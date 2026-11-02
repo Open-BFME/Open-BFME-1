@@ -11,15 +11,16 @@ class ButterflyDrawModuleTemplate
 {
 public:
     ButterflyDrawModuleTemplate();
-    __declspec(noinline) virtual ~ButterflyDrawModuleTemplate();
+    // ??0ButterflyDrawModuleTemplate@FXParticleSystem@@QAE@H@Z absent-from-retail
+    // Forcer-only constructor: compiling it installs the vftable, which emits
+    // the deleting destructor here without a copy of the matched destructor.
+    explicit ButterflyDrawModuleTemplate(int) {}
+    virtual ~ButterflyDrawModuleTemplate();
 
 private:
     unsigned char m_data[8];
 };
 
-ButterflyDrawModuleTemplate::~ButterflyDrawModuleTemplate()
-{
-}
 
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x0C-byte class.
@@ -31,5 +32,13 @@ ButterflyDrawModuleTemplate *MakeButterflyDrawModuleTemplateArray(int count)
 void DeleteButterflyDrawModuleTemplateArray(ButterflyDrawModuleTemplate *array)
 {
     delete[] array;
+}
+
+// The complete destructor is a matched row in another unit; a second strong
+// definition here duplicated it.
+// ?forceButterflyDrawModuleTemplateDeletingDestructor@FXParticleSystem@@YAXXZ absent-from-retail
+void forceButterflyDrawModuleTemplateDeletingDestructor()
+{
+    ButterflyDrawModuleTemplate value(0);
 }
 }

@@ -11,15 +11,16 @@ class QuadDrawModuleTemplate
 {
 public:
     QuadDrawModuleTemplate();
-    __declspec(noinline) virtual ~QuadDrawModuleTemplate();
+    // ??0QuadDrawModuleTemplate@FXParticleSystem@@QAE@H@Z absent-from-retail
+    // Forcer-only constructor: compiling it installs the vftable, which emits
+    // the deleting destructor here without a copy of the matched destructor.
+    explicit QuadDrawModuleTemplate(int) {}
+    virtual ~QuadDrawModuleTemplate();
 
 private:
     unsigned char m_data[8];
 };
 
-QuadDrawModuleTemplate::~QuadDrawModuleTemplate()
-{
-}
 
 // Non-retail helpers force MSVC 7.1 to materialize the compiler-generated
 // vector-deleting destructor for this 0x0C-byte class.
@@ -31,5 +32,13 @@ QuadDrawModuleTemplate *MakeQuadDrawModuleTemplateArray(int count)
 void DeleteQuadDrawModuleTemplateArray(QuadDrawModuleTemplate *array)
 {
     delete[] array;
+}
+
+// The complete destructor is a matched row in another unit; a second strong
+// definition here duplicated it.
+// ?forceQuadDrawModuleTemplateDeletingDestructor@FXParticleSystem@@YAXXZ absent-from-retail
+void forceQuadDrawModuleTemplateDeletingDestructor()
+{
+    QuadDrawModuleTemplate value(0);
 }
 }

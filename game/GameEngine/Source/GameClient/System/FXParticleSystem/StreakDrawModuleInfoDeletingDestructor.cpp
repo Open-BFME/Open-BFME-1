@@ -9,10 +9,18 @@ namespace FXParticleSystem
 class StreakDrawModuleInfo
 {
 public:
-    __declspec(noinline) virtual ~StreakDrawModuleInfo();
+    // ??0StreakDrawModuleInfo@FXParticleSystem@@QAE@H@Z absent-from-retail
+    // Forcer-only constructor: compiling it installs the vftable, which emits
+    // the deleting destructor here without a copy of the matched destructor.
+    explicit StreakDrawModuleInfo(int) {}
+    virtual ~StreakDrawModuleInfo();
 };
 
-StreakDrawModuleInfo::~StreakDrawModuleInfo()
+// The complete destructor is a matched row in another unit; a second strong
+// definition here duplicated it.
+// ?forceStreakDrawModuleInfoDeletingDestructor@FXParticleSystem@@YAXXZ absent-from-retail
+void forceStreakDrawModuleInfoDeletingDestructor()
 {
+    StreakDrawModuleInfo value(0);
 }
 }

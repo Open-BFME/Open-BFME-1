@@ -9,10 +9,18 @@ namespace FXParticleSystem
 class DefaultDrawModuleInfo
 {
 public:
-    __declspec(noinline) virtual ~DefaultDrawModuleInfo();
+    // ??0DefaultDrawModuleInfo@FXParticleSystem@@QAE@H@Z absent-from-retail
+    // Forcer-only constructor: compiling it installs the vftable, which emits
+    // the deleting destructor here without a copy of the matched destructor.
+    explicit DefaultDrawModuleInfo(int) {}
+    virtual ~DefaultDrawModuleInfo();
 };
 
-DefaultDrawModuleInfo::~DefaultDrawModuleInfo()
+// The complete destructor is a matched row in another unit; a second strong
+// definition here duplicated it.
+// ?forceDefaultDrawModuleInfoDeletingDestructor@FXParticleSystem@@YAXXZ absent-from-retail
+void forceDefaultDrawModuleInfoDeletingDestructor()
 {
+    DefaultDrawModuleInfo value(0);
 }
 }
