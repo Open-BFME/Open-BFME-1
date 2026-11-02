@@ -21811,5 +21811,25 @@
   "after_sha256": "62635d9de13b31888b936cfa319e2b6d4e80c092251bf5737706a4714d4f43e9",
   "evidence": "targets/game/reverse/identity_evidence/00465ab0-newlocomotor-copy-rehome.md",
   "reason": "LocomotorStore::newLocomotor is the matched 98-byte row 0x001B6920; retail (no ICF) cannot give the different unreferenced 95-byte 0x00465AB0 body the same identity, so it keeps an address-derived owner name"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00693b90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00693b90.cpp",
+  "old_name": "field20",
+  "new_name": "m_pad20",
+  "before_sha256": "82e641ad63b2397c908e383cadcf7bdcd3386ac87b822bdadf0abe5df447e18d",
+  "after_sha256": "1f9d65e7844057380d6b01f70f0a36f5f1979d8c0d32386f34c9956724c5d5c9",
+  "evidence": "targets/game/reverse/attempt_support/0x00693b90-cache-lookup.md",
+  "reason": "the 0x20..0x2C gap is unreconstructed padding in this bank (m_pad20); field20 was an attempt-local placeholder with no evidenced role"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00693b90.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00693b90.cpp",
+  "old_name": "method",
+  "new_name": "rva00693B90",
+  "before_sha256": "82e641ad63b2397c908e383cadcf7bdcd3386ac87b822bdadf0abe5df447e18d",
+  "after_sha256": "1f9d65e7844057380d6b01f70f0a36f5f1979d8c0d32386f34c9956724c5d5c9",
+  "evidence": "targets/game/reverse/attempt_support/0x00693b90-cache-lookup.md",
+  "reason": "the bank now spells the pinned caller-linked name ?rva00693B90@Rva00694710AudioWorker (pin at 0x00693B90, called by matched 0x00694130); method was an attempt-local placeholder"
  }
 ]

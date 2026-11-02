@@ -1,111 +1,391 @@
-// ?method@Rva00693B90@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
-// partial score=0.3333 date=2026-10-03
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
+// partial score=0.5619 date=2026-11-02
+// ?Rva00694230@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z
+// cl: /O2 /Ob2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /I.
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
-#define _OPERATOR_NEW_DEFINED_
-#include "StringInline.h"
-#include <list>
-inline bool AsciiString::isEmpty()const { return m_data==0 || *(const unsigned short*)&m_data->m_length==0; }
-extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void*,unsigned long);
-extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void*);
-class Gen0002857E;
-class Gen_006910e0 { public: void *m(); };
-extern void j_0003834d(); extern void j_00018971(); extern void j_0003cc81();
-extern void j_00003071(); extern void j_0001cb7f(); extern void j_0001f3a2();
-class Rva006BA130MaxField { public: void update(int); };
-class Gen0002857EOwner { public: void Rva00693B00(Gen0002857E*); };
-class Rva006910F0Handle { public:
- Rva006910F0Handle() { ((Gen_006910e0*)this)->m(); }
- Rva006910F0Handle(Gen0002857E*);
- Rva006910F0Handle(const Rva006910F0Handle &v) {
-  typedef void (Rva006910F0Handle::*Fn)(const Rva006910F0Handle&);
-  union { void(*raw)(); Fn member; } c; c.raw=j_0003834d; (this->*c.member)(v);
- }
- ~Rva006910F0Handle();
- Gen0002857E *ptr;
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include <stl/_alloc.h>
+#include <functional>
+#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+namespace _STL {
+template <> struct less<AsciiString> {
+ bool operator()(const AsciiString &left, const AsciiString &right) const { return left.compare(right) < 0; }
 };
-class Rva00693B90;
-class Gen0002857E { public:
- Gen0002857E(Rva00693B90 *o,const AsciiString &name);
- char field00[0x34]; int field34; unsigned field38; int field3c; bool field40,field41,field42;
-};
-struct Rva00693B90Node { void *next; const AsciiString key; Gen0002857E *value; };
-struct Rva00693B90Map {
- Rva00693B90Node *find(const AsciiString &s) const {
-  typedef Rva00693B90Node *(Rva00693B90Map::*Fn)(const AsciiString&) const;
-  union {void(*raw)();Fn member;}c;c.raw=j_0003cc81;return(this->*c.member)(s);
- }
- Gen0002857E *&index(const AsciiString &s) {
-  typedef Gen0002857E *&(Rva00693B90Map::*Fn)(const AsciiString&);
-  union {void(*raw)();Fn member;}c;c.raw=j_0001cb7f;return(this->*c.member)(s);
- }
- char storage[0x14];
-};
-struct Rva00693B90Set {
- void *find(const AsciiString &s)const {
-  typedef void *(Rva00693B90Set::*Fn)(const AsciiString&)const;
-  union {void(*raw)();Fn member;}c;c.raw=j_00003071;return(this->*c.member)(s);
- }
- void *sentinel;
-};
-struct Rva00693B90Lock {
- void *mutex; char acquired;
- Rva00693B90Lock(void *m) { acquired=0; mutex=m; if(WaitForSingleObject(m,0xffffffff)!=0x102)acquired=1; }
- ~Rva00693B90Lock(){if(acquired)ReleaseMutex(mutex);}
-};
-class Rva00693B90 { public:
- Rva006910F0Handle method(const AsciiString &name,int bucket);
- Rva00693B90Map field00; std::list<Gen0002857E*> field14[3];
- char field20[12]; Rva00693B90Set field2c; char field30[24]; void *field48;
-};
-void push(Rva00693B90 *o,int bucket,Gen0002857E *const &p) {
- typedef void (std::list<Gen0002857E*>::*Fn)(Gen0002857E *const&);
- union {void(*raw)();Fn member;}c;c.raw=j_0001f3a2; (o->field14[bucket].*c.member)(p);
 }
-Rva006910F0Handle Rva00693B90::method(const AsciiString &name,int bucket) {
- if(bucket<0) bucket=0; else if(bucket>=3) bucket=2;
- Rva00693B90Lock lock(field48);
- if(name.isEmpty())return Rva006910F0Handle();
- Rva00693B90Node *entry=field00.find(name);
- if(entry) {
-  Gen0002857E *p=entry->value;
-  if(p->field34==0)((Gen0002857EOwner*)this)->Rva00693B00(p);
-  if(!p->field41 && p->field3c<bucket) {
-   std::list<Gen0002857E*> &list=field14[p->field3c];
-   for(std::list<Gen0002857E*>::iterator it=list.begin();it!=list.end();++it) {
-    if(*it==p){list.erase(it);field14[bucket].push_back(p);break;}
-   }
-  }
-  ((Rva006BA130MaxField*)p)->update(bucket);
-  return Rva006910F0Handle(p);
- }
- void *end=field2c.sentinel;
- if(field2c.find(name)!=end)return Rva006910F0Handle();
- Gen0002857E *p=new Gen0002857E(this,name);
- Rva006910F0Handle handle(p);
- field00.index(name)=p;
- push(this,bucket,p);
- ((Rva006BA130MaxField*)p)->update(bucket);
- return handle;
+#include <set>
+typedef _STL::_Rb_tree<AsciiString, AsciiString, _STL::_Identity<AsciiString>, _STL::less<AsciiString>, _STL::allocator<AsciiString> > Rva000BFCC0Tree;
+namespace _STL {
+template <> inline __declspec(noinline) pair<set<AsciiString>::iterator, bool> set<AsciiString>::insert(const AsciiString &value)
+{
+ pair<_Rep_type::iterator, bool> result = _M_t.insert_unique(value);
+ return pair<iterator, bool>(*reinterpret_cast<const iterator *>(&result.first), result.second);
+}
 }
 
-// Retail extent525B: RET12 at00693D9A; INT3 at00693D9D.
-// EH handlerC47214 -> FuncInfoVA01236CDC has FOUR states, not nine:
-// 0 guarded return-handle cleanup (bit0 at[ebp-20], sret at[ebp+4]);
-// 1 mutex guard at[ebp-1C], previous0, cleanup -> ILT1E961 ->6915E0;
-// 2 failed allocation at[ebp+8], previous1, delete at881EB0;
-// 3 local handle at[ebp-24], previous1, cleanup -> ILT298E8 ->691130.
-// Independent helpers:6910E0 null ctor9B;6910F0 ptr ctor24B;
-// 691110 copy ctor26B;691130 destructor12B. Both retain viaILT2857E;
-// destructor releases through442B0. Constructor6BA2D0 is83B RET8 and
-// initializes44B record. Native constructor declaration above still needs
-// an independently reviewed ABI binding; old BfmeRecordBQ alias has wrong
-// AsciiStringBQ type and is deliberately not used. No pins added.
-// Candidate535B,330 masked positional differences, normalized shape.914.
-// Mutex bool/char and constructor forms tried; out-of-line record constructor
-// plus preloading set sentinel improves shape. Remaining: lock acquired flag
-// cached inBL vs stack, bucketEBP vsEBX, frame14 vs18, extra loop compare.
-// Native StringInline AsciiString and STLport list own their actual lifetimes;
-// no inline-asm or naked reconstruction. Typed ILT adapters preserve existing
-// ledger names; pin/callback binding remains unverified. Bank only.
+
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void *handle, unsigned long ms);
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+struct BfmeBlobYE { unsigned long format; unsigned long fields[8]; };
+extern "C" __declspec(dllimport) int __stdcall AIL_WAV_info(const void *data, BfmeBlobYE *info);
+extern "C" __declspec(dllimport) int __stdcall AIL_decompress_ADPCM(const BfmeBlobYE *info, void **out, unsigned long *size);
+class BfmeAudioYE { public: void bfmeSetYE(int data, const BfmeBlobYE *info, int size, char compressed); };
+class Rva006BA120ResetFlags { public: void reset(); };
+class File {
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+ virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+ virtual void slot20(); virtual void slot24(); virtual void slot28();
+ virtual int size(); virtual void slot30(); virtual char *readEntireAndClose();
+};
+class FileSystem { public: File *openFile(const char *, int); };
+extern FileSystem *TheFileSystem;
+class Debug {
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+ virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+ virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+ virtual void slot30(); virtual void slot34(); virtual Debug &operator<<(const char *);
+ virtual void slot3c(); virtual void slot40(); virtual void slot44(); virtual void slot48();
+ virtual bool finish(int);
+};
+Debug &operator<<(Debug &, const StringBase<char> &);
+class DebugView00409E20 {
+public:
+ virtual void Slot00(); virtual void Slot04(); virtual void Slot08(); virtual void Slot0C();
+ virtual void Slot10(); virtual void Slot14(); virtual void Slot18(); virtual void Slot1C();
+ virtual void Slot20(); virtual void Slot24(); virtual void Slot28(); virtual void Slot2C();
+ virtual void Slot30(); virtual void Slot34(); virtual void Slot38(); virtual void Slot3C();
+ virtual void Slot40(); virtual void Slot44(); virtual void Slot48(); virtual void Slot4C();
+ virtual void Slot50(); virtual void Slot54(); virtual void Slot58(); virtual void Slot5C();
+ virtual bool Begin_Report(); virtual void Slot64(); virtual void Slot68();
+ virtual Debug &Get_Stream(const char *, int);
+};
+extern DebugView00409E20 *DebugGlobal00409E20;
+bool _bfme_debugReportingEnabled();
+void _bfme_debugRecordCallsite(int);
+class ScopedMutex {
+public:
+ // ??0ScopedMutex@@QAE@XZ absent-from-retail
+ ScopedMutex() : m_owned(0), m_enabled(0) {}
+ // ??1ScopedMutex@@QAE@XZ
+ ~ScopedMutex() { release(); }
+ // ?acquire@ScopedMutex@@QAEKPAX@Z absent-from-retail
+ unsigned long acquire(void *h) {
+  m_owned = h;
+  unsigned long status = WaitForSingleObject(h, 500);
+  if (status != 0x102) m_enabled = 1;
+  return status;
+ }
+ // ?release@ScopedMutex@@QAEXXZ absent-from-retail
+ void release() { if(m_enabled) { ReleaseMutex(m_owned); m_enabled = 0; } }
+ void *m_owned;
+ char m_enabled;
+};
+typedef ScopedMutex Rva006915E0;
+class Gen0002857E {
+public:
+ AsciiString m_name;
+};
+class Gen0002857EOwner {
+public:
+ void Rva00694230(Gen0002857E *value);
+ void Rva00693FB0();
+ void Rva00693B00(Gen0002857E *value);
+ char m_pad0[0x2c];
+ _STL::set<AsciiString> m_failed;
+ unsigned int m_accountingTotal;
+ unsigned int m_limit;
+ void *m_thread;
+ char m_stop;
+ void *m_mutex;
+};
+// Boundary, ABI, and dependency evidence: targets/game/reverse/identity_evidence/00694230-statement-order.md
+// ?Rva00694230@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z
+//-------------------------------------------------------------------------------------------------
+void Gen0002857EOwner::Rva00694230(Gen0002857E *value)
+{
+ File *file = TheFileSystem->openFile(value->m_name.str(), 0x41);
+ int fileSize;
+ char *buffer;
+ bool failed;
+ if (!file) failed = true;
+ else { fileSize = file->size(); buffer = file->readEntireAndClose(); failed = false; }
+ Rva006915E0 mut;
+ while (!m_stop) {
+  if (mut.acquire(m_mutex) == 0x102) continue;
+  if (failed) {
+   reinterpret_cast<Rva006BA120ResetFlags *>(value)->reset();
+   reinterpret_cast<Rva000BFCC0Tree *>(&m_failed)->insert_unique(value->m_name);
+   mut.release();
+   if (_bfme_debugReportingEnabled()) {
+    _bfme_debugRecordCallsite(1);
+    DebugGlobal00409E20->Begin_Report();
+    ((DebugGlobal00409E20->Get_Stream(0,0) << "Missing Audio File: '") << value->m_name << "'\n").finish(2);
+   }
+   return;
+  }
+  BfmeBlobYE soundInfo;
+  AIL_WAV_info(buffer, &soundInfo);
+  bool compressed;
+  int size;
+  if (soundInfo.format == 0x11) {
+   void *decompressFileBuffer;
+   unsigned long newFileSize;
+   AIL_decompress_ADPCM(&soundInfo, &decompressFileBuffer, &newFileSize);
+   compressed = true;
+   size = newFileSize;
+   delete [] buffer;
+   buffer = static_cast<char *>(decompressFileBuffer);
+   AIL_WAV_info(buffer, &soundInfo);
+  } else if (soundInfo.format == 1) {
+   compressed = false;
+   size = fileSize;
+  } else {
+   reinterpret_cast<Rva006BA120ResetFlags *>(value)->reset();
+   m_failed.insert(value->m_name);
+   mut.release();
+   if (_bfme_debugReportingEnabled()) {
+    _bfme_debugRecordCallsite(1);
+    DebugGlobal00409E20->Begin_Report();
+    ((DebugGlobal00409E20->Get_Stream(0,0) << "Unexpected compression type in '") << value->m_name << "'\n").finish(2);
+   }
+   // prevent leaks
+   delete [] buffer;
+   return;
+  }
+  reinterpret_cast<BfmeAudioYE *>(value)->bfmeSetYE(reinterpret_cast<int>(buffer), &soundInfo, size, compressed);
+  m_accountingTotal += size;
+  if (m_accountingTotal > m_limit) {
+   // We need to free some samples, or we're not going to be able to play this sound.
+   Rva00693FB0();
+  }
+  return;
+ }
+}
+
+// Address-derived cache lookup at retail 0x00693B90 (525 bytes, ret 0xC):
+// under the cache mutex (+0x48, waited on without timeout), find the named
+// sample in the hash map at +0x00; a hit is promoted into the per-priority
+// list (+0x14) for the clamped priority and handed out, a name already in the
+// failed set (+0x2C) yields an empty handle, and a miss creates the 0x44-byte
+// record, registers it in the map and the priority list and hands it out.
+// Callers: Rva00694130 (0x00694130).  Callee identities are the matched rows
+// named below; the hash-map, priority-list and record helpers are still
+// address-named, so they are called through their defined ledger names.
+extern "C" void __cdecl __identifier("??0Rva00691110Handle@@QAE@ABV0@@Z")();
+extern "C" void __cdecl __identifier("??$_M_find@VAsciiString@@@?$hashtable@URva006931A0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva006931A0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva006931A0Value@@@7@@_STL@@ABEPAU?$_Hashtable_node@URva006931A0Value@@@1@ABVAsciiString@@@Z")();
+extern "C" void __cdecl __identifier("??A?$hash_map@VAsciiString@@W4Rva00693020Mapped@@U?$hash@VAsciiString@@@rts@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@6@@_STL@@QAEAAW4Rva00693020Mapped@@ABVAsciiString@@@Z")();
+extern "C" void __cdecl __identifier("?dup_006925f0@@YAXXZ")();
+
+class Rva006910F0Handle
+{
+public:
+	Rva006910F0Handle();
+	Rva006910F0Handle(Gen0002857E *target);
+	// ??0Rva006910F0Handle@@QAE@ABV0@@Z absent-from-retail
+	// The copy constructor at 0x00691110 is ledgered as Rva00691110Handle.
+	Rva006910F0Handle(const Rva006910F0Handle &other)
+	{
+		union { void (__cdecl *symbol)(); void (Rva006910F0Handle::*member)(const Rva006910F0Handle &); } c;
+		c.symbol = &__identifier("??0Rva00691110Handle@@QAE@ABV0@@Z");
+		(this->*c.member)(other);
+	}
+	~Rva006910F0Handle();
+
+	Gen0002857E *m_target;
+};
+
+class Rva006BA130MaxField
+{
+public:
+	void update(int value);
+};
+
+class AsciiStringBQ;
+
+class BfmeRecordBQ
+{
+public:
+	BfmeRecordBQ(int owner, const AsciiStringBQ &name);
+
+	unsigned char m_bytes[0x44];
+};
+
+struct Rva00693B90Record
+{
+	unsigned char m_pad00[0x34];
+	int m_count;					// 0x34
+	unsigned char m_pad38[4];
+	int m_priority;					// 0x3c
+	unsigned char m_pad40;
+	unsigned char m_pinned;				// 0x41
+};
+
+struct Rva00693B90Node
+{
+	Rva00693B90Node *m_next;
+	Rva00693B90Node *m_prev;
+	Gen0002857E *m_data;
+};
+
+struct Rva00693B90HashNode
+{
+	Rva00693B90HashNode *m_next;
+	AsciiString m_key;
+	Gen0002857E *m_value;
+};
+
+class Rva00693B90HashTable;
+
+struct Rva00693B90HashIterator
+{
+	Rva00693B90HashNode *m_cur;
+	Rva00693B90HashTable *m_ht;
+};
+
+class Rva00693B90HashTable
+{
+public:
+	Rva00693B90HashIterator find(const AsciiString &name)
+	{
+		union { void (__cdecl *symbol)(); Rva00693B90HashNode *(Rva00693B90HashTable::*member)(const AsciiString &) const; } c;
+		c.symbol = &__identifier("??$_M_find@VAsciiString@@@?$hashtable@URva006931A0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva006931A0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva006931A0Value@@@7@@_STL@@ABEPAU?$_Hashtable_node@URva006931A0Value@@@1@ABVAsciiString@@@Z");
+		Rva00693B90HashIterator it;
+		it.m_cur = (this->*c.member)(name);
+		it.m_ht = this;
+		return it;
+	}
+
+	Gen0002857E *&operator[](const AsciiString &name)
+	{
+		union { void (__cdecl *symbol)(); Gen0002857E *&(Rva00693B90HashTable::*member)(const AsciiString &); } c;
+		c.symbol = &__identifier("??A?$hash_map@VAsciiString@@W4Rva00693020Mapped@@U?$hash@VAsciiString@@@rts@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@6@@_STL@@QAEAAW4Rva00693020Mapped@@ABVAsciiString@@@Z");
+		return (this->*c.member)(name);
+	}
+
+	unsigned char m_rep[0x14];
+};
+
+class Rva00693B90List
+{
+public:
+	void push_back(Gen0002857E *const &value)
+	{
+		union { void (__cdecl *symbol)(); void (Rva00693B90List::*member)(Gen0002857E *const &); } c;
+		c.symbol = &__identifier("?dup_006925f0@@YAXXZ");
+		(this->*c.member)(value);
+	}
+
+	Rva00693B90Node *m_node;
+};
+
+struct Rva00693B90StringData
+{
+	unsigned short m_refCount;
+	unsigned short m_pad02;
+	unsigned short m_length;			// 0x04
+};
+
+static __forceinline bool isEmptyName(const AsciiString &name)
+{
+	const Rva00693B90StringData *data = *(Rva00693B90StringData *const *)&name;
+	return data == 0 || data->m_length == 0;
+}
+
+class Rva00693B90Mutex
+{
+public:
+	Rva00693B90Mutex(void *h)
+	{
+		m_enabled = 0;
+		m_owned = h;
+		if (WaitForSingleObject(h, 0xffffffff) != 0x102)
+			m_enabled = 1;
+	}
+	~Rva00693B90Mutex() { if (m_enabled) ReleaseMutex(m_owned); }
+
+	void *m_owned;
+	volatile char m_enabled;
+};
+
+class Rva00694710AudioWorker
+{
+public:
+	Rva006910F0Handle rva00693B90(const AsciiString &name, int priority);
+
+	Rva00693B90HashTable m_files;			// 0x00
+	Rva00693B90List m_lists[3];			// 0x14
+	unsigned char m_pad20[0x0c];
+	_STL::set<AsciiString> m_failed;		// 0x2c
+	unsigned int m_accountingTotal;
+	unsigned int m_limit;
+	void *m_thread;
+	char m_stop;
+	void *m_mutex;					// 0x48
+};
+
+// ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
+Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, int priority)
+{
+	int level;
+	if (priority < 0)
+		level = 0;
+	else if (priority >= 3)
+		level = 2;
+	else
+		level = priority;
+
+	Rva00693B90Mutex mut(m_mutex);
+
+	if (isEmptyName(name))
+		return Rva006910F0Handle();
+
+	Rva00693B90HashIterator it = m_files.find(name);
+	if (it.m_cur != 0)
+	{
+		Gen0002857E *file = it.m_cur->m_value;
+		Rva00693B90Record *record = (Rva00693B90Record *)file;
+		if (record->m_count == 0)
+			((Gen0002857EOwner *)this)->Rva00693B00(file);
+		if (!record->m_pinned && record->m_priority < level)
+		{
+			Rva00693B90Node *head = m_lists[record->m_priority].m_node;
+			for (Rva00693B90Node *n = head->m_next; n != head; n = n->m_next)
+			{
+				if (n->m_data == file)
+				{
+					Rva00693B90Node *next = n->m_next;
+					Rva00693B90Node *prev = n->m_prev;
+					prev->m_next = next;
+					next->m_prev = prev;
+					_STL::__node_alloc<true, 0>::deallocate(n, sizeof(Rva00693B90Node));
+
+					Rva00693B90Node *pos = m_lists[level].m_node;
+					Rva00693B90Node *node = (Rva00693B90Node *)_STL::__node_alloc<true, 0>::allocate(sizeof(Rva00693B90Node));
+					Gen0002857E **data = &node->m_data;
+					if (data != 0)
+						*data = file;
+					Rva00693B90Node *last = pos->m_prev;
+					node->m_next = pos;
+					node->m_prev = last;
+					last->m_next = node;
+					pos->m_prev = node;
+					break;
+				}
+			}
+		}
+		((Rva006BA130MaxField *)file)->update(level);
+		return Rva006910F0Handle(file);
+	}
+
+	if (m_failed.find(name) != m_failed.end())
+		return Rva006910F0Handle();
+
+	BfmeRecordBQ *record = new BfmeRecordBQ((int)this, (const AsciiStringBQ &)name);
+	Rva006910F0Handle handle((Gen0002857E *)record);
+	m_files[name] = (Gen0002857E *)record;
+	m_lists[level].push_back((Gen0002857E *)record);
+	((Rva006BA130MaxField *)record)->update(level);
+	return handle;
+}

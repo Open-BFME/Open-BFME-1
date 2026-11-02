@@ -34,3 +34,19 @@ Ruled out (no gain or worse): separate clamped local; STLport find form
 single tail return (0.83); default-ctor + acquire() mutex shape (0.915).
 Levers that helped: lists at +0x14 (hash rep 0x14 bytes), inline empty test on
 the string data (+4 length word), volatile lock flag, 0x44-byte record view.
+
+## Update (same session, later): shape 0.977, exact through +0x8E
+
+Typing the new record as `BfmeRecordBQ *record` and passing
+`(Gen0002857E *)record` to the handle ctor, the map store and the list
+push_back (the push_back reference binds to a converted temporary, so the
+record itself stays in EDI) fixed the register assignment (EBX priority,
+EBP name, EDI handle/record) and the frame (0x18). The lock ctor storing
+`m_enabled = 0` before `m_owned = h` (body assignments, volatile flag) fixed the
+prologue store order. Remaining (5 structural): the list scan stays rotated
+(raw-node while/for/&&-find/for(;;) forms and a real STLport list+find+erase
+all inert or worse); retail stores the converted pointer into the dead `name`
+home before the handle ctor call, ours right before push_back (an early
+`file` local gets its own slot and grows the frame; const-ref and block-scope
+spellings inert); one epilogue `pop ebx` placement. EH throw() levers via
+eh_levers/shape_search: 28 trials, no gain.
