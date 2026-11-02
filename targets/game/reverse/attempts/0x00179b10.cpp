@@ -1,5 +1,6 @@
 // ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.9974 date=2026-11-02
+// partial score=1.0 date=2026-11-02
+// EXACT 1517/1517 modulo relocations: AIUpdateInterface *ownerAI2 = getMachineOwner()->m_ai local fixes the +0x1F1 EDX/EAX swap
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BFME ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ at retail
@@ -392,7 +393,8 @@ StateReturnType AIFollowPathAsTeamState::update()
 		const Rva0016FFD0Coord3D *turnTo = ai->friend_getGoalPathPosition(m_index + 1);
 		if (turnTo)
 		{
-			Real speed = getMachineOwner()->m_ai->getCurLocomotorSpeed();
+			AIUpdateInterface *ownerAI2 = getMachineOwner()->m_ai;
+			Real speed = ownerAI2->getCurLocomotorSpeed();
 			if (ai->isDoingGroundMovement())
 				ai->setDesiredSpeed(speed);
 			Real angle = obj->bfmeRelativeAngleTo((const Coord3D *)turnTo);
