@@ -39906,7 +39906,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_00095a30@@YAXXZ,,0x00095A30,15,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z;C++ alias
 ?dup_00095ac0@@YAXXZ,,0x00095AC0,15,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@@Z;C++ alias
 ?dup_00095ae0@@YAXXZ,,0x00095AE0,1,game/GameEngine/Source/Common/RvaShard0TinyNoops7.cpp,matched,address-derived anonymous one-byte carved return
-?dup_00097090@@YAXXZ,,0x00097090,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_00097090@@YAXXZ,,0x00097090,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_00097390@@YAXXZ,,0x00097390,7,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??R?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@_STL@@QBEABVAsciiString@@ABU?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@1@@Z;C++ alias
 ?dup_000974f0@@YAXXZ,,0x000974F0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioEventInfo@AudioEventRTS@@QBEXPBUAudioEventInfo@@@Z;C++ alias
 ?dup_000978c0@@YAXXZ,,0x000978C0,14,game/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,matched,gen-alias;object-symbol=?empty@?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QBE_NXZ;C++ alias
@@ -41145,7 +41145,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_001F8C60@@YAXXZ,,0x001F8C60,1,game/GameEngine/Source/Common/Dup001F8C60.cpp,matched,carved body is a single ret with no identity evidence
 ?dup_001a0df0@@YAXXZ,,0x001A0DF0,18,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$_Hashtable_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAE@PAU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@1@PAV?$hashtable@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@1@@Z;C++ alias
 ?dup_001a0eb0@@YAXXZ,,0x001A0EB0,19,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@U?$_Const_traits@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@QAE@ABU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@1@@Z;C++ alias
-?dup_001a1a10@@YAXXZ,,0x001A1A10,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_001a1a10@@YAXXZ,,0x001A1A10,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_001a1b00@@YAXXZ,,0x001A1B00,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
 ?dup_001a3370@@YAXXZ,,0x001A3370,18,game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp,matched,gen-alias;object-symbol=??0StaticNameKey@@QAE@PBD@Z;C++ alias
 ?dup_001a33f0@@YAXXZ,,0x001A33F0,11,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$_List_iterator@PAUAudioRequest@@U?$_Nonconst_traits@PAUAudioRequest@@@_STL@@@_STL@@QAE@PAU?$_List_node@PAUAudioRequest@@@1@@Z;C++ alias
@@ -42448,7 +42448,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_002b6ef0@@YAXXZ,,0x002B6EF0,5,game/GameEngine/Source/Common/Rva112A40VirtualDispatchThunk.cpp,matched,gen-alias;object-symbol=?dispatch@Rva112A40VirtualDispatchThunk@@QAEXXZ;C++ alias
 ?dup_002b6f00@@YAXXZ,,0x002B6F00,5,game/GameEngine/Source/Common/Rva112A40VirtualDispatchThunk.cpp,matched,gen-alias;object-symbol=?dispatch@Rva112A40VirtualDispatchThunk@@QAEXXZ;C++ alias
 ?dup_002b7860@@YAXXZ,,0x002B7860,6,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,gen-alias;object-symbol=?max_size@?$_String_base@DV?$allocator@D@_STL@@@_STL@@QBEIXZ;C++ alias
-?dup_002b9d20@@YAXXZ,,0x002B9D20,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_002b9d20@@YAXXZ,,0x002B9D20,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_002b9d30@@YAXXZ,,0x002B9D30,10,game/GameEngine/Source/Common/TerrainTypes.cpp,matched,gen-alias;object-symbol=?friend_setNext@TerrainType@@QAEXPAV1@@Z;C++ alias
 ?dup_002b9e50@@YAXXZ,,0x002B9E50,52,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp,matched,gen-alias;object-symbol=?startBuildingSound@DozerAIUpdate@@UAEXPBVAudioEventRTS@@W4ObjectID@@@Z;C++ alias
 ?dup_002ba9c0@@YAXXZ,,0x002BA9C0,90,game/GameEngine/Source/Common/System/BuildAssistant_isRemovableForConstruction.cpp,matched,gen-alias;object-symbol=?isRemovableForConstruction@BuildAssistant@@IAE_NPAVObject@@@Z;C++ alias
@@ -43061,7 +43061,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_00368ab0@@YAXXZ,,0x00368AB0,45,game/GameEngine/Source/Common/Thing/ThingTemplate.cpp,matched,gen-alias;object-symbol=?_Unchecked_set@?$bitset@$0L@@_STL@@QAEAAV12@IH@Z;C++ alias
 ?dup_00369590@@YAXXZ,,0x00369590,305,game/GameEngine/Source/GameLogic/Object/SpecialPower/OCLUpgradesVectorInsert.cpp,matched,gen-alias;object-symbol=?_M_insert_overflow@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@OCLSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z;C++ alias
 ?dup_0036ad70@@YAXXZ,,0x0036AD70,7,game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp,matched,gen-alias;object-symbol=?getUV@ParticleSystemTemplate@FXParticleSystem@@QBEPBURegion2D@@XZ;C++ alias
-?dup_0036adb0@@YAXXZ,,0x0036ADB0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_0036adb0@@YAXXZ,,0x0036ADB0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_0036ae10@@YAXXZ,,0x0036AE10,9,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?size@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBEIXZ;C++ alias
 ?dup_0036ae20@@YAXXZ,,0x0036AE20,12,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=??A?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEAAPAVObject@@I@Z;C++ alias
 ?dup_0036ae50@@YAXXZ,,0x0036AE50,23,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=?Set@Vector3@@QAEXMMM@Z;C++ alias
@@ -43206,7 +43206,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_0037cb80@@YAXXZ,,0x0037CB80,5,game/Libraries/Source/WWVegas/WWLib/VectorIntegerInsertOverflowThunk.cpp,matched,gen-alias;object-symbol=?pop_back@?$vector@HV?$allocator@H@_STL@@@_STL@@QAEXXZ;C++ alias
 ?dup_0037cb90@@YAXXZ,,0x0037CB90,29,game/GameEngine/Source/GameNetwork/LANAPIhandlers.cpp,matched,zh-landmulti exact-multi ZH twin (rel32-all-resolve);object-symbol=?getName@LANPlayer@@QAE?AVUnicodeString@@XZ;model=claude-opus-5-5;host=GreatFaram
 ?dup_0037d080@@YAXXZ,,0x0037D080,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_0037d090@@YAXXZ,,0x0037D090,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_0037d090@@YAXXZ,,0x0037D090,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_0037d1c0@@YAXXZ,,0x0037D1C0,9,game/GameEngine/Source/Common/INI/INILineBuffer.cpp,matched,gen-alias;object-symbol=?size@?$vector@UINILine@@V?$allocator@UINILine@@@_STL@@@_STL@@QBEIXZ;C++ alias
 ?dup_0037d210@@YAXXZ,,0x0037D210,6,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??C?$_List_iterator@U?$pair@VAsciiString@@M@_STL@@U?$_Nonconst_traits@U?$pair@VAsciiString@@M@_STL@@@2@@_STL@@QBEPAU?$pair@VAsciiString@@M@1@XZ;C++ alias
 ?dup_0037d220@@YAXXZ,,0x0037D220,6,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??C?$_List_iterator@U?$pair@VAsciiString@@M@_STL@@U?$_Nonconst_traits@U?$pair@VAsciiString@@M@_STL@@@2@@_STL@@QBEPAU?$pair@VAsciiString@@M@1@XZ;C++ alias
@@ -45646,7 +45646,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_004d9dc0@@YAXXZ,,0x004D9DC0,14,game/GameEngine/Source/Common/GameEngine.cpp,matched,gen-alias;object-symbol=?begin@?$_Rb_tree@VAsciiString@@V1@U?$_Identity@VAsciiString@@@_STL@@U?$less_than_nocase@VAsciiString@@@rts@@V?$allocator@VAsciiString@@@3@@_STL@@QBE?AU?$_Rb_tree_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@2@XZ;C++ alias
 ?dup_004d9de0@@YAXXZ,,0x004D9DE0,11,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=?end@?$list@PAUAudioRequest@@V?$allocator@PAUAudioRequest@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAUAudioRequest@@U?$_Nonconst_traits@PAUAudioRequest@@@_STL@@@2@XZ;C++ alias
 ?dup_004e2590@@YAXXZ,,0x004E2590,7,game/GameEngineDevice/Source/W3DDevice/GameClient/HeightMap.cpp,matched,gen-alias;object-symbol=?Get_Viewport@CameraClass@@QBEABVViewportClass@@XZ;C++ alias
-?dup_004e25b0@@YAXXZ,,0x004E25B0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_004e25b0@@YAXXZ,,0x004E25B0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_004e2970@@YAXXZ,,0x004E2970,9,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=??0AsciiString@@QAE@XZ;C++ alias
 ?dup_004e2980@@YAXXZ,,0x004E2980,9,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=??0AsciiString@@QAE@XZ;C++ alias
 ?dup_004e2990@@YAXXZ,,0x004E2990,9,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=??0AsciiString@@QAE@XZ;C++ alias
@@ -45914,7 +45914,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_00537560@@YAXXZ,,0x00537560,7,game/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsQueueDestructorThunk.cpp,matched,gen-alias;object-symbol=?clear@GameResultsThreadAuxHolder@@QAEXXZ;C++ alias
 ?dup_00537580@@YAXXZ,,0x00537580,9,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=??0AsciiString@@QAE@XZ;C++ alias
 ?dup_005376a0@@YAXXZ,,0x005376A0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioEventInfo@AudioEventRTS@@QBEXPBUAudioEventInfo@@@Z;C++ alias
-?dup_005376c0@@YAXXZ,,0x005376C0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_005376c0@@YAXXZ,,0x005376C0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_00537700@@YAXXZ,,0x00537700,8,game/GameEngine/Source/GameClient/Drawable.cpp,matched,gen-alias;object-symbol=?retailLoadType@@YA?AW4INILoadType@@PBVINI@@@Z;C++ alias
 ?dup_00537710@@YAXXZ,,0x00537710,7,game/GameEngine/Source/GameNetwork/GameSpy/darray.c,matched,gen-alias;object-symbol=_ArrayLength;C++ alias
 ?dup_00537900@@YAXXZ,,0x00537900,5,game/GameEngine/Source/GameClient/GameClient.cpp,matched,gen-alias;object-symbol=?UPDATE@SubsystemInterface@@QAEXXZ;C++ alias;model=gpt-6-astra;host=GreatFaram
@@ -46893,7 +46893,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_006013a0@@YAXXZ,,0x006013A0,10,game/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,matched,gen-alias;object-symbol=?friend_setBridge@TerrainRoadType@@QAEX_N@Z;C++ alias
 ?dup_006013b0@@YAXXZ,,0x006013B0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setPlayingHandle@AudioEventRTS@@QAEXI@Z;C++ alias
 ?dup_006013c0@@YAXXZ,,0x006013C0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_006013e0@@YAXXZ,,0x006013E0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_006013e0@@YAXXZ,,0x006013E0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_006013f0@@YAXXZ,,0x006013F0,10,game/GameEngine/Source/Common/TerrainTypes.cpp,matched,gen-alias;object-symbol=?friend_setNext@TerrainType@@QAEXPAV1@@Z;C++ alias
 ?dup_00601400@@YAXXZ,,0x00601400,10,game/GameEngine/Source/Common/Thing/Thing.cpp,matched,gen-alias;object-symbol=?Set_Y_Translation@Matrix3D@@QAEXM@Z;C++ alias
 ?dup_00601410@@YAXXZ,,0x00601410,13,game/GameEngine/Source/GameClient/Terrain/TerrainRoads.cpp,matched,gen-alias;object-symbol=?friend_setTransitionEffectsHeight@TerrainRoadType@@QAEXM@Z;C++ alias
@@ -47725,7 +47725,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_00662420@@YAXXZ,,0x00662420,11,game/GameEngine/Source/Common/System/SubsystemLegend.cpp,matched,gen-alias;object-symbol=?end@?$list@USubsystemLegendEntry@@V?$allocator@USubsystemLegendEntry@@@_STL@@@_STL@@QAE?AU?$_List_iterator@USubsystemLegendEntry@@U?$_Nonconst_traits@USubsystemLegendEntry@@@_STL@@@2@XZ;C++ alias
 ?dup_00662750@@YAXXZ,,0x00662750,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioEventInfo@AudioEventRTS@@QBEXPBUAudioEventInfo@@@Z;C++ alias
 ?dup_00662760@@YAXXZ,,0x00662760,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setPlayingHandle@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_00662780@@YAXXZ,,0x00662780,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_00662780@@YAXXZ,,0x00662780,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_00662830@@YAXXZ,,0x00662830,10,game/GameEngine/Source/Common/Thing/Thing.cpp,matched,gen-alias;object-symbol=?Set_Y_Translation@Matrix3D@@QAEXM@Z;C++ alias
 ?dup_00662840@@YAXXZ,,0x00662840,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z;C++ alias
 ?dup_00662870@@YAXXZ,,0x00662870,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setVolume@AudioEventRTS@@QAEXM@Z;C++ alias
@@ -48362,7 +48362,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_006d1190@@YAXXZ,,0x006D1190,30,game/Libraries/Source/WWVegas/WWLib/MultiListObjectDeletingDestructor.cpp,matched,ICF alias of authentic MultiListObjectClass scalar-deleting destructor;object-symbol=??_GMultiListObjectClass@@UAEPAXI@Z; matched complete destructor at 0x009DC190 and upstream multilist.h class/vtable identity
 ?dup_006d1300@@YAXXZ,,0x006D1300,7,game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,matched,gen-alias;object-symbol=?Current_Object@GenericMultiListIterator@@IAEPAVMultiListObjectClass@@XZ;C++ alias
 ?dup_006d1310@@YAXXZ,,0x006D1310,19,game/GameEngine/Source/Common/MessageStream.cpp,matched,gen-alias;object-symbol=??0TranslatorData@MessageStream@@QAE@XZ;C++ alias
-?dup_006d4520@@YAXXZ,,0x006D4520,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_006d4520@@YAXXZ,,0x006D4520,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_006d7560@@YAXXZ,,0x006D7560,7,game/GameEngine/Source/Common/Rva97120Offset268Getter.cpp,matched,gen-alias;object-symbol=?get_value@Rva97120Offset268Getter@@QAEIXZ;C++ alias
 ?dup_006d75e0@@YAXXZ,,0x006D75E0,7,game/GameEngine/Source/Common/System/Radar.cpp,matched,gen-alias;object-symbol=?getStealthLook@Drawable@@QBE?AW4StealthLookType@@XZ;C++ alias
 ?dup_006d7ca0@@YAXXZ,,0x006D7CA0,7,game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp,matched,gen-alias;object-symbol=?get_polys@MeshGeometryClass@@IAEPAVVector3i16@@XZ;C++ alias
@@ -48406,7 +48406,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_006df5f0@@YAXXZ,,0x006DF5F0,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
 ?dup_006df610@@YAXXZ,,0x006DF610,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setPlayingHandle@AudioEventRTS@@QAEXI@Z;C++ alias
 ?dup_006df620@@YAXXZ,,0x006DF620,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_006df630@@YAXXZ,,0x006DF630,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_006df630@@YAXXZ,,0x006DF630,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_006df640@@YAXXZ,,0x006DF640,10,game/GameEngine/Source/Common/System/List.cpp,matched,gen-alias;object-symbol=?addToEndOfGroup@LList@@QAEX_N@Z;C++ alias
 ?dup_006df910@@YAXXZ,,0x006DF910,7,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,gen-alias;object-symbol=?Get_Depth@CameraClass@@QBEMXZ;C++ alias
 ?dup_006e1960@@YAXXZ,,0x006E1960,10,game/GameEngine/Source/GameLogic/AI/AIStates.cpp,matched,gen-alias;object-symbol=?setDesiredSpeed@AIUpdateInterface@@QAEXM@Z;C++ alias
@@ -48593,7 +48593,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_0074d920@@YAXXZ,,0x0074D920,65,game/GameEngine/Source/Common/MoneyVectorPushBack.cpp,matched,gen-alias;object-symbol=??1?$_Vector_base@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@QAE@XZ;C++ alias
 ?dup_007511A0@@YAXXZ,,0x007511A0,1,game/GameEngine/Source/Common/Rva007511A0Noop.cpp,matched,carved ret-only boundary at 0x007511A0; no semantic identity evidence; address-derived opaque name preserves the real body address
 ?dup_007511C0@@YAXXZ,,0x007511C0,1,game/GameEngine/Source/Common/Rva007511C0Noop.cpp,matched,carved ret-only boundary at 0x007511C0; caller proves no semantic identity; address-derived opaque name
-?dup_00751b40@@YAXXZ,,0x00751B40,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_00751b40@@YAXXZ,,0x00751B40,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_00751d60@@YAXXZ,,0x00751D60,1,game/GameEngine/Source/Common/RvaShard0TinyNoops19.cpp,matched,address-derived anonymous one-byte carved return
 ?dup_00751da0@@YAXXZ,,0x00751DA0,11,game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp,matched,gen-alias;object-symbol=?getRopeDrawInterface@W3DRopeDraw@@UAEPAVRopeDrawInterface@@XZ;C++ alias
 ?dup_00752040@@YAXXZ,,0x00752040,11,game/GameEngine/Source/Common/MoneyVectorPushBack.cpp,matched,gen-alias;object-symbol=?empty@?$vector@VMoney@@V?$allocator@VMoney@@@_STL@@@_STL@@QBE_NXZ;C++ alias
@@ -49202,7 +49202,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_007b7d80@@YAXXZ,,0x007B7D80,10,game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior.cpp,matched,gen-alias;object-symbol=?setExtraBounciness@PhysicsBehavior@@QAEXM@Z;C++ alias
 ?dup_007b7f50@@YAXXZ,,0x007B7F50,10,game/GameEngine/Source/Common/TerrainTypes.cpp,matched,gen-alias;object-symbol=?friend_setNext@TerrainType@@QAEXPAV1@@Z;C++ alias
 ?dup_007b7f80@@YAXXZ,,0x007B7F80,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_007b7f90@@YAXXZ,,0x007B7F90,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_007b7f90@@YAXXZ,,0x007B7F90,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_007b8040@@YAXXZ,,0x007B8040,15,game/GameEngine/Source/Common/Bezier/BezierSegment.cpp,matched,gen-alias;object-symbol=??A?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEAAUCoord3D@@I@Z;C++ alias
 ?dup_007b80b0@@YAXXZ,,0x007B80B0,10,game/GameEngine/Source/GameLogic/AI/AIGuardRetaliate.cpp,matched,gen-alias;object-symbol=?setNemesisID@AIGuardRetaliateMachine@@QAEXW4ObjectID@@@Z;C++ alias
 ?dup_007b9e50@@YAXXZ,,0x007B9E50,39,game/Libraries/Source/WWVegas/WW3D2/pointgr.cpp,matched,zh-landmulti exact-multi ZH twin (rel32-all-resolve);object-symbol=?Clear@?$VectorClass@E@@UAEXXZ
@@ -49265,7 +49265,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_007f0940@@YAXXZ,,0x007F0940,9,game/GameEngine/Source/GameNetwork/FrameData.cpp,matched,gen-alias;object-symbol=?setFrameCommandCount@FrameData@@QAEXI@Z;C++ alias
 ?dup_007f0960@@YAXXZ,,0x007F0960,17,game/GameEngine/Source/GameClient/System/DebugDisplay.cpp,matched,gen-alias;object-symbol=?setCursorPos@DebugDisplay@@UAEXHH@Z;C++ alias
 ?dup_007f0990@@YAXXZ,,0x007F0990,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_007f09b0@@YAXXZ,,0x007F09B0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_007f09b0@@YAXXZ,,0x007F09B0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_007f09d0@@YAXXZ,,0x007F09D0,10,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,gen-alias;object-symbol=?setValue@Offset24IntegerSetterThunk@@QAEXH@Z;C++ alias
 ?dup_007f09f0@@YAXXZ,,0x007F09F0,10,game/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,gen-alias;object-symbol=?Set_Back_Child@CullNodeStruct@AABTreeClass@@QAEXK@Z;C++ alias
 ?dup_007f0a10@@YAXXZ,,0x007F0A10,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z;C++ alias
@@ -49275,7 +49275,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_007f0b00@@YAXXZ,,0x007F0B00,10,game/GameEngine/Source/Common/GameEngine.cpp,matched,gen-alias;object-symbol=?setFramesPerSecondLimit@GameEngine@@UAEXH@Z;C++ alias
 ?dup_007f0b20@@YAXXZ,,0x007F0B20,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setPlayingHandle@AudioEventRTS@@QAEXI@Z;C++ alias
 ?dup_007f0b40@@YAXXZ,,0x007F0B40,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_007f0b60@@YAXXZ,,0x007F0B60,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_007f0b60@@YAXXZ,,0x007F0B60,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_007f0b80@@YAXXZ,,0x007F0B80,10,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,gen-alias;object-symbol=?setValue@Offset24IntegerSetterThunk@@QAEXH@Z;C++ alias
 ?dup_007f0ba0@@YAXXZ,,0x007F0BA0,10,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,gen-alias;object-symbol=?Set_Fog_Enable@SceneClass@@UAEX_N@Z;C++ alias
 ?dup_007f0be0@@YAXXZ,,0x007F0BE0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z;C++ alias
@@ -49312,7 +49312,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_007f8fe0@@YAXXZ,,0x007F8FE0,10,game/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,gen-alias;object-symbol=?Set_Back_Child@CullNodeStruct@AABTreeClass@@QAEXK@Z;C++ alias
 ?dup_007f9000@@YAXXZ,,0x007F9000,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z;C++ alias
 ?dup_007f9030@@YAXXZ,,0x007F9030,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_007f9050@@YAXXZ,,0x007F9050,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_007f9050@@YAXXZ,,0x007F9050,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_007f9060@@YAXXZ,,0x007F9060,10,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,gen-alias;object-symbol=?setValue@Offset24IntegerSetterThunk@@QAEXH@Z;C++ alias
 ?dup_007f9070@@YAXXZ,,0x007F9070,10,game/Libraries/Source/WWVegas/WW3D2/segline.cpp,matched,gen-alias;object-symbol=?Set_Merge_Abort_Factor@SegLineRendererClass@@QAEXM@Z;C++ alias
 ?dup_007f9580@@YAXXZ,,0x007F9580,10,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,gen-alias;object-symbol=?_M_construct_null@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEXPAD@Z;C++ alias
@@ -49338,7 +49338,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_00803020@@YAXXZ,,0x00803020,16,game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,matched,gen-alias;object-symbol=??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ;C++ alias
 ?dup_008062d0@@YAXXZ,,0x008062D0,16,game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/DockUpdate.cpp,matched,gen-alias;object-symbol=??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ;C++ alias
 ?dup_008088c0@@YAXXZ,,0x008088C0,10,game/GameEngine/Source/Common/Audio/AudioEventRTS.cpp,matched,gen-alias;object-symbol=?setHandleToKill@AudioEventRTS@@QAEXI@Z;C++ alias
-?dup_008088e0@@YAXXZ,,0x008088E0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_008088e0@@YAXXZ,,0x008088E0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_0081c4d0@@YAXXZ,,0x0081C4D0,23,game/Libraries/Source/WWVegas/WW3D2/part_buf.cpp,matched,gen-alias;object-symbol=?Set@Vector3@@QAEXMMM@Z;C++ alias
 ?dup_0081c6a0@@YAXXZ,,0x0081C6A0,11,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=??0?$_STLP_alloc_proxy@IU?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@_STL@@V?$allocator@U?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@_STL@@@2@@_STL@@QAE@ABV?$allocator@U?$_Hashtable_node@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@_STL@@@1@I@Z;C++ alias
 ?dup_0081c890@@YAXXZ,,0x0081C890,64,game/GameEngine/Source/GameLogic/Object/Contain/HordeContainDestructors.cpp,matched,gen-alias;object-symbol=??1?$_Vector_base@UGen_p28pod@@V?$allocator@UGen_p28pod@@@_STL@@@_STL@@QAE@XZ;C++ alias
@@ -51385,16 +51385,16 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?dup_69b5c0@@YAXXZ,,0x0069B5C0,9,game/GameEngine/Source/Common/RTS/TunnelTracker.cpp,matched,gen-alias;object-symbol=??D?$reverse_iterator@U?$_List_iterator@PAVObject@@U?$_Nonconst_traits@PAVObject@@@_STL@@@_STL@@@_STL@@QBEAAPAVObject@@XZ;C++ alias
 ?dup_6df5f0@@YAXXZ,,0x006DF5F0,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
 ?dup_7e87e0@@YAXXZ,,0x007E87E0,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
-?dup_7f09b0@@YAXXZ,,0x007F09B0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_7f09b0@@YAXXZ,,0x007F09B0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_7f09f0@@YAXXZ,,0x007F09F0,10,game/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,gen-alias;object-symbol=?Set_Back_Child@CullNodeStruct@AABTreeClass@@QAEXK@Z;C++ alias
 ?dup_7f0ae0@@YAXXZ,,0x007F0AE0,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
-?dup_7f0b60@@YAXXZ,,0x007F0B60,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_7f0b60@@YAXXZ,,0x007F0B60,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_7f0ba0@@YAXXZ,,0x007F0BA0,10,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DScene.cpp,matched,gen-alias;object-symbol=?Set_Fog_Enable@SceneClass@@UAEX_N@Z;C++ alias
 ?dup_7f54b0@@YAXXZ,,0x007F54B0,10,game/GameEngine/Source/Common/ConditionalPointerStoreThunk.cpp,matched,gen-alias;object-symbol=?assignSecond@ConditionalPointerStoreThunk@@QAEXPAX@Z;C++ alias
 ?dup_7f8fe0@@YAXXZ,,0x007F8FE0,10,game/Libraries/Source/WWVegas/WW3D2/aabtree.cpp,matched,gen-alias;object-symbol=?Set_Back_Child@CullNodeStruct@AABTreeClass@@QAEXK@Z;C++ alias
-?dup_7f9050@@YAXXZ,,0x007F9050,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_7f9050@@YAXXZ,,0x007F9050,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_7f9580@@YAXXZ,,0x007F9580,10,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp,matched,gen-alias;object-symbol=?_M_construct_null@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEXPAD@Z;C++ alias
-?dup_8088e0@@YAXXZ,,0x008088E0,10,game/GameEngine/Source/Common/RTS/Player.cpp,matched,gen-alias;object-symbol=?friend_setPrev@Upgrade@@QAEXPAV1@@Z;C++ alias
+?dup_8088e0@@YAXXZ,,0x008088E0,10,game/GameEngine/Source/GameNetwork/NetGameCommandMsg_constructGameMessage.cpp,matched,gen-alias;object-symbol=?friend_setPlayerIndex@GameMessage@@QAEXH@Z;C++ alias
 ?dup_81d4e0@@YAXXZ,,0x0081D4E0,41,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=?__copy_trivial@_STL@@YAPAXPBX0PAX@Z;C++ alias
 ?dup_83ebc0@@YAXXZ,,0x0083EBC0,41,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=?__copy_trivial@_STL@@YAPAXPBX0PAX@Z;C++ alias
 ?dup_83f020@@YAXXZ,,0x0083F020,41,game/GameEngine/Source/Common/Audio/GameAudio.cpp,matched,gen-alias;object-symbol=?__copy_trivial@_STL@@YAPAXPBX0PAX@Z;C++ alias
