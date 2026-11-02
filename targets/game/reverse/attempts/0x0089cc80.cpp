@@ -1,150 +1,185 @@
 // ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z
-// partial score=0.2431 date=2026-10-04
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// RVA 0089CC80 (617 B): erase one member from an Apt object's open-addressed
-// member table. Rva00899800TableSet.cpp calls it as
-// BfmeLookup1279::bfmeErase1279 with the member name. The table probes the
-// name's hash slot, then a 16-slot window around it (forward, then back);
-// keys compare by identity or by hash plus case-insensitive text. A removed
-// slot keeps the shared empty string as its tombstone. Names that are not in
-// the table may still be the object's two reserved links, "prototype" (hash
-// 0x699) and "__proto__" (hash 0x6BBD), which live in their own slots.
-// String block and pool follow Rva008AD750RefreshString.cpp.
+// partial score=0.5494 date=2026-11-02
+// cl: /O2 /DNDEBUG /MD
+// Open-address string-map find at retail 0x0089CA10: hashes the key into a
+// bucket, then probes up to 8 slots forward and 8 backward inside the table.
 
-int bfmeCompareVSC(const char *, const char *);
-
-struct BfmeStringData3AF0 { unsigned short m_refCount, m_length, m_capacity, m_unknown06; };
-struct BfmeStringPool3AF0 { void *m_unknown00; void (__cdecl *free)(void *); };
-extern BfmeStringData3AF0 g_bfmeDefaultString1284;
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
-
-class BfmeThing929G { public: void bfmeInit929G(); };
-
-struct BfmeKey1279
+// The shared empty EA string block at 0x012D5298 is one global, EA's
+// EAStringC::StringDataC g_rva012D5298Empty (defined in
+// game/GameEngine/Source/Common/Data/Rva012D5298.cpp).  MSVC mangles the type
+// into a global's name, so the reference must carry that exact spelling; the
+// TU-local BfmeStringData0089CA10 view is only reached through a cast.
+class EAStringC
 {
-    const char *text() const { return (const char *)(m_data + 1); }
-    BfmeStringData3AF0 *m_data;
+public:
+	class StringDataC;
+};
+extern EAStringC::StringDataC g_rva012D5298Empty;
+
+// Retail RVA 0x009F6FA0 jumps through IAT VA 0x0135933C to
+// MSVCR71._strcmpi. Keep a direct call so the import library supplies that thunk.
+extern "C" int __cdecl _strcmpi(const char *left, const char *right);
+
+struct BfmeStringData0089CA10
+{
+	unsigned short m_refCount;
+	unsigned short m_size;
+	unsigned short m_maxSize;
+	unsigned short m_hash;
 };
 
+static inline BfmeStringData0089CA10 *localEmptyString1285()
+{
+	return reinterpret_cast<BfmeStringData0089CA10 *>(&g_rva012D5298Empty);
+}
+
+struct BfmeStringKey0089CA10
+{
+	BfmeStringData0089CA10 *m_data;
+};
+
+struct BfmeStringEntry0089CA10
+{
+	BfmeStringData0089CA10 *m_data;
+	void *m_value;
+};
+
+class BfmeStringMap0089CA10
+{
+public:
+	int m_count;
+	BfmeStringEntry0089CA10 *m_entries;
+
+	BfmeStringEntry0089CA10 *findInMap0089CA10(const BfmeStringKey0089CA10 &key);
+	__forceinline BfmeStringEntry0089CA10 *findInline(const BfmeStringKey0089CA10 &key);
+	unsigned int m_proto08;
+	unsigned int m_prototype0c;
+};
+
+static inline bool matchEntry0089CA10(
+	const BfmeStringEntry0089CA10 *entry, const BfmeStringKey0089CA10 &key)
+{
+	if (entry->m_data == key.m_data)
+		return true;
+	if (entry->m_data->m_hash != key.m_data->m_hash)
+		return false;
+	return _strcmpi(reinterpret_cast<const char *>(entry->m_data) + 8,
+		reinterpret_cast<const char *>(key.m_data) + 8) == 0;
+}
+
+__forceinline BfmeStringEntry0089CA10 *BfmeStringMap0089CA10::findInline(const BfmeStringKey0089CA10 &key)
+{
+	unsigned short keyHash = key.m_data->m_hash;
+	int bucket = (m_count - 1) & keyHash;
+	BfmeStringData0089CA10 *data = m_entries[bucket].m_data;
+	if (data == 0)
+		return 0;
+	if (data != localEmptyString1285()
+		&& matchEntry0089CA10(&m_entries[bucket], key))
+		return &m_entries[bucket];
+	int start = bucket - 8;
+	int high;
+	if (start < 0)
+	{
+		start = 0;
+		high = 16;
+		if (m_count <= 16)
+			high = m_count - 1;
+	}
+	else
+	{
+		high = bucket + 8;
+		if (high > m_count - 1)
+		{
+			high = m_count - 1;
+			start = high - 16;
+			if (start < 0)
+				start = 0;
+		}
+	}
+	int cursor = bucket;
+	int forward = high - bucket;
+	while (forward != 0)
+	{
+		--forward;
+		++cursor;
+		data = m_entries[cursor].m_data;
+		if (data == 0)
+			return 0;
+		if (data != localEmptyString1285()
+			&& matchEntry0089CA10(&m_entries[cursor], key))
+			return &m_entries[cursor];
+	}
+	cursor = bucket;
+	int backward = bucket - start;
+	while (backward != 0)
+	{
+		--cursor;
+		data = m_entries[cursor].m_data;
+		--backward;
+		if (data == 0)
+			return 0;
+		if (data != localEmptyString1285()
+			&& matchEntry0089CA10(&m_entries[cursor], key))
+			return &m_entries[cursor];
+	}
+	return 0;
+}
+
+class BfmeThing929G { public: void bfmeInit929G(); };
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 class Rva0089CC80Object
 {
 public:
-    virtual void retain();
-    virtual void release();
+	virtual void retain();
+	virtual void release();
 };
-
-static inline void releaseTagged(unsigned int tagged)
-{
-    ((Rva0089CC80Object *)(tagged & ~1U))->release();
-}
-
-struct Rva0089CC80Entry
-{
-    BfmeStringData3AF0 *m_key;
-    unsigned int m_value;
-};
-
-static __forceinline bool keysEqual(const BfmeStringData3AF0 *left, const BfmeStringData3AF0 *right)
-{
-    if (left == right)
-        return true;
-    if (left->m_unknown06 != right->m_unknown06)
-        return false;
-    return bfmeCompareVSC((const char *)(left + 1), (const char *)(right + 1)) == 0;
-}
-
+struct BfmeKey1279;
 class BfmeLookup1279
 {
 public:
-    void bfmeErase1279(BfmeKey1279 &key);
-
-    __forceinline Rva0089CC80Entry *find(const BfmeKey1279 &key, unsigned short hash);
-
-    int m_capacity;
-    Rva0089CC80Entry *m_entries;
-    unsigned int m_proto08;
-    unsigned int m_prototype0c;
+	void bfmeErase1279(BfmeKey1279 &key);
 };
 
-__forceinline Rva0089CC80Entry *BfmeLookup1279::find(const BfmeKey1279 &key, unsigned short hash)
+void BfmeLookup1279::bfmeErase1279(BfmeKey1279 &keyArg)
 {
-    if (!m_entries)
-        return 0;
-    int slot = (m_capacity - 1) & hash;
-    BfmeStringData3AF0 *probe = m_entries[slot].m_key;
-    if (!probe)
-        return 0;
-    if (probe != &g_bfmeDefaultString1284 && keysEqual(probe, key.m_data))
-        return &m_entries[slot];
-
-    int capacity = m_capacity;
-    int low = slot - 8;
-    int high;
-    if (low < 0) {
-        high = capacity > 16 ? 16 : capacity - 1;
-        low = 0;
-    } else {
-        high = slot + 8;
-        if (high > capacity - 1) {
-            high = capacity - 1;
-            low = high - 16;
-            if (low < 0)
-                low = 0;
-        }
-    }
-
-    int index = slot;
-    for (int count = high - slot; count; ) {
-        --count;
-        ++index;
-        probe = m_entries[index].m_key;
-        if (!probe)
-            return 0;
-        if (probe != &g_bfmeDefaultString1284 && keysEqual(probe, key.m_data))
-            return &m_entries[index];
-    }
-    index = slot;
-    for (int count = slot - low; count; ) {
-        --index;
-        probe = m_entries[index].m_key;
-        --count;
-        if (!probe)
-            return 0;
-        if (probe != &g_bfmeDefaultString1284 && keysEqual(probe, key.m_data))
-            return &m_entries[index];
-    }
-    return 0;
-}
-
-// ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z
-void BfmeLookup1279::bfmeErase1279(BfmeKey1279 &key)
-{
-    if (key.m_data == &g_bfmeDefaultString1284)
-        return;
-    if (key.m_data->m_unknown06 == 0)
-        ((BfmeThing929G *)&key)->bfmeInit929G();
-    unsigned short hash = key.m_data->m_unknown06;
-    int hashValue = hash;
-    Rva0089CC80Entry *entry = find(key, hash);
-    if (entry) {
-        BfmeStringData3AF0 *old = entry->m_key;
-        if (--old->m_refCount == 0)
-            g_bfmeStringPool1284->free(old);
-        entry->m_key = &g_bfmeDefaultString1284;
-        ++g_bfmeDefaultString1284.m_refCount;
-        releaseTagged(entry->m_value);
-        entry->m_value = 0;
-        return;
-    }
-    if (hashValue == 0x699) {
-        if (bfmeCompareVSC(key.text(), "prototype") == 0 && m_prototype0c) {
-            releaseTagged(m_prototype0c);
-            m_prototype0c = 0;
-        }
-    } else if (hashValue == 0x6bbd) {
-        if (bfmeCompareVSC(key.text(), "__proto__") == 0 && m_proto08) {
-            releaseTagged(m_proto08);
-            m_proto08 = 0;
-        }
-    }
+	BfmeStringKey0089CA10 &key = (BfmeStringKey0089CA10 &)keyArg;
+	if (key.m_data == localEmptyString1285())
+		return;
+	if (key.m_data->m_hash == 0)
+		((BfmeThing929G *)&key)->bfmeInit929G();
+	int id = key.m_data->m_hash;
+	BfmeStringMap0089CA10 *map = (BfmeStringMap0089CA10 *)this;
+	if (map->m_entries)
+	{
+		BfmeStringEntry0089CA10 *entry = map->findInline(key);
+		if (entry)
+		{
+			BfmeStringData0089CA10 *old = entry->m_data;
+			if (--old->m_refCount == 0)
+				g_rva01337A30AllocPair->m_free(old);
+			entry->m_data = localEmptyString1285();
+			++localEmptyString1285()->m_refCount;
+			((Rva0089CC80Object *)((unsigned int)entry->m_value & ~1u))->release();
+			entry->m_value = 0;
+			return;
+		}
+	}
+	if (id == 0x699)
+	{
+		if (_strcmpi(reinterpret_cast<const char *>(key.m_data) + 8, "prototype") == 0 && map->m_prototype0c)
+		{
+			((Rva0089CC80Object *)(map->m_prototype0c & ~1u))->release();
+			map->m_prototype0c = 0;
+		}
+	}
+	else if (id == 0x6bbd)
+	{
+		if (_strcmpi(reinterpret_cast<const char *>(key.m_data) + 8, "__proto__") == 0 && map->m_proto08)
+		{
+			((Rva0089CC80Object *)(map->m_proto08 & ~1u))->release();
+			map->m_proto08 = 0;
+		}
+	}
 }
