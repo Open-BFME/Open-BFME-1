@@ -58,7 +58,7 @@ class GlobalData { public: char m_unmodelled00[0x38]; bool m_useCloudMap; char m
 extern GlobalData *TheWritableGlobalData;
 // The floor buffer's own static shader object (W3DFloorBuffer.cpp keeps its
 // shaders TU-local, as ZH W3DRoadBuffer.cpp does); address-derived name.
-extern ShaderClass g_floorBufferShader012BAB3C;
+extern ShaderClass g_Va012BAB3C;
 int Rva00716970Lookup(int);
 void BoxSetTexture(unsigned,TextureBaseClass *&);
 class BaseHeightMapFloorElement { public: virtual ~BaseHeightMapFloorElement(); };
@@ -177,7 +177,7 @@ void FloorBuffer006F9380::draw(void *unused,bool skipTexture,TextureBaseClass *&
   DX8Wrapper::Set_Material(field0c);
   DX8Wrapper::Set_Index_Buffer(field08,0);
   DX8Wrapper::Set_Vertex_Buffer(field04,0);
-  DX8Wrapper::Set_Shader(g_floorBufferShader012BAB3C);
+  DX8Wrapper::Set_Shader(g_Va012BAB3C);
   DX8Wrapper::Apply_Render_State_Changes();
   W3DShaderManager::ShaderTypes shader=W3DShaderManager::ST_ROAD_BASE;
   GlobalData *globalData=TheWritableGlobalData;
