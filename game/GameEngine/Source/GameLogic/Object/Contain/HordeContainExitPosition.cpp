@@ -1,12 +1,8 @@
 // cl: /DNDEBUG /MD
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 #define THING_TU_MEMBERS void setPosition(const Coord3D *position);
 #include "../../../Common/Thing/thing.h"

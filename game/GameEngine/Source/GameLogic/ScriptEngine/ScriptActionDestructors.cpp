@@ -8,10 +8,8 @@ void __cdecl operator delete(void *);
 
 #include "ascii_string.h"
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class ObjectStatusMask
 {

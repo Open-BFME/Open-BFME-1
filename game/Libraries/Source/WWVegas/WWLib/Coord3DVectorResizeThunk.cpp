@@ -21,12 +21,8 @@
 // would mask to these same bytes otherwise.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Include/Lib/Coord3D.h"
+
 
 namespace _STL
 {

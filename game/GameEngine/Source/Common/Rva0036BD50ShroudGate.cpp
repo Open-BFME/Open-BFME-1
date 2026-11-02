@@ -3,7 +3,8 @@
 // pointer stored four bytes before the module, with position at owner+0x38.
 // The final helper receives the local player's index as a raw 32-bit value.
 
-struct Coord3D { float x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 // This TU's own view of the dword at +0x10C of retail's GameLogic.
 // ?TheGameLogic@@3PAVGameLogic@@A -- retail 0x012F0898, defined once in

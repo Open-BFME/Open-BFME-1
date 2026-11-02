@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-struct Coord3D { float x,y,z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 class Object;
 class PartitionManager;
 class NameKeyGenerator { public: int nameToKey(const char *); };

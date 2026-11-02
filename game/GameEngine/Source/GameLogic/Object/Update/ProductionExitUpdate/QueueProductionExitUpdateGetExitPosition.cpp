@@ -8,12 +8,8 @@
 #include "vector3.h"
 #include "matrix3d.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Object
 {

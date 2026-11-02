@@ -3,10 +3,8 @@
 // Integer slots retain the parsed float bit patterns for the existing dispatch ABI.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Matrix3D;
 

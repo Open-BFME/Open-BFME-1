@@ -1,12 +1,8 @@
 // cl: /Igame/GameEngine/Source/Common
 #include "debug.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Xfer;
 

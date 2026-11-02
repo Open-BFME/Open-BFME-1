@@ -10,12 +10,8 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
+
 
 class Object;
 
