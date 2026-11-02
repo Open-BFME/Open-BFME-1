@@ -30,6 +30,8 @@ public:
     void construct(Thing *, const ModuleData *);
 };
 
+extern void j_0000c315(void);
+
 class DynamicPortalBehaviour
 {
 public:
@@ -43,7 +45,10 @@ private:
 DynamicPortalBehaviour::DynamicPortalBehaviour(Thing *thing, const ModuleData *moduleData)
 {
     unsigned char *bytes = reinterpret_cast<unsigned char *>(this);
-    reinterpret_cast<QueueProductionExitUpdateBase *>(this)->construct(thing, moduleData);
+    // ILT 0x0000C315 (body 0x001F8970) is defined as ?j_0000c315@@YAXXZ.
+    union { void (*raw)(void); void (QueueProductionExitUpdateBase::*member)(Thing *, const ModuleData *); } base;
+    base.raw = j_0000c315;
+    (reinterpret_cast<QueueProductionExitUpdateBase *>(this)->*base.member)(thing, moduleData);
 
     volatile unsigned int *words = reinterpret_cast<volatile unsigned int *>(bytes);
     words[0x1c / 4] = reinterpret_cast<unsigned int>(bfmeVftBfmeBasePB0);

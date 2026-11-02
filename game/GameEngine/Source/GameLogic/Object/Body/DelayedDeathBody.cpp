@@ -26,6 +26,7 @@ struct Rva00212980Data {
  unsigned char gap71[3]; const UpgradeTemplate *upgrade74;
 };
 struct Rva002147E0Owner { void apply(float,DamageInfo*); };
+extern void j_00030bbb(void);
 struct Rva00212980Owner {
  // Unused virtual slot signatures are placeholders, not ABI claims.
  virtual void slot00();virtual void slot04();virtual void slot08();virtual void slot0c();
@@ -61,5 +62,10 @@ void Rva00212980Owner::apply(float amount,DamageInfo *info)
 finish:
  if((checked || started) && (data()->flag68 || transitioned)) amount=0;
  if(started==1 && info && info->flag20==1) amount=-health();
- ((Rva002147E0Owner*)this)->apply(amount,info);
+ {
+  // ILT 0x00030BBB (body 0x002147E0) is defined as ?j_00030bbb@@YAXXZ.
+  union { void (*raw)(void); void (Rva002147E0Owner::*member)(float,DamageInfo*); } call;
+  call.raw = j_00030bbb;
+  (((Rva002147E0Owner*)this)->*call.member)(amount,info);
+ }
 }
