@@ -1135,25 +1135,11 @@ ParticleSystem::~ParticleSystem()
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?setMaster@ParticleSystem@@QAEXPAV1@@Z present-unmatched
-void ParticleSystem::setMaster( ParticleSystem *master )
-{
-
-	m_masterSystem = master;
-	m_masterSystemID = master ? master->getSystemID() : INVALID_PARTICLE_SYSTEM_ID;
-
-}  // end set Master
+// ?setMaster@ParticleSystem@@QAEXPAV1@@Z: retail body is in game/GameEngine/Source/GameClient/System/ParticleSystemSetMaster.cpp
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?setSlave@ParticleSystem@@QAEXPAV1@@Z present-unmatched
-void ParticleSystem::setSlave( ParticleSystem *slave )
-{
-
-	m_slaveSystem = slave;
-	m_slaveSystemID = slave ? slave->getSystemID() : INVALID_PARTICLE_SYSTEM_ID;
-
-}  // end setSlave
+// ?setSlave@ParticleSystem@@QAEXPAV1@@Z: retail body is in game/GameEngine/Source/GameClient/System/ParticleSystemSetSlave.cpp
 
 // ------------------------------------------------------------------------------------------------
 /** Stop a particle system from emitting */

@@ -2207,14 +2207,7 @@ void Team::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* con
 // ?countObjects@Team@@QAEHV?$BitFlags@$0HE@@@0@Z: retail body is in Team_countObjects.cpp
 
 // ------------------------------------------------------------------------
-// ?healAllObjects@Team@@QAEXXZ present-unmatched
-void Team::healAllObjects(void)
-{
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) 
-	{
-		iter.cur()->healCompletely();
-	}
-}
+// ?healAllObjects@Team@@QAEXXZ: retail body is in game/GameEngine/Source/Common/RTS/TeamHealAllObjects.cpp
 
 // ------------------------------------------------------------------------
 // ?iterateObjects@Team@@QAEXP6AXPAVObject@@PAX@Z1@Z present-unmatched

@@ -2051,53 +2051,7 @@ AIMoveToState::AIMoveToState(StateMachine *machine) : m_isMoveTo(true), AIIntern
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp
-// ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIMoveToState::onEnter()
-{
-
-	//Kris: 7/01/03 (Temporary debug hook for units not being able to leave maps)
-	if( getMachineOwner()->testStatus( OBJECT_STATUS_RIDER8 ) )
-	{
-		int blah = 0;
-		blah++;
-	}
-	setAdjustsDestination(true);
-
-	//If we have a goal object and are trying to ignore it as an obstacle...
-	//This is used in the case of units trying to get really close.
-	AIUpdateInterface *ai = getMachineOwner()->getAI();
-	if( getMachineGoalObject() ) 
-	{
-		if( ai && getMachineGoalObject()->getID() == ai->getIgnoredObstacleID() ) 
-		{
-			setAdjustsDestination( false );
-		}
-	}
-
-	// if we have a goal object, move to it, otherwise move to goal position
-	if (getMachineGoalObject())	{
-		m_goalPosition = *getMachineGoalObject()->getPosition();
-		if (getMachineOwner()->isKindOf(KINDOF_PROJECTILE)) {
-			Real halfHeight = getMachineGoalObject()->getGeometryInfo().getMaxHeightAbovePosition()/2.0f;
-			m_goalPosition.z += halfHeight;
-			if (getMachineGoalObject()->getPosition()->z < m_goalPosition.z) {
-				m_goalPosition.z += halfHeight;
-			}
-		}
-	} else
-		m_goalPosition = *getMachineGoalPosition();
-
-	StateReturnType ret = AIInternalMoveToState::onEnter();
-	if (getMachineOwner()->getFormationID() != NO_FORMATION_ID) {
-		AIGroup *group = ai->getGroup();
-		if (group) {
-			Real speed = group->getSpeed();
-			ai->setDesiredSpeed(speed);
-		}
-	}
-	return ret;
-}
+// ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ: retail body is in game/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp
 
 //----------------------------------------------------------------------------------------------------------
 void AIMoveToState::onExit( StateExitType status )
@@ -6399,24 +6353,7 @@ StateReturnType AIAttackFireWeaponState::update()
 /** 
 	Stop firing.
 	*/
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AIAttackFireWeaponState_onExit.cpp
-// ?onExit@AIAttackFireWeaponState@@UAEXW4StateExitType@@@Z present-unmatched
-void AIAttackFireWeaponState::onExit( StateExitType status )
-{
-	// contained by AIAttackState, so no separate timer
-	Object *obj = getMachineOwner();
-	obj->clearStatus( MAKE_OBJECT_STATUS_MASK2( OBJECT_STATUS_IS_FIRING_WEAPON, OBJECT_STATUS_IGNORING_STEALTH ) );
-
-	// this can occur if we start a preattack (eg, bayonet)
-	// and the target moves out range before we can actually "fire"...
-	// leaving us thinking we're still "pre attacking". cancel this state
-	// to avoid confusion. (srj)
-	Weapon* weapon = obj->getCurrentWeapon();
-	if (weapon && weapon->getStatus() == PRE_ATTACK)
-	{
-		weapon->setPreAttackFinishedFrame(0);
-	}
-}
+// ?onExit@AIAttackFireWeaponState@@UAEXW4StateExitType@@@Z: retail body is in game/GameEngine/Source/GameLogic/AI/AIAttackFireWeaponState_onExit.cpp
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
