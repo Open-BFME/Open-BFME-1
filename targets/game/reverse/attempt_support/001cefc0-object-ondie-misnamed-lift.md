@@ -158,3 +158,15 @@ read (798 B, /O1 /G7 /arch:SSE; check-inside setStatusBit/clearStatusBit
 over raw m_bits[4]; Team canonical header 8c0120e29c). No transferable
 lever for these residues: BFME 1's body is 1493 B with a different flag
 layout, and the check-inside-helpers family was already tried inert.
+
+## Session a1 s543 (2026-11-02): 0.983 -> 0.986
+- `unsigned myID = m_id; Bool selfInflicted = (damageInfo->in.m_sourceID == myID);`
+  fixes the opening compare (`cmp edx,eax` with both in registers) AND residue 2,
+  the die-module loop (`lea ecx,[eax+0xC]; mov eax,[ecx]; call [eax+18h]`): first
+  diff moves from +0x2D to +0x77 (the EBP constant). Spelling the loop through a
+  `BehaviorModuleInterface *` or `BehaviorModule *` local alone was inert; the
+  reversed compare without the local was worse (memory operand).
+- Residue 1 is now the first difference: ours `mov ebp,0x20000000` at +0x77.
+  Retail keeps EBP for the inlined spawner lookup result (`mov ebp,[eax+8]` at
+  +0x329, then `[ebp+0x1F0]`, `[ebp+0x1FC]`) and the bit-87 clear temp. Inert:
+  int vs unsigned m_status94, signed ModelConditionFlags words/masks, `L` suffix.
