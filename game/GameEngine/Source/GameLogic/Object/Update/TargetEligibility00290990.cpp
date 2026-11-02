@@ -1,6 +1,7 @@
 // Retail 0x00290990 target eligibility callback. Owning filter identity unproved.
 // Object/Thing ABI offsets witnessed in retail; unknown members remain address-derived.
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 class Overridable { public: const Overridable* getFinalOverride() const; };
 enum KindOfType { K2=2,K47=47,K53=53,K108=108 };
 enum Relationship { ENEMY=0 };
