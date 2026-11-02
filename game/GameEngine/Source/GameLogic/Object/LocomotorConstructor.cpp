@@ -89,9 +89,10 @@ enum LocoFlag
 
 class Locomotor : public Snapshot
 {
+public:
+	virtual ~Locomotor();	// public: ILT oracle confirms ??1Locomotor@@UAE@XZ
 protected:
 	Locomotor(const LocomotorTemplate *tmpl);
-	virtual ~Locomotor();
 	virtual void crc(Xfer *xfer);
 	virtual void xfer(Xfer *xfer);
 	virtual void loadPostProcess();
@@ -162,4 +163,12 @@ Locomotor::Locomotor(const LocomotorTemplate *tmpl) : m_transform(true), m_field
 
 	setFlag(IS_CLOSE_ENOUGH_DIST_3D, m_template->m_isCloseEnoughDist3D);
 	setFlag(OFFSET_INCREASING, GetGameLogicRandomValue(0, 1, __FILE__, __LINE__));
+}
+
+// Retail 0x001B4680 (7 bytes): the constructor's vtable 0x0109DEF0 slot 0 is
+// ILT 0x0003AFDF -> the scalar deleting destructor 0x001B63B0 (emitted here
+// from this vtable), which calls this body through ILT 0x000474EC. Nothing to
+// destroy but the Snapshot base, so it only restores Snapshot's vptr.
+Locomotor::~Locomotor()
+{
 }

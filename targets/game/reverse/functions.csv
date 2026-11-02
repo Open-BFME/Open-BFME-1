@@ -7680,7 +7680,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??1LockClass@CriticalSectionClass@@QAE@XZ,,0x009DB4D0,15,game/Libraries/Source/WWVegas/WWLib/mutex.cpp,matched,MASM converted to clean C++
 ??1LockClass@MutexClass@@QAE@XZ,,0x009DB400,22,game/Libraries/Source/WWVegas/WWLib/mutex.cpp,matched,icf-owner=??1BFMEAutoLockRef@@QAE@XZ
 ??1LockWeaponCreate@@MAE@XZ,,0x0024FC70,25,game/GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp,matched,adjacent LockWeaponCreate literal-name and pool methods plus all three vtables identify this destructor
-??1Locomotor@@MAE@XZ,,0x001B0DB0,79,game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp,matched,icf-alias=??1ExperienceTracker@@MAE@XZ;object-symbol=??1ExperienceTracker@@MAE@XZ
 ??1LocomotorSetUpgrade@@MAE@XZ,,0x002D6110,32,game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeDestructor.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/002d6110-locomotorsetupgrade-dtor.md;empty protected destructor inlines UpgradeModule teardown and tail-jumps to ObjectModule dtor ILT 0x00047C53; deleting wrapper reaches it via ILT 0x00020BE4; ilt_oracle confirms MAE;model=claude-opus-5-5;host=GreatFaram
 ??1LocomotorStore@@UAE@XZ,,0x005D2C10,139,game/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,structural: true body via ctor vtable; map+delete ICF ImageCollection; pin Rb_tree dtor 0x5D2900
 ??1LookAtTranslator@@UAE@XZ,,0x005A63A0,31,game/GameEngine/Source/GameClient/MessageStream/LookAtXlat.cpp,matched,
@@ -12376,7 +12375,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??_GLockClass@CriticalSectionClass@@QAEPAXI@Z,,0x0063AB00,30,game/Libraries/Source/WWVegas/WWLib/LockClassCriticalSectionDeletingDestructor.cpp,matched,authentic scalar-deleting destructor; matched CriticalSectionClass::LockClass constructor 0x009DB4B0 and complete destructor 0x009DB4D0 establish nested class identity
 ??_GLockWeaponCreate@@MAEPAXI@Z,,0x0024FD70,30,game/GameEngine/Source/GameLogic/Object/Create/LockWeaponCreate.cpp,matched,primary LockWeaponCreate vtable slot zero reaches this deleting destructor
 ??_GLockWeaponCreateModuleData@@UAEPAXI@Z,,0x0024FE20,30,game/GameEngine/Source/GameLogic/Object/Create/LockWeaponCreateModuleDataDeletingDestructor.cpp,matched,authentic protected scalar-deleting destructor; exact constructor 0x0024FE00 installs vtable 0x00CB1950 whose slot zero routes through ILT 0x000220A7; complete destructor ILT 0x00031DEF reaches tail body 0x0024FE50;ilt-verified=T1-access(efp=5.54e-03)
-??_GLocomotor@@MAEPAXI@Z,,0x001B0E60,30,game/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,icf-owner=??_GUpgrade@@MAEPAXI@Z
 ??_GLocomotorSetUpgrade@@MAEPAXI@Z,,0x002D6260,30,game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeDeletingDestructor.cpp,matched,authentic protected scalar-deleting destructor; vtable 0x00CCD0BC slots name LocomotorSetUpgrade (?getClassMemoryPool@LocomotorSetUpgrade@@CAPAVMemoryPool@@XZ); slot zero routes through ILT 0x0001E975; complete destructor ILT 0x00020BE4 reaches tail body 0x002D6110
 ??_GLocomotorStore@@UAEPAXI@Z,,0x005D3170,30,game/GameEngine/Source/GameLogic/Object/Locomotor.cpp,matched,
 ??_GLocomotorTemplate@@MAEPAXI@Z,,0x001B60B0,30,game/GameEngine/Source/GameLogic/Object/LocomotorTemplateDeletingDestructor.cpp,matched,authentic protected scalar-deleting destructor; exact constructor 0x001B52C0 installs vtable 0x00C9DE9C whose slot zero routes through ILT 0x0000F9AC; complete destructor ILT 0x0003296B reaches tail body 0x001B5550
@@ -124405,7 +124403,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?m@Gen_001b2ad0@@QAEHXZ,,0x001B2AD0,3,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=ret-zero;ghidra=FUN_005b2ad0
 ?m@Gen_001b3e30@@QAEXH@Z,,0x001B3E30,10,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=setter-d8;ghidra=FUN_005b3e30
 ?m@Gen_001b3e50@@QAEHXZ,,0x001B3E50,4,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=getter-d8;ghidra=FUN_005b3e50
-?m@Gen_001b4680@@QAEXXZ,,0x001B4680,7,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_005b4680
 ?m@Gen_001b4690@@QAEXXZ,,0x001B4690,1,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=ret-void;ghidra=FUN_005b4690
 ?m@Gen_001bdc10@@QAEXXZ,,0x001BDC10,7,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_005bdc10
 ?m@Gen_001bdc30@@QAEXXZ,,0x001BDC30,7,game/gen_small/fun_001.cpp,matched,gen-shim;skeleton=store-imm-0;ghidra=FUN_005bdc30
@@ -173462,3 +173459,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ??0Rva000E17F0@@QAE@ABH@Z,,0x000E17F0,15,game/GameEngine/Source/Common/UnclaimedZeroTripleConstructors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00067020-zero-triple-ctors.md;model=claude-opus-5-5;host=app
 ??0Rva000E50F0@@QAE@ABH@Z,,0x000E50F0,15,game/GameEngine/Source/Common/UnclaimedZeroTripleConstructors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00067020-zero-triple-ctors.md;model=claude-opus-5-5;host=app
 ??0Rva000E5110@@QAE@ABH@Z,,0x000E5110,15,game/GameEngine/Source/Common/UnclaimedZeroTripleConstructors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00067020-zero-triple-ctors.md;model=claude-opus-5-5;host=app
+??1Locomotor@@UAE@XZ,,0x001B4680,7,game/GameEngine/Source/GameLogic/Object/LocomotorConstructor.cpp,matched,model=claude-opus-5-5;host=app
