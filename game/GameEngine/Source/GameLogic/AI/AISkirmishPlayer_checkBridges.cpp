@@ -56,6 +56,8 @@ public:
 // name it through a member pointer.
 extern "C" void __identifier("?getLayerForDestination@TerrainLogic@@QAE?AW4PathfindLayerEnum@@PAVObject@@PBUCoord3D@@@Z")(void);
 
+// Pathfinder::worldToCell (0x003D7EC0) is likewise defined struct-keyed.
+extern "C" void __identifier("?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z")(void);
 extern TerrainLogic *TheTerrainLogic;
 
 class LocomotorSet
@@ -168,9 +170,11 @@ int Pathfinder::findBrokenBridge(const void *locomotorSetPointer, const Coord3D 
     PathfindLayerEnum destinationLayer = (TheTerrainLogic->*layerCall.member)(0, to);
     PathfindLayerEnum fromLayer = (TheTerrainLogic->*layerCall.member)(0, from);
     ICoord2D cell;
-    worldToCell(from, &cell);
+    union { void (*raw)(void); bool (Pathfinder::*member)(const Coord3D *, ICoord2D *); } cellCall;
+    cellCall.raw = __identifier("?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z");
+    (this->*cellCall.member)(from, &cell);
     PathfindCell *parentCell = getCell(fromLayer, cell.x, cell.y);
-    worldToCell(to, &cell);
+    (this->*cellCall.member)(to, &cell);
     PathfindCell *goalCell = getCell(destinationLayer, cell.x, cell.y);
     PathfindMovementProfile profile(locomotorSet.getValidSurfaces());
     int zone1 = m_zoneManager.getEffectiveZone(profile, parentCell->getZone());

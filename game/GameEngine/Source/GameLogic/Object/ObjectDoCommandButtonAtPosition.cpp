@@ -41,6 +41,9 @@ public:
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 // BFME decorates Coord3D as a class: retail's ILT confirms PBVCoord3D for
+// AICommandInterface::aiAttackMoveToPosition (0x00153AF0) is defined struct-keyed; the
+// call below names it through a member pointer.
+extern "C" void __identifier("?aiAttackMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z")(void);
 // aiAttackMoveToPosition and doCommandButtonAtPosition.
 // class-gate: allow Coord3D canonical header is struct-keyed; retail ILT proves the class-keyed mangling
 class Coord3D
@@ -166,8 +169,12 @@ void Object::doCommandButtonAtPosition(const CommandButton *commandButton, const
 
 		case 9:
 			if (ai)
-				ai->m_commandInterface.aiAttackMoveToPosition(pos, commandButton->m_maxShotsToFire,
+			{
+				union { void (*raw)(void); void (AICommandInterface::*member)(const Coord3D *, int, CommandSourceType); } call;
+				call.raw = __identifier("?aiAttackMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z");
+				(ai->m_commandInterface.*call.member)(pos, commandButton->m_maxShotsToFire,
 					source);
+			}
 			return;
 
 		case 13:

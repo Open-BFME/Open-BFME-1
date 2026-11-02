@@ -211,6 +211,10 @@ public:
 	Object *m_object;
 };
 
+// FXList::doFXPos (0x004280D0) is defined struct-keyed; the call names it through a
+// member pointer.
+extern "C" void __identifier("?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z")(void);
+
 void TaintSpecialPower::after(const Coord3D *loc)
 {
 	TaintSpecialPowerModuleData *data = m_moduleData;
@@ -253,8 +257,10 @@ void TaintSpecialPower::after(const Coord3D *loc)
 	((Rva003FD060TerrainLogic *)TheTerrainLogic)->refresh001A3190(loc, radius + 50.0f, 1);
 
 	FXList *fx = data->m_taintFX;
+	union { void (*raw)(void); void (FXList::*member)(const Coord3D *, const Matrix3D *, Real, const Coord3D *) const; } fxCall;
+	fxCall.raw = __identifier("?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z");
 	if (fx != 0 && !fx->bfmeIsBlocked())
-		fx->doFXPos(loc, 0, 0.0f, 0);
+		(fx->*fxCall.member)(loc, 0, 0.0f, 0);
 
 	BfmeThingFB *ocl = data->m_taintOCL;
 	if (ocl != 0)
