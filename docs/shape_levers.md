@@ -3367,3 +3367,20 @@ virtual call (a local caches it in a callee-saved register retail does not
 use), and assign a `Vector2`'s X and Y one statement each before `Length()`
 (the two-argument constructor interleaves the two `fabs` sums). Measured on
 this body only.
+
+## A converted temporary, not the local, binds a `T const &` argument (2026-11-02)
+
+0x00693B90 (audio cache lookup, bank `targets/game/reverse/attempts/0x00693b90.cpp`,
+MSVC 7.1 /O2 /Ob2 /EHsc, STLport). Retail keeps the freshly constructed
+record in EDI across `list.push_back(...)` while passing push_back the address
+of a stack slot (the dead `name` parameter home). Writing
+`Gen *file = new Record(...); ...; list.push_back(file);` made `file`
+address-taken: every later use reloaded it from memory, the record never got
+a callee-saved register, and the whole function's register assignment and
+frame (0x1C vs 0x18) shifted. Typing the local as the record class
+(`Record *record = new Record(...)`) and passing `(Gen *)record` everywhere —
+so push_back's reference binds a converted temporary — reproduced retail's
+registers, frame and the first 0x8E bytes (shape 0.92 -> 0.977). Measured on
+this body only; the remaining residue (a rotated list scan, the temporary's
+store placed before the handle constructor in retail) is in
+`targets/game/reverse/attempt_support/0x00693b90-cache-lookup.md`.
