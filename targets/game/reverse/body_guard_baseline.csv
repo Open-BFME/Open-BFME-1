@@ -193,7 +193,6 @@ dir32,0x010C8E30,??_7Rva010C8E90Base@@6B@,"retail 0x010C8E30 is already recorded
 dir32,0x010C8E90,??_7SupplyTruckAIUpdate@@6BRva010C8E90Base@@@,"retail 0x010C8E90 is already recorded as ??_7SupplyTruckAIUpdate@@6B@; reference that name, not a new one"
 dir32,0x010C8FE8,??_7SupplyTruckAIUpdate@@6BAnimalAIUpdateBase@@@,"retail 0x010C8FE8 is already recorded as ??_7SupplyTruckAIUpdate@@6BST_RootBase@@@; reference that name, not a new one"
 dir32,0x010C9280,??_7SupplyTruckStateMachine@@6B@,"retail 0x010C9280 is already recorded as ??_7Rva002C59E0TailDtor@@6B@; reference that name, not a new one"
-dir32,0x010C9390,??_7RegroupingState@@6B@,"retail 0x010C9390 is already recorded as ??_7Rva002C6170State@@6B@; reference that name, not a new one"
 dir32,0x010C93F8,??_7DockingState@@6B@,"retail 0x010C93F8 is already recorded as ??_7Rva002C61F0State@@6B@; reference that name, not a new one"
 dir32,0x010C9460,??_7HarvestingState@@6B@,"retail 0x010C9460 is already recorded as ??_7Rva002C6260State@@6B@; reference that name, not a new one"
 dir32,0x010C94C8,??_7SupplyTruckBusyState@@6B@,"retail 0x010C94C8 is already recorded as ??_7Rva002C62D0State@@6B@; reference that name, not a new one"

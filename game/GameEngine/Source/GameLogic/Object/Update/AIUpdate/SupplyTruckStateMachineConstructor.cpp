@@ -62,9 +62,15 @@ public:
     SupplyTruckWantsToPickUpOrDeliverBoxesState(StateMachine *m) : State(m, AsciiString("SupplyTruckWantsToPickUpOrDeliverBoxesState")) {}
     virtual ~SupplyTruckWantsToPickUpOrDeliverBoxesState();
 };
-class RegroupingState : public State {
+// 0x010C9390 is the vftable the dir32 record owns as
+// ??_7Rva002C6170State@@6B@; this class's own vftable was the unrecorded name
+// the dir32 gate debt at 0x010C9390 retires.  novtable suppresses it; the
+// explicit store of the recorded vtable in the inline ctor is the vptr stamp.
+// retired debt: ??_7RegroupingState@@6B@ replaced with ??_7Rva002C6170State@@6B@
+extern "C" void *__identifier("??_7Rva002C6170State@@6B@")[];
+class __declspec(novtable) RegroupingState : public State {
 public:
-    RegroupingState(StateMachine *m) : State(m, AsciiString("RegroupingState")) {}
+    RegroupingState(StateMachine *m) : State(m, AsciiString("RegroupingState")) { *(volatile void **)this = (void *)__identifier("??_7Rva002C6170State@@6B@"); }
     virtual ~RegroupingState();
 };
 class DockingState : public State {
