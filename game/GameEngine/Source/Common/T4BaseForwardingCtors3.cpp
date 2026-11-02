@@ -146,7 +146,28 @@ T4_SECOND_BASE( 0110FA14 )
 T4_SECOND_BASE( 0110F9E8 )
 
 T4_FORWARDING_CTOR_3( 005EEA10, 01110898, 0110F978 )
-T4_FORWARDING_CTOR_3( 005EEB70, 01110898, 0110F978 )
+// 0x01113040 is the vftable the dir32 record owns as
+// ??_7T1BaseForward_005EEBC0@@6BBfmeHolderCU@@@ (+2 more); this class's own
+// primary vftable was the unrecorded name the dir32 gate debt at 0x01113040
+// retires.  novtable suppresses it; the 60-byte body is unchanged, the
+// explicit store of the recorded vtable being the primary vptr stamp.
+// retired debt: ??_7T4Derived_005EEB70@@6BBfmeHolderCU@@@ replaced with ??_7T1BaseForward_005EEBC0@@6BBfmeHolderCU@@@
+extern "C" void *__identifier("??_7T1BaseForward_005EEBC0@@6BBfmeHolderCU@@@")[];
+
+class __declspec(novtable) T4Derived_005EEB70
+	: public BfmeHolderCU, public T4A2_01110898, public T4A2_0110F978
+{
+public:
+	T4Derived_005EEB70( void *a, void *b );
+};
+
+T4Derived_005EEB70::T4Derived_005EEB70( void *a, void *b )
+	: BfmeHolderCU( reinterpret_cast<BfmeListCU **>( a ), b )
+{
+	*(volatile void **)this = (void *)__identifier("??_7T1BaseForward_005EEBC0@@6BBfmeHolderCU@@@");
+	*(volatile void **)((char *)this + 0x14) = (void *)__identifier("??_7T4Derived_005EEB70@@6BT4A2_01110898@@@");
+	*(volatile void **)((char *)this + 0x18) = (void *)__identifier("??_7T4Derived_005EEB70@@6BT4A2_0110F978@@@");
+}
 T4_FORWARDING_CTOR_3( 005EFCC0, 0111081C, 01073760 )
 T4_FORWARDING_CTOR_3( 005EFD10, 0111081C, 01073760 )
 T4_FORWARDING_CTOR_3( 005FC870, 01110830, 0107375C )

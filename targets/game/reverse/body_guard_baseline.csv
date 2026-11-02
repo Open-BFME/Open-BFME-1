@@ -260,7 +260,6 @@ dir32,0x01111F18,??_7GenY005E5D90@@6BPolymorphicVptrBase01073760@@@,"retail 0x01
 dir32,0x01111F1C,??_7GenY005E5D90@@6BBaseY005E5D90Primary@@@,"retail 0x01111F1C is already recorded as ??_7GenY005E5D90@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x011122AC,?g_vtbl_011122AC@@3PAPAXA,"retail 0x011122AC is already recorded as ??_7GenX005ED630@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01112EA0,??_7T4Derived_005F2C60@@6BBfmeHolderCU@@@,"retail 0x01112EA0 is already recorded as ??_7Rva005EB7B0@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
-dir32,0x01113040,??_7T4Derived_005EEB70@@6BBfmeHolderCU@@@,"retail 0x01113040 is already recorded as ??_7T1BaseForward_005EEBC0@@6BBfmeHolderCU@@@ (+2 more); reference that name, not a new one"
 dir32,0x0111305C,??_7T4Derived_005EEA10@@6BBfmeHolderCU@@@,"retail 0x0111305C is already recorded as ??_7Rva005EC230@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
 dir32,0x011130AC,??_7T4Derived_005EFD10@@6BBfmeHolderCU@@@,"retail 0x011130AC is already recorded as ??_7T4Derived_005EFD10@@6BT1A1_005DD290@@@; reference that name, not a new one"
 dir32,0x011130CC,??_7T4Derived_005EFCC0@@6BBfmeHolderCU@@@,"retail 0x011130CC is already recorded as ??_7Rva005EC4C0@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
