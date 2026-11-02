@@ -713,6 +713,21 @@ struct Rva0023B5B0Value
 
 typedef _STL::pair<const int, Rva0023B5B0Value> Rva0023B5B0Pair;
 
+// The value copy is reached through ILT 0x00007ED7 (to 0x00235CD0); the
+// _Construct spelling for this placeholder pair is contradicted by retail's
+// ILT order, so the call names the ILT itself.
+void j_00007ed7( void *destination, const void *source );
+
+namespace _STL
+{
+template <>
+__forceinline void _Construct( Rva0023B5B0Pair *p, const Rva0023B5B0Pair &value )
+{
+	j_00007ed7( p, &value );
+}
+}
+
+
 typedef _STL::_Rb_tree<int, Rva0023B5B0Pair, _STL::_Select1st<Rva0023B5B0Pair>,
 	_STL::less<int>, _STL::allocator<Rva0023B5B0Pair> > Rva0023B5B0Tree;
 

@@ -221,7 +221,7 @@ name,address,notes
 ??$_Construct@U?$pair@$$CBHURva00224140Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva00224140Value@@@0@ABU10@@Z,0x000402E6,Open-BFME5 the value _Construct the tree _M_insert at 0x00224060 reaches
 ??$_Construct@U?$pair@$$CBHURva002253A0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva002253A0Value@@@0@ABU10@@Z,0x0003DAAF,Open-BFME5 the value _Construct the tree _M_insert at 0x00224200 reaches
 ??$_Construct@U?$pair@$$CBHURva00225540Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva00225540Value@@@0@ABU10@@Z,0x0000701D,Open-BFME5 the value _Construct the tree _M_insert at 0x00225460 reaches
-??$_Construct@U?$pair@$$CBHURva0023B5B0Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva0023B5B0Value@@@0@ABU10@@Z,0x00007ED7,Open-BFME5 the value _Construct the tree _M_insert at 0x0023B4D0 reaches
+?j_00007ed7@@YAXPAXPBX@Z,0x00007ED7,self-addressed caller view of the ILT to 0x00235CD0 (value copy the 0x0023B4D0 _M_insert reaches); replaces the ilt_oracle-contradicted _Construct<pair<const int Rva0023B5B0Value>> pin;model=claude-opus-5-5
 ??$_Construct@U?$pair@$$CBHURva00372570Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva00372570Value@@@0@ABU10@@Z,0x00031F1B,Open-BFME5 the value _Construct the tree _M_insert at 0x00370BF0 reaches
 ??$_Construct@U?$pair@$$CBHURva00375F30Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva00375F30Value@@@0@ABU10@@Z,0x0001F00A,Open-BFME5 the value _Construct the tree _M_insert at 0x003754B0 reaches
 ??$_Construct@U?$pair@$$CBHURva003FFA70Value@@@_STL@@U12@@_STL@@YAXPAU?$pair@$$CBHURva003FFA70Value@@@0@ABU10@@Z,0x0001A89D,Open-BFME5 the value _Construct the tree _M_insert at 0x003FF990 reaches
