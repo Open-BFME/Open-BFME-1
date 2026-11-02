@@ -24,11 +24,17 @@ static __forceinline Rva00894120Item *Rva00894120Next(
     return item + 1;
 }
 
+// The helper body 0x00893F10 is defined as ?Rva00893F10@@YAXXZ (a MASM dump); the
+// call names it through a member pointer.
+void Rva00893F10(void);
+
 // ?insert@Rva00894120Vector@@QAEXPAURva00894120Item@@@Z
 void Rva00894120Vector::insert(Rva00894120Item *source)
 {
     Rva00894120Item *end = &m_items[m_count];
     Rva00894120Item *next = source + 1;
     Rva00894120Item *begin = source;
-    helper(&begin, &next, &end);
+    union { void (*raw)(void); void (Rva00894120Vector::*member)(void *, void *, void *); } call;
+    call.raw = Rva00893F10;
+    (this->*call.member)(&begin, &next, &end);
 }
