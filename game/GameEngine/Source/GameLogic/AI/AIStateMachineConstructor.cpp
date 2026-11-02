@@ -28,6 +28,7 @@ class AIInternalMoveToState : public State
 {
   public:
     AIInternalMoveToState(StateMachine *, AsciiString);
+    virtual ~AIInternalMoveToState();	// matched 0x00172430
     char m_24[0x2c];
 };
 #include <vector>
