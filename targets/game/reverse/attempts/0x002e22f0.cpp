@@ -1,5 +1,5 @@
 // ?xfer@LuaSpyData@@UAEXPAVXfer@@@Z
-// partial score=0.53 date=2026-09-24
+// partial score=0.5251 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
 // Constructor 0x0027EE90 installs vtable 0x010BA790.
