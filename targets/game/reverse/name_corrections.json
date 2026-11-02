@@ -21791,5 +21791,15 @@
     "after_sha256": "1515b2469d6d8349102fe417e874aa933fa57e397bb436db39c5aa850f7e02d2",
     "evidence": "targets/game/reverse/attempt_support/00529be0-exact-pin-retire-20261102.md",
     "reason": "ilt_oracle contradicts ?shouldRefresh@SkirmishScreenState@@QAE_NXZ for 0x00529BE0 (p_false 4.57e-4); the landed body keeps an address-derived method name."
-  }
+  },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/PendingSurfaceStructAssignmentBFME.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/PendingSurfaceStructAssignmentBFME.cpp",
+  "old_name": "PendingSurfaceStruct",
+  "new_name": "Rva0093E8E0PendingSurface",
+  "before_sha256": "4ee31e3b42cb753069b9d836612a74e8f4a0d75dcb3047c18f14b3d89d08eb78",
+  "after_sha256": "c765d5b50a45190bef6315c95ded755f3b82a328781e16cd757cddb9491dc279",
+  "evidence": "targets/game/reverse/identity_evidence/0093e8e0-pending-surface-assign-rehome.md",
+  "reason": "PendingSurfaceStruct::operator= is the matched 47-byte row 0x0036DAF0; retail (no ICF) cannot give the different unreferenced 71-byte 0x0093E8E0 body the same identity, so it keeps an address-derived struct name"
+ }
 ]

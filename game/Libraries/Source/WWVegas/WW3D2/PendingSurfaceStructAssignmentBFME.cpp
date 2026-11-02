@@ -62,23 +62,23 @@ private:
 	int growth_step;
 };
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
-class Render2DSentenceClass
+// Retail 0x0093E8E0 (71 bytes) has the shape of ZH's
+// Render2DSentenceClass::PendingSurfaceStruct::operator= (upstream layout:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h)
+// over the BFME renderer vector, but the matched 47-byte
+// PendingSurfaceStructAssignThunk.cpp row at 0x0036DAF0 already carries that
+// name and nothing in retail calls this body, so it keeps an address-derived
+// name instead of emitting a second definition of the same symbol.
+struct Rva0093E8E0PendingSurface
 {
-public:
-	// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2dsentence.h
-	struct PendingSurfaceStruct
-	{
-		SurfaceClass *surface;
-		BfmeRendererVector renderers;
+	SurfaceClass *surface;
+	BfmeRendererVector renderers;
 
-		PendingSurfaceStruct &operator=(const PendingSurfaceStruct &that);
-	};
+	Rva0093E8E0PendingSurface &operator=(const Rva0093E8E0PendingSurface &that);
 };
 
-Render2DSentenceClass::PendingSurfaceStruct &
-Render2DSentenceClass::PendingSurfaceStruct::operator=(
-	const Render2DSentenceClass::PendingSurfaceStruct &that)
+Rva0093E8E0PendingSurface &Rva0093E8E0PendingSurface::operator=(
+	const Rva0093E8E0PendingSurface &that)
 {
 	SurfaceClass *incoming = that.surface;
 	if (incoming != 0)
