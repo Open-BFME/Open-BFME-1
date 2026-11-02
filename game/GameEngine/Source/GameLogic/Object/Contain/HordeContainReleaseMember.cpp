@@ -24,10 +24,10 @@ typedef unsigned int UnsignedInt;
 class Object
 {
 public:
-	int bfmeGetId( void ) const { return m_bfmeId; }
+	int bfmeGetId( void ) const { return m_id; }
 
 	char m_bfmeHead[ 0x74 ];
-	int m_bfmeId;										///< retail this+0x74
+	int m_id;										///< retail this+0x74
 	char m_bfmeTail[ 0x224 - 0x78 ];
 	UnsignedInt m_bfmeUpgradesCompleted[ 6 ];			///< retail this+0x224
 };

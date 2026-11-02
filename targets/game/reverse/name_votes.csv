@@ -5976,3 +5976,4 @@ game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte0
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte04cc,9559b103c4f70983b35c542c,glm,20261024145050-e87cf0,2026-10-24
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte04cd,ec9da13d52af0b29e15bc2a9,glm,20261024145050-e87cf0,2026-10-24
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_dword04d0,d8aa60627257345b3e101e18,glm,20261024145050-e87cf0,2026-10-24
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|member||m_bfmeId,a4e0ea5e4ad8161637ae53bc,claude-opus,20261102205527-1628b7,2026-11-02

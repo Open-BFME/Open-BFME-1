@@ -920,3 +920,5 @@ game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte0
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte04cc,m_canPathThroughGates,glm+gpt-6.1-sol,applied,2026-10-24
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte04cd,m_shouldClearShotsOnIdle,glm+gpt-6.1-sol,applied,2026-10-24
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_dword04d0,m_heroSortOrder,glm+gpt-6.1-sol,applied,2026-10-24
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|member||m_bfmeId,m_id,claude-opus+gpt-6.1-sol,agreed,2026-11-02
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|member||m_bfmeId,m_id,claude-opus+gpt-6.1-sol,applied,2026-11-02
