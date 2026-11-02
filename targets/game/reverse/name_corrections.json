@@ -21671,5 +21671,35 @@
   "after_sha256": "3f1fe5121fc2d4e9cfdd0d1cdb1b0f3a18c6771951c96bfbcfb74a5360a934c1",
   "evidence": "targets/game/reverse/identity_evidence/002c7e10-not-drawable-setflashcolor.md",
   "reason": "0x002C7E10 stores +0xD0 and has no rel32 caller; Drawable's flash colour is +0x164 and the ILT oracle contradicts the old name, so the body keeps an address-derived name."
- }
+ },
+  {
+    "old_path": "game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPopupDescriptionUpdateFunc.cpp",
+    "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp",
+    "old_name": "ControlBar",
+    "new_name": "BfmeMsgDN",
+    "before_sha256": "3ef8059da2f548f95ba3fabf0b00effb1e5cb6776d40ae1d828d4504af3bf064",
+    "after_sha256": "0c690e1af73dd6f676b03caf4ba2471b29a6e5ab78cca331e21acbc6dec4658b",
+    "evidence": "targets/game/reverse/identity_evidence/20261102-004c15d0-popup-unit.md",
+    "reason": "False pairing of the naming checker after the popup bodies moved into one unit; the original name is kept verbatim in the new source and no symbol was renamed."
+  },
+  {
+    "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBar_hideBuildTooltipLayout.cpp",
+    "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp",
+    "old_name": "hideBuildTooltipLayout",
+    "new_name": "bfmeShowDN",
+    "before_sha256": "12961dfc351086346b3c7fed3fa374a084128673d41a7abdd5d2a3dd9b163972",
+    "after_sha256": "0c690e1af73dd6f676b03caf4ba2471b29a6e5ab78cca331e21acbc6dec4658b",
+    "evidence": "targets/game/reverse/identity_evidence/20261102-004c15d0-popup-unit.md",
+    "reason": "False pairing of the naming checker after the popup bodies moved into one unit; the original name is kept verbatim in the new source and no symbol was renamed."
+  },
+  {
+    "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBar_hideBuildTooltipLayout.cpp",
+    "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp",
+    "old_name": "reverseAnimateWindow",
+    "new_name": "_bfme_slot0",
+    "before_sha256": "12961dfc351086346b3c7fed3fa374a084128673d41a7abdd5d2a3dd9b163972",
+    "after_sha256": "0c690e1af73dd6f676b03caf4ba2471b29a6e5ab78cca331e21acbc6dec4658b",
+    "evidence": "targets/game/reverse/identity_evidence/20261102-004c15d0-popup-unit.md",
+    "reason": "False pairing of the naming checker after the popup bodies moved into one unit; the original name is kept verbatim in the new source and no symbol was renamed."
+  }
 ]

@@ -1,35 +1,20 @@
-// ?bfmeShowDN@ControlBar@@QAEXPAUBfmeMsgDN@@@Z
-// partial score=0.9956 date=2026-10-13
-// ROUND41 coherent family ownership candidate (gpt-6-astra).
-// All 11 absolute retail operands for VA012F368C are in the four bodies below.
-// Delete92/hide61/update267 are masked-exact; show678 retains3 handle-transfer
-// differences. This is evidence, not production: migrate all four together,
-// validate their one local data owner and every relocation with normal gates.
-// The historical isolated-static warning below applies if siblings stay in
-// other production TUs; this bank now carries their combined implementation.
-// ?bfmeShowDN@ControlBar@@QAEXPAUBfmeMsgDN@@@Z
-// partial score=0.9764 date=2026-09-28
-// ?bfmeShowDN@ControlBar@@QAEXPAUBfmeMsgDN@@@Z
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
-// Retail 0x004C15D0, 678 bytes (ret 4). Three matched callers (ControlBarRva004C1B60.cpp,
-// BfmeConv1941.cpp, Rva003BF540_applyOwner.cpp) name it ControlBar::bfmeShowDN(BfmeMsgDN*).
-// Shape is Zero Hour's ControlBar::showBuildTooltipLayout (ControlBarPopupDescription.cpp):
-// prevWindow became the owning handle at ControlBar+0x2F4 holding a cloned tooltip source.
+// ControlBar's build-tooltip popup (Zero Hour GUICallbacks/ControlBarPopupDescription.cpp):
+// show (0x004C15D0), delete (0x004C1450), hide (0x004C1940) and the popup
+// update callback (0x004C1990). Retail compiled them in one unit that owns the
+// animate-window-manager file static at VA 0x012F368C: all eleven retail
+// operands of that address are in these four bodies, and only the file static
+// reproduces bfmeShowDN's store schedule (an extern leaves 13 bytes).
 //
-// STATUS (opus-5.5, 2026-09-28): 678/678 bytes, 16 differing with this extern global.
-//  * Declaring the animate-manager pointer as a TU-private `static` (ZH's file static
-//    theAnimateWindowManager) drops it to 3 bytes: retail compiled this body in the TU
-//    that OWNED that static (store to it sinks below the new-expression's EH reset).
-//    Do NOT land a private static here: hide/deleteBuildTooltipLayout (matched, other
-//    TUs) read the same 0x012F368C through extern Glo012F368C, and build.py skips local
-//    statics in the DIR32 check, so a split global would pass unnoticed. The real lever is
-//    one ControlBarPopupDescription.cpp TU holding the static and its tooltip siblings.
-//  * Remaining 3 bytes (with the static): +0x200 retail puts the stolen clone pointer in
-//    ECX and the by-value operator= argument address in EDX; ours swaps them. ~20 spellings
-//    of the converting constructor (member/base/template/derived/ref-object/conversion
-//    operator) all leave the swap.
-//  * timeGetTime: retail never hoists the IAT load and has no EH state around the static
-//    initializer; a __declspec(nothrow) inline wrapper over the IAT pointer does both.
+// bfmeShowDN is Zero Hour's showBuildTooltipLayout: three matched callers
+// (ControlBarRva004C1B60.cpp, BfmeConv1941.cpp, Rva003BF540_applyOwner.cpp)
+// name it ControlBar::bfmeShowDN(BfmeMsgDN*); the previous window became the
+// owning handle at ControlBar+0x2F4 holding a cloned tooltip source. The clone
+// travels by value into the matched Rva004C1510Handle::operator= (0x004C1510)
+// through an STLport auto_ptr_ref-style transfer: the source handle converts to
+// a ref that captured its pointer, and the ref's release() clears the source
+// before the new handle stores the pointer (retail: pointer in ECX, argument
+// slot in EDX).
 
 typedef bool Bool;
 typedef int Int;
@@ -43,21 +28,33 @@ struct BfmeMsgDN;
 
 // The owning handle a tooltip source's clone returns (its out-of-line
 // destructor is the 0x00499F30 body the EH state-0 cleanup calls).
+class Rva004C1AE0Handle;
+struct Rva004C1AE0HandleRef
+{
+	Rva004C1AE0Handle &m_r;
+	BfmeMsgDN *const m_p;
+	Rva004C1AE0HandleRef(Rva004C1AE0Handle &r, BfmeMsgDN *p) : m_r(r), m_p(p) {}
+	BfmeMsgDN *release() const;
+};
 class Rva004C1AE0Handle
 {
 public:
 	~Rva004C1AE0Handle();
 	BfmeMsgDN *release(void) { BfmeMsgDN *p = m_ptr; m_ptr = 0; return p; }
+	BfmeMsgDN *get(void) const { return m_ptr; }
+	operator Rva004C1AE0HandleRef() { return Rva004C1AE0HandleRef(*this, get()); }
 
 	BfmeMsgDN *m_ptr;
 };
+// ?Rva004C1AE0HandleRef::release present-unmatched
+inline BfmeMsgDN *Rva004C1AE0HandleRef::release() const { m_r.m_ptr = 0; return m_p; }
 
 // ControlBar+0x2F4's owning handle; operator= is matched at 0x004C1510.
 class Rva004C1510Handle
 {
 public:
 	Rva004C1510Handle(Rva004C1510Handle &other) : m_ptr(other.release()) {}
-	Rva004C1510Handle(Rva004C1AE0Handle &other) : m_ptr(other.release()) {}
+	Rva004C1510Handle(Rva004C1AE0HandleRef ref) { m_ptr = ref.release(); }
 	~Rva004C1510Handle();
 	BfmeMsgDN *get(void) const { return m_ptr; }
 	void reset(void);
@@ -76,8 +73,13 @@ struct BfmeMsgDN
 	virtual Int getTooltipDelay(void) const;		// slot 2
 };
 
+// Inline handle members, expanded at every use in this unit (the clone
+// handle's out-of-line destructor is the 0x00499F30 body the EH cleanup calls):
+// ?Rva004C1AE0Handle::~Rva004C1AE0Handle present-unmatched
 inline Rva004C1AE0Handle::~Rva004C1AE0Handle() { delete m_ptr; }
+// ?Rva004C1510Handle::~Rva004C1510Handle present-unmatched
 inline Rva004C1510Handle::~Rva004C1510Handle() { delete m_ptr; }
+// ?Rva004C1510Handle::reset present-unmatched
 inline void Rva004C1510Handle::reset(void) { delete m_ptr; m_ptr = 0; }
 
 class BfmeThingGX;
@@ -242,8 +244,10 @@ public:
 	char m_pad12[0x34 - 0x12];
 };
 
-class Glo012F368CType;
-static Glo012F368CType *Glo012F368C = 0;				// theAnimateWindowManager
+// Zero Hour's file static theAnimateWindowManager (VA 0x012F368C). Every
+// retail reference to it is in this unit's bodies; as a file static the store
+// after the new-expression in bfmeShowDN sinks below the EH reset as in retail.
+static AnimateWindowManager *theAnimateWindowManager = 0;
 extern Bool g_bfmeReadyPT;					// useAnimation
 
 class Rva005929E0
@@ -258,7 +262,8 @@ public:
 	char m_bfmeHead[0x488];
 	Rva005929E0 m_bfmeSub;
 };
-extern Glo012F4B98Type *Glo012F4B98;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;			// 0x012F4B98
 
 class BfmeTooltipLayout
 {
@@ -296,7 +301,7 @@ public:
 
 static inline AnimateWindowManager *animateManager(void)
 {
-	return (AnimateWindowManager *)Glo012F368C;
+	return theAnimateWindowManager;
 }
 
 void ControlBar::bfmeShowDN(BfmeMsgDN *source)
@@ -333,15 +338,15 @@ void ControlBar::bfmeShowDN(BfmeMsgDN *source)
 		{
 			m_buildToolTipLayout->hide(true);
 			m_bfmeHandle2F4.reset();
-			if (Glo012F4B98)
-				Glo012F4B98->m_bfmeSub.release();
+			if (TheAptPalantir)
+				reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_bfmeSub.release();
 		}
 		return;
 	}
 
 	if (!passedWaitTime)
 	{
-		m_bfmeHandle2F4 = source->bfmeCopy04();
+		m_bfmeHandle2F4 = Rva004C1510Handle(source->bfmeCopy04());
 		beginWaitTime = bfmeNow();
 		isInitialized = false;
 		return;
@@ -360,21 +365,20 @@ void ControlBar::bfmeShowDN(BfmeMsgDN *source)
 
 	if (g_bfmeReadyPT && TheWritableGlobalData->m_animateWindows)
 	{
-		Glo012F368C = (Glo012F368CType *)new AnimateWindowManager;
+		theAnimateWindowManager = new AnimateWindowManager;
 		animateManager()->reset();
 		animateManager()->registerGameWindow(m_buildToolTipLayout->getFirstWindow(), WIN_ANIMATION_SLIDE_RIGHT_FAST, true, 200);
 	}
 }
 
-// Coherent scratch ownership trial: all retail users of VA012F368C.
 void ControlBar::deleteBuildTooltipLayout(void)
 {
  m_showBuildToolTipLayout = false;
  m_buildToolTipLayout->hide(true);
  m_bfmeHandle2F4.reset();
- if (Glo012F4B98) Glo012F4B98->m_bfmeSub.release();
+ if (TheAptPalantir) reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->m_bfmeSub.release();
  delete animateManager();
- Glo012F368C = 0;
+ theAnimateWindowManager = 0;
 }
 void ControlBar::hideBuildTooltipLayout(void)
 {
@@ -396,7 +400,7 @@ void ControlBarPopupDescriptionUpdateFunc(WindowLayout *, void *)
   Bool wasFinished = animateManager()->isFinished();
   animateManager()->update();
   if (animateManager() && animateManager()->isFinished() && !wasFinished && animateManager()->isReversed()) {
-   delete animateManager(); Glo012F368C = 0;
+   delete animateManager(); theAnimateWindowManager = 0;
    TheControlBar->deleteBuildTooltipLayout();
   }
  }

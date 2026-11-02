@@ -6,7 +6,6 @@
 // VA 0x010F5738 as ??_7BfmeMsgDN@@6B@; its inline virtual destructor keeps
 // retail's EH frame with no destructor call.
 
-extern "C" void __cdecl __identifier("?d_004c15d0@@YAXXZ")();
 struct BfmeMsgDN
 {
 	BfmeMsgDN(void *p)
@@ -24,12 +23,7 @@ struct BfmeMsgDN
 class ControlBar
 {
 public:
-	void bfmeShowDN(BfmeMsgDN * a0) {
-	 // retail body is still the gen-dump row ?d_004c15d0@@YAXXZ (no C++ row yet); call it by that defined name
-	 union { void (__cdecl *symbol)(); void (ControlBar::*member)(BfmeMsgDN *); } c;
-	 c.symbol = &__identifier("?d_004c15d0@@YAXXZ");
-	 (this->*c.member)(a0);
-	}
+	void bfmeShowDN(BfmeMsgDN *source);	// 0x004C15D0
 };
 
 extern ControlBar *TheControlBar;

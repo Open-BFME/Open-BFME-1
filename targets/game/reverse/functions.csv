@@ -14010,7 +14010,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?Contribution@InputLightStruct@LightEnvironmentClass@@QAEMXZ,,0x0094AA10,32,game/Libraries/Source/WWVegas/WW3D2/lightenvironment.cpp,matched,
 ?ControlBarInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004BFFD0,3,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarCallback.cpp,matched,FunctionLexicon table 0x012A96E4 pairs the string ControlBarInput with ILT thunk 0x0040F033 into this body
 ?ControlBarObserverSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004AA690,234,game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarObserver.cpp,matched,Corrected one-byte-early vote; explicit BFME observer-player offset and retail callee thunks.
-?ControlBarPopupDescriptionUpdateFunc@@YAXPAVWindowLayout@@PAX@Z,,0x004C1990,267,game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPopupDescriptionUpdateFunc.cpp,matched,Parent rawinit4A0F70 instruction4A1B11 registers411BF8 at layout1C; ILT11BF8 targets4C1990; fullret4C1A9A; canonicalcallback semantics and retail localABI offsets
 ?ControlBarSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,,0x004C0560,1459,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Rva004C0560.cpp,matched,Identity independentlyproven FunctionLexiconVA012A9648 literalControlBarSystem VA010873F0 ILT80E4 reachesbody; completeRET-int3 extent1459; nativeGameLogic receiver cache retains after multiplayerpredicate refreshes afterplayeractive run=sol1843;model=gpt-6.1-sol;host=wings02
 ?Control_Bone@Animatable3DObjClass@@UAEXHABVMatrix3D@@_N@Z,,0x00982440,44,game/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Control_Bone@HTreeClass@@QAEXHABVMatrix3D@@_N@Z,,0x00952A60,110,game/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,MASM dump -> C++; true size 110 not 108; CapTransform at pivot+0x74 and WorldSpaceTranslation at +0xB0
@@ -37838,7 +37837,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_004afb20@@YAXXZ,,0x004AFB20,3,game/GameEngine/Source/Common/Rva004AFB20GetThis.cpp,matched,object-symbol=?getThis@Rva004AFB20@@QBEIXZ;address-derived this getter;carved boundary and retail bytes prove the body
 ?d_004b25d0@@YAXXZ,,0x004B25D0,1365,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008b25d0
 ?d_004be210@@YAXXZ,,0x004BE210,242,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008be210
-?d_004c15d0@@YAXXZ,,0x004C15D0,678,game/gen_asm/d_004b2470.asm,matched,gen-dump;ghidra=FUN_008c15d0
 ?d_004c1c30@@YAXXZ,,0x004C1C30,4289,game/gen_asm/d_004ad980.asm,matched,gen-dump;bounds=high
 ?d_004c6a70@@YAXXZ,,0x004C6A70,37,game/gen_asm/d_004c3de0.asm,matched,gen-dump;ghidra=FUN_008c6a70
 ?d_004cc660@@YAXXZ,,0x004CC660,468,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp,matched,caller ILT 0x0001C9D6 proves address; BFME ABI views exact probe;model=gpt-5.6-luna
@@ -38720,7 +38718,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?deleteAllUnmanned@ScriptActions@@IAEXXZ,,0x002FC7C0,51,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,matched,Open-BFME5 Object disabled mask at +0x1a4
 ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z,,0x001AAF00,163,game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp,matched,clean C++ bridge unlink pathfinder update and object destruction
 ?deleteBridges@TerrainLogic@@IAEXXZ,,0x001AB150,135,game/GameEngine/Source/GameLogic/Map/TerrainLogicBridges.cpp,matched,exact bridge cleanup body; vtable slot +0xB4 and bridge object hash walk identify protected TerrainLogic::deleteBridges
-?deleteBuildTooltipLayout@ControlBar@@QAEXXZ,,0x004C1450,92,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBar_buildTooltipLayout.cpp,matched,
 ?deleteCondition@OrCondition@@QAEXPAVCondition@@@Z,,0x0034FD40,31,game/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp,matched,
 ?deleteFromList@Radar@@IAE_NPAVObject@@PAPAVRadarObject@@@Z,,0x00106BC0,76,game/GameEngine/Source/Common/System/RadarObjectList.cpp,matched,Open-BFME5 node object at +0x04 next at +0x08 object back-pointer at +0x20C
 ?deleteListResources@Radar@@IAEXXZ,,0x00106A90,130,game/GameEngine/Source/Common/System/RadarObjectList.cpp,matched,
@@ -59663,7 +59660,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?hideAptLivingWorldUI@@YAXXZ,,0x0051AF70,51,game/GameEngine/Source/GameClient/GUI/AptLivingWorldUIVisibility.cpp,matched,BFME APT Living World indexed hide helper
 ?hideAptWindow@WindowManager@@QAE_NH@Z,,0x00467460,98,game/GameEngine/Source/GameClient/GUI/WindowManager_hideAptWindow.cpp,matched,stringbaseunicode empty tooltip then ILT 0x0003F3E1 hide
 ?hideBeacon@BeaconClientUpdate@@QAEXXZ,,0x00603520,226,game/GameEngine/Source/GameClient/Drawable/Update/BeaconClientUpdateClientUpdate.cpp,matched,ZH twin hideBeacon call for call (0x00411DD0 setter then setShadowsEnabled 0x004140E0 then createParticleSystem 0x006032F0 then findParticleSystemByID and stop); BFME also deselects;model=claude-opus-5.5;host=yann-pc
-?hideBuildTooltipLayout@ControlBar@@QAEXXZ,,0x004C1940,61,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBar_hideBuildTooltipLayout.cpp,matched,Parent fullret4C197C; canonicalmethod semantics equal verifiedpopup inline branch; rawcaller588B36 throughILT11BCB; reversed11 and existing reverse/delete callees; ControlBarupdate source call is commented out
 ?hideCommunicator@ControlBar@@QAEX_N@Z,,0x0049D070,18,game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp,matched,
 ?hideEndGame@VictoryConditions@@UAEXXZ,,0x0035F770,119,game/GameEngine/Source/GameLogic/ScriptEngine/VictoryConditionsHideEndGame.cpp,matched,BFME HideEndGame APT event then score-screen fade
 ?hideIdleWorkerLayout@InGameUI@@EAEXXZ,,0x0043FA90,72,game/GameEngine/Source/GameClient/InGameUI.cpp,matched,Exact 72B C++ raw function conversion Open-BFME5
@@ -173466,3 +173462,7 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?add@Rva8D0D80Table@@QAEXPAVRva8D0D80String@@PAVRva8D0D80Value@@@Z,,0x0089D890,814,game/Libraries/Source/EA/Apt/Rva0089D5B0Insert.cpp,matched,model=claude-opus-5-5;host=app
 ?Rva008C64C0@@YAPAVAptValue@@PAV1@H@Z,,0x008C64C0,470,game/Libraries/Source/EA/Apt/Rva008C66A0SlotRelease.cpp,matched,model=claude-opus-5-5;host=app
 ?rva008C3C00@@YAPAURva008C3B60Node@@PBD@Z,,0x008C3C00,510,game/Libraries/Source/EA/Apt/Rva008C6C20StringConcat.cpp,matched,model=claude-opus-5-5;host=app
+?bfmeShowDN@ControlBar@@QAEXPAUBfmeMsgDN@@@Z,,0x004C15D0,678,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,Zero Hour showBuildTooltipLayout shape; three matched callers name it; STLport auto_ptr_ref-style handle transfer into matched operator= 0x004C1510; file-static animate manager VA 0x012F368C owned by this popup unit;model=claude-opus-5-5;host=app
+?deleteBuildTooltipLayout@ControlBar@@QAEXXZ,,0x004C1450,92,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,rehomed into the popup unit that owns the VA 0x012F368C file static (Zero Hour ControlBarPopupDescription.cpp);model=claude-opus-5-5;host=app
+?hideBuildTooltipLayout@ControlBar@@QAEXXZ,,0x004C1940,61,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,rehomed into the popup unit that owns the VA 0x012F368C file static (Zero Hour ControlBarPopupDescription.cpp);model=claude-opus-5-5;host=app
+?ControlBarPopupDescriptionUpdateFunc@@YAXPAVWindowLayout@@PAX@Z,,0x004C1990,267,game/GameEngine/Source/GameClient/GUI/GUICallbacks/ControlBarPopupDescription.cpp,matched,rehomed into the popup unit that owns the VA 0x012F368C file static (Zero Hour ControlBarPopupDescription.cpp);model=claude-opus-5-5;host=app
