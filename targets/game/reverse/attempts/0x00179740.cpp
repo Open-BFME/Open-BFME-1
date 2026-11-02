@@ -1,203 +1,217 @@
 // ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.45 date=2026-09-20
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.9463 date=2026-11-02
+// ?onEnter@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ retail 0x00179740 (670 B, ret at +0x29D).
+// BFME 2 donor: open-bfme-2 45afcff3a6 Code/GameEngine/Source/GameLogic/AI/AIAttackApproachTargetStateOnEnter.cpp
+// (AIFollowPathAsTeamState::onEnter, BFME 2 0x0034E3A5) ported to BFME 1 offsets; ZH AIStateMachine::getGoalPathPosition
+// over a real STLport vector<Coord3D> at state machine +0x44 (inlined twice, out of line via ILT 0xA9D4 the third time).
+// cl: /DNDEBUG /MD /EHsc- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#include <vector>
 #include <math.h>
-
 typedef bool Bool;
-enum StateReturnType { STATE_FAILURE = -2 };
-struct Coord3D { float x, y, z; };
+typedef float Real;
+typedef int Int;
+enum StateReturnType { STATE_CONTINUE = 0, STATE_FAILURE = -2 };
 
-extern unsigned char Glo012F0239;
-extern void *TheCRCParameterCheck;
-extern float BfmeZeroRange;
-extern float g_bfmePathExtraDistance;
-void __cdecl _bfmeRetailCritterDesyncLog(void *, const char *, ...);
-
-class Rva0016FFD0PathOwner
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct Coord3D
 {
-public:
-    Coord3D *getPoint(int index);
+	Real x;
+	Real y;
+	Real z;
 };
 
-class Rva0026FE90DwordSlot
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct Coord2D
 {
-public:
-    void set(int value);
+	Real x;
+	Real y;
+	Real length() const { return (Real)sqrt(x * x + y * y); }
 };
 
-class BfmePath
+class Path
 {
 public:
-    unsigned char m_unmodelled00[0x44];
-    Coord3D *m_begin;
-    Coord3D *m_end;
+	const Coord3D *getPoint(Int i) const
+	{
+		if (i < 0 || i >= m_goalPath.size())
+			return 0;
+		return &m_goalPath[i];
+	}
+private:
+	unsigned char m_pad00[0x44];
+	_STL::vector<Coord3D> m_goalPath;
 };
 
-class BfmeFollowAI
+class AIUpdateInterface
 {
 public:
-    unsigned char m_unmodelled000[0x194];
-    int m_rva194;
-    unsigned char m_unmodelled198[8];
-    int m_rva1A0;
-
-    Coord3D *currentPosition()
-    {
-        typedef Coord3D *(__fastcall *Proc)(BfmeFollowAI *, void *);
-        return ((Proc)(*(void ***)this)[128])(this, 0);
-    }
-
-    Coord3D *getPoint(int index)
-    {
-        return ((Rva0016FFD0PathOwner *)this)->getPoint(index);
-    }
-
-    void setPathDistance(float value)
-    {
-        union { float f; int i; } bits;
-        bits.f = value;
-        ((Rva0026FE90DwordSlot *)this)->set(bits.i);
-    }
+	virtual void slot000();
+	void setPathExtraDistance(Real dist);
+	Int getCommandSource()
+	{
+		typedef Int (AIUpdateInterface::*Slot)();
+		return (this->*(*(Slot *)&((*(void ***)this)[128])))();
+	}
+	unsigned char m_pad04[0x30 - 0x04];
+	Path *m_goalPath;
+	unsigned char m_pad34[0x194 - 0x34];
+	Int m_currentGoalPathIndex;
+	unsigned char m_pad198[0x1a0 - 0x198];
+	Int m_rva1A0;
 };
 
-class BfmeObject
+struct Object
+{
+	unsigned char m_pad00[0x38];
+	Coord3D m_position;
+	unsigned char m_pad44[0x204 - 0x44];
+	AIUpdateInterface *m_ai;
+	const Coord3D *getPosition() const { return &m_position; }
+	AIUpdateInterface *getAI() const { return m_ai; }
+};
+
+struct StateMachine
+{
+	unsigned char m_pad00[0x10];
+	Object *m_owner;
+	Object *getOwner() const { return m_owner; }
+};
+
+class AttackMoveMachine
 {
 public:
-    unsigned char m_unmodelled000[0x38];
-    Coord3D m_position;
-    unsigned char m_unmodelled044[0x204 - 0x44];
-    BfmeFollowAI *m_ai;
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void slot4();
+	virtual void slot5();
+	virtual void slot6();
+	virtual void slot7();
+	virtual void slot8(Int);
 };
 
-class BfmeStateMachine
-{
-public:
-    unsigned char m_unmodelled00[0x10];
-    BfmeObject *m_owner;
-};
+extern bool Glo012F0239;
+class CRCParameterCheck;
+extern CRCParameterCheck *TheCRCParameterCheck;
+extern void j_0003a17a(void);
+extern void j_0000a9d4(void);
+typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);
 
-class BfmeAttackMoveMachine
-{
-public:
-    void resetForFollow()
-    {
-        typedef void (__fastcall *NoArg)(BfmeAttackMoveMachine *, void *);
-        typedef void (__fastcall *OneArg)(BfmeAttackMoveMachine *, void *, int);
-        ( (NoArg)(*(void ***)this)[5] )(this, 0);
-        ( (OneArg)(*(void ***)this)[8] )(this, 0, 0);
-    }
-};
-
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
 {
 public:
-    virtual ~AIInternalMoveToState();
-    virtual void crc();
-    virtual void xfer();
-    virtual void loadPostProcess();
-    virtual StateReturnType onEnter();
-
+	virtual StateReturnType onEnter();
 protected:
-    unsigned char m_unmodelled04[0x18];
-    BfmeStateMachine *m_machine;
-    Coord3D m_goalPosition;
-    unsigned char m_unmodelled2C[0x4c - 0x2c];
-    Bool m_adjustDestination;
+	Object *getMachineOwner() const { return m_machine->getOwner(); }
+	void setAdjustsDestination(Bool b) { m_adjustDestination = b; }
+	unsigned char m_pad04[0x1c - 0x04];
+	StateMachine *m_machine;
+	unsigned char m_pad20[4];
+	Coord3D m_goalPosition;
+	unsigned char m_pad30[0x4c - 0x30];
+	Bool m_adjustDestination;
 };
 
 class AIFollowPathAsTeamState : public AIInternalMoveToState
 {
 public:
-    virtual StateReturnType onEnter();
-
+	virtual StateReturnType onEnter();
 private:
-    int m_pathIndex;
-    int m_retryCount;
-    Bool m_rva58;
-    Bool m_rva59;
-    Bool m_rva5A;
-    Bool m_rva5B;
-    Coord3D *m_currentPosition;
-    BfmeAttackMoveMachine *m_attackMoveMachine;
-    int m_rva64;
-    Bool m_rva68;
+	Int m_index;
+	Int m_retryCount;
+	Bool m_adjustFinal;
+	Bool m_rva59;
+	Bool m_rva5A;
+	Bool m_rva5B;
+	Int m_lastCommandSource;
+	AttackMoveMachine *m_attackMove;
+	Int m_64;
+	Bool m_rva68;
 };
 
-static int pathCount(const BfmePath *path)
+static __forceinline Coord3D *getPathPoint(AIUpdateInterface *ai, Int index)
 {
-    return (int)(path->m_end - path->m_begin);
+	typedef Coord3D *(AIUpdateInterface::*GetPointCall)(Int);
+	union
+	{
+		void (*asFunction)(void);
+		GetPointCall asMember;
+	} call;
+	call.asFunction = j_0000a9d4;
+	return (ai->*call.asMember)(index);
 }
 
 StateReturnType AIFollowPathAsTeamState::onEnter()
 {
-    BfmeObject *owner = m_machine->m_owner;
-    BfmeAttackMoveMachine *attackMoveMachine = m_attackMoveMachine;
-    BfmeFollowAI *ai = owner->m_ai;
-    m_pathIndex = 0;
+	Object *obj = getMachineOwner();
+	AIUpdateInterface *ai = obj->getAI();
+	m_index = 0;
+	if (m_attackMove)
+	{
+		m_attackMove->slot5();
+		m_attackMove->slot8(0);
+	}
+	m_lastCommandSource = ai->getCommandSource();
+	m_rva68 = false;
+	m_rva5B = false;
+	const Coord3D *pos = ai->m_goalPath->getPoint(m_index);
+	if (pos == 0)
+		return STATE_FAILURE;
+	m_64 = ai->m_rva1A0;
+	m_goalPosition = *pos;
+	const Coord3D *nextPos = ai->m_goalPath->getPoint(m_index + 1);
+	m_adjustFinal = true;
+	while (nextPos)
+	{
+		const Coord3D *goal = &m_goalPosition;
+		Coord3D fromOwner;
+		fromOwner.x = goal->x;
+		fromOwner.y = goal->y;
+		fromOwner.x -= obj->getPosition()->x;
+		fromOwner.y -= obj->getPosition()->y;
+		Coord3D toNext;
+		toNext.x = nextPos->x;
+		toNext.y = nextPos->y;
+		toNext.x -= goal->x;
+		toNext.y -= goal->y;
+		if (!(toNext.x * fromOwner.x + toNext.y * fromOwner.y < 0.0f))
+			break;
+		m_index++;
+		m_goalPosition = *nextPos;
+		nextPos = ai->m_goalPath->getPoint(m_index + 1);
+	}
+	ai->m_currentGoalPathIndex = m_index;
 
-    if (attackMoveMachine)
-        attackMoveMachine->resetForFollow();
-
-    m_currentPosition = ai->currentPosition();
-    m_rva68 = false;
-    m_rva5B = false;
-    BfmePath *path = *(BfmePath **)((char *)ai + 0x30);
-
-    Coord3D *point = (m_pathIndex >= 0 && m_pathIndex < pathCount(path))
-        ? path->m_begin + m_pathIndex : 0;
-    if (!point)
-        return STATE_FAILURE;
-
-    ++m_pathIndex;
-    m_rva64 = ai->m_rva1A0;
-    m_goalPosition = *point;
-
-    Coord3D *next = (m_pathIndex >= 0 && m_pathIndex < pathCount(path))
-        ? path->m_begin + m_pathIndex : 0;
-    m_rva58 = true;
-
-    while (next) {
-        Coord3D toGoal;
-        Coord3D toNext;
-        toGoal.x = m_goalPosition.x - owner->m_position.x;
-        toGoal.y = m_goalPosition.y - owner->m_position.y;
-        toNext.x = next->x - m_goalPosition.x;
-        toNext.y = next->y - m_goalPosition.y;
-        if (toGoal.x * toNext.x + toGoal.y * toNext.y <= BfmeZeroRange)
-            break;
-        ++m_pathIndex;
-        m_goalPosition = *next;
-        next = (m_pathIndex + 1 >= 0 && m_pathIndex + 1 < pathCount(path))
-            ? path->m_begin + m_pathIndex + 1 : 0;
-    }
-
-    ai->m_rva194 = m_pathIndex;
-    if (Glo012F0239 && TheCRCParameterCheck)
-        _bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-            "CritterDesync: setAdjustDestination(nextPos=%s) 44", next ? "TRUE" : "FALSE");
-
-    m_adjustDestination = next != 0;
-    m_rva58 = true;
-    StateReturnType result = AIInternalMoveToState::onEnter();
-
-    if (next) {
-        float dx = next->x - point->x;
-        float dy = next->y - point->y;
-        float distance = (float)sqrt(dx * dx + dy * dy);
-        if (ai->getPoint(m_pathIndex + 2))
-            distance += g_bfmePathExtraDistance;
-        ai->setPathDistance(distance);
-        if (Glo012F0239 && TheCRCParameterCheck)
-            _bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-                "CritterDesync: setAdjustDestination(FALSE) 45");
-        m_adjustDestination = false;
-    } else {
-        if (Glo012F0239 && TheCRCParameterCheck)
-            _bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
-                "CritterDesync: setAdjustDestination(m_adjustFinal=%s) 46",
-                m_rva58 ? "TRUE" : "FALSE");
-        m_adjustDestination = m_rva58;
-        ai->setPathDistance(0);
-    }
-    return result;
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
+			"CritterDesync: setAdjustDestination(nextPos=%s) 44", nextPos ? "VALID" : "NULL");
+	setAdjustsDestination(nextPos != 0);
+	m_adjustFinal = true;
+	StateReturnType ret = AIInternalMoveToState::onEnter();
+	if (nextPos)
+	{
+		Coord2D delta;
+		delta.x = nextPos->x - pos->x;
+		delta.y = nextPos->y - pos->y;
+		Real offset = delta.length();
+		if (getPathPoint(ai, m_index + 2))
+			offset += 40.0f;
+		ai->setPathExtraDistance(offset);
+		if (Glo012F0239 && TheCRCParameterCheck)
+			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
+				"CritterDesync: setAdjustDestination(FALSE) 45");
+		setAdjustsDestination(false);
+	}
+	else
+	{
+		if (Glo012F0239 && TheCRCParameterCheck)
+			((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
+				"CritterDesync: setAdjustDestination(m_adjustFinal=%s) 46", m_adjustFinal ? "TRUE" : "FALSE");
+		setAdjustsDestination(m_adjustFinal);
+		ai->setPathExtraDistance(0.0f);
+	}
+	return ret;
 }
