@@ -13,10 +13,18 @@ template <>
 class DefaultModuleTemplate<7>
 {
 public:
-    __declspec(noinline) virtual ~DefaultModuleTemplate();
+    // ??0?$DefaultModuleTemplate@$06@FXParticleSystem@@QAE@H@Z absent-from-retail
+    // Forcer-only constructor: compiling it installs the vftable, which emits
+    // ??_G here without copies of the matched default or copy constructors.
+    explicit DefaultModuleTemplate(int) {}
+    virtual ~DefaultModuleTemplate();
 };
-
-DefaultModuleTemplate<7>::~DefaultModuleTemplate()
-{
 }
+
+// The complete destructor is the matched DestructorThunk row; a second
+// strong definition here duplicated it.
+// ?forceDefaultModuleTemplate06DeletingDestructor@@YAXXZ absent-from-retail
+void forceDefaultModuleTemplate06DeletingDestructor()
+{
+    FXParticleSystem::DefaultModuleTemplate<7> value(0);
 }
