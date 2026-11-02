@@ -31,7 +31,7 @@ public:
 extern ImageCollection *TheMappedImageCollection;
 extern Anim2DCollection *TheAnim2DCollection;
 extern const char *TheDrawableIconNames[];
-extern "C" void *__cdecl bfmeArrayNew(unsigned int size);
+void *__cdecl operator new[](unsigned int size);
 
 class Drawable
 {
@@ -77,7 +77,7 @@ void Drawable::initStaticImages()
     s_contestPipEmpty = TheMappedImageCollection->findImageByName(
         AsciiString("SCPContestPipEmpty"));
 
-    s_animationTemplates = (Anim2DTemplate **)bfmeArrayNew(
+    s_animationTemplates = (Anim2DTemplate **)operator new[](
         14 * sizeof(Anim2DTemplate *));
     s_animationTemplates[0] = TheAnim2DCollection->findTemplate(
         AsciiString(TheDrawableIconNames[0]));

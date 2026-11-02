@@ -74,8 +74,15 @@
 class Render2DSentenceHHHH
 {
 public:
-	void Draw_Sentence( UnsignedInt c0, UnsignedInt c1, UnsignedInt c2, UnsignedInt c3 );
+	void Draw_Sentence( Int c0, Int c1, Int c2, Int c3 );
 };
+
+// The four-color BFME Draw_Sentence is defined at 0x0093EB50 as
+// ?Draw_Sentence@Render2DSentenceClass@@QAEXHHHH@Z (Render2DSentenceDrawSentence.cpp);
+// the ZH header's Render2DSentenceClass lacks that overload, so the calls name the
+// defined symbol directly.
+extern "C" void __identifier("?Draw_Sentence@Render2DSentenceClass@@QAEXHHHH@Z")(void);
+typedef void (Render2DSentenceHHHH::*Render2DSentenceDrawCall)( Int, Int, Int, Int );
 
 // W3DDisplayString::drawText006F5170 ==========================================
 /** Render the built sentence(s) at x,y with the drop shadow offset by
@@ -88,6 +95,8 @@ public:
 void W3DDisplayString::drawText006F5170( Int x, Int y, Int xDrop, Int yDrop )
 {
 	Bool needNewPolys = FALSE;
+	union { void (*raw)(); Render2DSentenceDrawCall member; } drawSentence;
+	drawSentence.raw = __identifier("?Draw_Sentence@Render2DSentenceClass@@QAEXHHHH@Z");
 
 	if( getTextLength() == 0 )
 		return;
@@ -112,17 +121,17 @@ void W3DDisplayString::drawText006F5170( Int x, Int y, Int xDrop, Int yDrop )
 			Int sx = m_textPos.x + xDrop;
 			Int sy = m_textPos.y + yDrop;
 			m_textRenderer.Set_Location( Vector2( sx, sy ) );
-			((Render2DSentenceHHHH *)&m_textRenderer)->Draw_Sentence( m_bfmeResetFields[2], m_bfmeResetFields[3], m_bfmeResetFields[4], m_bfmeResetFields[5] );
+			(((Render2DSentenceHHHH *)&m_textRenderer)->*drawSentence.member)( m_bfmeResetFields[2], m_bfmeResetFields[3], m_bfmeResetFields[4], m_bfmeResetFields[5] );
 		}
 
 		m_textRenderer.Set_Location( Vector2( m_textPos.x, m_textPos.y ) );
-		((Render2DSentenceHHHH *)&m_textRenderer)->Draw_Sentence( m_currTextColor, m_currDropColor, m_bfmeResetFields[0], m_bfmeResetFields[1] );
+		(((Render2DSentenceHHHH *)&m_textRenderer)->*drawSentence.member)( m_currTextColor, m_currDropColor, m_bfmeResetFields[0], m_bfmeResetFields[1] );
 
 		if(m_useHotKey)
 		{
 			m_textRendererHotKey.Reset_Polys();
 			m_textRendererHotKey.Set_Location( Vector2( m_textPos.x + m_hotKeyPos.x , m_textPos.y + m_hotKeyPos.y) );
-			((Render2DSentenceHHHH *)&m_textRendererHotKey)->Draw_Sentence( m_hotKeyColor, m_hotKeyColor, m_hotKeyColor, m_hotKeyColor );
+			(((Render2DSentenceHHHH *)&m_textRendererHotKey)->*drawSentence.member)( m_hotKeyColor, m_hotKeyColor, m_hotKeyColor, m_hotKeyColor );
 			m_textRendererHotKey.Render();
 		}
 

@@ -85,7 +85,7 @@ AptValue *__cdecl dup_008c66a0()
 class AptInteger
 {
 public:
-	static AptValue *Create(int value);
+	static AptInteger *Create(int value);
 };
 
 class BfmeNode1220
@@ -133,7 +133,7 @@ AptValue *Rva008C64C0(AptValue *, int nParams)
 	AptValue *delay = Rva008AE770TheStack.at(1);
 	int firstParam = 2;
 	if (callback->isUndefined())
-		return AptInteger::Create(0);
+		return (AptValue *)AptInteger::Create(0);
 	int i;
 	for (i = 0; i < POOL->m_maxTimers; ++i)
 	{
@@ -166,5 +166,5 @@ AptValue *Rva008C64C0(AptValue *, int nParams)
 			break;
 		}
 	}
-	return AptInteger::Create(i);
+	return (AptValue *)AptInteger::Create(i);
 }
