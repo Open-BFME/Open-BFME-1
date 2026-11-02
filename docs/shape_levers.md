@@ -3384,3 +3384,23 @@ registers, frame and the first 0x8E bytes (shape 0.92 -> 0.977). Measured on
 this body only; the remaining residue (a rotated list scan, the temporary's
 store placed before the handle constructor in retail) is in
 `targets/game/reverse/attempt_support/0x00693b90-cache-lookup.md`.
+
+## Out-of-line STLport push_back means the TU had no try/unwind; locals for null checks move a byte arg to CL (2026-11-02)
+
+0x00518FF0 (`Rva0051A5A0Host::setup`,
+`game/GameEngine/Source/Common/Rva0051A5A0HostSetup.cpp`, MSVC 7.1 /O2 /EHsc
+/D_STLP_USE_STATIC_LIB, STLport `list<GameWindow *>`). Retail calls
+`push_front` and `push_back` out of line, and those bodies (0x004FFE70,
+0x00469A90) contain `_M_create_node` inlined (allocate, null-checked
+placement copy, link). Without `_STLP_NO_EXCEPTIONS`, `_M_create_node` keeps
+its try/unwind and stays a call, `push_back` becomes small enough to inline,
+and the caller pins the list header in a register (EBX/ESI shift, 196 diffs).
+`#define _STLP_NO_EXCEPTIONS 1` before `<list>` kept both calls out of line
+and left 14 diffs. Those were the enable byte in AL loaded before
+`mov esi,ecx` (retail: CL after it) mirrored with the two null-check
+temporaries; reading the two windows into pointer locals for the null checks
+(`void *second = m_window3C8; if (second == 0) return; GameWindow *first =
+m_window3BC; ...`) made it exact. Byte/bool parameter types, volatile reads,
+nested ifs, rotation_sweep and flag sweeps were inert. Measured on this body
+only; the same define was inert on four banks whose containers are
+hand-written views.
