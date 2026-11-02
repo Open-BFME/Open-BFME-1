@@ -5,7 +5,8 @@
 // Preserve the authentic Override.h conversion/deinputs/reference/recursive layers;
 // the helper they emit independently matches Overridable::getFinalOverride.
 
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
+
 #include "../../../../../Libraries/Include/Lib/Coord2D.h"
 typedef bool Bool;
 enum ObjectID { INVALID_ID=0 };
