@@ -3292,3 +3292,22 @@ MSVC 7.1 /O2 /MD). Two residues after a donor-shaped rewrite:
   the label on `case 16`'s own `return 0` or on `case 1` was not.
 
 Measured on this body only.
+
+## Header-inline accessor left out of line at its third call site (2026-11-02)
+
+0x00179740 AIFollowPathAsTeamState::onEnter (670 B,
+`game/GameEngine/Source/GameLogic/AI/AIFollowPathAsTeamState_onEnter.cpp`,
+MSVC 7.1 /O2 /MD /EHsc- STLport). Retail inlines the goal-path lookup twice
+and calls it through ILT 0x0000A9D4 the third time. Calling that third site
+through a member-pointer union over `j_0000a9d4` (or a declared-only member)
+left 6 scratch-register differences (pos in ECX instead of EAX, index in EAX
+instead of EDX, AL instead of CL for a byte store). Writing every site as Zero
+Hour's inline `AIUpdateInterface::friend_getGoalPathPosition` over
+`AIStateMachine::getGoalPathPosition` (real `_STL::vector<Coord3D>`) was exact:
+MSVC 7.1 itself declines the third inline (budget), and the out-of-line copy
+it emits matched the 62 B body 0x0016FFD0, whose ILT name ilt_oracle then
+confirmed. The same two-level inline wrapper also fixed the loop latch
+(retail `jmp`/`xor edi,edi`/`test` null join; a one-level inline getPoint was
+tail-duplicated). Lesson: when retail inlines a helper at some sites and calls
+it at others, write the inline helper at every site before trying call-shape
+tricks, and probe the helper's emitted copy against the called body.
