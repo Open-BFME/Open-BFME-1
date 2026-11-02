@@ -8,11 +8,15 @@
 class AptValue
 {
 public:
+	virtual void addRef();
 	int toInteger() const;
+	float toNumber();
+	unsigned int kind() const { return m_valueBits & 0x3f; }
 	bool isUndefined() const { return ((m_valueBits >> 15) & 1) == 0; }
+	bool isScriptFunction() const { return kind() == 10 && !isUndefined(); }
+	bool isNativeFunction() const { return kind() == 9 && !isUndefined(); }
 
 private:
-	void *m_vtable;
 	unsigned int m_valueBits;
 };
 
@@ -43,6 +47,7 @@ struct Rva008AE770Stack
 	int m_count;
 	int m_rva0133874C;
 	AptValue **m_rva01338750;
+	AptValue *at(int i) const { return m_rva01338750[m_count - 1 - i]; }
 };
 
 extern Rva008AE770Stack Rva008AE770TheStack;
@@ -70,4 +75,96 @@ AptValue *__cdecl dup_008c66a0()
 		}
 	}
 	return g_bfmeFallbackDB;
+}
+
+// Retail 0x008C64C0 (470 bytes): the paired registration callback (Apt
+// setInterval). Open BFME 2 45afcff3 AptActionInterpreterConstantHandlers.cpp
+// callback006FEFF0 supplies the shape: claim the first free 32-byte timer,
+// resolve object+method callbacks through findChild (bfmeTest1220), copy the
+// remaining arguments, return AptInteger::Create(slot).
+class AptInteger
+{
+public:
+	static AptValue *Create(int value);
+};
+
+class BfmeNode1220
+{
+public:
+	int bfmeTest1220(int *name, int context);
+};
+
+struct AptIntervalParams
+{
+	int m_count;
+	int m_capacity;
+	AptValue **m_items;
+	void push(AptValue *value)
+	{
+		m_items[m_count] = value;
+		++m_count;
+		value->addRef();
+	}
+};
+
+struct AptIntervalTimer
+{
+	int m_used;
+	AptValue *m_callback;
+	float m_interval;
+	float m_countdown;
+	AptValue *m_context;
+	AptIntervalParams m_params;
+};
+
+struct AptIntervalPool
+{
+	char m_pad0000[0x1230];
+	AptIntervalTimer *m_timers;
+	int m_activeTimers;
+	char m_pad1238[0x12a4 - 0x1238];
+	int m_maxTimers;
+};
+#define POOL ((AptIntervalPool *)g_bfmeHolderBU)
+
+AptValue *Rva008C64C0(AptValue *, int nParams)
+{
+	AptValue *callback = Rva008AE770TheStack.at(0);
+	AptValue *delay = Rva008AE770TheStack.at(1);
+	int firstParam = 2;
+	if (callback->isUndefined())
+		return AptInteger::Create(0);
+	int i;
+	for (i = 0; i < POOL->m_maxTimers; ++i)
+	{
+		if (!POOL->m_timers[i].m_used)
+		{
+			++POOL->m_activeTimers;
+			POOL->m_timers[i].m_used = 1;
+			POOL->m_timers[i].m_context = g_bfmeFallbackDB;
+			if (!callback->isScriptFunction() && !callback->isNativeFunction())
+			{
+				AptValue *context = callback;
+				delay = Rva008AE770TheStack.at(2);
+				callback = (AptValue *)((BfmeNode1220 *)callback)->bfmeTest1220((int *)((char *)Rva008AE770TheStack.at(1) + 8), 0);
+				firstParam = 3;
+				POOL->m_timers[i].m_context = context;
+			}
+			POOL->m_timers[i].m_callback = callback;
+			POOL->m_timers[i].m_callback->addRef();
+			POOL->m_timers[i].m_interval = delay->toNumber();
+			POOL->m_timers[i].m_countdown = POOL->m_timers[i].m_interval;
+			if (nParams > firstParam)
+			{
+				int remaining = nParams - firstParam;
+				for (int j = 0; j < remaining; ++j)
+				{
+					AptValue *param = Rva008AE770TheStack.at(j + firstParam);
+					POOL->m_timers[i].m_params.push(param);
+				}
+			}
+			break;
+		}
+	}
+	return AptInteger::Create(i);
 }
