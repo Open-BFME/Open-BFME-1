@@ -1,5 +1,5 @@
 // ?Replace@EAStringC@@QAEHPBD0@Z
-// partial score=0.6461 date=2026-11-02
+// partial score=0.6938 date=2026-11-02
 // ?Replace@EAStringC@@QAEHPBD0@Z
 // Supersedes an earlier "score=0.78" self-report on this RVA that
 // re-verification with probe.py and shape_search showed was inflated
@@ -66,6 +66,16 @@ class EAStringC
 			g_bfmeStringPool1284->free(data);
 	}
 
+	__forceinline EAStringC &operator=(const EAStringC &other)
+	{
+		++other.m_pData->m_uRefCount;
+		StringDataC *old = m_pData;
+		if (--old->m_uRefCount == 0)
+			g_bfmeStringPool1284->free(old);
+		m_pData = other.m_pData;
+		return *this;
+	}
+
 	int Replace(const char *find, const char *replacement);
 };
 
@@ -120,9 +130,6 @@ int EAStringC::Replace(const char *find, const char *replacement)
 	result.m_pData->m_uSize = static_cast<unsigned short>(newLength);
 	result.m_pData->m_uHash = 0;
 
-	++result.m_pData->m_uRefCount;
-	if (--m_pData->m_uRefCount == 0)
-		g_bfmeStringPool1284->free(m_pData);
-	m_pData = result.m_pData;
+	*this = result;
 	return count;
 }
