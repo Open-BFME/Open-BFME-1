@@ -37,10 +37,8 @@ private:
     UnsignedInt m_viewObjectDuration;
 };
 
-AsciiString SpecialPowerTemplate::getName() const
-{
-    return ((const SpecialPowerTemplate *)friend_getFinalOverride())->m_name;
-}
+// getName's retail-equal inline copy is owned by SpecialPower.cpp. Defining
+// it strongly here collides with the existing inline copies in consumers.
 
 UnsignedInt SpecialPowerTemplate::getViewObjectDuration() const
 {
