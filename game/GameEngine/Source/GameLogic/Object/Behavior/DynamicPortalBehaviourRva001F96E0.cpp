@@ -149,6 +149,10 @@ private:
 };
 
 // ?createWaypoints@DynamicPortalBehaviour@@QAEXXZ
+// Object::getMultiLogicalBonePosition (0x001BFAC0) is defined struct-keyed; the call
+// names it through a member pointer.
+extern "C" void __identifier("?getMultiLogicalBonePosition@Object@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@_NH@Z")(void);
+
 void DynamicPortalBehaviour::createWaypoints()
 {
 	Coord3D positions[16];
@@ -158,7 +162,9 @@ void DynamicPortalBehaviour::createWaypoints()
 
 	if (!built)
 	{
-		obj->getMultiLogicalBonePosition(data->m_bonePrefix.str(),
+		union { void (*raw)(void); Int (Object::*member)(const char *, Int, Coord3D *, Matrix3D *, Bool, Int) const; } boneCall;
+		boneCall.raw = __identifier("?getMultiLogicalBonePosition@Object@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@_NH@Z");
+		(obj->*boneCall.member)(data->m_bonePrefix.str(),
 			data->m_numBones, positions, NULL, TRUE, 0);
 
 		UnsignedInt startFrame = 0;

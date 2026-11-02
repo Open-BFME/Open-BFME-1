@@ -118,6 +118,10 @@ private:
     void *m_extra;
 };
 
+// Bridge::createTower (0x001A9730) is defined struct-keyed; the call names it through
+// a member pointer.
+extern "C" void __identifier("?createTower@Bridge@@QAEPAVObject@@PAUCoord3D@@W4BridgeTowerType@@PBVThingTemplate@@PAV2@@Z")(void);
+
 Bridge::Bridge(Object *bridgeObj) : m_next(0), m_layer(LAYER_GROUND), m_extra(0)
 {
 	((Rva00887C90String *)&m_templateName)->set(bridgeObj->getTemplate()->getName());
@@ -208,7 +212,9 @@ Bridge::Bridge(Object *bridgeObj) : m_next(0), m_layer(LAYER_GROUND), m_extra(0)
 				pos.y -= v.y*offset;
 				break;
 		}
-		tower = createTower( &pos, type, towerTemplate, bridgeObj );
+		union { void (*raw)(void); Object *(Bridge::*member)(Coord3D *, BridgeTowerType, const ThingTemplate *, Object *); } towerCall;
+		towerCall.raw = __identifier("?createTower@Bridge@@QAEPAVObject@@PAUCoord3D@@W4BridgeTowerType@@PBVThingTemplate@@PAV2@@Z");
+		tower = (this->*towerCall.member)( &pos, type, towerTemplate, bridgeObj );
 		m_bridgeInfo.towerObjectID[i] = tower->getID();
 	}
 
