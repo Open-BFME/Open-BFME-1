@@ -3351,3 +3351,19 @@ compared with retail before landing; the maker row moved into the TU and the
 `_Construct` specialization elsewhere became `inline` (select-any). VC7.1
 `/O2 /EHsc`. Same family as the visible-callee escape lever; measured on one
 body.
+
+## Inline intermediate base ctor keeps base-field stores ahead of argument loads (2026-11-02)
+
+0x007C2F20 (BfmeVolumetricShadowBufferOwner ctor,
+`game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/BfmeVolumetricShadowBufferOwnerConstructor.cpp`,
+MSVC 7.1 /O2 /EHsc, STLport). Retail: base ctor call, then the four 0x58..0x64
+default stores, and only then `mov eax,[esp+0x40]` (first ctor argument) before
+the vptr store. With the four stores written in the derived ctor body, ours
+hoisted the argument load above them (rest of the 662 bytes identical).
+Moving the four stores into an inline default ctor of an intermediate base
+class (`BfmeShadowVolumeBase : Rva007B12F0Base`) reproduced retail's order
+exactly. Two more levers in the same body: re-read `vec[j]` per use around a
+virtual call (a local caches it in a callee-saved register retail does not
+use), and assign a `Vector2`'s X and Y one statement each before `Length()`
+(the two-argument constructor interleaves the two `fabs` sums). Measured on
+this body only.
