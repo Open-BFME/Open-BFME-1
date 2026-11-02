@@ -1,5 +1,13 @@
 // ?rva004175F0@ThingTemplate@@QBE?AVAudioEventInfoRef@@H@Z
-// partial score=0.96 date=2026-09-25
+// partial score=0.9437 date=2026-11-02
+// ?rva004175F0@ThingTemplate@@QBE?AVAudioEventInfoRef@@H@Z
+// partial date=2026-11-02 s545: 231/231 B, 13 non-reloc diffs (prologue EBX/EDI mirror only)
+// The four switch arms call ILT 0x286A through the stdcall union view the matched
+// siblings in Q1OrdinalSelectorFallbacks.cpp use (incoming ECX passes through, so no
+// `mov ecx,edi` reload: size went 233 -> 231). Null fallback as if/assign in the helper.
+// Residue: retail selector=EBX this=EDI; ours selector=EDI this=EBX. Inert: helper
+// static/member/forceinline/with self param, __assume, self/selector copies, switch in
+// helper (3 forms), early-return bottom, flags /Ox /G6 /Ob1 /Ob2 /GR /GX.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // ThingTemplate selector-driven audio-event info accessor at retail RVA 0x004175F0.
 //
@@ -67,6 +75,9 @@ public:
 
 extern AudioEventRTS BfmeTheEmptyAudioEvent;
 
+extern void j_0000286a();
+typedef union { void (*raw)(); const AudioEventRTS *(__stdcall *typed)( Int ); } Q1SelectorFunction;
+
 struct Rva005A00B0AudioClient
 {
 	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
@@ -96,6 +107,15 @@ public:
 			sound = &BfmeTheEmptyAudioEvent;
 		return sound;
 	}
+	static const AudioEventRTS *pick( Int k )
+	{
+		Q1SelectorFunction lookup;
+		lookup.raw = j_0000286a;
+		const AudioEventRTS *s = lookup.typed( k );
+		if ( !s )
+			s = &BfmeTheEmptyAudioEvent;
+		return s;
+	}
 	AudioEventInfoRef rva004175F0( Int selector ) const;
 
 private:
@@ -107,10 +127,10 @@ AudioEventInfoRef ThingTemplate::rva004175F0( Int selector ) const
 	const AudioEventRTS *sound;
 	switch ( selector )
 	{
-		case 1: sound = getSound( 0x5C ); break;
-		case 2: sound = getSound( 0x5D ); break;
-		case 3: sound = getSound( 0x5E ); break;
-		default: sound = getSound( 0x5B ); break;
+		case 1: sound = pick( 0x5C ); break;
+		case 2: sound = pick( 0x5D ); break;
+		case 3: sound = pick( 0x5E ); break;
+		default: sound = pick( 0x5B ); break;
 	}
 
 	if ( !sound->m_eventName.isEmpty() )
