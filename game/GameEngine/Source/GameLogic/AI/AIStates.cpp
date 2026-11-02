@@ -7627,25 +7627,7 @@ StateReturnType AIExitState::update()
 }
 
 //----------------------------------------------------------------------------------------------------------
-void AIExitState::onExit( StateExitType status )
-{
-	Object* obj = getMachineOwner();
-
-	// use this, rather than getMachineGoalObject, in case the goal
-	// is killed while we were waiting...
-	if (m_entryToClear != INVALID_ID)
-	{
-		Object* goal = TheGameLogic->findObjectByID(m_entryToClear);
-		if (goal)
-		{
-			ContainModuleInterface* contain = goal->getContain();
-			if (contain)
-			{
-				contain->onObjectWantsToEnterOrExit(obj, WANTS_NEITHER);
-			}
-		}
-	}
-}
+// ?onExit@AIExitState@@UAEXW4StateExitType@@@Z: retail body is in game/GameEngine/Source/GameLogic/AI/AIExitStateOnExit.cpp
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
