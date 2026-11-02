@@ -314,6 +314,10 @@ private:
 
 #undef BFME_VIRTUAL_SLOT
 
+// AICommandInterface::aiMoveToPosition (0x000D86C0) is defined struct-keyed; the call
+// names it through a member pointer.
+extern "C" void __identifier("?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z")(void);
+
 void AIPlayer::recruitSpecificAITeam(TeamPrototype *teamProto, Real recruitRadius,
 	const Coord3D *recruitPos)
 {
@@ -381,7 +385,9 @@ void AIPlayer::recruitSpecificAITeam(TeamPrototype *teamProto, Real recruitRadiu
 									pos = teamProto->getTemplateInfo()->m_homeLocation;
 								to = &pos;
 							}
-							ai->getCommandInterface()->aiMoveToPosition( to, CMD_FROM_AI);
+							union { void (*raw)(void); void (AICommandInterface::*member)(const Coord3D *, CommandSourceType); } moveCall;
+							moveCall.raw = __identifier("?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z");
+							(ai->getCommandInterface()->*moveCall.member)( to, CMD_FROM_AI);
 						}
 					} else {
 						break;

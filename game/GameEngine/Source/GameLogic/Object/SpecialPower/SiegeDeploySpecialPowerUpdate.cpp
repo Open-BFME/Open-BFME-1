@@ -36,6 +36,10 @@ extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(v
 class Rva00266EB0SiegeDeployBase {public: void transition(int);void clearStatusBit63();};
 class GameLogic {public: Object *findObjectByID(int);};
 extern GameLogic *TheGameLogic;
+// AICommandInterface::aiMoveToPosition (0x000D86C0) is defined struct-keyed; the call
+// names it through a member pointer.
+extern "C" void __identifier("?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z")(void);
+
 class AICommandInterface {public: void aiMoveToPosition(const Coord3D*,CommandSourceType);};
 class Rva00266F40AIView { public:
 virtual void slot0();
@@ -231,7 +235,7 @@ UpdateSleepTime SiegeDeploySpecialPower::update()
  if(ai->slot96()) {
  ((AIUpdateInterface*)ai)->ignoreObstacle(target);
  self->m_turn=!self->m_turn;
- if(self->m_turn) {bool docked=false;union {void(*raw)();Coord3D(Rva00266F40Action::*fn)(Object*,Coord3D*,bool*);}c;c.raw=j_00020455;self->m_approach=(((Rva00266F40Action*)((char*)this-0x10))->*c.fn)(target,&self->m_direction,&docked);if(docked)((AICommandInterface*)((char*)ai+0x20))->aiMoveToPosition(&self->m_approach,CMD_FROM_AI);}
+ if(self->m_turn) {bool docked=false;union {void(*raw)();Coord3D(Rva00266F40Action::*fn)(Object*,Coord3D*,bool*);}c;c.raw=j_00020455;self->m_approach=(((Rva00266F40Action*)((char*)this-0x10))->*c.fn)(target,&self->m_direction,&docked);if(docked){union {void(*raw)();void(AICommandInterface::*fn)(const Coord3D*,CommandSourceType);}m;m.raw=__identifier("?aiMoveToPosition@AICommandInterface@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z");(((AICommandInterface*)((char*)ai+0x20))->*m.fn)(&self->m_approach,CMD_FROM_AI);}}
  else {Coord3D position=object->m_cachedPos;position+=self->m_direction;rva00266A30((char*)ai+0x20,&position,CMD_FROM_AI);}
  }
  break;}
