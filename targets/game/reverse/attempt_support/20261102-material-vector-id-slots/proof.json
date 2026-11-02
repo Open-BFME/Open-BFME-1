@@ -1,0 +1,79 @@
+{
+  "target_revision": "849fdc602c",
+  "donor_revision": "92f12c3fc4e42305d6c26c1da9290c17cc5d20cd",
+  "compiler": "MSVC 7.1",
+  "compiler_arguments": [
+    "/usr/bin/wine",
+    "/home/yannick/.t3/worktrees/Open-BFME-1/t3-13376028/inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-DNDEBUG",
+    "-MD",
+    "-EHsc",
+    "-DWIN32",
+    "-D_WINDOWS",
+    "-Igame/Libraries/Source/WWVegas/WWLib",
+    "-Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug",
+    "-Fobuild/task-queue-20261102/material-vector/witness.obj",
+    "build/task-queue-20261102/material-vector/witness.cpp"
+  ],
+  "header": "game/Libraries/Source/WWVegas/WWLib/vector.h",
+  "header_sha256": "449b56b10ddec16b943005c33969abf724d47fff33f00877ac8432960ea996fe",
+  "witness_sha256": "3e92a3a351f7a1713765ecbdd9bc8dcdc85307a1568ba5acc03959d5e17e6a3b",
+  "include_trace_vector_header": "game/Libraries/Source/WWVegas/WWLib\\vector.h",
+  "vtable_relocations": [
+    {
+      "offset": 0,
+      "kind": 6,
+      "name": "??_E?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEPAXI@Z"
+    },
+    {
+      "offset": 4,
+      "kind": 6,
+      "name": "??8?$VectorClass@PAVVertexMaterialClass@@@@UBE_NABV0@@Z"
+    },
+    {
+      "offset": 8,
+      "kind": 6,
+      "name": "?Resize@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAE_NHPBQAVVertexMaterialClass@@@Z"
+    },
+    {
+      "offset": 12,
+      "kind": 6,
+      "name": "?Clear@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEXXZ"
+    },
+    {
+      "offset": 16,
+      "kind": 6,
+      "name": "?ID@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEHABQAVVertexMaterialClass@@@Z"
+    },
+    {
+      "offset": 20,
+      "kind": 6,
+      "name": "?ID@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEHPBQAVVertexMaterialClass@@@Z"
+    }
+  ],
+  "bodies": [
+    {
+      "name": "?ID@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEHABQAVVertexMaterialClass@@@Z",
+      "rva": "0x00930210",
+      "size": 38,
+      "relocations": [],
+      "compiled_hex": "8b51105633c085d27e158b7424088b368b49043931740b4083c1043bc27cf483c8ff5ec20400",
+      "retail_hex": "8b51105633c085d27e158b7424088b368b49043931740b4083c1043bc27cf483c8ff5ec20400",
+      "exact": true
+    },
+    {
+      "name": "?ID@?$DynamicVectorClass@PAVVertexMaterialClass@@@@UAEHPBQAVVertexMaterialClass@@@Z",
+      "rva": "0x00930270",
+      "size": 25,
+      "relocations": [],
+      "compiled_hex": "8a410c84c0750533c0c204008b4424042b4104c1e802c20400",
+      "retail_hex": "8a410c84c0750533c0c204008b4424042b4104c1e802c20400",
+      "exact": true
+    }
+  ]
+}
