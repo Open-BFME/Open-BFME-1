@@ -1,5 +1,5 @@
 // ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.5827 date=2026-10-03
+// partial score=0.9974 date=2026-11-02
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // BFME ?update@AIFollowPathAsTeamState@@UAE?AW4StateReturnType@@XZ at retail
@@ -98,12 +98,10 @@ struct Rva0016FFD0Coord3D
 class Rva0016FFD0Path
 {
 public:
- Rva0016FFD0Coord3D *getPoint(int index) {
-  if (index >= 0) {
-   if ((unsigned)index < m_points.size())
-    return &m_points[index];
-  }
-  return 0;
+ const Rva0016FFD0Coord3D *getPoint(int index) const {
+  if (index < 0 || index >= m_points.size())
+   return 0;
+  return &m_points[index];
  }
  unsigned char m_pad00[0x44];
  std::vector<Rva0016FFD0Coord3D> m_points;
@@ -154,6 +152,7 @@ public:
 	void friend_startingMove();				// 0x0026F0E0
 
 	Rva0016FFD0Path *getPath() { return m_path; }
+	const Rva0016FFD0Coord3D *friend_getGoalPathPosition(int index) const { return m_path->getPoint(index); }
 
 	unsigned char m_pad04[0x30 - 4];
 	Rva0016FFD0Path *m_path;				// +0x30
@@ -390,7 +389,7 @@ StateReturnType AIFollowPathAsTeamState::update()
 	{
 		if (m_field5B && m_index > 0)
 			m_index--;
-		Rva0016FFD0Coord3D *turnTo = ((Rva0016FFD0PathOwner *)ai)->getPoint(m_index + 1);
+		const Rva0016FFD0Coord3D *turnTo = ai->friend_getGoalPathPosition(m_index + 1);
 		if (turnTo)
 		{
 			Real speed = getMachineOwner()->m_ai->getCurLocomotorSpeed();
@@ -417,7 +416,7 @@ StateReturnType AIFollowPathAsTeamState::update()
 	start.x = ownerPos->x;
 	start.y = ownerPos->y;
 	AIUpdateInterface *ownerAI = owner->m_ai;
-	Rva0016FFD0Coord3D *pos = ((Rva0016FFD0PathOwner *)ownerAI)->getPoint(m_index);
+	const Rva0016FFD0Coord3D *pos = ownerAI->friend_getGoalPathPosition(m_index);
 
 	Bool tooClose = true;
 	while (pos && tooClose)
@@ -428,13 +427,13 @@ StateReturnType AIFollowPathAsTeamState::update()
 		if (sqr(dx) + sqr(dy) < 100.0f)
 			tooClose = true;
 		int next = m_index + 1;
-		Rva0016FFD0Coord3D *nextPos = ownerAI->getPath()->getPoint(next);
-		if (nextPos && (nextPos->x - pos->x) * dx + (nextPos->y - pos->y) * (pos->y - start.y) < 0.0f)
+		const Rva0016FFD0Coord3D *nextPos = ownerAI->friend_getGoalPathPosition(next);
+		if (nextPos && (nextPos->x - pos->x) * (pos->x - start.x) + (nextPos->y - pos->y) * (pos->y - start.y) < 0.0f)
 			tooClose = true;
 		if (tooClose)
 		{
 			m_index = next;
-			pos = ownerAI->getPath()->getPoint(next);
+			pos = ownerAI->friend_getGoalPathPosition(next);
 		}
 	}
 
@@ -449,13 +448,13 @@ StateReturnType AIFollowPathAsTeamState::update()
 	ownerAI->friend_startingMove();
 	m_goalPosition = *(const Coord3D *)pos;
 	int index = m_index;
-	Rva0016FFD0Coord3D *nextPos = ((Rva0016FFD0PathOwner *)ownerAI)->getPoint(index + 1);
+	const Rva0016FFD0Coord3D *nextPos = ownerAI->friend_getGoalPathPosition(index + 1);
 	if (nextPos)
 	{
 		Real dx = nextPos->x - pos->x;
 		Real dy = nextPos->y - pos->y;
 		Real offset = (Real)sqrt(dx * dx + dy * dy);
-		if (((Rva0016FFD0PathOwner *)ownerAI)->getPoint(index + 2))
+		if (ownerAI->friend_getGoalPathPosition(index + 2))
 			offset += 40.0f;
 		((Rva0026FE90DwordSlot *)ownerAI)->set(*(int *)&offset);
 		if (Glo012F0239 && TheCRCParameterCheck)
