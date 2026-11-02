@@ -6,6 +6,15 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <vector>
 
+// Suppress this TU's implicit copy of the uchar _M_insert_overflow: the kept
+// retail 0x0074D6F0 body lives in vector_uchar_insert_overflow.cpp and serves
+// the link. Plain declaration-only form (no __imp_), as in BFME 2's
+// stlport_pod_vector_bodies.cpp.
+namespace _STL {
+template <> void vector<unsigned char, allocator<unsigned char> >::_M_insert_overflow(
+    unsigned char *, unsigned char const &, __true_type const &, unsigned int, bool);
+}
+
 // Address-derived view: retail passes the fill byte by value, unlike the
 // previously claimed const-reference overload. See identity_evidence/
 // 0074e620-value-argument.md for caller and complete-boundary evidence.
