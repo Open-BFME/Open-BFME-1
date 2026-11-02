@@ -68,7 +68,7 @@ public:
 class AptValue
 {
 public:
-	int toInteger();
+	int toInteger() const;
 };
 
 class Rva8CD130Value : public AptValue
