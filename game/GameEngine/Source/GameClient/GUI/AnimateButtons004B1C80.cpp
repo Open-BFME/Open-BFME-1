@@ -59,7 +59,6 @@ struct Counted004B1C80 {
  }
 };
 struct Node004B1C80 { int field00; Node004B1C80 *field04,*field08,*field0c; };
-struct Iterator004B1C80 { Node004B1C80 *p; Iterator004B1C80(Node004B1C80 *v):p(v) {} };
 // The existing 004B1B90 map specialization is already identified by its caller.
 class Rva004B1880Counted
 {
@@ -100,7 +99,6 @@ template<> Rva004B1880Value &Rva004B1880Map::operator[](const Rva004B1880Key &ke
 }
 struct Rva004B12F0Map {
  Node004B1C80 *field00; unsigned field04;
- Iterator004B1C80 rva004B0530(const Rva004B00D0Element *const &key);
  __forceinline Counted004B1C80 &at(const Rva004B00D0Element *const &key) { return (Counted004B1C80 &)((Rva004B1880Map*)this)->operator[]((const Rva004B1880Key &)key); }
  unsigned erase(const Rva004B00D0Element *const &key);
  void clear() { if(field04) { ((BfmeListW*)this)->bfmeEraseFrom((BfmeNodeW*)field00->field04); field00->field08=field00; field00->field04=0; field00->field0c=field00; field04=0; } }
@@ -169,8 +167,9 @@ void AnimateButtons004B1C80::update() {
     ButtonData004B1C80 *data=(ButtonData004B1C80*)GadgetButtonGetData((GameWindow*)window);
     if(data && data->field144>0) {
      Node004B1C80 *end=field44.field00;
-     Iterator004B1C80 found=field44.rva004B0530(key);
-     if(found.p==end) {
+     // The map's own find<Rva004B1880Key> instantiation is retail 0x004B0530.
+     Rva004B1880Map::iterator found=((Rva004B1880Map*)&field44)->find((const Rva004B1880Key &)key);
+     if((Node004B1C80*)found._M_node==end) {
       field44.at(key)=Counted004B1C80(new Gen_ctor_004b02a0);
       field08=true;
      }
