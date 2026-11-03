@@ -21932,5 +21932,15 @@
   "after_sha256": "8c40e7cb1279acb66c318d2654dc191f358d4afceeebd6891e8bb083b541fcbd",
   "evidence": "targets/game/reverse/identity_evidence/00267b10-specialdisguiseupdate-changevisualdisguise.md",
   "reason": "Both spellings are offset placeholders for the same Drawable+0x3B8 field (bank m3B8, conversion m_3B8, the repo's m_<offset> style); no identity is lost."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001f8970.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModuleConstructor.cpp",
+  "old_name": "UpgradeModuleInterface",
+  "new_name": "Rva001EE620",
+  "before_sha256": "6fa22d13a4fbef4bf211e805213f614c064fbaccfcc8f424aac89b8a32d3b35f",
+  "after_sha256": "1dc8f1597ba318d01ad4801fb05c396d965dc5b8470e365d76bbf0a8a86c57ff",
+  "evidence": "targets/game/reverse/identity_evidence/0x001f8970.md",
+  "reason": "The +0x18 interface base of UpgradeModule only contributes its own vtable store (0x010A1BFC); that table is recorded in dir32_addresses.csv under fifteen conflicting class names and the DIR32 gate refuses a new one, so the conversion uses the recorded address-derived ??_7Rva001EE620@@6B@. UpgradeModuleInterface was the bank author's unverified ZH guess for that base (ZH UpgradeMux itself derives from UpgradeModuleInterface, which BFME1 layout does not show); no identity is lost."
  }
 ]

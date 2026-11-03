@@ -1,5 +1,3 @@
-// ??0UpgradeModule@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=1.0 date=2026-11-03
 // cl: /DNDEBUG /MD /EHsc
 //
 // ??0UpgradeModule@@QAE@PAVThing@@PBVModuleData@@@Z, retail 0x001F8970, 139 B.
@@ -54,13 +52,23 @@ private:
 	bool m_upgradeExecuted;
 };
 
-class UpgradeModuleInterface
+// The +0x18 interface's own table 0x010A1BFC is recorded as ??_7Rva001EE620@@6B@,
+// so the interface keeps that address-derived name.
+class Rva001EE620
 {
 public:
 	virtual void isAlreadyUpgraded();
 };
 
-class UpgradeModule : public BehaviorModule, public Rva002D9B80, public UpgradeModuleInterface
+// UpgradeModule's own four tables are installed by hand: 0x010A36E0 and
+// 0x010A36CC are recorded under the address-derived Rva002D44E0DeepDtorL1 view,
+// 0x010A3804 and 0x010A3740 under nothing, so they take g_Va names.
+extern "C" const char __identifier("??_7Rva002D44E0DeepDtorL1@@6BRva002D44E0DeepDtorL1M0@@@")[];
+extern "C" const char __identifier("??_7Rva002D44E0DeepDtorL1@@6BRva002D44E0DeepDtorL1M1@@@")[];
+extern const char g_Va010A3804[];
+extern const char g_Va010A3740[];
+
+class __declspec(novtable) UpgradeModule : public BehaviorModule, public Rva002D9B80, public Rva001EE620
 {
 public:
 	UpgradeModule(Thing *thing, const ModuleData *moduleData);
@@ -70,4 +78,10 @@ public:
 UpgradeModule::UpgradeModule(Thing *thing, const ModuleData *moduleData)
 	: BehaviorModule(thing, moduleData)
 {
+	*reinterpret_cast<const char **>(static_cast<Rva002D9B80 *>(this)) =
+		__identifier("??_7Rva002D44E0DeepDtorL1@@6BRva002D44E0DeepDtorL1M0@@@");
+	*reinterpret_cast<const char **>(this) = g_Va010A3804;
+	*reinterpret_cast<const char **>(static_cast<BehaviorModuleInterface *>(this)) = g_Va010A3740;
+	*reinterpret_cast<const char **>(static_cast<Rva001EE620 *>(this)) =
+		__identifier("??_7Rva002D44E0DeepDtorL1@@6BRva002D44E0DeepDtorL1M1@@@");
 }
