@@ -3491,3 +3491,17 @@ m_bits[bit>>5] |= 1u << (bit&31);` (assignments, loops and helpers all fold to t
 constant), and a missing EH state store before an out-of-line filter constructor call
 came from declaring that constructor `throw()`. Measured on this body only; its
 remaining frame-slot packing (0x9C vs 0x90) is open.
+
+## Chained inline accessors flip a this/argument ESI-EDI mirror (2026-11-03)
+
+0x0039B160 `BfmeObjectReferenceStore::updateObjectReference` (264 B, /O2
+/MD /EHsc) sat at 24 diffs for ~25 logged attempts: retail keeps the Object
+argument in ESI and `this` in EDI, ours the reverse. Aliases, `self` locals,
+combined guards, nested ifs, forceinline body helpers, visible callees and a
+/G7 /O1 /Ox /Ob1 sweep were all inert. Reading the owner's template as
+`object->getControllingPlayer()->getPlayerTemplate()` and its +0x118 flag
+through a one-line inline accessor (instead of `->m_template`/`->m_flag`)
+gave retail's roles at once; the remaining diff was an `int`-returning length
+accessor (`movzx`), fixed by testing the `unsigned short` in place. Observed
+effect only: the extra inlined calls change the allocator's priority order.
+Source: game/GameEngine/Source/GameLogic/Object/Update/BfmeObjectReferenceStoreClear.cpp.
