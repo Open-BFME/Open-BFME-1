@@ -3453,3 +3453,22 @@ A lone `Int color = B; if (fourth) color = A;` kept the position but emitted a
 branch. The same body also needed `if (cursorType != m_curRcType) { ... }`
 around the work, because retail's same-type early-out jumps to the shared
 tint tail rather than returning. Measured on this body only.
+
+## Block scope keeps an EH local out of a dead argument home (2026-11-03)
+
+0x00287410 (bank `targets/game/reverse/attempts/0x00287410.cpp`, VC7.1
+`/MD /EHsc` STLport, 346 B, probe EXACT) ends with `PickAndPlayInfo info; ...
+DrawableList list; list.push_back(o->getDrawable());` after the last use of its
+first parameter. With early returns and both locals at function scope the frame
+was `sub esp,0x28` (spilled `this`, info and list in separate slots). With info
+and list in their own `{}` block after the parameter's last use the frame matched
+(0x24) but VC7.1 put the list in the dead first argument's home and the
+`push_back` temp in the second's. Retail keeps the list in the frame (sharing
+the spilled-`this` slot) and the temps in the first argument home. Exact: open
+the block before the parameter's last use, here `if (ai) { ...
+aiForceAttackObject(target, ...); ...; DrawableList list; ... }` instead of
+`if (!ai) return;`. Observed: a local whose lexical scope starts before a
+parameter's last use is not packed into that parameter's home, while the
+flow-based `this` spill still shares a slot with it. Also on this body, value
+locals (`Int id = object->m_id; iface->set(id);`) fixed an eax/ecx/edx rotation
+of the loaded IDs. Measured on this body only.
