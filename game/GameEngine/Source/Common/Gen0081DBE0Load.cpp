@@ -15,7 +15,17 @@ extern void j_0001bb4e();
 
 // INI::load at 0x00853CB0 (matched in INILoadBFMERetail.cpp) takes an Xfer*
 // and the block parser; INI.h still declares it as (AsciiString, int, int,
-// void *), the spelling pinned to the same body, so the call uses that.
+// void *), a spelling nothing defines, so the call binds to the ledger's
+// defined name through a member-pointer view of that symbol.
+extern "C" void __cdecl __identifier("?load@INI@@QAEXVAsciiString@@HPAVXfer@@P6AXPAV1@@Z@Z")();
+
+typedef void (INI::*BfmeIniLoadPmf)(AsciiString, int, int, void *);
+static __forceinline BfmeIniLoadPmf bfmeIniLoadPmf()
+{
+	union { void (__cdecl *symbol)(); BfmeIniLoadPmf member; } c;
+	c.symbol = &__identifier("?load@INI@@QAEXVAsciiString@@HPAVXfer@@P6AXPAV1@@Z@Z");
+	return c.member;
+}
 
 // Retail inlines the C-string store: the member address goes to ECX first,
 // then strlen, then a direct call to StringBase<char>::set(const char *, int).
@@ -46,5 +56,5 @@ void Gen_0081DBE0::bfmeLoad_0081DD20(const char *filename)
 	bfmeAssign(m_bfmeNameA, filename);
 
 	INI ini;
-	ini.load(AsciiString(filename), 1, 0, (void *)j_0001bb4e);
+	(ini.*bfmeIniLoadPmf())(AsciiString(filename), 1, 0, (void *)j_0001bb4e);
 }
