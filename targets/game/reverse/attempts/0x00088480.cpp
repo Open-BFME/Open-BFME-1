@@ -1,5 +1,7 @@
 // ?ambientAudio00088480@MapObject@@QAEXXZ
-// partial score=0.42 date=2026-09-28
+// partial score=0.789 date=2026-11-03
+// ?ambientAudio00088480@MapObject@@QAEXXZ
+// partial score=0.80 date=2026-11-03 (591 -> 203 diffs; see attempt_support/20261103-00088480-mapobject-ambient-altinfo.md)
 // ?ambientAudio00088480@MapObject@@QAEXXZ -- retail RVA 0x00088480, 1019 bytes (banked, not matched).
 //
 // IDENTITY: class MapObject is proven (matched MapObject::duplicate calls this
@@ -21,8 +23,6 @@
 
 #include "ascii_string.h"
 
-template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
-template <> inline StringBase<char>::~StringBase() { releaseBuffer(); }
 
 typedef long Long;
 typedef int Int;
@@ -265,6 +265,7 @@ void MapObject::ambientAudio00088480()
 	}
 
 	Rva00087750Ref current;
+	AudioEventInfo *altInfo = 0;
 	Rva00087750Ref alternate;
 	if (!disabled && g_bfmeCurEYE && isRuntimeFlag10())
 	{
@@ -296,15 +297,18 @@ void MapObject::ambientAudio00088480()
 		if (tt->get(0x5b))
 		{
 			alternate = soundAt(tt, 0x5b)->m_eventInfo;
-			if (alternate.m_ptr == 0)
+			altInfo = alternate.m_ptr;
+			if (altInfo == 0)
 			{
 				AudioManager *audio = TheAudio;
 					audio->getInfoForAudioEvent(soundAt(m_thingTemplate, 0x5b));
 				alternate = soundAt(m_thingTemplate, 0x5b)->m_eventInfo;
+				altInfo = alternate.m_ptr;
 			}
 		}
-
-		if (current.m_ptr || alternate.m_ptr)
+		else
+			altInfo = alternate.m_ptr;
+		if (current.m_ptr || altInfo)
 		{
 			switch ((Int)g_bfmeCurEYE)
 			{
@@ -318,7 +322,7 @@ void MapObject::ambientAudio00088480()
 				enable = false;
 				if (current.m_ptr && (char)reinterpret_cast<Gen_000874E0 *>(current.m_ptr)->bfmeReady())
 					enable = true;
-				else if (alternate.m_ptr && (char)reinterpret_cast<Gen_000874E0 *>(alternate.m_ptr)->bfmeReady())
+				else if (altInfo && (char)reinterpret_cast<Gen_000874E0 *>(altInfo)->bfmeReady())
 					enable = true;
 				break;
 			}
@@ -337,15 +341,15 @@ void MapObject::ambientAudio00088480()
 			m_rva5c = info;
 			if (current.m_ptr)
 			{
-				m_rva54 = TheAudio->addAudioEvent(&AudioEventRTS(
-					reinterpret_cast<const AsciiString &>(current),
-					reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0));
-				if (alternate.m_ptr)
-				{
-					m_rva58 = TheAudio->addAudioEvent(&AudioEventRTS(
-						reinterpret_cast<const AsciiString &>(alternate),
-						reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0));
-				}
+				AudioEventRTS event(reinterpret_cast<const AsciiString &>(current),
+					reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0);
+				m_rva54 = TheAudio->addAudioEvent(&event);
+			}
+			if (altInfo)
+			{
+				AudioEventRTS event(reinterpret_cast<const AsciiString &>(alternate),
+					reinterpret_cast<const Coord3D *>(reinterpret_cast<BfmeThingBWF *>(this)->bfmeGoBWF()), 0);
+				m_rva58 = TheAudio->addAudioEvent(&event);
 			}
 		}
 		else
