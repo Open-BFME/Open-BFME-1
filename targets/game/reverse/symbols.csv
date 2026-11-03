@@ -80415,6 +80415,7 @@ name,address,notes
 ?bfmeUpdateBFromPointNA@BfmeThingNA@@QAEXABUCoord2D@@@Z,0x0001365B,matched LivingWorldManager caller 0x00615900 reaches exact body 0x0061C220 through this ILT
 ?bfmeUpdateCHE@BfmeThingCHE@@QAEXXZ,0x00004A70,pin
 ?bfmeUpdateCMB@BfmeThingCMB@@QAEXXZ,0x00032231,pin
+?bfmeUpdateDisconnectScreen@@YAXXZ,0x0050E5F0,the this-less spelling retail's DisconnectManager::update 0x0066C8D0 calls through ILT 0x000036FC with no receiver set up; the 18-byte body loads the DisconnectScreen layout 0x012F4960 itself; the same body is the ledger row ?_bfme_updateScreen@DisconnectMenu@@QAEXXZ
 ?bfmeUpdateMacroTexture@BaseHeightMapRenderObjClass@@QAEXVAsciiString@@_N@Z,0x00003CE2,BEnvironmentData parser macro-texture update thunk
 ?bfmeUpdateTexture@BaseHeightMapRenderObjClass@@QAEXVAsciiString@@@Z,0x00003B66,BEnvironmentData parser default-texture update thunk
 ?bfmeUpdateVKP@BfmeUpdVKP@@QAEXXZ,0x0003611A,pin

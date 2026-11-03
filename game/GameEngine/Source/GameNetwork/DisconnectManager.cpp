@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/disconnectmanager /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/disconnectmanager /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -113,6 +113,8 @@ class BFMEConnectionManager : public ConnectionManager
 public:
 	Bool isPlayerInGame(Int slot);
 	Bool isPlayerSlotActive(Int slot);
+	Bool isPlayerConnectedDefaultTimeout(Int slot);
+	Bool isPlayerConnectedForTimeout(Int slot, UnsignedInt timeout);
 	void sendDisconnectFrameCommand();
 	void resendFrameRangeToPlayer(Int playerID, UnsignedInt startFrame, UnsignedInt endFrame);
 };
@@ -232,87 +234,158 @@ void DisconnectManager::init() {
 	*(UnsignedByte *)((char *)this + 0x270) = 0;
 }
 
-// ?update@DisconnectManager@@ present-unmatched
+// BFME's per-tick disconnect-layout refresh (0x0050E5F0, via ILT 0x000036FC)
+// is called with no receiver: it loads the DisconnectScreen layout itself.
+extern void bfmeUpdateDisconnectScreen(void);
+
+// Network vtable slot 30 (+0x78) leaves the game; BFME 2's twin is its slot 37.
+class BFMENetworkLeaveFacade
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
+	virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19();
+	virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+	virtual void slot28(); virtual void slot29();
+	virtual void leaveGame();										// +0x78
+};
+
+// The three no-argument victory-state queries update consults before leaving
+// a stalled game instead of showing the disconnect screen (+0x38, +0x34, +0x40).
+class VictoryConditionsInterface;
+extern VictoryConditionsInterface *TheVictoryConditions;
+class BFMEVictoryConditionsFacade
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
+	virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07();
+	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12();
+	virtual Bool query34();
+	virtual Bool query38();
+	virtual void slot15();
+	virtual Bool query40();
+};
+
+// DisconnectManager::update(ConnectionManager *), retail 0x0066C8D0 (1122
+// bytes, ret 4). ilt_oracle CONFIRMS ?update@DisconnectManager@@QAEXPAVConnectionManager@@@Z;
+// ConnectionManager::update (0x0066AB30) calls it through ILT 0x00049080
+// when a disconnect manager exists. This replaces the Zero Hour body and the
+// naked BFMEDisconnectManager::update lift in native_connection_timing.cpp.
+// Donor: BFME 2 Code/GameEngine/Source/GameNetwork/DisconnectManagerO1.cpp
+// (Open-BFME-2 59e3f8f825, BFME 2 0x004D46FC): BFME's stall detection --
+// per-slot stalls charged once to the slot (or to the local slot when the
+// ping success ratio is under 0.1), the stalled flag at +0x270, leaving the
+// game after five local stalls or with fewer than two players, the
+// last-frame clock, and ping requests to the first ping server every 3000 ms.
+// BFME 1 differences read from this body: the load-screen test is
+// GameLogic+0x118 and there is no game-mode test before the victory queries;
+// m_pingFrame (+0x268) holds the last ping time; ping responses are counted
+// only while pings are needed.
 void DisconnectManager::update(ConnectionManager *conMgr) {
-	if (m_lastFrameTime == -1) {
-		m_lastFrameTime = timeGetTime();
+	bfmeUpdateDisconnectScreen();
+
+	Int numStalled = 0;
+	Bool needPing = FALSE;
+	BFMEConnectionManager *bfmeMgr = (BFMEConnectionManager *)conMgr;
+	UnsignedShort *stallCount = (UnsignedShort *)((char *)this + 0x272);
+	UnsignedByte *stallCharged = (UnsignedByte *)((char *)this + 0x282);
+	Int localSlot = conMgr->getLocalPlayerID();
+	for (Int i = 0; i < MAX_SLOTS; ++i) {
+		if (!bfmeMgr->isPlayerSlotActive(i) && conMgr->isPlayerConnected(i) &&
+			!bfmeMgr->isPlayerConnectedForTimeout(i, 5000)) {
+			needPing = TRUE;
+		}
+		if (!bfmeMgr->isPlayerConnectedDefaultTimeout(i) && !bfmeMgr->isPlayerSlotActive(i) &&
+			conMgr->isPlayerConnected(i)) {
+			++numStalled;
+			Int slot = i;
+			// hasPingSuccessRatioAtLeast(0.1f), inlined here in retail.
+			if (m_pingsSent > 0 && (Real)m_pingsRecieved / (Real)m_pingsSent < 0.1f) {
+				slot = localSlot;
+			}
+			if (!stallCharged[slot]) {
+				stallCharged[slot] = TRUE;
+				++stallCount[slot];
+			}
+		} else {
+			if (i != localSlot) {
+				stallCharged[i] = FALSE;
+			}
+			Int slot = translatedSlotPosition(i, conMgr->getLocalPlayerID());
+			if (slot != -1) {
+				resetPlayerTimeout(slot);
+			}
+		}
 	}
 
-	// The game logic stalls on the frame we are currently waiting for commands on,
-	// so we have to check for the current logic frame being one higher than
-	// the last one we had the commands ready for.
-	if (TheGameLogic->getFrame() == m_lastFrame) {
-		time_t curTime = timeGetTime();
-		if ((curTime - m_lastFrameTime) > TheGlobalData->m_networkDisconnectTime) {
-			if (m_disconnectState == DISCONNECTSTATETYPE_SCREENOFF) {
+	if (numStalled == 0) {
+		stallCharged[localSlot] = FALSE;
+	}
+
+	if (numStalled > 0) {
+		*(UnsignedByte *)((char *)this + 0x270) = TRUE;
+		if ((TheGameLogic == NULL || *(void **)((char *)TheGameLogic + 0x118) == NULL) &&
+			m_disconnectState == DISCONNECTSTATETYPE_SCREENOFF) {
+			if (stallCount[localSlot] >= 5 && TheNetwork != NULL) {
+				((BFMENetworkLeaveFacade *)TheNetwork)->leaveGame();
+			} else if (conMgr->getNumPlayers() < 2 ||
+				(TheVictoryConditions != NULL &&
+				(((BFMEVictoryConditionsFacade *)TheVictoryConditions)->query38() ||
+				((BFMEVictoryConditionsFacade *)TheVictoryConditions)->query34() ||
+				((BFMEVictoryConditionsFacade *)TheVictoryConditions)->query40()))) {
+				if (TheNetwork != NULL) {
+					((BFMENetworkLeaveFacade *)TheNetwork)->leaveGame();
+				}
+			} else {
 				turnOnScreen(conMgr);
 			}
-			sendKeepAlive(conMgr);
 		}
+		sendKeepAlive(conMgr);
 	} else {
-		nextFrame(TheGameLogic->getFrame(), conMgr);
+		*(UnsignedByte *)((char *)this + 0x270) = FALSE;
+		if (m_disconnectState == DISCONNECTSTATETYPE_SCREENON) {
+			turnOffScreen(conMgr->getLocalPlayerID());
+		}
+	}
+
+	if (m_lastFrameTime == -1 || m_lastFrame != TheGameLogic->getFrame()) {
+		m_lastFrame = TheGameLogic->getFrame();
+		m_lastFrameTime = timeGetTime();
 	}
 
 	if (m_disconnectState != DISCONNECTSTATETYPE_SCREENOFF) {
 		updateDisconnectStatus(conMgr);
+	}
 
-		// check to see if we need to send pings
-		if (m_pingFrame < TheGameLogic->getFrame())
-		{
-			time_t curTime = timeGetTime();
-			if ((curTime - m_lastFrameTime) > 10000) /// @todo: plug in some better measure here
-			{
-				m_pingFrame = TheGameLogic->getFrame();
-				m_pingsSent = 0;
-				m_pingsRecieved = 0;
-
-				// Send the pings
-				if (ThePinger)
-				{
-					//use next ping server
-					static int serverIndex = 0;
-					serverIndex++;
-					if( serverIndex >= TheGameSpyConfig->getPingServers().size() )
-						serverIndex = 0;  //wrap back to first ping server
-
-					std::list<AsciiString>::iterator it = TheGameSpyConfig->getPingServers().begin();
-					for( int i = 0;  i < serverIndex;  i++ )
-						it++;
-
-					PingRequest req;
-					req.hostname = it->str();
-					req.repetitions = 5;
-					req.timeout = 2000;
-					m_pingsSent = req.repetitions;
-					ThePinger->addRequest(req);
-					DEBUG_LOG(("DisconnectManager::update() - requesting %d pings of %d from %s\n",
-						req.repetitions, req.timeout, req.hostname.c_str()));
-				}
-			}
+	if (needPing) {
+		if (ThePinger == NULL) {
+			return;
 		}
+		if (timeGetTime() - m_pingFrame > 3000 &&
+			(numStalled == 0 || timeGetTime() - m_timeOfDisconnectScreenOn < 5000)) {
+			PingRequest req;
+			req.hostname = TheGameSpyConfig->getPingServers().begin()->str();
+			req.repetitions = 5;
+			req.timeout = 2000;
+			m_pingsSent += req.repetitions;
+			ThePinger->addRequest(req);
+			m_pingFrame = timeGetTime();
+		}
+	} else {
+		m_pingsSent = 0;
+		m_pingsRecieved = 0;
+		m_pingFrame = 0;
+	}
 
-		// update the ping thread, tracking pings if we are on the same frame
-		if (ThePinger)
-		{
-			PingResponse resp;
-			while (ThePinger->getResponse(resp))
-			{
-				if (m_pingFrame != TheGameLogic->getFrame())
-				{
-					// wrong frame - we're not pinging yet
-					DEBUG_LOG(("DisconnectManager::update() - discarding ping of %d from %s (%d reps)\n",
-						resp.avgPing, resp.hostname.c_str(), resp.repetitions));
-				}
-				else
-				{
-					// right frame
-					DEBUG_LOG(("DisconnectManager::update() - keeping ping of %d from %s (%d reps)\n",
-						resp.avgPing, resp.hostname.c_str(), resp.repetitions));
-					if (resp.avgPing < 2000)
-					{
-						m_pingsRecieved += resp.repetitions;
-					}
-				}
+	if (ThePinger != NULL) {
+		PingResponse resp;
+		while (ThePinger->getResponse(resp)) {
+			if (needPing && resp.avgPing < 2000) {
+				m_pingsRecieved += resp.repetitions;
 			}
 		}
 	}

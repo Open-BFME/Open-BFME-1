@@ -2139,7 +2139,7 @@ emit	game/GameEngine/Source/GameNetwork/GameInfo.cpp	*	843
 emit	game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_joinBestGroupRoomMethodThunk.cpp	*	433
 emit	game/GameEngine/Source/GameNetwork/GameSpy/GameTooltipThunk.cpp	*	1656
 emit	game/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils_populateBuddyGames_Thunk.cpp	*	551
-emit	game/GameEngine/Source/GameNetwork/native_connection_timing.cpp	*	480
+emit	game/GameEngine/Source/GameNetwork/native_connection_timing.cpp	*	247
 emit	game/GameEngine/Source/GameNetwork/native_network_dispatcher.cpp	*	3235
 emit	game/GameEngine/Source/GameNetwork/native_network_interface.cpp	*	113
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawDestructorThunk.cpp	*	682
@@ -129755,7 +129755,6 @@ present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	recal
 present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	resetPacketRouterTimeout@DisconnectManager@@IAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	translatedSlotPosition@DisconnectManager@@IAEHHH@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	untranslatedSlotPosition@DisconnectManager@@IAEHHH@Z	1
-present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	update@DisconnectManager@@	1
 present_unmatched	game/GameEngine/Source/GameNetwork/DisconnectManager.cpp	updateWaitForPacketRouter@DisconnectManager@@IAEXPAVConnectionManager@@@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/DownloadManager.cpp	downloadFile@DownloadManager@@UAEJVAsciiString@@00000_N@Z	1
 present_unmatched	game/GameEngine/Source/GameNetwork/DownloadManager.cpp	init@DownloadManager@@QAEXXZ	1
