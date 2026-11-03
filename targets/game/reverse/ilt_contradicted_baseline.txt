@@ -1255,7 +1255,6 @@ functions	0x00113BE0	?friend_newModuleData@W3DDebrisDraw@@SAPAVModuleData@@PAVIN
 functions	0x00113BE0	?friend_newModuleData@W3DRopeDraw@@SAPAVModuleData@@PAVINI@@@Z
 functions	0x00113D20	?loadPostProcess@ObjectModule@@MAEXXZ
 functions	0x00113F20	??_GObjectModule@@UAEPAXI@Z
-functions	0x00113FB0	?friend_newModuleInstance@PointDefenseLaserUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
 functions	0x00113FB0	?friend_newModuleInstance@SmartBombTargetHomingUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
 functions	0x001144C0	?friend_newModuleData@SpyVisionUpdate@@SAPAVModuleData@@PAVINI@@@Z
 functions	0x00114A40	?friend_newModuleData@EnragedBehavior@@SAPAVModuleData@@PAVINI@@@Z
@@ -2564,11 +2563,8 @@ functions	0x00285650	??1BattlePlanUpdate@@UAE@XZ
 functions	0x002857E0	?getClassMemoryPool@BattlePlanUpdate@@CAPAVMemoryPool@@XZ
 functions	0x00285D00	??_GBattlePlanUpdate@@UAEPAXI@Z
 functions	0x00286DC0	??1SmartBombTargetHomingUpdate@@MAE@XZ
-functions	0x00286F80	??0PointDefenseLaserUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 functions	0x00286F80	??0SmartBombTargetHomingUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 functions	0x00287100	??_GSmartBombTargetHomingUpdate@@MAEPAXI@Z
-functions	0x00287410	??1PointDefenseLaserUpdate@@UAE@XZ
-functions	0x00287410	??1SmartBombTargetHomingUpdate@@UAE@XZ
 functions	0x00287BC0	?parse@BoneFXUpdateModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z
 functions	0x00287D00	?parse@BoneFXUpdateModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z
 functions	0x00287E40	?parseParticleSystem@BoneFXParseParticleSystemShim@@SAXPAVINI@@PAX1PBX@Z

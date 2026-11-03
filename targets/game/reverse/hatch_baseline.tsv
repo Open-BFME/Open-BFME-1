@@ -2122,8 +2122,6 @@ emit	game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateTryToIgniteTh
 emit	game/GameEngine/Source/GameLogic/Object/Update/LargeGroupBonusUpdateDestructorThunk.cpp	*	818
 emit	game/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdateCtorThunk.cpp	*	652
 emit	game/GameEngine/Source/GameLogic/Object/Update/PathfindLayer_isPointOnWall_Thunk.cpp	*	257
-emit	game/GameEngine/Source/GameLogic/Object/Update/PointDefenseLaserUpdateDestructorThunk.cpp	*	346
-emit	game/GameEngine/Source/GameLogic/Object/Update/SmartBombTargetHomingUpdateDestructorThunk.cpp	*	346
 emit	game/GameEngine/Source/GameLogic/Object/Update/SpecialDisguiseUpdateSlot15Rva00267D80Thunk.cpp	*	433
 emit	game/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_ctor_Thunk.cpp	*	252
 emit	game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp	*	944

@@ -3456,8 +3456,9 @@ tint tail rather than returning. Measured on this body only.
 
 ## Block scope keeps an EH local out of a dead argument home (2026-11-03)
 
-0x00287410 (bank `targets/game/reverse/attempts/0x00287410.cpp`, VC7.1
-`/MD /EHsc` STLport, 346 B, probe EXACT) ends with `PickAndPlayInfo info; ...
+0x00287410 (`BloodthirstyUpdate::sacrificeHorde`,
+`game/GameEngine/Source/GameLogic/Object/Update/BloodthirstyUpdateSacrificeHorde.cpp`,
+VC7.1 `/MD /EHsc` STLport, 346 B, exact) ends with `PickAndPlayInfo info; ...
 DrawableList list; list.push_back(o->getDrawable());` after the last use of its
 first parameter. With early returns and both locals at function scope the frame
 was `sub esp,0x28` (spilled `this`, info and list in separate slots). With info

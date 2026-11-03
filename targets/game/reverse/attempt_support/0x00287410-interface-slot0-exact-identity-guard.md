@@ -1,5 +1,9 @@
 # 0x00287410 (346 B): exact C++ banked; landing blocked by identity_guard on 0x00286F80
 
+**Landed s547 (same session)** as `?sacrificeHorde@BloodthirstyUpdate@@UAEXPAVObject@@W4CommandSourceType@@@Z`
+after ea_evidence.csv named the address and ilt_oracle CONFIRMED it; the
+phantom `??0PointDefenseLaserUpdate` alias at 0x00286F80 was retired with it.
+
 Session a1 s547 (2026-11-03), model claude-opus-5-5. No donor source used.
 
 ## Body (exact)

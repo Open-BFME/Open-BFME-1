@@ -1,14 +1,16 @@
-// ?method@Rva00287410Owner@@UAEXPAVObject@@W4CommandSourceType@@@Z
-// partial score=0.0 date=2026-11-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
-// Retail 0x00287410 (346 B, ret 8): slot 0 of the vtable 0x010BC684 that
-// ??0SmartBombTargetHomingUpdate (0x00286F80) installs at +0x20, so the body is
-// entered with ECX at that interface and reaches the module's object through
-// [ecx-0x18]. The method name is unproven; the class keeps the address. The
-// ledger had pinned two destructor names on this extent, which the retail
-// body (two stack arguments, no teardown) refutes.
+// BloodthirstyUpdate::sacrificeHorde, retail 0x00287410 (346 B, ret 8).
+// Identity: EA evidence names this address BloodthirstyUpdate::sacrificeHorde
+// in GameLogic/Object/Update/BloodthirstyUpdate.cpp (ea_evidence.csv, chain +
+// direct), and tools/ilt_oracle.py CONFIRMS the decorated name below. The body
+// is slot 0 of the vtable 0x010BC684 that the BloodthirstyUpdate constructor
+// (0x00286F80) installs at +0x20, so it is entered with ECX at that interface
+// and reaches the module's object through [ecx-0x18]. BFME 2 has the same
+// +0x20 slot-0 body as its placeholder BloodthirstyUpdate::n (donor
+// reverse/functions.csv 0x0044E374); no donor source was used.
+// Evidence: targets/game/reverse/identity_evidence/00287410-bloodthirsty-sacrificehorde.md
 
 #include <list>
 
@@ -16,12 +18,7 @@ typedef bool Bool;
 
 #include "../../command_source_type.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS \
@@ -96,14 +93,15 @@ class GameMessage
 public:
 	enum Type
 	{
-		MSG_RVA00287410_VOICE = 0x7E9
+		MSG_BLOODTHIRSTY_SACRIFICE_VOICE = 0x7E9
 	};
 };
 
 bool pickAndPlayUnitVoiceResponse(const DrawableList *list, GameMessage::Type messageType,
 	PickAndPlayInfo *info);
 
-class Rva00287410Module
+// The UpdateModule part of the module, as far as this body reads it.
+class BloodthirstyUpdateModuleView
 {
 public:
 	virtual void slot00();
@@ -113,21 +111,22 @@ public:
 	char m_unmodelled0C[0x14];
 };
 
-class Rva00287410Interface
+// The interface at +0x20 (vtable 0x010BC684); its slot 0 is this body.
+class BloodthirstyUpdateInterface20
 {
 public:
-	virtual void method(Object *target, CommandSourceType commandSource) = 0;
+	virtual void sacrificeHorde(Object *target, CommandSourceType commandSource) = 0;
 };
 
-class Rva00287410Owner : public Rva00287410Module, public Rva00287410Interface
+class BloodthirstyUpdate : public BloodthirstyUpdateModuleView, public BloodthirstyUpdateInterface20
 {
 public:
-	virtual void method(Object *target, CommandSourceType commandSource);
+	virtual void sacrificeHorde(Object *target, CommandSourceType commandSource);
 
 	Int m_targetID;								// +0x24
 };
 
-void Rva00287410Owner::method(Object *target, CommandSourceType commandSource)
+void BloodthirstyUpdate::sacrificeHorde(Object *target, CommandSourceType commandSource)
 {
 	Object *object = m_object;
 	if (!target || !object)
@@ -162,6 +161,6 @@ void Rva00287410Owner::method(Object *target, CommandSourceType commandSource)
 
 		DrawableList list;
 		list.push_back(object->getDrawable());
-		pickAndPlayUnitVoiceResponse(&list, GameMessage::MSG_RVA00287410_VOICE, &info);
+		pickAndPlayUnitVoiceResponse(&list, GameMessage::MSG_BLOODTHIRSTY_SACRIFICE_VOICE, &info);
 	}
 }
