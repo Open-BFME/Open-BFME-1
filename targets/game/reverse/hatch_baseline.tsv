@@ -2132,7 +2132,6 @@ emit	game/GameEngine/Source/GameLogic/Object/VectorArmorTemplateSetAssignmentThu
 emit	game/GameEngine/Source/GameLogic/Object/Weapon_reloadWithBonus_Thunk.cpp	*	371
 emit	game/GameEngine/Source/GameLogic/Pathfinder/PathfinderFindPathThunk.cpp	*	1016
 emit	game/GameEngine/Source/GameLogic/ScriptEngine/ParameterReadParameterThunk.cpp	*	748
-emit	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_ParseActionFalseDataChunk_Thunk.cpp	*	413
 emit	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsExecuteActionThunk.cpp	*	39600
 emit	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doForceObjectSelection_Thunk.cpp	*	481
 emit	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doMoveCameraAlongWaypointPath_Thunk.cpp	*	563

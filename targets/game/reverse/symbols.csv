@@ -91171,3 +91171,9 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?d_008c64c0@@YAXXZ,0x008C64C0,legacy address-only alias of ?Rva008C64C0@@YAPAVAptValue@@PAV1@H@Z; Rva0089BBF0InitGlobals.cpp registers the native under this symbol after the dump conversion
 ?rva00619C40@Rva0061A0F0Owner@@QAEXPAURva00619C40Entry@@HABVAsciiString@@@Z,0x00619C40,caller-ABI view: retail 0x0061A0F0 loads ECX with its receiver before calling this body through ILT 0x000451FB; the body never reads ECX so the stdcall ledger row and this thiscall member are byte-equivalent;model=claude-opus-5-5
 ?rva006196F0@Rva00619C40Entry@@QAE?AVAsciiString@@XZ,0x006196F0,retail 0x0061A0F0 calls this body through ILT 0x0001DEE4 with ecx=&record and one hidden-return slot; record type named by the 0x006196C0 pin; body is a byte twin of 0x003A4390 (row ?dup_006196f0);model=claude-opus-5-5
+??_C@_07HLELOFGH@Powered?$AA@,0x00CE7FF4,TheObjectFlagsNames[1] (retail .data VA 0x012B3E78 +0x4 points at VA 0x010E7FF4); compiler string literal Powered equals retail
+??_C@_0P@HJHIBKHJ@Indestructible?$AA@,0x00CE7FE0,TheObjectFlagsNames[2] (retail .data VA 0x012B3E78 +0x8 points at VA 0x010E7FE0); compiler string literal Indestructible equals retail
+??_C@_0L@FMIAHPBK@Unsellable?$AA@,0x00CE7FD0,TheObjectFlagsNames[3] (retail .data VA 0x012B3E78 +0xC points at VA 0x010E7FD0); compiler string literal Unsellable equals retail
+??_C@_0L@CGGBDDBB@Selectable?$AA@,0x00C8A5FC,TheObjectFlagsNames[4] (retail .data VA 0x012B3E78 +0x10 points at VA 0x0108A5FC); compiler string literal Selectable equals retail
+??_C@_0P@BEOMKAMG@AI?5Recruitable?$AA@,0x00CE7FBC,TheObjectFlagsNames[5] (retail .data VA 0x012B3E78 +0x14 points at VA 0x010E7FBC); compiler string literal AI Recruitable equals retail
+??_C@_0BC@BAOJGCGM@Player?5Targetable?$AA@,0x00CE7FA4,TheObjectFlagsNames[6] (retail .data VA 0x012B3E78 +0x18 points at VA 0x010E7FA4); compiler string literal Player Targetable equals retail

@@ -2965,7 +2965,6 @@ functions	0x002F8150	?doNamedFireSpecialPowerAtWaypoint@ScriptActions@@IAEXABVAs
 functions	0x002F8420	?doNamedFireSpecialPowerAtNamed@ScriptActions@@IAEXABVAsciiString@@00@Z
 functions	0x002F86D0	?doTeamSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVParameter@@0@Z
 functions	0x002F8880	?doTeamGiveTeamUpgrade@ScriptActions@@IAEXPAVParameter@@0@Z
-functions	0x002F8A50	?ParseActionFalseDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
 functions	0x002F95A0	?doTeamAttackNamed@ScriptActions@@IAEXABVAsciiString@@0@Z
 functions	0x002F9DA0	?doNamedUseCommandButtonAbility@ScriptActions@@IAEXABVAsciiString@@0@Z
 functions	0x002F9E40	?doNamedUseCommandButtonAbilityOnNamed@ScriptActions@@IAEXABVAsciiString@@00@Z

@@ -2628,7 +2628,7 @@ void ScriptAction::WriteActionFalseDataChunk(DataChunkOutput &chunkWriter, Scrip
 *	Input: DataChunkInput 
 *		
 */
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_ParseActionFalseDataChunk_Thunk.cpp
+// (0x002F8A50, once lifted under this name, is ScriptActions::changeObjectPanelFlagForSingleObject: ScriptActionsChangeObjectPanelFlag.cpp)
 // ?ParseActionFalseDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptAction::ParseActionFalseDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {

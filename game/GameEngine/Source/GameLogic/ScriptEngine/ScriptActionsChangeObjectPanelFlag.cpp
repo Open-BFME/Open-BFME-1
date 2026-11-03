@@ -1,6 +1,4 @@
-// ?ParseActionFalseDataChunk@ScriptAction@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-// partial score=0.9903 date=2026-11-03
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x002F8A50, 413 bytes (ret 0xC):
 // ScriptActions::changeObjectPanelFlagForSingleObject. Identity: the body calls
 // itself through ILT 0x0002DD85, which is pinned to this decorated name and
@@ -11,25 +9,18 @@
 // changes: the first five names are tested with StringBase<char>::compare, the
 // last two with the out-of-line operator==, and "Indestructible" also walks
 // the object's contain list and applies the flag to every contained object.
+// Control shape (one else-if chain, then a propagate flag guarding the contain
+// walk) follows the BFME 2 donor Code/GameEngine/Source/GameLogic/ScriptEngine/
+// ScriptActions_doAffectObjectPanelFlagsTeam.cpp (open-bfme-2 45afcff3); the
+// return-per-branch Zero Hour shape swaps the two contain vcall registers.
 // Object offsets: contain +0x1FC, body +0x200, AI +0x204 (matched sibling
 // ScriptActionsTeamMemberWalk.cpp reads AI +0x204 and its +0x32C flag).
 
 typedef bool Bool;
 
-template <class T>
-class StringBase
-{
-public:
-	int compare(const T *s) const;
+#include "ascii_string.h"
 
-private:
-	void *m_data;
-};
-
-class AsciiString : public StringBase<char>
-{
-};
-
+// out-of-line StringBase<char> == const char * (retail callee; the header declares only the template forms)
 bool operator==(const StringBase<char> &s1, const char *s2);
 
 extern const char *TheObjectFlagsNames[];
@@ -130,29 +121,32 @@ protected:
 // ?changeObjectPanelFlagForSingleObject@ScriptActions@@IAEXPAVObject@@ABVAsciiString@@_N@Z
 void ScriptActions::changeObjectPanelFlagForSingleObject(Object *obj, const AsciiString &flagToChange, Bool newVal)
 {
-	// Enabled flag
-	if (flagToChange.compare(TheObjectFlagsNames[0]) == 0)
-	{
+	Bool propagate = false;
+	if (flagToChange.compare(TheObjectFlagsNames[0]) == 0) {
 		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_DISABLED, !newVal);
-		return;
-	}
-
-	// Powered flag
-	if (flagToChange.compare(TheObjectFlagsNames[1]) == 0)
-	{
+	} else if (flagToChange.compare(TheObjectFlagsNames[1]) == 0) {
 		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_UNPOWERED, !newVal);
-		return;
-	}
-
-	// Indestructible flag
-	if (flagToChange.compare(TheObjectFlagsNames[2]) == 0)
-	{
+	} else if (flagToChange.compare(TheObjectFlagsNames[2]) == 0) {
 		BodyModuleInterface *body = obj->getBodyModule();
 		if (body)
 			body->setIndestructible(newVal);
-
-		if (obj->getContain() && obj->getContain()->slot26())
-		{
+		propagate = true;
+	} else if (flagToChange.compare(TheObjectFlagsNames[3]) == 0) {
+		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_UNSELLABLE, newVal);
+	} else if (flagToChange.compare(TheObjectFlagsNames[4]) == 0) {
+		if (obj->isMassSelectable() != newVal)
+			obj->setSelectable(newVal);
+	} else if ((const StringBase<char> &)flagToChange == TheObjectFlagsNames[5]) {
+		if (obj->getAIUpdateInterface())
+			obj->getAIUpdateInterface()->setIsRecruitable(newVal);
+	} else if ((const StringBase<char> &)flagToChange == TheObjectFlagsNames[6]) {
+		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_TARGETABLE, newVal);
+	} else {
+		return;
+	}
+	if (propagate) {
+		ContainModuleInterface *contain = obj->getContain();
+		if (contain && contain->slot26()) {
 			const ContainedObjectList *list = obj->getContain()->slot65();
 			for (ContainedObjectNode *node = list->m_head->m_next; node != list->m_head; node = node->m_next)
 			{
@@ -160,36 +154,5 @@ void ScriptActions::changeObjectPanelFlagForSingleObject(Object *obj, const Asci
 					changeObjectPanelFlagForSingleObject(node->m_object, flagToChange, newVal);
 			}
 		}
-		return;
-	}
-
-	// Unsellable flag
-	if (flagToChange.compare(TheObjectFlagsNames[3]) == 0)
-	{
-		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_UNSELLABLE, newVal);
-		return;
-	}
-
-	// Selectable flag
-	if (flagToChange.compare(TheObjectFlagsNames[4]) == 0)
-	{
-		if (obj->isMassSelectable() != newVal)
-			obj->setSelectable(newVal);
-		return;
-	}
-
-	// AI Recruitable flag
-	if (flagToChange == TheObjectFlagsNames[5])
-	{
-		if (obj->getAIUpdateInterface())
-			obj->getAIUpdateInterface()->setIsRecruitable(newVal);
-		return;
-	}
-
-	// Player targetable flag
-	if (flagToChange == TheObjectFlagsNames[6])
-	{
-		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_TARGETABLE, newVal);
-		return;
 	}
 }
