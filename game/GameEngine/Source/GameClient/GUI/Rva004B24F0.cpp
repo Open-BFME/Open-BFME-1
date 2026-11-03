@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 // Retail 0x004B24F0, 90 bytes: the TooltipText rank helper. It reads an
 // object's experience-level iterator through TheExperienceLevelSystem and
 // returns that node's rank, or 0 when no node matches.

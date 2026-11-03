@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 // Retail 0x0058D770, 90 bytes: byte-for-byte the shape of the matched rank
 // helper 0x004B24F0 (Rva004B24F0.cpp). It reads an object's experience-level
 // node through TheExperienceLevelSystem (ILT 0x0000EDC7) and returns that

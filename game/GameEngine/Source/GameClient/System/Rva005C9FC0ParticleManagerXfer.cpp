@@ -1,4 +1,4 @@
-// cl: /O2 /Ob2 /I. /MD /EHsc /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /Ob2  /MD /EHsc /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include/Common /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB

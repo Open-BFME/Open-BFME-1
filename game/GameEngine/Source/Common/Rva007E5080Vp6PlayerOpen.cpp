@@ -1,8 +1,8 @@
 // Retail 0x007E5080: VP6 player open path.
 // Evidence: targets/game/reverse/identity_evidence/007e5080-vp6-open.md
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /I.
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-#include "game/GameEngine/Include/GameClient/Video.h"
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../Include/GameClient/Video.h"
 
 class Debug
 {

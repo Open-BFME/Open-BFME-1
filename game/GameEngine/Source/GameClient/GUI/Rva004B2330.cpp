@@ -1,4 +1,4 @@
-// cl: /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 // Retail 0x004B2330, 252 bytes: the TooltipText rank-cap helper.  It walks
 // the object's experience-level iterator to the end of the run and returns
 // that node's rank, clamped down to the object's rank limit when the limit

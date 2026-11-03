@@ -1,15 +1,15 @@
 // ?rva00743F80@W3DView@@UAEXXZ
-// cl: /I. /DNDEBUG /DWIN32 /MD /EHsc
+// cl:  /DNDEBUG /DWIN32 /MD /EHsc
 // stlport
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 // ?getPosition@Thing@@QBEPBUCoord3D@@XZ absent-from-retail
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return &m_cachedPos; }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../../../GameEngine/Source/GameLogic/Object/object.h"
 #undef THING_TU_MEMBERS
 
 class BfmeGameLogicPause { public: bool isGamePaused(); };
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
+#include "../../../../GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
 extern GameLogic *TheGameLogic;
 void __fastcall normAngle(float &angle);
 

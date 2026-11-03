@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /I. /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG  /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1
@@ -9,7 +9,7 @@
 #include <list>
 #include <algorithm>
 #include <bitset>
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 template<> inline bool StringBase<char>::isEmpty() const {return m_data == 0 || m_data->length == 0;}
 typedef bool Bool;
 typedef int Int;
@@ -174,7 +174,7 @@ struct KindOfMask : AuraFlags2803<192> {
 };
 #define THING_TU_MEMBERS bool isKindOf(KindOfType) const; bool isAnyKindOf(const KindOfMask &) const;
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const; int getLayer() const; bool applyAttributeModifier(const AsciiString &,int); private: friend class AttributeModifierAuraUpdate; AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../object.h"
 
 class GameLogic;
 extern GameLogic *TheGameLogic;

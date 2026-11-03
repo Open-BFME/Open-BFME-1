@@ -1,6 +1,6 @@
 // ?addBibs@BuildAssistant@@UAEXPBUCoord3D@@PBVThingTemplate@@@Z
 // Recovery: visible non-retaining kind-filter constructor fixes stack reuse.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DWIN32 /D_WINDOWS /Igame/GameEngine/Include/Precompiled /I. /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DWIN32 /D_WINDOWS /Igame/GameEngine/Include/Precompiled  /Igame/GameEngine/Source/Common/System /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
@@ -82,7 +82,7 @@ public:
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GeometryInfo.h
 struct Region2D;
-#include "game/GameEngine/Source/Common/System/geometry.h"
+#include "geometry.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
@@ -116,7 +116,7 @@ private:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 #define THING_TU_MEMBERS const ThingTemplate *getTemplate() const { const ThingTemplate *tmpl = m_template; if (tmpl && tmpl->m_nextOverride) tmpl = static_cast<const ThingTemplate *>(tmpl->m_nextOverride->getFinalOverride()); return tmpl; }
 #define OBJECT_TU_MEMBERS UnsignedInt getKindOfWord(Int word) const { return getTemplate()->getKindOfWord(word); } UnsignedInt getStatusBits() const { return m_privateStatus; }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../GameLogic/Object/object.h"
 
 struct SimpleObjectIteratorClump
 {

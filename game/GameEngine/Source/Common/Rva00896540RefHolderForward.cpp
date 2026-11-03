@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /I.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc 
 // Retail 0x00896540, 111 bytes: a by-value ref-counted handle forwarder. It
 // hands its handle to the 0x00896470 submitter and lets the implicit parameter
 // destructor release the caller's copy. Identity stays address-derived: the

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib 
 // stlport
 // Retail 0x000AF660, 275 bytes through the RET at +0x112. An opaque owner resets
 // six name/index/value-list records keyed by water and river texture INI names.
