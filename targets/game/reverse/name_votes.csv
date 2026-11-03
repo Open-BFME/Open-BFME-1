@@ -5987,3 +5987,4 @@ game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRefCount,af90f25
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,870c241631ef8e68e0376400,claude-opus,20261102210122-68b92d,2026-11-02
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,0a53d9d4b82c2d953cab242e,claude-opus,20261102210122-68b92d,2026-11-02
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|local|Bfme5BridgeList::bfmeAnyBridgeAt|b,cb612bd5bc237d57058cfdf0,claude-opus,20261102210122-68b92d,2026-11-02
+game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeStamp,c2bd5653afa9cbcdf1cf7200,claude-opus,20261103072306-41c6e6,2026-11-03
