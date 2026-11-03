@@ -18,7 +18,7 @@ public:
 	float m_fb4;  // +0xb4
 	float m_fb8;  // +0xb8
 	float m_fbc;  // +0xbc
-	float m_fc0;  // +0xc0
+	float m_elapsedTime;  // +0xc0
 	unsigned char m_c4; // +0xc4
 };
 
@@ -27,8 +27,8 @@ void Rva006996F0Owner::update(float dt)
 	if (!m_c4)
 		return;
 
-	float t = dt * 0.001f + m_fc0;
-	m_fc0 = t;
+	float t = dt * 0.001f + m_elapsedTime;
+	m_elapsedTime = t;
 
 	if (t <= m_fb4)
 	{
