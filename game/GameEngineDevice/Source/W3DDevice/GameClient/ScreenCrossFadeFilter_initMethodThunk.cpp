@@ -63,18 +63,25 @@ extern volatile int g_bfmeProbeBT;
 class BfmeHandleCX;
 extern BfmeHandleCX g_bfmeCurrentCZ;
 
-extern int __identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA");
-
 class W3DFilterInterface
 {
 public:
 	virtual int init(void);
 };
 
+// m_curFadeFrame is defined in W3DShaderManager.cpp (retail 0x0130720C, the
+// recorded ?m_curFadeFrame@ScreenCrossFadeFilter@@1HA); the class view only
+// declares it.  A static member does not change the class layout.
+// MSVC 7.1 folds the static member's access level into its mangled linkage
+// digit: a `protected:` declaration references it as ...@@1HA (retail's form),
+// a `public:` one as ...@@2HA.  The real header (W3DShaderManager.h) and the
+// UpdateFadeLevel thunk both declare it protected, so keep it here too.
 class ScreenCrossFadeFilter : public W3DFilterInterface
 {
 public:
 	int init(void);
+protected:
+	static int m_curFadeFrame;
 };
 
 extern W3DFilterInterface *W3DFilters[];
@@ -86,7 +93,7 @@ int ScreenCrossFadeFilter::init(void)
 	if (!TheDisplay)
 		return 0;
 
-	__identifier("?m_curFadeFrame@ScreenCrossFadeFilter@@1HA") = 0;
+	ScreenCrossFadeFilter::m_curFadeFrame = 0;
 
 	if (!g_bfmeGateBT)
 		return 0;
