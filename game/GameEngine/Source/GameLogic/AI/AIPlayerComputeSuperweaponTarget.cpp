@@ -306,10 +306,7 @@ __forceinline long fast_float2long_round(Real f)
 
 #define REAL_TO_INT_CEIL(x) (fast_float2long_round(fast_float_ceil(x)))
 
-struct Coord2D
-{
-	Real x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Region2D
 {

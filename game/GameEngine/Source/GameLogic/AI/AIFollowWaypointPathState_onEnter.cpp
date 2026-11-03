@@ -60,10 +60,7 @@ enum StateReturnType {
 
 enum KindOfType { KINDOF_PROJECTILE = 0x19 };
 
-struct Coord2D {
-  Real x;
-  Real y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 struct Coord3D {
   Real x;

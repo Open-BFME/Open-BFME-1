@@ -13,12 +13,7 @@ typedef bool Bool;
 typedef float Real;
 
 extern "C" void __cdecl __identifier("?buildBeacons@TerrainLogic@@IAEXXZ")();
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Layout shared with the byte-matched TerrainLogic name lookups: the target
 // reads the location at +0x0c and the next link at +0x1c.

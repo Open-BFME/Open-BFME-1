@@ -18,10 +18,7 @@ __forceinline Int bfmeFloatToInt(Real value)
 #define BFME_CELL_INV 0.1f
 #define BFME_FLOOR(value) bfmeFloatToInt((Real)floor((double)(value)))
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum
 {

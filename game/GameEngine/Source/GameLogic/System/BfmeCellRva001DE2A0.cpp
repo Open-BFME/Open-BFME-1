@@ -16,12 +16,7 @@ typedef float Real;
 extern const Real g_rva01075350;		// retail 0x01075350
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Rva006E6E50Triple
 {

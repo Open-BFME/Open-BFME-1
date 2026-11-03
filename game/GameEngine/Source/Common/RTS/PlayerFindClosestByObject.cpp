@@ -14,12 +14,7 @@ public:
 
 typedef BitFlags<0xC0> KindOfMaskType;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #define BFME_HAVE_COORD3D
 #include "../../GameLogic/Object/object.h"
