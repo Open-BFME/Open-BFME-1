@@ -1001,6 +1001,289 @@ void	Render2DSentenceClass::Build_Sentence_Centered (const WCHAR *text, int *hkX
 
 ////////////////////////////////////////////////////////////////////////////////////
 //
+//	Build_Sentence_NotCentered
+//
+////////////////////////////////////////////////////////////////////////////////////
+// ?Build_Sentence_Not_Centered@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
+// BFME's shared-font helpers, as retail calls them from this body: the
+// character lookup is the out-of-line body at 0x009412F0 and the spacing rule
+// (FontCharsClassGetCharSpacingThunk.cpp, 0x009414D0) is inlined here.
+struct Rva00941400CharRecord
+{
+	unsigned short Value;
+	short Width;
+	short ExtraSpacing;
+};
+
+class Rva00941400Font
+{
+public:
+	const Rva00941400CharRecord *Get_Char_Data( unsigned short ch );
+
+	char Fields00[0x34];
+	int CharOverhang;
+	int PixelOverlap;
+};
+
+static inline bool Bfme_Is_Thai_Char( WCHAR ch )
+{
+	return (ch >= 0x0e01 && ch <= 0x0e3a) || (ch >= 0x0e3f && ch <= 0x0e5b);
+}
+
+static inline int Bfme_Char_Spacing( FontCharsClass *font, WCHAR ch )
+{
+	Rva00941400Font *f = reinterpret_cast<Rva00941400Font *>( font );
+	const Rva00941400CharRecord *data = f->Get_Char_Data( ch );
+	if (data != 0 && data->Width != 0) {
+		if (Bfme_Is_Thai_Char( ch ))
+			return data->Width + data->ExtraSpacing;
+		return data->Width - f->PixelOverlap - f->CharOverhang;
+	}
+	return 0;
+}
+
+// The Thai sentence builder BFME hands the whole string to (0x00941C60, still
+// the generated dump ?d_00941c60): a thiscall on the sentence returning a
+// Vector2, called through its ledger name.
+extern "C" void __identifier("?d_00941c60@@YAXXZ")();
+class Rva00941C60Sentence {};
+typedef Vector2 (Rva00941C60Sentence::*Rva00941C60Build)( const WCHAR *text, int *hkX, int *hkY, bool justCalcExtents );
+
+// Retail locks through the surface slot itself (ecx = &CurSurface) with the
+// discard flag explicit: the ledger's SurfaceClass::Lock(int *, bool) at
+// 0x008FC660, which the Zero Hour header does not declare.
+extern "C" void __identifier("?Lock@SurfaceClass@@QAEPAXPAH_N@Z")();
+class Rva008FC660SurfaceSlot {};
+typedef void *(Rva008FC660SurfaceSlot::*Rva008FC660Lock)( int *pitch, bool discard );
+
+// BFME's chunk recorder is public (0x0093F310); the Zero Hour header keeps it private.
+extern "C" void __identifier("?Record_Sentence_Chunk@Render2DSentenceClass@@QAEXXZ")();
+class Rva0093F310Sentence {};
+typedef void (Rva0093F310Sentence::*Rva0093F310Record)( void );
+
+void W3DRadarResetLock( void );
+void W3DRadarResetUnlock( void );
+
+const WCHAR BFME_BREAK_CHAR = 0x95;
+
+Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, int *hkX, int *hkY, bool justCalcExtents)
+{
+	Vector2 cursor = Cursor;
+	int textureStartX = TextureStartX;
+	float maxX = 0;
+
+	int hotKeyPosX = 0;
+	int hotKeyPosY = 0;
+	bool calcHotKeyX = false;
+	Vector2i textureOffset = TextureOffset;
+	Vector2 extent;
+
+	W3DRadarResetLock ();
+
+	//
+	//	Start fresh
+	//
+	if (!justCalcExtents)
+	{
+		Reset_Sentence_Data ();
+	}
+	Cursor.Set (0, 0);
+
+	//
+	//	Thai text has its own builder
+	//
+	for (const WCHAR *scan = text; *scan != 0; scan++) {
+		if (Bfme_Is_Thai_Char (*scan)) {
+			union { void (*raw)(); Rva00941C60Build member; } build = { __identifier("?d_00941c60@@YAXXZ") };
+			extent = (((Rva00941C60Sentence *)this)->*build.member) (text, hkX, hkY, justCalcExtents);
+			goto done;
+		}
+	}
+
+	//
+	//	Ensure we have a surface to start with
+	//
+	if (CurSurface == NULL) {
+		Allocate_New_Surface (text, justCalcExtents);
+	}
+
+	TextureOffset.Set (TEXTURE_OFFSET, 0);
+	TextureStartX = TEXTURE_OFFSET;
+
+	{
+	float char_height = Font->Get_Char_Height ();
+
+	//
+	//	Loop over all the characters in the string
+	//
+	while (text != NULL) {
+		WCHAR ch = *text++;
+		bool reprocess;
+		bool dontBlit;
+		float char_spacing;
+
+		do {
+			reprocess = false;
+			dontBlit = false;
+			if (ParseHotKey && (ch == L'&') && (*text != 0) && (*text > L' ') && (*text != L'\n') && (*text != BFME_BREAK_CHAR))
+			{
+				hotKeyPosY = Cursor.Y;
+				if (calcHotKeyX)
+					hotKeyPosX = 0;
+				else
+					hotKeyPosX = Cursor.X + TextureOffset.I - TextureStartX;
+
+				ch = *text++;
+				dontBlit = true;
+			}
+			char_spacing = Bfme_Char_Spacing (Font, ch);
+
+			bool encountered_break_char	= (ch == L' ' || ch == L'\n' || ch == BFME_BREAK_CHAR || ch == 0);
+			bool wordBiggerThenLine = ((useHardWordWrap) && ( WrapWidth != 0 ) &&((Cursor.X + TextureOffset.I - TextureStartX + char_spacing) >= WrapWidth));
+
+			if (encountered_break_char || wordBiggerThenLine) {
+				if (!justCalcExtents)
+				{
+					union { void (*raw)(); Rva0093F310Record member; } record = { __identifier("?Record_Sentence_Chunk@Render2DSentenceClass@@QAEXXZ") };
+					(((Rva0093F310Sentence *)this)->*record.member) ();
+				}
+
+				Cursor.X			+= (TextureOffset.I - TextureStartX);
+				maxX = max(maxX, Cursor.X);
+				TextureStartX	= TextureOffset.I;
+
+				if (ch == L' ' || ch == BFME_BREAK_CHAR) {
+					if (WrapWidth > 0) {
+						const WCHAR *word	= text;
+						float word_width	= char_spacing;
+						while ((*word != 0) && (*word > L' ') && (*word != BFME_BREAK_CHAR)) {
+							if (ParseHotKey && (*word == L'&'))
+								word++;
+							word_width += Bfme_Char_Spacing (Font, *word++);
+						}
+
+						if ((Cursor.X + word_width) >= WrapWidth) {
+							Cursor.X = 0;
+							calcHotKeyX = true;
+							Cursor.Y += char_height;
+							do {
+								ch = *text++;
+							} while (ch == L' ' || ch == BFME_BREAK_CHAR);
+							reprocess = true;
+						}
+					}
+					if (ch == BFME_BREAK_CHAR) {
+						do {
+							ch = *text++;
+						} while (ch == BFME_BREAK_CHAR);
+						reprocess = true;
+					}
+				} else if (ch == L'\n') {
+					Cursor.X = 0;
+					Cursor.Y += char_height;
+					do {
+						ch = *text++;
+					} while (ch == L' ');
+					reprocess = true;
+				} else if (wordBiggerThenLine) {
+					Cursor.X = 0;
+					Cursor.Y += char_height;
+				}
+			}
+
+			if (ch == 0)
+				goto finished;
+		} while (reprocess);
+
+		//
+		//	Did the text extend past the edge of the texture?
+		//
+		if ((TextureOffset.I + char_spacing) >= CurrTextureSize) {
+			if (!justCalcExtents)
+			{
+				union { void (*raw)(); Rva0093F310Record member; } record = { __identifier("?Record_Sentence_Chunk@Render2DSentenceClass@@QAEXXZ") };
+				(((Rva0093F310Sentence *)this)->*record.member) ();
+			}
+			Cursor.X			+= (TextureOffset.I - TextureStartX);
+			maxX = max(maxX, Cursor.X);
+
+			TextureStartX		= TEXTURE_OFFSET;
+			TextureOffset.I	= TextureStartX;
+			TextureOffset.J	+= char_height;
+
+			if ((TextureOffset.J + char_height) >= CurrTextureSize) {
+				Allocate_New_Surface (text, justCalcExtents);
+			}
+		}
+
+		if (!justCalcExtents)
+		{
+			if (LockedPtr == NULL) {
+				union { void (*raw)(); Rva008FC660Lock member; } lock = { __identifier("?Lock@SurfaceClass@@QAEPAXPAH_N@Z") };
+				LockedPtr = (uint16 *)(((Rva008FC660SurfaceSlot *)&CurSurface)->*lock.member) (&LockedStride, false);
+			}
+			if (!dontBlit)
+			{
+				Font->Blit_Char (ch, LockedPtr, LockedStride, TextureOffset.I, TextureOffset.J);
+			}
+		}
+		TextureOffset.I += char_spacing;
+	}
+	}
+
+finished:
+	extent.X = maxX + Font->Get_Extra_Overlap();
+	extent.Y = Cursor.Y + Font->Get_Char_Height();
+
+	//
+	//	Center each line of the sentence on the widest one
+	//
+	if (!justCalcExtents && Centered) {
+		int count = SentenceData.Count();
+		if (count > 0) {
+			int start = 0;
+			float top	= SentenceData[0].ScreenRect.Top;
+			float left	= SentenceData[0].ScreenRect.Left;
+			float right	= SentenceData[0].ScreenRect.Right;
+			int i = 1;
+			for (;; i++) {
+				if (i >= count || SentenceData[i].ScreenRect.Top != top) {
+				float line_width = (Font->Get_Extra_Overlap() * 0.5f + right) - left;
+				float argument = (extent.X - line_width) * 0.5f - left + 0.5f;
+				float offset = floor(argument);
+				for (int k = start; k < i; k++) {
+					SentenceData[k].ScreenRect.Left += offset;
+					SentenceData[k].ScreenRect.Right += offset;
+				}
+				if (i >= count)
+					break;
+				start = i;
+top = SentenceData[i].ScreenRect.Top;
+left = SentenceData[i].ScreenRect.Left;
+				}
+				right = SentenceData[i].ScreenRect.Right;
+			}
+		}
+	}
+
+done:
+	W3DRadarResetUnlock ();
+
+	Cursor = cursor;
+	TextureOffset = textureOffset;
+	TextureStartX = textureStartX;
+
+	if(hkX) {
+		*hkX = hotKeyPosX;
+		*hkY = hotKeyPosY;
+	}
+
+	return extent;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
 //	Build_Sentence
 //
 ////////////////////////////////////////////////////////////////////////////////////
