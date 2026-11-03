@@ -26,11 +26,9 @@ public:
 			++thing->m_bfmeRefs;
 	}
 
-	~BfmeHandleCX(void)
-	{
-		if (m_bfmeThing)
-			--m_bfmeThing->m_bfmeRefs;
-	}
+	// Retail's destructor (0x0005CC00, TextureHandleDestructor.cpp) releases
+	// through TextureClass::Release_Ref; no body here needs it.
+	~BfmeHandleCX(void);
 
 	BfmeThingCX *m_bfmeThing;				// +0x00
 };
