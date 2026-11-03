@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /I. /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2  /D_STLP_USE_STATIC_LIB
 // stlport
 // Retail 0x001FD970 uses the update-interface receiver at full object +0x14.
 #define _STLP_NO_EXCEPTIONS 1
@@ -28,7 +28,7 @@ public:
 #define OBJECT_TU_MEMBERS \
     const CountermeasuresBehaviorInterface *getCountermeasuresBehaviorInterface() const; \
     void notifyModelConditionChanged();
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../GameLogic/Object/object.h"
 #undef OBJECT_TU_MEMBERS
 
 class BfmeStrF9 { public: void *m_data; };

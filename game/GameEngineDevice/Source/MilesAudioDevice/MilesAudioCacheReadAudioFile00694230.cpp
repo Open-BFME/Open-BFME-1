@@ -1,11 +1,11 @@
 // ?Rva00694230@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z
-// cl: /O2 /Ob2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /O2 /Ob2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport /Igame/Libraries/Source/WWVegas/WWLib 
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <stl/_alloc.h>
 #include <functional>
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 namespace _STL {
 template <> struct less<AsciiString> {
  bool operator()(const AsciiString &left, const AsciiString &right) const { return left.compare(right) < 0; }

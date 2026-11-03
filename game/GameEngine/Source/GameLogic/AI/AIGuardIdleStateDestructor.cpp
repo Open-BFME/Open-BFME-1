@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /I. /Igame/GameEngine/Include/Precompiled /Iinputs/reference/shims/objectdlink /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc  /Igame/GameEngine/Include/Precompiled /Iinputs/reference/shims/objectdlink /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // AIGuardIdleState portion of retail AIGuard.cpp: update at 0015E510 and
 // complete destructor at 0015D180. The real Team average stays visible and
@@ -20,7 +20,7 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-#include "game/Libraries/Source/WWVegas/WWMath/coord.h"
+#include "../../../../Libraries/Source/WWVegas/WWMath/coord.h"
 class AIUpdateInterface
 {
 public:
@@ -119,7 +119,7 @@ public:
 	Team *findTeamByID(TeamID id);
 };
 
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
+#include "../../Common/Thing/GameLogicObjectLookup.h"
 class AIData
 {
 public:

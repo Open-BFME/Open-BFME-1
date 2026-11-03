@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I.
+// cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS 
 // stlport
 // ClickReactionBehavior secondary interface at +0x20, slot 1, retail RVA
 // 001F7B10 (316 B of code plus its five-entry case table, 340 B). The ctor
@@ -11,7 +11,7 @@
 // test after the switch swaps ESI/EDI for the whole body).
 #include <algorithm>
 #define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../object.h"
 class Rva001BEF20FieldAddress { public: char *get(); };
 class ClickReactionBehavior;
 class Drawable {

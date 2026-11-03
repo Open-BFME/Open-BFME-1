@@ -1,11 +1,11 @@
 // ?apply@Rva0015A600Bucket@@QAEHPBUCoord2D@@H@Z
 // Formation coordinate assignment for the address-derived fixed bucket.
-// cl: /I.
+// cl: 
 
 typedef float Real;
 typedef int Int;
 
-#include "game/Libraries/Include/Lib/Coord2D.h"
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 class Overridable
 {
@@ -43,7 +43,7 @@ public:
     Real &m_formationOffsetY() { return *(Real *)((char *)this + 0x324); } \
     void setFormationID(Int formationID) { m_formationID() = formationID; } \
     void setFormationOffset(const Coord2D &offset) { *(Coord2D *)&m_formationOffsetX() = offset; }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../GameLogic/Object/object.h"
 #undef OBJECT_TU_MEMBERS
 #undef THING_TU_MEMBERS
 

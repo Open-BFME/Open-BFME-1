@@ -1,9 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib 
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-#include "inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
 // Retail 0x00585CF0: preserve the banked type/member labels and keep
 // address tokens on unproven method identities. The range at +24/+28
 // is searched for zero by STL __find at 0x005853B0. Its empty iterator

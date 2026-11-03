@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /I.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB 
 // stlport
 // BfmeAODHordeContainOwner::updateFormationMembers, retail 0x00241050 / 1540 bytes
 // (ret +0x603, INT3 at +0x604). Identity: the matched AOD formation update at
@@ -39,8 +39,8 @@ template<int N> class BitFlags { public: UnsignedInt m_bits[(N + 31) / 32]; };
 // through a member pointer.
 extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(void);
 #define OBJECT_TU_MEMBERS int getID() const { return m_id; } void bfmeClearYG(const BitFlags<320> &flags); Real distanceSquared(const Object *other) const { return ((const Gen_0016E370 *)this)->bfmeDistanceSquared((const BfmeSpotCN *)other); }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
-#include "game/Libraries/Source/WWVegas/WWMath/coord3d.h"
+#include "../object.h"
+#include "../../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 #include <string.h>
 #pragma intrinsic(memcpy)
 inline Coord3D::Coord3D() {}
@@ -61,7 +61,7 @@ public:
 class AI { public: unsigned char pad000[0xc]; Pathfinder *m_pathfinder; };
 extern AI *TheAI;
 #define BFME_GAMELOGIC_LOOKUP_VISIBLE 1
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
 extern GameLogic *TheGameLogic;
 extern const Real g_rva01075350;
 

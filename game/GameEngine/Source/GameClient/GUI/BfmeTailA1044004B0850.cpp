@@ -1,11 +1,11 @@
-// cl: /I.
+// cl: 
 // Button menu screen-position update with an address-qualified identity.
 // Evidence: targets/game/reverse/identity_evidence/004b0850-screen-position.md
 
 #include <stdlib.h>
 #pragma intrinsic(abs)
 
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord2D
 {
@@ -27,7 +27,7 @@ public:
 
 #define BFME_HAVE_COORD3D
 #define OBJECT_TU_MEMBERS bool getWorldspaceBestContactPoint(Coord3D *, const Coord3D *, const char *, int, int, bool) const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../GameLogic/Object/object.h"
 #undef OBJECT_TU_MEMBERS
 
 class GameLogic

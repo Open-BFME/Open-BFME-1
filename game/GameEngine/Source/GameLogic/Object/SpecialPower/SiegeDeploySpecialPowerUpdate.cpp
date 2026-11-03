@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /I.
+// cl: /DNDEBUG /MD 
 //
 // Open-BFME: SiegeDeploySpecialPower::update at retail RVA 0x00266F40
 // (704 bytes including its five-entry switch table).
@@ -19,7 +19,7 @@
 // (direct member access reallocates every register). Field, slot and
 // helper names stay address-derived.
 #include <math.h>
-#include "game/Libraries/Source/WWVegas/WWMath/coord3d.h"
+#include "../../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D&o) {x=o.x;y=o.y;z=o.z;}
@@ -31,8 +31,8 @@ enum ObjectStatusTypes { Rva00266F40Status63=63 };
 // through a member pointer.
 extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(void);
 #define OBJECT_TU_MEMBERS void clearStatus(ObjectStatusTypes); bool bfmeGeometryIntersects(const Object*) const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
-#include "game/GameEngine/Source/GameLogic/command_source_type.h"
+#include "../object.h"
+#include "../../command_source_type.h"
 class Rva00266EB0SiegeDeployBase {public: void transition(int);void clearStatusBit63();};
 class GameLogic {public: Object *findObjectByID(int);};
 extern GameLogic *TheGameLogic;

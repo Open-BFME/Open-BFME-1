@@ -1,5 +1,5 @@
 // ?rva0023D230@BfmeHordeContainOwner@@QAEPAVObject@@H@Z
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /I. /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc  /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // stlport
 
 #define __PLACEMENT_VEC_NEW_INLINE
@@ -36,7 +36,7 @@ private:
 
 // Object +4 holds the native override pointer; the shared header stores its raw representation.
 #define THING_TU_MEMBERS const ThingTemplate *getTemplate() const { return *(const OVERRIDE<ThingTemplate> *)&m_template; } Bool isKindOf(KindOfType kind) const { return getTemplate()->isKindOf(kind); }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../object.h"
 
 struct BfmeMemberIndexNode
 {

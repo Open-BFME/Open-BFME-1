@@ -1,5 +1,5 @@
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E3650Struct@@@Z
-// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /I.
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB 
 // stlport
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E3650Struct@@@Z
 // Retail 0x003E3650: cell-space Bresenham walk with the BFME obstacle
@@ -48,10 +48,10 @@ public:
 	unsigned int m_kindOf[6];
 };
 
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../Object/object.h"
 
 #define BFME_GAMELOGIC_LOOKUP_VISIBLE
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
+#include "../../Common/Thing/GameLogicObjectLookup.h"
 
 extern GameLogic *TheGameLogic; // GameLogic.cpp, VA 012F0898
 

@@ -1,5 +1,5 @@
 // ?rva00380EE0@ExperienceLevelSystem@@QAEHPAVObject@@_N@Z
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 //
 // Retail 0x00380EE0, 284 bytes.  The existing ExperienceTracker
 // addExperiencePoints body at 0x001B28C0 loads TheExperienceLevelSystem and
@@ -55,7 +55,7 @@ private:
 };
 
 #define OBJECT_TU_MEMBERS ExperienceTracker *getExperienceTracker() const { return m_experienceTracker; }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../GameLogic/Object/object.h"
 #undef OBJECT_TU_MEMBERS
 
 class ExperienceLevel
