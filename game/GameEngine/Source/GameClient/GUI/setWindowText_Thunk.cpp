@@ -1,428 +1,94 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// readable body of ?setWindowText@@YAXPAVGameWindow@@VAsciiString@@@Z: game/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp
+// setWindowText, retail 0x004864E0 (416 bytes): reject an empty label, fetch
+// the translated text from TheGameText, then hand it to the gadget setter the
+// window style selects, else GameWindow::winSetText.
+//
+// The body is a file static that retail compiled with MSVC's private
+// convention: its one caller (createWindow, 0x004874A0) passes the GameWindow
+// in ESI and the by-value AsciiString label on the stack.
+//
+// [BFME 2 donor] Code/GameEngine/Source/GameClient/GUI/
+// GameWindowManagerScript_setWindowText.cpp (45afcff3): the same static with a
+// caller scaffold for the convention, and a UnicodeString whose copy
+// constructor body is visible and makes a call, which stores esp into the
+// temporary's unwind slot before `mov ecx,esp` at every by-value argument as
+// retail does. The setters are called by their ledger names: style bit 0x01
+// reaches 0x004BC6E0 and bit 0x02 0x004BD400, both through ILT thunks.
 
-class GameWindow;
-class AsciiString {};
-void setWindowText(GameWindow *, AsciiString);
-// ?setWindowText@@YAXPAVGameWindow@@VAsciiString@@@Z
-__declspec(naked) void setWindowText(GameWindow *, AsciiString)
+#include "string_base.h"
+
+template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+
+class AsciiString : public StringBase<char>
 {
-	__asm {
-		__emit 0x6a
-		__emit 0xff
-		__emit 0x68
-		__emit 0x40
-		__emit 0x6a
-		__emit 0x02
-		__emit 0x01
-		__emit 0x64
-		__emit 0xa1
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x50
-		__emit 0x64
-		__emit 0x89
-		__emit 0x25
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x83
-		__emit 0xec
-		__emit 0x10
-		__emit 0x57
-		__emit 0x8b
-		__emit 0x44
-		__emit 0x24
-		__emit 0x24
-		__emit 0x33
-		__emit 0xd2
-		__emit 0x3b
-		__emit 0xc2
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x54
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x66
-		__emit 0x39
-		__emit 0x50
-		__emit 0x04
-		__emit 0x0f
-		__emit 0x84
-		__emit 0x4a
-		__emit 0x01
-		__emit 0x00
-		__emit 0x00
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x04
-		__emit 0x89
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0x8b
-		__emit 0x0d
-		__emit 0x7c
-		__emit 0x14
-		__emit 0x2f
-		__emit 0x01
-		__emit 0x8b
-		__emit 0x39
-		__emit 0x83
-		__emit 0xc0
-		__emit 0x08
-		__emit 0x52
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x14
-		__emit 0x50
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x28
-		__emit 0x02
-		__emit 0xff
-		__emit 0x57
-		__emit 0x28
-		__emit 0x50
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x20
-		__emit 0x03
-		__emit 0xe8
-		__emit 0xea
-		__emit 0x1f
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x02
-		__emit 0xe8
-		__emit 0x7c
-		__emit 0x1c
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xf7
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0xa8
-		__emit 0x01
-		__emit 0x74
-		__emit 0x1f
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x52
-		__emit 0xe8
-		__emit 0x90
-		__emit 0x1e
-		__emit 0x40
-		__emit 0x00
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x7b
-		__emit 0xbf
-		__emit 0xbb
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0xe9
-		__emit 0xc5
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xcd
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0xa8
-		__emit 0x02
-		__emit 0x74
-		__emit 0x1f
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x66
-		__emit 0x1e
-		__emit 0x40
-		__emit 0x00
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x8b
-		__emit 0x3f
-		__emit 0xbb
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0xe9
-		__emit 0x9b
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xa3
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0xa8
-		__emit 0x04
-		__emit 0x74
-		__emit 0x1c
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x52
-		__emit 0xe8
-		__emit 0x3c
-		__emit 0x1e
-		__emit 0x40
-		__emit 0x00
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x77
-		__emit 0x1c
-		__emit 0xb9
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x74
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x7c
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x84
-		__emit 0xc0
-		__emit 0x79
-		__emit 0x1c
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x50
-		__emit 0xe8
-		__emit 0x15
-		__emit 0x1e
-		__emit 0x40
-		__emit 0x00
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x7e
-		__emit 0x5b
-		__emit 0xba
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x4d
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0x55
-		__emit 0x25
-		__emit 0xb8
-		__emit 0xff
-		__emit 0xa8
-		__emit 0x40
-		__emit 0x74
-		__emit 0x2a
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x24
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x0c
-		__emit 0xe8
-		__emit 0xe1
-		__emit 0x2b
-		__emit 0x40
-		__emit 0x00
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x54
-		__emit 0x24
-		__emit 0x0c
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x52
-		__emit 0xe8
-		__emit 0xe0
-		__emit 0x1d
-		__emit 0x40
-		__emit 0x00
-		__emit 0x56
-		__emit 0xe8
-		__emit 0x4e
-		__emit 0x62
-		__emit 0xb8
-		__emit 0xff
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x08
-		__emit 0xeb
-		__emit 0x18
-		__emit 0x51
-		__emit 0x8d
-		__emit 0x44
-		__emit 0x24
-		__emit 0x08
-		__emit 0x89
-		__emit 0x64
-		__emit 0x24
-		__emit 0x14
-		__emit 0x8b
-		__emit 0xcc
-		__emit 0x50
-		__emit 0xe8
-		__emit 0xc4
-		__emit 0x1d
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8b
-		__emit 0xce
-		__emit 0xe8
-		__emit 0xf0
-		__emit 0x35
-		__emit 0xbc
-		__emit 0xff
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x08
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x01
-		__emit 0xe8
-		__emit 0x7f
-		__emit 0x1b
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x04
-		__emit 0xc6
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0x00
-		__emit 0xe8
-		__emit 0x71
-		__emit 0x1b
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8d
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x24
-		__emit 0xc7
-		__emit 0x44
-		__emit 0x24
-		__emit 0x1c
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xff
-		__emit 0xe8
-		__emit 0xd0
-		__emit 0x12
-		__emit 0x40
-		__emit 0x00
-		__emit 0x8b
-		__emit 0x4c
-		__emit 0x24
-		__emit 0x14
-		__emit 0x64
-		__emit 0x89
-		__emit 0x0d
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x00
-		__emit 0x5f
-		__emit 0x83
-		__emit 0xc4
-		__emit 0x1c
-		__emit 0xc3
+public:
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+};
+
+class UnicodeString : public StringBase<unsigned short>
+{
+public:
+	UnicodeString() {}
+	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
+	~UnicodeString() {}
+	UnicodeString &operator=(const UnicodeString &other) { set(other); return *this; }
+	void translate(const AsciiString &that);
+};
+
+class GameTextInterface
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+	virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+	virtual void slot20(); virtual void slot24();
+	virtual UnicodeString fetch(const char *label, bool *exists);
+};
+extern GameTextInterface *TheGameText;
+
+class GameWindow
+{
+public:
+	unsigned int winGetStyle(void);
+	virtual int winSetText(UnicodeString newText);
+};
+
+void GadgetRadioSetText(GameWindow *window, UnicodeString text);
+void rva004BD400(GameWindow *window, UnicodeString text);
+void GadgetCheckBoxSetText(GameWindow *window, UnicodeString text);
+void GadgetStaticTextSetText(GameWindow *window, UnicodeString text);
+void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
+
+// ?setWindowText@@YAXPAVGameWindow@@VAsciiString@@@Z
+static __declspec(noinline) void setWindowText(GameWindow *window, AsciiString textLabel)
+{
+	if (textLabel.isEmpty())
+		return;
+
+	UnicodeString theText, entryText;
+	theText = TheGameText->fetch(textLabel.str(), 0);
+	if (window->winGetStyle() & 0x00000001)
+		GadgetRadioSetText(window, theText);
+	else if (window->winGetStyle() & 0x00000002)
+		rva004BD400(window, theText);
+	else if (window->winGetStyle() & 0x00000004)
+		GadgetCheckBoxSetText(window, theText);
+	else if (window->winGetStyle() & 0x00000080)
+		GadgetStaticTextSetText(window, theText);
+	else if (window->winGetStyle() & 0x00000040)
+	{
+		entryText.translate(textLabel);
+		GadgetTextEntrySetText(window, entryText);
 	}
+	else
+		window->GameWindow::winSetText(theText);
+}
+
+// ?bfme_setWindowTextCaller@@YAXPAVGameWindow@@ABVAsciiString@@@Z absent-from-retail
+// Codegen scaffold standing in for createWindow (0x004874A0, matched in its own
+// unit): a visible caller keeps the static emitted with the private convention.
+void bfme_setWindowTextCaller(GameWindow *window, const AsciiString &label)
+{
+	setWindowText(window, label);
 }
