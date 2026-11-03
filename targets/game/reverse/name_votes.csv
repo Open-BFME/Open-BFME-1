@@ -5995,3 +5995,5 @@ game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb8,4c03c2
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fc0,7a00b9ac71a8766f8d8b5424,claude-opus,20261103081930-509be1,2026-11-03
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_c4,56d31c2a74001051439b19c3,claude-opus,20261103081930-509be1,2026-11-03
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|t,5bbf34b6f0e378b281abfa88,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/BfmeConv1279.cpp|member||m_bfme04,d584e1a601d74627f39f0edc,claude-opus,20261103082129-060f87,2026-11-03
+game/GameEngine/Source/Common/BfmeConv1279.cpp|member||m_bfme104,fab203a39fdbc72177e5ae69,claude-opus,20261103082129-060f87,2026-11-03
