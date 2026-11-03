@@ -150,6 +150,15 @@ class GameSlot {
     int getStartPos() const { return m_startPos; }
     void setTeamNumber(int t) { m_teamNumber = t; }
     void setNATBehavior(int b) { m_nat = b; }
+    int getState() const { return m_state; }
+    bool isAccepted() const { return m_isAccepted != 0; }
+    bool hasMap() const { return m_hasMap != 0; }
+    int getColor() const { return m_color; }
+    int getPlayerTemplate() const { return m_playerTemplate; }
+    int getTeamNumber() const { return m_teamNumber; }
+    int getNATBehavior() const { return m_nat; }
+    // The formatter reads the connection record's ip/port as plain members.
+    friend AsciiString GameInfoToAsciiString(const class GameInfo *game, Bool includeSlots);
 
   private:
     SlotState m_state;
@@ -173,14 +182,85 @@ class GameInfo {
     GameSlot *getSlot(int i) { return i < 0 || i >= 8 ? 0 : m_slots[i]; }
     void setMapContentsMask(int n) { m_mapContentsMask = n; }
     void setSeed(int n) { m_seed = n; }
+    const GameSlot *getConstSlot(int i) const { return i < 0 || i >= 8 ? 0 : m_slots[i]; }
+    AsciiString getMap() const;
+    int getMapContentsMask() const { return m_mapContentsMask; }
+    unsigned int getMapCRC() const { return m_mapCRC; }
+    unsigned int getMapSize() const { return m_mapSize; }
+    int getSeed() const { return m_seed; }
 
   private:
     char m_unknown00[0x14];
     GameSlot *m_slots[8];
-    char m_unknown34[0x14];
+    char m_unknown34[0x0C];
+    unsigned int m_mapCRC, m_mapSize;
     int m_mapContentsMask, m_seed;
 };
 static const char slotListID = 'S';
+
+// Retail inlines the one-character and AsciiString concat forwarders: every
+// call site below encodes StringBase<char>::concat(const char *, int).
+template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
+template <> inline void StringBase<char>::concat(const StringBase<char> &s) {
+    concat(s.str(), s.getLength());
+}
+extern AsciiString _Rva00621170MapPathHelperConcat(const AsciiString &, bool);
+extern std::string WideCharStringToMultiByte(const unsigned short *orig);
+
+// GameInfoToAsciiString at 0x00621600 (ilt_oracle CONFIRMS the name at ILT
+// 0x0000E70A; the old lift named it GameInfo::isSandbox): the ZH GameInfo.cpp formatter with a
+// three-digit map mask, the slot name gated by includeSlots and the slot
+// fields formatted in one pass. Callers RecorderClass startRecording and
+// SkirmishPreferences::setSlotList reach it through ILT 0x0000E70A.
+AsciiString GameInfoToAsciiString(const GameInfo *game, Bool includeSlots) {
+    if (!game)
+        return AsciiString::TheEmptyString;
+
+    AsciiString newMapName = _Rva00621170MapPathHelperConcat(game->getMap(), FALSE);
+    AsciiString optionsString;
+    optionsString.format("M=%3.3x%s;MC=%X;MS=%d;SD=%d;", game->getMapContentsMask(),
+                         newMapName.str(), game->getMapCRC(), game->getMapSize(),
+                         game->getSeed());
+
+    // add player info for each slot
+    optionsString.concat(slotListID);
+    optionsString.concat('=');
+    for (Int i = 0; i < MAX_SLOTS; ++i) {
+        const GameSlot *slot = game->getConstSlot(i);
+
+        AsciiString str;
+        if (slot && slot->getState() == SLOT_PLAYER) {
+            AsciiString name = WideCharStringToMultiByte(slot->getName().str()).c_str();
+            // ip/port are plain member reads, as in the [BFME 2 donor]
+            // GameSlotApparent.cpp: through getters the pushes reschedule.
+            str.format("H%s,%X,%d,%c%c,%d,%d,%d,%d,%d:", includeSlots ? name.str() : "",
+                       slot->m_connectInfo.m_ip, slot->m_connectInfo.m_port, slot->isAccepted() ? 'T' : 'F',
+                       slot->hasMap() ? 'T' : 'F', slot->getColor(), slot->getPlayerTemplate(),
+                       slot->getStartPos(), slot->getTeamNumber(), slot->getNATBehavior());
+        } else if (slot && (slot->getState() == SLOT_EASY_AI || slot->getState() == SLOT_MED_AI ||
+                            slot->getState() == SLOT_BRUTAL_AI)) {
+            char c;
+            if (slot->getState() == SLOT_EASY_AI)
+                c = 'E';
+            else if (slot->getState() == SLOT_MED_AI)
+                c = 'M';
+            else
+                c = 'H';
+            str.format("C%c,%d,%d,%d,%d:", c, slot->getColor(), slot->getPlayerTemplate(),
+                       slot->getStartPos(), slot->getTeamNumber());
+        } else if (slot && slot->getState() == SLOT_OPEN) {
+            str.StringBase<char>::set("O:", 2);
+        } else if (slot && slot->getState() == SLOT_CLOSED) {
+            str.StringBase<char>::set("X:", 2);
+        } else {
+            str.StringBase<char>::set("X:", 2);
+        }
+        optionsString.concat(str);
+    }
+    optionsString.concat(';');
+
+    return optionsString;
+}
 
 static Int grabHexInt3(const char *s) {
     char tmp[6] = "0xfff";
