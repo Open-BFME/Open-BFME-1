@@ -42,6 +42,14 @@
 #define getAI getAI_ZHLayout
 #include "string_base.h"
 #define BFME_ASCIISTRING_STRINGBASE_COPY
+// The aicommandoutofline AI.h keeps AICommandInterface::aiMoveToPosition inline
+// with Zero Hour's 0x94-byte AICommandParms, which emits a non-retail 142-byte
+// COMDAT here ahead of retail's 219-byte body 0x000D86C0 in link order. These
+// macros set Zero Hour's class aside and turn the header's body into a
+// declaration; BFME's 0x9C-byte class and the body are defined below the
+// includes (doNamedMoveToWaypoint only schedules like retail with it visible).
+#define AICommandParms ZHAICommandParms
+#define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -129,6 +137,72 @@ public:
 #include "GameLogic/VictoryConditions.h"
 #include "GameLogic/AIPathfind.h"
 #undef findSpecialPowerTemplate
+#undef aiMoveToPosition
+#undef AICommandParms
+
+// The private STLport pool entry at RVA 0x0082E5F0 is a static __cdecl
+// member. Refer to its exact symbol without redeclaring the allocator; throw(...)
+// keeps /EHsc from treating the extern "C" declaration as nothrow (retail's
+// block destructor runs at unwind state -1, as for STLport's C++ member).
+extern "C" void __cdecl __identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(
+	void *memory, unsigned int bytes) throw(...);
+
+// Retail's AICommandParms::m_coords is STLport's node-allocated vector<Coord3D>;
+// this unit's STLport configuration (_STLP_USE_NEWALLOC) would free it through
+// __new_alloc, so the member is spelled as the pool-aware view.
+class BfmeAICommandCoordVectorBase
+{
+public:
+	~BfmeAICommandCoordVectorBase()
+	{
+		if (m_begin != 0) {
+			unsigned int bytes = (unsigned int)(m_capacityEnd - m_begin) * sizeof(Coord3D);
+			if (bytes > 0x80)
+				::operator delete(m_begin);
+			else
+				__identifier("?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")(m_begin, bytes);
+		}
+	}
+
+	Coord3D *m_begin;
+	Coord3D *m_end;
+	Coord3D *m_capacityEnd;
+};
+
+class BfmeAICommandCoordVector : public BfmeAICommandCoordVectorBase
+{
+public:
+	~BfmeAICommandCoordVector() {}
+};
+
+// BFME's 0x9C-byte block, as AICommandInterfaceMovementOrders.cpp writes it out;
+// DamageInfo is opaque because no body here reads it.
+class AICommandParms
+{
+public:
+	AICommandParms( AICommandType cmd, CommandSourceType commandSource );
+
+	AICommandType m_cmd;						// +0x00
+	CommandSourceType m_cmdSource;				// +0x04
+	Coord3D m_pos;								// +0x08
+	Object *m_obj;								// +0x14
+	Object *m_otherObj;							// +0x18
+	const Team *m_team;							// +0x1C
+	BfmeAICommandCoordVector m_coords;			// +0x20
+	const Waypoint *m_waypoint;					// +0x2C
+	const PolygonTrigger *m_polygon;			// +0x30
+	Int m_intValue;								// +0x34
+	char m_bfmeDamageInfo[0x5C];				// +0x38
+	const CommandButton *m_commandButton;		// +0x94
+	Path *m_path;								// +0x98
+};
+
+inline void AICommandInterface::aiMoveToPosition( const Coord3D *pos, CommandSourceType cmdSource )
+{
+	AICommandParms parms( AICMD_MOVE_TO_POSITION, cmdSource );
+	parms.m_pos = *pos;
+	aiDoCommand( (const ZHAICommandParms *)&parms );
+}
 
 // BFME's Display vtable puts setBorderShroudLevel at slot 69; the ZH header
 // lands it at 47, so the tail jump comes out [eax+0xbc] instead of [eax+0x114].
