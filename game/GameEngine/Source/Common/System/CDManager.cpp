@@ -135,7 +135,6 @@ AsciiString CDDrive::getPath( void )
 // CDDrive::getDiskName
 //============================================================================
 
-// ?getDiskName@CDDrive@@ present-unmatched
 AsciiString CDDrive::getDiskName( void )
 {
 	return m_diskName;
