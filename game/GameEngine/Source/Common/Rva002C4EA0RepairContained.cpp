@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS 
 // stlport
 //
 // Orders every contained member whose template carries kind bit 0x4000 to
@@ -7,8 +7,8 @@
 // name keeps the address. Shape follows the BFME 2 HordeWorkerAIUpdate private
 // repair donor.
 #define OBJECT_TU_MEMBERS void *unidentified_001BFE20() const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
-#include "game/GameEngine/Source/GameLogic/command_source_type.h"
+#include "../GameLogic/Object/object.h"
+#include "../GameLogic/command_source_type.h"
 #include <list>
 class ActionManager {
 public: bool canRepairObject(const Object *,const Object *,CommandSourceType);

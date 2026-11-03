@@ -1,7 +1,7 @@
 // Retail 0x007E4D40: movie paths and signed colour-table initialization.
 // Evidence: targets/game/reverse/identity_evidence/007e4d40-movie-init.md
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /I.
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include <stdio.h>
 #include <string.h>
 

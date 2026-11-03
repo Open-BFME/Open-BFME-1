@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 
 // This retail helper adjusts template damage values by an object's rounded bonus.
 // Static linkage preserves the private register inputs used by its caller.
@@ -7,7 +7,7 @@
 #include <new>
 
 #define OBJECT_TU_MEMBERS bool getAttributeModifierBonus(int, float *) const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../GameLogic/Object/object.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

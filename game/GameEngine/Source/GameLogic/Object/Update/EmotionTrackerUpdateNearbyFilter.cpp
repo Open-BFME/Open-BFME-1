@@ -1,4 +1,4 @@
-// cl: /O2 /MD /EHsc /DNDEBUG /I.
+// cl: /O2 /MD /EHsc /DNDEBUG 
 //
 // The object filter EmotionTrackerUpdate builds around its owner: it caches the
 // owner's controlling player and counts enemy and ally shroud-cell occupants at
@@ -8,8 +8,8 @@
 class Player;
 #include <new>
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../object.h"
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class EmotionTrackerUpdate;
 class PlayerList {public: unsigned short getPlayersWithRelationship(int,int,bool);};
 extern PlayerList *ThePlayerList;

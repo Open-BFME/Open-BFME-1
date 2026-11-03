@@ -1,9 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib 
 typedef unsigned short wchar_t;
 // The body at 0x0040F160 has no named caller or proven owner, so keep its
 // owner and method RVA-qualified. The manager and DisplayString slots used
 // here are grounded by GameWindowTransitionsStyles.cpp and SuperweaponInfo.cpp.
-#include "inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
+#include "../../../../inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
 
 typedef unsigned int UnsignedInt;
 typedef float Real;

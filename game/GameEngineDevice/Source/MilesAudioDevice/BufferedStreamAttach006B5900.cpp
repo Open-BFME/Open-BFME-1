@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib /I.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWLib 
 // ?attach@BufferedStreamStarter006B7E70@@QAEXPAUStreamSlot006B7E70@@PAVFileRef006B7E70@@H@Z
 // Evidence: targets/game/reverse/identity_evidence/006b5900-inline-accessors.md
 #include "ascii_string.h"
@@ -16,7 +16,7 @@ extern void j_0001dff2(); extern void j_00029910(); extern void j_00047519(); ex
 extern void j_0000268a(); extern void j_0001079e(); extern void j_00021ff3();
 extern void j_000298e8(); extern void j_0003aa6c(); extern void j_0004066f(); extern void j_00046a33();
 template<class M> inline M member006B7E70(void (*fn)()) { union { void(*f)(); M m; } u; u.f=fn; return u.m; }
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 struct WaveInfo006B7E70 { int format; void *data; unsigned size; int rate,bits,channels; unsigned extra[3]; };
 struct SampleFile006B7E70 { char pad00[8]; WaveInfo006B7E70 info; int m_rva006B5900Word2c; };
 extern AsciiString Rva01336E50EmptyString;

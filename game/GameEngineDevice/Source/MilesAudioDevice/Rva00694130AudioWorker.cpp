@@ -1,8 +1,8 @@
 // ?rva00694130@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAudioEventRef@@H@Z
 // Native 203-byte body. The filename temporary binds to the helper by const reference.
 // Identity and ABI: targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /I.
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 extern "C" void __cdecl __identifier("?d_00693b90@@YAXXZ")();
 struct AudioEventInfo { char pad0[0x84]; int m_soundType; };
 class RvaAudioEventFilenameForPortion { public: AsciiString getFilenameForPlayPortion(); };

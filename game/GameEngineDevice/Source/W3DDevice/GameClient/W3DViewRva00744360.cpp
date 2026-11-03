@@ -1,5 +1,5 @@
 // ?rva00744360HasClearShot@W3DView@@UAE_NW4ObjectID@@0H@Z
-// cl: /I. /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
+// cl:  /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WWDebug
 // BFME W3DView virtual at vtable 0x011217A0 slot 155 (ILT 0x000217E7), retail 0x00744360.
 // Casts a ray between two objects; false when a different object's drawable blocks it.
 // Evidence: targets/game/reverse/identity_evidence/00744360-vector-evaluation.md
@@ -20,18 +20,18 @@ struct Coord3D
 	Real z;
 };
 
-#include "game/Libraries/Source/WWVegas/WWMath/vector3.h"
-#include "game/Libraries/Source/WWVegas/WWMath/castres.h"
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
+#include "../../../../Libraries/Source/WWVegas/WWMath/castres.h"
 // Retail calls LineSegClass::Set and RayCollisionTestClass construction out of line.
 #pragma auto_inline(off)
-#include "game/Libraries/Source/WWVegas/WW3D2/coltest.h"
+#include "../../../../Libraries/Source/WWVegas/WW3D2/coltest.h"
 #pragma auto_inline(on)
 
 #define BFME_HAVE_OBJECTID
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return &m_cachedPos; }
 #define OBJECT_TU_MEMBERS ObjectID getID() const { return m_id; }
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../../../GameEngine/Source/GameLogic/Object/object.h"
 #undef THING_TU_MEMBERS
 #undef OBJECT_TU_MEMBERS
 
@@ -51,7 +51,7 @@ extern GameLogic *TheGameLogic;
 static __forceinline void rva00744360SetEndStart(LineSegClass &line,
     const Vector3 &p1, const Vector3 &p0) { line.Set(p0, p1); }
 
-#include "game/Libraries/Source/WWVegas/WW3D2/rendobj.h"
+#include "../../../../Libraries/Source/WWVegas/WW3D2/rendobj.h"
 
 class RTS3DScene
 {

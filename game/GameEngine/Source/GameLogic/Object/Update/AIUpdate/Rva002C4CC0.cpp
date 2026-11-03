@@ -1,10 +1,10 @@
-// cl: /DNDEBUG /MD /I.
+// cl: /DNDEBUG /MD 
 // stlport
 #define OBJECT_TU_MEMBERS void *unidentified_001BFE20() const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../object.h"
 #undef OBJECT_TU_MEMBERS
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
-#include "game/GameEngine/Source/GameLogic/command_source_type.h"
+#include "../../../../Common/Thing/GameLogicObjectLookup.h"
+#include "../../../command_source_type.h"
 extern GameLogic *TheGameLogic;
 class BfmeC979 { public: void bfmeGo979C(); };
 class Rva002C4910 {};

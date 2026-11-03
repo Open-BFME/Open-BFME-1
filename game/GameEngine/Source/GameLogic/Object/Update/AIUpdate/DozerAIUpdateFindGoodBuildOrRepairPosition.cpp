@@ -1,4 +1,4 @@
-// cl: /Igame/GameEngine/Include/Precompiled /I. /Igame/GameEngine/Source/Common/System /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug
+// cl: /Igame/GameEngine/Include/Precompiled  /Igame/GameEngine/Source/Common/System /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug
 // DozerAIUpdate::findGoodBuildOrRepairPosition, RVA 0x002B6C40 (445 bytes).
 // BFME uses an incoming receiver; the old static lift was an ABI error.
 // Evidence: identity_evidence/002b6c40-dozer-member-and-native-vector.md
@@ -24,11 +24,11 @@ public:
 };
 
 struct Region2D;
-#include "game/GameEngine/Source/Common/System/geometry.h"
+#include "../../../../Common/System/geometry.h"
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return &m_cachedPos; }
 #define OBJECT_TU_MEMBERS bool isUsingAirborneLocomotor() const;
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../../object.h"
 #undef THING_TU_MEMBERS
 #undef OBJECT_TU_MEMBERS
 

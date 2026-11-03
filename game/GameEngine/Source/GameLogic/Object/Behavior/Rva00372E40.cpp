@@ -1,5 +1,5 @@
 // ?Rva00372E40@@YAHPAXHPBX_N@Z
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /I.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib 
 // stlport
 //
 // Retail 0x00372E40, 280B. Identity: not a matched caller, but the string
@@ -17,7 +17,7 @@ typedef bool Bool;
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #define BFME_GAMELOGIC_LOOKUP_VISIBLE 1
-#include "game/GameEngine/Source/Common/Thing/GameLogicObjectLookup.h"
+#include "../../../Common/Thing/GameLogicObjectLookup.h"
 extern GameLogic *TheGameLogic;
 
 #include "Common/GameMemory.h"
@@ -40,7 +40,7 @@ public:
 // call name carries that access; only the friend may call it here.
 #define OBJECT_TU_MEMBERS public: Player *getControllingPlayer() const; ProjectileUpdateInterface *getProjectileUpdateInterface() const; \
 	protected: Module *findModule(NameKeyType) const; friend int Rva00372E40(void *, int, const void *, bool);
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../object.h"
 
 // Inherited bank view for the two witnessed virtual slots. This does not
 // establish EA slot names or a match to the differently shaped ZH interface.

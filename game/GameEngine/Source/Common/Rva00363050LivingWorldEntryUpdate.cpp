@@ -1,10 +1,10 @@
 // ?update@Rva00363050Owner@@QAEXABVBfmeSharedString@@HABUCoord2D@@_N@Z
-// cl: /DNDEBUG /MD /O2 /EHsc /I.
+// cl: /DNDEBUG /MD /O2 /EHsc 
 #include <string.h>
 
 // stlport
 #include <vector>
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 template <>
 inline int StringBase<char>::compare(const StringBase<char> &other) const
@@ -45,7 +45,7 @@ private:
     BfmeSharedString m_string;
 };
 
-#include "game/Libraries/Include/Lib/Coord2D.h"
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 typedef Coord2D Rva00363050Pair;
 
 // This transient view preserves the two observed stack writes in the inline setter.

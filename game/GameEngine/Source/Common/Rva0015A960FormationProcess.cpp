@@ -13,11 +13,11 @@
 // The start point is read into a two-float local built by an inline
 // constructor: that keeps both coordinates on the x87 stack (popped dead at
 // the end) the way retail does; plain locals or a Coord2D copy do not.
-// cl: /DNDEBUG /MD /O2 /I.
+// cl: /DNDEBUG /MD /O2 
 typedef float Real;
 typedef int Int;
 
-#include "game/Libraries/Include/Lib/Coord2D.h"
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 struct BucketStartPoint { Real x, y; BucketStartPoint(Real ax, Real ay) : x(ax), y(ay) {} };
 
