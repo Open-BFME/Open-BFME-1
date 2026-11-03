@@ -946,3 +946,7 @@ game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x0,star
 game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y0,startY,claude-opus+gpt-6.1-sol,agreed,2026-11-03
 game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x1,endX,claude-opus+gpt-6.1-sol,agreed,2026-11-03
 game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y1,endY,claude-opus+gpt-6.1-sol,agreed,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x0,startX,claude-opus+gpt-6.1-sol,applied,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y0,startY,claude-opus+gpt-6.1-sol,applied,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x1,endX,claude-opus+gpt-6.1-sol,applied,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y1,endY,claude-opus+gpt-6.1-sol,applied,2026-11-03
