@@ -2118,7 +2118,6 @@ emit	game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateTryToIgniteTh
 emit	game/GameEngine/Source/GameLogic/Object/Update/LargeGroupBonusUpdateDestructorThunk.cpp	*	818
 emit	game/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdateCtorThunk.cpp	*	652
 emit	game/GameEngine/Source/GameLogic/Object/Update/PathfindLayer_isPointOnWall_Thunk.cpp	*	257
-emit	game/GameEngine/Source/GameLogic/Object/Update/SpecialDisguiseUpdateSlot15Rva00267D80Thunk.cpp	*	433
 emit	game/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_ctor_Thunk.cpp	*	252
 emit	game/GameEngine/Source/GameLogic/Object/Update/StructureCollapseUpdateUpdateThunk.cpp	*	944
 emit	game/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_onDie_Thunk.cpp	*	145
@@ -7273,7 +7272,6 @@ object_symbol	targets/game/reverse/functions.csv	0x00265CD0	1
 object_symbol	targets/game/reverse/functions.csv	0x00265D80	1
 object_symbol	targets/game/reverse/functions.csv	0x00266360	1
 object_symbol	targets/game/reverse/functions.csv	0x00266440	1
-object_symbol	targets/game/reverse/functions.csv	0x00267D80	1
 object_symbol	targets/game/reverse/functions.csv	0x00267FE0	1
 object_symbol	targets/game/reverse/functions.csv	0x00267FF0	1
 object_symbol	targets/game/reverse/functions.csv	0x0026A760	1
