@@ -2,11 +2,7 @@
 
 typedef float Real;
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../Libraries/Include/Lib/Coord2D.h"
 
 extern void j_00026f49(void);
 extern void j_00009bc9(void);

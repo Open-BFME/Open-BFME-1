@@ -27,7 +27,7 @@ struct Device { DeviceVtable *v; };
 
 
 
-struct Coord2D { float x, y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 void bfmeDrawFilterUV(int, int, Coord2D *);
 
 class DX8CapsLike { public: char pad[0x28]; char npatches; };

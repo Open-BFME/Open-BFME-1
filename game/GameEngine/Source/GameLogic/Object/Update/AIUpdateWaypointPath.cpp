@@ -8,7 +8,7 @@
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D& c):x(c.x),y(c.y),z(c.z){} Coord3D& operator=(const Coord3D&c){x=c.x;y=c.y;z=c.z;return *this;} float x,y,z; };
-struct Coord2D { float x,y; };
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 enum PathfindLayerEnum { LAYER_GROUND=1 };
 enum UpdateSleepTime { UPDATE_SLEEP_NONE=1 };
 class Object { public: char pad[0x38]; Coord3D position; const Coord3D *getPosition() const {return &position;} };

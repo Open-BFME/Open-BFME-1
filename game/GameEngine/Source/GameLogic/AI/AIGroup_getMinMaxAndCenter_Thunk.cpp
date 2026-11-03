@@ -34,11 +34,7 @@ enum { NO_FORMATION_ID = 0 };
 enum { DISABLED_HELD = 0x00000008 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	Real x;														///< +0x00
-	Real y;														///< +0x04
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

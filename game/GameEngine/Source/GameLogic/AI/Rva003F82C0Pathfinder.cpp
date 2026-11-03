@@ -31,7 +31,7 @@ typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-struct Coord2D { Real x, y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D { Coord2D lo, hi; };
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };

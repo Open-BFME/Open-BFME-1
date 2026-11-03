@@ -23,7 +23,7 @@ typedef float Real;
 
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
-struct Coord2D { Real x, y; };
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D { Coord2D lo, hi; };
 // Retail's by-value Coord3D argument records the argument block's esp in a
 // dead frame slot (`mov [esp+N],esp`), which VC7.1 only emits for a class with

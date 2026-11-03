@@ -44,11 +44,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 
 class BannerCarrierPosition;
 

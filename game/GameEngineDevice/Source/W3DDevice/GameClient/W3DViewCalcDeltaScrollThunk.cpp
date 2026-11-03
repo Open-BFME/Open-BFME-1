@@ -9,11 +9,7 @@
 // m_pos at 0xC, the camera at 0x104, the previous look-at at 0x23E4 and the
 // ground level at 0x23F8.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord2D
-{
-	float x;
-	float y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 class Vector3
 {

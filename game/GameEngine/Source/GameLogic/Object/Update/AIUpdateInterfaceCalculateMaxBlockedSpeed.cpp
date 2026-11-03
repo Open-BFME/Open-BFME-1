@@ -13,10 +13,7 @@ extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 // class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into this body as file statics
-struct Coord2D
-{
-	Real x, y;
-};
+#include "../../../../../Libraries/Include/Lib/Coord2D.h"
 // ZH's inline Coord2D::length/normalize, kept file-local: the external names
 // are ledger rows defined elsewhere (normalize strong in coord2d.cpp at
 // 0x0014FF40) and the COMDAT copies emitted here duplicated them at link.

@@ -22,10 +22,7 @@ struct Coord3D
 // Plain two-float holder: retail's Coord2D::length/normalize are owned by
 // WWMath/coord2d.cpp, so this TU spells the reciprocal-length math out inline
 // instead of declaring a second Coord2D that emits those symbols.
-struct Coord2D
-{
-	Real x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 class Object
 {
