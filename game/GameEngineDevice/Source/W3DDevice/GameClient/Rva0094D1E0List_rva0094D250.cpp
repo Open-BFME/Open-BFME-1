@@ -127,7 +127,6 @@ struct Rva0094C5E0Tree
 {
 	Rva0094D250Node *head;
 	unsigned count;
-	Rva0094C5E0Iterator find(const unsigned &key);	// retail 0x0094C5E0
 };
 
 static __forceinline const Rva0094C5A0Value *addressOf(const Rva0094C5A0Value &value)
@@ -157,8 +156,9 @@ void Rva0094D1E0List::rva0094D250(const BFMEWaterTrackTextureHandle &texture)
 	if (texture.m_texture == 0)
 		return;
 	Rva0094D250Node *head = m_tree.head;
-	Rva0094C5E0Iterator it = m_tree.find(*(const unsigned *)&texture);
-	if (it.node != head)
+	// The tree's own find<unsigned> instantiation is retail 0x0094C5E0.
+	Rva0094CCF0Tree::iterator it = ((Rva0094CCF0Tree *)&m_tree)->find(*(const unsigned *)&texture);
+	if ((Rva0094D250Node *)it._M_node != head)
 		return;
 	((Rva0094CCF0Tree *)&m_tree)->insert_unique(
 		rva0094C5A0MakePair((const Rva0094C5A0Handle *)&texture, addressOf(Rva0094C5A0Value())));
