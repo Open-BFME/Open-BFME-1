@@ -936,3 +936,4 @@ game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,m_next,clau
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,m_bridgeListHead,claude-opus+gpt-6.1-sol,applied,2026-11-02
 game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeStamp,m_frame,claude-opus+gpt-6.1-sol,agreed,2026-11-03
 game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeStamp,m_frame,claude-opus+gpt-6.1-sol,applied,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fc0,m_elapsedTime,claude-opus+gpt-6.1-sol,agreed,2026-11-03

@@ -5988,3 +5988,10 @@ game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeNext,870c241631e
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeBridges,0a53d9d4b82c2d953cab242e,claude-opus,20261102210122-68b92d,2026-11-02
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|local|Bfme5BridgeList::bfmeAnyBridgeAt|b,cb612bd5bc237d57058cfdf0,claude-opus,20261102210122-68b92d,2026-11-02
 game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeStamp,c2bd5653afa9cbcdf1cf7200,claude-opus,20261103072306-41c6e6,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_f9c,ef85117269e3549be917ba05,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb0,846f069ca1b70337461f7873,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb4,8eb629a526420a4f0c56206c,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb8,4c03c2fde2bdc639e23f0b51,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fc0,7a00b9ac71a8766f8d8b5424,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_c4,56d31c2a74001051439b19c3,claude-opus,20261103081930-509be1,2026-11-03
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|t,5bbf34b6f0e378b281abfa88,claude-opus,20261103081930-509be1,2026-11-03
