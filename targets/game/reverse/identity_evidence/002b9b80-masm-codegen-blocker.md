@@ -74,3 +74,10 @@ AICommandInterface::aiIdle). Offsets other than the calls carry no relocations.
 `docs/conversion_gate` blocks `__asm`/`__emit`/`__declspec(naked)` outside
 `game/masm_dumps/*.asm`; the banked C++ is the best non-dump artifact and is
 retained in this file's history for any future allocator work.
+
+## Resolved (s548, 2026-11-03)
+
+Landed as real C++ in game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdateAiDoCommand.cpp:
+a port of the BFME 2 donor DozerAIUpdateCtor.cpp (open-bfme-2 45afcff3) compiled with
+BFME 1's flags. The BFME 1 layout, vtable slots and callee spellings were read from this
+body. The MASM dump is deleted.
