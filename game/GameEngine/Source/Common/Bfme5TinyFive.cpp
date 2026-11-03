@@ -70,7 +70,7 @@ class BfmeClockBL
 {
 public:
 	int m_bfmeHead[15];					// +0x00
-	int m_bfmeStamp;					// +0x3C
+	int m_frame;					// +0x3C
 };
 
 class GameLogic;
@@ -90,7 +90,7 @@ private:
 // ?bfmeArm@Gen_001BFF50@@QAEXXZ
 void Gen_001BFF50::bfmeArm(void)
 {
-	m_bfmeDeadline = g_bfmeClockBL->m_bfmeStamp + 50;
+	m_bfmeDeadline = g_bfmeClockBL->m_frame + 50;
 }
 
 class Gen_001E19F0
@@ -106,5 +106,5 @@ private:
 // ?bfmeArm@Gen_001E19F0@@QAEXH@Z
 void Gen_001E19F0::bfmeArm(int delay)
 {
-	m_bfmeDeadline = g_bfmeClockBL->m_bfmeStamp + delay;
+	m_bfmeDeadline = g_bfmeClockBL->m_frame + delay;
 }
