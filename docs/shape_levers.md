@@ -3437,3 +3437,19 @@ both arms gave VC7.1 an EBX=0 register instead (`cmp al,bl`, 0.84-0.86). One
 `if (!info.load(filename)) return 0;` was exact. Separately, retail pops no
 argument after `call eax`, so the callback pointer is `__stdcall`. Measured on
 this body only (default `/DNDEBUG /MD /EHsc`).
+
+## Ternary argument sunk past an inline null test (2026-11-03)
+
+Retail 0x0043DBE0 (`InGameUI::setRadiusCursor`, 461 B,
+`InGameUI_setRadiusCursor_Thunk.cpp`) ends with
+`m_curRadiusCursor.setColor(fourth ? 0xFFFFFFFF : 0xFFFF1414)` where `setColor`
+is an inline `if (m_decal) m_decal->set(color);`. Retail computes the colour
+(`neg al; sbb eax,eax; and eax,0xEBEB; add eax,0xFFFF1414`) before the
+`test ecx,ecx` on the decal. Every ternary spelling (inline argument, local,
+`const&`, `__forceinline`, explicit expansion, arithmetic mask) let VC7.1 sink
+the computation into the taken branch (EDX, 2 bytes longer); `if (fourth) color
+= A; else color = B;` emitted the same neg/sbb sequence in retail's place, exact.
+A lone `Int color = B; if (fourth) color = A;` kept the position but emitted a
+branch. The same body also needed `if (cursorType != m_curRcType) { ... }`
+around the work, because retail's same-type early-out jumps to the shared
+tint tail rather than returning. Measured on this body only.
