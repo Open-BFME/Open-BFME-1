@@ -82,7 +82,6 @@ dir32,0x00C6B360,_Rva0086B360Dispatch,"retail 0x00C6B360 is already recorded as 
 dir32,0x00C6B810,_piUserChangedNickCallback,"retail 0x00C6B810 is already recorded as _piChannelUserChangedNickA; reference that name, not a new one"
 dir32,0x00C81DB0,?d_00881db0@@YAXXZ,"nothing in the ledger owns 0x00C81DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C81EA0,?d_00881ea0@@YAXXZ,"nothing in the ledger owns 0x00C81EA0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00C91B80,??1Rva00891B40@@QAE@XZ,"retail 0x00C91B80 is already recorded as _bfmeDtorDAE; reference that name, not a new one"
 dir32,0x00C92B80,??0BfmeElemBW@@QAE@XZ,"retail 0x00C92B80 is already recorded as ??0Rva008947A0Elem@@QAE@XZ; reference that name, not a new one"
 dir32,0x00CB5720,?Callback00CB5720@@3PADA,"nothing in the ledger owns 0x00CB5720. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00CB5760,?Callback00CB5760@@3PADA,"nothing in the ledger owns 0x00CB5760. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
@@ -515,7 +514,6 @@ dir32,0x013377D8,?g_bfmeHolderBU@@3PAUState8C4DA0@@A,"retail 0x013377D8 is alrea
 dir32,0x01337820,?g_01337820@@3PAURva008B38F0Global@@A,the name encodes 0x008B38F0 but retail reads 0x01337820
 dir32,0x01337820,?g_01337820@@3PAVRva008B38F0Global@@A,the name encodes 0x008B38F0 but retail reads 0x01337820
 dir32,0x01337A30,?g_bfmeStringPool1284@@3PAP6AXPAX@ZA,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
-dir32,0x01337A30,?g_bfmeStringPool1284@@3PAUPool8C4DA0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x01337A30,?g_pool01337A30@@3PAUStringPool008B3AA0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x01337A30,?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x013384C0,?key013384C0@@3HA,"nothing in the ledger owns 0x013384C0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
