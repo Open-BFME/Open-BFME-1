@@ -68,8 +68,9 @@
 
 // ------------------------------------------------------------ zeroing ctor
 
-// retired debt: ??_7ParticleInfo@@6B@ replaced with ??_7Rva005CE890Object@@6B@
-extern "C" int __identifier("??_7Rva005CE890Object@@6B@")[];
+// The vptr store below targets the class's real identity, ParticleInfo, whose
+// vftable sits at 0x0110FE78 (see the novtable note below).
+extern "C" int __identifier("??_7ParticleInfo@@6B@")[];
 
 class U1Triple
 {
@@ -117,17 +118,17 @@ U1ZeroBase::U1ZeroBase()
 // ??_GParticleInfo@@UAEPAXI@Z (functions.csv:12299,
 // game/GameEngine/Source/GameClient/System/ParticleInfoDeletingDestructor.cpp).
 // This TU's class carries an address-derived name, so its compiler-generated
-// vftable could only ever be called ??_7U1Zero_005CEFC0@@6B@ and its slot 0 an
+// vftable could only ever be called ??_7U1Zero_0110FE78@@6B@ and its slot 0 an
 // invented virtual nothing defines.  novtable drops that table, and with it the
 // invented slot; the store is then written by hand below against the name that
 // is really defined.  Keeping the class polymorphic is what preserves the
 // layout: the derived vptr stays at +0 and the non-polymorphic base at +4,
 // which is what every member offset in this file's byte-dump comment assumes
 // (dropping the virtuals instead would move the base to +0 and shift them all).
-class __declspec(novtable) U1Zero_005CEFC0 : public U1ZeroBase
+class __declspec(novtable) U1Zero_0110FE78 : public U1ZeroBase
 {
 public:
-	U1Zero_005CEFC0();
+	U1Zero_0110FE78();
 	virtual void slot0();				// unreferenced under novtable; kept for the +0 vptr
 
 	int m_g0;
@@ -141,12 +142,12 @@ public:
 	int m_h3;
 };
 
-U1Zero_005CEFC0::U1Zero_005CEFC0()
+U1Zero_0110FE78::U1Zero_0110FE78()
 {
 	// novtable removed the vptr store; this writes it back at the only place it
 	// can go -- between the inlined non-polymorphic base and this class's own
 	// body -- which is where retail puts it.
-	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7Rva005CE890Object@@6B@");
+	*(volatile unsigned int *)this = (unsigned int)__identifier("??_7ParticleInfo@@6B@");
 	m_g0 = 0;
 	m_g1 = 0;
 	m_g2 = 0;
