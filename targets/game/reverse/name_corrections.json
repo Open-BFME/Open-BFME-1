@@ -21912,5 +21912,25 @@
   "after_sha256": "ba76ddbe7b0f15cd4f391af77343b49b20a1d09576cd257a8411700fdc51999f",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "The 0.18 bank invented local filter view names; its SameMapFilter stored vtable 0x01085DD0, which dir32_addresses.csv records as Rva0025ED50ObjectFilter (the not-self filter the conversion spells by that name). The conversion spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x010BFAB8 Rva00297440VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper, 0x01083B80 Rva0025ED50RootFilter, 0x01085DD0 Rva0025ED50ObjectFilter), as the DIR32 gate requires; the old name was never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00267b10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/SpecialDisguiseUpdateChangeVisualDisguise.cpp",
+  "old_name": "CheckMemberSize",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "3eabbe33fbfd088975e6741719e09084a3bcef7a92b00efb0ee76f5ad945cf39",
+  "after_sha256": "8c40e7cb1279acb66c318d2654dc191f358d4afceeebd6891e8bb083b541fcbd",
+  "evidence": "targets/game/reverse/identity_evidence/00267b10-specialdisguiseupdate-changevisualdisguise.md",
+  "reason": "The bank's CheckMemberSize was a compile-time size-assert typedef (sizeof a member pointer), not a name for any retail entity; the conversion has no such assert and the tool paired it by position with a padding member."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00267b10.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/SpecialDisguiseUpdateChangeVisualDisguise.cpp",
+  "old_name": "m3B8",
+  "new_name": "m_3B8",
+  "before_sha256": "3eabbe33fbfd088975e6741719e09084a3bcef7a92b00efb0ee76f5ad945cf39",
+  "after_sha256": "8c40e7cb1279acb66c318d2654dc191f358d4afceeebd6891e8bb083b541fcbd",
+  "evidence": "targets/game/reverse/identity_evidence/00267b10-specialdisguiseupdate-changevisualdisguise.md",
+  "reason": "Both spellings are offset placeholders for the same Drawable+0x3B8 field (bank m3B8, conversion m_3B8, the repo's m_<offset> style); no identity is lost."
  }
 ]
