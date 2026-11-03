@@ -3505,3 +3505,31 @@ gave retail's roles at once; the remaining diff was an `int`-returning length
 accessor (`movzx`), fixed by testing the `unsigned short` in place. Observed
 effect only: the extra inlined calls change the allocator's priority order.
 Source: game/GameEngine/Source/GameLogic/Object/Update/BfmeObjectReferenceStoreClear.cpp.
+
+## DIR32-refused constructor vtables: novtable class, hand-installed tables (2026-11-03)
+
+Not a codegen residue but a naming wall: byte-exact constructor banks of
+multiple-inheritance BehaviorModule classes were refused by the DIR32 gate
+because the compiler-named tables (`??_7C@@6BBase@@@`) are either unowned or
+already recorded under another class's view name. 0x001F8970
+`??0UpgradeModule` (139 B, was MASM) and 0x001FBC70
+`??0FireWeaponWhenDeadBehavior` (395 B, was a naked lift) landed by declaring
+the most-derived class `__declspec(novtable)` and storing its tables by hand
+under names the gate admits: a recorded name through
+`extern "C" const char __identifier("??_7...")[];`, the owned primary
+`??_7C@@6B@` (its slot zero reaches the class's matched `??_G`), or
+`extern const char g_Va<VA>[];` for an unowned table (the name encodes the
+address). Placement decides the bytes: the stores must run after the bases and
+before the members, as the compiler's round does. Putting them in a
+`__forceinline int installTables()` called from the first member's
+initializer (`m_lastDamageInfo( installTables() )`, with an extra
+`explicit DamageInfo( int )` overload) gave 395/395 with `[edi]` reused for the
+UpgradeMux subobject; a novtable holder base added an EH state store
+(+8 B), and doing them in the last base's constructor lost the `edi` reuse and
+let a later manual store kill that base's own vptr store. When the class has no
+members, the constructor body works (0x001F8970). A base whose own table must
+stay stored and is overwritten later keeps a recorded address-derived class
+name (`Rva001EE620`) so the compiler round still emits it. Sources:
+game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModuleConstructor.cpp,
+game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior_ctor_Thunk.cpp
+(602b32f945, bb661d7a33).
