@@ -71,3 +71,11 @@ call symbols resolve through `targets/game/reverse/symbols.csv`, and
 
 Only with a C++ reconstruction that compiles byte-identical, or a detected
 caller/string that pins the name better.
+
+## Resolved (s548, 2026-11-03)
+
+The 4-byte ECX/EDX wall fell to the BFME 2 donor's statement order (open-bfme-2
+45afcff3 Code/GameEngine/Source/GameLogic/AI/AIGuardStates.cpp), compiled with BFME 1's
+flags and BFME 1's layout read off this body. Source:
+game/GameEngine/Source/GameLogic/AI/GiantBirdGuardOuterStateOnEnter.cpp (exact, 525 B). The MASM
+dump is deleted.
