@@ -48,7 +48,7 @@ public:
 	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
 	~UnicodeString() {}
 	void format(UnicodeString pattern, ...);
-	const unsigned short *str( void ) const;
+	const unsigned short *str( void ) const { return m_data ? m_data->m_text : L""; }
 
 	// The empty UnicodeString every retail client copies from.  Retail exports
 	// exactly one name for the datum at 0x01336E54,
@@ -574,6 +574,8 @@ class NetChatCommandMsg : public NetCommandMsg
 {
 public:
 	NetChatCommandMsg();
+	UnicodeString getText();
+	int getPlayerMask();
 	void setText(UnicodeString text);
 	void setPlayerMask(int playerMask);
 private:
@@ -829,7 +831,7 @@ public:
 	void sendRequestPlayerLeaveCommand();
 	void sendLoadCompleteCommand();
 	void attachPlayersFromGameInfo(void *gameInfo);
-	void resolvePlayerFromName(void *msg);
+	static void playMessageReceivedSound();
 	void processAck(NetCommandMsg *msg);
 	void processGameSpyStatsAuthKeyCommand(void *msg);
 	void processAckCommand(void *msg);
@@ -1209,7 +1211,8 @@ Bool BFMEConnectionManager::processIncomingCommand(void *ref)
 		TheGameLogic->processProgressComplete(playerID);
 		return true;
 	case NETCOMMANDTYPE_CHAT:
-		resolvePlayerFromName(msg);
+		reinterpret_cast<ConnectionManager *>(this)->processChat(
+			reinterpret_cast<NetChatCommandMsg *>(msg));
 		return true;
 	case NETCOMMANDTYPE_FILE:
 		reinterpret_cast<ConnectionManager *>(this)->processFile(
@@ -3150,319 +3153,144 @@ L12_663048:
 }
 
 
-// Turns a player name into a Player. It formats the name into a UnicodeString,
-// puts it through NameKeyGenerator::nameToKey, and looks the result up with
-// PlayerList::findPlayerWithNameKey.
-__declspec(naked) void BFMEConnectionManager::resolvePlayerFromName(void *msg)
+// Views for ConnectionManager::processChat. GameSlot +0x0A is the mute flag
+// and +0x2C the player-name key string; Player +0x1C4 is the player colour.
+// InGameUI::messageColor/message are the varargs virtuals at +0x38/+0x40.
+class GameSlot
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 1044420h
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		sub esp, 1Ch
-		push ebx
-		push ebp
-		push esi
-		xor ebx, ebx
-		push edi
-		mov ebp, ecx
-		mov dword ptr [esp+10h], ebx
-		mov esi, dword ptr [esp+3Ch]
-		lea eax,  [esp+18h]
-		push eax
-		mov ecx, esi
-		mov dword ptr [esp+38h], ebx
-		__emit 0E8h
-		__emit 0A0h
-		__emit 0E2h
-		__emit 09Bh
-		__emit 0FFh   // call 0x25338
-		mov eax, dword ptr [eax]
-		cmp eax, ebx
-		mov byte ptr [esp+34h], 1h
-		je L00_6670A8
-		add eax, 8h
-		jmp L01_6670AD
-L00_6670A8:
-		mov eax, 107388Ch
-L01_6670AD:
-		push eax
-		mov eax, dword ptr [esi+0Ch]
-		push eax
-		lea ecx,  [esp+44h]
-		push ecx
-		mov ecx, ebp
-		__emit 0E8h
-		__emit 0A4h
-		__emit 0B9h
-		__emit 09Ah
-		__emit 0FFh   // call 0x12A62
-		mov eax, dword ptr [eax]
-		cmp eax, ebx
-		mov byte ptr [esp+38h], 2h
-		je L02_6670CE
-		add eax, 8h
-		jmp L03_6670D3
-L02_6670CE:
-		mov eax, 107388Ch
-L03_6670D3:
-		push eax
-		push ecx
-		mov dword ptr [esp+28h], esp
-		mov ecx, esp
-		push 1117AECh
-		__emit 0E8h
-		__emit 0FBh
-		__emit 01Ch
-		__emit 022h
-		__emit 000h   // call 0x888DE0
-		lea edx,  [esp+1Ch]
-		push edx
-		__emit 0E8h
-		__emit 0A1h
-		__emit 020h
-		__emit 022h
-		__emit 000h   // call 0x889190
-		add esp, 10h
-		lea ecx,  [esp+3Ch]
-		mov byte ptr [esp+34h], 1h
-		__emit 0E8h
-		__emit 0D0h
-		__emit 010h
-		__emit 022h
-		__emit 000h   // call 0x8881D0
-		lea ecx,  [esp+18h]
-		mov byte ptr [esp+34h], 0h
-		__emit 0E8h
-		__emit 0C2h
-		__emit 010h
-		__emit 022h
-		__emit 000h   // call 0x8881D0
-		mov eax, dword ptr [esi+0Ch]
-		cmp eax, 8h
-		jae L04_66726B
-		__emit 08Bh
-		__emit 00Dh
-		__emit 08Ch
-		__emit 070h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f708c]
-		push eax
-		__emit 0E8h
-		__emit 0F2h
-		__emit 07Ah
-		__emit 09Bh
-		__emit 0FFh   // call 0x1EC18
-		add eax, 2Ch
-		push eax
-		lea ecx,  [esp+18h]
-		__emit 0E8h
-		__emit 02Dh
-		__emit 00Ah
-		__emit 022h
-		__emit 000h   // call 0x887B60
-		mov eax, dword ptr [esp+14h]
-		cmp eax, ebx
-		mov byte ptr [esp+34h], 3h
-		je L05_667145
-		add eax, 8h
-		jmp L06_66714A
-L05_667145:
-		mov eax, 107388Bh
-L06_66714A:
-		__emit 08Bh
-		__emit 00Dh
-		__emit 000h
-		__emit 0D6h
-		__emit 02Eh
-		__emit 001h   // mov ecx, dword ptr [0x12ed600]
-		push eax
-		__emit 0E8h
-		__emit 081h
-		__emit 03Ch
-		__emit 09Dh
-		__emit 0FFh   // call 0x3ADD7
-		__emit 08Bh
-		__emit 00Dh
-		__emit 048h
-		__emit 0D7h
-		__emit 02Eh
-		__emit 001h   // mov ecx, dword ptr [0x12ed748]
-		push eax
-		__emit 0E8h
-		__emit 024h
-		__emit 084h
-		__emit 09Ch
-		__emit 0FFh   // call 0x2F586
-		mov edi, eax
-		cmp edi, ebx
-		jne L07_6671C6
-		__emit 08Bh
-		__emit 00Dh
-		__emit 068h
-		__emit 0D6h
-		__emit 02Eh
-		__emit 001h   // mov ecx, dword ptr [0x12ed668]
-		cmp ecx, ebx
-		je L08_66718F
-		mov eax, dword ptr [ecx]
-		call dword ptr [eax+124h]
-		cmp eax, ebx
-		je L08_66718F
-		__emit 08Bh
-		__emit 00Dh
-		__emit 068h
-		__emit 0D6h
-		__emit 02Eh
-		__emit 001h   // mov ecx, dword ptr [0x12ed668]
-		mov edx, dword ptr [ecx]
-		add eax, 0C40h
-		push eax
-		call dword ptr [edx+44h]
-L08_66718F:
-		mov eax, dword ptr [esp+10h]
-		cmp eax, ebx
-		je L09_66719C
-		add eax, 8h
-		jmp L10_6671A1
-L09_66719C:
-		mov eax, 107388Ch
-L10_6671A1:
-		push eax
-		push ecx
-		mov dword ptr [esp+44h], esp
-		mov ecx, esp
-		push 10FF4BCh
-		__emit 0E8h
-		__emit 02Dh
-		__emit 01Ch
-		__emit 022h
-		__emit 000h   // call 0x888DE0
-		__emit 0A1h
-		__emit 08Ch
-		__emit 014h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f148c]
-		mov ecx, dword ptr [eax]
-		push eax
-		call dword ptr [ecx+40h]
-		add esp, 0Ch
-		jmp L11_66725D
-L07_6671C6:
-		mov ecx, edi
-		__emit 0E8h
-		__emit 0F0h
-		__emit 007h
-		__emit 09Bh
-		__emit 0FFh   // call 0x179BD
-		neg al
-		sbb al, al
-		inc al
-		mov byte ptr [esp+3Ch], al
-		jne L12_6671F3
-		mov eax, dword ptr [esi+0Ch]
-		__emit 08Bh
-		__emit 00Dh
-		__emit 08Ch
-		__emit 070h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f708c]
-		push eax
-		__emit 0E8h
-		__emit 078h
-		__emit 022h
-		__emit 09Ch
-		__emit 0FFh   // call 0x29460
-		mov cl, byte ptr [eax+0Ah]
-		test cl, cl
-		jne L12_6671F3
-		mov bl, 1h
-		jmp L13_6671F5
-L12_6671F3:
-		xor bl, bl
-L13_6671F5:
-		mov ecx, esi
-		__emit 0E8h
-		__emit 020h
-		__emit 0B9h
-		__emit 099h
-		__emit 0FFh   // call 0x2B1C
-		mov ecx, dword ptr [ebp+12028h]
-		mov edx, 1h
-		shl edx, cl
-		__emit 085h
-		__emit 0C2h   // test edx, eax
-		je L11_66725D
-		test bl, bl
-		je L11_66725D
-		__emit 0E8h
-		__emit 0CAh
-		__emit 0BAh
-		__emit 0FFh
-		__emit 0FFh   // call 0x662CE0
-		mov eax, dword ptr [edi+1C4h]
-		push eax
-		lea ecx,  [esp+24h]
-		__emit 0E8h
-		__emit 0A1h
-		__emit 05Bh
-		__emit 09Ch
-		__emit 0FFh   // call 0x2CDC7
-		mov eax, dword ptr [esp+10h]
-		test eax, eax
-		je L14_667233
-		add eax, 8h
-		jmp L15_667238
-L14_667233:
-		mov eax, 107388Ch
-L15_667238:
-		push eax
-		push ecx
-		mov dword ptr [esp+44h], esp
-		mov ecx, esp
-		push 10FF4BCh
-		__emit 0E8h
-		__emit 096h
-		__emit 01Bh
-		__emit 022h
-		__emit 000h   // call 0x888DE0
-		__emit 0A1h
-		__emit 08Ch
-		__emit 014h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f148c]
-		mov ecx, dword ptr [eax]
-		lea edx,  [esp+28h]
-		push edx
-		push eax
-		call dword ptr [ecx+38h]
-		add esp, 10h
-L11_66725D:
-		lea ecx,  [esp+14h]
-		mov byte ptr [esp+34h], 0h
-		__emit 0E8h
-		__emit 0D5h
-		__emit 006h
-		__emit 022h
-		__emit 000h   // call 0x887940
-L04_66726B:
-		lea ecx,  [esp+10h]
-		mov dword ptr [esp+34h], 0FFFFFFFFh
-		__emit 0E8h
-		__emit 054h
-		__emit 00Fh
-		__emit 022h
-		__emit 000h   // call 0x8881D0
-		mov ecx, dword ptr [esp+2Ch]
-		pop edi
-		pop esi
-		pop ebp
-		mov dword ptr fs:[0h], ecx
-		pop ebx
-		add esp, 28h
-		ret 4h
+public:
+	Bool isMuted() const { return m_isMuted; }
+	const AsciiString &getPlayerNameKey() const { return m_playerNameKey; }
+private:
+	char m_unknown00[0x0A];
+	Bool m_isMuted;
+	char m_unknown0B[0x2C - 0x0B];
+	AsciiString m_playerNameKey;
+};
+class GameInfo
+{
+public:
+	GameSlot *getSlot(int index);
+	const GameSlot *getConstSlot(int index) const;
+};
+extern GameInfo *TheGameInfo;
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0
+};
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+extern NameKeyGenerator *TheNameKeyGenerator;
+class Player
+{
+public:
+	Bool isPlayerActive() const;
+	int getPlayerColor() const { return m_color; }
+private:
+	char m_unknown000[0x1C4];
+	int m_color;
+};
+class PlayerList
+{
+public:
+	Player *findPlayerWithNameKey(NameKeyType key);
+};
+extern PlayerList *ThePlayerList;
+class RGBColor
+{
+public:
+	void setFromInt(int color);
+	float red, green, blue;
+};
+class InGameUI
+{
+public:
+	virtual void unknown00(); virtual void unknown04(); virtual void unknown08();
+	virtual void unknown0C(); virtual void unknown10(); virtual void unknown14();
+	virtual void unknown18(); virtual void unknown1C(); virtual void unknown20();
+	virtual void unknown24(); virtual void unknown28(); virtual void unknown2C();
+	virtual void unknown30(); virtual void unknown34();
+	virtual void __cdecl messageColor(const RGBColor *rgbColor, UnicodeString format, ...);	// +0x38
+	virtual void unknown3C();
+	virtual void __cdecl message(UnicodeString format, ...);								// +0x40
+};
+extern InGameUI *TheInGameUI;
+// The audio manager's misc-audio getter (+0x124) and addAudioEvent (+0x44);
+// the chat-received event sits at misc audio +0xC40.
+class AudioManager
+{
+public:
+#define AUDIO_SLOT(n) virtual void slot##n();
+	AUDIO_SLOT(00) AUDIO_SLOT(01) AUDIO_SLOT(02) AUDIO_SLOT(03) AUDIO_SLOT(04)
+	AUDIO_SLOT(05) AUDIO_SLOT(06) AUDIO_SLOT(07) AUDIO_SLOT(08) AUDIO_SLOT(09)
+	AUDIO_SLOT(10) AUDIO_SLOT(11) AUDIO_SLOT(12) AUDIO_SLOT(13) AUDIO_SLOT(14)
+	AUDIO_SLOT(15) AUDIO_SLOT(16)
+	virtual void addAudioEvent(const void *eventToAdd);		// +0x44
+	AUDIO_SLOT(18) AUDIO_SLOT(19)
+	AUDIO_SLOT(20) AUDIO_SLOT(21) AUDIO_SLOT(22) AUDIO_SLOT(23) AUDIO_SLOT(24)
+	AUDIO_SLOT(25) AUDIO_SLOT(26) AUDIO_SLOT(27) AUDIO_SLOT(28) AUDIO_SLOT(29)
+	AUDIO_SLOT(30) AUDIO_SLOT(31) AUDIO_SLOT(32) AUDIO_SLOT(33) AUDIO_SLOT(34)
+	AUDIO_SLOT(35) AUDIO_SLOT(36) AUDIO_SLOT(37) AUDIO_SLOT(38) AUDIO_SLOT(39)
+	AUDIO_SLOT(40) AUDIO_SLOT(41) AUDIO_SLOT(42) AUDIO_SLOT(43) AUDIO_SLOT(44)
+	AUDIO_SLOT(45) AUDIO_SLOT(46) AUDIO_SLOT(47) AUDIO_SLOT(48) AUDIO_SLOT(49)
+	AUDIO_SLOT(50) AUDIO_SLOT(51) AUDIO_SLOT(52) AUDIO_SLOT(53) AUDIO_SLOT(54)
+	AUDIO_SLOT(55) AUDIO_SLOT(56) AUDIO_SLOT(57) AUDIO_SLOT(58) AUDIO_SLOT(59)
+	AUDIO_SLOT(60) AUDIO_SLOT(61) AUDIO_SLOT(62) AUDIO_SLOT(63) AUDIO_SLOT(64)
+	AUDIO_SLOT(65) AUDIO_SLOT(66) AUDIO_SLOT(67) AUDIO_SLOT(68) AUDIO_SLOT(69)
+	AUDIO_SLOT(70) AUDIO_SLOT(71) AUDIO_SLOT(72)
+#undef AUDIO_SLOT
+	virtual char *getMiscAudio();							// +0x124
+};
+extern AudioManager *TheAudio;
+
+// ConnectionManager::processChat, retail 0x00667060 (561 bytes, ret 4).
+// The CHAT (14) arm of the incoming-command dispatcher (0x0066A5C4) reaches
+// it through ILT 0x00004A07, and ilt_oracle CONFIRMS
+// ?processChat@ConnectionManager@@QAEXPAVNetChatCommandMsg@@@Z; the old
+// resolvePlayerFromName lift name was wrong.
+// Donor: BFME 2 Code/GameEngine/Source/GameNetwork/ConnectionManager_processChat.cpp
+// (Open-BFME-2 59e3f8f825, BFME 2 0x004D10F1): the Zero Hour line format, the
+// early return for a sender slot of 8 or more, the Player lookup by the slot's
+// name key, the plain message when there is no Player and the coloured
+// message for a recipient who can see the chat. BFME 1 differences read from
+// this body: the key string is at GameSlot +0x2C and goes to nameToKey as a C
+// string; a sender who is not an active player cannot be seen; the no-Player
+// branch plays the chat sound inline while the coloured branch calls the
+// static helper; and there is no chat-history call.
+void ConnectionManager::processChat(NetChatCommandMsg *msg)
+{
+	UnicodeString unitext;
+	unitext.format(UnicodeString(L"[%ls] %ls"), getPlayerName(msg->getPlayerID()).str(),
+		msg->getText().str());
+
+	if (msg->getPlayerID() >= 8)
+		return;
+
+	AsciiString playerName = TheGameInfo->getSlot(msg->getPlayerID())->getPlayerNameKey();
+	Player *player = ThePlayerList->findPlayerWithNameKey(TheNameKeyGenerator->nameToKey(playerName.str()));
+	if (!player)
+	{
+		if (TheAudio)
+		{
+			char *miscAudio = TheAudio->getMiscAudio();
+			if (miscAudio)
+				TheAudio->addAudioEvent(miscAudio + 0xC40);
+		}
+		TheInGameUI->message(UnicodeString(L"%ls"), unitext.str());
+		return;
+	}
+
+	Bool fromObserver = !player->isPlayerActive();
+	Bool canSeeChat = !fromObserver && !TheGameInfo->getConstSlot(msg->getPlayerID())->isMuted();
+	if (((1 << m_localSlot) & msg->getPlayerMask()) && canSeeChat)
+	{
+		BFMEConnectionManager::playMessageReceivedSound();
+		RGBColor rgb;
+		rgb.setFromInt(player->getPlayerColor());
+		TheInGameUI->messageColor(&rgb, UnicodeString(L"%ls"), unitext.str());
 	}
 }
 
