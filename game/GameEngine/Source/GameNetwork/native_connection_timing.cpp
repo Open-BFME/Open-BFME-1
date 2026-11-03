@@ -456,8 +456,10 @@ template <class T> const T &frameMinimum(const T &a, const T &b)
 class FrameDataManager
 {
 public:
+	virtual ~FrameDataManager();
 	NetCommandList *getFrameCommandList(unsigned int frame);
 	Bool getIsQuitting();
+	unsigned int getQuitFrame();
 	unsigned int getCommandCount(unsigned int frame);
 	unsigned int getFrameCommandCount(unsigned int frame);
 	NetCommandRef *addNetCommandMsg(NetCommandMsg *msg);
@@ -468,8 +470,14 @@ public:
 class Connection
 {
 	public:
+	~Connection();
 	void sendNetCommandMsg(NetCommandMsg *msg, unsigned char relay);
+	unsigned int doSend(Bool throttle);
+	Bool isQueueEmpty();
 	long getLastTimeSent() { return m_lastTimeSent; }
+	// ConnectionManager::update compares +0 with the logic frame as the
+	// connection's quit frame (the BFME 2 donor names it m_quitFrame).
+	unsigned int getQuitFrame() { return (unsigned int)m_openState; }
 	int m_openState;
 	char m_unknown04[0x10];
 	UnicodeString m_playerName;
@@ -497,7 +505,11 @@ private:
 class BFMENetRequestGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
 {
 public:
+	BFMENetRequestGameSpyStatsAuthKeyCommandMsg();
 	AsciiString getText1C();
+	void setText1C(AsciiString text);
+private:
+	AsciiString m_text1C;
 };
 class BFMENetGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
 {
@@ -525,6 +537,38 @@ extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 extern "C" char *goastrdup(const char *text) throw();
 extern "C" char *GenerateAuthA(char *challenge, char *password, char *response);
 extern "C" __declspec(dllimport) void __cdecl free(void *memory);
+extern "C" char *GetChallenge(void *game);
+
+// The staging room's stats-game flag (+0x43C) and GameSpy stats handle
+// (+0x464) are read only by ConnectionManager::update; slot 5 returns the
+// local slot index passed to getGameSpySlot.
+class GameSpyGameSlot
+{
+public:
+	AsciiString getLoginName() const;
+	void setLoginName(AsciiString name);
+	void setLocale(AsciiString locale);
+};
+class GameSpyStagingRoom
+{
+public:
+	virtual void unknown00(); virtual void unknown04(); virtual void unknown08();
+	virtual void unknown0C(); virtual void unknown10();
+	virtual int getLocalSlotNum() const;
+	GameSpyGameSlot *getGameSpySlot(int index);
+	char m_unknown004[0x43C - 0x004];
+	Bool m_hasStatsGame;
+	char m_unknown43D[0x464 - 0x43D];
+	void *m_statsGame;
+};
+extern GameSpyStagingRoom *TheGameSpyGame;
+
+class Transport
+{
+public:
+	Bool doRecv();
+	Bool doSend();
+};
 
 class NetChatCommandMsg : public NetCommandMsg
 {
@@ -673,6 +717,7 @@ public:
 class ConnectionManager
 {
 public:
+	virtual void update(Bool isInGame, int frameAdvanced);
 	void sendLocalCommand(NetCommandMsg *msg, unsigned char relay);
 	void sendLocalCommandDirect(NetCommandMsg *msg, unsigned char relay);
 	int getNumPlayers();
@@ -691,16 +736,23 @@ private:
 	void processFileAnnounce(NetFileAnnounceCommandMsg *msg);
 	void processFile(NetFileCommandMsg *msg);
 	void processFileProgress(NetFileProgressCommandMsg *msg);
-	char m_unknown00[4];
 	Connection *m_connections[8];
-	char m_unknown24[0x12004];
+	char m_unknown24[0x12000];
+	Transport *m_transport;
 	unsigned int m_localSlot;
 	unsigned int m_packetRouterSlot;
-	char m_unknown12030[0x28];
+	char m_unknown12030[0x20];
+	unsigned int m_localAddress;
+	unsigned short m_localPort;
+	char m_unknown12056[2];
 	UnicodeString m_localPlayerName;
-	char m_unknown1205C[0x88];
+	char m_unknown1205C[0x84];
+	DisconnectManager *m_disconnectManager;
 	FrameDataManager *m_frameData[8];
-	char m_unknown12104[0x14];
+	char m_unknown12104[0x10];
+	Bool m_throttleSend;
+	Bool m_statsAuthPending;
+	char m_unknown12116[2];
 	FileCommandMap m_fileCommandMap;
 	FileMaskMap m_fileRecipientMaskMap;
 	FileProgressMap m_fileProgressMap[8];
@@ -757,7 +809,6 @@ public:
 	int isPlayerSlotActive(int slot);
 	void processRequestPlayerLeaveCommand(void *msg);
 	void relayCommand(void *ref);
-	void update();
 	void runRelayPass();
 	void destroy();
 	void processWrappedCommand(NetCommandRef *ref);
@@ -1446,469 +1497,99 @@ void BFMEConnectionManager::resendFrameRangeToPlayer(int playerID, unsigned int 
 	}
 }
 
-// The per-tick network update, and what drives the delay cadence: it is the
-// only caller of sendFrameInfo, so the frame ceiling is published from here.
-// It also runs the relay pass (0x0066A740) and the disconnect/timeout sweep
-// (0x0066C8D0), builds keep-alive and progress commands, and touches the tail
-// scalars at this+0x12050, +0x12054, +0x120E0, +0x12114 and +0x12115. Nothing
-// in .text calls it directly and it is in no recovered vtable, so retail must
-// reach it through a stored function pointer.
-__declspec(naked) void BFMEConnectionManager::update()
+// ConnectionManager::update(Bool isInGame, Int frameAdvanced), retail
+// 0x0066AB30 (814 bytes, ret 8). ilt_oracle CONFIRMS ?update@ConnectionManager@@UAEX_NH@Z
+// through ILT 0x00005178; the old BFMEConnectionManager::update() lift name
+// is CONTRADICTED and its niladic ABI disagrees with the ret 8.
+// Donor: BFME 2 Code/GameEngine/Source/GameNetwork/ConnectionManager_update.cpp
+// (Open-BFME-2 59e3f8f825, BFME 2 0x004D342A): the Zero Hour update order plus
+// the one-shot GameSpy stats-auth step behind +0x12115. BFME 1 differences read
+// from this body: the relay pass is runRelayPass and the disconnect sweep is
+// BFMEDisconnectManager::update; on a frame advance only sendFrameInfo is
+// called (skipped for the router while a router leave is pending, with no
+// frame-ceiling store); there is no timestamp on the auth request; and the
+// connection's quit frame at +0 is compared unsigned with the logic frame.
+void ConnectionManager::update(Bool isInGame, int frameAdvanced)
 {
-	__asm {
-		push 0FFFFFFFFh
-		push 104473Bh
-		mov eax, dword ptr fs:[0h]
-		push eax
-		mov dword ptr fs:[0h], esp
-		sub esp, 44h
-		push ebx
-		push ebp
-		mov ebp, ecx
-		mov eax, dword ptr [ebp+12050h]
-		xor ebx, ebx
-		cmp eax, ebx
-		push esi
-		push edi
-		mov dword ptr [esp+10h], ebx
-		jne L00_66AB6B
-		cmp word ptr [ebp+12054h], bx
-		je L01_66AE49
-L00_66AB6B:
-		mov ecx, dword ptr [ebp+12024h]
-		cmp ecx, ebx
-		je L02_66AB7A
-		__emit 0E8h
-		__emit 055h
-		__emit 0E5h
-		__emit 099h
-		__emit 0FFh   // call 0x90CF
-L02_66AB7A:
-		mov al, byte ptr [esp+64h]
-		test al, al
-		je L03_66ABCA
-		mov ecx, dword ptr [ebp+120E0h]
-		cmp ecx, ebx
-		je L04_66AB92
-		push ebp
-		__emit 0E8h
-		__emit 0EEh
-		__emit 0E4h
-		__emit 09Dh
-		__emit 0FFh   // call 0x49080
-L04_66AB92:
-		mov ecx, ebp
-		__emit 0E8h
-		__emit 0E5h
-		__emit 0FAh
-		__emit 09Dh
-		__emit 0FFh   // call 0x4A67E
-		cmp dword ptr [esp+68h], ebx
-		je L03_66ABCA
-		__emit 08Bh
-		__emit 00Dh
-		__emit 014h
-		__emit 077h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f7714]
-		cmp ecx, ebx
-		je L05_66ABC3
-		mov eax, dword ptr [ecx]
-		call dword ptr [eax+0DCh]
-		test al, al
-		je L05_66ABC3
-		mov ecx, dword ptr [ebp+12028h]
-		cmp ecx, dword ptr [ebp+1202Ch]
-		je L03_66ABCA
-L05_66ABC3:
-		mov ecx, ebp
-		__emit 0E8h
-		__emit 043h
-		__emit 04Bh
-		__emit 09Bh
-		__emit 0FFh   // call 0x1F70D
-L03_66ABCA:
-		__emit 0A1h
-		__emit 098h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f7198]
-		cmp eax, ebx
-		je L06_66AD90
-		__emit 039h
-		__emit 01Dh
-		__emit 0B4h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // cmp dword ptr [0x12f71b4], ebx
-		je L06_66AD90
-		mov cl, byte ptr [ebp+12115h]
-		test cl, cl
-		je L06_66AD90
-		mov cl, byte ptr [eax+43Ch]
-		test cl, cl
-		je L07_66AD89
-		mov edx, dword ptr [eax+464h]
-		push edx
-		mov edi, 111A2C0h
-		__emit 0E8h
-		__emit 090h
-		__emit 08Dh
-		__emit 036h
-		__emit 000h   // call 0x9D39A0
-		add esp, 4h
-		mov esi, eax
-		mov ecx, 9h
-		xor eax, eax
-		repe cmpsb
-		je L06_66AD90
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f7198]
-		mov edx, dword ptr [ecx+464h]
-		push edx
-		__emit 0E8h
-		__emit 06Ah
-		__emit 08Dh
-		__emit 036h
-		__emit 000h   // call 0x9D39A0
-		push eax
-		__emit 0E8h
-		__emit 074h
-		__emit 097h
-		__emit 01Eh
-		__emit 000h   // call 0x8543B0
-		push 20h
-		mov ebx, eax
-		__emit 0E8h
-		__emit 0EBh
-		__emit 072h
-		__emit 021h
-		__emit 000h   // call 0x881F30
-		add esp, 0Ch
-		mov dword ptr [esp+64h], eax
-		xor esi, esi
-		cmp eax, esi
-		mov dword ptr [esp+5Ch], esi
-		je L08_66AC5F
-		mov ecx, eax
-		__emit 0E8h
-		__emit 00Dh
-		__emit 0E3h
-		__emit 09Bh
-		__emit 0FFh   // call 0x28F6A
-		mov esi, eax
-L08_66AC5F:
-		mov ecx, dword ptr [ebp+12028h]
-		or eax, 0FFFFFFFFh
-		mov dword ptr [esp+5Ch], eax
-		mov dword ptr [esi+8h], eax
-		mov eax, dword ptr [esi+14h]
-		push eax
-		mov dword ptr [esi+0Ch], ecx
-		__emit 0E8h
-		__emit 0F7h
-		__emit 0AEh
-		__emit 09Ah
-		__emit 0FFh   // call 0x15B72
-		add esp, 4h
-		test al, al
-		je L09_66AC8B
-		__emit 0E8h
-		__emit 0D1h
-		__emit 058h
-		__emit 09Ch
-		__emit 0FFh   // call 0x30558
-		mov word ptr [esi+10h], ax
-L09_66AC8B:
-		push ecx
-		mov ecx, esp
-		mov dword ptr [esp+68h], esp
-		push ebx
-		__emit 0E8h
-		__emit 0AAh
-		__emit 07Fh
-		__emit 09Ah
-		__emit 0FFh   // call 0x12C42
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0C6h
-		__emit 0FDh
-		__emit 099h
-		__emit 0FFh   // call 0xAA65
-		mov ecx, dword ptr [ebp+12028h]
-		xor edx, edx
-		mov dl, 1h
-		shl dl, cl
-		mov ecx, ebp
-		not dl
-		push edx
-		push esi
-		__emit 0E8h
-		__emit 021h
-		__emit 065h
-		__emit 09Dh
-		__emit 0FFh   // call 0x411D7
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0E7h
-		__emit 053h
-		__emit 09Bh
-		__emit 0FFh   // call 0x200A4
-		__emit 08Bh
-		__emit 00Dh
-		__emit 0B4h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f71b4]
-		mov eax, dword ptr [ecx]
-		call dword ptr [eax+30h]
-		push eax
-		__emit 0E8h
-		__emit 0E2h
-		__emit 096h
-		__emit 01Eh
-		__emit 000h   // call 0x8543B0
-		lea ecx,  [esp+18h]
-		push ecx
-		mov edi, eax
-		push edi
-		push ebx
-		__emit 0E8h
-		__emit 0D4h
-		__emit 07Dh
-		__emit 036h
-		__emit 000h   // call 0x9D2AB0
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f7198]
-		mov edx, dword ptr [ecx]
-		add esp, 10h
-		call dword ptr [edx+14h]
-		__emit 08Bh
-		__emit 00Dh
-		__emit 098h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f7198]
-		push eax
-		__emit 0E8h
-		__emit 0E0h
-		__emit 0B4h
-		__emit 099h
-		__emit 0FFh   // call 0x61D6
-		mov esi, eax
-		test esi, esi
-		je L10_66AD22
-		lea eax,  [esp+68h]
-		push eax
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0D0h
-		__emit 0C0h
-		__emit 09Ah
-		__emit 0FFh   // call 0x16DD8
-		mov eax, dword ptr [eax]
-		test eax, eax
-		mov ecx, 1h
-		je L11_66AD1B
-		movzx eax, word ptr [eax+4h]
-		test eax, eax
-		jne L12_66AD26
-L11_66AD1B:
-		mov byte ptr [esp+64h], 1h
-		jmp L13_66AD2B
-L10_66AD22:
-		mov cl, byte ptr [esp+10h]
-L12_66AD26:
-		mov byte ptr [esp+64h], 0h
-L13_66AD2B:
-		test cl, 1h
-		je L14_66AD39
-		lea ecx,  [esp+68h]
-		__emit 0E8h
-		__emit 007h
-		__emit 0CCh
-		__emit 021h
-		__emit 000h   // call 0x887940
-L14_66AD39:
-		mov al, byte ptr [esp+64h]
-		test al, al
-		je L15_66AD78
-		push ecx
-		lea edx,  [esp+18h]
-		mov dword ptr [esp+68h], esp
-		mov ecx, esp
-		push edx
-		__emit 0E8h
-		__emit 06Eh
-		__emit 0DEh
-		__emit 021h
-		__emit 000h   // call 0x888BC0
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0F9h
-		__emit 0DBh
-		__emit 09Bh
-		__emit 0FFh   // call 0x28952
-		__emit 08Bh
-		__emit 00Dh
-		__emit 0B4h
-		__emit 071h
-		__emit 02Fh
-		__emit 001h   // mov ecx, dword ptr [0x12f71b4]
-		mov eax, dword ptr [ecx]
-		call dword ptr [eax+2Ch]
-		push ecx
-		mov ecx, esp
-		mov dword ptr [esp+68h], esp
-		push eax
-		__emit 0E8h
-		__emit 0D1h
-		__emit 07Eh
-		__emit 09Ah
-		__emit 0FFh   // call 0x12C42
-		mov ecx, esi
-		__emit 0E8h
-		__emit 0B9h
-		__emit 0BFh
-		__emit 09Ch
-		__emit 0FFh   // call 0x36D31
-L15_66AD78:
-		__emit 08Bh
-		__emit 035h
-		__emit 0D4h
-		__emit 093h
-		__emit 035h
-		__emit 001h   // mov esi, dword ptr [0x13593d4]
-		push ebx
-		call esi
-		push edi
-		call esi
-		add esp, 8h
-		xor ebx, ebx
-L07_66AD89:
-		mov byte ptr [ebp+12115h], 0h
-L06_66AD90:
-		mov ecx, ebp
-		__emit 0E8h
-		__emit 022h
-		__emit 0A3h
-		__emit 09Ah
-		__emit 0FFh   // call 0x150B9
-		lea esi,  [ebp+4h]
-		mov dword ptr [esp+64h], 8h
-L20_66ADA2:
-		mov ecx, dword ptr [esi]
-		cmp ecx, ebx
-		je L16_66ADE6
-		xor edx, edx
-		mov dl, byte ptr [ebp+12114h]
-		push edx
-		__emit 0E8h
-		__emit 07Dh
-		__emit 088h
-		__emit 09Ah
-		__emit 0FFh   // call 0x13633
-		mov ecx, dword ptr [esi]
-		__emit 08Bh
-		__emit 015h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov edx, dword ptr [0x12f0898]
-		mov eax, dword ptr [ecx]
-		cmp eax, dword ptr [edx+3Ch]
-		ja L16_66ADE6
-		__emit 0E8h
-		__emit 0EEh
-		__emit 02Fh
-		__emit 09Bh
-		__emit 0FFh   // call 0x1DDB8
-		test al, al
-		je L16_66ADE6
-		mov edi, dword ptr [esi]
-		cmp edi, ebx
-		je L17_66ADE4
-		mov ecx, edi
-		__emit 0E8h
-		__emit 0F4h
-		__emit 020h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3CECF
-		push edi
-		__emit 0E8h
-		__emit 0CFh
-		__emit 070h
-		__emit 021h
-		__emit 000h   // call 0x881EB0
-		add esp, 4h
-L17_66ADE4:
-		mov dword ptr [esi], ebx
-L16_66ADE6:
-		mov ecx, dword ptr [esi+120E0h]
-		cmp ecx, ebx
-		je L18_66AE26
-		__emit 0E8h
-		__emit 0E7h
-		__emit 088h
-		__emit 09Bh
-		__emit 0FFh   // call 0x236DC
-		test al, al
-		je L18_66AE26
-		__emit 0A1h
-		__emit 098h
-		__emit 008h
-		__emit 02Fh
-		__emit 001h   // mov eax, dword ptr [0x12f0898]
-		mov ecx, dword ptr [esi+120E0h]
-		mov edi, dword ptr [eax+3Ch]
-		__emit 0E8h
-		__emit 0ADh
-		__emit 009h
-		__emit 09Dh
-		__emit 0FFh   // call 0x3B7B9
-		cmp eax, edi
-		jne L18_66AE26
-		mov ecx, dword ptr [esi+120E0h]
-		cmp ecx, ebx
-		je L19_66AE20
-		mov edx, dword ptr [ecx]
-		push 1h
-		call dword ptr [edx]
-L19_66AE20:
-		mov dword ptr [esi+120E0h], ebx
-L18_66AE26:
-		mov eax, dword ptr [esp+64h]
-		add esi, 4h
-		dec eax
-		mov dword ptr [esp+64h], eax
-		jne L20_66ADA2
-		mov ebp, dword ptr [ebp+12024h]
-		cmp ebp, ebx
-		je L01_66AE49
-		mov ecx, ebp
-		__emit 0E8h
-		__emit 0F5h
-		__emit 0AEh
-		__emit 09Ah
-		__emit 0FFh   // call 0x15D3E
-L01_66AE49:
-		mov ecx, dword ptr [esp+54h]
-		pop edi
-		pop esi
-		pop ebp
-		mov dword ptr fs:[0h], ecx
-		pop ebx
-		add esp, 50h
-		ret 8h
+	if (m_localAddress == 0 && m_localPort == 0)
+		return;
+
+	if (m_transport)
+		m_transport->doRecv();
+
+	if (isInGame)
+	{
+		if (m_disconnectManager)
+			reinterpret_cast<BFMEDisconnectManager *>(m_disconnectManager)->update(this);
+		reinterpret_cast<BFMEConnectionManager *>(this)->runRelayPass();
+		if (frameAdvanced)
+		{
+			if (!(TheNetwork && reinterpret_cast<Network *>(TheNetwork)->isRouterLeavePending() &&
+				m_localSlot == m_packetRouterSlot))
+				reinterpret_cast<BFMEConnectionManager *>(this)->sendFrameInfo();
+		}
 	}
+
+	if (TheGameSpyGame && TheGameSpyBuddyMessageQueue && m_statsAuthPending)
+	{
+		if (TheGameSpyGame->m_hasStatsGame)
+		{
+			if (memcmp(GetChallenge(TheGameSpyGame->m_statsGame), "NULLGAME", 9) != 0)
+			{
+				char *challenge = goastrdup(GetChallenge(TheGameSpyGame->m_statsGame));
+				BFMENetRequestGameSpyStatsAuthKeyCommandMsg *msg = new BFMENetRequestGameSpyStatsAuthKeyCommandMsg;
+				msg->setPlayerID(m_localSlot);
+				msg->setExecutionFrame((unsigned int)-1);
+				if ((unsigned char)DoesCommandRequireACommandID(msg->getNetCommandType()))
+					msg->setID(GenerateNextCommandID());
+				msg->setText1C(AsciiString(challenge));
+				sendLocalCommandDirect(msg, (unsigned char)~(unsigned char)(1 << m_localSlot));
+				msg->detach();
+
+				char *secret = goastrdup(TheGameSpyBuddyMessageQueue->getAuthSecretText());
+				char response[64];
+				GenerateAuthA(challenge, secret, response);
+				GameSpyGameSlot *slot = TheGameSpyGame->getGameSpySlot(TheGameSpyGame->getLocalSlotNum());
+				if (slot && filePathLength(slot->getLoginName()) == 0)
+				{
+					slot->setLoginName(AsciiString(response));
+					slot->setLocale(AsciiString(TheGameSpyBuddyMessageQueue->getReplyIdentityText()));
+				}
+				free(challenge);
+				free(secret);
+				m_statsAuthPending = false;
+			}
+		}
+		else
+		{
+			m_statsAuthPending = false;
+		}
+	}
+
+	reinterpret_cast<BFMEConnectionManager *>(this)->sendKeepAliveCommand();
+
+	for (int i = 0; i < 8; ++i)
+	{
+		if (m_connections[i])
+		{
+			m_connections[i]->doSend(m_throttleSend);
+			if (m_connections[i]->getQuitFrame() <= TheGameLogic->getFrame() &&
+				m_connections[i]->isQueueEmpty())
+			{
+				delete m_connections[i];
+				m_connections[i] = 0;
+			}
+		}
+		if (m_frameData[i] && m_frameData[i]->getIsQuitting() &&
+			m_frameData[i]->getQuitFrame() == TheGameLogic->getFrame())
+		{
+			delete m_frameData[i];
+			m_frameData[i] = 0;
+		}
+	}
+
+	if (m_transport)
+		m_transport->doSend();
 }
 
 // update() drives this on every peer. The router additionally broadcasts

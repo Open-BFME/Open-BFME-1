@@ -2141,7 +2141,7 @@ emit	game/GameEngine/Source/GameNetwork/GameInfo.cpp	*	843
 emit	game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_joinBestGroupRoomMethodThunk.cpp	*	433
 emit	game/GameEngine/Source/GameNetwork/GameSpy/GameTooltipThunk.cpp	*	1656
 emit	game/GameEngine/Source/GameNetwork/GameSpy/LobbyUtils_populateBuddyGames_Thunk.cpp	*	551
-emit	game/GameEngine/Source/GameNetwork/native_connection_timing.cpp	*	888
+emit	game/GameEngine/Source/GameNetwork/native_connection_timing.cpp	*	623
 emit	game/GameEngine/Source/GameNetwork/native_network_dispatcher.cpp	*	3235
 emit	game/GameEngine/Source/GameNetwork/native_network_interface.cpp	*	113
 emit	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawDestructorThunk.cpp	*	682
