@@ -1,4 +1,4 @@
-// cl: /I.
+// cl: 
 // ?prepare0021C4B0@Rva21C710Owner@@QAEXPAVRva21C710Object@@@Z
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
@@ -42,7 +42,7 @@ struct Coord3D
 // ?set@Rva21C710Vector@@QAEXPAUCoord3D@@@Z absent-from-retail
 inline void Rva21C710Vector::set(const Coord3D *a) { x = a->x; y = a->y; z = a->z; }
 
-#include "game/GameEngine/Source/GameLogic/Object/object.h"
+#include "../object.h"
 
 class Rva21C710StatusMask
 {
@@ -123,7 +123,7 @@ struct Rva21C710OwnerContext
 	Rva21C710OwnerStringHolder *nameHolder;
 };
 
-#include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Gen_00411DD0
 {

@@ -1,7 +1,7 @@
 // ?DoXfer@Object@@MAEXAAVXfer@@@Z
 // EA identity: Object::DoXfer (see identity_evidence/ea-worldbuilder-labels.md).
 // Size ends before the int3 run at +0x0F94 (3988 bytes).
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /I. /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB  /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME Object snapshot receiver. Offsets are relative to Object+0x60.
 #define _STLP_NO_EXCEPTIONS 1
@@ -10,8 +10,8 @@
 #include <vector>
 #include <utility>
 #define _OPERATOR_NEW_DEFINED_
-#include "game/Libraries/Source/WWVegas/WWMath/matrix3d.h"
-#include "game/GameEngine/Source/Common/System/xfer.h"
+#include "../../../../Libraries/Source/WWVegas/WWMath/matrix3d.h"
+#include "../../Common/System/xfer.h"
 
 struct __declspec(align(4)) Rva001D48A0Version
 {

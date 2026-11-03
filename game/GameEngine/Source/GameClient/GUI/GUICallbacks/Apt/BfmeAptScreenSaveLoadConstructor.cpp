@@ -1,11 +1,11 @@
-// cl: /I. /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+// cl:  /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // SaveLoad screen construction and callback registration.
 
 #include <list>
 #include "ascii_string.h"
 #include "unicode_string.h"
-#include "game/GameEngine/Include/GameClient/BfmeAptScreenBaseLayout.h"
+#include "../../../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 class GameWindow;
 class __multiple_inheritance FunctorTarget;
 typedef void (FunctorTarget::*FunctorMethod)(void);

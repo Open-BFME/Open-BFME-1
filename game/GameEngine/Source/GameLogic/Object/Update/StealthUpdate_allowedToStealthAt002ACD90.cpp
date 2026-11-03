@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /I. /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB  /Igame/GameEngine/Source /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // StealthUpdate stealth-eligibility test at a position, retail 0x002ACD90
@@ -22,7 +22,7 @@ typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 
 enum NameKeyType

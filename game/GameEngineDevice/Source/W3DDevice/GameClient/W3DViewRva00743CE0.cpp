@@ -1,4 +1,4 @@
-// cl: /I. /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl:  /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00743CE0, 530 bytes (ret 0x10 at +0x1F5 and +0x20F): BFME W3DView
 // virtual, vtable 0x011217A0 slot 115 (VA 0x0112196C -> ILT 0x00027F84).
 // Locks the camera on an object: saves the current view into the globals at
@@ -16,7 +16,7 @@ enum ObjectID
 	FORCE_OBJECTID_TO_LONG_SIZE = 0x7FFFFFFF
 };
 
-#include "game/Libraries/Include/Lib/Coord3D.h"
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Overridable
 {
