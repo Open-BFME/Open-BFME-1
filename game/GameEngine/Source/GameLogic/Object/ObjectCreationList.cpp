@@ -1575,7 +1575,6 @@ static const FieldParse TheObjectCreationListFieldParse[] =
 };
 
 //-------------------------------------------------------------------------------------------------
-// ?clear@ObjectCreationList@@QAEXXZ present-unmatched
 void ObjectCreationList::clear()
 {
 	// do NOT delete the nuggets -- they're owned by the Store.
