@@ -22,13 +22,13 @@ class BfmeA1279
 public:
 	BfmeA1279(BfmeQ1279 *a);
 	BfmeQ1279 *m_bfme00;
-	char m_bfme04[0x100];
-	char m_bfme104[0x100];
+	char m_ticket[0x100];
+	char m_challenge[0x100];
 };
 
 BfmeA1279::BfmeA1279(BfmeQ1279 *a)
 {
 	m_bfme00 = a;
-	reinterpret_cast< BfmeThingUPB * >( a )->bfmeGoUPB("ticket", m_bfme04, (void *)0x100);
-	reinterpret_cast< BfmeThingUPB * >( m_bfme00 )->bfmeGoUPB("challenge", m_bfme104, (void *)0x100);
+	reinterpret_cast< BfmeThingUPB * >( a )->bfmeGoUPB("ticket", m_ticket, (void *)0x100);
+	reinterpret_cast< BfmeThingUPB * >( m_bfme00 )->bfmeGoUPB("challenge", m_challenge, (void *)0x100);
 }
