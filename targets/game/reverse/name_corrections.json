@@ -21842,5 +21842,65 @@
   "after_sha256": "ef9b00bc6e5de0489fd813474a5492ec2657ce6ac0d8b26941d1363bc22d4e73",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "Retail vftable mangling at 0x010EE13C is ??_7LargeGroupAudio@@6BRva004948B0Base@@@ (dir32_addresses.csv owns that name there), so retail spells the first base Rva004948B0Base; the rename makes the emitted primary vftable the recorded name and retires the ??_7LargeGroupAudio@@6BSubsystemInterface@@@ dir32 gate debt. Layout unchanged (vptr+m_name, 8B); base dtor still resolves to matched 0x009A1A40 via the ??1Rva004948B0Base@@UAE@XZ pin."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "ContainmentFilter",
+  "new_name": "Rva00204360VptrZeroObject",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "ControllingPlayerFilter",
+  "new_name": "Rva0016A9F0FunctorValueWrapper",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "RelationshipFilter",
+  "new_name": "Rva0025ED50RootFilter",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "SameMapFilter",
+  "new_name": "Rva0025ED50ObjectFilter",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "SpawnBehaviorBase",
+  "new_name": "BfmeC1050",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00204b50.cpp",
+  "old_name": "slot00",
+  "new_name": "bfmeGo1050D",
+  "before_sha256": "02d123f0894e5e4465714951961c29bdf84f4ca9583c2a873eaf3f8ce588c13e",
+  "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
  }
 ]
