@@ -5997,3 +5997,7 @@ game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_c4,56d31c2
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|t,5bbf34b6f0e378b281abfa88,claude-opus,20261103081930-509be1,2026-11-03
 game/GameEngine/Source/Common/BfmeConv1279.cpp|member||m_bfme04,d584e1a601d74627f39f0edc,claude-opus,20261103082129-060f87,2026-11-03
 game/GameEngine/Source/Common/BfmeConv1279.cpp|member||m_bfme104,fab203a39fdbc72177e5ae69,claude-opus,20261103082129-060f87,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x0,38d1034bdd037040902c7df4,claude-opus,20261103082452-53e71d,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y0,af8ca39f303f1be9cf51002c,claude-opus,20261103082452-53e71d,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x1,db3d7d22f2821cac520c2bde,claude-opus,20261103082452-53e71d,2026-11-03
+game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y1,da6bf03158bd4bff8c338567,claude-opus,20261103082452-53e71d,2026-11-03
