@@ -21902,5 +21902,15 @@
   "after_sha256": "afea58f02799d481e17fa48fa8d55a870eef2f42d176b201ec8c741e83df5971",
   "evidence": "targets/game/reverse/dir32_addresses.csv",
   "reason": "The 0.35 bank invented local filter view names; the s547 bank spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x01085DD0 Rva0025ED50ObjectFilter, 0x01083B80 Rva0025ED50RootFilter, 0x01085DC0 PartitionFilterRelationship, 0x010A5AAC Rva00204360VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper) and calls 0x009F26A0 by its ledger name ?bfmeGo1050D@BfmeC1050@@QAEPAXHHHH@Z; the old names were never evidence-backed, and the tool pairs removed and added names by position."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00297930.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/LargeGroupBonusUpdate_update.cpp",
+  "old_name": "SameMapFilter",
+  "new_name": "Rva00297440VptrZeroObject",
+  "before_sha256": "93090bc47540e002e3bbb31337ee6ba29d2a160c74ecc66b49cfe4f5dee7c8e7",
+  "after_sha256": "ba76ddbe7b0f15cd4f391af77343b49b20a1d09576cd257a8411700fdc51999f",
+  "evidence": "targets/game/reverse/dir32_addresses.csv",
+  "reason": "The 0.18 bank invented local filter view names; its SameMapFilter stored vtable 0x01085DD0, which dir32_addresses.csv records as Rva0025ED50ObjectFilter (the not-self filter the conversion spells by that name). The conversion spells every filter class by the vtable name dir32_addresses.csv records at the VA the retail body stores (0x010BFAB8 Rva00297440VptrZeroObject, 0x01097144 Rva0016A9F0FunctorValueWrapper, 0x01083B80 Rva0025ED50RootFilter, 0x01085DD0 Rva0025ED50ObjectFilter), as the DIR32 gate requires; the old name was never evidence-backed, and the tool pairs removed and added names by position."
  }
 ]

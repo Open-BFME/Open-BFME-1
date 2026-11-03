@@ -2115,7 +2115,6 @@ emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AnimalAIUpdateDestr
 emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_getModuleNameKey_Thunk.cpp	*	155
 emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/findObjectToRepair_Thunk.cpp	*	505
 emit	game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateTryToIgniteThunk.cpp	*	961
-emit	game/GameEngine/Source/GameLogic/Object/Update/LargeGroupBonusUpdateDestructorThunk.cpp	*	818
 emit	game/GameEngine/Source/GameLogic/Object/Update/MobMemberSlavedUpdateCtorThunk.cpp	*	652
 emit	game/GameEngine/Source/GameLogic/Object/Update/PathfindLayer_isPointOnWall_Thunk.cpp	*	257
 emit	game/GameEngine/Source/GameLogic/Object/Update/StealthUpdate_ctor_Thunk.cpp	*	252
