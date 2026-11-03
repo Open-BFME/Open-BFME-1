@@ -91177,3 +91177,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0P@BEOMKAMG@AI?5Recruitable?$AA@,0x00CE7FBC,TheObjectFlagsNames[5] (retail .data VA 0x012B3E78 +0x14 points at VA 0x010E7FBC); compiler string literal AI Recruitable equals retail
 ??_C@_0BC@BAOJGCGM@Player?5Targetable?$AA@,0x00CE7FA4,TheObjectFlagsNames[6] (retail .data VA 0x012B3E78 +0x18 points at VA 0x010E7FA4); compiler string literal Player Targetable equals retail
 ??_EHCompressedAnimClass@@UAEPAXI@Z,0x0095C4A0,weak alias of the scalar deleting dtor ??_G at this address; target of the W7 adjustor thunk at 0x0095B820
+??_ERTS3DScene@@UAEPAXI@Z,0x000080FD,weak alias of the scalar deleting dtor ??_GRTS3DScene reached through this ILT entry; target of the WBAI adjustor thunk at 0x00713500
+??_ERTS2DScene@@UAEPAXI@Z,0x000299B0,weak alias of the scalar deleting dtor ??_GRTS2DScene reached through this ILT entry; target of the WBAI adjustor thunk at 0x00711ED0
