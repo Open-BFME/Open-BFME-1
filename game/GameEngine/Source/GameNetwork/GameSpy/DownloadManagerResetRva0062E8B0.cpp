@@ -4,8 +4,8 @@ class Gen00627270Owner { public: void cleanup(); };
 namespace _STL { template<class T> class allocator; template<class T, class A> class list; }
 class QueuedDownload;
 extern _STL::list<QueuedDownload, _STL::allocator<QueuedDownload> > queuedDownloads;
-extern bool mustDownloadPatch;
-extern bool cantConnectBeforeOnline;
+extern unsigned char mustDownloadPatch;
+extern unsigned char cantConnectBeforeOnline;
 class Rva012F49B4Thing { public: char m_beforeFlag[0x259]; bool m_flagAt259; };
 class BfmeAptScreenMainMenu;
 extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
