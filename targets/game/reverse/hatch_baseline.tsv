@@ -2112,9 +2112,6 @@ emit	game/GameEngine/Source/GameLogic/Object/SpecialPower/DarknessSpecialPowerMo
 emit	game/GameEngine/Source/GameLogic/Object/SpecialPower/DefectorSpecialPowerModuleData_dtor.cpp	*	263
 emit	game/GameEngine/Source/GameLogic/Object/SpecialPower/StopSpecialPowerModuleDataDestructorThunk.cpp	*	426
 emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AnimalAIUpdateDestructorThunk.cpp	*	843
-emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateDestructorThunk.cpp	*	2099
-emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/TransportAIUpdateDestructorThunk.cpp	*	2099
-emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WanderAIUpdateDestructorThunk.cpp	*	2099
 emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdate_getModuleNameKey_Thunk.cpp	*	155
 emit	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/findObjectToRepair_Thunk.cpp	*	505
 emit	game/GameEngine/Source/GameLogic/Object/Update/CivilianSpawnUpdateDestructorThunk.cpp	*	1025

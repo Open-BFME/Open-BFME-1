@@ -66,3 +66,16 @@ retirement tooling (`add_match --replace-rva` accepts exactly one row;
 see help/o1.md 0x00013101 entry). The existing `AIUpdateInterface::xfer`
 draft in `AIUpdate.cpp` (present-unmatched) probes at 0.355 (1927 vs 2099 B),
 so a conversion session must also rework the body.
+
+## Landing spelling (s548, 2026-11-03)
+
+`tools/ilt_oracle.py check '?DoXfer@AIUpdateInterface@@MAEXAAVXfer@@@Z' 0x271DB0`: CONFIRMED
+(exact); `?xfer@AIUpdateInterface@@MAEXPAVXfer@@@Z` is CONTRADICTED. BFME's
+Snapshot slot 3 is `DoXfer(Xfer &)` (same one-pointer ABI as the Zero Hour
+`xfer(Xfer *)`). The body takes its one stack argument and returns with `ret 4`, so it is not
+any of the three `@@UAE@XZ` destructors (AssaultTransport/Transport/WanderAIUpdate)
+the naked lifts claimed here.
+Source: game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceDoXfer.cpp,
+a BFME 2 donor port (AIUpdateXfer.cpp, open-bfme-2 45afcff3) with every BFME 1 delta
+read from the retail body. Recipe:
+targets/game/reverse/attempt_support/00271db0-aiupdateinterface-xfer-donor-recipe-s548.md.

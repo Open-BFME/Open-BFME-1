@@ -2427,9 +2427,6 @@ functions	0x00270B40	?setPathFromWaypoint@AIUpdateInterface@@QAEXPBVWaypoint@@PB
 functions	0x002714D0	?getTreatAsAircraftForLocoDistToGoal@AIUpdateInterface@@MBE_NXZ
 functions	0x00271630	?privateMoveToObject@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z
 functions	0x00271800	?privateExitInstantly@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z
-functions	0x00271DB0	??1AssaultTransportAIUpdate@@UAE@XZ
-functions	0x00271DB0	??1TransportAIUpdate@@UAE@XZ
-functions	0x00271DB0	??1WanderAIUpdate@@UAE@XZ
 functions	0x00272800	?findNearestLabeledContactPointOnTarget@AIUpdateInterface@@QAE_NPAVObject@@PAUCoord3D@@PBU3@_N@Z
 functions	0x002730E0	?playAttackVoiceResponse@AIUpdateInterface@@IAEXPAVObject@@@Z
 functions	0x00273200	?playAttackVoiceResponse@AIUpdateInterface@@IAEXPBUCoord3D@@@Z
