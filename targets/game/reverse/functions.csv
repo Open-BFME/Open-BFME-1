@@ -122665,46 +122665,29 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_007e3b10@@YAXXZ,,0x007E3B10,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0081C370
 ?j_007e3b20@@YAXXZ,,0x007E3B20,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0081C380
 ?j_007f0120@@YAXXZ,,0x007F0120,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00bf00b0
-?j_007f4dd0@@YAXXZ,,0x007F4DD0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x007E86C0
-?j_007f77a0@@YAXXZ,,0x007F77A0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x007F6BA0
-?j_007f7800@@YAXXZ,,0x007F7800,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x007F6C60
 ?j_007f7940@@YAXXZ,,0x007F7940,5,game/gen_small/gthunks_087.cpp,matched,gen-thunk;gap;target=0x007F6BA0
 ?j_007f7960@@YAXXZ,,0x007F7960,5,game/gen_small/gthunks_087.cpp,matched,gen-thunk;gap;target=0x007F6C60
-?j_007f7f40@@YAXXZ,,0x007F7F40,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x007F78E0
 ?j_00800660@@YAXXZ,,0x00800660,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c00550
-?j_00801b60@@YAXXZ,,0x00801B60,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00801570
-?j_00801bc0@@YAXXZ,,0x00801BC0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00801600
 ?j_00801c30@@YAXXZ,,0x00801C30,5,game/gen_small/gthunks_087.cpp,matched,gen-thunk;gap;target=0x00801570
 ?j_00801fa0@@YAXXZ,,0x00801FA0,5,game/gen_small/gthunks_087.cpp,matched,gen-thunk;gap;target=0x00801600
-?j_00802c20@@YAXXZ,,0x00802C20,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00802A10
 ?j_00802c90@@YAXXZ,,0x00802C90,5,game/gen_small/gthunks_087.cpp,matched,gen-thunk;gap;target=0x00802A10
-?j_00808b20@@YAXXZ,,0x00808B20,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x007E86C0
 ?j_0082ada0@@YAXXZ,,0x0082ADA0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c81f30
 ?j_00845bc0@@YAXXZ,,0x00845BC0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c45a00
 ?j_00845bd0@@YAXXZ,,0x00845BD0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c45aa0
 ?j_00853580@@YAXXZ,,0x00853580,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c53460
 ?j_008543a0@@YAXXZ,,0x008543A0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=WSACleanup
 ?j_00857ea0@@YAXXZ,,0x00857EA0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c667a0
-?j_00861200@@YAXXZ,,0x00861200,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00872680
 ?j_0087ffb0@@YAXXZ,,0x0087FFB0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0087FDC0
-?j_00891dd0@@YAXXZ,,0x00891DD0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00897190
 ?j_00893c90@@YAXXZ,,0x00893C90,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c93960
-?j_00893ca0@@YAXXZ,,0x00893CA0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x008939C0
-?j_00893cb0@@YAXXZ,,0x00893CB0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x00893B30
 ?j_00894110@@YAXXZ,,0x00894110,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c93e70
 ?j_00894780@@YAXXZ,,0x00894780,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c94660
 ?j_00894790@@YAXXZ,,0x00894790,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c94160
 ?j_00897470@@YAXXZ,,0x00897470,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c97360
 ?j_008976e0@@YAXXZ,,0x008976E0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=thunk_FUN_00c9c900
-?j_0089c9c0@@YAXXZ,,0x0089C9C0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0089C900
 ?j_0089cc70@@YAXXZ,,0x0089CC70,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00c9c900
 ?j_008bd7e0@@YAXXZ,,0x008BD7E0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00cac620
-?j_008c4a20@@YAXXZ,,0x008C4A20,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x0089EC50
-?j_008c5fb0@@YAXXZ,,0x008C5FB0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x008A0CF0
-?j_008c5fc0@@YAXXZ,,0x008C5FC0,5,game/gen_small/gthunks_085.cpp,matched,gen-thunk;gap;target=0x008C5BB0
 ?j_008cc560@@YAXXZ,,0x008CC560,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00ccbdf0
 ?j_008fd350@@YAXXZ,,0x008FD350,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d56a70
-?j_008fd360@@YAXXZ,,0x008FD360,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x00956A80
 ?j_008feb60@@YAXXZ,,0x008FEB60,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00deb810
 ?j_008fff30@@YAXXZ,,0x008FFF30,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00cffd60
 ?j_00906380@@YAXXZ,,0x00906380,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x000202E3
@@ -122715,39 +122698,20 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_00939f30@@YAXXZ,,0x00939F30,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x00939520
 ?j_00940000@@YAXXZ,,0x00940000,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d3fa90
 ?j_009401e0@@YAXXZ,,0x009401E0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x0093FC10
-?j_00944c90@@YAXXZ,,0x00944C90,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBF60
-?j_00944ca0@@YAXXZ,,0x00944CA0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBFE0
-?j_00944cb0@@YAXXZ,,0x00944CB0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC060
-?j_00944cc0@@YAXXZ,,0x00944CC0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC100
-?j_00944cf0@@YAXXZ,,0x00944CF0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC170
-?j_00944d30@@YAXXZ,,0x00944D30,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBF60
-?j_00944d40@@YAXXZ,,0x00944D40,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBFE0
-?j_00944d50@@YAXXZ,,0x00944D50,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC060
-?j_00944d60@@YAXXZ,,0x00944D60,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC100
-?j_00944d90@@YAXXZ,,0x00944D90,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC170
-?j_00944df0@@YAXXZ,,0x00944DF0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBFE0
-?j_00944e20@@YAXXZ,,0x00944E20,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC170
-?j_00944e70@@YAXXZ,,0x00944E70,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DBF60
-?j_00944ea0@@YAXXZ,,0x00944EA0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC100
-?j_00944eb0@@YAXXZ,,0x00944EB0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009DC170
 ?j_00945640@@YAXXZ,,0x00945640,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x0093B340
 ?j_00945970@@YAXXZ,,0x00945970,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00ddc190
 ?j_0094cdd0@@YAXXZ,,0x0094CDD0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d4cc70
 ?j_0094cde0@@YAXXZ,,0x0094CDE0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00d4cbf0
 ?j_0094dfc0@@YAXXZ,,0x0094DFC0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x0092F0D0
 ?j_009587e0@@YAXXZ,,0x009587E0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x00881F30
-?j_0095c6d0@@YAXXZ,,0x0095C6D0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009E5ED0
 ?j_0096d120@@YAXXZ,,0x0096D120,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00ddb7a0
 ?j_0097b710@@YAXXZ,,0x0097B710,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x000202E3
-?j_00984710@@YAXXZ,,0x00984710,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009E6020
 ?j_009a4280@@YAXXZ,,0x009A4280,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00da4010
-?j_009ac580@@YAXXZ,,0x009AC580,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009B4680
 ?j_009cd6e0@@YAXXZ,,0x009CD6E0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009CD390
 ?j_009cf410@@YAXXZ,,0x009CF410,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00dcf1e0
 ?j_009d0300@@YAXXZ,,0x009D0300,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009CFB40
 ?j_009d7a60@@YAXXZ,,0x009D7A60,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009D77A0
 ?j_009d7d20@@YAXXZ,,0x009D7D20,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009D7A70
-?j_009d7db0@@YAXXZ,,0x009D7DB0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009D7B80
 ?j_009d82c0@@YAXXZ,,0x009D82C0,5,game/gen_small/gthunks_086.cpp,matched,gen-thunk;gap;target=0x009D8230
 ?j_009d83c0@@YAXXZ,,0x009D83C0,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00dd82d0
 ?j_009db820@@YAXXZ,,0x009DB820,5,game/gen_small/thunks_037.cpp,matched,gen-thunk;target=FUN_00ddb7a0
@@ -173456,3 +173420,39 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ??_EW3DView@@WPM@AEPAXI@Z,,0x00746170,11,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewAdjustorThunks.cpp,matched,this-adjustor thunk: sub ecx 0xFC then jmp via ILT 0x00041191 to the deleting dtor 0x007463F0 through its ??_E weak alias pin; ilt_oracle CONFIRMS the name; unowned gap plus retired tail-jmp scaffold row;model=claude-opus-5-5;host=app
 ?onDelete@WorkerAIUpdate@@WDEA@AEXXZ,,0x002C9450,11,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/WorkerAIUpdateAdjustorThunks.cpp,matched,this-adjustor thunk: sub ecx 0x340 then jmp via ILT 0x00026D50 to WorkerAIUpdate::onDelete 0x002C9090; ilt_oracle CONFIRMS the name; unowned gap plus retired tail-jmp scaffold row;model=claude-opus-5-5;host=app
 ?update@DisconnectManager@@QAEXPAVConnectionManager@@@Z,,0x0066C8D0,1122,game/GameEngine/Source/GameNetwork/DisconnectManager.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0066c8d0-disconnectmanager-update.md;[BFME 2 donor] real C++ in the official TU replacing the misnamed naked BFMEDisconnectManager::update lift; ConnectionManager::update calls via ILT 0x00049080; ilt_oracle CONFIRMS; DisconnectManagerO1.cpp 59e3f8f825 stall/ping logic;model=claude-opus-5-5;host=Chartreuse
+?forward@Rva007F4DD0Forward@@QAEXXZ,,0x007F4DD0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva00808B20Forward@@QAEXXZ,,0x00808B20,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva007F77A0Forward@@QAEXXZ,,0x007F77A0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva007F7800Forward@@QAEXXZ,,0x007F7800,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva007F7F40Forward@@QAEXXZ,,0x007F7F40,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva00801B60Forward@@QAEXXZ,,0x00801B60,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva00801BC0Forward@@QAEXXZ,,0x00801BC0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva00802C20Forward@@QAEXXZ,,0x00802C20,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva0089C9C0Forward@@QAEXXZ,,0x0089C9C0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva008C4A20Forward@@QAEXI@Z,,0x008C4A20,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva008C5FB0Forward@@QAEXH@Z,,0x008C5FB0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva008C5FC0Forward@@QAEXH@Z,,0x008C5FC0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?forward@Rva009D7DB0Forward@@QBEIPBUBfmeCharRange@@@Z,,0x009D7DB0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva00861200Forward@@YAXPAVBfmeRoomXM@@HH@Z,,0x00861200,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva00891DD0Forward@@YAXXZ,,0x00891DD0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva00893CA0Forward@@YAPAXPAVBfmeElemCU@@HH@Z,,0x00893CA0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva00893CB0Forward@@YAPAURva00892640Item@@PAU1@HH@Z,,0x00893CB0,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva008FD360Forward@@YAHXZ,,0x008FD360,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?Rva009AC580Forward@@YAHPAURva009B4680State@@@Z,,0x009AC580,5,game/GameEngine/Source/Common/UnclaimedJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?add@Rva00944C90MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944C90,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?addTail@Rva00944C90MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944CA0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?addAfter@Rva00944C90MultiList@@QAE_NPAVMultiListObjectClass@@PBV2@_N@Z,,0x00944CB0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?remove@Rva00944C90MultiList@@QAE_NPAVMultiListObjectClass@@@Z,,0x00944CC0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?removeHead@Rva00944C90MultiList@@QAEPAVMultiListObjectClass@@XZ,,0x00944CF0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?add@Rva00944D30MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944D30,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?addTail@Rva00944D30MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944D40,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?addAfter@Rva00944D30MultiList@@QAE_NPAVMultiListObjectClass@@PBV2@_N@Z,,0x00944D50,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?remove@Rva00944D30MultiList@@QAE_NPAVMultiListObjectClass@@@Z,,0x00944D60,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?removeHead@Rva00944D30MultiList@@QAEPAVMultiListObjectClass@@XZ,,0x00944D90,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?addTail@Rva00944DF0MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944DF0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?removeHead@Rva00944DF0MultiList@@QAEPAVMultiListObjectClass@@XZ,,0x00944E20,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?add@Rva00944E70MultiList@@QAE_NPAVMultiListObjectClass@@_N@Z,,0x00944E70,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?remove@Rva00944E70MultiList@@QAE_NPAVMultiListObjectClass@@@Z,,0x00944EA0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?removeHead@Rva00944E70MultiList@@QAEPAVMultiListObjectClass@@XZ,,0x00944EB0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?draw@Rva0095C6D0Random@@QAEHXZ,,0x0095C6D0,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
+?draw@Rva00984710Random@@QAEHXZ,,0x00984710,5,game/Libraries/Source/WWVegas/WWLib/UnclaimedWWLibJmpForwarders.cpp,matched,unreferenced 5-byte tail-jmp forwarder (no call jmp ILT or dword reaches it) to the matched row its rel32 names; address-derived name;model=claude-opus-5-5;host=app
