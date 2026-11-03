@@ -113,6 +113,37 @@ static GameWindow *staticTextPlayerName = NULL;
 //-----------------------------------------------------------------------------
 
 
+// EA's ControlBar::initObserverControls (0x004A9980): ilt_oracle CONFIRMS
+// ?initObserverControls@ControlBar@@QAEXXZ there; the Zero Hour body below is
+// unchanged (the BFME 2 donor Rva0050DE39Observer.cpp agrees). See
+// targets/game/reverse/identity_evidence/004a9980-controlbar-initobservercontrols.md.
+void ControlBar::initObserverControls( void )
+{
+	ObserverPlayerInfoWindow = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:ObserverPlayerInfoWindow"));
+	ObserverPlayerListWindow = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:ObserverPlayerListWindow"));
+
+	for (Int i = 0; i < MAX_BUTTONS; i++)
+	{
+		AsciiString tmpString;
+		tmpString.format("ControlBar.wnd:ButtonPlayer%d", i);
+		buttonPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
+		buttonPlayer[i] = TheWindowManager->winGetWindowFromId( ObserverPlayerListWindow, buttonPlayerID[i] );
+		tmpString.format("ControlBar.wnd:StaticTextPlayer%d", i);
+		staticTextPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
+		staticTextPlayer[i] = TheWindowManager->winGetWindowFromId( ObserverPlayerListWindow, staticTextPlayerID[i] );
+	}
+	
+	staticTextNumberOfUnits = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:StaticTextNumberOfUnits"));
+	staticTextNumberOfBuildings = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:StaticTextNumberOfBuildings"));
+	staticTextNumberOfUnitsKilled = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:StaticTextNumberOfUnitsKilled"));
+	staticTextNumberOfUnitsLost = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:StaticTextNumberOfUnitsLost"));
+	staticTextPlayerName = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:StaticTextPlayerName"));
+	winFlag = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:WinFlag"));
+	winGeneralPortrait = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:WinGeneralPortrait"));
+	
+	buttonCancelID = TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonCancel");
+}
+
 //-------------------------------------------------------------------------------------------------
 /** System callback for the ControlBarObserverSystem */
 //-------------------------------------------------------------------------------------------------
