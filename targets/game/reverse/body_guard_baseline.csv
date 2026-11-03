@@ -446,7 +446,6 @@ dir32,0x012F7024,??_B?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType
 dir32,0x012F7048,?g_bfmeStateDF@@3PAURva006174D0State@@A,"retail 0x012F7048 is already recorded as ?Glo012F7048@@3PAVGlo012F7048CampaignGateMode@@A (+16 more); reference that name, not a new one"
 dir32,0x012F7048,?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A,"retail 0x012F7048 is already recorded as ?Glo012F7048@@3PAVGlo012F7048CampaignGateMode@@A (+16 more); reference that name, not a new one"
 dir32,0x012F7078,?g_bfmeBoxYP@@3URegion2D@@A,"retail 0x012F7078 is already recorded as ?Rva012F7078Region@@3URegion2D@@A (+2 more); reference that name, not a new one"
-dir32,0x012F77A8,?cursorResources@@3PAY07PAXA,"retail 0x012F77A8 is already recorded as _g_bfmeSITable (+1 more); reference that name, not a new one"
 dir32,0x012F7FE0,?TheTerrainRenderObject@@3PAVRva0074B480TerrainAbi@@A,"retail 0x012F7FE0 is already recorded as ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A (+14 more); reference that name, not a new one"
 dir32,0x012F7FE0,?g_012F7FE0@@3PAVDisplay006E2540@@A,"retail 0x012F7FE0 is already recorded as ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A (+14 more); reference that name, not a new one"
 dir32,0x012F8044,?g_rva012F8044Object@@3VAsciiString@@A,"retail 0x012F8044 is already recorded as ?TheBfmeObject_00C70970@@3VGen_00C70970Target@@A; reference that name, not a new one"
@@ -515,7 +514,6 @@ dir32,0x01337820,?g_01337820@@3PAURva008B38F0Global@@A,the name encodes 0x008B38
 dir32,0x01337820,?g_01337820@@3PAVRva008B38F0Global@@A,the name encodes 0x008B38F0 but retail reads 0x01337820
 dir32,0x01337A30,?g_bfmeStringPool1284@@3PAP6AXPAX@ZA,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x01337A30,?g_pool01337A30@@3PAUStringPool008B3AA0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
-dir32,0x01337A30,?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x013384C0,?key013384C0@@3HA,"nothing in the ledger owns 0x013384C0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x013384C8,?key013384C8@@3HA,"nothing in the ledger owns 0x013384C8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01338524,?g_01338524@@3URva008A9A70Str@@A,the name encodes 0x008A9A70 but retail reads 0x01338524
