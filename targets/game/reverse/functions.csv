@@ -159929,7 +159929,7 @@ uw_00c2440b,,0x00C2440B,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;obj
 uw_00c24430,,0x00C24430,11,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L527
 uw_00c2443b,,0x00C2443B,11,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L528
 uw_00c24460,,0x00C24460,11,game/gen_small/uw_gen_012.cpp,matched,gen-funclet;object-symbol=$L527
-uw_00c24480,,0x00C24480,8,game/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,gen-funclet;parent=??0AnimateWindowManager@@QAE@XZ;object-symbol=$L38021;eh-state-pin $L38015->$L38021: retail unwind map (??0AnimateWindowManager@@QAE@XZ states [0]) binds this address to $L38021;repin-model=claude-opus-5.5
+uw_00c24480,,0x00C24480,8,game/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,gen-funclet;parent=??0AnimateWindowManager@@QAE@XZ;object-symbol=$L38344;eh-state-pin $L38015->$L38021: retail unwind map (??0AnimateWindowManager@@QAE@XZ states [0]) binds this address to $L38021;repin-model=claude-opus-5.5;eh-state-pin $L38021->$L38344: retail unwind map (??0AnimateWindowManager@@QAE@XZ states [0]) binds this address to $L38344;repin-model=claude-opus-5-5
 uw_00c24488,,0x00C24488,11,game/gen_small/uw_gen_013.cpp,matched,gen-funclet;object-symbol=$L9807
 uw_00c24493,,0x00C24493,11,game/gen_small/uw_gen_013.cpp,matched,gen-funclet;object-symbol=$L9808
 uw_00c2449e,,0x00C2449E,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
@@ -159940,7 +159940,7 @@ uw_00c244ca,,0x00C244CA,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;obj
 uw_00c244d5,,0x00C244D5,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
 uw_00c244e0,,0x00C244E0,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
 uw_00c244eb,,0x00C244EB,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243
-uw_00c24520,,0x00C24520,8,game/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,gen-funclet;parent=??1AnimateWindowManager@@UAE@XZ;object-symbol=$L38424;eh-state-pin $L38418->$L38424: retail unwind map (??1AnimateWindowManager@@UAE@XZ states [0]) binds this address to $L38424;repin-model=claude-opus-5.5
+uw_00c24520,,0x00C24520,8,game/GameEngine/Source/GameClient/GUI/AnimateWindowManager.cpp,matched,gen-funclet;parent=??1AnimateWindowManager@@UAE@XZ;object-symbol=$L38655;eh-state-pin $L38418->$L38424: retail unwind map (??1AnimateWindowManager@@UAE@XZ states [0]) binds this address to $L38424;repin-model=claude-opus-5.5;eh-state-pin $L38424->$L38655: retail unwind map (??1AnimateWindowManager@@UAE@XZ states [0]) binds this address to $L38655;repin-model=claude-opus-5-5
 uw_00c24528,,0x00C24528,11,game/gen_small/uw_gen_013.cpp,matched,gen-funclet;object-symbol=$L9796
 uw_00c24533,,0x00C24533,11,game/gen_small/uw_gen_013.cpp,matched,gen-funclet;object-symbol=$L9797
 uw_00c24560,,0x00C24560,11,game/gen_small/uw_gen_010.cpp,matched,gen-funclet;object-symbol=$L1243

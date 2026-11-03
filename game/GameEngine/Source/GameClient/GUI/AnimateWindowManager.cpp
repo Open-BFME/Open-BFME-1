@@ -57,7 +57,32 @@
 //-----------------------------------------------------------------------------
 // USER INCLUDES //////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+// BFME's SubsystemInterface has nine virtual slots, not Zero Hour's six: retail's
+// AnimateWindowManager table 0x010F6F2C and the base table 0x01141640 both hold
+// ~dtor, init, loadIniFilesFromLegend, postProcessLoad, reset, update, then
+// a bool(int) returning false (0x00067940 via ILT 0x00033497), an empty void()
+// (0x009A16C0) and an empty void(int) (0x009A16D0). Zero Hour's draw slot is gone.
+// The sweep header keeps the Zero Hour layout, so this unit sets it aside.
+#define SubsystemInterface ZHSubsystemInterface
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#undef SubsystemInterface
+
+class SubsystemInterface
+{
+public:
+	SubsystemInterface();
+	virtual ~SubsystemInterface();
+	virtual void init() = 0;
+	virtual Bool loadIniFilesFromLegend();
+	virtual void postProcessLoad();
+	virtual void reset() = 0;
+	virtual void update() = 0;
+	virtual Bool unidentifiedSlot06( Int ) { return FALSE; }
+	virtual void unidentifiedSlot07() {}
+	virtual void unidentifiedSlot08( Int ) {}
+protected:
+	AsciiString m_name;
+};
 
 #include "GameClient/AnimateWindowManager.h"
 #include "GameClient/GameWindow.h"
