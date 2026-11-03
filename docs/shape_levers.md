@@ -3473,3 +3473,21 @@ parameter's last use is not packed into that parameter's home, while the
 flow-based `this` spill still shares a slot with it. Also on this body, value
 locals (`Int id = object->m_id; iface->set(id);`) fixed an eax/ecx/edx rotation
 of the loaded IDs. Measured on this body only.
+
+## A frame word zeroed at entry and set to 0xF = conditional temporaries' destructor bitmask (2026-11-03)
+
+0x00204B50 (`ReplenishUnitsBehavior::update`, bank `targets/game/reverse/attempts/0x00204b50.cpp`,
+VC7.1 `/MD /EHsc`, 628 B) zeroes a frame dword in the prologue (`mov [esp+0x20],ebx`
+with EBX=0) and stores `0xF` into it just before the first `PartitionFilter::link` of a
+four-filter chain, with only one EH state store (3) for the whole group. That is VC7.1's
+destructor bitmask for temporaries constructed conditionally (here behind `||`): the
+four filters are temporaries in one full expression, not named locals. Named locals or
+an out-of-line helper gave 400-595 B; `Bool clear = radius == g_bfmeDefaultBR ||
+mgr->find(pos, radius, 0, Rel(o,1,false).link(Root().link(ObjF(o).link(&F1(o,false))))) == 0;`
+gave the retail bitmask, states and vptr layout (shape 1.000). Same body: a
+`BitFlags`-style mask built as `xor edx,edx / mov eax,edx / or eax,0x20000` (not an
+immediate store) came from a constructor doing `memset(m_bits,0,sizeof m_bits);
+m_bits[bit>>5] |= 1u << (bit&31);` (assignments, loops and helpers all fold to the
+constant), and a missing EH state store before an out-of-line filter constructor call
+came from declaring that constructor `throw()`. Measured on this body only; its
+remaining frame-slot packing (0x9C vs 0x90) is open.
