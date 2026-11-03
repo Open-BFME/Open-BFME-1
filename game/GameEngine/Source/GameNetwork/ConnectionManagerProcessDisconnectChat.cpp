@@ -94,6 +94,20 @@ private:
 	Int m_playerID;									// this+0x0C
 };
 
+// The getText body (0x006751E0, NetCommandMsg_text.cpp) is defined as
+// ?getText@NetDisconnectChatCommandMsg@@QAE?AV?$StringBase@G@@XZ; this unit's
+// UnicodeString spelling is only a pin, so the call binds to the defined name
+// through a member-pointer view of that symbol.
+extern "C" void __cdecl __identifier("?getText@NetDisconnectChatCommandMsg@@QAE?AV?$StringBase@G@@XZ")();
+
+typedef UnicodeString (NetDisconnectChatCommandMsg::*BfmeGetTextPmf)( void );
+static __forceinline BfmeGetTextPmf bfmeGetTextPmf()
+{
+	union { void (__cdecl *symbol)(); BfmeGetTextPmf member; } c;
+	c.symbol = &__identifier("?getText@NetDisconnectChatCommandMsg@@QAE?AV?$StringBase@G@@XZ");
+	return c.member;
+}
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisconnectMenu.h
 class DisconnectMenu
 {
@@ -121,7 +135,7 @@ void ConnectionManager::processDisconnectChat( NetDisconnectChatCommandMsg *msg 
 
 		unitext.format( UnicodeString( L"[%ls] %ls" ),
 			getPlayerName( msg->getPlayerID() ).str(),
-			msg->getText().str() );
+			(msg->*bfmeGetTextPmf())().str() );
 
 		TheDisconnectMenu->showChat( unitext );
 	}
