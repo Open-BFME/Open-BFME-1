@@ -6003,3 +6003,4 @@ game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x1,db3d
 game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y1,da6bf03158bd4bff8c338567,claude-opus,20261103082452-53e71d,2026-11-03
 game/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFXRubbleNeighbors.cpp|local|TransitionDamageFX::rva002539F0|d,0392be3b4f03e60f8e869d94,claude-opus,20261103082641-15fee8,2026-11-03
 game/GameEngine/Source/Common/BfmeConv1269.cpp|type||BfmeVec1269,d3a9e9e2ae2374fc950351fb,claude-opus,20261103082711-336dfd,2026-11-03
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapUpdateScorches.cpp|type||BFMEScorchEntry,0f72000c4fef60bc4e9bc390,claude-opus,20261103082927-2800b1,2026-11-03
