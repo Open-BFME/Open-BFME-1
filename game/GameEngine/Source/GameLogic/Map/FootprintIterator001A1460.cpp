@@ -50,6 +50,8 @@ struct ICoord2D
 	Int x, y;
 };
 
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
+
 class Vector3
 {
 public:
@@ -101,10 +103,16 @@ public:
 	Real boxMinorRadius() const;							///< 0x0087DC30
 };
 
+bool Point_In_Triangle_2D(const Vector3 &tri_point0, const Vector3 &tri_point1,
+	const Vector3 &tri_point2, const Vector3 &test_point, int axis_1, int axis_2,
+	unsigned char &flags);
+extern Real g_bfmeDirectionWeight1285;
+
 class FootprintIterator001A1460
 {
 public:
 	FootprintIterator001A1460(const GeometryInfo &geom, Real angle, const Coord3D *pos);
+	Bool next(Coord2D *out);
 
 private:
 	GeometryInfo m_geom;									///< +0x00
@@ -173,4 +181,52 @@ FootprintIterator001A1460::FootprintIterator001A1460(const GeometryInfo &geom,
 
 	m_curX = m_iMin.x;
 	m_curY = m_iMin.y - 1;
+}
+
+// ?next@FootprintIterator001A1460@@QAE_NPAUCoord2D@@@Z
+Bool FootprintIterator001A1460::next(Coord2D *out)
+{
+	unsigned char edge;
+	Vector3 pt;
+	for (;;)
+	{
+		++m_curY;
+		while (m_curY > m_iMax.y)
+		{
+			++m_curX;
+			if (m_curX > m_iMax.x)
+				return false;
+			m_curY = m_iMin.y;
+		}
+
+		pt.Z = 0.0f;
+		pt.X = (Real)m_curX * g_bfmeDirectionWeight1285;
+		pt.Y = (Real)m_curY * g_bfmeDirectionWeight1285;
+
+		if (((BfmeThingTemplateShadowSelector &)m_geom).usePluralShadowName())
+		{
+			if (Point_In_Triangle_2D(m_topLeft, m_topRight, m_bottomLeft,
+				pt, 0, 1, edge) ||
+				Point_In_Triangle_2D(m_topRight, m_bottomRight, m_bottomLeft,
+					pt, 0, 1, edge))
+			{
+				goto success;
+			}
+		}
+		else
+		{
+			Real dx = pt.X - m_pos.x;
+			Real dy = pt.Y - m_pos.y;
+			Real radius = m_geom.getBoundingCircleRadius();
+			if (dx * dx + dy * dy < radius * radius)
+			{
+				goto success;
+			}
+		}
+	}
+
+success:
+	out->x = pt.X;
+	out->y = pt.Y;
+	return true;
 }
