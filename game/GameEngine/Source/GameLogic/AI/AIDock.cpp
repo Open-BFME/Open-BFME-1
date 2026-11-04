@@ -55,8 +55,7 @@ public: \
 	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
 	{ return MP_GLUE_ALLOCATE(ARGCLASS); } \
 public: \
-	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
-	{ BfmePoolGlue::free(p); } \
+	void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2); \
 protected: \
 	inline void *operator new(size_t s) { return ::operator new(s); } \
 	inline void operator delete(void *p) { ::operator delete(p); } \
@@ -278,27 +277,40 @@ static void bfmeRetailSetAdjustsDestinationFalse( State *state )
  * Create an AI state machine. Define all of the states the machine 
  * can possibly be in, and set the initial (default) state.
  */
-// byte-exact BFME-layout reconstruction: game/GameEngine/Source/GameLogic/AI/AIDockMachineCtor.cpp
-// ??0AIDockMachine@@ present-unmatched
-AIDockMachine::AIDockMachine( Object *obj ) : StateMachine( obj, "AIDockMachine" )
+// The BFME constructor is defined once in AIDockMachineCtor.cpp.
+// Keep the existing ledgered placement-delete helpers defined independently
+// of the removed Zero Hour constructor that formerly forced their emission.
+void AIDockApproachState::operator delete(void *p, AIDockApproachStateMagicEnum)
 {
-	static const StateConditionInfo waitForClearanceConditions[] = 
-	{
-		StateConditionInfo(ableToAdvance, AI_DOCK_ADVANCE_POSITION, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
-
-	// order matters: first state is the default state.
-	defineState( AI_DOCK_APPROACH,						newInstance(AIDockApproachState)( this ), AI_DOCK_WAIT_FOR_CLEARANCE, EXIT_MACHINE_WITH_FAILURE );
-	defineState( AI_DOCK_WAIT_FOR_CLEARANCE,	newInstance(AIDockWaitForClearanceState)( this ), AI_DOCK_MOVE_TO_ENTRY, EXIT_MACHINE_WITH_FAILURE, waitForClearanceConditions );
-	defineState( AI_DOCK_ADVANCE_POSITION,		newInstance(AIDockAdvancePositionState)( this ), AI_DOCK_WAIT_FOR_CLEARANCE, EXIT_MACHINE_WITH_FAILURE );
-	defineState( AI_DOCK_MOVE_TO_ENTRY,				newInstance(AIDockMoveToEntryState)( this ), AI_DOCK_MOVE_TO_DOCK, AI_DOCK_MOVE_TO_EXIT );
-	defineState( AI_DOCK_MOVE_TO_DOCK,				newInstance(AIDockMoveToDockState)( this ), AI_DOCK_PROCESS_DOCK, AI_DOCK_MOVE_TO_EXIT );
-	defineState( AI_DOCK_PROCESS_DOCK,				newInstance(AIDockProcessDockState)( this ), AI_DOCK_MOVE_TO_EXIT, AI_DOCK_MOVE_TO_EXIT );
-	defineState( AI_DOCK_MOVE_TO_EXIT,				newInstance(AIDockMoveToExitState)( this ), AI_DOCK_MOVE_TO_RALLY, EXIT_MACHINE_WITH_FAILURE );
-	defineState( AI_DOCK_MOVE_TO_RALLY,				newInstance(AIDockMoveToRallyState)( this ), EXIT_MACHINE_WITH_SUCCESS, EXIT_MACHINE_WITH_FAILURE );
-
-	m_approachPosition = -1;
+	BfmePoolGlue::free(p);
+}
+void AIDockWaitForClearanceState::operator delete(void *p, AIDockWaitForClearanceStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockAdvancePositionState::operator delete(void *p, AIDockAdvancePositionStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockMoveToEntryState::operator delete(void *p, AIDockMoveToEntryStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockMoveToDockState::operator delete(void *p, AIDockMoveToDockStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockProcessDockState::operator delete(void *p, AIDockProcessDockStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockMoveToExitState::operator delete(void *p, AIDockMoveToExitStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+void AIDockMoveToRallyState::operator delete(void *p, AIDockMoveToRallyStateMagicEnum)
+{
+	BfmePoolGlue::free(p);
 }
 
 //-----------------------------------------------------------------------------
