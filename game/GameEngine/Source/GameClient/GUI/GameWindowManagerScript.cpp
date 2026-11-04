@@ -69,8 +69,7 @@ public: \
 	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
 	{ return MP_GLUE_ALLOCATE(ARGCLASS); } \
 public: \
-	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
-	{ BfmePoolGlue::free(p); } \
+	void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2); \
 protected: \
 	inline void *operator new(size_t s) { return ::operator new(s); } \
 	inline void operator delete(void *p) { ::operator delete(p); } \
@@ -2080,32 +2079,20 @@ Bool parseLayoutBlock( File *inFile, char *buffer, UnsignedInt version, WindowLa
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+// Preserve the independently rowed native placement-delete provider after
+// removing the obsolete allocation site that used to emit its inline copy.
+void WindowLayout::operator delete(void *p, WindowLayoutMagicEnum)
+{
+	BfmePoolGlue::free(p);
+}
+
 // GameWindowManager::winCreateLayout =========================================
 /** Load window(s) from a .wnd definition file and wrap within a
 	* new window layout */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameWindowManager_winCreateLayout_Thunk.cpp
-// ?winCreateLayout@GameWindowManager@@UAEPAVWindowLayout@@VAsciiString@@@Z present-unmatched
-WindowLayout *GameWindowManager::winCreateLayout( AsciiString filename )
-{
-	WindowLayout *layout;
-
-	// allocate a new window layout
-	layout = newInstance(WindowLayout);
-
-	// load windows into layout
-	if( layout->load( filename ) == FALSE )
-	{
-
-		layout->deleteInstance();
-		return NULL;
-
-	}  // end if
-	
-	// return loaded layout
-	return layout;
-
-}  // end winCreateLayout
+// Native BFME layout factory is defined in GameWindowManager_winCreateLayout_Thunk.cpp.
+// It loads WindowLayoutInfo before creating the layout; the Zero Hour factory
+// here used a different allocation and load sequence.
 
 /** Free up the memory used by static strings.  Normally this memory
 is freed by the string destructor but we do it here to make the
