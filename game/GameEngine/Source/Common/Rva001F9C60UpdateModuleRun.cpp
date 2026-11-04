@@ -106,28 +106,21 @@ struct UpdateModuleData
 	UpdateModuleName m_moduleName;
 };
 
-class BfmeHostCL;
-
-class BfmePathCL
+class Pathfinder
 {
 public:
-	void bfmeDropOneCL(BfmeHostCL *o);
+	void addObjectToPathfindMap(Object *object);
+	void removeObjectFromPathfindMap(Object *object);
 };
 
 class AI
 {
 public:
 	unsigned char m_bfmeHeadCL[0xc];
-	BfmePathCL *m_bfmePathCL;
+	Pathfinder *m_bfmePathCL;
 };
 
 extern AI *TheAI;
-
-class BFMEPathfinderMapShim
-{
-public:
-	void addObjectToPathfindMap(Object *object);
-};
 
 class Rva001F9C60UpdateModule
 {
@@ -154,8 +147,8 @@ void Rva001F9C60UpdateModule::run(void)
 		if (moduleData->m_moduleName.getLength() > 0)
 		{
 			((Rva00414230GuardedVCall *)drawable)->forward((int)moduleData->m_moduleName.str());
-			TheAI->m_bfmePathCL->bfmeDropOneCL((BfmeHostCL *)obj);
-			((BFMEPathfinderMapShim *)TheAI->m_bfmePathCL)->addObjectToPathfindMap(obj);
+			TheAI->m_bfmePathCL->removeObjectFromPathfindMap(obj);
+			TheAI->m_bfmePathCL->addObjectToPathfindMap(obj);
 
 		}
 	}
