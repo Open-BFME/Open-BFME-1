@@ -564,8 +564,8 @@ extern "C" void __identifier("?parseIndexList@INI@@SAXPAV1@PAX1PBX@Z")(INI *, vo
 extern "C" void __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern "C" void __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 // Gate debt _bfmeINIParseAsciiString: use the recorded INI static function directly.
-extern "C" void bfmeINIParseCoord3D(INI *, void *, void *, const void *);
-#pragma comment(linker, "/alternatename:_bfmeINIParseCoord3D=?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")
+extern "C" void __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+// Gate debt _bfmeINIParseCoord3D: use the recorded INI static function directly.
 extern "C" void bfmeINIParseUnsignedInt(INI *, void *, void *, const void *);
 #pragma comment(linker, "/alternatename:_bfmeINIParseUnsignedInt=?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")
 void j_00036615();
@@ -1890,7 +1890,8 @@ extern const char *const RotationTypeNames[];
 extern const char g_01110850[];
 // ?g_01110820@FXParticleSystem@@3QBDB: retail 0x01110820 is ??_7?$CategoryModuleClass@$05@FXParticleSystem@@6B@
 #define g_01110820 __identifier("??_7?$CategoryModuleClass@$05@FXParticleSystem@@6B@")
-extern const char g_01110868[];
+// ?g_01110868@FXParticleSystem@@3QBDB: retail 0x01110868 is ??_7?$CategoryModuleClass@$06@FXParticleSystem@@6B@
+#define g_01110868 __identifier("??_7?$CategoryModuleClass@$06@FXParticleSystem@@6B@")
 extern const char g_01110880[];
 // ?g_0111088C@FXParticleSystem@@3QBDB: retail 0x0111088C is ??_7?$CategoryModuleClass@$04@FXParticleSystem@@6B@
 #define g_0111088C __identifier("??_7?$CategoryModuleClass@$04@FXParticleSystem@@6B@")
@@ -8927,7 +8928,7 @@ void ParticleSystemTemplate::parse(INI *ini, void *data, void *store, const void
         { "Type", __identifier("?parseIndexList@INI@@SAXPAV1@PAX1PBX@Z"), (const void *)&::g_rva011101B0Names, 0x0c },
         { "ParticleName", reinterpret_cast<ParseProc>(__identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x10 },
         { "SlaveSystem", reinterpret_cast<ParseProc>(__identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x68 },
-        { "SlavePosOffset", reinterpret_cast<ParseProc>(bfmeINIParseCoord3D), 0, 0x6c },
+        { "SlavePosOffset", reinterpret_cast<ParseProc>(__identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x6c },
         { "PerParticleAttachedSystem", reinterpret_cast<ParseProc>(__identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x78 },
         { "Lifetime", reinterpret_cast<ParseProc>(j_00036615), 0, 0x14 },
         { "SystemLifetime", reinterpret_cast<ParseProc>(bfmeINIParseUnsignedInt), 0, 0x20 },
