@@ -35,8 +35,11 @@ public: AIGuardReturnState(StateMachine *machine):AIInternalMoveToState(machine,
 public:virtual ~AIGuardReturnState();
 private: unsigned int m_rva0015d1d0_50;
 };
-class AIGuardIdleState:public State {
-public: AIGuardIdleState(StateMachine *machine):State(machine,"AIGuardIdleState"){}
+// ??_7Rva0015CE80State@@6B@; this class's own vftable was the unrecorded name
+// retired debt: ??_7AIGuardIdleState@@6B@ replaced with ??_7Rva0015CE80State@@6B@
+extern "C" void *__identifier("??_7Rva0015CE80State@@6B@")[];
+class __declspec(novtable) AIGuardIdleState:public State {
+public: AIGuardIdleState(StateMachine *machine):State(machine,"AIGuardIdleState"){ *(volatile void **)this = (void *)__identifier("??_7Rva0015CE80State@@6B@"); }
 protected:virtual ~AIGuardIdleState();
 private:char m_rva0015d1d0_tail[0x10];
 };
