@@ -326,49 +326,10 @@ Bool SpecialPowerModule::isScriptOnly() const
 /** A special power has been used ... start the recharge process by computing the frame
 	* we will become fully available on in the future again */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/promoted__startPowerRecharge_SpecialPowerModule_UAEXXZ_0026AE00.cpp
-// ?startPowerRecharge@SpecialPowerModule@@UAEXXZ present-unmatched
-void SpecialPowerModule::startPowerRecharge()
-{
-#if defined(_DEBUG) || defined(_INTERNAL) || defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)
-	// this is a cheat ... remove this for release!
-	if( TheGlobalData->m_specialPowerUsesDelay == FALSE ) 
-		return;
-#endif
+// BFME startPowerRecharge is defined once in SpecialPowerModule_startPowerRecharge.cpp.
+// getReloadTime is retained by the existing Player reset-ready-frame provider.
 
-	const SpecialPowerModuleData *modData = getSpecialPowerModuleData();
 
-	// sanity
-	if( modData->m_specialPowerTemplate == NULL )
-	{
-		DEBUG_CRASH(("special power not found"));
-		return;
-	}
-
-	Object* obj = getObject();
-	if (!obj)
-		return;
-
-	Player* player = getObject()->getControllingPlayer();
-	if (!player)
-		return;
-
-	//Here, we make sure that general specials work as one between command centers
-	// only factory type faction buildings should do this, and only with generals powers (in general)
-	// but there are no restrictions on the use of SharedNSync on specialPowerTemplates at large
-	if ( modData->m_specialPowerTemplate->isSharedNSync() )
-	{
-		player->resetOrStartSpecialPowerReadyFrame( modData->m_specialPowerTemplate );
-	}
-	else
-	{
-		// set the frame we will be 100% available on now
-		m_availableOnFrame = TheGameLogic->getFrame() + getSpecialPowerTemplate()->getReloadTime();
-	}
-}
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModuleInitiateIntentThunk.cpp
 // ?initiateIntentToDoSpecialPower@SpecialPowerModule@@IAE_NPBVObject@@PBUCoord3D@@PBVWaypoint@@I@Z present-unmatched
 Bool SpecialPowerModule::initiateIntentToDoSpecialPower( const Object *targetObj, const Coord3D *targetPos, const Waypoint *way, UnsignedInt commandOptions )
