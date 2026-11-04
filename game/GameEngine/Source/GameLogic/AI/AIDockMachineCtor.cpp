@@ -102,10 +102,13 @@ public:
 private:
     unsigned int m_droneID;
 };
-class AIDockMoveToExitState : public AIInternalMoveToState
+// ??_7Rva0014F690State@@6B@; this class's own vftable was the unrecorded name
+// retired debt: ??_7AIDockMoveToExitState@@6B@ replaced with ??_7Rva0014F690State@@6B@
+extern "C" void *__identifier("??_7Rva0014F690State@@6B@")[];
+class __declspec(novtable) AIDockMoveToExitState : public AIInternalMoveToState
 {
 public:
-    AIDockMoveToExitState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToExitState") {}
+    AIDockMoveToExitState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToExitState") { *(volatile void **)this = (void *)__identifier("??_7Rva0014F690State@@6B@"); }
 protected:
     virtual ~AIDockMoveToExitState();
 };

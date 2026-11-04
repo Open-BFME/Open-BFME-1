@@ -103,7 +103,6 @@ dir32,0x0108EAF8,??_7RubbleRiseUpdateModuleData@@6B@,"nothing in the ledger owns
 dir32,0x010956C4,??_7PartitionFilter010956C4@@6B@,"retail 0x010956C4 is already recorded as ?g_010956C4@@3PAPBXA; reference that name, not a new one"
 dir32,0x01095704,??_7PartitionFilterRepulsor@@6B@,"retail 0x01095704 is already recorded as ??_7ParticleEmitterPrototypeClass@@6B@; reference that name, not a new one"
 dir32,0x01095734,??_7PartitionFilter01095734@@6B@,"retail 0x01095734 is already recorded as ??_7Rva0014A580FunctorValueWrapper@@6B@; reference that name, not a new one"
-dir32,0x01095E28,??_7AIDockMoveToExitState@@6B@,"retail 0x01095E28 is already recorded as ??_7Rva0014F690State@@6B@; reference that name, not a new one"
 dir32,0x01095FBC,??_7PartitionFilterIsFlying@@6B@,"retail 0x01095FBC is already recorded as ?g_target_0015B910@@3HA; reference that name, not a new one"
 dir32,0x010961E0,??_7AIGuardIdleState@@6B@,"retail 0x010961E0 is already recorded as ??_7Rva0015CE80State@@6B@; reference that name, not a new one"
 dir32,0x01096348,??_7AIGuardPickUpCrateState@@6B@,"retail 0x01096348 is already recorded as _bfmeVftableAU; reference that name, not a new one"
