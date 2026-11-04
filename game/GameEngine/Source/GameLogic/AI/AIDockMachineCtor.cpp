@@ -49,10 +49,13 @@ private:
     char m_storage24[0x2c];
 };
 
-class AIDockApproachState : public AIInternalMoveToState
+// ??_7Rva0014F380State@@6B@; this class's own vftable was the unrecorded name
+// retired debt: ??_7AIDockApproachState@@6B@ replaced with ??_7Rva0014F380State@@6B@
+extern "C" void *__identifier("??_7Rva0014F380State@@6B@")[];
+class __declspec(novtable) AIDockApproachState : public AIInternalMoveToState
 {
 public:
-    AIDockApproachState(StateMachine *m) : AIInternalMoveToState(m, "AIDockApproachState") {}
+    AIDockApproachState(StateMachine *m) : AIInternalMoveToState(m, "AIDockApproachState") { *(volatile void **)this = (void *)__identifier("??_7Rva0014F380State@@6B@"); }
 protected:
     virtual ~AIDockApproachState();
 };
