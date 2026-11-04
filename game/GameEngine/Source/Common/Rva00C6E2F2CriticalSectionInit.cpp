@@ -39,7 +39,9 @@ private:
     unsigned char m_storage[44];
 };
 }
-extern ATL::CAtlWinModule g_rva0130A45CObject;
+// Retire ?g_rva0130A45CObject@@3VCAtlWinModule@ATL@@A
+extern "C" ATL::CAtlWinModule __identifier("?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A");
+#define g_rva0130A45CObject __identifier("?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A")
 void bfmeForward_00C715C0(void);
 
 void Rva00C6E308Initialize()

@@ -23,7 +23,10 @@
 ** NOTE: If _TheFileFactory is ever changed to point to an object of a different class which does
 ** not derive from SimpleFileFactoryClass, _TheSimpleFileFactory should be set to NULL.
 */
-SimpleFileFactoryClass		_DefaultFileFactory;
+// 0x0134ECF0 is recorded (DIR32) as ?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A.
+// Retire ?_DefaultFileFactory@@3VSimpleFileFactoryClass@@A: define the storage under that symbol.
+extern "C" { SimpleFileFactoryClass __identifier("?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A"); }
+#define _DefaultFileFactory __identifier("?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A")
 FileFactoryClass *			_TheFileFactory = &_DefaultFileFactory;
 SimpleFileFactoryClass *			_TheSimpleFileFactory = &_DefaultFileFactory;
 

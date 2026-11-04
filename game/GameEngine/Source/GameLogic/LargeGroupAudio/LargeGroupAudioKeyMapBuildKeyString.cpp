@@ -89,8 +89,9 @@ struct LargeGroupAudioKeyRecord : _STL::_Rb_tree_node_base
 // initializer 0x00C6B390) in Rva00C6B390StaticInitializers.cpp; its first
 // word is the header node this TU walks from.
 struct Rva00C6B390Init;
-extern Rva00C6B390Init g_rva012F1050;
-#define g_lgaKeyRecordSentinel (*reinterpret_cast<LargeGroupAudioKeyRecord **>(&g_rva012F1050))
+// Retire ?g_rva012F1050@@3URva00C6B390Init@@A
+extern "C" Rva00C6B390Init __identifier("?TheBfmeObject_00C6FF00@@3VGen_00C6FF00Target@@A");
+#define g_lgaKeyRecordSentinel (*reinterpret_cast<LargeGroupAudioKeyRecord **>(&__identifier("?TheBfmeObject_00C6FF00@@3VGen_00C6FF00Target@@A")))
 
 class LargeGroupAudioKeyMap
 {

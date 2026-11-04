@@ -141,7 +141,10 @@ struct Rva00C6B900Init
 	~Rva00C6B900Init();
 };
 
-Rva00C6B390Init g_rva012F1050;
+// 0x012F1050 is recorded (DIR32) as ?TheBfmeObject_00C6FF00@@3VGen_00C6FF00Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva012F1050@@3URva00C6B390Init@@A
+extern "C" { Rva00C6B390Init __identifier("?TheBfmeObject_00C6FF00@@3VGen_00C6FF00Target@@A"); }
 // 0x012F10DC is recorded (DIR32) as ?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A,
 // the name its consumers bind; define the storage under that symbol.
 extern "C" { Rva00C6B3D0Init __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A"); }

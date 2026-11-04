@@ -19,4 +19,7 @@ public:
 }
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
-ATL::CAtlWinModule g_rva0130A45CObject;
+// 0x0130A45C is recorded (DIR32) as ?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A.
+// Retire ?g_rva0130A45CObject@@3VCAtlWinModule@ATL@@A: define the storage under that symbol.
+extern "C" { ATL::CAtlWinModule __identifier("?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A"); }
+#define g_rva0130A45CObject __identifier("?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A")
