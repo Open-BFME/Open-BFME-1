@@ -59,8 +59,12 @@ const FieldParse WaterTransparencySetting::m_waterTransparencySettingFieldParseT
 WaterSetting::WaterSetting( void )
 {
 
-	m_skyTextureFile.clear();
-	m_waterTextureFile.clear();
+	// link queue #45 (?clear@AsciiString@@QAEXXZ, strings family): retail's
+	// clears are direct releaseBuffer calls (the AsciiString spelling is only
+	// a pin at 0x00887940); the header forwarder already inlines to that, so
+	// spell the base call explicitly and emit no AsciiString copy of our own.
+	m_skyTextureFile.StringBase<char>::clear();
+	m_waterTextureFile.StringBase<char>::clear();
 	m_waterRepeatCount = 0;
 	m_skyTexelsPerUnit = 0.0f;
 
