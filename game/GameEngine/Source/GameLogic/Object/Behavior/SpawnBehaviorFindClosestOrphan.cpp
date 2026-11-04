@@ -27,12 +27,7 @@ public:
 	bool isEquivalentTo(const ThingTemplate *other) const;
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 static inline const ThingTemplate *getTemplate(const Object *object);

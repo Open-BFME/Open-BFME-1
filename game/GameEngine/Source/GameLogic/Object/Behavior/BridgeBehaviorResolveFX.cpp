@@ -22,7 +22,7 @@ template<> inline int StringBase<char>::compare(const char *s) const {
  return len-n;
 }
 #include "ascii_string.h"
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class Matrix3D;
 enum ObjectID {};
 class Object { char pad00[0x38]; public: Coord3D m_position; char pad44[0x30]; ObjectID m_id; ObjectID getID() const { return m_id; } bool getSingleLogicalBonePosition(const char*,Coord3D*,Matrix3D*) const; };

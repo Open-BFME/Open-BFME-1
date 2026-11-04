@@ -11,7 +11,7 @@
 // Its vtable is 0x010956B0; unrelated DistLOD names on that table are not evidence
 // for changing this game-logic identity. Keep the override receiver mutable:
 // a separate getType temporary changes MSVC receiver allocation.
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 struct ContactString002A79B0 { struct Data {int refs;unsigned short length,capacity;char text[1];}; Data* data;
  bool empty() const {return !data || !data->length;} const char* str() const {return data?data->text:"";}
 };

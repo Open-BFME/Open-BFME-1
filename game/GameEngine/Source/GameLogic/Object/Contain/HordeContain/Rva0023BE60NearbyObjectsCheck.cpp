@@ -5,7 +5,7 @@
 // name are not proven, so both keep the address token. AI+0x0C is ZH m_pathfinder;
 // the pathfinder query at 0x003E4680 (ILT 0x00027AB6, ret 12) is address-derived.
 
-struct Coord3D { float x, y, z; };
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 typedef unsigned int ObjectID;
 
 extern void j_00027ab6();

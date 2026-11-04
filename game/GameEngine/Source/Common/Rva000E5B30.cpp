@@ -7,12 +7,7 @@
 // Query callback 0x001A3280 stores a pointer to the selected 48-byte record;
 // its first member is the position. No vtables are instantiated by this TU.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 #define VDECL(N) virtual void *slot##N();
 
