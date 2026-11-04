@@ -4,7 +4,6 @@ dir32,0x00405277,??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@
 dir32,0x0040602D,??0MoveHint0043AAD0@@QAE@XZ,"nothing in the ledger owns 0x0040602D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0040768A,??0AttackPriorityInfo@@QAE@XZ,"nothing in the ledger owns 0x0040768A. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0040C5E0,?ownerNotDockingOrIdle@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0040C5E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0040EB65,??0Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail reads 0x0040EB65
 dir32,0x0040F4ED,??_F?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0040F4ED. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004128FA,??1BfmeGdElem36@@QAE@XZ,"retail 0x004128FA is already recorded as ??1GdElemSlot@@QAE@XZ; reference that name, not a new one"
 dir32,0x0041421D,??_F?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0041421D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
