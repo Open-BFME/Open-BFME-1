@@ -143,11 +143,11 @@ public:
 // The two in-object texture slot arrays are constructed by the compiler's
 // array-new helper: element size 0x28, count 0x200, element constructor
 // ?j_00027c55 and element destructor ?j_00041b32.
-class Rva0074EB10TextureSlot
+class Rva0074E990TextureSlot
 {
 public:
-	Rva0074EB10TextureSlot(void);
-	~Rva0074EB10TextureSlot(void);
+	Rva0074E990TextureSlot(void);
+	~Rva0074E990TextureSlot(void);
 
 private:
 	char m_body[0x28];
@@ -197,9 +197,9 @@ private:
 	Rva0074EB10Vector<int> m_vectorA4;
 	Rva0074EB10Vector<int> m_vectorB0;
 	char m_gap80bc[4];
-	Rva0074EB10TextureSlot m_textureSlotsA[0x200];
+	Rva0074E990TextureSlot m_textureSlotsA[0x200];
 	char m_gapD0c0[4];
-	Rva0074EB10TextureSlot m_textureSlotsB[0x200];
+	Rva0074E990TextureSlot m_textureSlotsB[0x200];
 	Rva0074EB10TextureRef m_texture0;
 	Int m_terrainTexHeight;
 	Rva0074EB10TextureRef m_texture1;
