@@ -60605,3 +60605,5 @@ _g_01134280	0x01134280	0	solved	gate-debt: admitted into data_rows.csv via add_d
 ?key012F4B80@@3VAsciiString@@A	0x012F4B80	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B80Global.cpp t=2 model=gemini-3.8-flash-medium
 ?key012F4B84@@3VAsciiString@@A	0x012F4B84	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B84Global.cpp t=2 model=gemini-3.8-flash-medium
 ?key012F4B88@@3VAsciiString@@A	0x012F4B88	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B88Global.cpp t=8 model=muse-spark
+_g_012F3930	0x012F3930	0	solved	gate-debt: baseline key stale; VAs owned by matched ?g_012F3930@@3HA/?g_012F3934@@3HA data rows (6a3495e4cb); no source spells the C-underscore key t=5 model=muse-spark
+_g_012F3934	0x012F3934	0	solved	gate-debt: baseline key stale; VAs owned by matched ?g_012F3930@@3HA/?g_012F3934@@3HA data rows (6a3495e4cb); no source spells the C-underscore key t=5 model=muse-spark
