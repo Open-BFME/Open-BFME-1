@@ -14,7 +14,7 @@ class ObjectCreationList;
 class FXList;
 class TerrainRoadType;
 class AudioEventRTS;
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 enum BodyDamageType { BODY_PRISTINE, BODY_DAMAGED, BODY_REALLYDAMAGED, BODY_RUBBLE };
 class Object { char prefix[0x38]; public: Coord3D position; };
 class Bridge { public: AsciiString getBridgeTemplateName(); };

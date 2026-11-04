@@ -1,12 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // W3DLightDraw::reactToTransformChange, retail RVA 0x00758AC0.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "matrix3d.h"
 

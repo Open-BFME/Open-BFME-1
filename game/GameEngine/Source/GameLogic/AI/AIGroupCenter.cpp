@@ -26,7 +26,7 @@
 
 #include <list>
 
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class AIUpdateInterface;
 
 // Object's mobility test (0x001C9270, via ILT 0x00017607), under its ledger name.

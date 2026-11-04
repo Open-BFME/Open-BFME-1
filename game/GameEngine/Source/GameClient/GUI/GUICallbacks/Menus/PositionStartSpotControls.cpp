@@ -7,12 +7,7 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region3D
 {
