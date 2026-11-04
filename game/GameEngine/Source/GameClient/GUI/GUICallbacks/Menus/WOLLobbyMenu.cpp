@@ -236,6 +236,18 @@ void SetLobbyAttemptHostJoin(Bool start)
 
 // Tooltips -------------------------------------------------------------------------------
 
+// link queue #53 (?compareNoCase@AsciiString@@QBEHABV1@@Z, strings family):
+// this TU sees Zero Hour's standalone AsciiString, whose inline compareNoCase
+// emits a non-retail copy ahead of retail's kept body (retail callers reach
+// the StringBase spelling). Zero Hour's body is _stricmp over str(), so route
+// this TU's one call through a file-static helper with that exact shape and
+// emit no AsciiString copy of our own. (A StringBase cast is wrong here: the
+// Zero Hour m_data layout differs from StringBase's Header.)
+static __forceinline int asciiCompareNoCase(const AsciiString &a, const AsciiString &b)
+{
+	return _stricmp(a.str(), b.str());
+}
+
 static void playerTooltip(GameWindow *window,
 													WinInstanceData *instData,
 													UnsignedInt mouse)
@@ -258,7 +270,7 @@ static void playerTooltip(GameWindow *window,
 
 	PlayerInfoMap::iterator it = TheGameSpyInfo->getPlayerInfoMap()->find(aName);
 	PlayerInfo *info = &(it->second);
-	Bool isLocalPlayer = (TheGameSpyInfo->getLocalName().compareNoCase(info->m_name) == 0);
+	Bool isLocalPlayer = (asciiCompareNoCase(TheGameSpyInfo->getLocalName(), info->m_name) == 0);
 
 	if (col == 0)
 	{
