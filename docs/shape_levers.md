@@ -1,5 +1,26 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## One-bit bit-fields move a loop count from EBX to EBP (2026-11-04)
+
+The two 146-byte PathfindCellInfo list walks at 0x003F6F60 and 0x003F7020
+(MSVC 7.1 `/O2 /DNDEBUG /MD /EHsc`) were stuck at 5 bytes: the walk count
+sat in EBX where retail keeps it in EBP and never touches EBX. More than 60
+spellings and 15 flag sets had no effect, including loop forms, count types,
+helper visibility and byte-typed locals. The fix was the record's type, not
+the walk. Declare its +0x24 flags as one-bit bit-fields
+(`unsigned int lo:3; unsigned int m_open:1; unsigned int m_closed:1; ...`),
+then write the clear as `cur->m_closed = 0` and the test as
+`!info->m_open && !info->m_closed`. The instruction bytes are the same as the
+`&= ~0x10` and `& 0x18` mask forms (`and ecx,0xffffffef`,
+`test byte ptr [ecx+0x24],0x18`), and the count then lands in EBP. A second
+change put the prologue in order: test the `void *` parameter before casting
+it (`if (p == 0) return 0; T *list = (T *)p;`). That gives retail's
+`push edi; mov edi,[esp+8]` where the cast-first form loads EAX. Measured
+effect only. The likely cause is that the allocator ranks EBX by byte-register
+demand. Bit-field reads and writes are scored as such, and mask arithmetic is
+not. This has not been tested elsewhere. Source:
+`game/GameEngine/Source/GameLogic/AI/PathfindCellReleaseLists.cpp`.
+
 ## A list-head register exchange fixed by a named count local (2026-11-04)
 
 `Rva00694570::run` (0x00694570, 315 B, MSVC 7.1 `/O2 /Ob2 /EHsc`, STLport
