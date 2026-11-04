@@ -93,3 +93,24 @@ int method(void *p)
 	return count;
 }
 }
+
+namespace Rva003F7020 {
+int method(void *p)
+{
+	if (p == 0) return 0;
+	PathfindCellInfo *list = (PathfindCellInfo *)p;
+	int count = 0;
+	while (list)
+	{
+		++count;
+		PathfindCellInfo *cur = list;
+		list = cur->m_next;
+		cur->unlink();
+		cur->m_closed = 0;
+		PathfindCell *cell = cur->m_cell;
+		if (cell)
+			cell->releaseInfo();
+	}
+	return count;
+}
+}
