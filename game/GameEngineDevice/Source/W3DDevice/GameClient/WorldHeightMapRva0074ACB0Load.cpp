@@ -62,7 +62,7 @@ extern "C" int __identifier("??_7BfmeParserBindingBaseVE@@6B@")[];
 // ?g_0109BFD4@@3PAHA: retail 0x0109BFD4 is ??_7BfmeParserBindingVE@@6B@
 extern "C" int __identifier("??_7BfmeParserBindingVE@@6B@")[];
 #define g_0109BFD4 __identifier("??_7BfmeParserBindingVE@@6B@")
-void j_0001579e();
+void bfmeChunkParserVE();
 void j_0004a755();
 void j_00043c93();
 void j_000283a3();
@@ -78,7 +78,7 @@ public:
 		m_vftable = __identifier("??_7BfmeParserBindingBaseVE@@6B@");
 		m_file = file;
 		m_parser = file->registerParser(label, parent,
-			(ChunkParserCallback)j_0001579e, this);
+			(ChunkParserCallback)bfmeChunkParserVE, this);
 	}
 
 	~BfmeParserRegistrationVE()
@@ -265,7 +265,7 @@ public:
 	void clear();
 };
 
-extern Dict g_Va012ED5E0;
+class MapObject { public: static Dict TheWorldDict; };
 extern char g_Va012A7A48[];
 extern unsigned int *RvaGlobal012A7A48;
 class View
@@ -293,7 +293,7 @@ static void freeListOfMapObjects()
 		delete *reinterpret_cast<Rva0074ACB0MapObject **>(BfmeTheMapObjectListHolder);
 		*reinterpret_cast<Rva0074ACB0MapObject **>(BfmeTheMapObjectListHolder) = 0;
 	}
-	g_Va012ED5E0.clear();
+	MapObject::TheWorldDict.clear();
 }
 
 // ---- WorldHeightMap ---------------------------------------------------------
