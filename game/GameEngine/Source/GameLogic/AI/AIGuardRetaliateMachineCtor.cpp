@@ -135,7 +135,10 @@ private:
 extern "C" bool __cdecl Rva0015E720StatePredicate( State *, void * );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuardRetaliate.h
-class AIGuardRetaliateMachine : public StateMachine
+// ??_7Rva0015E730TailDtor@@6B@; this class's own vftable was the unrecorded name
+// retired debt: ??_7AIGuardRetaliateMachine@@6B@ replaced with ??_7Rva0015E730TailDtor@@6B@
+extern "C" void *__identifier("??_7Rva0015E730TailDtor@@6B@")[];
+class __declspec(novtable) AIGuardRetaliateMachine : public StateMachine
 {
 public:
 	AIGuardRetaliateMachine( Object *owner );
@@ -153,9 +156,10 @@ private:
 
 // ??0AIGuardRetaliateMachine@@QAE@PAVObject@@@Z
 AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner )
-	: StateMachine( owner, AsciiString( "AIGuardRetaliateMachine" ), false ),
-	  m_nemesisToAttack( 0 )
+	: StateMachine( owner, AsciiString( "AIGuardRetaliateMachine" ), false )
 {
+	*(volatile void **)this = (void *)__identifier("??_7Rva0015E730TailDtor@@6B@");
+	m_nemesisToAttack = 0;
 	m_positionToGuard.zero();
 
 	static const StateConditionInfo attackAggressors[] =

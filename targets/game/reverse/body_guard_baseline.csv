@@ -99,7 +99,6 @@ dir32,0x01095704,??_7PartitionFilterRepulsor@@6B@,"retail 0x01095704 is already 
 dir32,0x01095734,??_7PartitionFilter01095734@@6B@,"retail 0x01095734 is already recorded as ??_7Rva0014A580FunctorValueWrapper@@6B@; reference that name, not a new one"
 dir32,0x01095FBC,??_7PartitionFilterIsFlying@@6B@,"retail 0x01095FBC is already recorded as ?g_target_0015B910@@3HA; reference that name, not a new one"
 dir32,0x01096348,??_7AIGuardPickUpCrateState@@6B@,"retail 0x01096348 is already recorded as _bfmeVftableAU; reference that name, not a new one"
-dir32,0x01096420,??_7AIGuardRetaliateMachine@@6B@,"retail 0x01096420 is already recorded as ??_7Rva0015E730TailDtor@@6B@; reference that name, not a new one"
 dir32,0x01096650,_bfmeVftAIHarvestMachine,"retail 0x01096650 is already recorded as ??_7Rva0015F730TailDtor@@6B@; reference that name, not a new one"
 dir32,0x01097144,??_7PartitionFilterSamePlayer@@6B@,"retail 0x01097144 is already recorded as ??_7Rva0016A9F0FunctorValueWrapper@@6B@; reference that name, not a new one"
 dir32,0x01097144,??_7PlayerFilter0028AE90@@6B@,"retail 0x01097144 is already recorded as ??_7Rva0016A9F0FunctorValueWrapper@@6B@; reference that name, not a new one"
