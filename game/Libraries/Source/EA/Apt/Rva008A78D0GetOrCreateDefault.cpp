@@ -2,9 +2,8 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Address-derived owner; constructor and sized-delete identities are pinned independently.
 
+void *Rva00897640(unsigned int bytes);
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
-class BfmeItemDX;
-void bfmePush(BfmeItemDX *block);
 
 class Rva008A78D0VBase
 {
@@ -21,14 +20,11 @@ public:
 class Rva00899FC0 : public Rva00897670HeaderedDelete
 {
 public:
-	// Full 33-byte allocator body, same as Rva008B4DA0CandidateLookup.cpp:
-	// grow the request by 8, advance past the header, push the tracked block.
-	__declspec(noinline) static void *operator new(unsigned int n)
+	// Share the independently matched headered allocator at retail0x00897640.
+	// An outlined copy here differs under this unit's /O2 compiler flags.
+	static __forceinline void *operator new(unsigned int n)
 	{
-		char *raw = (char *)Rva008C5D70Alloc(n + 8);
-		char *block = raw + 8;
-		bfmePush((BfmeItemDX *)block);
-		return block;
+		return Rva00897640(n);
 	}
 
 	__declspec(noinline) Rva00899FC0(int callback);
