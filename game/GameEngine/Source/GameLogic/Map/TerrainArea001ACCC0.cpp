@@ -99,7 +99,11 @@ public:
  virtual void s32();virtual void s33();virtual void s34();
  virtual void notify(TerrainPoint001AC3D0,int);
 };
-extern TerrainVisual001AC3D0 *TheTerrainVisual;
+// Retail's global at 0x012F7014 is `TerrainVisual *TheTerrainVisual`
+// (game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp defines it).
+// Declare it under that exact spelling; the notify-call view is cast in.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
  if(!position||!(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))||!ThePartitionManager||!TheGameLogic)return;
  (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->bfmeApplyCircleWorld((const BfmePointFC*)position,*(float*)&radius,128,true);
@@ -110,6 +114,6 @@ void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
  ((TerrainLogicP48ClearNear*)this)->clearNear((const Coord3D*)position,*(float*)&radius);
  if(TheTerrainVisual) {
   const float *p=(const float*)position;
-  TheTerrainVisual->notify(TerrainPoint001AC3D0(p[0],p[1],p[2]),radius);
+  ((TerrainVisual001AC3D0 *)TheTerrainVisual)->notify(TerrainPoint001AC3D0(p[0],p[1],p[2]),radius);
  }
 }
