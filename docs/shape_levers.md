@@ -3543,3 +3543,32 @@ name (`Rva001EE620`) so the compiler round still emits it. Sources:
 game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModuleConstructor.cpp,
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior_ctor_Thunk.cpp
 (602b32f945, bb661d7a33).
+
+## Empty overflow tag aliases a live local; by-value name keeps EH states apart (2026-11-04)
+
+0x0036AA80 (`AttributeModifierPoolUpdate::xfer`, 582 B,
+game/GameEngine/Source/GameLogic/Object/Update/AttributeModifierPoolUpdate_xfer.cpp,
+VC7.1 `/MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`, real STLport
+`<vector>` included). Three measured effects on this body only:
+
+- Retail passes push_back's `__false_type` tag at the load count's address,
+  which is the dead `xfer` argument home, and never stores to it. A real
+  `_IsPODType()` temporary (or a named uninitialised tag anywhere) took that
+  home itself, pushed the count into the frame and grew `sub esp` from 0x2C
+  to 0x30 (54 bytes). `/FAsc` showed `$T = 8` beside the save-branch count.
+  `reinterpret_cast<const __false_type &>(count)` (the spelling already used
+  in Rva003A5A10Xfer.cpp) restores the 0x2C frame and every slot.
+- A record constructor taking `AsciiString` BY VALUE, inlined, gives retail's
+  EH sequence state 0 (name temporary) -> -1 -> 1 (record) with dword state
+  stores; a `const AsciiString &` constructor keeps the temporary alive beside
+  the record (byte stores, different frame). The matched sibling
+  applyAttributeModifier (0x0036A570) uses the same by-value constructor.
+- With stand-in `_STL::vector` declarations and no `<vector>` the identical
+  function body kept 12 bytes in three lea/push register choices (+0x59 and
+  +0xBD: vtable EDX/address EAX vs retail EAX/ECX; +0x8E: ECX vs EDX). With
+  real STLport included, `public_vector` exposing `_M_finish`,
+  `_M_end_of_storage` and `_M_insert_overflow`, and an undefined explicit
+  specialisation keeping the 16-byte `erase` out of line, all three match.
+  Not yet tested on the other lea/push-temp family rows
+  (targets/game/reverse/attempt_support/20261031-lea-push-temp-register-family.md);
+  0x0043A3B0's bank already includes real `<list>` and keeps its residue.
