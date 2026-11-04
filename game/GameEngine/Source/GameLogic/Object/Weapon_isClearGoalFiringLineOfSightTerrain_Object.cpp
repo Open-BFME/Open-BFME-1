@@ -7,12 +7,7 @@
 // asks TheAI->pathfinder() to adjust the two points. TerrainLogic
 // vtable+0x3C isClearLineOfSight. Focused TU.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class GeometryInfo
 {

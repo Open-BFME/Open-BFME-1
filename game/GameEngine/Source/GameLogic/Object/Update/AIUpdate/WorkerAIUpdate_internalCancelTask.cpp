@@ -1,12 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
 // WorkerAIUpdate::internalCancelTask, retail 0x002CA510.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum DozerTask
 {

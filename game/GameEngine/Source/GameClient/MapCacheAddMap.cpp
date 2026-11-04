@@ -13,7 +13,7 @@ template <class T> inline void StringBase<T>::concat(T c) { concat(&c,1); }
 template <class T> inline void StringBase<T>::concat(const T *s) { concat(s,s ? strlen(s) : 0); }
 #include "ascii_string.h"
 class UnicodeString { public: void translate(const AsciiString &); private: void *m_data; };
-struct Coord3D { float x,y,z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 struct Region3D { Coord3D lo,hi; };
 struct Rva004570F0Node { int color; Rva004570F0Node *parent,*left,*right; };
 namespace _STL { struct _Rb_tree_node_base; template <class T> class _Rb_global; template <> class _Rb_global<bool> { public: static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *); }; }

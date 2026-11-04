@@ -31,12 +31,7 @@ private:
 typedef char Rva00267D00ConditionBitsSize[
 	(sizeof(Rva00267D00ConditionBits) == 40) ? 1 : -1];
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Matrix3D;
 

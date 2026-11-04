@@ -22,12 +22,7 @@ public:
 
 #define BFME_W3D_SLOT(n) virtual void slot##n() = 0;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct WaypointXY
 {

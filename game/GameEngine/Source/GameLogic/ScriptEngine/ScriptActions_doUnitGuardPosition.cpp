@@ -12,12 +12,7 @@ enum GuardMode
 
 #include "../command_source_type.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Waypoint
 {
