@@ -25,6 +25,13 @@ public:
 	MaterialPassClass();
 	virtual ~MaterialPassClass();
 
+	// Retail vtable 0x0113C884 has four slots: Delete_This, the deleting
+	// destructor (0x00933570), Install_Materials (0x00933590) and
+	// UnInstall_Materials, the one-byte ret at 0x00933410 that only this
+	// table references (matpass.h: `{ }`).
+	virtual void Install_Materials(void) const;
+	virtual void UnInstall_Materials(void) const { }
+
 private:
 	BfmeHandleCX Stages[8];
 	int Shader;
