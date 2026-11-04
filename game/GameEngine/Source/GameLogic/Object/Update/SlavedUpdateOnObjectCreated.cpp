@@ -10,12 +10,12 @@ enum ModelConditionFlagType
 class ModelConditionFlags
 {
 public:
-	bool test(ModelConditionFlagType condition) const
+	__declspec(dllimport) __forceinline bool test(ModelConditionFlagType condition) const
 	{
 		return (m_bits & (1u << condition)) != 0;
 	}
 
-	void set(ModelConditionFlagType condition)
+	__declspec(dllimport) __forceinline void set(ModelConditionFlagType condition)
 	{
 		m_bits |= 1u << condition;
 	}
@@ -38,7 +38,8 @@ public:
 class Object
 {
 public:
-	void setModelConditionState(ModelConditionFlagType condition)
+	// Inline-only BFME helper: suppress incompatible standalone COMDAT copies.
+	__declspec(dllimport) __forceinline void setModelConditionState(ModelConditionFlagType condition)
 	{
 		if (!m_modelConditionFlags.test(condition))
 		{

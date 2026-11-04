@@ -47,8 +47,8 @@ public:
 
 	BitFlags() { }
 
-	Bool test(Int idx) const { return m_bits.test(idx); }
-	void set(Int idx) { m_bits.set(idx); }
+	__forceinline Bool test(Int idx) const { return m_bits.test(idx); }
+	__forceinline void set(Int idx) { m_bits.set(idx); }
 	void reset(Int idx) { m_bits.reset(idx); }
 
 private:
@@ -68,7 +68,8 @@ public:
 	void setStatus(const ObjectStatusMaskType &objectStatus, Bool set = true);	// ILT 0x000307E7
 	void clearStatus(const ObjectStatusMaskType &objectStatus) { setStatus( objectStatus, false ); }
 
-	void setModelConditionState(ModelConditionFlagType bit)
+	// Inline-only BFME helper: suppress incompatible standalone COMDAT copies.
+	__declspec(dllimport) __forceinline void setModelConditionState(ModelConditionFlagType bit)
 	{
 		if (!m_conditionFlags.test(bit))
 		{

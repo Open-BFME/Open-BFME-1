@@ -3212,6 +3212,16 @@ inlined and the unit emits no out-of-line copy at all, while the 432-byte
 `ios_base::_M_copy_state` row stays exact
 (game/Libraries/Source/STLport/IosBaseCopyState.cpp).
 
+The same suppression keeps four BFME model-condition callers exact in
+`ProneUpdate_startProneEffects.cpp`, `RadarUpdate_extendRadar.cpp` and
+`SlavedUpdateOnObjectCreated.cpp` (MSVC 7.1, their existing /O2 flags).
+For Prone, suppressing only the outer setter stopped constant-folding its
+nested BitFlags::test and emitted a call instead; marking the existing
+BitFlags test/set helpers `__forceinline` restored the complete 73-byte
+caller. No import reference remains. See
+`targets/game/reverse/attempt_support/20261104-queue30-model-condition-inline.md`.
+
+
 ## End a dead pointer's live range before loading the next one (2026-11-01)
 
 At 0x00176F70 (AIAttackMeleeApproachState::onEnter, landed in
