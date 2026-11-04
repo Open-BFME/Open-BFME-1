@@ -3652,3 +3652,27 @@ element to the out-of-line `Rva003B9100::contains` (0x003B9100).
   names[i]` local gave 4 bytes of load-order residue. Neither is needed once
   the callee body is visible. For a residue of this kind, land the body in the
   callee's home TU before trying register spellings.
+
+## Two named bool locals and a ternary keep a short predicate's ESI/EDI pairing and branch tail (2026-11-05)
+
+Retail 0x001CDBE0 (Object::rva001CDBE0, game/GameEngine/Source/GameLogic/Object/Rva001CDBE0Ready.cpp,
+56 B) loads a global into EDI after pushing ESI and EDI, keeps `this` in ESI,
+and ends in two full epilogues (`mov eax,1` and `xor eax,eax`) reached by
+`jne`/`jb` straight from the call result and the compare. Six banked sessions
+reached either the right ESI/EDI pairing with a `setb`/`sete` or `sbb`/`inc`
+tail (52 B), or the right tail with the pair swapped (global in ESI, `push edi`
+delayed behind the load). Measured trials (VC7.1 `/DNDEBUG /MD /EHsc`):
+
+- `return (!self->test() && g->m_frame >= self->f) ? 1 : 0;` gives the retail
+  tail and the swapped pair (9 diffs).
+- `Bool bad = self->test(); if (!bad) bad = frame < f; return bad ? 0 : 1;`
+  gives the retail pair and a `setb`/`sete` tail (13 diffs).
+- `Bool busy = self->test(); Bool early = g->m_frame < self->f;
+  return (busy || early) ? 0 : 1;` gives both, exact. Two bool locals, each
+  the direct result of one call or compare, joined by a single `||` in the
+  ternary. The same shape with the two tests inlined in the ternary condition
+  (`(bad || frame < f) ? 0 : 1`) falls back to the swapped pair.
+
+The early `return false` before the call stays a separate `xor al,al` epilogue.
+The measured effect is the allocation and tail; the cause (both compares
+becoming plain temporaries that the branch folder consumes) is a hypothesis.

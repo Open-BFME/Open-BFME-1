@@ -47,7 +47,7 @@ struct RvaC4390Interface;
 struct RvaC4390First { public: RvaC4390Interface* getInterface(); };
 struct RvaC4390Second { public: RvaC4390First* resolve(int); };
 class AssistedTargetingObjectShim { public: void* find(int); };
-void d_001cdbe0(); void d_00278830(); void d_002acd90();
+void d_00278830(); void d_002acd90();
 char bfmeGo1098B(int,int,int);
 class BfmeThingDDE { public: int bfmeGoDDE(); };
 struct BfmeFlagHolder; class BfmeFlagCandidate; struct BfmeThingEGA;
@@ -182,11 +182,7 @@ __forceinline bool rva001CC790(Object* a,int b) const {
 __forceinline void rva001C3020() {
  typedef void (Object::*Function)();
  return (this->*reinterpret_cast<Function>(&Object::bfmeResetSafeOcclusionFrame))();
-}bool rva001CDBE0() const {
- typedef bool (Object::*Function)() const;
- union { void (*raw)(); Function member; } fn; fn.raw=d_001cdbe0;
- return (this->*fn.member)();
-}Rva001BE270* rva001BE270(int a) const {
+}bool rva001CDBE0() const;Rva001BE270* rva001BE270(int a) const {
  typedef Rva001BE270* (Object::*Function)(int) const;
  return (this->*reinterpret_cast<Function>(&AssistedTargetingObjectShim::find))(a);
 }
