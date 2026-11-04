@@ -57,7 +57,6 @@ extern TerrainLogic *TheTerrainLogic;
 enum CommandSourceType { CMD_FROM_AI = 2 };
 enum DamageType { DAMAGE_8 = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
-enum ObjectID { INVALID_ID = 0 };
 
 class AICommandInterface
 {
@@ -136,11 +135,16 @@ private:
 	AIUpdateInterface *m_ai;
 };
 
-class Pathfinder
-{
-public:
-	Bool slowDoesPathExist(Object *obj, const Coord3D *from, const Coord3D *to, ObjectID ignoreObject);
-};
+// The call at this body targets ILT0004A327, whose typed Zero Hour
+// provider is not retail's body. Bind the existing address-owned thunk using
+// the witnessed ECX receiver, four stack words, AL result and ret16 contract.
+// All callers here pass zero in the fourth slot; its semantic type is unknown.
+class Pathfinder {};
+extern void j_0004a327();
+typedef Bool (Pathfinder::*Rva0004A327Call)(
+ Object *, const Coord3D *, const Coord3D *, unsigned int);
+typedef char Rva0004A327PointerSize[
+ sizeof(Rva0004A327Call) == sizeof(void (*)()) ? 1 : -1];
 
 class AI
 {
@@ -251,7 +255,13 @@ void RunOffMapBehavior::rva00205440()
 		destination.z = TheTerrainLogic->getGroundHeight(destination.x, destination.y, 0);
 	}
 
-	if (!TheAI->pathfinder()->slowDoesPathExist(obj, obj->getPosition(), &destination, INVALID_ID))
+	union Rva0004A327Binding
+ {
+  void (*address)();
+  Rva0004A327Call member;
+ } pathCheck;
+ pathCheck.address = &j_0004a327;
+ if (!(TheAI->pathfinder()->*pathCheck.member)(obj, obj->getPosition(), &destination, 0))
 	{
 		int sourceID = obj->getBodyModule()->getLastDamageInfo() ? obj->getBodyModule()->getLastDamageInfo()->m_sourceID : 0;
 		Object *source = TheGameLogic->findObjectByID(sourceID);
