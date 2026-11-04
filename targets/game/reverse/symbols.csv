@@ -91182,3 +91182,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_ERTS2DScene@@UAEPAXI@Z,0x000299B0,weak alias of the scalar deleting dtor ??_GRTS2DScene reached through this ILT entry; target of the WBAI adjustor thunk at 0x00711ED0
 ??_EW3DView@@UAEPAXI@Z,0x00041191,weak alias of the scalar deleting dtor ??_GW3DView reached through this ILT entry; target of the WPM adjustor thunk at 0x00746170
 ??0Rva0069CEE0@@QAE@XZ,0x0000EB65,pin
+??0MoveHint0043AAD0@@QAE@XZ,0x0000602D,pin
