@@ -407,7 +407,6 @@ dir32,0x01336E30,?obj@?1??getRva008877A0Singleton@@YAPAXXZ@4VRva008877A0Type@@A,
 dir32,0x01336E4C,??_B?1??getRva008877A0Singleton@@YAPAXXZ@51,the name encodes 0x008877A0 but retail reads 0x01336E4C
 dir32,0x01336E5C,?debug01336E5C@@3PAVShadowDebug007BC270@@A,"retail 0x01336E5C is already recorded as ?DebugGlobal00409E20@@3PAVDebugView00409E20@@A (+14 more); reference that name, not a new one"
 dir32,0x013377D8,?g_bfmeHolderBU@@3PAUState8C4DA0@@A,"retail 0x013377D8 is already recorded as ?Rva008A5380Holder@@3PADA (+18 more); reference that name, not a new one"
-dir32,0x01337820,?g_01337820@@3PAURva008B38F0Global@@A,the name encodes 0x008B38F0 but retail reads 0x01337820
 dir32,0x01337820,?g_01337820@@3PAVRva008B38F0Global@@A,the name encodes 0x008B38F0 but retail reads 0x01337820
 dir32,0x01337A30,?g_pool01337A30@@3PAUStringPool008B3AA0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
 dir32,0x013384C0,?key013384C0@@3HA,"nothing in the ledger owns 0x013384C0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

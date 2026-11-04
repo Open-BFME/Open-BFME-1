@@ -3,10 +3,11 @@ extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 
 struct Rva00899560Value;
-struct Rva008B38F0Global;
-
-// Retail 0x01337820: the global table pointer both constructors load. No
-// symbol in dir32_addresses.csv names it, so it stays address-derived.
+// Retail 0x01337820: the global table pointer both constructors load. It is
+// defined as `class Rva008B38F0Global` in game/Libraries/Source/Apt/Rva008921E0.cpp
+// (recorded ?g_01337820@@3PAVRva008B38F0Global@@A); declare it the same way
+// here so this TU references the recorded name, not a struct-spelled twin.
+class Rva008B38F0Global;
 extern Rva008B38F0Global *g_01337820;
 
 struct Rva00899560Pool
@@ -119,8 +120,9 @@ struct Rva008B38F0Nested
     unsigned int *m_value08;
 };
 
-struct Rva008B38F0Global
+class Rva008B38F0Global
 {
+public:
     virtual void *get(unsigned int *argument0);
 };
 
