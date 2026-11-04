@@ -3627,3 +3627,28 @@ VC7.1 `/MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`, real STLport
   Not yet tested on the other lea/push-temp family rows
   (targets/game/reverse/attempt_support/20261031-lea-push-temp-register-family.md);
   0x0043A3B0's bank already includes real `<list>` and keeps its residue.
+
+## A same-TU callee definition turns an index scan into an induction pointer (2026-11-04)
+
+0x003B9200 (`Rva003B9200Owner::rva003B9200`, 79 B,
+game/GameEngine/Source/Common/Rva003B9100Contains.cpp, VC7.1 `/DNDEBUG /MD
+/EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`, real STLport
+`<vector>`). Retail walks `vector<AsciiString>` at +0x0C with an index in EDI
+and an EBX element pointer (`mov ebx,[esi+0xc]` once, `add ebx,4` per pass)
+while re-deriving the count from both pointers each pass, and passes each
+element to the out-of-line `Rva003B9100::contains` (0x003B9100).
+
+- Measured: `for (unsigned i = 0; i < m_vec.size(); ++i) if
+  (other->contains(m_vec[i])) return true;` compiles to 72 B / 67 diffs
+  (begin re-read per pass, no induction pointer) when `contains` is only
+  declared, and to the exact 79 B when the TU also DEFINES `contains`. Source
+  order of the two definitions does not matter; removing the definition alone
+  reverts to 72 B.
+- Hypothesis (unverified): VC7.1 uses per-TU information about the already
+  compiled callee (it writes no memory), so `_M_start` is loop-invariant and
+  strength-reduced.
+- Earlier raw two-pointer spellings (`const T *p = m_begin; ... ++p`) reached
+  79 B but kept 11 bytes of EBX/EDI swap; a hoisted `names = m_begin;
+  names[i]` local gave 4 bytes of load-order residue. Neither is needed once
+  the callee body is visible. For a residue of this kind, land the body in the
+  callee's home TU before trying register spellings.
