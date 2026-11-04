@@ -149,13 +149,22 @@ extern "C" { Rva00C6B3D0Init __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF
 // the name its consumers bind; define the storage under that symbol.
 // Retire ?g_rva012F10F4@@3URva00C6B3F0Init@@A
 extern "C" { Rva00C6B3F0Init __identifier("?TheBfmeObject_00C6FF30@@3VGen_00C6FF30Target@@A"); }
-Rva00C6B3F0Init g_rva012F10F8;
+// 0x012F10F8 is recorded (DIR32) as ?TheBfmeObject_00C6FF20@@3VGen_00C6FF20Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva012F10F8@@3URva00C6B3F0Init@@A
+extern "C" { Rva00C6B3F0Init __identifier("?TheBfmeObject_00C6FF20@@3VGen_00C6FF20Target@@A"); }
 // 0x012F1108 is recorded (DIR32) as ?TheCloudEffectSaved@@3UCloudEffect@@A,
 // the name its consumers bind; define the storage under that symbol.
 // Retire ?g_rva012F1108@@3URva00C6B450Init@@A
 extern "C" { Rva00C6B450Init __identifier("?TheCloudEffectSaved@@3UCloudEffect@@A"); }
-Rva00C6B450Init g_rva012F1198;
-Rva00C6B4E0Init g_rva012F1404;
+// 0x012F1198 is recorded (DIR32) as ?TheCloudEffectActive@@3UCloudEffect@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva012F1198@@3URva00C6B450Init@@A
+extern "C" { Rva00C6B450Init __identifier("?TheCloudEffectActive@@3UCloudEffect@@A"); }
+// 0x012F1404 is recorded (DIR32) as ?TheBfmeObject_00C6FFA0@@3VGen_00C6FFA0Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva012F1404@@3URva00C6B4E0Init@@A
+extern "C" { Rva00C6B4E0Init __identifier("?TheBfmeObject_00C6FFA0@@3VGen_00C6FFA0Target@@A"); }
 // 0x012F1990 is recorded (DIR32) as ?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A,
 // the name its consumers bind; define the storage under that symbol.
 extern "C" { Rva00C6B840Init __identifier("?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A"); }

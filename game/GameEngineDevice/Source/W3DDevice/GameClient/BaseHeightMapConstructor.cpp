@@ -67,7 +67,9 @@ static const WaterTransparency006CFAE0 *waterSetting() {
 }
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern DX8_CleanupHook *cleanup0134058C;
+// Retire ?cleanup0134058C@@3PAVDX8_CleanupHook@@A: retail 0x0134058C is recorded as ?s_value@Rva006C5730@@2HA
+extern "C" DX8_CleanupHook *__identifier("?s_value@Rva006C5730@@2HA");
+#define cleanup0134058C __identifier("?s_value@Rva006C5730@@2HA")
 class BaseHeightMapRenderObjClass : public RenderObjClass, public DX8_CleanupHook, public Snapshot {
 public:
  BaseHeightMapRenderObjClass();
