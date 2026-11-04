@@ -11,12 +11,7 @@ extern "C" double __cdecl fabs(double value);
 extern const Real g_rva01075350;
 extern const Real g_rva0107533C;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 template <int BitCount> class BitFlags
 {

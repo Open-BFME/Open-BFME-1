@@ -16,12 +16,7 @@
 
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
 // (public const, upstream Overridable.h); the TU-local stand-in carries the

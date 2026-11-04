@@ -34,12 +34,7 @@
 // byte-level fact about the shape, not a claim that retail wrote these exact
 // five statements.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class PolygonTrigger
 {

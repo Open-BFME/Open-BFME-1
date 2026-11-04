@@ -8,10 +8,7 @@ typedef unsigned int TeamID;
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 class Team;

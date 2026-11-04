@@ -9,7 +9,7 @@
 #include <math.h>
 #pragma intrinsic(atan2, fabs)
 typedef float Real;
-struct Coord3D { Real x,y,z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Overridable {
 public:
  const Overridable *getFinalOverride() const;

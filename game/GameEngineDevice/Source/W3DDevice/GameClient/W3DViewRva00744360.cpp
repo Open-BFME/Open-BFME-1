@@ -13,12 +13,7 @@ enum ObjectID
 	FORCE_OBJECTID_TO_LONG_SIZE = 0x7FFFFFFF
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 #include "../../../../Libraries/Source/WWVegas/WWMath/castres.h"

@@ -21,10 +21,7 @@ unsigned Rva00990210Lookup( lua_State *range, int index );
 
 #include "ascii_string.h"
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum CommandSourceType { CMD_FROM_SCRIPT_2E6650 = 1 };
 
