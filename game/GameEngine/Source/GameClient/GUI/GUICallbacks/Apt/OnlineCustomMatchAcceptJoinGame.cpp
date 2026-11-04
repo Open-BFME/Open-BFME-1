@@ -1,40 +1,13 @@
-// ?acceptJoinGame@BfmeAptScreenOnlineCustomMatch@@QAEXPBD@Z
-// partial score=0.9935 date=2026-10-31
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 //
-// BfmeAptScreenOnlineCustomMatch::acceptJoinGame, retail 0x0053DFC0, 772
-// bytes (thiscall ret 4).  The screen's constructor 0x00545310 registers this
+// ?acceptJoinGame@BfmeAptScreenOnlineCustomMatch@@QAEXPBD@Z, retail 0x0053DFC0,
+// 772 bytes (thiscall ret 4). The screen's constructor 0x00545310 registers this
 // body as the "AptOnline::CustomMatch::AcceptJoinGame" selector through ILT
 // 0x0002EFBE, which proves both the identity and the const char* argument.
 // BFME1's form of the BFME2 twin AptOnlineCustomMatch::AcceptJoinGame
 // (Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptOnlineCustomMatch
-// AcceptJoinGame.cpp, retail 0x005A5632): in the join-password state (+0x188
-// == 10) it reads the password entry (+0x1A4), disables both pop-up windows
-// (+0x1A0/+0x1A4) and clears the joining flag (+0x1B4).  An empty password or
-// a vanished room (findSelectedStagingRoom 0x0053AB30) closes the movie's
-// password box ("CallChild" / "ClosePassword") and reports
-// GUI:JoinFailedBadPassword or GUI:HostLeft under GUI:JoinFailedDefault
-// through GSMessageBoxOk.  Otherwise it marks the joiner
-// (GameSpyInfo vslot +0xB8 markAsStagingRoomJoiner, witnessed by the matched
-// OnlineCustomMatchRva0053E870.cpp), copies the room's game name, ladder IP
-// and ladder port into TheGameSpyGame, builds the 0x194-byte PeerRequest of
-// type 0xB (join), and queues it on TheGameSpyPeerMessageQueue addRequest
-// (+0x18); state 11, joining flag 1, room record -1 follow the
-// GameSpyCloseOverlay(5) that closes the password overlay.
-//
-// STATUS (banked partial, score 0.92): this source compiles to exactly 772
-// bytes with the retail frame, every call site, literal, EH trylevel store
-// and stack slot in place; 65 non-relocation bytes remain, all one family:
-// MSVC assigns the eax/edx pair in the opposite order from retail everywhere
-// (fetch vtable eax vs edx in the empty-password path, the no-room path
-// inverted, the markAsStagingRoomJoiner argument, the getGameName sret
-// register) plus three scheduler positions: the setLadderPort this-load
-// before the room port read, the req.m_stagingRoomId store sunk after the
-// password m_data test, and the second getGameName temp in edx.  Tried and
-// NOT the lever: pure-virtual interface slots, direct casts instead of the
-// windowManager19E() helper, direct member access for the +0x41C id,
-// eh_levers throw()/EHsc/_STLP_NO_EXCEPTIONS (9 trials, same shape).
+// AcceptJoinGame.cpp, retail 0x005A5632).
 
 #include <string>
 
@@ -225,14 +198,14 @@ void BfmeAptScreenOnlineCustomMatch::acceptJoinGame( const char *unused )
 	if( m_state != 10 )
 		return;
 
-	GameWindow *passwordEntry = m_passwordEntry;
-	AsciiString password( GadgetTextEntryGetText( passwordEntry ) );
+	AsciiString password( GadgetTextEntryGetText( m_passwordEntry ) );
 	m_field1B4 = false;
 	m_nameEntry->winEnable( false );
 	m_passwordEntry->winEnable( false );
 	if( asciiStringIsEmpty( password ) )
 	{
-		( (BfmeMgr19E *)g_rva012F19E8WindowManager )->add( m_owner->m_actionOwner, "CallChild", 1, "ClosePassword", 0, 0, 0, 0 );
+		void *actionOwner = m_owner->m_actionOwner;
+		( (BfmeMgr19E *)g_rva012F19E8WindowManager )->add( actionOwner, "CallChild", 1, "ClosePassword", 0, 0, 0, 0 );
 		m_state = 1;
 		GSMessageBoxOk( TheGameText->fetch( "GUI:JoinFailedDefault" ),
 			TheGameText->fetch( "GUI:JoinFailedBadPassword" ), 0 );
