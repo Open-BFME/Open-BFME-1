@@ -46,6 +46,10 @@
 // retail's 0x0009FEE0 (+0x1C) and emits that COMDAT copy; rename it so only
 // retail-equal copies carry the name. Inlined calls are unchanged.
 #define getMachine getMachine_LocalView
+// Keep the existing native helpers as explicit providers after removing the
+// unrelated Zero Hour lookup body which previously caused their emission.
+#define setNemesisID(a) setNemesisID(a); void zhInlineSetNemesisID(a)
+#define getFrameObjectsChangedTriggerAreas(a) getFrameObjectsChangedTriggerAreas(a); UnsignedInt zhInlineGetFrameObjectsChangedTriggerAreas(a)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -89,6 +93,19 @@ public:
 #include "GameLogic/Object.h"
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/PolygonTrigger.h"
+#undef setNemesisID
+#undef getFrameObjectsChangedTriggerAreas
+
+void AIGuardMachine::setNemesisID(ObjectID id)
+{
+ m_nemesisToAttack = id;
+}
+
+UnsignedInt GameLogic::getFrameObjectsChangedTriggerAreas(void)
+{
+ return m_frameObjectsChangedTriggerAreas;
+}
+
 
 const Real CLOSE_ENOUGH = (25.0f);
 
@@ -191,110 +208,6 @@ AIGuardMachine::~AIGuardMachine()
 }
 
 //--------------------------------------------------------------------------------------
-// ?lookForInnerTarget@AIGuardMachine@@ present-unmatched
-Bool AIGuardMachine::lookForInnerTarget(void)
-{
-	Object* owner = getOwner();
-	if (!owner->isAbleToAttack())
-	{
-		return false;	// my, that was easy
-	}
-
-	// Check if team auto targets same victim.
-	Object *teamVictim = NULL;
-	if (owner->getTeam()->getPrototype()->getTemplateInfo()->m_attackCommonTarget) 
-	{
-		teamVictim = owner->getTeam()->getTeamTargetObject();
-		if (teamVictim) 
-		{
-			setNemesisID(teamVictim->getID());
-			return true;	// Transitions to AIGuardInnerState.
-		}
-	}
-
-	Object* targetToGuard = findTargetToGuardByID();
-	Coord3D pos = targetToGuard ? *targetToGuard->getPosition() : *getPositionToGuard();
-
-	const PolygonTrigger*								area = getAreaToGuard();
-	PartitionFilterRelationship					f1(owner, PartitionFilterRelationship::ALLOW_ENEMIES);
-	PartitionFilterPossibleToAttack			f2(ATTACK_NEW_TARGET, owner, CMD_FROM_AI);
-	PartitionFilterSameMapStatus				filterMapStatus(owner);
-	PartitionFilterPolygonTrigger				f3(area);
-	PartitionFilterIsFlying							f4;
-	PartitionFilterRelationship					f5(owner, PartitionFilterRelationship::ALLOW_NEUTRAL);
-	PartitionFilterPossibleToEnter			f6(owner, CMD_FROM_AI);
-	PartitionFilterPossibleToHijack			f7(owner, CMD_FROM_AI);
-
-	PartitionFilter *filters[16];
-	Int count = 0;
-
-	// Enter Guard state
-	if (owner->getTemplate()->isEnterGuard())
-	{
-		filters[count++] = &f6;
-
-		// Hijack Guard state
-		if (owner->getTemplate()->isHijackGuard())
-		{
-			filters[count++] = &f1;
-			filters[count++] = &f7;
-		}
-		else
-		{
-			filters[count++] = &f5;
-		}
-	}
-	// Attack Guard state
-	else
-	{
-		filters[count++] = &f1;
-		filters[count++] = &f2;
-	}
-
-	filters[count++] = &filterMapStatus;
-
-	Real visionRange = AIGuardMachine::getStdGuardRange(owner);
-
-	if (area) 
-	{
-		UnsignedInt checkFrame = TheGameLogic->getFrameObjectsChangedTriggerAreas()+TheAI->getAiData()->m_guardEnemyScanRate;
-		if (TheGameLogic->getFrame()>checkFrame) {
-			return false; 
-		}
-		filters[count++] = &f3;
-		visionRange = area->getRadius();
-		area->getCenterPoint(&pos);
-	}
-
-	if (getGuardMode() == GUARDMODE_GUARD_FLYING_UNITS_ONLY) 
-	{
-		// only consider flying targets
-		filters[count++] = &f4;
-	}
-
-	filters[count++] = NULL;
-
-//	SimpleObjectIterator* iter = ThePartitionManager->iterateObjectsInRange(
-//					&pos, visionRange, FROM_CENTER_2D, filters, ITER_SORTED_NEAR_TO_FAR);
-//	MemoryPoolObjectHolder hold(iter);
-//	Object* target = iter->first();
-//
-// srj sez: the above code is stupid and slow. since we only want the closest object,
-// just ask for that; the above has to find ALL objects in range, but we ignore all 
-// but the first (closest).
-//
-	Object* target = ThePartitionManager->getClosestObject(&pos, visionRange, FROM_CENTER_2D, filters);
-	if (target) 
-	{
-		setNemesisID(target->getID());	
-		return true;	// Transitions to AIGuardInnerState.
-	}
-	else
-	{
-		return false;
-	}
-}
-
 // ------------------------------------------------------------------------------------------------
 /** CRC */
 // ------------------------------------------------------------------------------------------------
