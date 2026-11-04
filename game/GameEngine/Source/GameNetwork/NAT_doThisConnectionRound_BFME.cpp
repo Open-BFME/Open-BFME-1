@@ -64,8 +64,9 @@ private:
 protected:
 	static int m_connectionPairs[ 7 ][ 7 ][ 8 ];
 	static int m_timeBetweenRetries;
-private:
-	static int m_timeToWaitForPort;
+	// protected time_t, as Zero Hour NAT.h declares it and nat.cpp defines it
+	// (?m_timeToWaitForPort@NAT@@1JA)
+	static long m_timeToWaitForPort;
 };
 
 void NAT::doThisConnectionRound()
