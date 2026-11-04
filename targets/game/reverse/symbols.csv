@@ -91186,3 +91186,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_F?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEXXZ,0x0000F4ED,pin
 ??_F?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEXXZ,0x0001421D,pin
 ??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@XZ,0x00005277,pin
+??_C@_0BG@BOKGDHKM@multiplayerStartIndex?$AA@,0x0107D2B0,Retail key datum VA 0x012A7968 name pointer is VA 0x0107D2B0; full compiler literal multiplayerStartIndex including NUL equals retail and occurs once in the image
