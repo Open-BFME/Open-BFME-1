@@ -195,11 +195,11 @@ public:
 	unsigned int m_p0, m_p4, m_p8;
 };
 
-class Rva00146BA0ArrayItem
+class Rva0077CDE0ArrElem
 {
 public:
-	Rva00146BA0ArrayItem();                         ///< pinned 0x0002FB80
-	~Rva00146BA0ArrayItem();                        ///< pinned 0x0000E746
+	Rva0077CDE0ArrElem();                         ///< pinned 0x0002FB80
+	~Rva0077CDE0ArrElem();                        ///< pinned 0x0000E746
 private:
 	unsigned char m_data[0x14];
 };
@@ -264,7 +264,7 @@ private:
 	unsigned int m_d3c;                                   ///< +0x12c
 	unsigned char m_b40;                                  ///< +0x130
 	unsigned char m_b41, m_b42, m_b43;                    ///< +0x131
-	Rva00146BA0ArrayItem m_arr[2];                     ///< +0x134
+	Rva0077CDE0ArrElem m_arr[2];                     ///< +0x134
 };
 
 // ??0W3DScriptedModelDrawModuleData@@QAE@XZ

@@ -41,7 +41,7 @@ private:
 }
 
 S4_MEMBER(S4Elem007746E0, 1);
-S4_MEMBER( Rva00146BA0ArrayItem, 0x14 );
+S4_MEMBER( Rva0077CDE0ArrElem, 0x14 );
 
 class S4Base0077C1F0 : public Inner01073744
 {
@@ -76,7 +76,7 @@ private:
 	AsciiString m_atec;
 	_STL::vector<Gen00770440, _STL::allocator<Gen00770440> > m_atf0;
 	char m_padf1[ 0x43 ];
-	Rva00146BA0ArrayItem m_items[ 2 ];
+	Rva0077CDE0ArrElem m_items[ 2 ];
 };
 
 // ??1S4Base0077C1F0@@UAE@XZ
