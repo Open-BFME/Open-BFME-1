@@ -50,6 +50,16 @@
 // non-retail 142-byte COMDAT here (Zero Hour AICommandParms); this macro turns it
 // into a declaration so calls bind to the retail body 0x000D86C0.
 #define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
+// The Zero Hour SidesList.h inline BuildListInfo::setTemplateName inlines ZH's
+// AsciiString::operator= into a 146-byte COMDAT; every other unit (and both
+// retail candidates, 0x000CD770 and 0x00450270) has the 75-byte set/release
+// shape. Only this unit's present-unmatched add*BuildList views call it out of
+// line, so rename it here; no retail row binds the name from this object.
+// markPriorityBuild likewise stores at the Zero Hour offset +0x8C where
+// BFME's layout (Player_addToPriorityBuildList.cpp) has +0x88; retail has
+// no out-of-line body at either offset.
+#define setTemplateName setTemplateName_LocalView
+#define markPriorityBuild markPriorityBuild_LocalView
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #define DEFINE_SCIENCE_AVAILABILITY_NAMES
