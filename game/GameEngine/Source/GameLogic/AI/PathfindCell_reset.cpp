@@ -29,6 +29,7 @@ static __forceinline void bfmeReleaseToPool(PathfindCellInfo *info, void *pool)
 class PathfindCell
 {
 public:
+	~PathfindCell();
 	void reset();
 
 private:
@@ -38,6 +39,18 @@ private:
 	unsigned short m_layerFlags;
 	unsigned int m_pathFlags;
 };
+
+// ??1PathfindCell@@QAE@XZ
+// Retail 0x003F6EA0 (17 bytes, int3 padding after the ret), directly before
+// reset(). PathfindLayer::bfmeReset hands its ILT 0x00036AB1 to the eh vector
+// destructor iterator for the 16-byte cell array, and ilt_oracle confirms the
+// name; see targets/game/reverse/identity_evidence/003f6ea0-PathfindCell-dtor.md.
+PathfindCell::~PathfindCell()
+{
+	PathfindCellInfo *cellInfoRecord = m_info;
+	if (cellInfoRecord != 0)
+		bfmeReleaseToPool(cellInfoRecord, &g_rva012F1094);
+}
 
 void PathfindCell::reset()
 {

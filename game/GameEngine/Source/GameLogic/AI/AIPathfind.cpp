@@ -1096,17 +1096,8 @@ PathfindCell::PathfindCell( void ) :m_info(NULL)
 /**
  * Destructor
  */
-// ??1PathfindCell@@QAE@XZ present-unmatched
-PathfindCell::~PathfindCell( void ) 
-{ 	
-	if (m_info) PathfindCellInfo::releaseACellInfo(m_info);
-	m_info = NULL;
-	static warn = true;
-	if (warn) {
-		warn = false;
-		DEBUG_LOG( ("PathfindCell::~PathfindCell m_info Allocated."));
-	}
-}
+// Retail destructor is provided by PathfindCell_reset.cpp (0x003F6EA0).
+// BFME releases m_info to its free-list head; the ZH warn/DEBUG_LOG tail is absent.
 
 /**
  * Reset the cell to default values
