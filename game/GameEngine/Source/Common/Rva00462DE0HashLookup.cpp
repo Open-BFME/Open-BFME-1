@@ -54,7 +54,9 @@ struct Rva00C6B880Init
 	}
 };
 
-extern Rva00C6B880Init g_rva012F19B8;
+// Retire ?g_rva012F19B8@@3URva00C6B880Init@@A: VA 0x012F19B8 is recorded (DIR32) as
+// ?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A (same pattern as 0x012F19A4 in Rva00462C10HashLookup.cpp).
+extern "C" Rva00C6B880Init __identifier("?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A");
 
 // ?Rva00462DE0@@YAPAXPBD@Z -- address-derived TAG, identity unresolved
 void *Rva00462DE0(const char *name)
@@ -62,7 +64,7 @@ void *Rva00462DE0(const char *name)
 	void *node;
 	{
 		AsciiString key(name);
-		node = g_rva012F19B8.findRaw(key);
+		node = __identifier("?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A").findRaw(key);
 	}
 	return node ? *reinterpret_cast<void **>(reinterpret_cast<char *>(node) + 8) : 0;
 }

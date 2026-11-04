@@ -403,7 +403,6 @@ dir32,0x012F1598,?g_rva012F1598@@3VRva00C6B720Init@@A,"retail 0x012F1598 is alre
 dir32,0x012F1600,?Rva00EF1600@@3PAURva0071A730View@@A,"retail 0x012F1600 is already recorded as ?FadeTacticalView@@3PAVFadeView@@A (+25 more); reference that name, not a new one"
 dir32,0x012F18F0,?water012F18F0@@3PAUWaterTransparency006CFAE0@@A,"retail 0x012F18F0 is already recorded as ?TheWaterTransparency@@3V?$OVERRIDE@VWaterTransparencySetting@@@@A (+1 more); reference that name, not a new one"
 dir32,0x012F1990,?g_rva012F1990@@3URva00C6B840Init@@A,"retail 0x012F1990 is already recorded as ?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A; reference that name, not a new one"
-dir32,0x012F19B8,?g_rva012F19B8@@3URva00C6B880Init@@A,"retail 0x012F19B8 is already recorded as ?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A (+2 more); reference that name, not a new one"
 dir32,0x012F19CC,?g_rva012F19CC@@3URva00C6B8A0Init@@A,"retail 0x012F19CC is already recorded as ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A; reference that name, not a new one"
 dir32,0x012F19CC,?g_rva012F19CCMap@@3V?$map@VAsciiString@@W4Rva00461630Mapped@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00461630Mapped@@@_STL@@@4@@_STL@@A,"retail 0x012F19CC is already recorded as ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A; reference that name, not a new one"
 dir32,0x012F19E8,?g_rva012F19E8WindowManager@@3PAVBfmeLevelAN@@A,"retail 0x012F19E8 is already recorded as ?R2Ptr012F19E8@@3PAVGen000290D2@@A (+66 more); reference that name, not a new one"
