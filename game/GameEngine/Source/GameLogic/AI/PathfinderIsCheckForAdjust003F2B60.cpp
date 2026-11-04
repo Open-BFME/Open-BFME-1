@@ -8,7 +8,7 @@ typedef float Real;
 class Object;
 class LocomotorSet;
 class PathfindCell;
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class CRCParameterCheck;
 
 extern CRCParameterCheck *TheCRCParameterCheck;

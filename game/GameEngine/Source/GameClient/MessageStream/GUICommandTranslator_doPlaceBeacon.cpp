@@ -5,12 +5,7 @@ typedef bool Bool;
 
 struct ICoord2D;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class CommandButton;
 

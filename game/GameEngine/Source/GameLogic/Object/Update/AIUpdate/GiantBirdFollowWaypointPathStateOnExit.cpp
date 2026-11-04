@@ -12,12 +12,7 @@ enum StateExitType
 	STATE_EXIT_UNKNOWN = 0
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // The condition-change notification is Object's own member: the call goes
 // through ILT 0x0002191D, whose thunk jumps to

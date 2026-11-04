@@ -10,12 +10,7 @@
 // the Vector3 temporary completes the transform before any output store.
 #include "vector3.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Rva0087DC00Vec
 {
