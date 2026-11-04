@@ -169,7 +169,11 @@ struct AptScreenContext00464080
 void * __stdcall createAptScreenLoadScreen( void *context );
 
 extern WindowManager *g_rva012F19E8WindowManager;
-extern Rva00461630Map g_rva012F19CCMap;
+// Retire ?g_rva012F19CCMap@@3V?$map@VAsciiString@@W4Rva00461630Mapped@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00461630Mapped@@@_STL@@@4@@_STL@@A:
+// retail 0x012F19CC is recorded as ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A.
+class Gen_00C70080Target;
+extern Gen_00C70080Target TheBfmeObject_00C70080;
+#define aptWindowMap (*reinterpret_cast<Rva00461630Map *>(&TheBfmeObject_00C70080))
 extern void *g_rva012F198CLoadScreen;
 
 extern void j_0000ed59();
@@ -233,8 +237,8 @@ void registerAptCallbacks00464080()
 		_bfme_setAptScreenRef( name, j_00029b63 );
 	}
 
-	g_rva012F19CCMap[ AsciiString( "apt/combobox.wnd" ) ] = Rva00461630MappedZero;
-	g_rva012F19CCMap[ AsciiString( "apt/horzslider.wnd" ) ] = Rva00461630MappedZero;
+	aptWindowMap[ AsciiString( "apt/combobox.wnd" ) ] = Rva00461630MappedZero;
+	aptWindowMap[ AsciiString( "apt/horzslider.wnd" ) ] = Rva00461630MappedZero;
 
 	AptScreenContext00464080 context;
 	context.m_word04 = 0x08000000;

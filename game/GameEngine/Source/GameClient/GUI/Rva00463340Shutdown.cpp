@@ -16,8 +16,11 @@
 
 typedef std::map<AsciiString, GameWindow *> S3WindowTree;
 struct Rva00C6B8A0Init;
-extern Rva00C6B8A0Init g_rva012F19CC;
-#define s_windowTree (*reinterpret_cast<S3WindowTree *>(&g_rva012F19CC))
+// Retire ?g_rva012F19CC@@3URva00C6B8A0Init@@A: retail 0x012F19CC is recorded as
+// ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A.
+class Gen_00C70080Target;
+extern Gen_00C70080Target TheBfmeObject_00C70080;
+#define s_windowTree (*reinterpret_cast<S3WindowTree *>(&TheBfmeObject_00C70080))
 
 // S3Guard is the inherited bank label, not an original owner identity.
 class S3Guard { public: virtual void release(int); };
@@ -54,8 +57,10 @@ struct NameClearFunctor00462540 {
 };
 class Gen_00C700A0Target;
 extern Gen_00C700A0Target TheBfmeObject_00C700A0;	// 0x012F19A4
-struct Rva00C6B840Init;
-extern Rva00C6B840Init g_rva012F1990;
+// Retire ?g_rva012F1990@@3URva00C6B840Init@@A: retail 0x012F1990 is recorded as
+// ?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A.
+class Gen_00C70090Target;
+extern Gen_00C70090Target TheBfmeObject_00C70090;
 
 
 struct Rva00463340Buckets {
@@ -146,6 +151,6 @@ void bfmeStep1_004647E0(void)
 	{
 		AsciiString name("BinkMovieInit");
 		_STL::for_each(windowTableBegin(), windowTableEnd(), NameClearFunctor00462540(name));
-		reinterpret_cast<AptScreenRefTable *>(&g_rva012F1990)->erase(name);
+		reinterpret_cast<AptScreenRefTable *>(&TheBfmeObject_00C70090)->erase(name);
 	}
 }

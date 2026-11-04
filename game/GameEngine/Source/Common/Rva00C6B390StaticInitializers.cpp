@@ -142,19 +142,25 @@ struct Rva00C6B900Init
 };
 
 Rva00C6B390Init g_rva012F1050;
-Rva00C6B3D0Init g_rva012F10DC;
+// 0x012F10DC is recorded (DIR32) as ?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+extern "C" { Rva00C6B3D0Init __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A"); }
 Rva00C6B3F0Init g_rva012F10F4;
 Rva00C6B3F0Init g_rva012F10F8;
 Rva00C6B450Init g_rva012F1108;
 Rva00C6B450Init g_rva012F1198;
 Rva00C6B4E0Init g_rva012F1404;
-Rva00C6B840Init g_rva012F1990;
+// 0x012F1990 is recorded (DIR32) as ?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+extern "C" { Rva00C6B840Init __identifier("?TheBfmeObject_00C70090@@3VGen_00C70090Target@@A"); }
 // 0x012F19A4 is recorded (DIR32) as ?TheBfmeObject_00C700A0@@3VGen_00C700A0Target@@A,
 // the name its consumers bind; define the storage under that symbol.
 extern "C" { Rva00C6B860Init __identifier("?TheBfmeObject_00C700A0@@3VGen_00C700A0Target@@A"); }
 // 0x012F19B8 is recorded (DIR32) as ?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A,
 // the name its consumers bind; define the storage under that symbol.
 extern "C" { Rva00C6B880Init __identifier("?TheBfmeObject_00C70070@@3VGen_00C70070Target@@A"); }
-Rva00C6B8A0Init g_rva012F19CC;
+// 0x012F19CC is recorded (DIR32) as ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+extern "C" { Rva00C6B8A0Init __identifier("?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A"); }
 Rva00C6B900Init g_rva012F2570;
 Rva00C6B900Init g_rva012F2578;

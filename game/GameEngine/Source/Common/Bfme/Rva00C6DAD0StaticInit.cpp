@@ -18,4 +18,6 @@ public:
 	~Rva00C6DAD0Init();
 };
 
-Rva00C6DAD0Init g_rva0130C074;
+// 0x0130C074 is recorded (DIR32) as ?TheBfmeObject_00C70E20@@3VGen_00C70E20Target@@A.
+// Retire ?g_rva0130C074@@3VRva00C6DAD0Init@@A: define the storage under that symbol.
+extern "C" { Rva00C6DAD0Init __identifier("?TheBfmeObject_00C70E20@@3VGen_00C70E20Target@@A"); }

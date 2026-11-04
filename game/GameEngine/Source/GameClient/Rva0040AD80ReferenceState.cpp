@@ -51,8 +51,9 @@ typedef _STL::_Rb_tree<Int, _STL::pair<const Int, Gen_t_0040abb0_p12cd>,
 // 0x012F10DC holds the tree instance; retail's dynamic initializer
 // (retail 0x00C6B3D0) constructs it, so the one definition of the storage is
 // the init struct in game/GameEngine/Source/Common/Rva00C6B390StaticInitializers.cpp.
-struct Rva00C6B3D0Init;
-extern Rva00C6B3D0Init g_rva012F10DC;				// 0x012F10DC
+// Retire ?g_rva012F10DC@@3URva00C6B3D0Init@@A: VA 0x012F10DC is recorded (DIR32) as
+// ?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A (same pattern as 0x012F19B8 in Rva00462DE0HashLookup.cpp).
+extern "C" char __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A");
 
 class ReferenceStateReferent
 {
@@ -99,7 +100,7 @@ void Rva0040AD80ReferenceState::releaseReferences(void)
 		{
 			Int key = second->m_key;
 
-			((ReferenceStateTree *)&g_rva012F10DC)->erase(key);
+			((ReferenceStateTree *)&__identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A"))->erase(key);
 		}
 
 		ReferenceStateReferent *again = m_secondReferent;
