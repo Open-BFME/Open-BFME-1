@@ -155,7 +155,6 @@ class AnimationSoundModuleManager;
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern TerrainVisual *TheTerrainVisual;
 extern Display *TheDisplay;
-extern Gen_0048C5B0 *TheHeaderTemplateManager;
 extern LanguageFilter *TheLanguageFilter;
 
 extern Anim2DCollection *TheAnim2DCollection;

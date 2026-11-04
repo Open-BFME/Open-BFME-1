@@ -148,7 +148,10 @@ private:
 extern const char g_01105690[];
 // retired debt: ?g_01105A78@@3QBDB replaced with ??_7BfmeAptScreenLanLobby@@6BBfmeAptScreenBase@@@
 extern "C" const char __identifier("??_7BfmeAptScreenLanLobby@@6BBfmeAptScreenBase@@@")[];
-extern const char g_01105A74[], g_01105A28[];
+// retired debt: ?g_01105A74@@3QBDB replaced with ??_7BfmeAptScreenLanLobby@@6BS4Owner@@@
+extern "C" const char __identifier("??_7BfmeAptScreenLanLobby@@6BS4Owner@@@")[];
+#define g_01105A74 __identifier("??_7BfmeAptScreenLanLobby@@6BS4Owner@@@")
+extern const char g_01105A28[];
 
 class BfmeAptScreenSecondary
 {

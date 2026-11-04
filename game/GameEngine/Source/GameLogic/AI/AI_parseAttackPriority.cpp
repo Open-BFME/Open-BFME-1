@@ -49,7 +49,9 @@ public:
 	AINamedListNode *m_namedLists;
 };
 
-extern const FieldParse g_010959F4[];
+// Retire ?g_010959F4@@3QBUFieldParse@@B
+extern "C" const char __identifier("?g_010959F4@@3QBDB")[];
+#define g_010959F4 ((const FieldParse *)__identifier("?g_010959F4@@3QBDB"))
 
 class AI
 {

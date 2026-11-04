@@ -152,7 +152,9 @@ class AnimationSoundModuleManager;
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern TerrainVisual *TheTerrainVisual;
 extern Display *TheDisplay;
-extern Gen_0048C5B0 *TheHeaderTemplateManager;
+// Retire ?TheHeaderTemplateManager@@3PAVGen_0048C5B0@@A
+extern "C" Gen_0048C5B0 *__identifier("?TheHeaderTemplateManager@@3PAVHeaderTemplateManager@@A");
+#define TheHeaderTemplateManager __identifier("?TheHeaderTemplateManager@@3PAVHeaderTemplateManager@@A")
 extern LanguageFilter *TheLanguageFilter;
 
 extern Anim2DCollection *TheAnim2DCollection;

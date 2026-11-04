@@ -158,7 +158,10 @@ extern "C" const char __identifier("??_7?$CategoryModuleInfo@$04@FXParticleSyste
 extern "C" const char __identifier("??_7ParticleModuleSnapshotSlice@FXParticleSystem@@6B@")[];
 // retired debt: ?g_01111828@@3QBDB replaced with ??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BParticleModuleCategorySlice@1@@
 extern "C" const char __identifier("??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BParticleModuleCategorySlice@1@@")[];
-extern const char g_0111182C[], g_01111824[];
+// retired debt: ?g_0111182C@@3QBDB replaced with ??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BT1A1_005DD290@@@
+extern "C" const char __identifier("??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BT1A1_005DD290@@@")[];
+#define g_0111182C __identifier("??_7?$DefaultParticleModule@$04@FXParticleSystem@@6BT1A1_005DD290@@@")
+extern const char g_01111824[];
 // Gate debt ?g_011132E8@@3QBDB: reference ??_7LightningEmissionModule@FXParticleSystem@@6BParticleModuleSnapshotSlice@1@@.
 extern "C" void *__identifier("??_7LightningEmissionModule@FXParticleSystem@@6BParticleModuleSnapshotSlice@1@@")[];
 // retired debt: ?g_011132EC@@3QBDB replaced with ??_7LightningEmissionModule@FXParticleSystem@@6BParticleModuleCategorySlice@1@@

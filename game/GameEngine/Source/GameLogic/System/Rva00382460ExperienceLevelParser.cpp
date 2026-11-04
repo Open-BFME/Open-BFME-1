@@ -48,7 +48,9 @@ typedef bool Bool;
 typedef int Int;
 
 struct FieldParse;
-extern const char g_010EAB48[];
+// Retire ?g_010EAB48@@3QBDB
+extern "C" const FieldParse __identifier("?g_010EAB48@@3PADA")[];
+#define g_010EAB48 __identifier("?g_010EAB48@@3PADA")
 
 // The retail parser's token temporary calls the shared BFME narrow-string
 // constructor and releaseBuffer body.  The local spelling is AsciiString so
