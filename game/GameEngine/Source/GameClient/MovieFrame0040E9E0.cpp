@@ -56,7 +56,9 @@ __int64 Previous0040E9E0 = 0;
 __int64 Elapsed0040E9E0 = 0;
 // ?Current0040E9E0@@3_JA: eight retail initial bytes are zero.
 __int64 Current0040E9E0 = 0;
-extern __int64 Threshold0040E9E0;
+// Retail 0x012F1290 is the recorded 8-byte quotient cell ?g_Va012F1290@@3_JC
+// (Display.cpp); the old Threshold0040E9E0 spelling named the user, not the datum.
+extern __int64 g_Va012F1290;
 // ?Trace0040E9E0@@3_NA: retail initial byte is zero.
 bool Trace0040E9E0 = false;
 // ?Sum0040E9E0@@3NA: eight retail initial bytes are zero.
@@ -175,7 +177,7 @@ unsigned MovieOpen0040E3B0::frame0040E9E0(int force)
             return 0;
         }
         Elapsed0040E9E0 = Current0040E9E0 - Previous0040E9E0;
-        if (Elapsed0040E9E0 > Threshold0040E9E0)
+        if (Elapsed0040E9E0 > g_Va012F1290)
             sprintf(text, "%d", stream34->frame());
         Previous0040E9E0 = Current0040E9E0;
         if (stream34->ready(flags38))

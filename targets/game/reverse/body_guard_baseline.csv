@@ -350,7 +350,6 @@ dir32,0x012F0898,?g00251530Va012F0898@@3PAVRoute00251530@@A,"retail 0x012F0898 i
 dir32,0x012F0FE0,?g_012F0FE0@@3PAVGen_0039B020@@A,"retail 0x012F0FE0 is already recorded as ?R2Ptr012F0FE0@@3PAVGen00049FDA@@A (+6 more); reference that name, not a new one"
 dir32,0x012F1028,?Glo012F1028@@3PAXA,"retail 0x012F1028 is already recorded as ?Glo012F1028@@3PAVGlo012F1028Type@@A (+29 more); reference that name, not a new one"
 dir32,0x012F1270,?display00487F80@@3PAVDisplay00487F80@@A,"retail 0x012F1270 is already recorded as ?Rva00367810TheVirtualGate@@3PAVRva00367810VirtualGate@@A (+20 more); reference that name, not a new one"
-dir32,0x012F1290,?Threshold0040E9E0@@3_JA,"nothing in the ledger owns 0x012F1290. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F1464,?g_012F1464@@3PAVClient006E2540@@A,"retail 0x012F1464 is already recorded as ?ClientAt012F1464@@3PAVClient0009A580@@A (+27 more); reference that name, not a new one"
 dir32,0x012F1600,?Rva00EF1600@@3PAURva0071A730View@@A,"retail 0x012F1600 is already recorded as ?FadeTacticalView@@3PAVFadeView@@A (+25 more); reference that name, not a new one"
 dir32,0x012F19E8,?g_rva012F19E8WindowManager@@3PAVBfmeLevelAN@@A,"retail 0x012F19E8 is already recorded as ?R2Ptr012F19E8@@3PAVGen000290D2@@A (+66 more); reference that name, not a new one"
