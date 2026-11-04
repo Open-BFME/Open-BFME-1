@@ -16,4 +16,7 @@ public:
 	}
 };
 
-Rva00C6B720Init g_rva012F1598;
+// 0x012F1598 is recorded (DIR32) as ?TheBfmeObject_00C70000@@3VGen_00C70000Target@@A;
+// define the storage under that symbol.
+// Retire ?g_rva012F1598@@3VRva00C6B720Init@@A
+extern "C" { Rva00C6B720Init __identifier("?TheBfmeObject_00C70000@@3VGen_00C70000Target@@A"); }

@@ -16,4 +16,7 @@ public:
 };
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
-Rva007E4960 g_rva01309C18Object;
+// 0x01309C18 is recorded (DIR32) as ?TheBfmeObject_00C70BC0@@3VGen_00C70BC0Target@@A;
+// define the storage under that symbol.
+// Retire ?g_rva01309C18Object@@3VRva007E4960@@A
+extern "C" { Rva007E4960 __identifier("?TheBfmeObject_00C70BC0@@3VGen_00C70BC0Target@@A"); }
