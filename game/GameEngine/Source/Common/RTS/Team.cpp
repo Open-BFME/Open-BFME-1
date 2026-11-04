@@ -34,6 +34,16 @@
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+
+// Keep Waypoint's by-value name accessor on its verified out-of-line provider.
+// Preload dependencies so the definition-hiding macro touches only TerrainLogic.
+#include "Common/Snapshot.h"
+#include "Common/STLTypedefs.h"
+#include "GameClient/TerrainRoads.h"
+#define getName(args) getName(args) const; AsciiString zhInlineWaypointGetName(args)
+#include "GameLogic/TerrainLogic.h"
+#undef getName
+
 #include "Common/GameState.h"
 #pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 #undef MEMORY_POOL_GLUE_WITHOUT_GCMP

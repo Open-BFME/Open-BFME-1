@@ -52,6 +52,16 @@
 #define aiMoveToPosition(a, b) aiMoveToPosition(a, b); void zhInlineAiMoveToPosition(a, b)
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+// Keep Waypoint's by-value name accessor on its verified out-of-line provider.
+// Preload dependencies so the definition-hiding macro touches only TerrainLogic.
+#include "Common/Snapshot.h"
+#include "Common/STLTypedefs.h"
+#include "GameClient/TerrainRoads.h"
+#define getName(args) getName(args) const; AsciiString zhInlineWaypointGetName(args)
+#include "GameLogic/TerrainLogic.h"
+#undef getName
+
+
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
 // is one 12-byte body (0x007EFFF0) that calls the CRT free IMPORT THUNK -- a
 // `call rel32` into `jmp [__imp__free]` -- where ::operator delete (0x00881EB0)
