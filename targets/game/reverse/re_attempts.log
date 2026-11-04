@@ -60480,3 +60480,21 @@ ___defaultmatherr	0x012DBDE0	0	blocked	gate-debt: absent owner in data_rows and 
 ?startFacing@SpecialAbilityUpdate@@QAEXXZ	0x002AA850	154	solved	Adopt registered data-only Coord3D; compiler-proven12B/float fields, same complete runtime sections/code/relocations, only canonical header added; targets/game/reverse/attempt_support/b1-05-coordinate-header-20261104-1105.md t=2min model=gpt-6
 ?onEnter@Rva00173990State@@UAE?AW4StateReturnType@@XZ	0x00173990	101	solved	Adopt registered data-only Coord3D; compiler-proven12B/float fields, same complete runtime sections/code/relocations, only canonical header added; targets/game/reverse/attempt_support/b1-14-coordinate-header-20261104-1105.md t=2min model=gpt-6
 ??_7GDIFileStream@@6B@	0x01121AE8	0	blocked	gate-debt: name_regression refuses renaming descriptive GDIFileStream to recorded placeholder Gen_00749740 t=2 model=gemini-3.8-flash-medium
+??1?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ	0x0043C961	0	blocked	gate-debt: unowned datum requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??0ConditionTemplate@@QAE@XZ	0x0043ECF7	0	blocked	gate-debt: unowned datum requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??1?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ	0x00448DD3	0	blocked	gate-debt: unowned datum requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??_7Object@@6BRva00C9EE00Base@@@	0x0109EE00	0	blocked	gate-debt: compiler-generated multiple inheritance vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+??_7GiantBirdSlowDeathBehaviorModuleData@@6B@	0x010A49B8	0	blocked	gate-debt: unowned compiler-generated vtable requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??_7BodyModuleInterface@@6B@	0x010A7348	0	blocked	gate-debt: compiler-generated interface vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+??_7ActiveBodyModuleData@@6B@	0x010A76C0	0	blocked	gate-debt: unowned compiler-generated vtable requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??_7HordeSiegeEngineContainModuleData@@6B@	0x010AD180	0	blocked	gate-debt: unowned compiler-generated vtable requiring data row or class redesign t=1 model=gemini-3.8-flash-medium
+??_7SupplyTruckAIUpdate@@6BRva010C8E90Base@@@	0x010C8E90	0	blocked	gate-debt: compiler-generated multiple inheritance vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+??_7Gen_00378650@@6BSnapshot@@@	0x010EA21C	0	blocked	gate-debt: compiler-generated multiple inheritance vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+?m_shellMenuSchemeFieldParseTable@ShellMenuSchemeManager@@2QBUFieldParse@@B	0x0110B5F0	0	blocked	gate-debt: requires class rename across multiple TUs from ShellMenuSchemeManager to BfmeShellMenuSchemeManager t=1 model=gemini-3.8-flash-medium
+??_7T1Derived_005DEC00@@6BBfmeHolderCU@@@	0x01111348	0	blocked	gate-debt: compiler-generated multiple inheritance vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+??_7CylinderEmissionVolumeModule@FXParticleSystem@@6BBfmeHolderCU@@@	0x0111196C	0	blocked	gate-debt: compiler-generated multiple inheritance vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+??_7LaserDrawInterface@@6B@	0x011229A0	0	blocked	gate-debt: compiler-generated interface vtable requiring hierarchy redesign t=1 model=gemini-3.8-flash-medium
+?RvaObject012ED82C@@3VAsciiString@@A	0x012ED82C	0	blocked	gate-debt: unowned datum requiring data row addition t=1 model=gemini-3.8-flash-medium
+?$S198@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA	0x012F0054	0	blocked	gate-debt: compiler-generated static guard variable index in module_pool_glue_bulk.cpp t=1 model=gemini-3.8-flash-medium
+?g_classic0130B798@@3V?$collate@G@_STL@@A	0x0130B798	0	blocked	gate-debt: unowned datum requiring data row addition t=1 model=gemini-3.8-flash-medium
+?RenderStates@DX8Wrapper@@0PAIA	0x01340100	0	blocked	gate-debt: declared in shared header dx8wrapper.h requiring full gate t=1 model=gemini-3.8-flash-medium

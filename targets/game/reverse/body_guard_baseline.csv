@@ -38,7 +38,6 @@ dir32,0x004316B0,??0BoneParticleSystemInfo@@QAE@XZ,"nothing in the ledger owns 0
 dir32,0x00431C87,?isForcedIntoWantingState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00431C87. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00431EDF,??0Rva006967A0@@QAE@XZ,the name encodes 0x006967A0 but retail reads 0x00431EDF
 dir32,0x0043475C,??0Rva00127AC0Element@@QAE@XZ,"retail 0x0043475C is already recorded as ??0StructureCollapseOCLVector@@QAE@XZ; reference that name, not a new one"
-dir32,0x0043572E,?j_0003572e@@YAXXZ,"retail 0x0043572E is already recorded as ?buildFieldParse@RetailCollideModuleDataBase@@SAXAAVMultiIniFieldParse@@@Z (+4 more); reference that name, not a new on"
 dir32,0x00436E7B,??0BfmeGdElem36@@QAE@XZ,"nothing in the ledger owns 0x00436E7B. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004376AA,??1Message0043DBA0@@QAE@XZ,"nothing in the ledger owns 0x004376AA. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004376D7,??0RadarEvent@@QAE@XZ,"nothing in the ledger owns 0x004376D7. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
@@ -385,7 +384,6 @@ dir32,0x012F1464,?g_012F1464@@3PAVClient006E2540@@A,"retail 0x012F1464 is alread
 dir32,0x012F1600,?Rva00EF1600@@3PAURva0071A730View@@A,"retail 0x012F1600 is already recorded as ?FadeTacticalView@@3PAVFadeView@@A (+25 more); reference that name, not a new one"
 dir32,0x012F19E8,?g_rva012F19E8WindowManager@@3PAVBfmeLevelAN@@A,"retail 0x012F19E8 is already recorded as ?R2Ptr012F19E8@@3PAVGen000290D2@@A (+66 more); reference that name, not a new one"
 dir32,0x012F2564,?tooltipFunc@@3P6AXPAVGameWindow@@PAVWinInstanceData@@I@ZA,"nothing in the ledger owns 0x012F2564. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012F2578,?theTooltipString@@3VAsciiString@@A,"retail 0x012F2578 is already recorded as ?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A; reference that name, not a new one"
 dir32,0x012F3930,_g_012F3930,"nothing in the ledger owns 0x012F3930. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F3934,_g_012F3934,"nothing in the ledger owns 0x012F3934. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F49B0,?g_loadScreen012F49B0@@3PAVLoadScreen0051BF30@@A,"retail 0x012F49B0 is already recorded as ?g_Va012F49B0@@3HA; reference that name, not a new one"

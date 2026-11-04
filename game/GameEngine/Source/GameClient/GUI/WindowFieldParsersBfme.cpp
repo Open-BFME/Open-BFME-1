@@ -83,7 +83,9 @@ protected:
 	void *findFunction(NameKeyType key, TableIndex index);
 };
 
-extern AsciiString theTooltipString;
+// retired debt: ?theTooltipString@@3VAsciiString@@A replaced with ?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A
+extern "C" AsciiString __identifier("?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A");
+#define theTooltipString __identifier("?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A")
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern FunctionLexicon *TheFunctionLexicon;
 extern GameWinTooltipFunc tooltipFunc;

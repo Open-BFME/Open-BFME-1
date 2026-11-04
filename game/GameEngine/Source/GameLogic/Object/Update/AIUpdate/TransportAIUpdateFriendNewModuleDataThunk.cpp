@@ -39,7 +39,8 @@ public:
 // identity of the builder it reaches is
 // ?buildFieldParse@TransportAIUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,
 // still address-derived in the ledger.
-void __cdecl j_0003572e();
+// retired debt: ?j_0003572e@@YAXXZ replaced with _TransportAIUpdateFieldParse
+extern "C" void TransportAIUpdateFieldParse();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransportAIUpdate.h
 class TransportAIUpdate
@@ -54,6 +55,6 @@ ModuleData *TransportAIUpdate::friend_newModuleData(INI *ini)
 	TransportAIUpdateModuleData *data = new TransportAIUpdateModuleData;
 	if (ini)
 		ini->initFromINIMultiProc(data,
-			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>( &j_0003572e ));
+			reinterpret_cast<void (__cdecl *)(MultiIniFieldParse &)>( &TransportAIUpdateFieldParse ));
 	return (ModuleData *)data;
 }
