@@ -351,7 +351,6 @@ dir32,0x012F1600,?Rva00EF1600@@3PAURva0071A730View@@A,"retail 0x012F1600 is alre
 dir32,0x012F19E8,?g_rva012F19E8WindowManager@@3PAVBfmeLevelAN@@A,"retail 0x012F19E8 is already recorded as ?R2Ptr012F19E8@@3PAVGen000290D2@@A (+66 more); reference that name, not a new one"
 dir32,0x012F49B0,?g_loadScreen012F49B0@@3PAVLoadScreen0051BF30@@A,"retail 0x012F49B0 is already recorded as ?g_Va012F49B0@@3HA; reference that name, not a new one"
 dir32,0x012F4ABC,?g_rva012F4ABC@@3PAURva0055A240Global@@A,"retail 0x012F4ABC is already recorded as ?g_Va012F4ABC@@3HA (+3 more); reference that name, not a new one"
-dir32,0x012F7014,?TheTerrainVisual@@3PAVTerrainVisual001AE610@@A,"retail 0x012F7014 is already recorded as ?TheTerrainVisual@@3PAVRva001A8820TerrainVisual@@A (+10 more); reference that name, not a new one"
 dir32,0x012F7020,?nk@?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType@@XZ@4W43@A,"retail 0x012F7020 is already recorded as ?TheBeaconClientUpdatePool@?1??getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A; reference that name,"
 dir32,0x012F7024,??_B?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType@@XZ@51,"retail 0x012F7024 is already recorded as ?$S288@?1??getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ@4IA; reference that name, not a new one"
 dir32,0x012F7078,?g_bfmeBoxYP@@3URegion2D@@A,"retail 0x012F7078 is already recorded as ?Rva012F7078Region@@3URegion2D@@A (+2 more); reference that name, not a new one"
