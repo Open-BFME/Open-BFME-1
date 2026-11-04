@@ -269,6 +269,18 @@ static void findClosestKindOf( Object *obj, void *userData )
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+// link queue #3 (?isEmpty@AsciiString@@QBE_NXZ, strings family): retail has
+// one body, StringBase<char>::isEmpty at 0x0005E4C0 (the AsciiString spelling
+// is only a pin there). This TU sees Zero Hour's AsciiString, whose inline
+// isEmpty emits a non-retail COMDAT ahead of retail's copy in the link (byte
+// test at +4 where retail tests the StringBase length word). Route this TU's
+// emptiness tests through the public str() spelling so this object no longer
+// defines the AsciiString copy.
+static __forceinline bool asciiIsEmpty(const AsciiString &s)
+{
+	const char *str = s.str();
+	return str == 0 || str[0] == 0;
+}
 #ifdef DEBUG_CRC
 #define CRCDUMPBATTLEPLANBONUSES(x,y,z) dumpBattlePlanBonuses(x, #x, y, z, __FILE__, __LINE__, FALSE)
 #define DUMPBATTLEPLANBONUSES(x,y,z) dumpBattlePlanBonuses(x, #x, y, z, __FILE__, __LINE__, TRUE)
@@ -280,12 +292,12 @@ AsciiString kindofMaskAsAsciiString(KindOfMaskType m)
 	{
 		if (m.test(i))
 		{
-			if (s.isNotEmpty())
+			if (!asciiIsEmpty(s))
 				s.concat("|");
 			s.concat(kindofNames[i]);
 		}
 	}
-	if (s.isEmpty())
+	if (asciiIsEmpty(s))
 		s = "KINDOF_INVALID";
 	return s;
 }
@@ -1181,7 +1193,7 @@ void Player::initFromDict(const Dict* d)
 					for (j = 0; j < numKeys; ++j)
 					{
 						tmpStr = teamDict.getAsciiString(nameKeys[j], &exists);
-						if (exists && !tmpStr.isEmpty())
+						if (exists && !asciiIsEmpty(tmpStr))
 						{
 							newName.format("%s%d", tmpStr.str(), m_mpStartIndex);
 							teamDict.setAsciiString(nameKeys[j], newName);
@@ -1193,7 +1205,7 @@ void Player::initFromDict(const Dict* d)
 						AsciiString keyName;
 						keyName.format("%s%d", TheNameKeyGenerator->keyToName(TheKey_teamGenericScriptHook).str(), j);
 						tmpStr = teamDict.getAsciiString(NAMEKEY(keyName.str()), &exists);
-						if (exists && !tmpStr.isEmpty())
+						if (exists && !asciiIsEmpty(tmpStr))
 						{
 							newName.format("%s%d", tmpStr.str(), m_mpStartIndex);
 							teamDict.setAsciiString(NAMEKEY(keyName.str()), newName);
