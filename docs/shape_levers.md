@@ -1,5 +1,23 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## A list-head register exchange fixed by a named count local (2026-11-04)
+
+`Rva00694570::run` (0x00694570, 315 B, MSVC 7.1 `/O2 /Ob2 /EHsc`, STLport
+node allocator) takes the first entry of a `list<T*>`. Retail loads the
+sentinel into ECX and the first node into EAX
+(`mov ecx,[edi]; mov eax,[ecx]; cmp eax,ecx; ... mov esi,[eax+8]`). With
+`it != end()`, `end() != it` or `!empty()`, VC7.1 loads the sentinel into EAX
+every time, which leaves 3 or 4 bytes wrong. More than 40 spellings across
+sessions did not change this. The fix was a later statement: read the entry's
+use count into a named local before testing it
+(`int count = selected->m_count; if (count == 0) ...` instead of
+`if (!selected->m_count)`), with `it = begin(); if (it != end())`. The result
+was exact. Neither `volatile` nor `register` is needed. Measured effect: the
+named local moves the allocator's choice for the iterator's node load several
+instructions earlier. The cause is not known. The spelling was carried from
+Open-BFME-2 `AudioFileCacheLoader.cpp` (`rva000A8437`). Source:
+`game/GameEngineDevice/Source/MilesAudioDevice/Rva00694570AudioWorkerRun.cpp`.
+
 ## Head-tested found loop and an uncached element address (2026-11-02)
 
 `Rva0061A0F0Owner::rva0061A0F0` (0x0061A0F0, 213 B, MSVC 7.1 `/DNDEBUG /MD
