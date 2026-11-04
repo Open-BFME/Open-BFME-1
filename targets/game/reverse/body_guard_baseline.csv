@@ -23,7 +23,6 @@ dir32,0x0042A392,??_F?$vector@UGen00026F35@@V?$allocator@UGen00026F35@@@_STL@@@_
 dir32,0x0042A8E2,??1Rva00386070@@QAE@XZ,"retail 0x0042A8E2 is already recorded as ??1Rva00386080AsciiStringElement@@QAE@XZ; reference that name, not a new one"
 dir32,0x0042AA81,??0Message0043DBA0@@QAE@XZ,"nothing in the ledger owns 0x0042AA81. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0042BC01,??0?$map@VAsciiString@@HU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@H@_STL@@@3@@_STL@@QAE@XZ,"nothing in the ledger owns 0x0042BC01. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0042D902,??1Rva006AD440Entry@@QAE@XZ,"retail 0x0042D902 is already recorded as ??1Rva00699D60AudioOwner@@QAE@XZ; reference that name, not a new one"
 dir32,0x0042E02D,??0Rva00386070@@QAE@XZ,the name encodes 0x00386070 but retail reads 0x0042E02D
 dir32,0x0042FEE6,?j_0002fee6@@YAXXZ,"retail 0x0042FEE6 is already recorded as ?TheBfmeOwner_00161290@@3PADA (+1 more); reference that name, not a new one"
 dir32,0x004316B0,??0BoneParticleSystemInfo@@QAE@XZ,"nothing in the ledger owns 0x004316B0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

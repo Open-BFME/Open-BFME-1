@@ -144,7 +144,7 @@ struct Gen_t_0069e220_p4pod { int v; };
 struct Gen_t_0069e310_p4pod { int v; };
 struct Gen_t_0069e400_p4pod { int v; };
 struct Gen_t_006a00d0_p4pod { int v; };
-struct Rva006AD440Entry { ~Rva006AD440Entry( void ); char m_body[0x40]; };
+struct Rva00699D60AudioOwner { ~Rva00699D60AudioOwner( void ); char m_body[0x40]; };
 
 // Hash map payloads and set key: the address-derived spellings the matched
 // out-of-line STLport bodies already carry.
@@ -233,7 +233,7 @@ private:
 	_STL::hash_map<int, Gen_t_006a3b50_p12cd> m_hashb08;	// +0xb08
 	_STL::hash_map<int, Gen_t_006a3c20_p12cd> m_hashb1c;	// +0xb1c
 	_STL::hash_map<int, Gen_t_006a3cf0_p12cd> m_hashb30;	// +0xb30
-	Rva006AD440Entry *m_b44;
+	Rva00699D60AudioOwner *m_b44;
 	UnsignedInt m_b48;							// +0xb44
 	Int m_b4c;											// +0xb4c
 	UnsignedInt m_b50, m_b54;
