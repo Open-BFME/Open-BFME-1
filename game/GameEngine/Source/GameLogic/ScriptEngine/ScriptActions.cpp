@@ -1132,70 +1132,9 @@ void ScriptActions::doLocalDefeat( void )
 	((BfmeScriptEngineVtbl_38 *)TheScriptEngine)->startCloseWindowTimer();
 }
 
-//-------------------------------------------------------------------------------------------------
-/** changeObjectPanelFlagForSingleObject */
-//-------------------------------------------------------------------------------------------------
-// ?changeObjectPanelFlagForSingleObject@ScriptActions@@IAEXPAVObject@@ABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::changeObjectPanelFlagForSingleObject(Object *obj, const AsciiString& flagToChange, Bool newVal )
-{
-	// Enabled flag
-	if (flagToChange == TheObjectFlagsNames[0])
-	{
-		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_DISABLED, !newVal);
-		return;
-	}
-
-	// Powered flag
-	if (flagToChange == TheObjectFlagsNames[1])
-	{
-		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_UNPOWERED, !newVal);
-		return;
-	}
-
-	// Indestructible flag
-	if (flagToChange == TheObjectFlagsNames[2])
-	{
-		BodyModuleInterface* body = obj->getBodyModule();
-		if (body)	{
-			body->setIndestructible(newVal);
-		}
-		return;
-	}
-
-	// Unsellable flag
-	if (flagToChange == TheObjectFlagsNames[3])
-	{
-		obj->setScriptStatus(OBJECT_STATUS_SCRIPT_UNSELLABLE, newVal);
-		return;
-	}
-
-	// Selectable flag
-	if (flagToChange == TheObjectFlagsNames[4])
-	{
-		if (obj->isSelectable() != newVal) {
-			obj->setSelectable(newVal);
-		}
-		return;
-	}
-
-	// AI Recruitable flag
-	if (flagToChange == TheObjectFlagsNames[5])
-	{
-		if (obj->getAIUpdateInterface()) {
-			obj->getAIUpdateInterface()->setIsRecruitable(newVal);
-		}
-
-		return;
-	}
-
-	// Player targetable flag
-	if( flagToChange == TheObjectFlagsNames[6] )
-	{
-		obj->setScriptStatus( OBJECT_STATUS_SCRIPT_TARGETABLE, newVal );
-		return;
-	}
-
-}
+// changeObjectPanelFlagForSingleObject is owned by
+// ScriptActionsChangeObjectPanelFlag.cpp (retail0x002F8A50).
+// Its BFME containment propagation is absent from the old Zero Hour copy.
 
 //-------------------------------------------------------------------------------------------------
 /** doDebugMessage */
