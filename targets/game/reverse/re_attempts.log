@@ -60598,3 +60598,9 @@ _g_01134280	0x01134280	0	solved	gate-debt: admitted into data_rows.csv via add_d
 ?g_rva0130A45CObject@@3VCAtlWinModule@ATL@@A	0x0130A45C	0	solved	gate-debt: defined under recorded ?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A in Rva00C6C770Init.cpp t=2 model=gemini-3.8-flash-medium
 ?_DefaultFileFactory@@3VSimpleFileFactoryClass@@A	0x0134ECF0	0	solved	gate-debt: defined under recorded ?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A in ffactory.cpp t=2 model=gemini-3.8-flash-medium
 ?tooltipFunc@@3P6AXPAVGameWindow@@PAVWinInstanceData@@I@ZA	0x012F2564	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py and defined in WindowFieldParsersBfme.cpp t=2 model=gemini-3.8-flash-medium
+??_7BoneFXUpdateModuleData@@6B@	0x010BC940	0	blocked	gate-debt: vtable not emitted by any TU, add_data_match fails: cannot be named from TU t=2 model=gemini-3.8-flash-medium
+??_7U1Ctor_005E3300@@6BBfmeHolderCU@@@	0x0111182C	0	blocked	gate-debt: compiler-generated vtable for placeholder class U1Ctor_005E3300 conflicts with recorded DefaultParticleModule; class rename outside debt scope t=2 model=gemini-3.8-flash-medium
+?MasterFilterList@@3PAPAPAVW3DFilterInterface@@A	0x012BAE60	0	blocked	gate-debt: add_data_match fails: initializer differs from retail at +0x10 t=1 model=gemini-3.8-flash-medium
+?MasterShaderList@@3PAPAPAVW3DShaderInterface@@A	0x012BAE40	0	blocked	gate-debt: add_data_match fails: TerrainShaderList has no retail address in ledgers t=1 model=gemini-3.8-flash-medium
+?key012F4B80@@3VAsciiString@@A	0x012F4B80	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B80Global.cpp t=2 model=gemini-3.8-flash-medium
+?key012F4B84@@3VAsciiString@@A	0x012F4B84	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B84Global.cpp t=2 model=gemini-3.8-flash-medium
