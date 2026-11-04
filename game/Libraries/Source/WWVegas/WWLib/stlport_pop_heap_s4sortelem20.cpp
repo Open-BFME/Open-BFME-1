@@ -52,9 +52,14 @@ public:
     {
         StringBase<char>::set(other);
     }
+    // link queue #94 (?set@AsciiString@@QAEXABV1@@Z, strings family): retail
+    // keeps the StringBase<char>::set body at 0x00887C90 (matched in
+    // StringBaseCaseOps.cpp); the AsciiString spelling is only ever a
+    // forwarder here. Route the assignment through the base directly so this
+    // object neither defines nor references the AsciiString copy.
     AsciiString &operator=(const AsciiString &other)
     {
-        set(other);
+        StringBase<char>::set(other);
         return *this;
     }
 
