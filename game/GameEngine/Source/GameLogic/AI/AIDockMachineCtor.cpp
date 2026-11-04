@@ -82,10 +82,13 @@ public:
 public:
     virtual ~AIDockMoveToEntryState();
 };
-class AIDockMoveToDockState : public AIInternalMoveToState
+// ??_7Rva0014F590State@@6B@; this class's own vftable was the unrecorded name
+// retired debt: ??_7AIDockMoveToDockState@@6B@ replaced with ??_7Rva0014F590State@@6B@
+extern "C" void *__identifier("??_7Rva0014F590State@@6B@")[];
+class __declspec(novtable) AIDockMoveToDockState : public AIInternalMoveToState
 {
 public:
-    AIDockMoveToDockState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToDockState") {}
+    AIDockMoveToDockState(StateMachine *m) : AIInternalMoveToState(m, "AIDockMoveToDockState") { *(volatile void **)this = (void *)__identifier("??_7Rva0014F590State@@6B@"); }
 protected:
     virtual ~AIDockMoveToDockState();
 };
