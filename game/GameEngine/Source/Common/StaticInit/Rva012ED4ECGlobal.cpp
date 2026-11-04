@@ -6,4 +6,5 @@
 // bytes as its compiler-local _$E1; the ledger row names that COFF symbol
 // via object-symbol=_$E1.
 #include "ascii_string.h"
-AsciiString g_rva012ED4EC;
+// Retire ?g_rva012ED4EC@@3VAsciiString@@A
+extern "C" { AsciiString g_bfmeNameVSF; }

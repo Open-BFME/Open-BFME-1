@@ -54,10 +54,13 @@ extern Engine0040E9E0 *EngineGlobal0040E9E0;
 __int64 Previous0040E9E0 = 0;
 // ?Elapsed0040E9E0@@3_JA: eight retail initial bytes are zero.
 __int64 Elapsed0040E9E0 = 0;
-extern __int64 Current0040E9E0, Threshold0040E9E0;
+// ?Current0040E9E0@@3_JA: eight retail initial bytes are zero.
+__int64 Current0040E9E0 = 0;
+extern __int64 Threshold0040E9E0;
 // ?Trace0040E9E0@@3_NA: retail initial byte is zero.
 bool Trace0040E9E0 = false;
-extern double Sum0040E9E0;
+// ?Sum0040E9E0@@3NA: eight retail initial bytes are zero.
+double Sum0040E9E0 = 0.0;
 extern double Interval0040F780;
 extern int Count0040E9E0;
 extern "C" int __identifier("?Count0040E9E0@@3HA") = 0;

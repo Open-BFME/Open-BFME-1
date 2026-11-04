@@ -192,3 +192,4 @@ extern "C" NameKeyType __identifier("?parentPopupID@@3W4NameKeyType@@A") = NAMEK
 extern "C" NameKeyType __identifier("?checkBoxAllowObserversID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;
 extern "C" NameKeyType __identifier("?textEntryGameDescriptionID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;
 extern "C" NameKeyType __identifier("?textEntryGamePasswordID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;
+extern "C" NameKeyType __identifier("?textEntryLadderPasswordID@@3W4NameKeyType@@A") = NAMEKEY_INVALID;

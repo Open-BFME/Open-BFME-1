@@ -70,7 +70,8 @@ template<int N> class BitFlags { public:
  static int getSingleBitFromName(const char *);
 };
 
-extern const char *names1CB270[];
+// Retire ?names1CB270@@3PAPBDA
+extern const char *const ModelConditionNames[];
 
 class Rva001CB270BitFlags { _STL::bitset<304> bits; public: void xfer(Xfer *xfer); };
 
@@ -83,8 +84,8 @@ void Rva001CB270BitFlags::xfer(Xfer *xfer)
   int count=bits.count();
   xfer->integer(&count);
   for (int i=0;i<304;++i) {
-   if (bits._Unchecked_test(i) && names1CB270[i]) {
-    AsciiString name(names1CB270[i]);
+   if (bits._Unchecked_test(i) && ModelConditionNames[i]) {
+    AsciiString name(ModelConditionNames[i]);
     xfer->text(&name);
     --count;
    }
