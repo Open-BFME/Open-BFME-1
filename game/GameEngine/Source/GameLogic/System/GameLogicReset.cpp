@@ -38,9 +38,9 @@ public: Gen_00366B90();
  ~Gen_00366B90() {typedef void(Gen_00366B90::*P)();union{void(*raw)();P member;}r={j_0000b5cd};(this->*r.member)();}
 private: unsigned at000[12];
 };
-class Rva00386070 {
+class Rva00386080AsciiStringElement {
 public:
- Rva00386070(); ~Rva00386070() {}
+ Rva00386080AsciiStringElement(); ~Rva00386080AsciiStringElement() {}
  unsigned at000,at004,at008,at00c; bool at010; char pad011[3];unsigned at014;AsciiString at018;
 };
 class GameLogic : public SubsystemInterface, public Snapshot {
@@ -75,7 +75,7 @@ private:
  unsigned at1a0,at1a4;bool at1a8;char pad1a9[3];
  struct ObjectTOCEntry {AsciiString name;unsigned short id;};
  std::list<ObjectTOCEntry> at1ac;
- Rva00386070 at1b0[8];
+ Rva00386080AsciiStringElement at1b0[8];
  unsigned at290;
 };
 
