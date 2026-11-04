@@ -65,13 +65,13 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
-extern BOOL __stdcall bfmeEnumThreadWndProc(HWND window, LPARAM context);
+extern void b_00548d90();
 
 static void minimizeCurrentThreadWindow()
 {
 	HWND window = 0;
 	EnumThreadWindows( GetCurrentThreadId(),
-		&bfmeEnumThreadWndProc,
+		(BOOL (__stdcall *)(HWND, LPARAM))&b_00548d90,
 		reinterpret_cast<LPARAM>( &window ) );
 	if( window )
 		ShowWindow( window, 6 );
