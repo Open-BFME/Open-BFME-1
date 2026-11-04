@@ -336,6 +336,8 @@ Render2DSentenceClass::Get_Formatted_Text_Extents (const WCHAR *text)
 // Its ZH copy here was the only user of the matched
 // DynamicVectorClass<SentenceDataStruct>::Delete_All, so instantiate it.
 template void DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct>::Delete_All(void);
+// Build_Textures now lives in its verified split TU; retain this ledgered helper.
+template void DynamicVectorClass<Render2DSentenceClass::PendingSurfaceStruct>::Delete_All(void);
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -352,82 +354,8 @@ template void DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct>::Del
 //	Build_Textures
 //
 ////////////////////////////////////////////////////////////////////////////////////
-void
-// byte-exact reconstruction: game/GameEngine/Source/Common/Render2DSentenceClass_Build_TexturesMethodThunk.cpp
-// ?Build_Textures@Render2DSentenceClass@@AAEXXZ present-unmatched
-Render2DSentenceClass::Build_Textures (void)
-{
-	WWMEMLOG(MEM_TEXTURE);
-
-	//
-	//	Make sure we unlock the current surface
-	//
-	if (LockedPtr != NULL) {
-		CurSurface->Unlock ();
-		LockedPtr = NULL;
-	}
-	
-	//
-	//	Release our hold on the current surface
-	//
-	REF_PTR_RELEASE (CurSurface);
-	TextureOffset.Set (0, 0);
-	TextureStartX = 0;
-
-	//
-	//	Convert all pending surfaces to textures
-	//
-	for (int index = 0; index < PendingSurfaces.Count (); index ++) {		
-		PendingSurfaceStruct &surface_info = PendingSurfaces[index];
-		SurfaceClass *curr_surface = surface_info.Surface;
-
-		//
-		//	Get the dimensions of the surface
-		//
-		SurfaceClass::SurfaceDescription desc;
-		curr_surface->Get_Description (desc);
-		
-		//
-		//	Create the new texture
-		//
-		TextureClass *new_texture = W3DNEW TextureClass (desc.Width, desc.Width, WW3D_FORMAT_A4R4G4B4, MIP_LEVELS_1);
-		SurfaceClass *texture_surface = new_texture->Get_Surface_Level ();
-
-		new_texture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		new_texture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		new_texture->Get_Filter().Set_Min_Filter(TextureFilterClass::FILTER_TYPE_NONE);
-		new_texture->Get_Filter().Set_Mag_Filter(TextureFilterClass::FILTER_TYPE_NONE);
-		new_texture->Get_Filter().Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
-
-		//
-		//	Copy the contents of the texture from the surface
-		//
-		DX8Wrapper::_Copy_DX8_Rects (curr_surface->Peek_D3D_Surface (), NULL, 0, texture_surface->Peek_D3D_Surface (), NULL);
-		REF_PTR_RELEASE (texture_surface);
-	
-		//
-		//	Assign this texture to any renderers that need it
-		//
-		for (int renderer_index = 0; renderer_index < surface_info.Renderers.Count (); renderer_index ++) {
-			Render2DClass *renderer = surface_info.Renderers[renderer_index];
-			renderer->Set_Texture (new_texture);
-		}
-
-		//
-		//	Release our hold on the objects
-		//
-		REF_PTR_RELEASE (new_texture);
-		REF_PTR_RELEASE (curr_surface);
-	}
-
-	//
-	//	Reset the list
-	//
-	if (PendingSurfaces.Count()>0) {
-		PendingSurfaces.Delete_All ();
-	}
-	return ;
-}
+// Retail Build_Textures is defined once in
+// Render2DSentenceClass_Build_TexturesMethodThunk.cpp.
 
 
 ////////////////////////////////////////////////////////////////////////////////////
