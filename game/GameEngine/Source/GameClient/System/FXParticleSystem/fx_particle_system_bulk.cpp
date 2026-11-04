@@ -565,9 +565,8 @@ extern "C" void __identifier("?parseBool@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *,
 extern "C" void __identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 // Gate debt _bfmeINIParseAsciiString: use the recorded INI static function directly.
 extern "C" void __identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
-// Gate debt _bfmeINIParseCoord3D: use the recorded INI static function directly.
-extern "C" void bfmeINIParseUnsignedInt(INI *, void *, void *, const void *);
-#pragma comment(linker, "/alternatename:_bfmeINIParseUnsignedInt=?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")
+// Gate debt _bfmeINIParseUnsignedInt: use the recorded INI static function directly.
+extern "C" void __identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 void j_00036615();
 // Zero comparisons read retail float 0.0f at VA 0x01075350.
 
@@ -8931,8 +8930,8 @@ void ParticleSystemTemplate::parse(INI *ini, void *data, void *store, const void
         { "SlavePosOffset", reinterpret_cast<ParseProc>(__identifier("?parseCoord3D@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x6c },
         { "PerParticleAttachedSystem", reinterpret_cast<ParseProc>(__identifier("?parseAsciiString@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x78 },
         { "Lifetime", reinterpret_cast<ParseProc>(j_00036615), 0, 0x14 },
-        { "SystemLifetime", reinterpret_cast<ParseProc>(bfmeINIParseUnsignedInt), 0, 0x20 },
-        { "SortLevel", reinterpret_cast<ParseProc>(bfmeINIParseUnsignedInt), 0, 0x24 },
+        { "SystemLifetime", reinterpret_cast<ParseProc>(__identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x20 },
+        { "SortLevel", reinterpret_cast<ParseProc>(__identifier("?parseUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")), 0, 0x24 },
         { "Size", reinterpret_cast<ParseProc>(j_00036615), 0, 0x28 },
         { "StartSizeRate", reinterpret_cast<ParseProc>(j_00036615), 0, 0x34 },
         { "BurstDelay", reinterpret_cast<ParseProc>(j_00036615), 0, 0x44 },
