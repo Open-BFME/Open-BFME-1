@@ -60604,3 +60604,4 @@ _g_01134280	0x01134280	0	solved	gate-debt: admitted into data_rows.csv via add_d
 ?MasterShaderList@@3PAPAPAVW3DShaderInterface@@A	0x012BAE40	0	blocked	gate-debt: add_data_match fails: TerrainShaderList has no retail address in ledgers t=1 model=gemini-3.8-flash-medium
 ?key012F4B80@@3VAsciiString@@A	0x012F4B80	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B80Global.cpp t=2 model=gemini-3.8-flash-medium
 ?key012F4B84@@3VAsciiString@@A	0x012F4B84	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B84Global.cpp t=2 model=gemini-3.8-flash-medium
+?key012F4B88@@3VAsciiString@@A	0x012F4B88	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py in Rva012F4B88Global.cpp t=8 model=muse-spark
