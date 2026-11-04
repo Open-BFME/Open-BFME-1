@@ -7,8 +7,10 @@
 
 class OathbreakersFadeAwayBehavior
 {
-public:
+protected:
 	virtual ~OathbreakersFadeAwayBehavior();
+private:
+	friend void forceOathbreakersFadeAwayBehaviorDeletingDestructor();
 };
 
 void forceOathbreakersFadeAwayBehaviorDeletingDestructor()

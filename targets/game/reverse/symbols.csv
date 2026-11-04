@@ -9151,7 +9151,7 @@ name,address,notes
 ??1OCLSpecialPower@@MAE@XZ,0x00022ABB,destructor ILT to 0x00262930
 ??1OCLUpdate@@MAE@XZ,0x000137C8,destructor ILT to 0x00298870
 ??1OathbreakerBody@@MAE@XZ,0x00010C67,destructor ILT to 0x00213F80;ilt-verified=T1-access(efp=4.89e-03)
-??1OathbreakersFadeAwayBehavior@@UAE@XZ,0x00038262,public complete destructor ILT called by scalar wrapper 0x00201CC0; matched constructor 0x00201BB0 installs dedicated vtable 0x010A5124
+??1OathbreakersFadeAwayBehavior@@MAE@XZ,0x00038262,protected complete destructor ILT called by scalar wrapper 0x00201CC0; matched constructor 0x00201BB0 installs dedicated vtable 0x010A5124
 ??1Object@@MAE@XZ,0x0000207C,vtable 0x00C9EE74 slots name Object; protected complete destructor called by wrapper 0x001D5CF0
 ??1ObjectCreationListMap@@QAE@XZ,0x0001D110,Open-BFME5 retail ObjectCreationList map destructor body
 ??1ObjectCreationUpgradeModuleData@@UAE@XZ,0x0000FD03,destructor ILT used by the ObjectCreationUpgradeModuleData scalar-deleting destructor
