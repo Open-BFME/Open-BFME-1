@@ -186,7 +186,11 @@ public:
     virtual void pad137();
     virtual void slot228(int);
 };
-extern Display006E2540 *g_012F7FE0;
+// Retail's global at 0x012F7FE0 is `BaseHeightMapRenderObjClass *TheTerrainRenderObject`
+// (game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp defines it).
+// Declare it under that exact spelling; the slot228-call view is cast in.
+class BaseHeightMapRenderObjClass;
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 class FXList;
 class Matrix3D;
 struct Coord3D {float x,y,z;};
@@ -298,6 +302,6 @@ void Rva006E2540::update() {
         fc4.x=value.x*factor;
         fc4.y=value.y*factor;
         fc4.z=value.z*factor;
-        if(g_012F1464->slot68()%10==0) g_012F7FE0->slot228(0);
+        if(g_012F1464->slot68()%10==0) ((Display006E2540 *)TheTerrainRenderObject)->slot228(0);
     }
 }

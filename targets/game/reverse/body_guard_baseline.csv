@@ -354,7 +354,6 @@ dir32,0x012F4ABC,?g_rva012F4ABC@@3PAURva0055A240Global@@A,"retail 0x012F4ABC is 
 dir32,0x012F7020,?nk@?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType@@XZ@4W43@A,"retail 0x012F7020 is already recorded as ?TheBeaconClientUpdatePool@?1??getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A; reference that name,"
 dir32,0x012F7024,??_B?1??getModuleNameKey@BeaconClientUpdate@@UBE?AW4NameKeyType@@XZ@51,"retail 0x012F7024 is already recorded as ?$S288@?1??getClassMemoryPool@BeaconClientUpdate@@CAPAVMemoryPool@@XZ@4IA; reference that name, not a new one"
 dir32,0x012F7078,?g_bfmeBoxYP@@3URegion2D@@A,"retail 0x012F7078 is already recorded as ?Rva012F7078Region@@3URegion2D@@A (+2 more); reference that name, not a new one"
-dir32,0x012F7FE0,?g_012F7FE0@@3PAVDisplay006E2540@@A,"retail 0x012F7FE0 is already recorded as ?TheBfmeGlobal_012f7fe0@@3PAVBfmeGlobal_012f7fe0@@A (+14 more); reference that name, not a new one"
 dir32,0x012F8058,?g_012F8058@@3PAVSink006E2540@@A,"retail 0x012F8058 is already recorded as ?Rva012F8058@@3PAVRva00712F60@@A (+10 more); reference that name, not a new one"
 dir32,0x012F8060,?m_3DInterfaceScene@Gen006EF850@@2PAVRTS3DInterfaceScene@@A,"retail 0x012F8060 is already recorded as ?Rva012F8060@@3PAVRva00711B00@@A (+1 more); reference that name, not a new one"
 dir32,0x012F9D08,?m_renderTexture@W3DShaderManager@@2PAUIDirect3DTexture8@@A,"retail 0x012F9D08 is already recorded as ?m_renderTexture@W3DShaderManager@@1PAUIDirect3DTexture8@@A (+2 more); reference that name, not a new one"
