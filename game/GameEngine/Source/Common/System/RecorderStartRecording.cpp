@@ -15,6 +15,15 @@ template <typename T> inline void StringBase<T>::concat(const StringBase<T> &s) 
 inline UnicodeString::UnicodeString() { *(void**)this = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) { ((StringBase<unsigned short>*)this)->set(*(const StringBase<unsigned short>*)&s); return *this; }
+// link queue #6 (?str@UnicodeString@@QBEPBGXZ, strings family): retail has one
+// body, the m_data ? m_data->data : L"" spelling other units already emit; the
+// canonical header's inline forwarder emits a non-retail COMDAT here even
+// though every call inlines. Route this TU's wide fetches through the
+// StringBase spelling so this object no longer defines the UnicodeString copy.
+static __forceinline const wchar_t *unicodeStr(const UnicodeString &s)
+{
+	return (const wchar_t *)((const StringBase<unsigned short> *)&s)->str();
+}
 
 class FileSystem { public: bool createDirectory(AsciiString path); };
 extern FileSystem *TheFileSystem;
@@ -119,14 +128,14 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
     for (int i=0;i<8;++i) fwrite(&b,1,1,m_file);
     UnicodeString replayName;
     replayName = TheGameText->fetch("GUI:LastReplay");
-    fwprintf(m_file,L"%ws",replayName.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(replayName)); fputwc(0,m_file);
     SYSTEMTIME systemTime;
     GetLocalTime(&systemTime); fwrite(&systemTime,sizeof(systemTime),1,m_file);
     UnicodeStringAL versionString=((BfmeVersionAL*)TheVersion)->bfmeVersionTextAL();
     UnicodeString versionTimeString=TheVersion->getUnicodeBuildTime();
     unsigned int versionNumber=TheVersion->getVersionNumber();
-    fwprintf(m_file,L"%ws",versionString.str()); fputwc(0,m_file);
-    fwprintf(m_file,L"%ws",versionTimeString.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(versionString)); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(versionTimeString)); fputwc(0,m_file);
     fwrite(&versionNumber,4,1,m_file);
     int value=Rva0009B4B0(TheWritableGlobalData->field0bd0,TheWritableGlobalData->field0bd0);
     fwrite(&value,4,1,m_file);
