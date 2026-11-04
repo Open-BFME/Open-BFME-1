@@ -22,4 +22,7 @@ public:
 
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
-Rva007D2360 g_rva013071D4Object;
+// 0x013071D4 is recorded (DIR32) as ?Rva00F071D4Target986B@@3PADA;
+// define the storage under that symbol.
+// Retire ?g_rva013071D4Object@@3VRva007D2360@@A
+extern "C" { Rva007D2360 __identifier("?Rva00F071D4Target986B@@3PADA"); }

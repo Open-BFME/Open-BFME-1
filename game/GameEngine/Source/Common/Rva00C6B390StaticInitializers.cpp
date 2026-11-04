@@ -172,4 +172,7 @@ extern "C" { Rva00C6B8A0Init __identifier("?TheBfmeObject_00C70080@@3VGen_00C700
 // the name its consumers bind; define the storage under that symbol.
 // Retire ?g_rva012F2570@@3URva00C6B900Init@@A
 extern "C" { Rva00C6B900Init __identifier("?TheBfmeObject_00C700B0@@3VGen_00C700B0Target@@A"); }
-Rva00C6B900Init g_rva012F2578;
+// 0x012F2578 is recorded (DIR32) as ?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva012F2578@@3URva00C6B900Init@@A
+extern "C" { Rva00C6B900Init __identifier("?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A"); }

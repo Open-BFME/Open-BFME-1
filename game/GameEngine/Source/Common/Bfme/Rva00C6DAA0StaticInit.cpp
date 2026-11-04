@@ -15,4 +15,7 @@ public:
 	~Rva00C6DAA0Init();
 };
 
-Rva00C6DAA0Init g_rva0130C0B0;
+// 0x0130C0B0 is recorded (DIR32) as ?TheBfmeObject_00C70E10@@3VGen_00C70E10Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_rva0130C0B0@@3VRva00C6DAA0Init@@A
+extern "C" { Rva00C6DAA0Init __identifier("?TheBfmeObject_00C70E10@@3VGen_00C70E10Target@@A"); }

@@ -9,7 +9,9 @@ public:
 // Retire ?g_bfmeRva01340C50Static@@3VRva00906340@@A: 0x01340C50 is recorded (DIR32) as
 // ?TheBfmeObject_00C70FD0@@3VGen_00C70FD0Target@@A.
 extern "C" Rva00906340 __identifier("?TheBfmeObject_00C70FD0@@3VGen_00C70FD0Target@@A");
-extern Rva00906340 g_bfmeRva01340EC0Static;
+// Retire ?g_bfmeRva01340EC0Static@@3VRva00906340@@A: 0x01340EC0 is recorded (DIR32) as
+// ?TheBfmeObject_00C71000@@3VGen_00C71000Target@@A.
+extern "C" Rva00906340 __identifier("?TheBfmeObject_00C71000@@3VGen_00C71000Target@@A");
 void bfmeForward_00C70FD0();
 void bfmeForward_00C71000();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
@@ -22,6 +24,6 @@ void bfmeRva00C6DD10Initialize()
 
 void bfmeRva00C6DD60Initialize()
 {
-    g_bfmeRva01340EC0Static.init();
+    __identifier("?TheBfmeObject_00C71000@@3VGen_00C71000Target@@A").init();
     atexit(bfmeForward_00C71000);
 }

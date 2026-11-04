@@ -7,6 +7,13 @@
 // _$E1; the ledger row names that COFF symbol via object-symbol=_$E1.
 #include "wwstring.h"
 
-StringClass g_bfmeRva01346718Str(0, false);
+// 0x01346718 is recorded (DIR32) as ?TheBfmeObject_00C712C0@@3VGen_00C712C0Target@@A,
+// the name its consumers bind; define the storage under that symbol.
+// Retire ?g_bfmeRva01346718Str@@3VStringClass@@A
+extern "C" { StringClass __identifier("?TheBfmeObject_00C712C0@@3VGen_00C712C0Target@@A")(0, false); }
+
 // Retail 0x00C6DFD0 initializes the StringClass global at 0x01346E74.
-StringClass g_bfmeRva01346E74Str(0, false);
+// 0x01346E74 is recorded (DIR32) as ?TheBfmeObject_009372E0@@3VGen_009372E0Target@@A;
+// define the storage under that symbol.
+// Retire ?g_bfmeRva01346E74Str@@3VStringClass@@A
+extern "C" { StringClass __identifier("?TheBfmeObject_009372E0@@3VGen_009372E0Target@@A")(0, false); }
