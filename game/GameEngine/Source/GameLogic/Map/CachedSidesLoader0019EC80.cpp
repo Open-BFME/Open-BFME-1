@@ -122,13 +122,13 @@ extern "C" int _bfmeVftXB[];
 // ?g_0109BFD4@@3PAHA: retail 0x0109BFD4 is ??_7BfmeParserBindingVE@@6B@
 extern "C" int __identifier("??_7BfmeParserBindingVE@@6B@")[];
 #define g_0109BFD4 __identifier("??_7BfmeParserBindingVE@@6B@")
-void j_0001579e();
+void bfmeChunkParserVE();
 void j_0004a755();
 void j_000283a3();
 class ParserBase0019EC80 {
 public:
  ParserBase0019EC80(DataChunkInput *file,const AsciiString &label,const AsciiString &parent) {
-   vtable_=_bfmeVftVE;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)j_0001579e,this);
+   vtable_=_bfmeVftVE;file_=file;token_=file->registerParser(label,parent,(CallbackBase0019EC80)bfmeChunkParserVE,this);
  }
  ~ParserBase0019EC80() {vtable_=_bfmeVftVE;((BfmeSubVE*)file_)->bfmeDropVE(token_);}
 protected:
