@@ -412,7 +412,9 @@ public: bool isBeyondRange(const Rva005A49E0Point *, const Rva005A49E0Point *) c
 extern "C" Rva005A49E0RangeTest *__identifier("?TheMouse@@3PAVMouse@@A");
 #define Rva00EF4C5C __identifier("?TheMouse@@3PAVMouse@@A")
 class Rva005B5440 { public: void clearFlags(); };
-extern Rva005B5440 *Rva00EF4C84;
+// Retire ?Rva00EF4C84@@3PAVRva005B5440@@A
+extern "C" Rva005B5440 *__identifier("?g_bfmeSingletonVVD@@3PAVBfmeOwnVVD@@A");
+#define Rva00EF4C84 __identifier("?g_bfmeSingletonVVD@@3PAVBfmeOwnVVD@@A")
 // Retail reads byte +0x60 of TheWritableGlobalData (0x012ED5C8), the BFME
 // mouse-button swap flag; no BFME witness names that member yet.
 class GlobalData;

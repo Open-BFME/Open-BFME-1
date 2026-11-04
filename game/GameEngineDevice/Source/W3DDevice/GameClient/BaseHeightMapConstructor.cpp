@@ -54,10 +54,16 @@ public:
 struct WaterTransparency006CFAE0 : Overridable {
  unsigned field08; float m_transparentWaterDepth, m_minWaterOpacity;
 };
-extern WaterTransparency006CFAE0 *water012F18F0;
+// Retire ?water012F18F0@@3PAUWaterTransparency006CFAE0@@A
+class WaterTransparencySetting;
+template <class T> class OVERRIDE {
+public:
+ const WaterTransparency006CFAE0 *m_value;
+};
+extern OVERRIDE<WaterTransparencySetting> TheWaterTransparency;
 static const WaterTransparency006CFAE0 *waterSetting() {
- if(!water012F18F0) return 0;
- return (const WaterTransparency006CFAE0*)water012F18F0->getFinalOverride();
+ if(!TheWaterTransparency.m_value) return 0;
+ return (const WaterTransparency006CFAE0*)TheWaterTransparency.m_value->getFinalOverride();
 }
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;

@@ -133,7 +133,9 @@ class Rva00336C20FieldAddress
 public:
 	char *get();
 };
-extern Rva00336C20FieldAddress *TheScriptEngine;
+// Retire ?TheScriptEngine@@3PAVRva00336C20FieldAddress@@A
+extern "C" Rva00336C20FieldAddress *__identifier("?TheScriptEngine@@3PAVScriptEngine@@A");
+#define TheScriptEngine __identifier("?TheScriptEngine@@3PAVScriptEngine@@A")
 static inline const AttackPriorityInfo *getDefaultAttackInfo()
 {
 	return (const AttackPriorityInfo *)TheScriptEngine->get();

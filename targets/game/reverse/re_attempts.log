@@ -60459,3 +60459,5 @@ ___defaultmatherr	0x012DBDE0	0	blocked	gate-debt: absent owner in data_rows and 
 ??0BFMERetailAsciiString@@QAE@XZ	0x00417BD9	0	blocked	gate-debt: absent owner in data_rows and no source spells mangled symbol, pass-test fails locate_source t=1 model=gemini-3.8-flash-medium
 ?Names00377AF0@@3QBQBDB	0x012B4180	0	blocked	gate-debt: absent owner in data_rows and no source spells mangled symbol, pass-test fails locate_source t=1 model=gemini-3.8-flash-medium
 ?g_bfmeBoxYP@@3URegion2D@@A	0x012F7078	0	blocked	gate-debt: name_regression refuses renaming descriptive g_bfmeBoxYP to recorded placeholder Rva012F7078Region t=2 model=gemini-3.8-flash-medium
+??0?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ	0x00443649	0	blocked	gate-debt: no source spells mangled STL symbol; locate_source failed closed t=2 model=gemini-3.8-flash-medium
+??_7PartitionFilterRepulsor@@6B@	0x01095704	0	blocked	gate-debt: compiler-generated vtable not spelled in source; requires body rewrite or class renaming t=2 model=gemini-3.8-flash-medium

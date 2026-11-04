@@ -163,11 +163,14 @@ extern GameLogic *TheGameLogic;
 static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logic *)TheGameLogic; }
 // Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
 // GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
+// Retire ?g_bfmeStateDF@@3PAURva006174D0State@@A
 class Rva006092D0State;
 extern Rva006092D0State *g_rva012F7048LivingWorld;
 #define g_bfmeStateDF ( *(Rva006174D0State **)&g_rva012F7048LivingWorld )
+// Retire ?TheLivingWorldLogic@@3PAVRva003BF540@@A
 class Rva003BF540;
-extern Rva003BF540 *TheLivingWorldLogic;
+extern "C" Rva003BF540 *__identifier("?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A");
+#define TheLivingWorldLogic __identifier("?TheLivingWorldLogic@@3PAVLivingWorldLogic@@A")
 class WindowManager;
 // Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
 // (data_rows.csv, GUI/WindowManager.cpp); g_theWindowManager was only a pin.
