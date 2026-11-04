@@ -21,6 +21,22 @@ demand. Bit-field reads and writes are scored as such, and mask arithmetic is
 not. This has not been tested elsewhere. Source:
 `game/GameEngine/Source/GameLogic/AI/PathfindCellReleaseLists.cpp`.
 
+## Argument temporaries: ECX/EDX order and slot reuse (2026-11-04)
+
+`W3DShaderManagerStartRenderToTextureShim::start` (0x007171F0, 445 B,
+`/DNDEBUG /MD`). Retail loads the opacity global into EDX and takes the blit's
+`(1,1)` scale address with `lea ecx,[esp+4]`. Filling a union slot before the
+call (alpha first or stores first, about 30 spellings) always swapped the two
+registers. Building the scale as a temporary in the argument list fixed the
+registers (`ViewportScale(1.0f, 1.0f)` with an `operator Coord2D *()`,
+because the pinned callee takes `Coord2D *`). The temporary then landed 8
+bytes too high. Putting the earlier `ShaderClass shader` local (passed by
+reference to `Set_Shader`) in its own `{ }` block let the temporary reuse the
+shader's slot at -0x14. Passing the opacity through an inline getter call
+inside the `Clear` arguments keeps retail's stack copy of the float, which a
+named local loses. Source:
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManagerStartRenderToTexture.cpp`.
+
 ## A list-head register exchange fixed by a named count local (2026-11-04)
 
 `Rva00694570::run` (0x00694570, 315 B, MSVC 7.1 `/O2 /Ob2 /EHsc`, STLport
