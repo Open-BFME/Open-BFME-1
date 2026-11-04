@@ -41,6 +41,7 @@ class WW3D { public: static void *Get_Window(); };
 struct IDirect3DDevice8;
 class DX8Wrapper { private: static IDirect3DDevice8 *D3DDevice; public: static IDirect3DDevice8 *_Get_D3D_Device8(){return D3DDevice;} };
 // Existing owner of the retail DX8WebBrowser::hWnd cell at VA 0x0134B27C.
+// Retire ?hWnd@DX8WebBrowser@@2PAUHWND__@@A
 extern HWND g_bfmeObjECFFlag27C;
 class DX8WebBrowser {
 public:
