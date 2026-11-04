@@ -60424,3 +60424,12 @@ ___defaultmatherr	0x012DBDE0	0	blocked	gate-debt: absent owner in data_rows and 
 ?bfmeRva012B5198FirstCopy@@3URvaTriple@@A	0x012B5198	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
 ?theTooltipString@@3VAsciiString@@A	0x012F2578	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
 ?g_bfmeCaps1340578@@3PAUBfmeVertexMaterialCaps@@A	0x01340578	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+?g_rva0130C0BC@@3VRva00C6DB30Init@@A	0x0130C0BC	0	blocked	gate-debt: absent data owner in data_rows and no source spells decorated symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+?j_0002fee6@@YAXXZ	0x0042FEE6	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+??_7Object@@6BRva00C9EE28Base@@@	0x0109EE28	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+??_7CashHackSpecialPowerModuleData@@6B@	0x010B3A08	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+??_7PartTheHeavensUpdateModuleData@@6B@	0x010C08A8	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+??_7ProneUpdate@@6BObjectModule@@@	0x010C13F4	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+?g_0111182C@@3QBDB	0x0111182C	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+?g_rva012ED4EC@@3VAsciiString@@A	0x012ED4EC	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
+?g_bfmeStateDF@@3PAURva006174D0State@@A	0x012F7048	0	blocked	gate-debt: absent owner in data_rows and no source spells symbol, locate_source fails closed t=1 model=gemini-3.8-flash-medium
