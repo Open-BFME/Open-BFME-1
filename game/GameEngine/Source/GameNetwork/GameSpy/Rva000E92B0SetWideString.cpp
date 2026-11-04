@@ -27,14 +27,21 @@ private:
 	unsigned short *m_data;
 };
 
+// ScoreKeeper (declared in game/GameEngine/Source/Common/RTS/ScoreKeeperScoring.cpp):
+// retail calls its calculateScore/getVictoryType ILTs here with this same
+// receiver, recomputing the ints at +0x2EC/+0x2F0.
+class ScoreKeeper
+{
+public:
+	Int calculateScore();
+	Int getVictoryType();
+};
+
 class Rva000E92B0Owner
 {
 public:
 	void setWideString(UnicodeString text);
 private:
-	Int computeFirst();
-	Int computeSecond();
-
 	unsigned char m_unmodelled_000[0x2E8];
 	UnicodeString m_text;		// +0x2E8
 	Int m_first;				// +0x2EC
@@ -44,6 +51,7 @@ private:
 void Rva000E92B0Owner::setWideString(UnicodeString text)
 {
 	m_text = text;
-	m_first = computeFirst();
-	m_second = computeSecond();
+	ScoreKeeper *keeper = reinterpret_cast<ScoreKeeper *>(this);
+	m_first = keeper->calculateScore();
+	m_second = keeper->getVictoryType();
 }
