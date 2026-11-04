@@ -16,7 +16,8 @@ class Object;
 class Player;
 class Module;
 class PlayerList { public: unsigned char isLocalAlliedWith(Object *); };
-extern PlayerList *g_mgr12ED748;
+// Retail VA0x012ED748 is the matched PlayerList.cpp datum.
+extern PlayerList *ThePlayerList;
 
 class Object;
 #define OBJECT_TU_MEMBERS friend class Rva00594AD0; protected: Module *findModule(NameKeyType) const; public: Player *getControllingPlayer() const;
@@ -132,7 +133,7 @@ void Rva00594AD0::method(Object *object)
 	Player *player = object->getControllingPlayer();
 	if (module && player)
 	{
-		unsigned char allied = g_mgr12ED748->isLocalAlliedWith(object);
+		unsigned char allied = ThePlayerList->isLocalAlliedWith(object);
 		if (allied)
 		{
 			if (!m_visible)
