@@ -33,7 +33,17 @@
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
 
 #define BFME_STLP_NODE_ALLOC
+// Keep the native out-of-line Overridable provider.  This Zero Hour
+// inline uses the pool deleteInstance path instead of retail global delete.
+// Dispatch the declaration's void separately from its recursive empty call.
+#define deleteOverrides_void deleteOverrides(void); Overridable *zhInlineDeleteOverrides(void)
+#define deleteOverrides_ deleteOverrides()
+#define deleteOverrides(a) deleteOverrides_##a
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#include "Common/Overridable.h"
+#undef deleteOverrides
+#undef deleteOverrides_
+#undef deleteOverrides_void
 #include "Common/UnicodeString.h"
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
