@@ -6,7 +6,8 @@ class WorldHeightMap;
 struct Rva0072E150Region { int loX, loY, hiX, hiY; };
 class W3DTerrainBackground {
 public:
-    void rva0072D210(const Rva0072E150Region & a0,WorldHeightMap * a1,bool a2,bool a3) {
+    // Inline route only: the retail body is owned by the existing dump row.
+    __declspec(dllimport) __forceinline void rva0072D210(const Rva0072E150Region & a0,WorldHeightMap * a1,bool a2,bool a3) {
      // retail body is still the gen-dump row ?d_0072d210@@YAXXZ (no C++ row yet); call it by that defined name
      union { void (__cdecl *symbol)(); void (W3DTerrainBackground::*member)(const Rva0072E150Region &,WorldHeightMap *,bool,bool); } c;
      c.symbol = &__identifier("?d_0072d210@@YAXXZ");
