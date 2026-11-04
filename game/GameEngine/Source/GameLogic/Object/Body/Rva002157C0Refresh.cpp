@@ -15,6 +15,20 @@
 
 #include "ascii_string.h"
 
+// Retail AsciiString::compare shape (repe cmpsb over the shared prefix, then
+// the length difference), spelled as the StringBase<char> specialization so
+// this TU emits no AsciiString::compare COMDAT of its own. Same spelling as
+// game/GameEngine/Source/GameNetwork/Rva00692570KeyLess.cpp.
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class Matrix3D;
 
 class Thing
@@ -82,7 +96,7 @@ void Rva002157C0Owner::refresh()
 		for ( ; entry; entry = entry->next )
 		{
 			name = entry->field84;
-			if ( name.compare( md->field5c ) == 0 )
+			if ( name.StringBase<char>::compare( md->field5c ) == 0 )
 			{
 				obj->rva00132200( (const Matrix3D *)&entry->m_gap00[ 8 ] );
 				int value = entry->field74;

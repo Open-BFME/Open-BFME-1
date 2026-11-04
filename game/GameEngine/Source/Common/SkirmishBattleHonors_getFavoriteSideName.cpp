@@ -8,6 +8,20 @@ typedef bool Bool;
 
 #include "ascii_string.h"
 
+// Retail AsciiString::compare shape (repe cmpsb over the shared prefix, then
+// the length difference), spelled as the StringBase<char> specialization so
+// this TU emits no AsciiString::compare COMDAT of its own. Same spelling as
+// game/GameEngine/Source/GameNetwork/Rva00692570KeyLess.cpp.
+template <> inline int StringBase<char>::compare(const StringBase<char> &str) const
+{
+	int otherLength = str.m_data ? str.m_data->length : 0;
+	const char *otherData = str.m_data ? str.m_data->data : (const char *)"";
+	int length = m_data ? m_data->length : 0;
+	const char *data = m_data ? m_data->data : (const char *)"";
+	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
+	return result ? result : length - otherLength;
+}
+
 class UnicodeString : private StringBase<unsigned short>
 {
 public:
@@ -60,7 +74,7 @@ extern GameTextInterface *TheGameText;
 UnicodeString SkirmishBattleHonors::getFavoriteSideName(void)
 {
 	AsciiString favoriteSide = getAsciiString("FavoriteSide", AsciiString::TheEmptyString);
-	if (favoriteSide.compare(AsciiString::TheEmptyString) == 0)
+	if (favoriteSide.StringBase<char>::compare(AsciiString::TheEmptyString) == 0)
 		return UnicodeString::TheEmptyString;
 
 	{
