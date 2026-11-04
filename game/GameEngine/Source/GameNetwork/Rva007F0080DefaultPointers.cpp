@@ -1,5 +1,5 @@
-void g_00BEFFE0();
-void g_00BEFFF0();
+extern unsigned char g_Va00BEFFE0;
+extern unsigned char g_Va00BEFFF0;
 
 extern void *g_0112A5C4[];
 
@@ -17,6 +17,6 @@ private:
 Rva007F0080Owner::Rva007F0080Owner(void *first, void *second)
 {
     m_vtable = g_0112A5C4;
-    m_first = first ? first : reinterpret_cast<void *>(g_00BEFFE0);
-    m_second = second ? second : reinterpret_cast<void *>(g_00BEFFF0);
+    m_first = first ? first : reinterpret_cast<void *>(&g_Va00BEFFE0);
+    m_second = second ? second : reinterpret_cast<void *>(&g_Va00BEFFF0);
 }
