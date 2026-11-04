@@ -367,7 +367,6 @@ dir32,0x012F8058,?g_012F8058@@3PAVSink006E2540@@A,"retail 0x012F8058 is already 
 dir32,0x012F8060,?m_3DInterfaceScene@Gen006EF850@@2PAVRTS3DInterfaceScene@@A,"retail 0x012F8060 is already recorded as ?Rva012F8060@@3PAVRva00711B00@@A (+1 more); reference that name, not a new one"
 dir32,0x012F9D08,?m_renderTexture@W3DShaderManager@@2PAUIDirect3DTexture8@@A,"retail 0x012F9D08 is already recorded as ?m_renderTexture@W3DShaderManager@@1PAUIDirect3DTexture8@@A (+2 more); reference that name, not a new one"
 dir32,0x012F9D18,??m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A@@3PAUShaderComResource@@A,"retail 0x012F9D18 is already recorded as ?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A (+1 more); reference that name, not a new one"
-dir32,0x01306978,?g_rva01306978Object@@3VRvaList@@A,"retail 0x01306978 is already recorded as ?TheBfmeObject_00C70AB0@@3VGen_00C70AB0Target@@A (+2 more); reference that name, not a new one"
 dir32,0x01306E04,?shadowDecalVertexBufferD3D@@3PAUShadowDecalBuffer007B14A0@@A,"nothing in the ledger owns 0x01306E04. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01306E08,?shadowDecalIndexBufferD3D@@3PAUShadowDecalBuffer007B14A0@@A,"nothing in the ledger owns 0x01306E08. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01306EEC,?TheW3DShadowManager@@3PAUW3DShadowManager@@A,"retail 0x01306EEC is already recorded as ?R2Ptr01306EEC@@3PAVGen0003AC38@@A (+10 more); reference that name, not a new one"
