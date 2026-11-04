@@ -89,7 +89,12 @@ bool BfmeAptScreenLanLobby::bfmeMapChanged(
 		return false;
 
 	AsciiString lowerMap = *mapName;
-	lowerMap.toLower();
+	// link queue #39 (?toLower@AsciiString@@QAEXXZ, strings family): retail
+	// keeps the StringBase<char>::toLower body at 0x00887DA0 (matched in
+	// StringBaseCaseOps.cpp); the AsciiString spelling is only a pin there.
+	// The header forwarder already inlines to that call, so spell it
+	// explicitly and emit no AsciiString copy of our own.
+	((StringBase<char> *)&lowerMap)->toLower();
 	game->setMapForwarder(lowerMap);
 	const MapMetaData *map = TheMapCache->findMap(lowerMap);
 	if (map)
