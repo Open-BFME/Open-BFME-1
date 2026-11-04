@@ -88,7 +88,8 @@ extern "C" AsciiString __identifier("?TheBfmeObject_00C700D0@@3VGen_00C700D0Targ
 #define theTooltipString __identifier("?TheBfmeObject_00C700D0@@3VGen_00C700D0Target@@A")
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern FunctionLexicon *TheFunctionLexicon;
-extern GameWinTooltipFunc tooltipFunc;
+// retail .bss VA 0x012F2564 (ZH GameWindowManagerScript.cpp: static tooltipFunc)
+GameWinTooltipFunc tooltipFunc = 0;
 
 // ?parseTooltipCallback@@YA_NPADPAVWinInstanceData@@0PAX@Z
 Bool parseTooltipCallback(char *token, WinInstanceData *instData, char *buffer, void *data)

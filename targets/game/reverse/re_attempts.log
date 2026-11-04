@@ -60597,3 +60597,4 @@ _g_01134280	0x01134280	0	solved	gate-debt: admitted into data_rows.csv via add_d
 ?g_rva013073C0Object@@3VRva007DCA80@@A	0x013073C0	0	solved	gate-debt: defined under recorded ?TheBfmeObject_00C70BB0@@3VGen_00C70BB0Target@@A in Rva00C6C730Init.cpp t=2 model=gemini-3.8-flash-medium
 ?g_rva0130A45CObject@@3VCAtlWinModule@ATL@@A	0x0130A45C	0	solved	gate-debt: defined under recorded ?TheBfmeObject_00C70C00@@3VGen_00C70C00Target@@A in Rva00C6C770Init.cpp t=2 model=gemini-3.8-flash-medium
 ?_DefaultFileFactory@@3VSimpleFileFactoryClass@@A	0x0134ECF0	0	solved	gate-debt: defined under recorded ?TheBfmeObject_00C71550@@3VGen_00C71550Target@@A in ffactory.cpp t=2 model=gemini-3.8-flash-medium
+?tooltipFunc@@3P6AXPAVGameWindow@@PAVWinInstanceData@@I@ZA	0x012F2564	0	solved	gate-debt: admitted into data_rows.csv via add_data_match.py and defined in WindowFieldParsersBfme.cpp t=2 model=gemini-3.8-flash-medium
