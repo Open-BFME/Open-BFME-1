@@ -1,12 +1,7 @@
 // ?bfmeConsiderEZ@BfmeHostEZ@@QAEXPAVBfmeNodeEZ@@PBVBfmeVec2EZ@@@Z
 // Retail RVA 0x001A3280, 167 bytes.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum ObjectID
 {

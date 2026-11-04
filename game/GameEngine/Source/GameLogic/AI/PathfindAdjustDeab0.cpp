@@ -12,7 +12,7 @@ struct PathfindMovementProfile;
 typedef int Int;
 typedef bool Bool;
 
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
 

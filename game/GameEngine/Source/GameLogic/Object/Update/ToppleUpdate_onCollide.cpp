@@ -16,12 +16,7 @@ typedef unsigned int UnsignedInt;
 
 extern const Real g_rva01075350;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object
 {

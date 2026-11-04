@@ -12,12 +12,7 @@ typedef float Real;
 static __forceinline void normalizePathCoord(Coord2D &p){float length=(float)sqrt(p.x*p.x+p.y*p.y);if(length!=0.0f){p.x/=length;p.y/=length;}}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathNode

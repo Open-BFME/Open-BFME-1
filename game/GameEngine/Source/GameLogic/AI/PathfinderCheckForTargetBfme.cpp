@@ -8,7 +8,7 @@ enum PathfindLayerEnum { LAYER_GROUND = 1 };
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-struct Coord3D { float x; float y; float z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Object { };
 class Weapon
 {

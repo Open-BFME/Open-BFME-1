@@ -1,10 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // Convert 0x0026D820: GameLogic findObjectByID + Coord3D + this-adj -8.
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object
 {
