@@ -1,5 +1,60 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## One-bit bit-fields move a loop count from EBX to EBP (2026-11-04)
+
+The two 146-byte PathfindCellInfo list walks at 0x003F6F60 and 0x003F7020
+(MSVC 7.1 `/O2 /DNDEBUG /MD /EHsc`) were stuck at 5 bytes: the walk count
+sat in EBX where retail keeps it in EBP and never touches EBX. More than 60
+spellings and 15 flag sets had no effect, including loop forms, count types,
+helper visibility and byte-typed locals. The fix was the record's type, not
+the walk. Declare its +0x24 flags as one-bit bit-fields
+(`unsigned int lo:3; unsigned int m_open:1; unsigned int m_closed:1; ...`),
+then write the clear as `cur->m_closed = 0` and the test as
+`!info->m_open && !info->m_closed`. The instruction bytes are the same as the
+`&= ~0x10` and `& 0x18` mask forms (`and ecx,0xffffffef`,
+`test byte ptr [ecx+0x24],0x18`), and the count then lands in EBP. A second
+change put the prologue in order: test the `void *` parameter before casting
+it (`if (p == 0) return 0; T *list = (T *)p;`). That gives retail's
+`push edi; mov edi,[esp+8]` where the cast-first form loads EAX. Measured
+effect only. The likely cause is that the allocator ranks EBX by byte-register
+demand. Bit-field reads and writes are scored as such, and mask arithmetic is
+not. This has not been tested elsewhere. Source:
+`game/GameEngine/Source/GameLogic/AI/PathfindCellReleaseLists.cpp`.
+
+## Argument temporaries: ECX/EDX order and slot reuse (2026-11-04)
+
+`W3DShaderManagerStartRenderToTextureShim::start` (0x007171F0, 445 B,
+`/DNDEBUG /MD`). Retail loads the opacity global into EDX and takes the blit's
+`(1,1)` scale address with `lea ecx,[esp+4]`. Filling a union slot before the
+call (alpha first or stores first, about 30 spellings) always swapped the two
+registers. Building the scale as a temporary in the argument list fixed the
+registers (`ViewportScale(1.0f, 1.0f)` with an `operator Coord2D *()`,
+because the pinned callee takes `Coord2D *`). The temporary then landed 8
+bytes too high. Putting the earlier `ShaderClass shader` local (passed by
+reference to `Set_Shader`) in its own `{ }` block let the temporary reuse the
+shader's slot at -0x14. Passing the opacity through an inline getter call
+inside the `Clear` arguments keeps retail's stack copy of the float, which a
+named local loses. Source:
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManagerStartRenderToTexture.cpp`.
+
+## A list-head register exchange fixed by a named count local (2026-11-04)
+
+`Rva00694570::run` (0x00694570, 315 B, MSVC 7.1 `/O2 /Ob2 /EHsc`, STLport
+node allocator) takes the first entry of a `list<T*>`. Retail loads the
+sentinel into ECX and the first node into EAX
+(`mov ecx,[edi]; mov eax,[ecx]; cmp eax,ecx; ... mov esi,[eax+8]`). With
+`it != end()`, `end() != it` or `!empty()`, VC7.1 loads the sentinel into EAX
+every time, which leaves 3 or 4 bytes wrong. More than 40 spellings across
+sessions did not change this. The fix was a later statement: read the entry's
+use count into a named local before testing it
+(`int count = selected->m_count; if (count == 0) ...` instead of
+`if (!selected->m_count)`), with `it = begin(); if (it != end())`. The result
+was exact. Neither `volatile` nor `register` is needed. Measured effect: the
+named local moves the allocator's choice for the iterator's node load several
+instructions earlier. The cause is not known. The spelling was carried from
+Open-BFME-2 `AudioFileCacheLoader.cpp` (`rva000A8437`). Source:
+`game/GameEngineDevice/Source/MilesAudioDevice/Rva00694570AudioWorkerRun.cpp`.
+
 ## Head-tested found loop and an uncached element address (2026-11-02)
 
 `Rva0061A0F0Owner::rva0061A0F0` (0x0061A0F0, 213 B, MSVC 7.1 `/DNDEBUG /MD
@@ -3543,3 +3598,57 @@ name (`Rva001EE620`) so the compiler round still emits it. Sources:
 game/GameEngine/Source/GameLogic/Object/Upgrade/UpgradeModuleConstructor.cpp,
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior_ctor_Thunk.cpp
 (602b32f945, bb661d7a33).
+
+## Empty overflow tag aliases a live local; by-value name keeps EH states apart (2026-11-04)
+
+0x0036AA80 (`AttributeModifierPoolUpdate::xfer`, 582 B,
+game/GameEngine/Source/GameLogic/Object/Update/AttributeModifierPoolUpdate_xfer.cpp,
+VC7.1 `/MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`, real STLport
+`<vector>` included). Three measured effects on this body only:
+
+- Retail passes push_back's `__false_type` tag at the load count's address,
+  which is the dead `xfer` argument home, and never stores to it. A real
+  `_IsPODType()` temporary (or a named uninitialised tag anywhere) took that
+  home itself, pushed the count into the frame and grew `sub esp` from 0x2C
+  to 0x30 (54 bytes). `/FAsc` showed `$T = 8` beside the save-branch count.
+  `reinterpret_cast<const __false_type &>(count)` (the spelling already used
+  in Rva003A5A10Xfer.cpp) restores the 0x2C frame and every slot.
+- A record constructor taking `AsciiString` BY VALUE, inlined, gives retail's
+  EH sequence state 0 (name temporary) -> -1 -> 1 (record) with dword state
+  stores; a `const AsciiString &` constructor keeps the temporary alive beside
+  the record (byte stores, different frame). The matched sibling
+  applyAttributeModifier (0x0036A570) uses the same by-value constructor.
+- With stand-in `_STL::vector` declarations and no `<vector>` the identical
+  function body kept 12 bytes in three lea/push register choices (+0x59 and
+  +0xBD: vtable EDX/address EAX vs retail EAX/ECX; +0x8E: ECX vs EDX). With
+  real STLport included, `public_vector` exposing `_M_finish`,
+  `_M_end_of_storage` and `_M_insert_overflow`, and an undefined explicit
+  specialisation keeping the 16-byte `erase` out of line, all three match.
+  Not yet tested on the other lea/push-temp family rows
+  (targets/game/reverse/attempt_support/20261031-lea-push-temp-register-family.md);
+  0x0043A3B0's bank already includes real `<list>` and keeps its residue.
+
+## A same-TU callee definition turns an index scan into an induction pointer (2026-11-04)
+
+0x003B9200 (`Rva003B9200Owner::rva003B9200`, 79 B,
+game/GameEngine/Source/Common/Rva003B9100Contains.cpp, VC7.1 `/DNDEBUG /MD
+/EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`, real STLport
+`<vector>`). Retail walks `vector<AsciiString>` at +0x0C with an index in EDI
+and an EBX element pointer (`mov ebx,[esi+0xc]` once, `add ebx,4` per pass)
+while re-deriving the count from both pointers each pass, and passes each
+element to the out-of-line `Rva003B9100::contains` (0x003B9100).
+
+- Measured: `for (unsigned i = 0; i < m_vec.size(); ++i) if
+  (other->contains(m_vec[i])) return true;` compiles to 72 B / 67 diffs
+  (begin re-read per pass, no induction pointer) when `contains` is only
+  declared, and to the exact 79 B when the TU also DEFINES `contains`. Source
+  order of the two definitions does not matter; removing the definition alone
+  reverts to 72 B.
+- Hypothesis (unverified): VC7.1 uses per-TU information about the already
+  compiled callee (it writes no memory), so `_M_start` is loop-invariant and
+  strength-reduced.
+- Earlier raw two-pointer spellings (`const T *p = m_begin; ... ++p`) reached
+  79 B but kept 11 bytes of EBX/EDI swap; a hoisted `names = m_begin;
+  names[i]` local gave 4 bytes of load-order residue. Neither is needed once
+  the callee body is visible. For a residue of this kind, land the body in the
+  callee's home TU before trying register spellings.

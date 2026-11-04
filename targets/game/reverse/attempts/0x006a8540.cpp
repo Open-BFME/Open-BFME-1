@@ -1,5 +1,5 @@
 // ?pauseAudio@MilesAudioManager@@UAEXW4AudioAffect@@HH@Z
-// partial score=0.48826 date=2026-09-28
+// partial score=0.7312 date=2026-11-04
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Retail 006A8540 pauseAudio: vtable 0111C0C0 slot +2C via 000194B1.
@@ -280,8 +280,7 @@ void MilesAudioManager::pauseAudio(AudioAffect which, int affectMask, int clearS
             (which & playing->m_audioEventRTS->getSoundClass())) {
             if (which & 0x20) playing->m_flag3a = true;
             else playing->m_flag39 = true;
-            bool pause = playing->isPaused006A8540();
-            AIL_pause_stream(playing->m_milesHandle, pause);
+            AIL_pause_stream(playing->m_milesHandle, playing->isPaused006A8540());
         }
     }
     if (which & 0x10) {

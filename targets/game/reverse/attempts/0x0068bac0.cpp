@@ -1,9 +1,13 @@
-// ?Rva0068BAC0@LANAPI@@QAEXPAULANMessage@@PAUBfmeNetAddress@@_N@Z
-// partial score=0.58 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
-// Reconstructed opaque LANAPI-family body at retail 0x0068BAC0.
-
-#include "StringInline.h"
+// ?handleRequestGameLeave@LANAPI@@IAEXPAULANMessage@@ABUIPAddr@@_N@Z
+// partial score=0.3754 date=2026-11-04
+// ?handleRequestGameLeave@LANAPI@@IAEXPAULANMessage@@ABUIPAddr@@_N@Z
+// partial date=2026-11-04 model=claude-opus-5-5
+// cl: /DNDEBUG /MD /EHsc
+//
+// Fresh rewrite from the retail stream (ZH LANAPIhandlers.cpp twin on the BFME
+// ABI; the name is the matched LANAPI::update caller's pin at 0x0068BAC0).
+// 999/999 bytes, shape 0.974, 10 structural differences; see
+// targets/game/reverse/attempt_support/0068bac0-handlerequestgameleave-20261104.md
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -13,16 +17,103 @@ typedef unsigned short WideChar;
 typedef bool Bool;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
+extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const WideChar *text);
 
-struct BfmeNetAddress
+extern const char g_bfmeEmptyAscii[];
+extern const WideChar BFMEEmptyUnicodeString;
+
+template <typename T> class StringBase
 {
+	friend class AsciiString;
+	friend class UnicodeString;
+
+public:
+	void set(const StringBase<T> &other);
+
+private:
+	struct Header
+	{
+		int m_refCount;
+		unsigned short m_length;
+		unsigned short m_capacity;
+		T m_text[1];
+	};
+
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &other);
+	void releaseBuffer();
+
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString() { releaseBuffer(); }
+
+	const char *str() const { return m_data ? m_data->m_text : g_bfmeEmptyAscii; }
+};
+
+class UnicodeString : private StringBase<WideChar>
+{
+public:
+	static UnicodeString TheEmptyString;
+
+	UnicodeString() : StringBase<WideChar>() {}
+	UnicodeString(const WideChar *text) : StringBase<WideChar>(text) {}
+	UnicodeString(const UnicodeString &other) : StringBase<WideChar>(other) {}
+	~UnicodeString() { releaseBuffer(); }
+
+	UnicodeString &operator=(const UnicodeString &other)
+	{
+		set(other);
+		return *this;
+	}
+
+	const WideChar *str() const { return m_data ? m_data->m_text : &BFMEEmptyUnicodeString; }
+	Int getLength() const { return m_data ? m_data->m_length : 0; }
+
+	void translate(const AsciiString &text);
+
+	__forceinline Int compare(const WideChar *text) const
+	{
+		Int otherLength = text ? wcslen(text) : 0;
+		Int myLength = getLength();
+		const WideChar *mine = str();
+		Int count = myLength < otherLength ? myLength : otherLength;
+		while (count > 0)
+		{
+			if (*mine != *text)
+			{
+				Int diff = *mine - *text;
+				if (diff)
+					return diff;
+				break;
+			}
+			++mine;
+			++text;
+			--count;
+		}
+		return myLength - otherLength;
+	}
+};
+
+struct IPAddr
+{
+	IPAddr() : m_ip(0), m_port(0) {}
+
 	UnsignedInt m_ip;
 	UnsignedShort m_port;
 };
 
 struct GameSlotConnectInfo
 {
-	Int m_nat;
+	GameSlotConnectInfo() : m_ip(0), m_port(0) {}
+
+	UnsignedInt m_ip;
 	UnsignedShort m_port;
 };
 
@@ -40,11 +131,15 @@ enum SlotState
 struct LANMessage
 {
 	Int LANMessageType;
-	UnsignedByte m_header[0x22 - 4];
+	WideChar name[13];					// +0x04
+	char userName[2];
+	char hostName[2];
 	union
 	{
-		WideChar name[13];
-		WideChar m_gameName[17];
+		struct
+		{
+			WideChar gameName[17];			// +0x22
+		} GameToLeave;
 	};
 };
 #pragma pack(pop)
@@ -52,36 +147,31 @@ struct LANMessage
 class LANPlayer
 {
 public:
-	~LANPlayer();
-	void setIP(BfmeNetAddress *address)
-	{
-		m_ip = address->m_ip;
-		m_addressPadding = *(UnsignedInt *)((UnsignedByte *)address + 4);
-	}
-	void setName(UnicodeString name);
-	void setHost(const AsciiString &name);
-	void setLogin(const AsciiString &name);
-	void setLastHeard(UnsignedInt time) { m_lastHeard = time; }
+	LANPlayer() : m_lastHeard(0), m_next(0) {}
 
-	UnicodeString m_name;
-	UnicodeString m_login;
-	UnicodeString m_host;
-	UnsignedInt m_lastHeard;
-	LANPlayer *m_next;
-	UnsignedInt m_ip;
-	UnsignedInt m_addressPadding;
+	void setName(const UnicodeString &name) { m_name = name; }
+	void setLogin(const AsciiString &name) { m_login.translate(name); }
+	void setHost(const AsciiString &name) { m_host.translate(name); }
+	void setLastHeard(UnsignedInt lastHeard) { m_lastHeard = lastHeard; }
+	void setIP(const IPAddr &address) { m_address = address; }
+
+	UnicodeString m_name;					// +0x00
+	UnicodeString m_login;					// +0x04
+	UnicodeString m_host;					// +0x08
+	UnsignedInt m_lastHeard;				// +0x0c
+	LANPlayer *m_next;					// +0x10
+	IPAddr m_address;					// +0x14
 };
-
-typedef char LANPlayerSizeCheck[sizeof(LANPlayer) == 0x1c ? 1 : -1];
 
 class GameSlot
 {
 public:
-	void setState(SlotState state, UnicodeString name,
-		const GameSlotConnectInfo *connectInfo);
-	UnsignedByte m_beforeAddress[0x30];
-	BfmeNetAddress m_address;
-	UnsignedByte m_afterAddress[0x0c];
+	void setState(SlotState state, UnicodeString name = UnicodeString::TheEmptyString,
+		const GameSlotConnectInfo *connectInfo = &GameSlotConnectInfo());
+
+	UnsignedByte m_bfmeBeforeAddress[0x30];
+	IPAddr m_address;					// +0x30
+	UnsignedByte m_bfmeAfterAddress[0x30];
 };
 
 class LANGameSlot : public GameSlot
@@ -90,107 +180,135 @@ public:
 	LANGameSlot();
 	LANGameSlot(const LANGameSlot &other);
 	~LANGameSlot();
-
-private:
-	LANPlayer m_user;
-	UnsignedByte m_serialStorage[sizeof(StringBase<char>)];
-	UnsignedInt m_lastHeard;
 };
 
-typedef char LANGameSlotSizeCheck[sizeof(LANGameSlot) == 0x68 ? 1 : -1];
+struct Rva0068D3E0Slot : public LANGameSlot
+{
+};
 
-#pragma comment(linker, "/alternatename:??0LANGameSlot@@QAE@XZ=?j_0001de8a@@YAXXZ")
+class Rva0068D3E0Arr
+{
+public:
+	Rva0068D3E0Slot *at(Int index);
+};
 
 class LANGameInfo
 {
 public:
-	Bool isGameInProgress(void) const;
-	BfmeNetAddress *getIP(Int player);
-	LANGameSlot *getLANSlot(Int player);
-	UnicodeString getName(void) const;
-	LANGameInfo *getNext(void) const;
-	void resetAccepted(void);
-	void setSlot(Int player, LANGameSlot slot);
+	virtual void _bfme_slot00(void) = 0;
+	virtual void _bfme_slot01(void) = 0;
+	virtual void _bfme_slot02(void) = 0;
+	virtual void _bfme_slot03(void) = 0;
+	virtual void _bfme_slot04(void) = 0;
+	virtual void _bfme_slot05(void) = 0;
+	virtual void resetAccepted(void) = 0;		// slot 6, vtable+0x18
+
 	~LANGameInfo();
-	UnsignedByte m_beforeSlots[0x58];
-	LANGameSlot m_slots[8];
-	LANGameInfo *m_next;
+
+	Bool isGameInProgress(void) const { return m_inProgress != 0; }
+	IPAddr *getIP(Int player) { return &m_LANSlot[player].m_address; }
+	LANGameSlot *getLANSlot(Int player)
+	{
+		return (LANGameSlot *)((Rva0068D3E0Arr *)this)->at(player);
+	}
+	void setSlot(Int slotNum, LANGameSlot slotInfo);
+	UnicodeString getName(void);
+	LANGameInfo *getNext(void) { return m_next; }
+
+	UnsignedByte m_bfmeBeforeInProgress[0x0d - 4];
+	UnsignedByte m_inProgress;				// +0x0d
+	UnsignedByte m_bfmeBeforeSlots[0x58 - 0x0e];
+	LANGameSlot m_LANSlot[8];				// +0x58, 0x68 apart
+	LANGameInfo *m_next;					// +0x398
 };
 
 class LANAPI
 {
 public:
-	virtual void slot00(void) = 0; virtual void slot01(void) = 0;
-	virtual void slot02(void) = 0; virtual void slot03(void) = 0;
-	virtual void slot04(void) = 0; virtual void slot05(void) = 0;
-	virtual void slot06(void) = 0; virtual void slot07(void) = 0;
-	virtual void slot08(void) = 0; virtual void slot09(void) = 0;
-	virtual void slot10(void) = 0; virtual void slot11(void) = 0;
-	virtual void slot12(void) = 0; virtual void slot13(void) = 0;
-	virtual void slot14(void) = 0; virtual void slot15(void) = 0;
-	virtual void slot16(void) = 0; virtual void slot17(void) = 0;
-	virtual void slot18(void) = 0; virtual void slot19(void) = 0;
-	virtual void slot20(void) = 0; virtual void slot21(void) = 0;
-	virtual void slot22(void) = 0; virtual void slot23(void) = 0;
-	virtual void slot24(void) = 0; virtual void slot25(void) = 0;
-	virtual void slot26(void) = 0;
-	virtual void OnGameList(LANGameInfo *games) = 0;
-	virtual void slot28(void) = 0; virtual void slot29(void) = 0;
-	virtual void slot30(void) = 0;
-	virtual void OnHostLeave(void) = 0;
-	virtual void OnPlayerLeave(UnicodeString name) = 0;
-	virtual void slot33(void) = 0; virtual void slot34(void) = 0;
-	virtual void slot35(void) = 0; virtual void slot36(void) = 0;
-	virtual void slot37(void) = 0; virtual void slot38(void) = 0;
-	virtual void slot39(void) = 0; virtual void slot40(void) = 0;
-	virtual void slot41(void) = 0; virtual void slot42(void) = 0;
-	virtual void slot43(void) = 0; virtual void slot44(void) = 0;
-	virtual void slot45(void) = 0;
-	virtual Bool AmIHost(void) = 0;
-	virtual void slot47(void) = 0; virtual void slot48(void) = 0;
-	virtual void slot49(void) = 0; virtual void slot50(void) = 0;
-	virtual void slot51(void) = 0; virtual void slot52(void) = 0;
-	virtual void slot53(void) = 0;
-	virtual LANPlayer *LookupPlayer(BfmeNetAddress *address) = 0;
-	virtual BfmeNetAddress *getLocalAddress(void) = 0;
+	virtual void _bfme_slot00(void) = 0;
+	virtual void _bfme_slot01(void) = 0;
+	virtual void _bfme_slot02(void) = 0;
+	virtual void _bfme_slot03(void) = 0;
+	virtual void _bfme_slot04(void) = 0;
+	virtual void _bfme_slot05(void) = 0;
+	virtual void _bfme_slot06(void) = 0;
+	virtual void _bfme_slot07(void) = 0;
+	virtual void _bfme_slot08(void) = 0;
+	virtual void _bfme_slot09(void) = 0;
+	virtual void _bfme_slot10(void) = 0;
+	virtual void _bfme_slot11(void) = 0;
+	virtual void _bfme_slot12(void) = 0;
+	virtual void _bfme_slot13(void) = 0;
+	virtual void _bfme_slot14(void) = 0;
+	virtual void _bfme_slot15(void) = 0;
+	virtual void _bfme_slot16(void) = 0;
+	virtual void _bfme_slot17(void) = 0;
+	virtual void _bfme_slot18(void) = 0;
+	virtual void _bfme_slot19(void) = 0;
+	virtual void _bfme_slot20(void) = 0;
+	virtual void requestSerializedGameInfo(Bool broadcast, const IPAddr &address) = 0;	// slot 21, +0x54
+	virtual void _bfme_slot22(void) = 0;
+	virtual void _bfme_slot23(void) = 0;
+	virtual void _bfme_slot24(void) = 0;
+	virtual void _bfme_slot25(void) = 0;
+	virtual void _bfme_slot26(void) = 0;
+	virtual void OnGameList(LANGameInfo *gameList) = 0;		// slot 27, +0x6C
+	virtual void _bfme_slot28(void) = 0;
+	virtual void _bfme_slot29(void) = 0;
+	virtual void _bfme_slot30(void) = 0;
+	virtual void OnHostLeave(void) = 0;				// slot 31, +0x7C
+	virtual void OnPlayerLeave(UnicodeString player) = 0;		// slot 32, +0x80
+	virtual void _bfme_slot33(void) = 0;
+	virtual void _bfme_slot34(void) = 0;
+	virtual void _bfme_slot35(void) = 0;
+	virtual void _bfme_slot36(void) = 0;
+	virtual void _bfme_slot37(void) = 0;
+	virtual void _bfme_slot38(void) = 0;
+	virtual void _bfme_slot39(void) = 0;
+	virtual void _bfme_slot40(void) = 0;
+	virtual void _bfme_slot41(void) = 0;
+	virtual void _bfme_slot42(void) = 0;
+	virtual void _bfme_slot43(void) = 0;
+	virtual void _bfme_slot44(void) = 0;
+	virtual void _bfme_slot45(void) = 0;
+	virtual Bool AmIHost(void) = 0;				// slot 46, +0xB8
+	virtual void _bfme_slot47(void) = 0;
+	virtual void _bfme_slot48(void) = 0;
+	virtual void _bfme_slot49(void) = 0;
+	virtual void _bfme_slot50(void) = 0;
+	virtual void _bfme_slot51(void) = 0;
+	virtual void _bfme_slot52(void) = 0;
+	virtual void _bfme_slot53(void) = 0;
+	virtual LANPlayer *LookupPlayer(const IPAddr *address) = 0;	// slot 54, +0xD8
+	virtual const IPAddr *getLocalAddress(void) = 0;		// slot 55, +0xDC
 
+protected:
 	void removeGame(LANGameInfo *game);
 	void removePlayer(LANPlayer *player);
 	void addPlayer(LANPlayer *player);
-	AsciiString GenerateGameOptionsString(void);
-	void RequestGameOptions(AsciiString options, Bool broadcast,
-		BfmeNetAddress *address);
-	void Rva0068BAC0(LANMessage *msg, BfmeNetAddress *sender,
-		Bool removeLobbyGame);
+	void handleRequestGameLeave(LANMessage *msg, const IPAddr &senderIP, bool removeLobbyGame);
 
-	UnsignedByte m_head04[4];
-	LANPlayer *m_lobbyPlayers;
-	LANGameInfo *m_games;
-	UnicodeString m_name;
-	AsciiString m_userName;
-	AsciiString m_hostName;
-	UnsignedByte m_head1c[0x3d - 0x1c];
-	Bool m_inLobby;
-	UnsignedByte m_head3e[2];
-	LANGameInfo *m_currentGame;
-	UnsignedByte m_tail44[8];
+	UnsignedByte m_bfmeHeadA[0x0c - 4];
+	LANGameInfo *m_games;					// +0x0c
+	UnicodeString m_name;					// +0x10
+	AsciiString m_userName;					// +0x14
+	AsciiString m_hostName;					// +0x18
+	UnsignedByte m_bfmeHeadB[0x3d - 0x1c];
+	Bool m_inLobby;						// +0x3d
+	UnsignedByte m_bfmeHeadC[2];
+	LANGameInfo *m_currentGame;				// +0x40
 };
 
-// The address remains in the method name until an independent identity witness
-// names this body. Retail callers pass the message, its sender address, and a
-// mode: network dispatch sets the mode, timeout synthesis clears it.
-void LANAPI::Rva0068BAC0(LANMessage *msg, BfmeNetAddress *sender,
-	Bool removeLobbyGame)
+// ?handleRequestGameLeave@LANAPI@@IAEXPAULANMessage@@ABUIPAddr@@_N@Z
+void LANAPI::handleRequestGameLeave(LANMessage *msg, const IPAddr &senderIP, bool removeLobbyGame)
 {
-	if (!m_inLobby && m_currentGame &&
-		!m_currentGame->isGameInProgress())
+	if (!m_inLobby && m_currentGame && !m_currentGame->isGameInProgress())
 	{
-		Int player;
+		int player;
 		for (player = 0; player < 8; ++player)
 		{
-			BfmeNetAddress *slotAddress = m_currentGame->getIP(player);
-			if (slotAddress->m_ip == sender->m_ip &&
-				slotAddress->m_port == sender->m_port)
+			IPAddr *slotIP = m_currentGame->getIP(player);
+			if (slotIP->m_ip == senderIP.m_ip && slotIP->m_port == senderIP.m_port)
 			{
 				if (player == 0)
 				{
@@ -199,41 +317,36 @@ void LANAPI::Rva0068BAC0(LANMessage *msg, BfmeNetAddress *sender,
 					delete m_currentGame;
 					m_currentGame = 0;
 
-					BfmeNetAddress *localAddress = getLocalAddress();
-					LANPlayer *localPlayer = LookupPlayer(localAddress);
-					if (!localPlayer)
+					LANPlayer *lanPlayer = LookupPlayer(getLocalAddress());
+					if (!lanPlayer)
 					{
-						localPlayer = new LANPlayer;
-						localPlayer->setIP(localAddress);
+						lanPlayer = new LANPlayer;
+						lanPlayer->setIP(*getLocalAddress());
 					}
 					else
 					{
-						removePlayer(localPlayer);
+						removePlayer(lanPlayer);
 					}
-					localPlayer->setName(UnicodeString(m_name));
-					localPlayer->setHost(m_hostName);
-					localPlayer->setLogin(m_userName);
-					localPlayer->setLastHeard(timeGetTime());
-					addPlayer(localPlayer);
+					lanPlayer->setName(UnicodeString(m_name));
+					lanPlayer->setHost(m_hostName.str());
+					lanPlayer->setLogin(m_userName.str());
+					lanPlayer->setLastHeard(timeGetTime());
+					addPlayer(lanPlayer);
 				}
 				else
 				{
 					if (AmIHost())
 					{
-						LANGameSlot openSlot;
-						UnicodeString slotName;
-						openSlot.setState(SLOT_OPEN, slotName, 0);
-						m_currentGame->setSlot(player, openSlot);
+						LANGameSlot slot;
+						slot.setState(SLOT_OPEN);
+						m_currentGame->setSlot(player, slot);
 					}
 					OnPlayerLeave(UnicodeString(msg->name));
-					UnicodeString playerStateName;
-					m_currentGame->getLANSlot(player)->setState(
-						SLOT_OPEN, playerStateName, 0);
+					((Rva0068D3E0Arr *)m_currentGame)->at(player)->setState(SLOT_OPEN);
 					m_currentGame->resetAccepted();
-					AsciiString options = GenerateGameOptionsString();
-					RequestGameOptions(options, false, sender);
+					requestSerializedGameInfo(false, senderIP);
 				}
-				break;
+				return;
 			}
 		}
 	}
@@ -242,23 +355,13 @@ void LANAPI::Rva0068BAC0(LANMessage *msg, BfmeNetAddress *sender,
 		LANGameInfo *game = m_games;
 		while (game)
 		{
-			Bool gameNameMatches;
-			{
-				UnicodeString candidateName = game->getName();
-				const unsigned short *candidate = candidateName.str();
-				const unsigned short *requested = msg->m_gameName;
-				while (*candidate && *candidate == *requested)
-				{
-					++candidate;
-					++requested;
-				}
-				gameNameMatches = *candidate == *requested;
-			}
-			if (gameNameMatches)
+			if (game->getName().compare(msg->GameToLeave.gameName) == 0)
 			{
 				if (removeLobbyGame)
 				{
 					removeGame(game);
+					if (game == m_currentGame)
+						m_currentGame = 0;
 					delete game;
 					OnGameList(m_games);
 				}

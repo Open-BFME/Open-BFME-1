@@ -56,3 +56,27 @@ bool Rva003B9100::contains(const AsciiString &name) const
 			return true;
 	return false;
 }
+
+// Retail 0x003B9200 (79 bytes, ret 4), reached only through ILT 0x00033889
+// from Rva003BAA70Owner::append.  The receiver is the same 36-byte record as
+// Rva003B9100 (the caller passes two elements of one vector), so it carries the
+// same STLport vector<AsciiString> at +0x0C; the body asks the other record
+// whether it contains each of this record's strings.  The address-derived class
+// view keeps the caller's pinned mangled name; identity is not recovered.
+class Rva003B9200Owner
+{
+public:
+	bool rva003B9200(const Rva003B9100 *other) const;
+
+private:
+	char m_pad[0x0C];
+	_STL::vector<AsciiString> m_vec;
+};
+
+bool Rva003B9200Owner::rva003B9200(const Rva003B9100 *other) const
+{
+	for (unsigned int i = 0; i < m_vec.size(); ++i)
+		if (other->contains(m_vec[i]))
+			return true;
+	return false;
+}
