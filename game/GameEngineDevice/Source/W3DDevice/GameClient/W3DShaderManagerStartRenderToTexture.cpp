@@ -32,10 +32,7 @@ public:
 	float X, Y, Z;
 };
 
-struct Coord2D
-{
-	float x, y;
-};
+#include "../../../../Libraries/Include/Lib/Coord2D.h"
 
 // The blit takes its UV scale through a Coord2D pointer.
 struct ViewportScale : Coord2D
