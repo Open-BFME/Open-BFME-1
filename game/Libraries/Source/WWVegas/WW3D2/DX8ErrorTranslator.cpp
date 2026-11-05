@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
+#define BFME_STRINGCLASS_INLINE_CSTR_ONLY
 #include "../WWLib/wwstring.h"
 #pragma intrinsic(strlen, memcpy)
 extern "C" const char *__stdcall DXGetErrorString9A(long hresult);

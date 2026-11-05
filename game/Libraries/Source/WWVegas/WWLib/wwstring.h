@@ -78,10 +78,16 @@ public:
 	StringClass (bool hint_temporary);
 	StringClass (int initial_len = 0, bool hint_temporary = false);
 	StringClass (const StringClass &string, bool hint_temporary = false);
+#ifdef BFME_STRINGCLASS_INLINE_CSTR_ONLY
+	__declspec(dllimport) __forceinline
+#endif
 	StringClass (const TCHAR *string, bool hint_temporary = false);
 	~StringClass (void);
 
 	inline const StringClass &operator= (const StringClass &string);
+#ifdef BFME_STRINGCLASS_INLINE_CSTR_ONLY
+	__forceinline
+#endif
 	inline const StringClass &operator= (const TCHAR *string);
 
 	const StringClass &operator+= (const StringClass &string);
@@ -155,6 +161,9 @@ private:
 ///////////////////////////////////////////////////////////////////
 //	operator=
 ///////////////////////////////////////////////////////////////////
+#ifdef BFME_STRINGCLASS_INLINE_CSTR_ONLY
+__forceinline
+#endif
 inline const StringClass &
 StringClass::operator= (const TCHAR *string)
 {
@@ -173,6 +182,10 @@ StringClass::operator= (const TCHAR *string)
 ///////////////////////////////////////////////////////////////////
 //	StringClass
 ///////////////////////////////////////////////////////////////////
+// Keep strlen-based caller expansions without a competing _mbslen constructor.
+#ifdef BFME_STRINGCLASS_INLINE_CSTR_ONLY
+__declspec(dllimport) __forceinline
+#endif
 inline
 StringClass::StringClass (const TCHAR *string, bool hint_temporary)
 	:	m_Buffer (m_EmptyString)

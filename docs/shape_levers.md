@@ -3277,6 +3277,16 @@ caller. No import reference remains. See
 `targets/game/reverse/attempt_support/20261104-queue30-model-condition-inline.md`.
 
 
+For `DX8ErrorTranslator` (MSVC 7.1, `/O2 /DNDEBUG /MD /EHsc`), importing
+and forcing only the C-string constructor suppresses its non-retail copy
+but stops automatic inlining of the nested C-string assignment: the caller
+shrinks from retail's 287 bytes to 224. Forcing that existing assignment
+inline as well restores all 287 bytes and leaves no constructor definition,
+reference or IAT symbol. The opt-in `BFME_STRINGCLASS_INLINE_CSTR_ONLY`
+keeps other translation units' defaults. See
+`targets/game/reverse/attempt_support/2026-11-05-dx8-stringclass-inline-constructor.md`.
+
+
 ## End a dead pointer's live range before loading the next one (2026-11-01)
 
 At 0x00176F70 (AIAttackMeleeApproachState::onEnter, landed in
