@@ -20,12 +20,7 @@ public:
 	float sample(unsigned int frame);
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Shadow
 {

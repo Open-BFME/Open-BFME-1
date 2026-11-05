@@ -7,7 +7,7 @@
 // Both native StringBase cleanup wrappers inline the same releaseBuffer call.
 #include "string_base.h"
 #include "ascii_string.h"
-struct Coord3D { float x,y,z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D 1
 enum KindOfType {};
 enum WeaponSlotType {};

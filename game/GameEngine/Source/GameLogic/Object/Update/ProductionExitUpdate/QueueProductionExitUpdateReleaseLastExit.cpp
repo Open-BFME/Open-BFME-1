@@ -1,12 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX- /O2 /Ob2
 // ?notifyProductionBurstFinished@QueueProductionExitUpdate@@UAEXXZ (EA name; retail thunk table confirms the virtual decoration)
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../../../command_source_type.h"
 

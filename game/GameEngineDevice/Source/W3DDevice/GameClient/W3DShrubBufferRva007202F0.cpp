@@ -35,10 +35,7 @@ void Rva00739B30(RenderObjClass *object, bool geometry);
 // W3DTreeBufferRva00736150.cpp does.
 unsigned char Rva00739900Forward(void *object, int value);
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class FXList
 {

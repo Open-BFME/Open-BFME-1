@@ -13,7 +13,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned short UnsignedShort;
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // BFME's REAL_TO_INT_FLOOR: CRT floor() then the engine's x87 round.
 static __forceinline Real fast_float_floor(Real f)
