@@ -26,10 +26,7 @@ typedef unsigned int UnsignedInt;
 #define TWO_PI 6.28318530718f
 #define RANDOM_START_ANGLE -99999.9f
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region3D
 {

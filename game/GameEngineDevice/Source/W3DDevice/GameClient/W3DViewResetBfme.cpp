@@ -14,12 +14,7 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail 0x00459F00 clears the height-state object embedded at W3DView+0x2448.
 // Its complete vector/count/scale/flag shape is retained here so the call is

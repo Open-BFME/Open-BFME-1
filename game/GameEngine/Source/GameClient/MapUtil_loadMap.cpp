@@ -113,12 +113,7 @@ private:
 	void *m_extra;
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class WaypointMap : public _STL::map<AsciiString, Coord3D>
 {

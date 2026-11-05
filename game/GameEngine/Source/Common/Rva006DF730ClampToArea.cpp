@@ -38,12 +38,7 @@
 extern "C" double sqrt(double x);
 #pragma intrinsic(sqrt)
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 // The clipping caller's existing coordinate view; identical layout to Coord3D.
 struct BfmeCoord6DF1F0
