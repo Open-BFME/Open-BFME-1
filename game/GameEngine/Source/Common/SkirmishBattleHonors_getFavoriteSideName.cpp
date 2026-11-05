@@ -60,7 +60,10 @@ extern GameTextInterface *TheGameText;
 UnicodeString SkirmishBattleHonors::getFavoriteSideName(void)
 {
 	AsciiString favoriteSide = getAsciiString("FavoriteSide", AsciiString::TheEmptyString);
-	if (favoriteSide.compare(AsciiString::TheEmptyString) == 0)
+	// StringBase spelling: the AsciiString::compare forwarder would be emitted
+	// here as a COMDAT; retail calls the out-of-line StringBase<char>::compare
+	// (0x0005FEB0) directly.
+	if (((const StringBase<char> &)favoriteSide).compare(*(const StringBase<char> *)&AsciiString::TheEmptyString) == 0)
 		return UnicodeString::TheEmptyString;
 
 	{
