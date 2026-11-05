@@ -3933,7 +3933,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??0PendingSurfaceStruct@Render2DSentenceClass@@QAE@XZ,,0x0093F3F0,73,game/Libraries/Source/WWVegas/WW3D2/PendingSurfaceStructCtor.cpp,matched,PendingSurfaceStruct ctor: W3DRadarResetSurface base then DynamicVectorClass Renderers at +4
 ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,,0x0029A880,202,game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorConstructor.cpp,matched,real name restored after the five-byte ILT claim at 0x000328C6 was retired; factory 0x0011A9F0 calls ILT 0x0003C3BC and its 0x60 allocation proves identity
 ??0PhysicsBehaviorModuleData@@QAE@XZ,,0x0029A090,126,game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorModuleDataCtorThunk.cpp,matched,clean C++ ctor replacing naked lift; factory 0x0011AA70 allocates 0x5C and calls it; installs dedicated vtable 0x00CC0910; store order sets constant-register live ranges;model=claude-opus-5-5;host=yann-pc
-??0PickAndPlayInfo@@QAE@XZ,,0x005A7460,46,game/GameEngine/Source/Common/Bfme5SixtyNine.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/005a7460-pickandplayinfo-ctor.md;PickAndPlayInfo ctor via ILT 0xF164; layout = ZH CommandXlat.h PickAndPlayInfo plus Coord3D and BFME word;model=claude-opus-5-5;host=GreatFaram
+??0PickAndPlayInfo@@QAE@XZ,,0x005A7460,46,game/GameEngine/Source/GameClient/MessageStream/Bfme5SixtyNine.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/005a7460-pickandplayinfo-ctor.md;PickAndPlayInfo ctor via ILT 0xF164; layout = ZH CommandXlat.h PickAndPlayInfo plus Coord3D and BFME word;model=claude-opus-5-5;host=GreatFaram
 ??0PickDrawableStruct@@QAE@XZ,,0x00459140,147,game/GameEngine/Source/GameClient/PickDrawableStructConstructor.cpp,matched,PickDrawableStruct BFME constructor from canonical SelectionInfo use; two six-dword BFME mask regions; calls Rva00459060 and Rva004590D0; campaign=luna36h-20260907;lane=expand38;model=gpt-5.6-luna-max run=20260908T024808Z-e22cfb265dd7
 ??0PingRequest@@QAE@ABV0@@Z,,0x00660050,33,game/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,matched,vendored=cnc-zh
 ??0PingResponse@@QAE@ABV0@@Z,,0x00660080,33,game/GameEngine/Source/GameNetwork/GameSpy/Thread/PingThread.cpp,matched,byte-scan placement; unique
@@ -28695,7 +28695,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeAnd@Gen_002083D0@@QAEXPBVBfmeTripleDH@@@Z,,0x002083D0,35,game/GameEngine/Source/Common/Bfme5ThirtyNine.cpp,matched,
 ?bfmeAndWith@BfmeBitsMA@@QAEXPBV1@@Z,,0x001C0310,77,game/GameEngine/Source/Common/Bfme5NinetySeven.cpp,matched,
 ?bfmeAndWith@BfmeBitsNB@@QAEXPBV1@@Z,,0x00208350,77,game/GameEngine/Source/Common/BfmeOneHundredOne.cpp,matched,
-?bfmeAngle@@YGMM@Z,,0x0045B850,45,game/GameEngine/Source/Common/Bfme5SixtyNine.cpp,matched,
+?bfmeAngle@@YGMM@Z,,0x0045B850,45,game/GameEngine/Source/GameClient/MessageStream/Bfme5SixtyNine.cpp,matched,
 ?bfmeAnimERC@@YGXPAVBfmeStrERC@@PAXPAPAVHAnimClass@@@Z,,0x003C8080,175,game/GameEngine/Source/Common/BfmeConv1948.cpp,matched,string temp in the dead parameter slot; two concats then Get_HAnim
 ?bfmeAny@Gen_0013E340@@QAEEXZ,,0x0013E340,55,game/GameEngine/Source/Common/Bfme/Rva0013E340Any.cpp,matched,
 ?bfmeAny@Gen_001EAC50@@QBEEXZ,,0x001EAC50,25,game/GameEngine/Source/Common/Bfme5TinyFourteen.cpp,matched,
@@ -31623,7 +31623,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeLayersCompatible@@YA_NPBVPathfindCell@@0@Z,,0x004022D0,80,game/GameEngine/Source/GameLogic/AI/PathfindCellLayersCompatible.cpp,matched,Open-BFME5 free cdecl bool: PathfindCell layer/connect-layer compatibility
 ?bfmeLeaveZK@BfmeNodeZK@@QAEXXZ,,0x005C2240,74,game/GameEngine/Source/Common/BfmeOneHundredSixty.cpp,matched,
 ?bfmeLength@Bfme5Span@@QAEHXZ,,0x00232540,33,game/GameEngine/Source/Common/Bfme5CtxChain.cpp,matched,
-?bfmeLess@@YA_NPBVBfmeItemEG@@0@Z,,0x0047C600,46,game/GameEngine/Source/Common/Bfme5SixtyNine.cpp,matched,
+?bfmeLess@@YA_NPBVBfmeItemEG@@0@Z,,0x0047C600,46,game/GameEngine/Source/GameClient/MessageStream/Bfme5SixtyNine.cpp,matched,
 ?bfmeLessAQ@@YG_NPAVBfmeHolderAQ@@PAX@Z,,0x00436850,49,game/GameEngine/Source/Common/BfmeConv1742.cpp,matched,string comparator; inline accessor gives retail eax chain
 ?bfmeLessAR@@YG_NPAXPAVBfmeHolderAR@@@Z,,0x00436890,49,game/GameEngine/Source/Common/BfmeConv1743.cpp,matched,mirrored operand order of 0x00436850
 ?bfmeLessOD@@YAEPBUBfmeKeyOD@@0@Z,,0x005A74A0,79,game/GameEngine/Source/Common/BfmeTwoHundredFortyFour.cpp,matched,
