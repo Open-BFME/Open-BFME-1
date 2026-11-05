@@ -15,12 +15,7 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region2D
 {

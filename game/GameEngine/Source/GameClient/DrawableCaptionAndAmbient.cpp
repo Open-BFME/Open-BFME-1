@@ -38,12 +38,7 @@ typedef long RefCount;
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement( long volatile *value );
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement( long volatile *value );
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord2D
 {

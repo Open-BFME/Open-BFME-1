@@ -25,10 +25,7 @@ typedef float Real;
 
 enum { FALSE = 0, TRUE = 1 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // By-value string argument model: inputs/reference/shims/stringinline/StringInline.h
 template <typename T> struct StringInlineData

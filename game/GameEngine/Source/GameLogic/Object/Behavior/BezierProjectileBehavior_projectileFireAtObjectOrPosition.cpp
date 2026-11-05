@@ -40,12 +40,7 @@ enum ObjectShroudStatus
 	OBJECTSHROUD_SHROUDED = 1
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Matrix3D
 {

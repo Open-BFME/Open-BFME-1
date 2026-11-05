@@ -30,12 +30,7 @@ enum CanAttackResult
 class Object;
 typedef _STL::list<Object *> ContainedItemsList;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct KindOfMask
 {

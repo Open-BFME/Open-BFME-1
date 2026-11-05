@@ -34,10 +34,7 @@ class AsciiString : public StringBase<char>
 #include "unicode_string.h"
 #include <bitset>
 
-struct Coord3D
-{
-    float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class BattleStatusFlags
 {
     _STL::bitset<320> bits;
