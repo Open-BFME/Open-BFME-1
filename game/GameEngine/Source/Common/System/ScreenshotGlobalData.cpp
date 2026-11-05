@@ -67,12 +67,18 @@ extern GlobalData *TheWritableGlobalData;
 // W3DDisplay.cpp declares ScreenshotAsciiString with one pointer to the string.
 // Its destructor pin at 0x00887940 names StringBase<char>::releaseBuffer.
 // This view inherits AsciiString to reuse the matched copy and release methods.
+// Retail keeps no distinct ScreenshotAsciiString dtor body: the destructor pin
+// at 0x00887940 names StringBase<char>::releaseBuffer.  The out-of-line
+// declaration plus the alternatename below route every scope exit to the
+// matched releaseBuffer row instead of emitting a non-retail copy here, as
+// W3DDisplay.cpp already assumes.
+#pragma comment(linker, "/alternatename:??1ScreenshotAsciiString@@QAE@XZ=?releaseBuffer@?$StringBase@D@@AAEXXZ")
 class ScreenshotAsciiString : private AsciiString
 {
 public:
 	ScreenshotAsciiString(const ScreenshotAsciiString &that)
 		: AsciiString((const AsciiString &)that) {}
-	~ScreenshotAsciiString() {}
+	~ScreenshotAsciiString();
 };
 
 class ScreenshotGlobalData
