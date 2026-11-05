@@ -48,13 +48,13 @@ public:
     AsciiString(const AsciiString &other)
         : StringBase<char>(other) {}
     ~AsciiString() {}
-    void set(const AsciiString &other)
-    {
-        StringBase<char>::set(other);
-    }
+    // No AsciiString::set member: the forwarder would be emitted here as a
+    // COMDAT, while retail binds the name to StringBase<char>::set
+    // (0x00887C90, matched in game/Libraries/Source/string/StringBase.cpp).
+    // The assignment spells the StringBase name instead.
     AsciiString &operator=(const AsciiString &other)
     {
-        set(other);
+        StringBase<char>::set(other);
         return *this;
     }
 
