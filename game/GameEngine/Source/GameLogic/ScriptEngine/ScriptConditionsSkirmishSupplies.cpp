@@ -31,11 +31,7 @@ enum AllowPlayerRelationship { ALLOW_NEUTRAL = 8 };
 enum DistanceCalculationType { FROM_CENTER_2D = 0 };
 enum IterOrderType { ITER_FASTEST = 0 };
 
-struct Coord3D {
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Parameter {
 public:

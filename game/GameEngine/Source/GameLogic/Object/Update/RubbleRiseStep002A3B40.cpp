@@ -15,10 +15,7 @@
 // retail-equal copies carry the name. Inlined calls are unchanged.
 #define getInstanceMatrix getInstanceMatrix_LocalView
 #include "matrix3d.h"
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class Drawable
 {
   public:

@@ -27,7 +27,7 @@ typedef Int ObjectID;
 enum KindOfType { KINDOF_INVALID = 0 };
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
-struct Coord3D { float x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Module;
 class CommandButton;

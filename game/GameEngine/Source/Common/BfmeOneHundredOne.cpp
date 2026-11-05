@@ -135,12 +135,7 @@ bool BfmeFirstWalkOnArmy::lookupWaypoints(
 	return false;
 }
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Waypoint
 {
