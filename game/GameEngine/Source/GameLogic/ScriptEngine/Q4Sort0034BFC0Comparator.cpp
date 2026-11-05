@@ -36,11 +36,10 @@ class AsciiString : public StringBase<char>
 public:
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	__declspec(nothrow) int compareNoCase(const AsciiString &other) const
-	{
-		return ((const StringBase<char> *)this)->compareNoCase(
-			*(const StringBase<char> *)&other);
-	}
+	// No AsciiString::compareNoCase member: the forwarder would be emitted
+	// here as a COMDAT, while retail calls the out-of-line
+	// StringBase<char>::compareNoCase (0x00090570) directly.  Call sites
+	// spell the StringBase name instead.
 };
 
 namespace FXParticleSystem
@@ -58,8 +57,8 @@ struct Q4Sort0034BFC0
 {
 	bool operator()(int a, int b) const
 	{
-		return ((const FXParticleSystem::ParticleSystemTemplate *)a)->getName().compareNoCase(
-			((const FXParticleSystem::ParticleSystemTemplate *)b)->getName()) < 0;
+		return ((const StringBase<char> &)((const FXParticleSystem::ParticleSystemTemplate *)a)->getName()).compareNoCase(
+			(const StringBase<char> &)((const FXParticleSystem::ParticleSystemTemplate *)b)->getName()) < 0;
 	}
 };
 
