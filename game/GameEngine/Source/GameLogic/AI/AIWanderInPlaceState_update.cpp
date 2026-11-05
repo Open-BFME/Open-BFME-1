@@ -24,12 +24,7 @@ __forceinline long fast_float2long_round(float value)
 
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((float)floor((double)(x))))
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 

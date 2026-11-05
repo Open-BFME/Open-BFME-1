@@ -50,12 +50,7 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 template <int NUMBITS>
 class BitFlags

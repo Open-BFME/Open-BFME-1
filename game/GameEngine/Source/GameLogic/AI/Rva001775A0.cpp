@@ -20,12 +20,7 @@ enum CrushSquishTestType
 	TEST_CRUSH_OR_SQUISH
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 

@@ -20,10 +20,7 @@ enum KindOfType { BFME_KINDOF_7 = 7 };
 enum WeaponSlotType { BFME_WEAPONSLOT_INVALID = -1 };
 enum WeaponStatus { BFME_WEAPON_STATUS_4 = 4 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AIGuardInnerState;
 

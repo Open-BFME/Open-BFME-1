@@ -5,10 +5,7 @@ typedef unsigned int UnsignedInt;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 extern "C" void __cdecl __identifier("?d_002475a0@@YAXXZ")();
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo

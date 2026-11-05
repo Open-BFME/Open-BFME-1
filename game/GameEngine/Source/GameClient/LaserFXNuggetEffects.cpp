@@ -12,10 +12,7 @@ enum DrawableStatus
 	DRAWABLE_STATUS_NONE = 0
 };
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Matrix3D;
 class ThingTemplate;

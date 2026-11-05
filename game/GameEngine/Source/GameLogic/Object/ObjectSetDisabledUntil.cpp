@@ -7,7 +7,7 @@ typedef unsigned int UnsignedInt;
 
 #include "ascii_string.h"
 extern AsciiString TheEmptyString;
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AudioEventRTS
 {

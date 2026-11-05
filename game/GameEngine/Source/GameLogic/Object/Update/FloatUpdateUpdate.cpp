@@ -24,12 +24,7 @@
 #define getInstanceMatrix getInstanceMatrix_LocalView
 #include "PreRTS.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum UpdateSleepTime
 {
