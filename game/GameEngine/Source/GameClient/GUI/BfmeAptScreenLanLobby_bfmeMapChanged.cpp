@@ -89,7 +89,10 @@ bool BfmeAptScreenLanLobby::bfmeMapChanged(
 		return false;
 
 	AsciiString lowerMap = *mapName;
-	lowerMap.toLower();
+	// StringBase spelling: the AsciiString::toLower forwarder would be emitted
+	// here as a COMDAT; retail calls the out-of-line StringBase<char>::toLower
+	// (0x00887DA0) directly.
+	((StringBase<char> &)lowerMap).toLower();
 	game->setMapForwarder(lowerMap);
 	const MapMetaData *map = TheMapCache->findMap(lowerMap);
 	if (map)
