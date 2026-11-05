@@ -421,4 +421,3 @@ dir32,0x013436B8,?_QuadVertexLocationOrientationTable@PointGroupClass@@0PAY03VVe
 dir32,0x0134B0E8,?TheDX8MeshRenderer@@3VDX8MeshRendererClass@@A,"retail 0x0134B0E8 is already recorded as ?TheDX8MeshRenderer@@3PAVDX8MeshRendererClass@@A (+1 more); reference that name, not a new one"
 dir32,0x0134B280,?Rva0134B280Browser@@3V?$_com_ptr_t@V?$_com_IIID@UIFEBrowserEngine2@@$1?_GUID_ee883b17_0778_4b18_a12b_e44c0d298412@@3U__s_GUID@@B@@@@A,"retail 0x0134B280 is already recorded as ?Rva00959410Dispatch@@3URva00959410Ptr@@A (+3 more); reference that name, not a new one"
 dir32,0x0134FB18,?g_bfmeRva0134FB18Static@@3VRva009F67EDCriticalSection@@A,"retail 0x0134FB18 is already recorded as ?TheBfmeObject_0005C450@@3VGen_0005C450Target@@A (+2 more); reference that name, not a new one"
-dir32,0x013571F8,__adjust_fdiv,"nothing in the ledger owns 0x013571F8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
