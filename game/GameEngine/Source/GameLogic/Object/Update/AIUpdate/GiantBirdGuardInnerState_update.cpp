@@ -18,10 +18,7 @@ typedef bool Bool;
 enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
 enum StateExitType { EXIT_NORMAL = 0 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
