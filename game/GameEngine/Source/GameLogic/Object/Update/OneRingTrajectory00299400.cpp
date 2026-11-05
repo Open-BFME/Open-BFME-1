@@ -1,8 +1,11 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Retail 0x00299400: OneRingPenaltyUpdate trajectory step (string VA 0x010C06B8 names OneRingPenaltyUpdate.cpp); method name unknown.
-#define _STLP_USE_NEWALLOC 1
-#define _STLP_NO_EXCEPTIONS 1
+// This unit used /DNDEBUG /MD without /D_STLP_USE_STATIC_LIB, so its in-class
+// inline aiMoveToPosition emitted a 180 B non-retail COMDAT (digest 71edda0c2bdb)
+// that won link selection ahead of retail's 219 B 0x000D86C0. With the static-lib
+// flags (and std::vector for m_coords) it emits the same 219 B copy as the other
+// definers (digest a49d2f1ceb11, byte-identical to AICommandInterfaceMovementOrders).
 #include <hash_map>
 #include <vector>
 extern "C" float cosf(float);
@@ -26,7 +29,7 @@ struct DamageInfo { char m_bfme_body[0x5C]; };
 class AICommandParms { public:
  AICommandParms( AICommandType cmd, CommandSourceType commandSource );
  AICommandType m_cmd; CommandSourceType m_cmdSource; Coord3D m_pos; Object *m_obj; Object *m_otherObj; const Team *m_team;
- _STL::vector<Coord3D> m_coords; const Waypoint *m_waypoint; const PolygonTrigger *m_polygon; int m_intValue; DamageInfo m_damage;
+ std::vector<Coord3D> m_coords; const Waypoint *m_waypoint; const PolygonTrigger *m_polygon; int m_intValue; DamageInfo m_damage;
  const CommandButton *m_commandButton; Path *m_path;
 };
 class AICommandInterface { public:
