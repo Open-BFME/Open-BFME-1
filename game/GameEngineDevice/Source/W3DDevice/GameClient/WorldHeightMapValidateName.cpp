@@ -25,12 +25,7 @@ static __declspec(noinline) AsciiString validateName(const AsciiString &n, Int f
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 

@@ -2,12 +2,7 @@
 // W3DStreakDraw helper at retail 0x0077D6B0.
 // The inline x87 block preserves the retail stack slot for distance.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "vector3.h"
 

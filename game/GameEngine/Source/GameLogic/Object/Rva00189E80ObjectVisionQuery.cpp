@@ -22,12 +22,7 @@ extern "C" void *__identifier("??_7PartitionFilterSameMapStatus@@6B@")[];
 extern "C" void *__identifier("_7Rva0025ED50RootFilter@@6B@")[];
 extern "C" void *__identifier("??_7PartitionFilterRelationship@@6B@")[];
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object
 {

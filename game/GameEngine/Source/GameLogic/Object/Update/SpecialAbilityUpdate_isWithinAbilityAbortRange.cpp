@@ -18,12 +18,7 @@ typedef int ObjectID;
 #define BFME_OFFSET_DF 2.5f
 #define __max(a, b) (((a) > (b)) ? (a) : (b))
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct BfmePt951
 {

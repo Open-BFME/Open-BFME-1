@@ -11,12 +11,7 @@ typedef int CommandSourceType;
 // Preserve the retail source value without assigning a disputed enum identity.
 enum { RETAIL_COMMAND_SOURCE_2 = 2 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 

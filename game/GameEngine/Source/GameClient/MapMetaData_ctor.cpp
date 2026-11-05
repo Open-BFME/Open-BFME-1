@@ -62,12 +62,7 @@ public:
 	bool operator<(const AsciiString &other) const;
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class WaypointMap : public std::map<AsciiString, Coord3D>
 {

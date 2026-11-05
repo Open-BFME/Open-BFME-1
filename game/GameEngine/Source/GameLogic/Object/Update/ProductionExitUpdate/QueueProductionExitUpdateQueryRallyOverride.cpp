@@ -9,7 +9,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-struct Coord3D { Real x; Real y; Real z; };
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 template <int NUMBITS>
 class BitFlags
