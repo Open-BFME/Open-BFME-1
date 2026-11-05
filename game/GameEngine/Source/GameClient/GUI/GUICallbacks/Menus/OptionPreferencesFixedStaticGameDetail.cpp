@@ -13,7 +13,9 @@ inline AsciiString::~AsciiString()
 namespace _STL {
 template <> struct less<AsciiString> {
     bool operator()(const AsciiString &a, const AsciiString &b) const {
-        return a.compare(b) < 0;
+        // Route through StringBase<char> directly: AsciiString::compare
+        // here emits a losing COMDAT. The out-of-line base call is unchanged.
+        return ((const StringBase<char> *)&a)->compare(*(const StringBase<char> *)&b) < 0;
     }
 };
 }
