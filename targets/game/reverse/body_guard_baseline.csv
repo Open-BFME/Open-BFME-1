@@ -393,7 +393,6 @@ dir32,0x0130BA40,?g_classic0130BA40@@3V?$money_put@DV?$ostreambuf_iterator@DV?$c
 dir32,0x0130BA50,?g_classic0130BA50@@3V?$time_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@A,"nothing in the ledger owns 0x0130BA50. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130BC78,?g_classic0130BC78@@3V?$ctype@D@_STL@@A,"nothing in the ledger owns 0x0130BC78. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130BC90,?g_classic0130BC90@@3V?$collate@D@_STL@@A,"nothing in the ledger owns 0x0130BC90. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0130C548,_locale_format_0084ED20,"nothing in the ledger owns 0x0130C548. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130EA10,?TheBfmeObject_00C70EB0@@3VGen_00C70EB0Target@@A,"nothing in the ledger owns 0x0130EA10. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01336CE0,?g_01336CE0@@3PAVRva008838F0Owner@@A,the name encodes 0x008838F0 but retail reads 0x01336CE0
 dir32,0x01336E10,?obj@?1??getRva008876E0Singleton@@YAPAXXZ@4VRva008876E0Type@@A,the name encodes 0x008876E0 but retail reads 0x01336E10

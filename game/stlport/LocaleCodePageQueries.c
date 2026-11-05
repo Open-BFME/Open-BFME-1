@@ -450,8 +450,11 @@ char *Rva0084E830LocaleName(LocaleCodePageObject_0084EED0 *object, char *buf)
 
 /* Retail 0084ED20, after INT3. The return at 0084EE53 is followed by
  * compiler switch tables through 0084EEC3, then INT3. Retain the retail
- * GetLocaleInfo count even though the local array is only 80 bytes. */
-extern char locale_format_0084ED20[];
+ * GetLocaleInfo count even though the local array is only 80 bytes.
+ * Load-time bytes are zero (see
+ * targets/game/reverse/identity_evidence/0130c548-locale-format.md); the true
+ * static bound is unevidenced, so claim the minimal one byte. */
+char locale_format_0084ED20[1];
 char *Rva0084ED20Tail(LocaleCodePageObject_0084EED0 *object)
 {
     char format[80];
