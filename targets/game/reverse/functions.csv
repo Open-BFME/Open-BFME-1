@@ -8501,7 +8501,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??1ScienceInfo@@MAE@XZ,,0x000E8520,127,game/GameEngine/Source/Common/RTS/ScienceInfoDestructorThunk.cpp,matched,C++ exact; BFME layout has one ScienceVec and out-of-line destructor ILT
 ??1ScienceStore@@UAE@XZ,,0x000E7A30,192,game/GameEngine/Source/Common/RTS/Science.cpp,matched,
 ??1ScreenMapperClass@@UAE@XZ,,0x00922750,7,game/Libraries/Source/WWVegas/WW3D2/vertmaterial.cpp,matched,Clean C++ scalar destructor; constructor/vtable and deleting-wrapper call establish ScreenMapperClass identity.
-??1Script@@QAE@XZ,,0x00352C20,156,game/GameEngine/Source/Common/BfmeConv1653.cpp,matched,
+??1Script@@QAE@XZ,,0x00352C20,156,game/GameEngine/Source/GameLogic/ScriptEngine/BfmeConv1653.cpp,matched,
 ??1ScriptAction@@UAE@XZ,,0x00354330,106,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionDestructors.cpp,matched,ScriptAction destructor identified by vtable 0x010E84E0 and matching constructors
 ??1ScriptActions@@UAE@XZ,,0x002F1B80,108,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDestructor.cpp,matched,ScriptActions destructor; inlines reset flag clearing on TheTerrainLogic; destroys m_unnamedUnit StringBase; chains to SubsystemInterface destructor
 ??1ScriptConditions@@UAE@XZ,,0x003244B0,106,game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsDestructorThunk.cpp,matched,True body via ctor vtbl 0x10E1F44; queue 0x9F27F1 was PartitionManager getName+pad+matched dtor
