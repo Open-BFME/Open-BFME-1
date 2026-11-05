@@ -9,7 +9,15 @@
 // matched ThingFactoryFindTemplate / ThingFactory_newObject / Object.cpp /
 // TransportContain.cpp and dispatch pin evidence at RVA 001BE220.
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-template <> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H
@@ -102,7 +110,7 @@ void HordeSiegeEngineContain::createPayload()
 				if (scaledCount > 0)
 					dispatchRva001BE220((Rva001BE220Receiver *)payload, 0xcf, scaledCount);
 
-				if (!owner->getName().isEmpty())
+				if (!asciiIsEmpty(owner->getName()))
 				{
 					const char *text = owner->getName().str();
 					char formattedName[256];

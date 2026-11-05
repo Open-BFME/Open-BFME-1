@@ -47,7 +47,6 @@ class AsciiString : private StringBase<char>
 public:
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : ""; }
 
 	bool endsWithNoCase(const char *p) const
@@ -59,12 +58,22 @@ public:
 	int compare(const char *p) const;
 };
 
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
+
 static const char *SAVE_GAME_EXTENSION = ".sav";
 static const char *ZERO_NAME_ONLY      = "00000000";
 
 void findHighFileNumber(AsciiString filename, void *userData)
 {
-	if (filename.isEmpty())
+	if (asciiIsEmpty(filename))
 		return;
 
 	if (reinterpret_cast<const StringBase<char> *>(&filename)->endsWithNoCase(

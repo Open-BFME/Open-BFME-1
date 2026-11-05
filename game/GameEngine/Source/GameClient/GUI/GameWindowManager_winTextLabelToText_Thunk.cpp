@@ -9,10 +9,14 @@
 // the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-// This caller inlines the canonical null/length test and wide construction.
-template <> inline bool StringBase<char>::isEmpty() const
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
 {
-	return !m_data || m_data->length == 0;
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
 }
 
 inline UnicodeString::UnicodeString() : m_text(0) {}
@@ -31,7 +35,7 @@ public:
 
 UnicodeString GameWindowManager::winTextLabelToText(AsciiString label)
 {
-	if (label.isEmpty()) {
+	if (asciiIsEmpty(label)) {
 		return UnicodeString::TheEmptyString;
 	}
 

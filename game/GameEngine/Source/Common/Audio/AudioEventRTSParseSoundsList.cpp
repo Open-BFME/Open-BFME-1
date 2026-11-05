@@ -26,7 +26,15 @@
 #include "Common/INI.h"
 #include "Common/INIException.h"
 #pragma intrinsic(strlen)
-template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 inline AsciiString::AsciiString(const char* str, int len) {
     ((StringBase<char>*)this)->StringBase<char>::StringBase(str,len);
@@ -69,7 +77,7 @@ void INIParseSoundsListShim::parse(INI* ini,void* instance,void* store,const voi
                 weight = 1000;
                 name = AsciiString(token,tokenLength);
             }
-            if(name.isEmpty()) throw INIException(3,"Sound file has no file name. Sound '%s' for audio event '%s'",token,((AsciiString*)((char*)instance + 8))->str());
+            if(asciiIsEmpty(name)) throw INIException(3,"Sound file has no file name. Sound '%s' for audio event '%s'",token,((AsciiString*)((char*)instance + 8))->str());
             sounds->push_back(_STL::Rva000B19F0Element(name,weight));
             if(totalWeight) *totalWeight += weight;
         }

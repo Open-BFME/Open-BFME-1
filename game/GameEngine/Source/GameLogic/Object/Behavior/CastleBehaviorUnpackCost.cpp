@@ -96,16 +96,22 @@ public:
 	}
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	Bool isEmpty() const
-	{
-		return m_buffer == 0 || m_buffer->m_length == 0;
-	}
-
 	const char *str() const
 	{
 		return m_buffer ? (const char *)((unsigned char *)m_buffer + 8) : "";
 	}
 };
+
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  This view keeps its SharedBuffer layout
+// (refcount word, then length at +4), which reads exactly like the canonical
+// header/m_data pair, so the same null/length test applies.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 
 enum NameKeyType
 {
@@ -219,7 +225,7 @@ UnsignedInt CastleBehavior::getUnpackCost(Player *player) const
 		return 0;
 
 	AsciiString playerName(player->m_playerName);
-	if (playerName.isEmpty())
+	if (asciiIsEmpty(playerName))
 		return 0;
 	else
 	{

@@ -33,10 +33,6 @@ public:
 	{
 		((StringBase<char> *)this)->set(text, length);
 	}
-	bool isEmpty(void) const
-	{
-		return AsciiString::isEmpty();
-	}
 	Int compare(const ControlBarSchemeAsciiString &other) const
 	{
 		return ((const StringBase<char> *)this)->compare(*(const StringBase<char> *)&other);
@@ -63,6 +59,16 @@ public:
 		return thisLen - otherLen;
 	}
 };
+
+// AsciiString::isEmpty, expanded in place.  Calling the member would emit
+// ?isEmpty@AsciiString@@QBE_NXZ and ?isEmpty@?$StringBase@D@@QBE_NXZ COMDATs
+// that are not retail's bodies.  The buffer pointer is the string's first
+// word; its length is at +4.
+static __forceinline bool asciiIsEmpty( const AsciiString &string )
+{
+	const char *data = *reinterpret_cast<const char * const *>(&string);
+	return !data || *reinterpret_cast<const unsigned short *>(data + 4) == 0;
+}
 
 typedef _STL::list<class ControlBarScheme *> ControlBarSchemeList;
 
@@ -93,7 +99,7 @@ void ControlBarSchemeManagerSetControlBarSchemeByPlayerTemplate::setControlBarSc
 		return;
 	}
 
-	if(side.isEmpty())
+	if(asciiIsEmpty(side))
 		side.set("Observer", 8);
 	ControlBarScheme *tempScheme = 0;
 	ControlBarSchemeList::iterator it = m_schemeList.begin();
