@@ -11,10 +11,7 @@ extern "C" float __cdecl sinf(float);
 extern "C" __declspec(dllimport) double BfmeFloorER(double x);
 extern "C" __declspec(dllimport) double bfmeMathVE(double x);
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord2D
 {

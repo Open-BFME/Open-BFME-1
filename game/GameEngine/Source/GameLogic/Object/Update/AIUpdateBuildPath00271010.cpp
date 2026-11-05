@@ -7,10 +7,7 @@ typedef bool Bool;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum
 {

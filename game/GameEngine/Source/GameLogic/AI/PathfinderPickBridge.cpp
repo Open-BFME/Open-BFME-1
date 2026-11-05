@@ -28,7 +28,7 @@ typedef int Int;
 
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
 

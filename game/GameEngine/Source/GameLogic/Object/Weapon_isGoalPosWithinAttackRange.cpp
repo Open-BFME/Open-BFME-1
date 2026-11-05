@@ -19,7 +19,7 @@
 // the obstacle and module contracts. The gap helpers and range overload
 // have matched C++ implementations. Address-claimed thunks avoid guessed
 // semantic callee names; the sole direct predicate import is explained below.
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Object;
 
 // These declarations import existing address-claimed ILT symbols only.
