@@ -27,12 +27,7 @@ typedef bool Bool;
 typedef float Real;
 typedef int Int;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 typedef _STL::list<Coord3D> Coord3DList;
 

@@ -20,7 +20,7 @@
 class Xfer;
 class Object;
 class SequentialScript;
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 enum ObjectID { INVALID_ID = 0 };
 enum ScienceType { SCIENCE_INVALID = -1 };
 

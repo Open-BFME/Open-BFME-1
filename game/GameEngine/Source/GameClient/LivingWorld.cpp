@@ -11,12 +11,7 @@
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class Rva003C9470Key
 {

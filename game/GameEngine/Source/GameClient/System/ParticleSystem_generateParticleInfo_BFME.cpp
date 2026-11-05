@@ -35,12 +35,7 @@ typedef unsigned int UnsignedInt;
 
 template <typename NUM> inline const NUM &bfmeMin(const NUM &x, const NUM &y) { return ((x) < (y) ? (x) : (y)); }
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "game_client_random_variable.h"
 

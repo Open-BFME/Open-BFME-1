@@ -13,12 +13,7 @@ enum AIStateType
 	AI_STATE_UNKNOWN = 0
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail reaches these through incremental-link thunks; call them directly.
 extern void j_0000de68();

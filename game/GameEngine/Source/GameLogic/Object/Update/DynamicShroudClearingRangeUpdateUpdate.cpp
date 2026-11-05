@@ -7,12 +7,7 @@
 // UpdateModule carries three members (0x14..0x1c), one more than Zero Hour,
 // so m_state sits at +0x20.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum UpdateSleepTime
 {

@@ -48,12 +48,7 @@ public:
 	}
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Rva0077C390Model
 {

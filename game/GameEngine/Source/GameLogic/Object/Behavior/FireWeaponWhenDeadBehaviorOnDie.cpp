@@ -28,10 +28,7 @@ BitFlags<NUMBITS>::BitFlags()
 
 typedef BitFlags<192> UpgradeMaskType;
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Player
 {
