@@ -24,12 +24,9 @@ game/GameEngine/Source/GameClient/EffectFactory0040A260Create.cpp	game/GameEngin
 game/GameEngine/Source/GameClient/GUI/BannerUIRva005841D0.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/BannerUIRva005841D0.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BannerUIRva00584330.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/BannerUIRva00584330.cpp	EA
 game/GameEngine/Source/GameClient/GUI/Rva004B2330.cpp	game/GameEngine/Source/GameClient/GUI/ControlBar/Rva004B2330.cpp	EA
-game/GameEngine/Source/GameClient/Player_addToPriorityBuildList.cpp	game/GameEngine/Source/Common/RTS/Player_addToPriorityBuildList.cpp	Player
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/Rva00592640OwnerConstructor.cpp	EA
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp	game/GameEngine/Source/GameClient/System/FXParticleSystem/fxpsdefaultdrawmodule.cpp	EA
 game/GameEngine/Source/GameClient/W3DInGameUISubtitleTail0043B4F0.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUISubtitleTail0043B4F0.cpp	W3DInGameUI
-game/GameEngine/Source/GameLogic/AI/DozerActionMoveToActionPosStateDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerActionMoveToActionPosStateDestructor.cpp	DozerActionMoveToActionPosState
-game/GameEngine/Source/GameLogic/AI/DozerActionPickActionPosStateDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerActionPickActionPosStateDestructor.cpp	DozerActionPickActionPosState
 game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerPrimaryIdleStateDeletingDestructor.cpp	DozerPrimaryIdleState
 game/GameEngine/Source/GameLogic/AI/GiantBirdFollowPathStateDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowPathStateDestructor.cpp	GiantBirdFollowPathState
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardOuterStateOnEnter.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateOnEnter.cpp	EA
@@ -42,11 +39,9 @@ game/GameEngine/Source/GameLogic/Object/Behavior/Rva001FAB70ParseWayPoint.cpp	ga
 game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp	game/GameEngine/Source/GameLogic/Object/Body/SymbioticStructureBody.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Contain/Rva00249F50.cpp	game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00249F50.cpp	EA
 game/GameEngine/Source/GameLogic/Object/PartitionData_doRectFill.cpp	game/Libraries/Source/shroudmanager/PartitionData_doRectFill.cpp	EA
-game/GameEngine/Source/GameLogic/Object/PartitionFilterFlammableDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/PartitionFilterFlammableDestructor.cpp	PartitionFilterFlammable
 game/GameEngine/Source/GameLogic/Object/Rva0010FE90CallbackLists.cpp	game/GameEngine/Source/Common/System/SaveGame/Rva0010FE90CallbackLists.cpp	EA
 game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D5980.cpp	game/GameEngine/Source/GameLogic/Object/Upgrade/GeometryUpgrade.cpp	EA
 game/GameEngine/Source/GameLogic/ObjectCreationListStoreDefaultVirtuals.cpp	game/GameEngine/Source/GameLogic/Object/ObjectCreationListStoreDefaultVirtuals.cpp	ObjectCreationListStore
-game/GameEngine/Source/GameLogic/Pathfinder/PathfinderNewMap.cpp	game/GameEngine/Source/GameLogic/AI/PathfinderNewMap.cpp	Pathfinder
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp	game/GameEngine/Source/GameLogic/AI/PathfinderRva003F5C70.cpp	Pathfinder
 game/GameEngine/Source/GameLogic/System/ArmySummaryCollectionXfer.cpp	game/GameEngine/Source/GameLogic/LivingWorld/ArmySummaryCollectionXfer.cpp	BfmeLivingWorldPlayerArmyCollection
 game/GameEngine/Source/GameLogic/System/VictorySystemNewMap.cpp	game/GameEngine/Source/GameLogic/Object/VictorySystemNewMap.cpp	EA
