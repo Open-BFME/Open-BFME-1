@@ -59,8 +59,11 @@ const FieldParse WaterTransparencySetting::m_waterTransparencySettingFieldParseT
 WaterSetting::WaterSetting( void )
 {
 
-	m_skyTextureFile.clear();
-	m_waterTextureFile.clear();
+	// StringBase spelling: the AsciiString::clear forwarder would be emitted
+	// here as a COMDAT; retail calls the out-of-line StringBase<char>::clear
+	// (0x000680C0) directly.
+	((StringBase<char> &)m_skyTextureFile).clear();
+	((StringBase<char> &)m_waterTextureFile).clear();
 	m_waterRepeatCount = 0;
 	m_skyTexelsPerUnit = 0.0f;
 
