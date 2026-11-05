@@ -30,10 +30,7 @@ class Team;
 
 const int NO_MAX_SHOTS_LIMIT = 0x7fffffff;
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Waypoint

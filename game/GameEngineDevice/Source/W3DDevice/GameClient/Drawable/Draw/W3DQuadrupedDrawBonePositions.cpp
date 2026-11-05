@@ -4,12 +4,7 @@
 
 #include "matrix3d.h"
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 namespace _STL
 {

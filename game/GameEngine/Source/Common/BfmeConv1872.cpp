@@ -91,12 +91,7 @@ void BfmeOwnerZE::bfmeCloseZE(void *unused)
 	m_bfmeWinZE->bfmeDoneZE();
 }
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 class GeometryInfo
 {

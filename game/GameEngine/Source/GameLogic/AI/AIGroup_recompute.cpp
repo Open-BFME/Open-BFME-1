@@ -6,12 +6,7 @@
 // scalar delete is explicitly non-throwing so the old MSVC caller cleanup can
 // be scheduled with the following path-state stores.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType { KINDOF_IMMOBILE = 2 };
 

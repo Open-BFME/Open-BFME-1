@@ -28,7 +28,7 @@ enum EmotionType
 enum GuardMode { GUARDMODE_NORMAL = 0 };
 #include "../command_source_type.h"
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "ascii_string.h"
 

@@ -51,12 +51,7 @@ extern "C" int lua_type(lua_State *state, int index);
 struct BfmeQ1039;
 void bfmeGo1039E(BfmeQ1039 *queue, int value);
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class ObjectStatusMask
 {

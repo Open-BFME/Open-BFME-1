@@ -12,12 +12,7 @@
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "ascii_string.h"
 

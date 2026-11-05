@@ -15,12 +15,7 @@ class ThingTemplate;
 class ObjectTypes;
 class AIGroup;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class BfmeAsciiStringArg : public AsciiString
 {

@@ -38,10 +38,7 @@ enum WeaponSlotType
 };
 
 // class-gate: allow Coord3D the ledgered callees take the struct-keyed (PBU) Coord3D and this body needs only its three components.
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Thing
 {

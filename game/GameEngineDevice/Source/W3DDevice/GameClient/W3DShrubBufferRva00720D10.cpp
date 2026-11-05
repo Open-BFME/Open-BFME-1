@@ -11,10 +11,7 @@
 #include "matrix3d.h"
 #include "sphere.h"
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
 // once in Common/GlobalData.cpp. Only the field this body reads is described on a

@@ -18,12 +18,7 @@
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // The embedded scalar field at this+0x2448.  The ledger spells its two entry
 // points on two different address-derived classes, so both are declared here
