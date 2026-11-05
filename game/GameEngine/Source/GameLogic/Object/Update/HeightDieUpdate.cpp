@@ -49,12 +49,7 @@ enum DeathType
 };
 
 // class-gate: allow Coord3D struct-keyed view: the pinned callee ?setPosition@Object@@QAEXPBUCoord3D@@@Z (ILT 0x0003A1A7) and the TerrainLogic height queries are spelled PBU in this TU
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 template <size_t NUMBITS>
 class BitFlags

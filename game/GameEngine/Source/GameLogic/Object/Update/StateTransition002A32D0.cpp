@@ -12,10 +12,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 template <unsigned N> class BitFlags
 {
 	_STL::bitset<N> bits;

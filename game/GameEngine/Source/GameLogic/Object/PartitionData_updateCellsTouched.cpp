@@ -65,10 +65,7 @@ __forceinline long fast_float2long_round(Real f)
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round(fast_float_floor(x)))
 #define REAL_TO_INT_CEIL(x) (fast_float2long_round(fast_float_ceil(x)))
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Coord3D-shaped offset whose default constructor zeroes it (retail stores the
 // three zeros before the name and the enabled flag).

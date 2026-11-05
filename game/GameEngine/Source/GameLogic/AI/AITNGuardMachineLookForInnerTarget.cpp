@@ -242,12 +242,7 @@ private:
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AITNGuardMachine : public StateMachine
 {
