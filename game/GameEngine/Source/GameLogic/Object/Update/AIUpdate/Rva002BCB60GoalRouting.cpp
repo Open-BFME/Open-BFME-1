@@ -5,12 +5,7 @@
 // two goal sinks and the height adjustment call their retail ILT thunks
 // (?j_*) directly through function-local member-pointer unions.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 
 class Rva002BCB60Thing

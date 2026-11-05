@@ -7,7 +7,7 @@
 #include <vector>
 extern "C" float cosf(float);
 extern "C" float sinf(float);
-struct Coord3D { float x,y,z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 #define THING_TU_MEMBERS void setPosition(const Coord3D*);
 #define OBJECT_TU_MEMBERS AIUpdateInterface* getAIUpdateInterface() { return m_ai; }

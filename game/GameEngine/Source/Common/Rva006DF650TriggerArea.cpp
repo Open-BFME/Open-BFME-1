@@ -32,12 +32,7 @@
 // x/y/z order -- that interleaving of `fld` and the store of the previous
 // result is the compiler's, not source order.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord3D
 {

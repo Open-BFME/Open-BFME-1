@@ -12,7 +12,7 @@
 
 #include <stddef.h>
 
-struct Coord3D { float x, y, z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 typedef float Real;
 typedef int Int;
 typedef unsigned int ObjectID;

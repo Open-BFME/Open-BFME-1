@@ -49,12 +49,7 @@ typedef BitFlags<86> ObjectStatusMaskType;
 
 #define MAKE_OBJECT_STATUS_MASK(k) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (k))
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Gen_00411DD0
 {

@@ -47,10 +47,7 @@ private:
 
 class Pathfinder;
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Rva003D7680Struct
 {

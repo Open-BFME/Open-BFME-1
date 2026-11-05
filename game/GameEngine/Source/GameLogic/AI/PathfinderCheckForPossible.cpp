@@ -42,12 +42,7 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned short zoneStorageType;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum
 {
