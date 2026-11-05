@@ -31,11 +31,16 @@ private:
 	Rva00363360StringData *m_data;
 };
 
+// Retail keeps no distinct BfmeSharedString dtor body: the name is pinned at
+// 0x00887940, StringBase<char>::releaseBuffer.  The out-of-line declaration
+// plus the alternatename below route every scope exit to the matched
+// releaseBuffer row instead of emitting a non-retail copy here.
+#pragma comment(linker, "/alternatename:??1BfmeSharedString@@QAE@XZ=?releaseBuffer@?$StringBase@D@@AAEXXZ")
 class BfmeSharedString : private StringBase<char>
 {
 public:
 	BfmeSharedString(const BfmeSharedString &other) : StringBase<char>(other) {}
-	~BfmeSharedString() {}
+	~BfmeSharedString();
 
 	int compare(const BfmeSharedString &other) const
 	{
