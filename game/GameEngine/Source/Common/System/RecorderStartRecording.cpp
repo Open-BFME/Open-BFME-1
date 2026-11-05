@@ -11,6 +11,11 @@
 // Use the canonical string declarations with the inline forwarding bodies
 // witnessed here: char destruction -> 0x00887940; wide -> 0x008881D0.
 // This retains retail's by-value argument construction and EH state schedule.
+// Route wide str() through StringBase<unsigned short> directly: spelling it as
+// UnicodeString::str emits a second ?str@UnicodeString COMDAT here that loses
+// the link (retail keeps one wide str body at 0x0005F290, owned by
+// StringBase<G>::str). The forward adds no code, so the inlined call sites
+// below are unaffected.
 template <typename T> inline void StringBase<T>::concat(const StringBase<T> &s) { concat(s.str(), s.getLength()); }
 inline UnicodeString::UnicodeString() { *(void**)this = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
@@ -119,14 +124,14 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
     for (int i=0;i<8;++i) fwrite(&b,1,1,m_file);
     UnicodeString replayName;
     replayName = TheGameText->fetch("GUI:LastReplay");
-    fwprintf(m_file,L"%ws",replayName.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",((const StringBase<unsigned short>*)&replayName)->str()); fputwc(0,m_file);
     SYSTEMTIME systemTime;
     GetLocalTime(&systemTime); fwrite(&systemTime,sizeof(systemTime),1,m_file);
     UnicodeStringAL versionString=((BfmeVersionAL*)TheVersion)->bfmeVersionTextAL();
     UnicodeString versionTimeString=TheVersion->getUnicodeBuildTime();
     unsigned int versionNumber=TheVersion->getVersionNumber();
-    fwprintf(m_file,L"%ws",versionString.str()); fputwc(0,m_file);
-    fwprintf(m_file,L"%ws",versionTimeString.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",((const StringBase<unsigned short>*)&versionString)->str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",((const StringBase<unsigned short>*)&versionTimeString)->str()); fputwc(0,m_file);
     fwrite(&versionNumber,4,1,m_file);
     int value=Rva0009B4B0(TheWritableGlobalData->field0bd0,TheWritableGlobalData->field0bd0);
     fwrite(&value,4,1,m_file);
