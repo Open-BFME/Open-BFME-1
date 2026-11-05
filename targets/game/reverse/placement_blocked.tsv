@@ -2,3 +2,4 @@ game/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp	pre-existing byte-red:
 game/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	defines a function no ledger row declares
 game/GameEngine/Source/Common/BfmeN1242Put.cpp	defines a function no ledger row declares
 game/GameEngine/Source/GameClient/GUI/OnlineLoginConstructor.cpp	defines a function no ledger row declares
+game/GameEngine/Source/Common/BfmeConv1729.cpp	class-gate: private Coord3D copy; canonical struct header changes mangled name (retail VCoord3D class), adoption needs identity work

@@ -31450,7 +31450,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeInit@RecorderClass@@AAEXXZ,,0x00098050,174,game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp,matched,Open-BFME5 clean C++ RecorderClass init; ReplayGameInfo reset and map/seed setup
 ?bfmeInit@Rva00694D10Fields@@QAEPAU1@PBX@Z,,0x00694D10,27,game/GameEngine/Source/Common/Rva00694D10AudioEventInitThunk.cpp,matched,address-derived twin of bfmeInitBQF shape copies AudioEventRTS via ILT 0x00047B27 then zeroes int+bool at 0x70/0x74
 ?bfmeInitAB@BfmeThingAB@@QAEPAV1@PAXPBUBfmeBigAB@@@Z,,0x005A81E0,60,game/GameEngine/Source/Common/BfmeThreeHundredEightyTwo.cpp,matched,
-?bfmeInitANB@LocomotorSet@@QAEXPAVBfmeSinkANB@@PAX@Z,,0x001BD200,76,game/GameEngine/Source/Common/BfmeConv412.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/ea-worldbuilder-labels.md;model=claude-opus-5-5;host=ymo-workstation
+?bfmeInitANB@LocomotorSet@@QAEXPAVBfmeSinkANB@@PAX@Z,,0x001BD200,76,game/GameEngine/Source/GameLogic/Object/BfmeConv412.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/ea-worldbuilder-labels.md;model=claude-opus-5-5;host=ymo-workstation
 ?bfmeInitAPA@BfmeThingAPA@@QAEPAV1@PAX0@Z,,0x0005BDC0,80,game/GameEngine/Source/Common/BfmeConv413.cpp,matched,
 ?bfmeInitARC@BfmeThingARC@@QAEPAV1@XZ,,0x003785E0,43,game/GameEngine/Source/Common/BfmeConv417.cpp,matched,
 ?bfmeInitASA@BfmeThingASA@@QAEPAV1@PAX@Z,,0x0042B970,46,game/GameEngine/Source/Common/BfmeConv419.cpp,matched,
