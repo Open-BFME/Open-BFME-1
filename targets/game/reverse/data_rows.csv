@@ -1821,3 +1821,4 @@ _g_01134280,0x01134280,va,2,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugEx
 ?key013384C0@@3HA,0x013384C0,va,4,.data,game/Libraries/Source/Apt/BfmeB1236Emit.cpp,matched,targets/game/reverse/identity_evidence/013384c0-key.md,muse-spark-1.3
 ?key013384C8@@3HA,0x013384C8,va,4,.data,game/Libraries/Source/Apt/BfmeB1236Emit.cpp,matched,targets/game/reverse/identity_evidence/013384c8-key.md,muse-spark-1.3
 ?RvaObject012EF0E8@@3UGen00026F35@@A,0x012EF0E8,va,1,.data,game/GameEngine/Source/Common/StaticInit/Rva012EF0E8Global.cpp,matched,targets/game/reverse/identity_evidence/012ef0e8-rvaobject.md,muse-spark-1.3
+?key0133853C@@3PADA,0x0133853C,va,1,.data,game/Libraries/Source/EA/Apt/AxisEvent008A6CB0.cpp,matched,targets/game/reverse/identity_evidence/0133853c-key.md,muse-spark-1.3

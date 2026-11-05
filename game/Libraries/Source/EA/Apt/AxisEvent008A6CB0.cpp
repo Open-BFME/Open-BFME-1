@@ -107,7 +107,10 @@ extern unsigned Rva008A5250LastKey;
 // incomplete here because only raw fields at +0x127c.. are read.
 struct BfmePickWorld1284;
 extern BfmePickWorld1284 *g_bfmeHolderBU;
-extern char key0133853C[];
+// Opaque Apt emit key at retail VA 0x0133853C: used only by address (see
+// targets/game/reverse/identity_evidence/0133853c-key.md). Retail holds 0,
+// so a one-byte BSS definition matches; the true bound is unevidenced.
+char key0133853C[1];
 Rva00899F00Base *axisEvent008A6CB0() {
     unsigned event = 0x1f7;
     unsigned id = 0;
