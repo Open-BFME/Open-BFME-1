@@ -71,7 +71,6 @@ dir32,0x00CB5720,?Callback00CB5720@@3PADA,"nothing in the ledger owns 0x00CB5720
 dir32,0x00CB5760,?Callback00CB5760@@3PADA,"nothing in the ledger owns 0x00CB5760. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00CB5770,?Callback00CB5770@@3PADA,"nothing in the ledger owns 0x00CB5770. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00DF7F4E,__RTC_Terminate,"nothing in the ledger owns 0x00DF7F4E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00DF7FB0,__matherr,"nothing in the ledger owns 0x00DF7FB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01070EC0,?obj@?1??getRva008877A0Singleton@@YAPAXXZ@$AVRva008877A0Type@@A,the name encodes 0x008877A0 but retail reads 0x01070EC0
 dir32,0x01070EE0,?obj@?1??getRva008876E0Singleton@@YAPAXXZ@$AVRva008876E0Type@@A,the name encodes 0x008876E0 but retail reads 0x01070EE0
 dir32,0x01073744,?g_vtbl_01073744@@3PAPAXA,"retail 0x01073744 is already recorded as ??_7?$BasicTimerClass@VSystemTimerClass@@@@6B@ (+112 more); reference that name, not a new one"
