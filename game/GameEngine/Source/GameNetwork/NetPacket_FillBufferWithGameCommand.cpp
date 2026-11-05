@@ -25,7 +25,7 @@ typedef bool Bool;
 typedef float Real;
 typedef unsigned short WideChar;
 
-struct Coord3D { Real x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 struct ICoord2D { Int x, y; };
 struct IRegion2D { Int loX, loY, hiX, hiY; };
 

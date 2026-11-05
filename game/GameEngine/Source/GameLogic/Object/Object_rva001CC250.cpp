@@ -35,12 +35,7 @@ typedef float Real;
 typedef bool Bool;
 typedef int Int;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum ObjectID { INVALID_ID = 0 };
 enum KindOfType { KINDOF_RVA001CC250_6C = 0x6C };

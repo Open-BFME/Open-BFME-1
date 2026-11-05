@@ -22,10 +22,7 @@ typedef int Int;
 typedef bool Bool;
 typedef int WaypointID;
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord3D
 {

@@ -39,7 +39,7 @@ typedef bool Bool;
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

@@ -9,12 +9,7 @@
 // Pathfinder takes the actual Weapon pointer, not a boolean presence test.
 // Object::m_id@0x74 and ThingTemplate::m_kindof@0xC8 are layout witnesses.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType { };
 
