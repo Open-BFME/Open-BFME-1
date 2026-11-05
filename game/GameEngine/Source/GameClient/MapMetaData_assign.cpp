@@ -27,12 +27,7 @@ struct WaypointMap
 	int m_numStartSpots;
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region3D
 {

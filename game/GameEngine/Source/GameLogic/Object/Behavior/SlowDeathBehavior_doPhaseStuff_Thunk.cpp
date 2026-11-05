@@ -22,7 +22,7 @@ extern int GetGameClientRandomValue(int, int, char *, int);
 extern int GetGameLogicRandomValue(int, int, char *, int);
 
 
-struct Coord3D { float x, y, z; };
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 enum ObjectID { INVALID_OBJECT_ID = 0 };
 enum SlowDeathPhaseType { SDPHASE_INITIAL, SDPHASE_MIDPOINT, SDPHASE_FINAL };
 class Object {

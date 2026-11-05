@@ -14,12 +14,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../command_source_type.h"
 

@@ -9,12 +9,7 @@
 // The old storage release is inline in this variant rather than through
 // vector::_M_clear.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Include/Lib/Coord3D.h"
 
 namespace _STL
 {

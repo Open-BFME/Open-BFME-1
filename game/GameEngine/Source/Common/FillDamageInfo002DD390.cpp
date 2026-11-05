@@ -11,12 +11,7 @@ extern "C" float sqrt(float value);
 
 extern const float g_rva01075350;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 struct IdRecord002DD390
 {

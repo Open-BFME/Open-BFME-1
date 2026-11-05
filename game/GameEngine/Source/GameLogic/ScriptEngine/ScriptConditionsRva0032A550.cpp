@@ -22,12 +22,7 @@ extern const float g_rva01075350;
 
 class Object;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // The constructor lives at retail 0x00324540 (R3ScalarFieldConstructors.cpp).
 struct Rva00324540

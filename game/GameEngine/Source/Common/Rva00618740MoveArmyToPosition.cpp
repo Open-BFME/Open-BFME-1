@@ -13,12 +13,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail's own call here is `call 0x00014858` (?j_00014858@@YAXXZ, defined in
 // game/gen_small/thunks_009.cpp), whose body is the 5-byte

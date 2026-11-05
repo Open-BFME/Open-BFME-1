@@ -12,12 +12,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned short PlayerMaskType;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../command_source_type.h"
 

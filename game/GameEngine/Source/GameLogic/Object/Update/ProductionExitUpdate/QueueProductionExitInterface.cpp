@@ -25,12 +25,7 @@
 // clearance distance at +0x18 and the burst count at +0x1C. Only
 // exitObjectByBudding reads any of them.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum
 {

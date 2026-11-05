@@ -19,7 +19,7 @@
 // class renames that row's function and the symbol stops existing in the object.
 
 typedef int Int;
-struct Coord3D { float x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 class Matrix3D { float m[12]; };
 
 // Slot 3 is BFME's seven-argument form and slot 4 the five-argument one.
