@@ -16,6 +16,14 @@ inline UnicodeString::UnicodeString() { *(void**)this = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) { ((StringBase<unsigned short>*)this)->set(*(const StringBase<unsigned short>*)&s); return *this; }
 
+// UnicodeString::str, expanded in place.  Calling the member would emit a
+// ?str@UnicodeString@@QBEPBGXZ COMDAT whose null-string operand is
+// StringBase<unsigned short>'s TheNullChr, not retail 0x0005F270's.
+static __forceinline const wchar_t *unicodeStr( const UnicodeString &string )
+{
+	return (const wchar_t *)((const StringBase<unsigned short> *)&string)->str();
+}
+
 class FileSystem { public: bool createDirectory(AsciiString path); };
 extern FileSystem *TheFileSystem;
 class GameTextInterface {
@@ -119,14 +127,14 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
     for (int i=0;i<8;++i) fwrite(&b,1,1,m_file);
     UnicodeString replayName;
     replayName = TheGameText->fetch("GUI:LastReplay");
-    fwprintf(m_file,L"%ws",replayName.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(replayName)); fputwc(0,m_file);
     SYSTEMTIME systemTime;
     GetLocalTime(&systemTime); fwrite(&systemTime,sizeof(systemTime),1,m_file);
     UnicodeStringAL versionString=((BfmeVersionAL*)TheVersion)->bfmeVersionTextAL();
     UnicodeString versionTimeString=TheVersion->getUnicodeBuildTime();
     unsigned int versionNumber=TheVersion->getVersionNumber();
-    fwprintf(m_file,L"%ws",versionString.str()); fputwc(0,m_file);
-    fwprintf(m_file,L"%ws",versionTimeString.str()); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(versionString)); fputwc(0,m_file);
+    fwprintf(m_file,L"%ws",unicodeStr(versionTimeString)); fputwc(0,m_file);
     fwrite(&versionNumber,4,1,m_file);
     int value=Rva0009B4B0(TheWritableGlobalData->field0bd0,TheWritableGlobalData->field0bd0);
     fwrite(&value,4,1,m_file);
