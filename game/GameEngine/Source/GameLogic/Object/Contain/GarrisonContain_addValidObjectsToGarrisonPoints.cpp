@@ -39,12 +39,7 @@ enum WeaponSlotType
 	FORCE_WEAPONSLOTTYPE_TO_LONG_SIZE = 0x7ffffff
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 typedef _STL::list<Object *> ContainedItemsList;
