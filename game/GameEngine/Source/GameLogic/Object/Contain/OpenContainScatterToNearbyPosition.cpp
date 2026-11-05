@@ -4,12 +4,7 @@ typedef int Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AIUpdateInterface;
 class TerrainLogic;

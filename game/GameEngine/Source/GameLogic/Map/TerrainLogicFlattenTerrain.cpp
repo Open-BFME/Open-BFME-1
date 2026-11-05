@@ -3,7 +3,7 @@
 // TerrainLogic::flattenTerrain, retail 0x001AE610. Matched Dozer and Worker
 // construct callers reach ILT 0x00049D2D; ZH flattenTerrain is the source twin.
 extern "C" __declspec(dllimport) double __cdecl floor(double);
-struct Coord3D {float x,y,z;};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct ICoord2D {int x,y;};
 class Object;

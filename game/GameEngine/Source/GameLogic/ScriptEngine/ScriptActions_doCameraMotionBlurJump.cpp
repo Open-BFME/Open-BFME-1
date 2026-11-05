@@ -26,12 +26,7 @@ enum FilterModes
 	FM_VIEW_MB_IN_AND_OUT_SATURATE
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Waypoint
 {

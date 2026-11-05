@@ -14,10 +14,7 @@ typedef bool Bool;
 
 enum StateReturnType { STATE_CONTINUE = 0 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail 0x012F0239 is ?Glo012F0239@@3_NA (data_rows.csv,
 // S3CritterDesyncCountdown.cpp); g_012F0239 was only a pin nothing defines.

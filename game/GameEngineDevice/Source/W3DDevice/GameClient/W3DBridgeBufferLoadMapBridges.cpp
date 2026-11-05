@@ -15,7 +15,7 @@ public:
 	void Set(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
 };
 
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Dict;
 
 // Declaration-only vtable slices, as in W3DTerrainLogicGetLayerHeight.cpp.

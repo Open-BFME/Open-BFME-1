@@ -6,12 +6,7 @@ typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct XferVersion
 {
