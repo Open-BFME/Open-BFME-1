@@ -10,6 +10,14 @@
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *left, const void *right, unsigned int count);
 
+// TU-visible null/length test: identical to the specializations the retail
+// call sites inline. Keeps the isEmpty test inline without emitting a
+// ?isEmpty@AsciiString copy.
+template <> inline bool StringBase<char>::isEmpty() const
+{
+	return !m_data || m_data->length == 0;
+}
+
 struct RealCoord2D
 {
 	Real x;
@@ -33,9 +41,13 @@ public:
 	{
 		((StringBase<char> *)this)->set(text, length);
 	}
+	// Retail inlines the null/length test here, so this must not ODR-use
+	// ?isEmpty@AsciiString (a second name on a body retail does not keep).
+	// Route through the TU-visible StringBase<char> specialization below,
+	// which inlines the same test; its copy is the accepted canonical shape.
 	bool isEmpty(void) const
 	{
-		return AsciiString::isEmpty();
+		return ((const StringBase<char> *)this)->isEmpty();
 	}
 	Int compare(const ControlBarSchemeAsciiString &other) const
 	{

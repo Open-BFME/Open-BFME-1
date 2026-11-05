@@ -102,7 +102,10 @@ void HordeSiegeEngineContain::createPayload()
 				if (scaledCount > 0)
 					dispatchRva001BE220((Rva001BE220Receiver *)payload, 0xcf, scaledCount);
 
-				if (!owner->getName().isEmpty())
+				// Route through the TU-visible StringBase<char> specialization:
+				// AsciiString::isEmpty here emits a losing COMDAT; the test
+				// inlines the same.
+				if (!((const StringBase<char> *)&owner->getName())->isEmpty())
 				{
 					const char *text = owner->getName().str();
 					char formattedName[256];

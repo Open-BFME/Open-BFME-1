@@ -96,9 +96,12 @@ public:
 	}
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	Bool isEmpty() const
+	// Static spelling: a const member here would emit ?isEmpty@AsciiString,
+	// a second name on a body retail does not keep (all retail call sites
+	// inline the null/length test). The inlined test below is unchanged.
+	static Bool isEmpty(const AsciiString &s)
 	{
-		return m_buffer == 0 || m_buffer->m_length == 0;
+		return s.m_buffer == 0 || s.m_buffer->m_length == 0;
 	}
 
 	const char *str() const
@@ -219,7 +222,7 @@ UnsignedInt CastleBehavior::getUnpackCost(Player *player) const
 		return 0;
 
 	AsciiString playerName(player->m_playerName);
-	if (playerName.isEmpty())
+	if (AsciiString::isEmpty(playerName))
 		return 0;
 	else
 	{

@@ -31,7 +31,10 @@ public:
 
 UnicodeString GameWindowManager::winTextLabelToText(AsciiString label)
 {
-	if (label.isEmpty()) {
+	// Route through the TU-visible StringBase<char> specialization above:
+	// spelling this as AsciiString::isEmpty emits a ?isEmpty@AsciiString
+	// copy that loses the link. The inlined test is unchanged.
+	if (((const StringBase<char> *)&label)->isEmpty()) {
 		return UnicodeString::TheEmptyString;
 	}
 
