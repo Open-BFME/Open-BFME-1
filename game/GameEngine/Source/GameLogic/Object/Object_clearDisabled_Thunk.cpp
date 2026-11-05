@@ -70,12 +70,7 @@ struct Rva002E5FF0Str
 
 extern Rva002E5FF0Str Rva01336E50Str;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // Retail's AudioEventRTS ctor is reached through the ILT thunk at 0x25306;
 // the inline body below keeps the call site identical. The dtor resolves

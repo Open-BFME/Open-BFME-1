@@ -7,10 +7,7 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Matrix3D;
 

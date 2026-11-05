@@ -17,12 +17,7 @@ class Team;
 
 #include "../command_source_type.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class BfmeOverridableView
 {

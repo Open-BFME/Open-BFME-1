@@ -22,12 +22,7 @@ enum KindOfType
 	KINDOF_PROJECTILE = 0x67
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class ProjectileUpdateInterface;
 
