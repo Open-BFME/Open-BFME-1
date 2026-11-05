@@ -334,8 +334,11 @@ char *Rva0084EF00(LocaleCodePageObject_0084EED0 *object)
 }
 
 /* Retail 0084EF30 builds a time format in the static buffer at VA 0130C128.
- * Convert the locale separator from the ACP before inserting it between fields. */
-extern char locale_format_0084EF30[];
+ * Convert the locale separator from the ACP before inserting it between fields.
+ * Load-time bytes are zero (see
+ * targets/game/reverse/identity_evidence/0130c128-locale-format.md); the true
+ * static bound is unevidenced, so claim the minimal one byte. */
+char locale_format_0084EF30[1];
 
 char *Rva0084EF30(LocaleCodePageObject_0084EED0 *object)
 {
