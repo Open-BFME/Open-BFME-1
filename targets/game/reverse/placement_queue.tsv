@@ -1,4 +1,3 @@
-game/GameEngine/Source/Common/Bfme/Rva006C5310BitFieldSet.cpp	game/Libraries/Source/WWVegas/WW3D2/Rva006C5310BitFieldSet.cpp	ShaderClass
 game/GameEngine/Source/Common/Bfme5SixtyNine.cpp	game/GameEngine/Source/GameClient/MessageStream/Bfme5SixtyNine.cpp	PickAndPlayInfo
 game/GameEngine/Source/Common/BfmeConv1083.cpp	game/GameEngine/Source/GameClient/Input/BfmeConv1083.cpp	Mouse
 game/GameEngine/Source/Common/BfmeConv1653.cpp	game/GameEngine/Source/GameLogic/ScriptEngine/BfmeConv1653.cpp	Script
