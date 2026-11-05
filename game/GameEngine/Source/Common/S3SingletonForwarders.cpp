@@ -646,7 +646,11 @@ public:
 	void bfmeForward(void);
 };
 
-extern Gen_00C70EB0Target TheBfmeObject_00C70EB0;		// 0x130ea10
+// ?TheBfmeObject_00C70EB0@@3VGen_00C70EB0Target@@A at retail VA 0x0130EA10:
+// opaque singleton forwarder target, zero storage (see
+// targets/game/reverse/identity_evidence/0130ea10-bfme-object.md). The empty
+// struct has a trivial constructor, so this emits no dynamic initializer.
+Gen_00C70EB0Target TheBfmeObject_00C70EB0;		// 0x130ea10
 class Gen_00C70F00Target
 {
 public:
