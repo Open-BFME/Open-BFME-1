@@ -1,15 +1,16 @@
-// ?rva005369A0@BfmeAptScreenOnlineChat@@UAEHPAVGameWindow@@III@Z
-// partial score=0.9927 date=2026-10-13
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /I.
+// The column-0 arm repeats the tooltip call in both branches; VC7.1 cross-jumps
+// the two copies into one tail, which is what yields retail's `mov ecx,esp`
+// before the EH saved-esp store at +0x1A6 (handoff targets/game/reverse/attempt_support/20261105-005369a0-onlinechat-cross-jump.md).
 // OnlineChat vtable 0x01106F58 slot 4 -> ILT 0x000423ED -> 0x005369A0.
 // Constructor 0x00536DC0 and destructor 0x0052D7C0 prove the owner.
 // The original virtual spelling is unproven; retain the RVA.
 // Gadget members +0x40..+0x50 follow BfmeAptScreenOnlineChatInitGadgets.cpp.
 // +0xAC/+0xB0/+0xB4 and +0xB8 retain OnlineChatConstructor.cpp names.
-// Direct helpers: rva005307B0 = ILT 0x00002E1E (one AsciiString by value);
-// rva00536870 = ILT 0x000436E9 (receiver in ECX; no stack arguments).
-// These new address-derived member declarations still need verified resolver
-// bindings before landing; no speculative symbols.csv pins accompany this attempt.
+// Direct helpers, called by their matched ledger names: ILT 0x00002E1E reaches
+// 0x005307B0, matched as AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip (one
+// AsciiString by value); ILT 0x000436E9 reaches 0x00536870, matched as
+// BfmeAptScreenOnlineChat::Rva00536870 (receiver in ECX, no stack arguments).
 #include "game/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "game/Libraries/Source/WWVegas/WWLib/unicode_string.h"
 class GameWindow;
@@ -37,11 +38,11 @@ void *GadgetListBoxGetItemData(GameWindow *, int, int);
 UnicodeString GadgetListBoxGetText(GameWindow *, int, int);
 void GadgetComboBoxGetSelectedPos(GameWindow *, int *);
 void *GadgetComboBoxGetItemData(GameWindow *, int);
+class AptOnlineCustomMatch { public: void MpOwnerUpdatePlayerTooltip(AsciiString name); };
 class BfmeAptScreenOnlineChat {
 public:
  virtual int rva005369A0(GameWindow *window, unsigned message, unsigned data1, unsigned data2);
- void rva005307B0(AsciiString name);
- void rva00536870();
+ void Rva00536870();
  unsigned char m_prefix[0x3c];
  GameWindow *m_playersList;
  GameWindow *m_friendsList;
@@ -76,15 +77,19 @@ int BfmeAptScreenOnlineChat::rva005369A0(GameWindow *window, unsigned message, u
    }
    if(column == 0) {
     AsciiString label;
-    if(GadgetListBoxGetItemData(list,row,1) == (void *)1) label = "TOOLTIP:FellowshipIcon";
-    else label = "APT:NULL";
-    TheMouse->setCursorTooltip(TheGameText->fetch(label),-1,0,1.0f);
+    if(GadgetListBoxGetItemData(list,row,1) == (void *)1) {
+     label = "TOOLTIP:FellowshipIcon";
+     TheMouse->setCursorTooltip(TheGameText->fetch(label),-1,0,1.0f);
+    } else {
+     label = "APT:NULL";
+     TheMouse->setCursorTooltip(TheGameText->fetch(label),-1,0,1.0f);
+    }
     m_unusedName = label;
    }
    if(column == 1) {
     AsciiString name;
     name.translate(GadgetListBoxGetText(list,row,2));
-    rva005307B0(name);
+    reinterpret_cast<AptOnlineCustomMatch *>(this)->MpOwnerUpdatePlayerTooltip(name);
    }
   }
   m_zAC = x;
@@ -110,7 +115,7 @@ int BfmeAptScreenOnlineChat::rva005369A0(GameWindow *window, unsigned message, u
  {
   int handled;
   if((GameWindow *)data1 == m_chatEntry) {
-   if(!data2) rva00536870();
+   if(!data2) Rva00536870();
    handled=1;
   } else handled=0;
   return handled;

@@ -3700,3 +3700,26 @@ delayed behind the load). Measured trials (VC7.1 `/DNDEBUG /MD /EHsc`):
 The early `return false` before the call stays a separate `xor al,al` epilogue.
 The measured effect is the allocation and tail; the cause (both compares
 becoming plain temporaries that the branch folder consumes) is a hypothesis.
+
+## Repeat a tail call in both arms to get a cross-jumped `mov ecx,esp` before the saved-ESP store (2026-11-05)
+
+Original mismatch: 0x005369A0 (BfmeAptScreenOnlineChat slot 4, 821 B), 6 bytes at +0x1A6.
+Before a by-value AsciiString copy (StringBase<char> copy ctor 0x00887B60) inside an EH frame,
+retail emits `8B CC` `mov ecx,esp` and then `89 64 24 34` `mov [esp+0x34],esp`; ours emitted the
+two in the opposite order. Equivalent spellings (ternary, key local, named temporaries,
+rotation_sweep) were inert.
+
+Measured evidence: a retail-wide scan finds 1378 sites in esp-first order and only 10 in ecx-first
+order. In the matched setGroup (0x0048AD80), the one ecx-first site is a cross-jumped tail. Removing
+either duplicate copy turns it esp-first.
+
+Successful transformation: write the call in both branches instead of after the if/else:
+`if (c) { label = A; TheMouse->setCursorTooltip(TheGameText->fetch(label), ...); }
+else { label = B; TheMouse->setCursorTooltip(TheGameText->fetch(label), ...); }`.
+VC7.1 /O2 /EHsc (cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc) merges the two identical tails after
+the literal push and emits retail's ecx-first pair. Duplicating the following
+`m_unusedName = label;` as well does not merge (895 B).
+
+Hypothesis: an ecx-first pair in retail marks a merged tail of two source-level copies.
+Source: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptOnlineChat.cpp; handoff
+targets/game/reverse/attempt_support/20261105-005369a0-onlinechat-cross-jump.md.
