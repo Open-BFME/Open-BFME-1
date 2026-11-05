@@ -2113,6 +2113,20 @@ attempt_support/002672b0-siegedeploy-initiate.md says why. The stub must
 leave its pointees alone: one that writes through them (0x001E65C0) feeds
 the caller more information and adds diffs.
 
+2026-11-05, /DNDEBUG /MD /EHsc: ParseObjectDataChunk (0x00454760, 605 B) went
+from 4-43 diffs to exact the same way. Every residue across all prior banks
+was one cause: the waypoint copy, the template-branch Vector3 argument copy,
+and a 4-byte scratch rotation. The local `loc` escaped only through
+`list::push_back(loc)`. Defining STLport `list::insert`, `push_back` and
+`_M_create_node` in the TU, in the same shape as RvaListInsertWidths.cpp, plus
+a defined non-inline `_Construct(T1*, const T2&)`, made it exact. push_back
+still compiles as a call, as in retail. If `_Construct` is only declared, it
+goes back to 43 diffs, so the whole chain must be visible. A diagnostic
+escape placed after the last use still serialised the copies, which confirms
+VC7.1's aliasing is per function, not per path.
+Source: game/GameEngine/Source/GameLogic/World/ParseObjectDataChunk_Thunk.cpp;
+handoff targets/game/reverse/attempt_support/20261105-00454760-parseobjectdatachunk-visible-push-back.md.
+
 ## A datum that is file-static in retail cannot stay a data row (2026-10-21)
 
 When a bank is exact only while a global is `static`, believe it: retail's
