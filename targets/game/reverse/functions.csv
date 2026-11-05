@@ -133412,11 +133412,9 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?storeWord@Rva00169FF0@@QAEXI@Z,,0x00169FF0,10,game/GameEngine/Source/Common/TinyIndexedForwarders.cpp,matched,carve rel32 target and RET4 plus INT3 prove10B; opaque word setter this+40; BFME2 AudioEventInfoPriority donor; sibling placement repair_queue dest 0016A040; identity_evidence/00169ff0-word-store.md;model=gpt-6.1-sol;host=GreatFaram
 ?str@?$StringBase@D@@QBEPBDXZ,0x00037F3D,0x0005F270,16,game/Libraries/Source/string/StringBase.cpp,matched,returns pointer to C string data
 ?str@?$StringBase@G@@QBEPBGXZ,0x0002287C,0x0005F290,16,game/Libraries/Source/string/StringBase.cpp,matched,returns c-string
-?str@AsciiString@@QBEPBDXZ,,0x0005F270,16,game/GameEngine/Source/Common/System/fx_particle_system_module_keys.cpp,matched,
 ?str@Rva003879F0Str@@QAEPBDXZ,,0x003879F0,17,game/GameEngine/Source/Common/Rva007BBDB0Str.cpp,matched,cpp-reconstruction;ascii-str
 ?str@Rva007BBDB0Str@@QAEPBDXZ,,0x007BBDB0,17,game/GameEngine/Source/Common/Rva007BBDB0Str.cpp,matched,cpp-reconstruction;ascii-str
 ?str@Rva007BBDD0Str@@QAEPBDXZ,,0x007BBDD0,17,game/GameEngine/Source/Common/Rva007BBDB0Str.cpp,matched,cpp-reconstruction;ascii-str
-?str@UnicodeString@@QBEPBGXZ,,0x0005F270,16,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp,matched,
 ?str_is_less@@YAHPAKPAEKKK@Z,,0x00874330,89,game/Libraries/Source/Benchmark/nbench1.cpp,matched,BYTEmark nbench1.c static compiled byte-exact at this gap inside the nbench block; no rel32 caller in the image
 ?stradjust@@YAXPAKPAEKKE@Z,,0x00874280,169,game/Libraries/Source/Benchmark/nbench1.cpp,matched,BYTEmark 2.1 (pre-Dierks) string adjustment
 ?streakBody0077D6B0@W3DStreakDraw@@QAEXXZ,,0x0077D6B0,463,game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DStreakDrawBody.cpp,matched,W3DStreakDraw helper identity follows the constructor and wrapper call path; distances use WWMath::Sqrt from wwmath.h whose inlined param and retval temps give the retail stack slots (local x87 asm removed);model=claude-opus-5.5;host=GreatFaram

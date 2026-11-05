@@ -134,8 +134,6 @@ functions	0x0005E750	?ID@?$VectorClass@UPtrRemapStruct@PointerRemapClass@@@@UAEH
 functions	0x0005E820	??_G?$VectorClass@PAUW3dAggregateSubobjectStruct@@@@UAEPAXI@Z
 functions	0x0005E960	??1?$DynamicVectorClass@K@@UAE@XZ
 functions	0x0005EBC0	?Clone@Image@Gdiplus@@QAEPAV12@XZ
-functions	0x0005F270	?str@AsciiString@@QBEPBDXZ
-functions	0x0005F270	?str@UnicodeString@@QBEPBGXZ
 functions	0x0005F590	??6@YAAAVDebug@@AAV0@ABV?$StringBase@D@@@Z
 functions	0x0005FEB0	?compare@AsciiString@@QBEHABV1@@Z
 functions	0x000607A0	??8@YA_NABV?$StringBase@G@@0@Z
