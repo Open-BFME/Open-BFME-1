@@ -5,7 +5,7 @@
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
-struct Coord3D { Real x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum StateReturnType
 {

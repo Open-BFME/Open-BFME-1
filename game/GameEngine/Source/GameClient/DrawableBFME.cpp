@@ -43,7 +43,7 @@ struct BfmeRecordOwnerRB
 enum WeaponSlotType { PRIMARY_WEAPON };
 enum WhichTurretType { TURRET_INVALID };
 class Matrix3D { unsigned char m[48]; };
-struct Coord3D { float x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType
 {

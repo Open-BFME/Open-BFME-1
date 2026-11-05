@@ -40,12 +40,7 @@ template <> inline bool StringBase<char>::isNotEmpty() const
 
 class Team;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class BfmeObjectDlinkObject;
 

@@ -213,12 +213,7 @@ public:
 	}
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Rva000C7C30Holder;
 

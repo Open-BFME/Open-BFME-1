@@ -33,12 +33,7 @@ struct AIGroupOffset2D
 	}
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum
 {

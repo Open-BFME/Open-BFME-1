@@ -32,12 +32,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../command_source_type.h"
 

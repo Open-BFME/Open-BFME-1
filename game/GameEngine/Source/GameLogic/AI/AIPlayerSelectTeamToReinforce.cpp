@@ -48,10 +48,7 @@ extern const AsciiString Rva01336E50EmptyString;
 #include "../command_source_type.h"
 enum { MAX_UNIT_TYPES = 7 };
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // StringBase<char>'s buffer header: refcount, length, capacity, data.
 struct BfmeAsciiHeader

@@ -91,12 +91,7 @@ static Bool isInBuildVariations(const ThingTemplate *ttWithVariations,
 	return false;
 }
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Player;
 class Team;

@@ -189,7 +189,7 @@ public:
 extern Display006E2540 *g_012F7FE0;
 class FXList;
 class Matrix3D;
-struct Coord3D {float x,y,z;};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 class FXList { public: static void doFXPos(const FXList *,const Coord3D *,const Matrix3D *,float,const Coord3D *); };
 class FXListStore { public: const FXList *findFXList(const char *) const; };
 extern FXListStore *TheFXListStore;
