@@ -42,7 +42,7 @@ void Rva0043AAE0Noop::noop()
 }
 
 struct ICoord2D { Int x, y; };
-struct Coord3D { float x, y, z; };
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 class Object;
 class Drawable;
 class ThingTemplate;

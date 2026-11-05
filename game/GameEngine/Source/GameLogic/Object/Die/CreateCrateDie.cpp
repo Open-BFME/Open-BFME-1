@@ -392,12 +392,7 @@ void CreateCrateDie::onDie( const DamageInfo *damageInfo )
 // The following are the narrow views used by CreateCrateDie::createCrate.  They
 // preserve the retail object and STL layouts without introducing a second
 // canonical class declaration or a new vtable.
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 typedef int PathfindLayerEnum;
 typedef int Bool;

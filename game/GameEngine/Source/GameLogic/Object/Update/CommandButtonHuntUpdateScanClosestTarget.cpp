@@ -75,12 +75,7 @@ class SpecialPowerModuleInterface;
 class SpecialPowerTemplate;
 class AttackPriorityInfo;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum Relationship
 {

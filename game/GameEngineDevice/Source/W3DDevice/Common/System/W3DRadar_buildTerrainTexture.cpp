@@ -70,12 +70,7 @@ public:
 	void concat(const char *text) { ((StringBase<char> *)this)->concat(text, strlen(text)); }
 };
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord2D
 {
