@@ -30,10 +30,7 @@ enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
 class Object;
 typedef Int ObjectID;
 
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class PathNode
 {

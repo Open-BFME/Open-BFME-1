@@ -16,10 +16,7 @@ enum StateID
     INVALID_STATE_ID = 0xF423F
 };
 
-struct Coord3D
-{
-    float x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class AIUpdateInterface;
 class Team;

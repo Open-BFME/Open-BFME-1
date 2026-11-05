@@ -24,12 +24,7 @@ class Player;
 class CommandButton;
 class UpgradeTemplate;
 
-struct Coord3D
-{
-    Real x;
-    Real y;
-    Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 template <size_t NUMBITS>
 class BitFlags

@@ -210,7 +210,7 @@ StateReturnType AIAttackSquadState::onEnter()
 	return m_attackSquadMachine->initDefaultState();
 }
 
-struct Coord3D { float x, y, z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Pathfinder
 {
 public:

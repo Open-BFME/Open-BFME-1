@@ -33,10 +33,7 @@ enum UpdateSleepTime
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x, y, z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 typedef _STL::list<Object *> ObjectList;
 

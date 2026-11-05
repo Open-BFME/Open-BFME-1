@@ -31,12 +31,7 @@ class ThingTemplate;
 class Module;
 class Player;
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // BFME's module-query slot used by the foundation action returns an interface
 // whose eighth entry starts construction at the foundation's position.
