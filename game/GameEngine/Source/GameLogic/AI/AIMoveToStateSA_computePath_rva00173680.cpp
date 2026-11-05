@@ -3,12 +3,7 @@
 // 0x00173620 and the onEnter/update bodies at 0x001737C0/0x00173900 share
 // vftable 0x01098FA8.  Slot +0x44 identifies this body as computePath.
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 class AIUpdateInterface;
