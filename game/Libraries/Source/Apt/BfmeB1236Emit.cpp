@@ -97,7 +97,12 @@ public:
 
 extern Rva008AE770Stack Rva008AE770TheStack;
 
-extern int key013384C0, key013384C8;
+// Opaque Apt emit keys at retail VAs 0x013384C0/0x013384C8: used only by
+// address (see targets/game/reverse/identity_evidence/013384c0-key.md), and
+// retail .data holds 0 at both (zero-filled virtual tail past raw_end
+// 0x012EE000). key013384C8 stays extern until its own data row lands.
+int key013384C0;
+extern int key013384C8;
 
 class BfmeTab1024
 {
