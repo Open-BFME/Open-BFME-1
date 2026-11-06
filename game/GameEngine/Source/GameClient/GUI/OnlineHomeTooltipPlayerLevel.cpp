@@ -70,7 +70,8 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 // retired debt _g_012B78C8: nothing in the ledger owns 0x012B78C8, and the
 // table's entries are pooled string literals owned elsewhere, so no data row
 // can own it; the g_Va address name passes the gate by encoding its own base.
-extern "C" const char *g_012B78F0[];
+// retired debt _g_012B78F0: same for the evil-rank table at 0x012B78F0.
+extern "C" const char *g_Va012B78F0[];
 extern "C" const char *g_Va012B78C8[];
 class Gen_uw_00025c1b;
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
@@ -112,7 +113,7 @@ void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
     for(;rank < 10; ++rank) if(points < TheRankPointValues->m_ranks[rank+1]) break;
     AsciiString key("TOOLTIP:");
     AsciiString name;
-    if(Rva004D8F50(side)) name.set(g_012B78F0[rank]);
+    if(Rva004D8F50(side)) name.set(g_Va012B78F0[rank]);
     else name.set(g_Va012B78C8[rank]);
     key.concat(name);
     UnicodeString level = TheGameText->fetch(key);
