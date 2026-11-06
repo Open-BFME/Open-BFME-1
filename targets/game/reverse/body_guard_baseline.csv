@@ -11,7 +11,6 @@ dir32,0x0041C445,?isForcedIntoBusyState@SupplyTruckStateMachine@@SA_NPAVState@@P
 dir32,0x0041E6F0,??1Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail reads 0x0041E6F0
 dir32,0x0042254D,??0Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x0042254D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00422D3B,??1Rva00127AB0Element@@QAE@XZ,"retail 0x00422D3B is already recorded as ??1Gen_uwm_00022d3b@@QAE@XZ (+3 more); reference that name, not a new one"
-dir32,0x00422FA7,??0Rva00478100@@QAE@XZ,the name encodes 0x00478100 but retail reads 0x00422FA7
 dir32,0x00423A1F,??0Rva006ABC60@@QAE@XZ,the name encodes 0x006ABC60 but retail reads 0x00423A1F
 dir32,0x00423B41,??1RadiusDecalTemplate@@QAE@XZ,"nothing in the ledger owns 0x00423B41. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0042450F,?Rva0051B560@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 0x0051B560 but retail reads 0x0042450F
