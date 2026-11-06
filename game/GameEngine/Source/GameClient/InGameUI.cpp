@@ -102,7 +102,12 @@ public:
 #include "Common/BuildAssistant.h"
 #include "Common/Recorder.h"
 #include "Common/BuildAssistant.h"
+// The Zero Hour header's inline SpecialPowerTemplate::getName compiles to a
+// non-retail COMDAT here (inline AsciiString copy); this macro turns it into a
+// declaration so calls bind to the retail body 0x00098F80 that SpecialPower.cpp emits.
+#define getName(v) getName(v) const; AsciiString zhInlineSpecialPowerTemplateGetName(v)
 #include "Common/SpecialPower.h"
+#undef getName
 
 #include "GameClient/Anim2D.h"
 #include "GameClient/ControlBar.h"
