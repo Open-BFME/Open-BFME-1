@@ -112,9 +112,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	if (*(volatile const float *)&g_rva01075350 == len2)
 		return;
 
-	float oolen = WWMath::Inv_Sqrt(len2);
-	oolen *= width;
-	oolen *= *(const float *)0x0107533c;
+	float oolen = WWMath::Inv_Sqrt(len2) * width * 0.5f;
 	corner_offset.X *= oolen;
 	corner_offset.Y = (*(volatile float *)&corner_offset.Y) * oolen;
 
@@ -159,9 +157,7 @@ void Render2DClass::Add_Line(const Vector2 &a, const Vector2 &b, float width, Bf
 	if (*(volatile const float *)&g_rva01075350 == len2)
 		return;
 
-	float oolen = WWMath::Inv_Sqrt(len2);
-	oolen *= width;
-	oolen *= *(const float *)0x0107533c;
+	float oolen = WWMath::Inv_Sqrt(len2) * width * 0.5f;
 	corner_offset.X *= oolen;
 	corner_offset.Y = (*(volatile float *)&corner_offset.Y) * oolen;
 
