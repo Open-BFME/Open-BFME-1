@@ -335,6 +335,24 @@ the callee preserves ECX; the 263-byte caller then matched exactly. Check the
 callee too, and do not substitute an empty or simplified stand-in just to
 change register allocation. Witness: `TerrainTracksSystemUpdate.cpp`.
 
+## Private register convention needs a callee with no spare callee-saved registers (2026-11-06)
+
+`0x0058B610` (415 B, `Rva0058D770Rank.cpp`) takes the object in ESI and two
+out-pointers in EDI/EBX from its gen-dump callers and saves none of them.
+With a TU-local stub caller, VC7.1 `/O2` first passed only the object (in
+EBX) and left both pointers on the stack, saving EBP/ESI/EDI/EBX: the
+helper copied a returned 8-byte iterator into a second local, which the
+compiler kept in ESI/EDI. Reading it through
+`const Iterator &next = *(Iterator *)&nextRaw;` kept it in memory; with
+those registers free, all three arguments moved to ESI/EDI/EBX with no
+saves and the body matched once the iterator type got a user copy ctor
+(in-place argument copy) and the tail became
+`return *rank > 1 || *fraction >= 0.0f;`. Parameter order was inert.
+Observation: the private convention assigns register arguments only when
+the callee needs no other callee-saved register; it is a hypothesis that
+this generalises (0x001E49E0, which keeps EBX for a temporary, still gets
+its source in EDX). Commit 961eef3a58.
+
 ## Reload a member after a native aggregate update
 
 At `0x00733000`, native `Vector3`, `Matrix3D`, and `SphereClass` operations
