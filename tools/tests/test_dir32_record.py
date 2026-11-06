@@ -420,6 +420,18 @@ def test_placeholder_may_not_replace_descriptive(tmp_path, monkeypatch, capsys):
     assert "placeholder" in capsys.readouterr().err
 
 
+def test_retire_address_body_alias_for_matched_bfme_callback(tmp_path, monkeypatch):
+    old = "?b_00001500@@YAXXZ"
+    callback = "?bfmeEnumThreadWndProc@@YGHPAXJ@Z"
+    repo = make_code_repo(tmp_path, [FN_ROW.replace(FN_NEW, callback)])
+    record = repo / guard.REL
+    record.write_text(record.read_text().replace(FN_OLD, old))
+    git(repo, "add", "-A")
+
+    assert retire(monkeypatch, repo, old, callback) == 0
+    assert old not in record.read_text()
+
+
 def test_old_without_plain_identifier_refused(tmp_path, monkeypatch, capsys):
     repo = make_code_repo(tmp_path, [FN_ROW])
     rec = repo / guard.REL

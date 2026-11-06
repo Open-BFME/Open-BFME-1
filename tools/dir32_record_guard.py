@@ -508,12 +508,13 @@ def only_in_unbuilt_procs(path, name, bare=None, tree=":"):
 
 PLACEHOLDER_RE = re.compile(
     r"(?i)(?:rva|va|gen|glo|dup_|d_|j_|obj|data?|addr|sub_|fun_|t\d\w*_)_?[0-9a-f]{5,8}"
-    r"|(?:^|[?@_$])(?:bfme|gen_|genx|dup_|d_)")
+    r"|(?:^|[?@_$])(?:bfme|gen_|genx|dup_|d_)"
+    r"|^b_[0-9a-f]{8}$")
 
 
 def is_placeholder(name):
     """An address-derived or generated stand-in name (Rva00819920, Gen_0014B790,
-    bfmeCb974D, ?d_00819920, T1A2_0110F9CC, g_Va0109FB78)."""
+    bfmeCb974D, ?d_00819920, b_00548d90, T1A2_0110F9CC, g_Va0109FB78)."""
     return bool(PLACEHOLDER_RE.search(bare_identifier(name) or name))
 
 
