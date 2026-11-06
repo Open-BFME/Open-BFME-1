@@ -1,5 +1,5 @@
 // ?computePath@AIAttackMeleeApproachState@@MAE_NXZ
-// partial score=0.975 date=2026-10-09
+// partial score=0.9769 date=2026-11-06
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // ?computePath@AIAttackMeleeApproachState@@MAE_NXZ
 // Retail 00176A50; identity evidence: 00176a50-meleeapproach-computepath.md.
@@ -188,8 +188,9 @@ Bool AIAttackMeleeApproachState::computePath()
         const Rva00176A50AIData *data = TheAI->m_data;
         Coord3D direction;
         direction.set(source->getPosition()->x,source->getPosition()->y,0.0f);
-        direction.x -= position54.x;
-        direction.y -= position54.y;
+        const Coord3D *victimPos = &position54;
+        direction.x -= victimPos->x;
+        direction.y -= victimPos->y;
         if (Rva000B6CA0Length(&direction) < data->field90 + data->field94)
             goto fail;
         if (CALL(Rva000A2CF0,victim,j_0003251f)(0x95))
