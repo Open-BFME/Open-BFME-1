@@ -38060,7 +38060,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00741360@@YAXXZ,,0x00741360,545,game/gen_asm/d_0073e050.asm,matched,gen-dump;ghidra=FUN_00b41360
 ?d_007418b0@@YAXXZ,,0x007418B0,676,game/gen_asm/d_0073e050.asm,matched,gen-dump;ghidra=FUN_00b418b0
 ?d_00742920@@YAXXZ,,0x00742920,726,game/gen_asm/d_00733000.asm,matched,gen-dump;bounds=high
-?d_00745370@@YAXXZ,,0x00745370,793,game/gen_asm/d_00733000.asm,matched,gen-dump;bounds=high
 ?d_00747940@@YAXXZ,,0x00747940,180,game/gen_asm/d_00745b10.asm,matched,gen-dump;ghidra=FUN_00b47940
 ?d_0074cdd0@@YAXXZ,,0x0074CDD0,271,game/gen_asm/d_00745b10.asm,matched,gen-dump;ghidra=FUN_00b4cdd0
 ?d_0074d6d0@@YAXXZ,,0x0074D6D0,1,game/GameEngine/Source/Common/Rva0074D6D0TinyBody.cpp,matched,one-byte carved return at a proven ret boundary
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?get@Rva009790B0DwordField@@QBEHXZ,,0x009790B0,4,game/GameEngine/Source/Common/UnclaimedSmallLeaves06.cpp,matched,dword load at +8 from this; unreferenced (no rel32 or abs refs); 16-aligned start after prior row ret; ret then int3 pad; address-derived name;model=claude-sonnet-5-5;host=DESKTOP-MP2VNF8
 ?rva001CDBE0@Object@@QBE_NXZ,,0x001CDBE0,56,game/GameEngine/Source/GameLogic/Object/Rva001CDBE0Ready.cpp,matched,model=claude-sonnet-5-5;host=DESKTOP-MP2VNF8
 ?next@FootprintIterator001A1460@@QAE_NPAUCoord2D@@@Z,,0x001A12D0,312,game/GameEngine/Source/GameLogic/Map/FootprintIterator001A1460.cpp,matched,FootprintIterator next step; sibling of constructor at 0x001A1460; natural C++;model=claude-sonnet-5-5;host=DESKTOP-MP2VNF8
+?rva00745370@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z,,0x00745370,793,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,W3DView pickDrawable vtable slot (ILT 0x0003E3EC; ZH twin W3DView::pickDrawable); address name because the ILT hash contradicts the ZH decoration; BFME collision-mask sweep + terrain fallback;model=claude-opus-5-5;host=app

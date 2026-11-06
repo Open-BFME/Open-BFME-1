@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/shims/viewpitchoutofline /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+// Retail's thunk-table hash contradicts every tested decoration of pickDrawable for the
+// vtable slot at 0x00745370 (ILT 0x0003E3EC), so the slot keeps its address name here.
+#define pickDrawable rva00745370
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -83,6 +86,7 @@
 #include "GameLogic/Module/OpenContain.h"
 #include "GameLogic/Object.h"
 #include "GameLogic/TerrainLogic.h"									///< @todo This should be TerrainVisual (client side)
+#include "GameLogic/PartitionManager.h"
 #include "Common/AudioEventInfo.h"
 
 #include "W3DDevice/Common/W3DConvert.h"
@@ -1436,8 +1440,245 @@ void W3DView::screenToWorld( const ICoord2D *s, Coord3D *w )
   * there if present. Screen coordinates assumed in absolute values relative
   * to full display resolution. */
 //-------------------------------------------------------------------------------------------------
-// ?pickDrawable@W3DView@@ present-unmatched
-Drawable *W3DView::pickDrawable( const ICoord2D *screen, Bool forceAttack, PickType pickType )
+// Retail 0x00745370 (793 B; vtable slot thunk 0x0003E3EC). BFME replaces ZH's single
+// castRay with a priority sweep of collision masks (0x184 and 0x104 only when pickType
+// carries 0x100, then 0x84, 0x14 and pickType itself), filters the drawable through
+// Drawable::bfmeVisibilityGate, and when nothing is hit asks the terrain under the cursor
+// for an object whose shroud state and two flags select one of four reserved drawable IDs.
+// The views below exist only for their vtable offsets; the slot names keep the offsets.
+// Control shape: one trailing `return draw` with the terrain fallback nested under
+// `draw == NULL` (early returns there gave a different epilogue and register split).
+class W3DViewPickSlots
+{
+public:
+	virtual void vslot000();
+	virtual void vslot004();
+	virtual void vslot008();
+	virtual void vslot00C();
+	virtual void vslot010();
+	virtual void vslot014();
+	virtual void vslot018();
+	virtual void vslot01C();
+	virtual void vslot020();
+	virtual void vslot024();
+	virtual void vslot028();
+	virtual void vslot02C();
+	virtual void vslot030();
+	virtual void vslot034();
+	virtual void vslot038();
+	virtual void vslot03C();
+	virtual void vslot040();
+	virtual void vslot044();
+	virtual void vslot048();
+	virtual void vslot04C();
+	virtual void vslot050();
+	virtual void vslot054();
+	virtual void vslot058();
+	virtual void vslot05C();
+	virtual void vslot060();
+	virtual void vslot064();
+	virtual void vslot068();
+	virtual void vslot06C();
+	virtual void vslot070();
+	virtual void vslot074();
+	virtual void vslot078();
+	virtual void vslot07C();
+	virtual void vslot080();
+	virtual void vslot084();
+	virtual void vslot088();
+	virtual void vslot08C();
+	virtual void vslot090();
+	virtual void vslot094();
+	virtual void vslot098();
+	virtual void vslot09C();
+	virtual void vslot0A0();
+	virtual void vslot0A4();
+	virtual void vslot0A8();
+	virtual void vslot0AC();
+	virtual void vslot0B0();
+	virtual void vslot0B4();
+	virtual void vslot0B8();
+	virtual void vslot0BC();
+	virtual void vslot0C0();
+	virtual void vslot0C4();
+	virtual void vslot0C8();
+	virtual void vslot0CC();
+	virtual void vslot0D0();
+	virtual void vslot0D4();
+	virtual void vslot0D8();
+	virtual void vslot0DC();
+	virtual void vslot0E0();
+	virtual void vslot0E4();
+	virtual void vslot0E8();
+	virtual void vslot0EC();
+	virtual void vslot0F0();
+	virtual void vslot0F4();
+	virtual void vslot0F8();
+	virtual void vslot0FC();
+	virtual void vslot100();
+	virtual void vslot104();
+	virtual void vslot108();
+	virtual void vslot10C();
+	virtual void vslot110();
+	virtual void vslot114();
+	virtual void vslot118();
+	virtual void vslot11C();
+	virtual void vslot120();
+	virtual void vslot124();
+	virtual void vslot128();
+	virtual void vslot12C();
+	virtual void vslot130();
+	virtual void vslot134();
+	virtual void vslot138();
+	virtual void vslot13C();
+	virtual void vslot140();
+	virtual void vslot144();
+	virtual void vslot148();
+	virtual void vslot14C();
+	virtual void vslot150();
+	virtual void vslot154();
+	virtual void vslot158();
+	virtual void vslot15C();
+	virtual void vslot160();
+	virtual void vslot164(const ICoord2D *screen, Coord3D *world, Int flags);
+};
+class RenderObjPickSlots
+{
+public:
+	virtual void vslot000();
+	virtual void vslot004();
+	virtual void vslot008();
+	virtual void vslot00C();
+	virtual void vslot010();
+	virtual void vslot014();
+	virtual void vslot018();
+	virtual void vslot01C();
+	virtual void vslot020();
+	virtual void vslot024();
+	virtual void vslot028();
+	virtual void vslot02C();
+	virtual void vslot030();
+	virtual void vslot034();
+	virtual void vslot038();
+	virtual void vslot03C();
+	virtual void vslot040();
+	virtual void vslot044();
+	virtual void vslot048();
+	virtual void vslot04C();
+	virtual void vslot050();
+	virtual void vslot054();
+	virtual void vslot058();
+	virtual void vslot05C();
+	virtual void vslot060();
+	virtual void vslot064();
+	virtual void vslot068();
+	virtual void vslot06C();
+	virtual void vslot070();
+	virtual void vslot074();
+	virtual void vslot078();
+	virtual void vslot07C();
+	virtual void vslot080();
+	virtual void vslot084();
+	virtual void vslot088();
+	virtual void vslot08C();
+	virtual void vslot090();
+	virtual void vslot094();
+	virtual void vslot098();
+	virtual void vslot09C();
+	virtual void vslot0A0();
+	virtual void vslot0A4();
+	virtual void vslot0A8();
+	virtual void vslot0AC();
+	virtual void vslot0B0();
+	virtual void vslot0B4();
+	virtual void vslot0B8();
+	virtual void vslot0BC();
+	virtual void vslot0C0();
+	virtual void vslot0C4();
+	virtual void vslot0C8();
+	virtual void vslot0CC();
+	virtual void vslot0D0();
+	virtual void vslot0D4();
+	virtual void vslot0D8();
+	virtual void vslot0DC();
+	virtual void vslot0E0();
+	virtual void vslot0E4();
+	virtual void vslot0E8();
+	virtual void vslot0EC();
+	virtual void vslot0F0();
+	virtual void vslot0F4();
+	virtual void vslot0F8();
+	virtual void vslot0FC();
+	virtual void vslot100();
+	virtual void vslot104();
+	virtual void vslot108();
+	virtual void vslot10C();
+	virtual void vslot110();
+	virtual void vslot114();
+	virtual void vslot118();
+	virtual void vslot11C();
+	virtual void vslot120();
+	virtual void vslot124();
+	virtual void vslot128();
+	virtual void vslot12C();
+	virtual void vslot130();
+	virtual void vslot134();
+	virtual void vslot138();
+	virtual void vslot13C();
+	virtual void vslot140();
+	virtual void vslot144();
+	virtual void vslot148();
+	virtual void vslot14C();
+	virtual void vslot150();
+	virtual void vslot154();
+	virtual void *vslot158();
+};
+class GameClientPickSlots
+{
+public:
+	virtual void vslot000();
+	virtual void vslot004();
+	virtual void vslot008();
+	virtual void vslot00C();
+	virtual void vslot010();
+	virtual void vslot014();
+	virtual void vslot018();
+	virtual void vslot01C();
+	virtual void vslot020();
+	virtual void vslot024();
+	virtual void vslot028();
+	virtual Drawable *findDrawableByID(DrawableID id);	// +0x2c
+};
+class BfmeThingCME
+{
+public:
+	int bfmeGoCME(void *what);
+};
+struct PickTerrainHit
+{
+	char m_pad00[0x0c];
+	void *m_field0C;
+	char m_pad10[0x1c];
+	Bool m_flag2C;
+	Bool m_flag2D;
+};
+struct PickPlayerView
+{
+	char m_pad00[0x24];
+	Int m_playerIndex;
+};
+struct PickPlayerListView
+{
+	char m_pad00[0x0c];
+	PickPlayerView *m_local;
+};
+class ShroudManager;
+extern ShroudManager *TheShroudManager;
+// Drawable::bfmeVisibilityGate (0x0041B8B0, DrawableBFME.cpp) is not in the ZH Drawable view.
+class PickDrawableGateView {};
+typedef int (PickDrawableGateView::*PickDrawableGate)( void );
+extern "C" void __identifier("?bfmeVisibilityGate@Drawable@@QAEHXZ")();
+Drawable *W3DView::rva00745370( const ICoord2D *screen, Bool forceAttack, PickType pickType )
 {
 	RenderObjClass *renderObj = NULL;
 	Drawable *draw = NULL;
@@ -1448,48 +1689,90 @@ Drawable *W3DView::pickDrawable( const ICoord2D *screen, Bool forceAttack, PickT
 		return NULL;
 
 	// don't pick a drawable if there is a window under the cursor
-	GameWindow *window = NULL;
 	if (TheWindowManager)
-		window = TheWindowManager->getWindowUnderCursor(screen->x, screen->y);
-
-	while (window)
 	{
-		// check to see if it or any of its parents are opaque.  If so, we can't select anything.
-		if (!BitTest( window->winGetStatus(), WIN_STATUS_SEE_THRU ))
-			return NULL;
+		GameWindow *window = TheWindowManager->getWindowUnderCursor(screen->x, screen->y);
+		while (window)
+		{
+			// check to see if it or any of its parents are opaque.  If so, we can't select anything.
+			if (!BitTest( window->winGetStatus(), WIN_STATUS_SEE_THRU ))
+				return NULL;
 
-		window = window->winGetParent();
+			window = window->winGetParent();
+		}
 	}
 
 	Vector3 rayStart,rayEnd;
-	getPickRay(screen,&rayStart,&rayEnd);
+	{
+		getPickRay(screen,&rayStart,&rayEnd);
 
-	LineSegClass lineseg;
-	lineseg.Set(rayStart,rayEnd);
+		LineSegClass lineseg;
+		lineseg.Set(rayStart,rayEnd);
 
-	CastResultStruct result;
+		CastResultStruct result;
 
-	if (forceAttack) 
-		result.ComputeContactPoint = true;
+		if (forceAttack) 
+			result.ComputeContactPoint = true;
 
-	//Don't check against translucent or hidden objects
-	RayCollisionTestClass raytest(lineseg,&result,COLL_TYPE_ALL,false,false);
+		//Don't check against translucent or hidden objects
+		RayCollisionTestClass raytest(lineseg,&result,COLL_TYPE_ALL,false,false);
 
-	if( W3DDisplay::m_3DScene->castRay( raytest, false, (Int)pickType ) )
-		renderObj = raytest.CollidedRenderObj;
-
-	// for right now there is no drawable data in a render object which is			 	// if we've found a render object, return our drawable associated with it,
-
-	// the terrain, therefore the userdata is NULL
-	/// @todo terrain and picking!
-	if( renderObj )
-		drawInfo = (DrawableInfo *)renderObj->Get_User_Data();
-	if (drawInfo)
-		draw=drawInfo->m_drawable;
-
+		if (pickType & 0x100)
+		{
+			if ( W3DDisplay::m_3DScene->castRay( raytest, true, 0x184 ) && (renderObj = raytest.CollidedRenderObj) != NULL )
+				goto found;
+			if ( W3DDisplay::m_3DScene->castRay( raytest, true, 0x104 ) && (renderObj = raytest.CollidedRenderObj) != NULL )
+				goto found;
+		}
+		if ( W3DDisplay::m_3DScene->castRay( raytest, true, 0x84 ) && (renderObj = raytest.CollidedRenderObj) != NULL )
+			goto found;
+		if ( W3DDisplay::m_3DScene->castRay( raytest, true, 0x14 ) && (renderObj = raytest.CollidedRenderObj) != NULL )
+			goto found;
+		if ( W3DDisplay::m_3DScene->castRay( raytest, false, (Int)pickType ) && (renderObj = raytest.CollidedRenderObj) != NULL )
+		{
+found:
+			drawInfo = (DrawableInfo *)((RenderObjPickSlots *)renderObj)->vslot158();
+			if (drawInfo)
+			{
+				draw = drawInfo->m_drawable;
+				if (draw)
+				{
+					union { void (*raw)(); PickDrawableGate member; } gate = { __identifier("?bfmeVisibilityGate@Drawable@@QAEHXZ") };
+					Drawable *gated = (Drawable *)(((PickDrawableGateView *)draw)->*gate.member)();
+					if (gated)
+						draw = gated;
+				}
+			}
+		}
+	}
+	if (draw == NULL)
+	{
+		// Retail's terrain point lives in rayStart's frame slot (+0x10, the getPickRay
+		// output); a separate Coord3D gets a 12-byte larger frame or pairs with rayEnd.
+		Coord3D *pos = (Coord3D *)&rayStart;
+		((W3DViewPickSlots *)this)->vslot164(screen, pos, 0);
+		PickTerrainHit *hit = (PickTerrainHit *)((BfmeThingCME *)TheTerrainLogic)->bfmeGoCME(pos);
+		if (hit)
+		{
+			Int playerIndex = ThePlayerList ? ((PickPlayerListView *)ThePlayerList)->m_local->m_playerIndex : 0;
+			if (((PartitionManager *)TheShroudManager)->getPropShroudStatusForPlayer(playerIndex, (const Coord3D *)hit) == 4)
+				return NULL;
+			if (hit->m_field0C)
+			{
+				if (hit->m_flag2C && hit->m_flag2D)
+					draw = ((GameClientPickSlots *)TheGameClient)->findDrawableByID((DrawableID)0x05f5e0ff);
+				else if (hit->m_flag2C && !hit->m_flag2D)
+					draw = ((GameClientPickSlots *)TheGameClient)->findDrawableByID((DrawableID)0x05f5e0fc);
+				else if (!hit->m_flag2C && hit->m_flag2D)
+					draw = ((GameClientPickSlots *)TheGameClient)->findDrawableByID((DrawableID)0x05f5e0fd);
+				else
+					draw = ((GameClientPickSlots *)TheGameClient)->findDrawableByID((DrawableID)0x05f5e0fe);
+			}
+		}
+	}
 	return draw;
 
-}  // end pickDrawable
+}  // end rva00745370 (pickDrawable)
 
 //-------------------------------------------------------------------------------------------------
 /** convert a pixel (x,y) to a location in the world on the terrain.

@@ -21942,5 +21942,25 @@
   "after_sha256": "1dc8f1597ba318d01ad4801fb05c396d965dc5b8470e365d76bbf0a8a86c57ff",
   "evidence": "targets/game/reverse/identity_evidence/0x001f8970.md",
   "reason": "The +0x18 interface base of UpgradeModule only contributes its own vtable store (0x010A1BFC); that table is recorded in dir32_addresses.csv under fifteen conflicting class names and the DIR32 gate refuses a new one, so the conversion uses the recorded address-derived ??_7Rva001EE620@@6B@. UpgradeModuleInterface was the bank author's unverified ZH guess for that base (ZH UpgradeMux itself derives from UpgradeModuleInterface, which BFME1 layout does not show); no identity is lost."
+ },
+ {
+  "old_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp",
+  "old_name": "pickDrawable",
+  "new_name": "rva00745370",
+  "before_sha256": "a12c6f055d46ac71c7381f02b7b3a439a3fcce65a9d384ba7d354158b0e79e67",
+  "after_sha256": "0bce662b8c0878acbda809af932afc5988b27c4ccf8d61db2a6b413ae75b6a7c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00745370.md",
+  "reason": "retail's ILT hash contradicts the ZH decoration ?pickDrawable@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z and every tested access/parameter variant for the 0x00745370 W3DView vtable slot, so the slot keeps an address name; the ZH role stays in comments"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00745370.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp",
+  "old_name": "pickDrawable",
+  "new_name": "rva00745370",
+  "before_sha256": "93d4241146f42696ac95569f56e4a0b411aa281813175d2063896153b7dfcbd9",
+  "after_sha256": "0bce662b8c0878acbda809af932afc5988b27c4ccf8d61db2a6b413ae75b6a7c",
+  "evidence": "targets/game/reverse/identity_evidence/0x00745370.md",
+  "reason": "retail's ILT hash contradicts the ZH decoration ?pickDrawable@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z and every tested access/parameter variant for the 0x00745370 W3DView vtable slot, so the slot keeps an address name; the ZH role stays in comments"
  }
 ]
