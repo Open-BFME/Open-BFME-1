@@ -2,7 +2,6 @@ check,target_rva,name,detail
 dir32,0x004046F6,??1Rva006967A0@@QAE@XZ,the name encodes 0x006967A0 but retail reads 0x004046F6
 dir32,0x0040768A,??0AttackPriorityInfo@@QAE@XZ,"nothing in the ledger owns 0x0040768A. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0040C5E0,?ownerNotDockingOrIdle@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0040C5E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x004128FA,??1BfmeGdElem36@@QAE@XZ,"retail 0x004128FA is already recorded as ??1GdElemSlot@@QAE@XZ; reference that name, not a new one"
 dir32,0x00417477,??1Rva00127AC0Element@@QAE@XZ,"retail 0x00417477 is already recorded as ??1Gen_uwm_00017477@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x00417BD9,??0BFMERetailAsciiString@@QAE@XZ,"retail 0x00417BD9 is already recorded as ??0AsciiString@@QAE@XZ (+3 more); reference that name, not a new one"
 dir32,0x00418949,??1List00442C90@@QAE@XZ,"nothing in the ledger owns 0x00418949. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
