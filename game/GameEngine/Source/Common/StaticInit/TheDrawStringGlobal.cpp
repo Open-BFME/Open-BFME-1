@@ -11,3 +11,8 @@ AsciiString theInputString;
 // Homed here with the other orphan AsciiString globals; used only by
 // address from Rva00C6FCC0Cleanup.cpp.
 AsciiString RvaObject012ED828;
+// ?RvaObject012ED82C@@3VAsciiString@@A at retail VA 0x012ED82C: empty
+// AsciiString (retail .data holds zeros; see
+// targets/game/reverse/identity_evidence/012ed82c-asciistring.md).
+// Adjacent sibling of RvaObject012ED828, same home and use pattern.
+AsciiString RvaObject012ED82C;
