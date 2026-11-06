@@ -53,3 +53,22 @@ Also inert (s559, later): visible bodies of `findNameIndex` and
 declared before the early return (0.858/0.883); the whole tail inside `if (!lookup) {}`;
 address-taken or out-parameter record index (optimised back to a register). The twin
 0x0035A060 with the same form gives the identical 0.917 / 14 plateau.
+
+## Caller 0x0035DD40 is probe-EXACT with the 0x0035A060 helper (s559)
+
+Bank `targets/game/reverse/attempts/0x0035dd40.cpp`: `Rva0035DD40GroupParser::parse(
+DataChunkInput &, DataChunkInfo *)` (363/363 EXACT) beside the static twin helper
+`rvaUniqueName0035a060` (owner table at +0x0C). Same record walk and
+`m_list->insertAfter(m_list->getLast(), node)` (head at +0x00 here), then the two
+registration objects (`Rva00352AB0ParserRegistration`, `Rva00350F50ParserRegistration`,
+args owner, `&group->m_list8`, file, `(AsciiString *)info`) with the base
+`BfmeParserRegistrationVE` destructor inline (`_bfmeVftVE` store then
+`Q1Forwardee0000871A::handle(m_parser)` on `m_table`), returning `file.parse(0)`.
+Lever: the two `readByte() != 0` results go through named `bool` locals before the
+stores; without them node/group swap EBX/EBP (0.967).
+
+Helper progress after that lever: a named `unsigned int count = m_nameIndexes.size()`
+gives 0.925 / 12 structural (still the table spill); named bool/int temps for the
+lookup result, compare result and the first lookup call are inert on top of it.
+So four bodies (0x35A060 350, 0x35A2A0 350, 0x35DD40 363, 0x35DF10 227 = 1290 B) land
+together once the helper's EBX priority is solved.
