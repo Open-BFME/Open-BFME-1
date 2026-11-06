@@ -3780,3 +3780,21 @@ compound-assignment chain evidently give the scheduler different dependence or
 cost inputs. When removing a raw-address cast perturbs scheduling, try reshaping
 the expression that uses it before keeping the cast. Source:
 game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddLine.cpp.
+
+## Assign a tagged pointer in the null test, then mask it in place, to keep one register through a virtual call (2026-11-06)
+
+Mismatch: BfmeLookup1279::bfmeErase1279 (0x0089CC80, 617 B, VC7.1 `/O2 /DNDEBUG /MD`)
+releases tagged object pointers (`value & ~1`) through a virtual call. Retail:
+`mov ecx,[edi+0Ch]; test ecx,ecx; je; and ecx,0FFFFFFFEh; mov edx,[ecx]; call [edx+4]`.
+
+- `((T *)(v & ~1u))->release();` evaluated the mask twice (`mov edx,ecx; and edx,~1;
+  mov eax,[edx]; and ecx,~1; call [eax+4]`). Fix: mask once into a local:
+  `T *value = (T *)(v & ~1u); value->release();`.
+- For a slot tested first (`... && map->m_slot`), the test load went to EAX and was
+  copied to ECX before the call (+2 B). Fix: `T *p; if (... && (p = (T *)map->m_slot) != 0)
+  { p = (T *)((unsigned)p & ~1u); p->release(); }`. A separate `unsigned tagged` local
+  inside the block was inert.
+
+Measured: 636 B (with the entries-snapshot lever 621 B) to EXACT. Source:
+game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp; handoff
+targets/game/reverse/attempt_support/20261106-0089cc80-erase1279-tagged-release.md.

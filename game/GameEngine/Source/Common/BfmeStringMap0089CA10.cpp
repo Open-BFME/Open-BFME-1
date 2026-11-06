@@ -220,3 +220,73 @@ int BfmeTab1024::bfmeFind1024(int keyArg)
 	}
 	return 0;
 }
+
+// ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z (0x0089CC80, 617 B)
+// erases a key through the same inlined probe: the slot's string is released
+// and replaced by the shared empty string, and its tagged value released. For
+// the reserved "prototype"/"__proto__" ids the tagged slot is assigned in the
+// condition and masked in place, which keeps retail's single ECX
+// test/and/call (attempt_support/20261106-0089cc80-erase1279-tagged-release.md).
+struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
+extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+class Rva0089CC80Object
+{
+public:
+	virtual void retain();
+	virtual void release();
+};
+struct BfmeKey1279;
+class BfmeLookup1279
+{
+public:
+	void bfmeErase1279(BfmeKey1279 &key);
+};
+
+void BfmeLookup1279::bfmeErase1279(BfmeKey1279 &keyArg)
+{
+	BfmeStringKey0089CA10 &key = (BfmeStringKey0089CA10 &)keyArg;
+	if (key.m_data == localEmptyString1285())
+		return;
+	if (key.m_data->m_hash == 0)
+		((BfmeThing929G *)&key)->bfmeInit929G();
+	int id = key.m_data->m_hash;
+	BfmeStringMap0089CA10 *map = (BfmeStringMap0089CA10 *)this;
+	if (map->m_entries)
+	{
+		BfmeStringEntry0089CA10 *entry = map->findInline(key);
+		if (entry)
+		{
+			BfmeStringData0089CA10 *old = entry->m_data;
+			if (--old->m_refCount == 0)
+				g_rva01337A30AllocPair->m_free(old);
+			entry->m_data = localEmptyString1285();
+			++localEmptyString1285()->m_refCount;
+			Rva0089CC80Object *value = (Rva0089CC80Object *)((unsigned int)entry->m_value & ~1u);
+			value->release();
+			entry->m_value = 0;
+			return;
+		}
+	}
+	if (id == 0x699)
+	{
+		Rva0089CC80Object *prototype;
+		if (_strcmpi(reinterpret_cast<const char *>(key.m_data) + 8, "prototype") == 0
+			&& (prototype = (Rva0089CC80Object *)map->m_prototype0c) != 0)
+		{
+			prototype = (Rva0089CC80Object *)((unsigned int)prototype & ~1u);
+			prototype->release();
+			map->m_prototype0c = 0;
+		}
+	}
+	else if (id == 0x6bbd)
+	{
+		Rva0089CC80Object *proto;
+		if (_strcmpi(reinterpret_cast<const char *>(key.m_data) + 8, "__proto__") == 0
+			&& (proto = (Rva0089CC80Object *)map->m_proto08) != 0)
+		{
+			proto = (Rva0089CC80Object *)((unsigned int)proto & ~1u);
+			proto->release();
+			map->m_proto08 = 0;
+		}
+	}
+}
