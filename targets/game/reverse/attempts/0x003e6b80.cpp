@@ -1,5 +1,5 @@
 // ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-// partial score=0.9807 date=2026-11-01
+// partial score=1.0 date=2026-11-06
 // ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
 // Open-BFME reconstruction of the BFME Pathfinder ground-path builder.
 // The surrounding layout follows the GPLv3 GeneralsMD reference tree; the
@@ -21,7 +21,7 @@
 typedef int Int;
 typedef float Real;
 
-extern const Real BfmeZeroRange;
+extern const Real BfmeBoundaryZero3D;
 extern const Real g_bfmeDefaultBU;
 extern const Real g_bfmeK1253;
 
@@ -214,6 +214,7 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 			prevDir.sub(&previousPosition);
 			nextDir.set(nextPosition);
 			nextDir.sub(currentPosition);
+			Real cross = prevDir.x * nextDir.y - prevDir.y * nextDir.x;
 			Real dirX = prevDir.x + nextDir.x;
 			Real dirY = nextDir.y + prevDir.y;
 			Real lenSq = dirX * dirX;
@@ -229,7 +230,7 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 
 			Coord3D adjustedPosition;
 			adjustedPosition.set(currentPosition);
-			if (prevDir.x * nextDir.y - nextDir.x * prevDir.y < BfmeZeroRange)
+			if (cross < BfmeBoundaryZero3D)
 			{
 				adjustedPosition.x -= offset.y;
 				adjustedPosition.y += offset.x;
@@ -248,7 +249,9 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 			offset.y *= g_bfmeK1253;
 			offset.z *= g_bfmeK1253;
 			adjustedPosition = *currentPosition;
-			adjustedPosition.add(&offset);
+			adjustedPosition.x = *(volatile Real *)&offset.x + adjustedPosition.x;
+			adjustedPosition.y += offset.y;
+			adjustedPosition.z += offset.z;
 			*currentPosition = adjustedPosition;
 		}
 
