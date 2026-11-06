@@ -1088,6 +1088,7 @@ address_global	game/Libraries/Source/WWVegas/WWDebug/Rva0088E1A0ShowAssertCrashD
 address_global	game/Libraries/Source/WWVegas/WWDebug/Rva0088E1A0ShowAssertCrashDialog.cpp	g_Rva013373BCTimerTicks	2
 address_global	game/Libraries/Source/WWVegas/WWDebug/Rva0088E1A0ShowAssertCrashDialog.cpp	g_Rva013373C0DialogClosed	3
 address_global	game/Libraries/Source/WWVegas/WWDebug/Rva0088E1A0ShowAssertCrashDialog.cpp	g_Rva013373C4DialogGeneration	2
+address_global	game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp	g_Va012C8390	2	allow=789a431ce326a403de8ef582846549f1fada9cac
 address_global	game/Libraries/Source/WWVegas/WWLib/stlport_LocaleFacets.cpp	g_Rva012C839C	3
 address_global	game/Libraries/Source/WWVegas/WWLib/stlport_LocaleFacets.cpp	g_Rva012C83A0	4
 address_global	game/Libraries/Source/WWVegas/WWLib/stlport_LocaleFacets.cpp	g_Rva012C83A4	3

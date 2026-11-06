@@ -1,0 +1,3 @@
+# Pointer at VA 0x012C8390
+
+The original .data word at 0x012C8390 is 0x01080FB4. The latter is a complete five-byte NUL-terminated true string in .rdata, named _bfmeStrDYF by the existing symbol and DIR32 records. Rva0084DBE0 reads the pointer, and BfmeConv796 passes the text to _strcmpi. The new object defines both and emits a DIR32 to the original string identity. The getter ABI stays as recorded. The adjacent dword is a distinct address outside this proof. The pinned BFME 2 Rva0084DBStringAndCodePage.cpp carries the nearby code-page donor, but this data identity comes from the BFME 1 image and its two callers.

@@ -15,7 +15,8 @@ const char *Rva0084DBC0GetText(const Rva0084DBText *owner)
 
 // 0x0084DBE0, between the two text getters: returns the dword at 0x012C8390.
 // No call, jump or pointer in the image reaches it; owner and type unproven.
-extern void *g_Va012C8390;
+extern "C" const unsigned char bfmeStrDYF[] = "true";
+void *g_Va012C8390 = const_cast<unsigned char *>(bfmeStrDYF);
 
 void *Rva0084DBE0()
 {

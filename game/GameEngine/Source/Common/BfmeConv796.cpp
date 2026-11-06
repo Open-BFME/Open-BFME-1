@@ -25,7 +25,7 @@ BfmeThingDYE *BfmeThingDYE::bfmeGoDYE(BfmeThingDYE *o)
 }
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *a, const char *b);
-extern "C" unsigned char bfmeStrDYF[];
+extern "C" const unsigned char bfmeStrDYF[];
 
 class BfmeGlobDYF
 {
