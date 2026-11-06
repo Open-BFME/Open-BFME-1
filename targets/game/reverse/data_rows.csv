@@ -1828,3 +1828,4 @@ _locale_format_0084ED20,0x0130C548,va,1,.data,game/stlport/LocaleCodePageQueries
 ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A,0x0113DF00,va,16,.rdata,game/GameEngine/Source/Common/BfmeConv1322.cpp,matched,targets/game/reverse/identity_evidence/0113df00-ife-browser-engine2-iid.md,muse-spark-1.3
 _bfmeStrDYF,0x01080FB4,va,5,.rdata,game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp,matched,targets/game/reverse/identity_evidence/012c8390-string-pointer.md,gpt-6.1-sol
 ?g_Va012C8390@@3PAXA,0x012C8390,va,4,.data,game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp,matched,targets/game/reverse/identity_evidence/012c8390-string-pointer.md,gpt-6.1-sol
+?g_bfmeSlots1220@@3RCUBfmeSlot1220@@C,0x012D5D50,va,112,.data,game/Libraries/Source/EA/Apt/BfmeNode1220_bfmeAllows.cpp,matched,targets/game/reverse/identity_evidence/012d5d50-apt-slots.md,gpt-6.1-sol

@@ -29,7 +29,23 @@ struct BfmeSlot1220
 
 // Retail walks fourteen 8-byte slots: m_index starts at 0x012D5D54 and the
 // exclusive end is 0x012D5DC4.
-extern volatile BfmeSlot1220 g_bfmeSlots1220[ 14 ];
+volatile BfmeSlot1220 g_bfmeSlots1220[ 14 ] =
+{
+	{ 0x0002, 104 },
+	{ 0x0400, 112 },
+	{ 0x0800, 113 },
+	{ 0x1000, 114 },
+	{ 0x0010, 108 },
+	{ 0x0020, 110 },
+	{ 0x0008, 109 },
+	{ 0x0080, 106 },
+	{ 0x0040, 105 },
+	{ 0x0001, 107 },
+	{ 0x0004, 117 },
+	{ 0x0100, 101 },
+	{ 0x2000, 116 },
+	{ 0x4000, 115 },
+};
 // Retail 0x01338480 is defined once, as bfmeObjDAE (Rva00C6DC90ArrayInit.cpp).
 extern "C" int __identifier("bfmeObjDAE")[];
 #define g_bfmeValues1220 __identifier("bfmeObjDAE")
