@@ -81371,6 +81371,7 @@ name,address,notes
 ?d_00895d30@@YAXXZ,0x00895D30,legacy address-only alias of retained bfmeSubmitEVA body;complete caller 0x00896060 at +0x38 directly calls this body;identity evidence 00895d30-dependency-accessor.md
 ?d_00896470@@YAXXZ,0x00896470,Address-only compatibility for withdrawn dump; native ?bfmeRva00896470@@YAXVBfmeRefHolder@@@Z body (game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp); game/gen_asm/d_00894a90.asm still calls this name
 ?d_008996b0@@YAXXZ,0x008996B0,legacy ABI alias for AptBoolean::Create; existing Apt caller TUs retain the address-only declaration after the generated row conversion
+?d_0089cef0@@YAXXZ,0x0089CEF0,legacy address-only alias of ?bfmeFind1024@BfmeTab1024@@QAEHH@Z (game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp); gen_asm dumps and matched callers still call this name after the dump conversion
 ?d_008a0320@@YAXXZ,0x008A0320,Address-only compatibility pin for the matched 008AA2B0 member-pointer call; decoded ECX receiver and one int argument with ret4; evidence=targets/game/reverse/identity_evidence/008a0320-utf8-initialize.md
 ?d_008a18c0@@YAXXZ,0x008A18C0,Address-only compatibility for withdrawn dump; native Rva008A18C0Holder::clear body (game/Libraries/Source/EA/Apt/Rva008A18C0Holder.cpp); game/gen_asm/d_008cb600.asm still calls this name
 ?d_008a4cd0@@YAXXZ,0x008A4CD0,legacy ABI alias for Rva008A4EA0MakeFloat; existing Apt caller TUs retain the address-only declaration after the generated row conversion

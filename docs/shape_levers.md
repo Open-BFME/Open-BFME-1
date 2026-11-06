@@ -3743,3 +3743,22 @@ Measured: declared-only dtor 42 B; inline body plus store-back 9 B; inline body 
 sibling timing EXACT. Hypothesis: an opaque call keeps every escaped local live
 across it. Source: game/GameEngine/Source/GameClient/System/ParticleSystemManagerUpdate.cpp;
 handoff targets/game/reverse/attempt_support/20261106-005c37e0-particle-manager-update-inline-dtor.md.
+
+## Snapshot a member array pointer for the first probe only to get `lea reg,[i*8]` before the load (2026-11-06)
+
+Mismatch: BfmeTab1024::bfmeFind1024 (0x0089CEF0, 520 B, VC7.1 `/O2 /DNDEBUG /MD`)
+force-inlines the open-address probe of 0x0089CA10. At +0x3A retail emits
+`lea ebx,[esi*8]; mov ecx,[ebx+eax]; test ecx,ecx`; ours emitted
+`mov ecx,[eax+esi*8]; test ecx,ecx; lea ebx,[esi*8]` (12 B over 0.9769 banks).
+
+Fix: in the inline copy, read the first probe through a local
+(`Entry *entries = m_entries; data = entries[bucket].m_data;` and
+`matchEntry(&entries[bucket], key)`), but keep `return &m_entries[bucket];` on
+the member. The load then uses the CSE'd `bucket*8` already in a register.
+Using the local for the return too gives 516 B (454 diffs). Operand order, nested
+ifs, a named mask local and `m_entries + bucket` were inert. The out-of-line
+0x0089CA10 in the same TU stays exact with the plain member form.
+
+Source: game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp; handoff
+targets/game/reverse/attempt_support/20261106-0089cef0-tab1024-find-entries-snapshot.md.
+Untested hypothesis: the same lever may fix 0x0089CC80's +0x45 residue.
