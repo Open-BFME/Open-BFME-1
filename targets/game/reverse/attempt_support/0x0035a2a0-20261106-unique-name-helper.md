@@ -34,3 +34,16 @@ header `AsciiString::compare`, `*name = candidate`, flags /O1 /Ox /Ob2 /G6 /G7
 /Oy-, `volatile` record index (worse), int-returning lookup (0.908).
 Untried: compiling it beside the real 227 B caller 0x0035DF10 (an earlier session
 reported the ECX convention there), and the 0x0035A060 twin with this form.
+
+## Caller 0x0035DF10 is probe-EXACT with this helper (s559)
+
+Bank `targets/game/reverse/attempts/0x0035df10.cpp`: `Rva0035DF10ScriptParser::parse(
+DataChunkInput &, DataChunkInfo *)` (thiscall, RET 8) compiles 227/227 EXACT beside the
+static helper above. Levers: a `table` local (`&m_owner->m_nameTable`) gives retail's
+unfolded `add eax,0x2c; mov eax,[eax+0xc]`; read `node->m_extra` before the record, then
+`m_references` before `m_nodes`; `if (count > skip) { n = count - skip; do ... while (--n); }`;
+append with `m_list->insertAfter(m_list->getLast(), node)` (two-variable last walk) so the
+empty branch reloads `m_head`. It must not land until the helper matches too (the caller's
+call ABI depends on the helper's private convention; docs/shape_levers.md
+"Compiler-private ABI"). Compiling the helper beside the real caller instead of a stub
+did not change the helper (still 0.917 / 249).
