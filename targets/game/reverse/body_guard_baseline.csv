@@ -288,7 +288,6 @@ dir32,0x01136058,??_7Rva008B2DF0Middle@@6B@,"retail 0x01136058 is already record
 dir32,0x01137808,??_7Rva008DCC70Link@@6B@,the name encodes 0x008DCC70 but retail reads 0x01137808
 dir32,0x0113CBAC,??_7Rva00938BC0VtableReseat@@6B@,"retail 0x0113CBAC is already recorded as ??_7Rva00938BF0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0113DF00,___GUID_ee883b17_0778_4b18_a12b_e44c0d298412,"retail 0x0113DF00 is already recorded as ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A (+4 more); reference that name, not a new one"
-dir32,0x01145854,_GUID_ATLVer70,"nothing in the ledger owns 0x01145854. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A5000,___xc_a,"nothing in the ledger owns 0x012A5000. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A617C,___xc_z,"nothing in the ledger owns 0x012A617C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A6280,___xi_a,"nothing in the ledger owns 0x012A6280. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

@@ -12,7 +12,12 @@
 // /BASE; renaming the declaration changes only the COFF symbol name, never the
 // emitted relocation (addend 0, base 0x00400000) or the body bytes.
 extern "C" IMAGE_DOS_HEADER g_Va00400000;
-extern "C" const GUID GUID_ATLVer70;
+// _GUID_ATLVer70 at retail VA 0x01145854: ATL 7.x module version GUID,
+// retail .rdata holds {394C3DE0-3C6F-11D2-817B-00C04F797AB7} (see
+// targets/game/reverse/identity_evidence/01145854-atlver70-guid.md).
+// Defined here, the TU that stores its address in pguidVer.
+extern "C" const GUID GUID_ATLVer70 =
+    { 0x394C3DE0, 0x3C6F, 0x11D2, { 0x81, 0x7B, 0x00, 0xC0, 0x4F, 0x79, 0x7A, 0xB7 } };
 
 class Rva009F69B1 : public ATL::_ATL_BASE_MODULE70
 {
