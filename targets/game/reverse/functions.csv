@@ -37495,7 +37495,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_003e5640@@YAXXZ,,0x003E5640,379,game/gen_asm/d_003dd7a0.asm,matched,gen-dump;ghidra=FUN_007e5640
 ?d_003e5a50@@YAXXZ,,0x003E5A50,232,game/gen_asm/d_003dd7a0.asm,matched,gen-dump;ghidra=FUN_007e5a50
 ?d_003e6300@@YAXXZ,,0x003E6300,1462,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_007e6300
-?d_003e6b80@@YAXXZ,,0x003E6B80,623,game/gen_asm/d_003e5ca0.asm,matched,gen-dump;ghidra=FUN_007e6b80
 ?d_003e6ee0@@YAXXZ,,0x003E6EE0,2308,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_007e6ee0
 ?d_003e86a0@@YAXXZ,,0x003E86A0,1521,game/gen_asm/d_002e22f0.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=jmp+int3 callers=1;ghidra=FUN_007e86a0
 ?d_003e8e10@@YAXXZ,,0x003E8E10,1852,game/gen_asm/d_003e5ca0.asm,matched,gen-dump;ghidra=FUN_007e8e10
@@ -133142,7 +133141,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?slot@Rva00350010@@QAEXPAX@Z,,0x00350010,3,game/GameEngine/Source/Common/Rva002CFC80TinyBodies.cpp,matched,opaque address-derived no-op thiscall body
 ?slot@Rva005A4600Arr@@QAEPAURva005A4600Slot@@XZ,,0x005A4600,14,game/GameEngine/Source/Common/Rva005A4600Arr.cpp,matched,cpp-reconstruction;index-times-54-plus-48
 ?smoothing_ok@D3DX@@YGHPAUjpeg_decompress_struct@1@@Z,,0x00AC2500,322,inputs/vendor/d3dx9/d3dx9.lib,matched,vendored=d3dx9-summer2003;member=obj\i386\jdcoefct.obj
-?snapLine@Pathfinder@@QAEXPBUCoord3D@@PAU2@@Z,,0x003E6AF0,110,game/GameEngine/Source/GameLogic/AI/PathfinderLineQueries.cpp,matched,BFME line-snap: Rva003D61C0 payload plus LAYER_GROUND iterate
 ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z,,0x003E6A30,151,game/GameEngine/Source/GameLogic/AI/PathfinderSnapPosition.cpp,matched,BFME snap position with destination layer
 ?snapShot@W3DGhostObject@@UAEXH@Z,,0x006BDE00,378,game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObjectSnapShot.cpp,matched,identity=ZH twin plus matched W3DGhostObject ctor dtor and vtable family; ABI=adjusted this and decoded callees; geometry=12 byte copy from Object plus 0x38 and minor at plus 0x44
 ?snapToFlaggedMember@Rva0023D850HordeContain@@QAEXXZ,,0x0023D850,147,game/GameEngine/Source/GameLogic/Object/Contain/Rva0023D850HordeSnapToMember.cpp,matched,HordeContain secondary-interface slot 69 at rdata 0x00CAE344: resets formation fields then snaps the owner onto each 0x800-flagged member via Thing::setOrientation and setPosition;model=claude-opus-5-5
@@ -173474,3 +173472,5 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?method@Rva0016F150@@QAE_NPAUCoord3D@@PAVObject@@PAX@Z,,0x0016F150,352,game/GameEngine/Source/GameLogic/AI/Rva0016F150.cpp,matched,model=claude-opus-5-5;host=app
 ?method@Rva0016F4F0@@QAEXPAVObject@@0PAVAIUpdateInterface@@@Z,,0x0016F4F0,243,game/GameEngine/Source/GameLogic/AI/Rva0016F4F0.cpp,matched,model=claude-opus-5-5;host=app
 ??1?$_Rb_tree@PAURva001408C0Target@@PAU1@U?$_Identity@PAURva001408C0Target@@@_STL@@U?$less@PAURva001408C0Target@@@3@V?$allocator@PAURva001408C0Target@@@3@@_STL@@QAE@XZ,,0x00140950,124,game/Libraries/Source/assetmanager/AssetRegistryKeySet009EF7D0.cpp,matched,Native 124B pointer-set destructor emitted by AssetRegistryKeySet; pinned BFME 2 donor dbde7dbe3 AssetPointerSetFind.cpp corroborates the pointer-key view. Three former generated-key consumers use this same typed destructor.;model=gpt-6.1-sol;launched=gpt-6;host=Michael-PC
+?rva003E6B80@Pathfinder@@QAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z,,0x003E6B80,623,game/GameEngine/Source/GameLogic/AI/PathfinderBuildGroundPath.cpp,matched,Zero Hour AIPathfind.cpp buildGroundPath shape with BFME corner smoothing (address kept: ILT contradicts Pathfinder decorations); worldToCell and snapLine visible never-inlined as in retail's pathfinder TU; Coord3D method spellings fix x87 operand order;model=claude-opus-5-5;host=vm
+?snapLine@Pathfinder@@QAEXPBUCoord3D@@PAU2@@Z,,0x003E6AF0,110,game/GameEngine/Source/GameLogic/AI/PathfinderBuildGroundPath.cpp,matched,BFME line-snap: Rva003D61C0 payload plus LAYER_GROUND iterate; moved beside rva003E6B80 which needs it visible and never inlined;model=claude-opus-5-5;host=vm

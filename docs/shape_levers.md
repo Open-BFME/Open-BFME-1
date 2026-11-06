@@ -3848,3 +3848,21 @@ lives at a TU-local .rdata object (0x010977EC, three references, all in this bod
 `__real@42480000` COMDAT is elsewhere): a file-scope `static const float` kept the
 literal's x87 schedule and emits a static symbol the verifier resolves by address, while
 an `extern const float` loaded it differently (245 B, 93 diffs).
+## x87 commutative operand order follows each field's first direct access, not source operand order (2026-11-06)
+
+Mismatch: Pathfinder::buildGroundPath (0x003E6B80, 623 B, VC7.1 `/DNDEBUG /DWIN32 /MD /EHsc`).
+Retail emits `fld [nextDir.x]; fmul st(3); fsubp st(1)` for the cross product
+(+0x133) and `fld [offset.x]; fadd [adjusted.x]` for a final sum (+0x1E5). Ours emitted
+`fxch`-shuffled forms and the swapped sum whatever operand order the source used.
+
+Observed rule (single-function micro TUs plus the full TU): VC7.1 orders a commutative
+x87 operation by when each field symbol is first accessed directly in the source. A
+field written only through an inline member function (`Coord3D::set/add/scale`) is not
+"seen" until the inliner runs. The operand seen later is loaded first. Fix: build the
+summed direction as `Coord3D dir; dir.set(&prevDir); dir.add(&nextDir);` and the offset
+with `offset.set(&dir); offset.scale(scale); offset.scale(width + width);`, instead of
+scalar field writes. With the scalar sum, all four operand orders gave the fxch form.
+`lenSq = dir.x*dir.x; lenSq += dir.y*dir.y;` keeps it exact. The single expression
+costs 4 B. Source: game/GameEngine/Source/GameLogic/AI/PathfinderBuildGroundPath.cpp;
+handoff targets/game/reverse/attempt_support/20261106-003e6b80-buildgroundpath-field-first-access.md.
+Hypothesis about the mechanism only; tested on this body.

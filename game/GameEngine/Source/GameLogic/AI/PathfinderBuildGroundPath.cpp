@@ -1,61 +1,42 @@
-// ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-// partial score=1.0 date=2026-11-06
-// ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-// Open-BFME reconstruction of the BFME Pathfinder ground-path builder.
-// The surrounding layout follows the GPLv3 GeneralsMD reference tree; the
-// retail-specific path smoothing is reconstructed from the BFME body at RVA
-// 0x003E6B80 and its matched Pathfinder::findGroundPath caller.
+// ?rva003E6B80@Pathfinder@@QAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 //
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// Pathfinder::rva003E6B80 (retail 0x003E6B80, 623 bytes; Zero Hour's
+// buildGroundPath shape) and
+// Pathfinder::snapLine (retail 0x003E6AF0, 110 bytes).
 //
-// 2026-10-17 (claude-opus-5-5): snapLine and worldToCell visible as
-// never-inlined bodies (retail's pathfinder TU defines them beside this one)
-// let VC7.1 prove adjustedPosition does not escape: 96 -> 16 differing bytes.
-// Left: the order of the two squares under sqrt (+0xEC, retail squares dirX
-// first), the cross-product fxch (+0x133) and offset.x + adjusted.x load order
-// (+0x1E5); declaration order, operand order, dir struct, sqrt casts and the
-// Coord3D copy constructor do not move them.
+// Identity: the matched Pathfinder::findGroundPath caller (0x003F2160 +0x7DC)
+// calls this body with the Pathfinder receiver; the Zero Hour AIPathfind.cpp
+// buildGroundPath (prependCells, optimizeGroundPath, then a corner-smoothing
+// pass) is the structural guide, and the BFME smoothing is reconstructed from
+// retail. Retail's pathfinder TU defines worldToCell, snapLine and this body
+// together, so worldToCell and snapLine are visible never-inlined bodies here:
+// with them opaque the body is 85 bytes off (adjustedPosition escapes).
+//
+// The summed direction is a Coord3D built with set/add and the perpendicular
+// offset with Coord3D::set/scale: MSVC 7.1 orders a commutative x87 operation by
+// when each field is first accessed directly in the source, and direct field
+// writes commute the cross product (+0x133) and the offset.x + adjusted.x sum
+// (+0x1E5). Handoff: targets/game/reverse/attempt_support/
+// 20261106-003e6b80-buildgroundpath-field-first-access.md.
 
-#include <math.h>
+#include "coord.h"
 
-typedef int Int;
-typedef float Real;
+#undef REAL_TO_INT_FLOOR
+#define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
+extern "C" __declspec(dllimport) double __cdecl floor(double);
 
-extern const Real BfmeBoundaryZero3D;
+extern const Real g_rva01075350;
 extern const Real g_bfmeDefaultBU;
 extern const Real g_bfmeK1253;
 
 class Pathfinder;
-
-struct ICoord2D
-{
-	Int x, y;
-};
-
-struct IRegion2D
-{
-	ICoord2D lo, hi;
-};
 
 enum PathfindLayerEnum
 {
 	LAYER_INVALID = 0,
 	LAYER_GROUND = 1
 };
-
-extern "C" __declspec(dllimport) double __cdecl floor( double );
-
-__forceinline long fast_float2long_round( float value )
-{
-	long result;
-	__asm {
-		fld [value]
-		fistp [result]
-	}
-	return result;
-}
-
-#define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 
 struct Rva003D61C0Vec
 {
@@ -64,29 +45,30 @@ struct Rva003D61C0Vec
 
 struct Rva003DE480Struct;
 
+// AI+0x14 holds the TAiData the AI constructor (0x0014C170) builds and
+// AI::parseAiDataDefinition (0x0014E580) fills from the FieldParse table at VA
+// 0x01094B00, whose FormationColumnWidth record writes a float at +0xA0
+// (targets/game/reverse/identity_evidence/0x003e6b80-retry-layout-and-abi.md;
+// ai.cpp and TAiDataCtor.cpp use the same field name).
+class TAiData
+{
+public:
+	char m_beforeFormationColumnWidth[0xa0];
+	Real m_formationColumnWidth;
+};
+
 class AI
 {
 public:
-	Pathfinder *pathfinder(void) const { return m_pathfinder; }
+	const TAiData *getAiData(void) const { return m_aiData; }
 
 private:
-	char m_beforePathfinder[0x14];
-	Pathfinder *m_pathfinder;
+	char m_beforeAiData[0x14];
+	TAiData *m_aiData;
 };
 
 extern AI *TheAI;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void add(const Coord3D *a) { x += a->x; y += a->y; z += a->z; }
-	void sub(const Coord3D *a) { x -= a->x; y -= a->y; z -= a->z; }
-	void scale(Real s) { x *= s; y *= s; z *= s; }
-	void set(const Coord3D *a) { x = a->x; y = a->y; z = a->z; }
-};
 
 class PathNode
 {
@@ -142,8 +124,10 @@ public:
 	__declspec(noinline) bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003DE480Struct *userData);
-protected:
-	Path *buildGroundPath(const Coord3D *fromPos, PathfindCell *goalCell,
+	// Zero Hour's buildGroundPath. The method keeps its address: retail's ILT
+	// contradicts every ?...@Pathfinder@@ decoration (tools/ilt_oracle.py), and
+	// the matched findGroundPath caller binds this pinned spelling.
+	Path *rva003E6B80(const Coord3D *fromPos, PathfindCell *goalCell,
 		bool center, Int pathDiameter);
 
 public:
@@ -153,11 +137,11 @@ public:
 
 	char m_before14[0x14];
 	IRegion2D m_extent;
-	char m_beforeFieldA0[0xa0 - 0x24];
-	Real m_fieldA0;
 };
 
-inline bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
+// One ANY-COMDAT copy per TU: every emission of worldToCell (retail 0x003D7EC0)
+// is this same inline, never-inlined body (PathfinderRva003D84A0.cpp holds the row).
+inline __declspec(noinline) bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 {
 	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/10);
 	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/10);
@@ -169,7 +153,10 @@ inline bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cell
 	return overflow;
 }
 
-inline void Pathfinder::snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition)
+// ?snapLine@Pathfinder@@QAEXPBUCoord3D@@PAU2@@Z
+// Moved here from PathfinderLineQueries.cpp: buildGroundPath needs the body
+// visible (never inlined), as in retail's single pathfinder TU.
+void Pathfinder::snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition)
 {
 	Rva003D61C0 info;
 	info.set((Int)this, 4, (const Rva003D61C0Vec *)sourcePosition);
@@ -184,8 +171,8 @@ inline void Pathfinder::snapLine(const Coord3D *sourcePosition, Coord3D *destina
 	}
 }
 
-// ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
+// ?rva003E6B80@Pathfinder@@QAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
+Path *Pathfinder::rva003E6B80(const Coord3D *fromPos,
 	PathfindCell *goalCell, bool center, Int pathDiameter)
 {
 	Path *path = new Path;
@@ -214,23 +201,21 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 			prevDir.sub(&previousPosition);
 			nextDir.set(nextPosition);
 			nextDir.sub(currentPosition);
-			Real cross = prevDir.x * nextDir.y - prevDir.y * nextDir.x;
-			Real dirX = prevDir.x + nextDir.x;
-			Real dirY = nextDir.y + prevDir.y;
-			Real lenSq = dirX * dirX;
-			lenSq += dirY * dirY;
+			Coord3D dir;
+			dir.set(&prevDir);
+			dir.add(&nextDir);
+			Real lenSq = dir.x * dir.x;
+			lenSq += dir.y * dir.y;
 			Real scale = g_bfmeDefaultBU / sqrt(lenSq);
 			Coord3D offset;
-			offset.x = scale * dirX;
-			offset.y = scale * dirY;
-			Real width = TheAI->pathfinder()->m_fieldA0;
-			width += width;
-			offset.x *= width;
-			offset.y *= width;
+			offset.set(&dir);
+			offset.scale(scale);
+			Real width = TheAI->getAiData()->m_formationColumnWidth;
+			offset.scale(width + width);
 
 			Coord3D adjustedPosition;
 			adjustedPosition.set(currentPosition);
-			if (cross < BfmeBoundaryZero3D)
+			if (prevDir.x * nextDir.y - prevDir.y * nextDir.x < g_rva01075350)
 			{
 				adjustedPosition.x -= offset.y;
 				adjustedPosition.y += offset.x;
@@ -249,9 +234,7 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 			offset.y *= g_bfmeK1253;
 			offset.z *= g_bfmeK1253;
 			adjustedPosition = *currentPosition;
-			adjustedPosition.x = *(volatile Real *)&offset.x + adjustedPosition.x;
-			adjustedPosition.y += offset.y;
-			adjustedPosition.z += offset.z;
+			adjustedPosition.add(&offset);
 			*currentPosition = adjustedPosition;
 		}
 

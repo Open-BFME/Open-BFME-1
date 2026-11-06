@@ -3,7 +3,7 @@
 // Open-BFME: the Pathfinder queries that answer a question about a straight
 // segment of the world.
 //
-//   ?snapLine@              0x003E6AF0, 110 bytes
+//   (?snapLine@             0x003E6AF0, 110 bytes: now in PathfinderBuildGroundPath.cpp)
 //   ?isGroundPathPassable@  0x003EAC00,  91 bytes
 //   ?isLinePassable@        0x003EE7A0, 131 bytes  (eight arguments)
 //   ?lineBlocked@           0x003EE850, 100 bytes
@@ -181,23 +181,9 @@ private:
 		PathfindLayerEnum layer, GroundPathPassableInfo *info);		///< ILT 0x00013DC2 -> 0x003E33F0
 };
 
-// ?snapLine@Pathfinder@@QAEXPBUCoord3D@@PAU2@@Z
-// Walk the segment on LAYER_GROUND and, if the cell iterator reports a hit,
-// write the payload's working Coord3D back onto the destination.
-void Pathfinder::snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition)
-{
-	Rva003D61C0 info;
-	info.set((Int)this, 4, (const Rva003D61C0Vec *)sourcePosition);
-	ICoord2D start;
-	worldToCell(sourcePosition, &start);
-	ICoord2D end;
-	worldToCell(destinationPosition, &end);
-	if (iterateCellsAlongLine(start, end, LAYER_GROUND, (Rva003DE480Struct *)&info)) {
-		destinationPosition->x = info.m_pos.x;
-		destinationPosition->y = info.m_pos.y;
-		destinationPosition->z = info.m_pos.z;
-	}
-}
+// Pathfinder::snapLine (0x003E6AF0) lives in PathfinderBuildGroundPath.cpp:
+// buildGroundPath needs its body visible and never inlined, as in retail's
+// single pathfinder TU.
 
 // ?isGroundPathPassable@Pathfinder@@QAE_NABUCoord3D@@W4PathfindLayerEnum@@0H@Z
 // Endpoints by reference, layer in the middle, and the payload is two words
