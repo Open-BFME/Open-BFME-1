@@ -1,29 +1,19 @@
 // ?d_0035a2a0@@YAXXZ
-// partial score=0.4514 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-
+// partial score=0.8 date=2026-11-06
+// ?rvaUniqueName0035a2a0@@YAXPAVRva0035A220Owner@@PAVAsciiString@@@Z (row ?d_0035a2a0@@YAXXZ)
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
+// stlport
+#include <vector>
 #include "ascii_string.h"
-
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &source);
-};
 
 bool rvaLookupReleased0035a220(void *owner, AsciiString *name);
 
-static __forceinline const char *rvaAsciiText(const AsciiString *name)
-{
-	const char *data = *(const char * const *)name;
-	return data ? data + 8 : "";
-}
-
-struct Rva0035A2A0Record
+struct Rva00359530Record
 {
 	int m_previous;
 	int m_next;
 	AsciiString m_name;
-	unsigned char m_released;
+	bool m_released;
 	unsigned char m_pad;
 	unsigned short m_references;
 	void *m_nodes;
@@ -34,50 +24,63 @@ class Rva00359530StringRecordTable
 public:
 	int findNameIndex(AsciiString *name);
 
-	int *m_nameIndexesBegin;
-	int *m_nameIndexesEnd;
-	int *m_nameIndexesCapacity;
-	Rva0035A2A0Record *m_records;
-	int m_10;
-	int m_14;
+	std::vector<int> m_nameIndexes;
+	std::vector<Rva00359530Record> m_records;
 	int m_freeHead;
 	int m_activeTail;
 };
 
-class Rva0035A2A0Owner
+class Rva0035A220Owner
 {
 public:
-	void makeUniqueScriptName(AsciiString *name, UnicodeString *result);
-
-private:
 	unsigned char m_head[0x2c];
 	Rva00359530StringRecordTable m_nameTable;
 };
 
-void Rva0035A2A0Owner::makeUniqueScriptName(
-	AsciiString *name, UnicodeString *result)
+static inline int rvaCompareNames(const AsciiString &self, const AsciiString &other)
 {
-	if (rvaLookupReleased0035a220(this, name))
+	int thatLen = other.getLength();
+	const char *thatData = other.str();
+	int thisLen = self.getLength();
+	const char *thisData = self.str();
+	int n = thisLen < thatLen ? thisLen : thatLen;
+	int c = memcmp(thisData, thatData, n);
+	if (c != 0)
+		return c;
+	return thisLen - thatLen;
+}
+
+static inline bool rvaLookupReleasedInline(Rva00359530StringRecordTable *table, AsciiString *name)
+{
+	unsigned int nameIndex = table->findNameIndex( name );
+	unsigned int count = table->m_nameIndexes.size();
+	if ( nameIndex < count )
+	{
+		int recordIndex = table->m_nameIndexes[nameIndex];
+		if ( rvaCompareNames(table->m_records[recordIndex].m_name, *name) == 0 && recordIndex != -1 )
+			return table->m_records[recordIndex].m_released;
+	}
+	return true;
+}
+
+static __declspec(noinline) void rvaUniqueName0035a2a0(Rva0035A220Owner *owner, AsciiString *name)
+{
+	if (rvaLookupReleased0035a220(owner, name))
 		return;
 
 	AsciiString candidate;
 	int suffix = 0;
-	Rva00359530StringRecordTable &table = m_nameTable;
-	for (;;)
+	Rva00359530StringRecordTable *table = &owner->m_nameTable;
+	do
 	{
+		const char *text = name->str();
 		++suffix;
-		candidate.format(AsciiString("%s %d"), rvaAsciiText(name), suffix);
+		candidate.format(AsciiString("%s %d"), text, suffix);
+	} while (!rvaLookupReleasedInline(table, &candidate));
+	name->set(candidate);
+}
 
-		int nameIndex = table.findNameIndex(&candidate);
-		if (nameIndex >= table.m_nameIndexesEnd - table.m_nameIndexesBegin)
-			break;
-
-		int recordIndex = table.m_nameIndexesBegin[nameIndex];
-		if (table.m_records[recordIndex].m_name.compare(candidate) != 0 ||
-			recordIndex == -1 ||
-			table.m_records[recordIndex].m_released)
-			break;
-	}
-
-	((UnicodeString *)result)->set(*(UnicodeString *)&candidate);
+void rvaUniqueNameStub(Rva0035A220Owner *owner, AsciiString *name)
+{
+	rvaUniqueName0035a2a0(owner, name);
 }

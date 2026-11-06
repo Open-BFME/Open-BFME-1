@@ -72,3 +72,17 @@ gives 0.925 / 12 structural (still the table spill); named bool/int temps for th
 lookup result, compare result and the first lookup call are inert on top of it.
 So four bodies (0x35A060 350, 0x35A2A0 350, 0x35DD40 363, 0x35DF10 227 = 1290 B) land
 together once the helper's EBX priority is solved.
+
+## Later s559: named temps move the table into EBX (now 70 raw diffs, 6 structural)
+
+New preferred stash `targets/game/reverse/attempts/0x0035a2a0.cpp`: inside the inlined lookup,
+`unsigned int count = table->m_nameIndexes.size(); if (nameIndex < count)` (0.925 alone), and
+in the loop a separate statement `const char *text = name->str();` before `++suffix` and the
+format call. Together they reproduce retail's allocation (table in EBX, record index spilled
+to [esp+0x1c], zero in ESI). Remaining: retail pushes `suffix` before it reads
+`name->str()` (the text is an argument expression there), and the scratch registers after
+findNameIndex are rotated (retail ECX=begin/EDX=size/ECX=rec, suffix in EAX across the loop).
+Moving the str() back into the argument list (`text = name->str()` in the call, `++suffix`
+in the call, `int number = ++suffix`, a `source` copy of name) restores the old 0.925
+allocation; the count lever without the text statement is 0.892. The same two levers should
+be tried on the 0x0035A060 twin.
