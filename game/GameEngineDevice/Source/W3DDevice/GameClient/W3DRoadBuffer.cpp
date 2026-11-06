@@ -1616,14 +1616,15 @@ public:
 	AssetList &operator <<(const AsciiString &name);
 };
 
-struct Gen_t_00140950_k4
-{
-	int m_value;
-};
+struct Rva001408C0Target;
+typedef Rva001408C0Target *AssetKey;
 
-typedef _STL::_Rb_tree<Gen_t_00140950_k4, Gen_t_00140950_k4,
-	_STL::_Identity<Gen_t_00140950_k4>, _STL::less<Gen_t_00140950_k4>,
-	_STL::allocator<Gen_t_00140950_k4> > RoadAssetTree;
+typedef _STL::_Rb_tree<AssetKey, AssetKey,
+	_STL::_Identity<AssetKey>, _STL::less<AssetKey>,
+	_STL::allocator<AssetKey> > RoadAssetTree;
+
+template <>
+RoadAssetTree::~_Rb_tree();
 
 class BfmeList950B
 {
