@@ -2145,6 +2145,17 @@ VC7.1's aliasing is per function, not per path.
 Source: game/GameEngine/Source/GameLogic/World/ParseObjectDataChunk_Thunk.cpp;
 handoff targets/game/reverse/attempt_support/20261105-00454760-parseobjectdatachunk-visible-push-back.md.
 
+2026-11-06, BfmeAptScreenLanLobby::rva00519150 (0x00519150, 884 B, `/O2 /DNDEBUG /DWIN32
+/D_WINDOWS /MD /EHsc`): the same lever decides **slot sharing**. Two block-scoped
+`GameInfo *game` locals (case 7 and the tail) whose address goes to
+getGameInfoRva00516850 share one frame slot in retail. With the callee only declared,
+each kept its own slot (frame 0x18, 14 B). Defining the matched 239-byte callee in the
+same TU (it stays out of line) gives EXACT. The `selected` locals passed to the opaque
+GadgetListBoxGetSelected keep separate slots, as retail does. A trivial visible stub
+is worse (136 B): the real body must be visible. Source:
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/BfmeAptScreenLanLobby_getGameInfoRva00516850.cpp;
+handoff targets/game/reverse/attempt_support/20261106-00519150-lanlobby-update-visible-callee.md.
+
 ## A datum that is file-static in retail cannot stay a data row (2026-10-21)
 
 When a bank is exact only while a global is `static`, believe it: retail's
