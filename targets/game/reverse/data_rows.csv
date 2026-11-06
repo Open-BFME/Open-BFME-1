@@ -1829,3 +1829,4 @@ _locale_format_0084ED20,0x0130C548,va,1,.data,game/stlport/LocaleCodePageQueries
 _GUID_ATLVer70,0x01145854,va,16,.rdata,game/GameEngine/Source/Common/Rva009F6ADBConstructor.cpp,matched,targets/game/reverse/identity_evidence/01145854-atlver70-guid.md,muse-spark-1.3
 _g_0113439C,0x0113439C,va,7,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugExceptionhandler_LogRegisters.cpp,matched,targets/game/reverse/identity_evidence/0113439c-flags-string.md,muse-spark-1.3
 _g_011343D4,0x011343D4,va,6,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugExceptionhandler_LogRegisters.cpp,matched,targets/game/reverse/identity_evidence/011343d4-ecx-string.md,muse-spark-1.3
+?g_rva012B7828EvilRanks@@3PAPBDA,0x012B7828,va,44,.data,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/Rva005307B0ChatPlayerTooltip.cpp,matched,targets/game/reverse/identity_evidence/012b7828-evilranks-table.md,muse-spark-1.3

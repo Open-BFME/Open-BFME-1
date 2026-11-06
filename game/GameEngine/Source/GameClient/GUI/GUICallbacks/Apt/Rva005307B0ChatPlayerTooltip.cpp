@@ -209,7 +209,7 @@ Int bfmeRankPointsFromStats(Gen_uw_00025c1b *stats, Int side);
 Bool Rva004D8F50(Int side);
 UnicodeString Rva0052DEB0RankText(Int value);
 
-extern const char *g_rva012B7828EvilRanks[];
+extern const char *g_rva012B7828EvilRanks[11];
 extern const char *g_rva012B7800GoodRanks[];
 
 class AptOnlineCustomMatch
@@ -349,3 +349,16 @@ void AptOnlineCustomMatch::MpOwnerUpdatePlayerTooltip(AsciiString name)
 	}
 	TheMouse->setCursorTooltip(uName, -1, 0, 1.5f);
 }
+
+// The evil rank-label table this callback indexes, defined at its retail
+// .data address: eleven pointers at VA 0x012B7828. Every pointee is a pooled
+// narrow literal shared with the sibling rank tables at VA 0x012B7AE0,
+// 0x012B7B08, 0x012B7DAC, 0x012B7DD4 and 0x012B8018 (compiler-literal pins
+// in symbols.csv; identity_evidence/012b7ae0-012b7b08-online-profile-rank-labels.md),
+// and the label content agrees with the BFME 2 donor's evil rank table
+// (open-bfme-2 Code/GameEngine/Source/GameNetwork/RankPointValue.cpp).
+extern "C" const char *__identifier("?g_rva012B7828EvilRanks@@3PAPBDA")[11] =
+{
+	"Wizard", "Scum", "Vermin", "Beast", "Goblin", "Orc",
+	"MountainTroll", "Berserker", "DarkWizard", "RingWraith", "DarkLord"
+};
