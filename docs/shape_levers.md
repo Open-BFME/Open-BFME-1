@@ -3839,3 +3839,12 @@ dy in place, and the 3D sum `faddp st(1)` reusing the 2D squares.
 Measured: 93 diffs (bank 0.7358) to EXACT. Source:
 game/GameEngine/Source/GameLogic/AI/Rva0016F150.cpp; sibling idiom
 game/GameEngine/Source/GameLogic/AI/Rva0016EE00.cpp.
+
+Second use (same day): Rva0016F4F0::method (0x0016F4F0, 243 B), blocked for weeks at
+`fld st(0)` vs retail `fxch st(2)` (106 diffs, 30+ attempts), went to 17 diffs with the
+same MemberwiseCoord3D copy/sub/Normalize/scale/add helpers, and to EXACT once the
+accumulated length summed in retail's order (`a = z*z; a += y*y; a += x*x`). Its 50.0f
+lives at a TU-local .rdata object (0x010977EC, three references, all in this body; the
+`__real@42480000` COMDAT is elsewhere): a file-scope `static const float` kept the
+literal's x87 schedule and emits a static symbol the verifier resolves by address, while
+an `extern const float` loaded it differently (245 B, 93 diffs).
