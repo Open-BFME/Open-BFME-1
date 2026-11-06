@@ -282,7 +282,6 @@ dir32,0x0112E9F8,??_7?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@
 dir32,0x0112EA2C,??_7?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,"??_7?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@ is a function the ledger places elsewhere, not at 0x0112EA2C"
 dir32,0x0112EB34,??_7_Locale_impl@_STL@@6B@,"retail 0x0112EB34 is already recorded as _bfmeVft1030B; reference that name, not a new one"
 dir32,0x0112F2B8,??_7stdio_ostreambuf@_SgI@@6B@,"??_7stdio_ostreambuf@_SgI@@6B@ is a function the ledger places elsewhere, not at 0x0112F2B8"
-dir32,0x011343D4,_g_011343D4,"nothing in the ledger owns 0x011343D4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01136058,??_7Rva008B2DF0Middle@@6B@,"retail 0x01136058 is already recorded as ??_7Gen_uwm_00899380@@6B@ (+14 more); reference that name, not a new one"
 dir32,0x01137808,??_7Rva008DCC70Link@@6B@,the name encodes 0x008DCC70 but retail reads 0x01137808
 dir32,0x0113CBAC,??_7Rva00938BC0VtableReseat@@6B@,"retail 0x0113CBAC is already recorded as ??_7Rva00938BF0Deleting@@6B@ (+1 more); reference that name, not a new one"
