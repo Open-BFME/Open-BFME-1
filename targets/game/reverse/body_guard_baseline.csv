@@ -301,7 +301,6 @@ dir32,0x012B5140,?bfmeRva012B5140FirstCopy@@3URvaTriple@@A,"?bfmeRva012B5140Firs
 dir32,0x012B5198,?bfmeRva012B5198FirstCopy@@3URvaTriple@@A,"?bfmeRva012B5198FirstCopy@@3URvaTriple@@A is a function the ledger places elsewhere, not at 0x012B5198"
 dir32,0x012B5AB0,?gameWindowFieldList@@3PAUGameWindowParse@@A,"nothing in the ledger owns 0x012B5AB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B7828,?g_rva012B7828EvilRanks@@3PAPBDA,"nothing in the ledger owns 0x012B7828. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012B78C8,_g_012B78C8,"nothing in the ledger owns 0x012B78C8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B78F0,_g_012B78F0,"nothing in the ledger owns 0x012B78F0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BAD1C,?g_roadShader012BAD1C@@3VShaderClass@@A,"nothing in the ledger owns 0x012BAD1C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012BAD20,?g_roadShader012BAD20@@3VShaderClass@@A,"nothing in the ledger owns 0x012BAD20. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

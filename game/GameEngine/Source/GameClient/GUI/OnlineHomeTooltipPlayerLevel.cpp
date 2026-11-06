@@ -67,8 +67,11 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 // Retail's per-rank APT label tables for the player-level tooltip, indexed by
 // rank 0..9.  Neither address is recorded in dir32_addresses.csv, so they keep
 // address-derived names; the pointer-to-const-char shape is what the body reads.
+// retired debt _g_012B78C8: nothing in the ledger owns 0x012B78C8, and the
+// table's entries are pooled string literals owned elsewhere, so no data row
+// can own it; the g_Va address name passes the gate by encoding its own base.
 extern "C" const char *g_012B78F0[];
-extern "C" const char *g_012B78C8[];
+extern "C" const char *g_Va012B78C8[];
 class Gen_uw_00025c1b;
 int bfmeRankPointsFromStats(Gen_uw_00025c1b*,int);
 // RankPointValue.h (SAGE upstream) declares `extern RankPoints
@@ -110,7 +113,7 @@ void BfmeAptScreenOnlineHome::tooltipPlayerLevelIcon(void*) {
     AsciiString key("TOOLTIP:");
     AsciiString name;
     if(Rva004D8F50(side)) name.set(g_012B78F0[rank]);
-    else name.set(g_012B78C8[rank]);
+    else name.set(g_Va012B78C8[rank]);
     key.concat(name);
     UnicodeString level = TheGameText->fetch(key);
     UnicodeString tooltip;
