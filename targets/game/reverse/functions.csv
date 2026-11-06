@@ -37908,7 +37908,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_0058e390@@YAXXZ,,0x0058E390,1810,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_0098e390
 ?d_00593440@@YAXXZ,,0x00593440,482,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_00993440
 ?d_005936a0@@YAXXZ,,0x005936A0,584,game/gen_asm/d_0058b1f0.asm,matched,gen-dump;ghidra=FUN_009936a0
-?d_00594fd0@@YAXXZ,,0x00594FD0,308,game/gen_asm/d_00593a30.asm,matched,gen-dump;ghidra=FUN_00994fd0
 ?d_00595e60@@YAXXZ,,0x00595E60,1350,game/gen_asm/d_00593a30.asm,matched,gen-dump;ghidra=FUN_00995e60
 ?d_00597130@@YAXXZ,,0x00597130,1085,game/gen_asm/d_00499050.asm,matched,gen-dump;carved start=rel32-call/jmp;ghidra-start end=ret+int3 callers=1;ghidra=FUN_00997130
 ?d_00597a30@@YAXXZ,,0x00597A30,1020,game/gen_asm/d_00597a30.asm,matched,gen-dump;switch-carved start=int3-aligned end=switch-table+int3 refs=0
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?bfmeFind1024@BfmeTab1024@@QAEHH@Z,,0x0089CEF0,520,game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp,matched,Apt string-keyed table find: inlined open-address probe shared with 0x0089CA10 plus prototype/__proto__ fallbacks; entries snapshot lever;model=claude-opus-5-5;host=vm
 ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z,,0x0089CC80,617,game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp,matched,Apt string-keyed table erase: inlined open-address probe shared with 0x0089CA10 then tagged value and prototype/__proto__ releases; entries snapshot and in-condition tagged-pointer levers;model=claude-opus-5-5;host=vm
 ?rva007B3E70@W3DProjectedShadowManager@@QAEPAVBfmeThingSE@@PAVW3DShadowTexture@@PAVRefCountClass@@H_NMMMMMPAPAV2@2PAVDrawable@@2@Z,,0x007B3E70,460,game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B3E70.cpp,matched,W3DProjectedShadowManager::addDecal 0x007B4340 calls it via ILT 0x000193BC with the manager as this; address-derived name;model=claude-opus-5-5;host=app
+?bfmeUnlinkBU@BfmeSubBU@@QAEXPAVBfmeHostBU@@@Z,,0x00594FD0,308,game/GameEngine/Source/Common/Rva0058D770Rank.cpp,matched,matched BfmeHostBU::bfmeDieBU calls it through ILT 0x0003C0AB (pinned name); only caller of the EAX rank helper 0x0058D770 in this TU;model=claude-opus-5-5;host=app
