@@ -1834,3 +1834,4 @@ _g_011343D4,0x011343D4,va,6,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugEx
 ?RvaObject012ED828@@3VAsciiString@@A,0x012ED828,va,4,.data,game/GameEngine/Source/Common/StaticInit/TheDrawStringGlobal.cpp,matched,targets/game/reverse/identity_evidence/012ed828-asciistring.md,muse-spark-1.3
 ?RvaObject012ED82C@@3VAsciiString@@A,0x012ED82C,va,4,.data,game/GameEngine/Source/Common/StaticInit/TheDrawStringGlobal.cpp,matched,targets/game/reverse/identity_evidence/012ed82c-asciistring.md,muse-spark-1.3
 ?RvaObject012EF180@@3VAsciiString@@A,0x012EF180,va,4,.data,game/GameEngine/Source/Common/StaticInit/TheDrawStringGlobal.cpp,matched,targets/game/reverse/identity_evidence/012ef180-asciistring.md,muse-spark-1.3
+?RvaObject012EF1E4@@3VAsciiString@@A,0x012EF1E4,va,4,.data,game/GameEngine/Source/Common/StaticInit/TheDrawStringGlobal.cpp,matched,targets/game/reverse/identity_evidence/012ef1e4-asciistring.md,muse-spark-1.3

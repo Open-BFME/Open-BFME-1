@@ -21,3 +21,8 @@ AsciiString RvaObject012ED82C;
 // targets/game/reverse/identity_evidence/012ef180-asciistring.md).
 // Same orphan pattern; used only by address from Rva00C6FCC0Cleanup.cpp.
 AsciiString RvaObject012EF180;
+// ?RvaObject012EF1E4@@3VAsciiString@@A at retail VA 0x012EF1E4: empty
+// AsciiString (retail .data holds zeros; see
+// targets/game/reverse/identity_evidence/012ef1e4-asciistring.md).
+// Same orphan pattern; used only by address from Rva00C6FCC0Cleanup.cpp.
+AsciiString RvaObject012EF1E4;
