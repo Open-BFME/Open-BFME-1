@@ -6,7 +6,6 @@ dir32,0x0041AF00,??1?$map@VAsciiString@@HU?$less@VAsciiString@@@_STL@@V?$allocat
 dir32,0x0041C445,?isForcedIntoBusyState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0041C445. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0042254D,??0Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x0042254D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00423B41,??1RadiusDecalTemplate@@QAE@XZ,"nothing in the ledger owns 0x00423B41. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0042450F,?Rva0051B560@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 0x0051B560 but retail reads 0x0042450F
 dir32,0x00425C7A,?ownerIdle@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x00425C7A. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004268F5,??1AttackPriorityInfo@@UAE@XZ,"nothing in the ledger owns 0x004268F5. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00426A8A,??0List00442C90@@QAE@XZ,"nothing in the ledger owns 0x00426A8A. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
