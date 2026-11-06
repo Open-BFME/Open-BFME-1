@@ -29,7 +29,7 @@ class BfmeSharedString : private StringBase<char>
 {
 public:
 	BfmeSharedString(const BfmeSharedString &other) : StringBase<char>(other) {}
-	~BfmeSharedString() {}
+	~BfmeSharedString();	// retail calls the narrow StringBase release body 0x00887940 directly
 
 	int compare(const BfmeSharedString &other) const
 	{
