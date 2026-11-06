@@ -39,8 +39,6 @@ private:
 	void *m_bfmeNode;					// +0x274
 };
 
-void j_0002fee6();
-
 class Gen_00161290
 {
 public:
@@ -55,6 +53,7 @@ class TeamInQueue
 {
 public:
 	TeamInQueue *dlink_next_TeamReadyQueue() const;
+	TeamInQueue *dlink_next_TeamBuildQueue() const;
 };
 
 typedef TeamInQueue *(TeamInQueue::*BfmeNextGetter)() const;
@@ -85,9 +84,17 @@ BfmeIterator Gen_000CBB80::bfmeMake(void)
 }
 
 // ?bfmeMake@Gen_00161290@@QAE?AUBfmeIterator@@XZ
+// Retail stores the recorded body name's address (thunk VA 0x0042FEE6),
+// the same member-pointer union spelling Gen_001612B0 uses.
 BfmeIterator Gen_00161290::bfmeMake(void)
 {
-	return BfmeIterator(m_bfmeNode, (void *)&j_0002fee6);
+	union
+	{
+		BfmeNextGetter member;
+		void *raw;
+	} getter;
+	getter.member = &TeamInQueue::dlink_next_TeamBuildQueue;
+	return BfmeIterator(m_bfmeNode, getter.raw);
 }
 
 // ?bfmeMake@Gen_001612B0@@QAE?AUBfmeIterator@@XZ
