@@ -1,23 +1,24 @@
-// ?update@ParticleSystemManager@@UAEXXZ
-// partial score=0.9807 date=2026-10-28
+// ?update005C37E0@ParticleSystemManager@@UAEXXZ
 // cl: /DNDEBUG /MD /EHsc
 // ParticleSystemManager::update, retail 0x005C37E0, 467 B (vtable slot 5 of
 // ParticleSystemManager 0x0110FDCC and W3DParticleSystemManager 0x0112039C).
+// The method name keeps the address: retail's ILT contradicts every
+// ?...@ParticleSystemManager@@ decoration (tools/ilt_oracle.py), so the class's
+// retail spelling is unknown (same convention as doParticles006FA9B0).
 // Zero Hour ParticleSys.cpp:2928 loop (including its `continue` without ++it)
 // over BFME's weak BfmeParticleSystemHandle list (layout from the matched
-// ParticleSystemManagerReset.cpp), plus QueryPerformanceCounter timing.
-// 467/467 B, 9 bytes off: VC7.1 puts `start` at [esp+14h] and `end` at
-// [esp+1Ch]; retail has them the other way round. See attempt_support handoff.
+// ParticleSystemManagerReset.cpp), plus QueryPerformanceCounter timing written
+// like the matched sibling ParticleSystem::update (ParticleSystemUpdate.cpp,
+// 0x005D1140): __int64 counters and `(Real)(end - start) * 1000.0f / (Real)frequency`.
+// The handle destructor is an inline definition that VC7.1 keeps out of line
+// (its COMDAT reproduces retail 0x001DA440, reached through ILT 0x00013994);
+// with its body visible the compiler packs the int64->fild temporary into the
+// dead `start` slot exactly as retail does and omits the state -1 store.
 typedef bool Bool;
 typedef float Real;
 
-union LARGE_INTEGER
-{
-	struct { unsigned long LowPart; long HighPart; };
-	__int64 QuadPart;
-};
-extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(LARGE_INTEGER *count);
-extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(LARGE_INTEGER *frequency);
+extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter( __int64 *count );
+extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency( __int64 *frequency );
 
 class GlobalData
 {
@@ -63,7 +64,22 @@ public:
 struct BfmeParticleSystemHandle
 {
 	BfmeParticleSystemHandle() : m_system(0), m_previous(0), m_next(0) {}
-	~BfmeParticleSystemHandle() throw();
+	~BfmeParticleSystemHandle()
+	{
+		if (m_system)
+		{
+			if (m_previous)
+				m_previous->m_next = m_next;
+			else
+				m_system->m_handleHead = m_next;
+			if (m_next)
+				m_next->m_previous = m_previous;
+			else
+				m_system->m_handleTail = m_previous;
+			m_previous = 0;
+			m_next = 0;
+		}
+	}
 	__forceinline BfmeParticleSystemHandle &operator=(const BfmeParticleSystemHandle &other)
 	{
 		if (this != &other)
@@ -117,7 +133,7 @@ struct BfmeParticleSystemList
 class ParticleSystemManager
 {
 public:
-	virtual void update();
+	virtual void update005C37E0();
 
 private:
 	unsigned char m_unmodelled_004[0x08];
@@ -133,9 +149,11 @@ private:
 	int m_localPlayerIndex;					// +0x98
 };
 
-void ParticleSystemManager::update()
+void ParticleSystemManager::update005C37E0()
 {
-	LARGE_INTEGER frequency, start, end;
+	__int64 frequency;
+	__int64 start;
+	__int64 end;
 	m_lastUpdateMilliseconds = 0;
 	if (TheWritableGlobalData->m_enableFrameTiming)
 	{
@@ -168,7 +186,6 @@ void ParticleSystemManager::update()
 	if (TheWritableGlobalData->m_enableFrameTiming)
 	{
 		QueryPerformanceCounter(&end);
-		start.QuadPart = end.QuadPart - start.QuadPart;
-		m_lastUpdateMilliseconds = (Real)start.QuadPart * 1000.0f / (Real)frequency.QuadPart;
+		m_lastUpdateMilliseconds = (Real)( end - start ) * 1000.0f / (Real)frequency;
 	}
 }

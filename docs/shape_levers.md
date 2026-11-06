@@ -3723,3 +3723,23 @@ the literal push and emits retail's ecx-first pair. Duplicating the following
 Hypothesis: an ecx-first pair in retail marks a merged tail of two source-level copies.
 Source: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptOnlineChat.cpp; handoff
 targets/game/reverse/attempt_support/20261105-005369a0-onlinechat-cross-jump.md.
+
+## Give an out-of-line destructor a visible body so an escaped local's slot can host the `fild` temporary (2026-11-06)
+
+Mismatch: ParticleSystemManager::update (0x005C37E0, 467 B, VC7.1 `/DNDEBUG /MD /EHsc`).
+Retail stores the `(Real)(end - start)` int64->`fild` temporary into the dead slot
+of `start` (frame 0x24). Ours gave the temporary its own slot (frame 0x30, 42 B
+different) whenever the trailing handle destructor was only declared (`~H() throw();`).
+
+Fix: define the destructor inline in the class (the unlink body). VC7.1 still calls
+it out of line (the COMDAT reproduces retail 0x001DA440 through ILT 0x00013994), but
+with the body visible the call no longer pins `&start` (escaped into
+QueryPerformanceCounter) as live, so the temporary packs into `start`'s slot and the
+EH state -1 store before the call disappears. Write the timing like the matched
+sibling ParticleSystem::update (`__int64 frequency, start, end;`, no store back into
+`start`): the bank's `start = end - start` form still left 9 B with the inline body.
+
+Measured: declared-only dtor 42 B; inline body plus store-back 9 B; inline body plus
+sibling timing EXACT. Hypothesis: an opaque call keeps every escaped local live
+across it. Source: game/GameEngine/Source/GameClient/System/ParticleSystemManagerUpdate.cpp;
+handoff targets/game/reverse/attempt_support/20261106-005c37e0-particle-manager-update-inline-dtor.md.
