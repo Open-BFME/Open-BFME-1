@@ -1,0 +1,69 @@
+// cl: /DNDEBUG /MD
+#include <math.h>
+typedef float Real;
+struct Coord3D
+{
+	Real x, y, z;
+	Coord3D() {}
+	Coord3D(const Coord3D &other) { x = other.x; y = other.y; z = other.z; }
+	Real length() const { return (Real)sqrt(z * z + y * y + x * x); }
+	void normalize()
+	{
+		Real len = length();
+		if (len != 0.0f)
+		{
+			Real inv = 1.0f / len;
+			x *= inv;
+			y *= inv;
+			z *= inv;
+		}
+	}
+	void sub(const Coord3D *a) { x -= a->x; y -= a->y; z -= a->z; }
+	void scale(Real s) { x *= s; y *= s; z *= s; }
+};
+struct Rva003A1D00Element
+{
+	char pad00[0xa4];
+	Coord3D point;
+	char padb0[8];
+};
+struct Rva003A1D00Range
+{
+	Rva003A1D00Element *first;
+	Rva003A1D00Element *last;
+	int size() const { return (int)(last - first); }
+	Rva003A1D00Element &operator[](int index) { return first[index]; }
+};
+class Rva003A1D00Owner
+{
+public:
+	void extrapolate();
+	char pad00[0x2c];
+	Rva003A1D00Range entries;
+};
+void Rva003A1D00Owner::extrapolate()
+{
+	Coord3D nearPoint = entries[1].point;
+	Coord3D farPoint = entries[2].point;
+	Coord3D delta = nearPoint;
+	delta.sub(&farPoint);
+	Real distance = delta.length();
+	Coord3D direction = nearPoint;
+	direction.sub(&entries[0].point);
+	direction.normalize();
+	direction.scale(distance);
+	nearPoint.sub(&direction);
+	entries[0].point = nearPoint;
+
+	nearPoint = entries[entries.size() - 2].point;
+	farPoint = entries[entries.size() - 3].point;
+	delta = nearPoint;
+	delta.sub(&farPoint);
+	distance = delta.length();
+	direction = nearPoint;
+	direction.sub(&entries[entries.size() - 1].point);
+	direction.normalize();
+	direction.scale(distance);
+	nearPoint.sub(&direction);
+	entries[entries.size() - 1].point = nearPoint;
+}
