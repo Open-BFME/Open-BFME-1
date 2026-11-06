@@ -1830,3 +1830,4 @@ _GUID_ATLVer70,0x01145854,va,16,.rdata,game/GameEngine/Source/Common/Rva009F6ADB
 _g_0113439C,0x0113439C,va,7,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugExceptionhandler_LogRegisters.cpp,matched,targets/game/reverse/identity_evidence/0113439c-flags-string.md,muse-spark-1.3
 _g_011343D4,0x011343D4,va,6,.rdata,game/Libraries/Source/WWVegas/WWDebug/DebugExceptionhandler_LogRegisters.cpp,matched,targets/game/reverse/identity_evidence/011343d4-ecx-string.md,muse-spark-1.3
 ?g_rva012B7828EvilRanks@@3PAPBDA,0x012B7828,va,44,.data,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/Rva005307B0ChatPlayerTooltip.cpp,matched,targets/game/reverse/identity_evidence/012b7828-evilranks-table.md,muse-spark-1.3
+?g_rva00EDBD60DistanceProcs@@3PAP6AMPBX0H@ZA,0x012DBD60,va,16,.data,game/Libraries/Source/partitionmanager/BfmeP1050QuadtreeClosest.cpp,matched,targets/game/reverse/identity_evidence/012dbd60-distanceprocs-table.md,muse-spark-1.3

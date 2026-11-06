@@ -130,7 +130,7 @@ struct S4Cmp009F4BF0
 };
 
 typedef float (__cdecl *BfmeDistanceProc1050)(const void *, const void *, int);
-extern BfmeDistanceProc1050 g_rva00EDBD60DistanceProcs[];
+extern BfmeDistanceProc1050 g_rva00EDBD60DistanceProcs[4];
 
 typedef _STL::vector<BfmeNode1050> BfmeNodeVec1050;
 
@@ -348,3 +348,22 @@ void *PartitionManagerImpl::GetClosestObject(int position, int maxDistance, int 
 	}
 	return closestObject;
 }
+
+// The partition distance-proc table this TU indexes, defined at its retail
+// .data address: four function pointers at VA 0x012DBD60, selected by the
+// clamped distanceType (0..3). The pointees are the matched distance bodies
+// (see their ledger rows); the caller passes (source, candidate, 0) and each
+// callee reads the prefix of that contract its own signature declares.
+// Names are forced with __identifier so the relocations resolve to exactly
+// the retail targets (AudioManagerRva006B9A80.cpp precedent).
+extern "C" float __cdecl __identifier("?Rva009F4070DistanceSquared@@YAMPBUCoord2DBase@@PAVRva009F4070PositionProvider@@@Z")(const void *, const void *);
+extern "C" float __cdecl __identifier("?bfmeSignedEJ@@YAMPBVBfmePosEJ@@PAVBfmeObjEJ@@@Z")(const void *, const void *);
+extern "C" float __cdecl __identifier("?Rva009F40A0DistanceSquared@@YAMPBUCoord3DBase@@PAVRva009F40A0PositionProvider@@@Z")(const void *, const void *);
+extern "C" float __cdecl __identifier("?distCalcProc_BoundaryAndBoundary_3D@@YAMPBUCoord3D@@PBVObject@@H@Z")(const void *, const void *, int);
+extern "C" BfmeDistanceProc1050 __identifier("?g_rva00EDBD60DistanceProcs@@3PAP6AMPBX0H@ZA")[4] =
+{
+	(BfmeDistanceProc1050)__identifier("?Rva009F4070DistanceSquared@@YAMPBUCoord2DBase@@PAVRva009F4070PositionProvider@@@Z"),
+	(BfmeDistanceProc1050)__identifier("?bfmeSignedEJ@@YAMPBVBfmePosEJ@@PAVBfmeObjEJ@@@Z"),
+	(BfmeDistanceProc1050)__identifier("?Rva009F40A0DistanceSquared@@YAMPBUCoord3DBase@@PAVRva009F40A0PositionProvider@@@Z"),
+	(BfmeDistanceProc1050)__identifier("?distCalcProc_BoundaryAndBoundary_3D@@YAMPBUCoord3D@@PBVObject@@H@Z")
+};
