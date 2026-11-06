@@ -5384,7 +5384,77 @@ Bool Object::getSingleLogicalBonePosition(const char* boneName, Coord3D* positio
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/ObjectGetSingleLogicalBonePositionOnTurretThunk.cpp
+class BfmeTurretDrawableView
+{
+public:
+#define BFME_TURRET_SLOT(n) virtual void slot##n(void) = 0;
+	BFME_TURRET_SLOT(00) BFME_TURRET_SLOT(01)
+	BFME_TURRET_SLOT(02) BFME_TURRET_SLOT(03)
+	BFME_TURRET_SLOT(04) BFME_TURRET_SLOT(05)
+	BFME_TURRET_SLOT(06) BFME_TURRET_SLOT(07)
+	BFME_TURRET_SLOT(08) BFME_TURRET_SLOT(09)
+	virtual Drawable *getDrawable(void) = 0;
+#undef BFME_TURRET_SLOT
+};
+Bool Object::getSingleLogicalBonePositionOnTurret( WhichTurretType whichTurret, const char* boneName, Coord3D* position, Matrix3D* transform ) const
+{
+	Coord3D turretPosition;
+	Coord3D bonePosition;
+	Drawable *drawable = reinterpret_cast<BfmeTurretDrawableView *>(const_cast<Object *>(this))->getDrawable();
+	AIUpdateInterface *ai = BFME_OBJ_AI(this);
+	if( drawable == NULL  || ai == NULL )
+		return FALSE;
+
+	// We need to find the TurretBone's pristine position.
+	drawable->getProjectileLaunchOffset( PRIMARY_WEAPON, 1, NULL, whichTurret, &turretPosition, NULL );
+	// And the required bone's pristine position
+	const BFMEDrawableBoneQuery *boneQuery = reinterpret_cast<const BFMEDrawableBoneQuery *>(drawable);
+	Int numBones = boneQuery->getPristineBonePositions(boneName, 0, &bonePosition, NULL, 1, 0);
+	if( numBones != 1 )
+		return FALSE;
+	//Then we mojo the Logic position of the required bone like Missile firing does.  Using the logic twist of the turret
+	Real turretRotation;
+	ai->getTurretRotAndPitch( whichTurret, &turretRotation, NULL );
+
+	Matrix3D boneOffset(TRUE);// This will be from the turret to the requested bone
+
+//	Vector3 bonePositionVector(	bonePosition.x - turretPosition.x, 
+//															bonePosition.y - turretPosition.y, 
+//															bonePosition.z - turretPosition.z );
+	Vector3 bonePositionVector(	bonePosition.x, 
+															bonePosition.y, 
+															bonePosition.z );
+	boneOffset.Translate(bonePositionVector);
+
+	Matrix3D turnAdjustment(TRUE);// this is the turret twist to be applied to the final answer
+
+	turnAdjustment.Translate( turretPosition.x, turretPosition.y, turretPosition.z );
+	turnAdjustment.In_Place_Pre_Rotate_Z(turretRotation);
+	turnAdjustment.Translate( -turretPosition.x, -turretPosition.y, -turretPosition.z );
+
+	Matrix3D boneLogicTransform;
+	boneLogicTransform.mul( turnAdjustment, boneOffset );
+
+	Matrix3D worldTransform;
+	convertBonePosToWorldPos(NULL, &boneLogicTransform, NULL, &worldTransform);
+
+	Vector3 tmp = worldTransform.Get_Translation();
+	Real worldX = tmp.X;
+	Real worldY = tmp.Y;
+	Real worldZ = tmp.Z;
+	Coord3D worldPos;
+	worldPos.x = worldX;
+	worldPos.y = worldY;
+	worldPos.z = worldZ;
+
+	if( position )
+		*position = worldPos;
+	if( transform )
+		*transform = worldTransform;
+
+	return TRUE;
+}
+
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
