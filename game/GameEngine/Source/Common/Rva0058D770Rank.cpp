@@ -59,6 +59,8 @@ public:
 	OVERRIDE<ThingTemplateRankView> m_template;	//retail +0x04
 	char m_pad08[0x74 - 0x08];
 	int m_id;							//retail +0x74
+	char m_pad78[0x210 - 0x78];
+	class Gen_001b2030 *m_210;			//retail +0x210
 };
 
 struct Iterator004B25D0
@@ -78,6 +80,7 @@ public:
 	void rva0037F190(Rva0037F190Result *, Object *);
 	bool at0037E810(Iterator004B25D0);
 	int at0037D810(Iterator004B25D0);
+	struct Rva0037F220Iterator rva0037F220(struct Rva0037F220Iterator);
 };
 
 extern ExperienceLevelSystem *TheExperienceLevelSystem;
@@ -114,6 +117,97 @@ static __declspec(noinline) int rank0058D770(Object *object)
 		return 0;
 	GoEGAaCall rank = Rva0037D810Binding();
 	return (TheExperienceLevelSystem->*rank)(node);
+}
+
+// Retail 0x0058B610, 415 bytes: a static helper with a private register
+// convention (object in ESI, rank out-pointer in EDI, fraction out-pointer in
+// EBX), called directly by the 0x00593440 and 0x00595E60 dumps. It stores the
+// object's experience rank, then the fraction of the way from this level's
+// threshold (ILT 0x0000BC21) to the next level's, clamped to [0,1], or -1
+// when there is no reachable next level. Identity stays address-derived.
+struct Rva0037F220Iterator
+{
+	void *m_sentinel;
+	void *m_current;
+	Rva0037F220Iterator() {}
+	Rva0037F220Iterator(const Rva0037F220Iterator &other) : m_sentinel(other.m_sentinel), m_current(other.m_current) {}
+};
+
+class Gen_001b2030
+{
+public:
+	bool m(int);
+
+	char m_pad00[0x0c];
+	float m_0c;							//retail +0x0c
+};
+
+class BfmeSinkBUB
+{
+public:
+	bool bfmeAskBUB(void *);
+};
+
+struct BfmeThingEGB;
+void *__stdcall bfmeGoEGAb(void *, BfmeThingEGB *);
+
+typedef int (ExperienceLevelSystem::*GoEGAbCall)(Iterator004B25D0);
+__forceinline GoEGAbCall Rva0037D840Binding()
+{
+	union { void *(__stdcall *raw)(void *, BfmeThingEGB *); GoEGAbCall member; } fn;
+	fn.raw = bfmeGoEGAb;
+	return fn.member;
+}
+
+
+// ?rva0058B610@@YA_NPAVObject@@PAHPAM@Z
+static __declspec(noinline) bool rva0058B610(Object *object, int *rank, float *fraction)
+{
+	Iterator004B25D0 node;
+	TheExperienceLevelSystem->rva0037F190((Rva0037F190Result *)&node, object);
+	MpSkirmishFlagGateCall check = Rva0037E810Binding();
+	if (!(TheExperienceLevelSystem->*check)(node))
+		return false;
+	GoEGAaCall rankOf = Rva0037D810Binding();
+	*rank = (TheExperienceLevelSystem->*rankOf)(node);
+	Rva0037F220Iterator nextRaw = TheExperienceLevelSystem->rva0037F220(*(Rva0037F220Iterator *)&node);
+	const Iterator004B25D0 &next = *(Iterator004B25D0 *)&nextRaw;
+	if ((TheExperienceLevelSystem->*check)(next)
+		&& ((BfmeSinkBUB *)TheExperienceLevelSystem)->bfmeAskBUB(object))
+	{
+		int cap;
+		if (!object->m_210->m((int)&cap) || *rank < cap)
+		{
+			float experience = object->m_210->m_0c;
+			GoEGAbCall threshold = Rva0037D840Binding();
+			float low = (float)(TheExperienceLevelSystem->*threshold)(node);
+			float high = (float)(TheExperienceLevelSystem->*threshold)(next);
+			if (low < high)
+			{
+				*fraction = (experience - low) / (high - low);
+				if (*fraction < 0.0f)
+					*fraction = 0.0f;
+				else if (*fraction > 1.0f)
+					*fraction = 1.0f;
+				goto done;
+			}
+		}
+	}
+	*fraction = -1.0f;
+done:
+	return *rank > 1 || *fraction >= 0.0f;
+}
+
+// This caller exists only to make the compiler emit the helper's private
+// convention, as retail's 0x00593440 and 0x00595E60 callers do.
+// ?rva0058B610Caller@@YAMPAVObject@@@Z absent-from-retail
+float rva0058B610Caller(Object *object)
+{
+	int rank;
+	float fraction;
+	if (!rva0058B610(object, &rank, &fraction))
+		return 0.0f;
+	return fraction + rank;
 }
 
 // Retail 0x00594FD0, 308 bytes (ret 4 at +0x131, int3 after): the helper's
