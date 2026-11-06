@@ -1,5 +1,5 @@
 // ?rva006DC0D0@Rva006DED60RoadBuffer@@QAEXPAVMeshClass@@PAURva006DC0D0RenderView@@HAAU?$_Rb_tree_iterator@PAURva006DC0D0Instance@@U?$_Const_traits@PAURva006DC0D0Instance@@@_STL@@@_STL@@@Z
-// partial score=0.0438 date=2026-10-03
+// partial score=0.0404 date=2026-10-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /I. /Igame/Libraries/Source/WWVegas/WWMath
 // stlport
 #include "game/Libraries/Source/WWVegas/WW3D2/mesh.h"
@@ -25,9 +25,12 @@ struct Rva006DC0D0MatInfo {
  void **vptr; int refs; int unused; VertexMaterialClass **materials;
  void release(){if(--refs==0){typedef void (__fastcall *F)(void *);((F)vptr[0])(this);}}
 };
+struct Rva006DC0D0MeshView {
+ char gap00[0xC8]; Rva006DC0D0Model *model;
+};
 struct Rva006DC0D0RenderView {
  void **vptr; char gap04[0x14]; Matrix3D transform;
- char gap48[0x80]; Rva006DC0D0Model *model;
+ char gap48[0x70]; Rva006DC0D0Model *model;
  Vector3 position()const {
   typedef void (__fastcall *F)(const void *);((F)vptr[20])(this);
   return transform.Get_Translation();
@@ -60,31 +63,33 @@ public:
 void Rva006DED60RoadBuffer::rva006DC0D0(MeshClass *mesh,Rva006DC0D0RenderView *camera,int index,Rva006DC0D0Set::iterator &it) {
  if(!ib||!vb||!enabled)return;
  if(!mesh||!camera)return;
+ Rva006DC0D0Set &set=sets[index];
  usedVertices=0;usedIndices=0;
 
- if(it==sets[index].end())return;
+ if(it==set.end())return;
  Rva006DC0D0RenderView *render=(Rva006DC0D0RenderView *)mesh;
- Vector3 *positions=(Vector3 *)render->model->positions->data;
- int nverts=render->model->vertices;
- int ntris=render->model->triangles;
- unsigned short *triangles=(unsigned short *)render->model->indices->data;
- Vector2 *uv=render->model->materials->Get_UV_Array_By_Index(0,false);
- unsigned *colors=render->model->materials->Get_Color_Array(0,false);
+ Rva006DC0D0MeshView *meshView=(Rva006DC0D0MeshView *)mesh;
+ Vector3 *positions=(Vector3 *)meshView->model->positions->data;
+ int nverts=meshView->model->vertices;
+ int ntris=meshView->model->triangles;
+ unsigned short *triangles=(unsigned short *)meshView->model->indices->data;
+ Vector2 *uv=meshView->model->materials->Get_UV_Array_By_Index(0,false);
+ unsigned *colors=meshView->model->materials->Get_Color_Array(0,false);
  Vector3 emissive(0,0,0);
  Rva006DC0D0MatInfo *info=render->materialInfo();
  if(info){info->materials[0]->Get_Emissive(&emissive);info->release();}
  RGBColor light;light.red=emissive.X;light.green=emissive.Y;light.blue=emissive.Z;
  Rva006DC0D0Vertex *vertices;
  unsigned short *indices;
- int total=sets[index].size()*nverts;
+ int total=set.size()*nverts;
  int stride=vb->fvf->stride;
  if(baseVertex+total+2>=30000){baseVertex=0;vb->buffer->lock(0,total*stride,(void**)&vertices,0x2000);}
  else vb->buffer->lock(baseVertex*stride,total*stride,(void**)&vertices,0x1000);
- total=sets[index].size()*ntris*3;
+ total=set.size()*ntris*3;
  if(baseIndex+total+6>=60000){baseIndex=0;ib->buffer->lock(0,total*2,(void**)&indices,0x2000);}
  else ib->buffer->lock(baseIndex*2,total*2,(void**)&indices,0x1000);
  int player=Rva012ED748?Rva012ED748->player->index:0;
- for(;it!=sets[index].end();++it) {
+ for(;it!=set.end();++it) {
   Rva006DC0D0Instance *instance=*it;
   if(!instance)continue;
   if(!instance->flag44||((Bfme5ShroudedThing*)instance)->bfmeIsShrouded(player)) {((Rva006DAC80Fade*)instance)->update();continue;}
@@ -94,7 +99,7 @@ void Rva006DED60RoadBuffer::rva006DC0D0(MeshClass *mesh,Rva006DC0D0RenderView *c
   pos+=render->position();
   bool useMatrix=false;
   if(!instance->flag10) {
-   if(render->model->flags&0x800) {
+   if(meshView->model->flags&0x800) {
     Matrix3D matrix;
     matrix.Obj_Look_At(pos,camera->position(),0);
     matrix.Set_Translation(Vector3(0,0,0));
@@ -103,7 +108,7 @@ void Rva006DED60RoadBuffer::rva006DC0D0(MeshClass *mesh,Rva006DC0D0RenderView *c
    }
    instance->flag10=true;
   }
-  if(render->model->flags&0x800) {
+  if(meshView->model->flags&0x800) {
    if(Rva012F1464->frame()%10==0) {
     Matrix3D matrix;
     matrix.Obj_Look_At(pos,camera->position(),0);
