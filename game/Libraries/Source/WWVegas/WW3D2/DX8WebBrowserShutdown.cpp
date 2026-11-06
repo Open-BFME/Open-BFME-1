@@ -3,7 +3,7 @@
 
 extern void __stdcall _com_issue_errorex(long error, IUnknown *object,
 	const GUID &iid);
-extern GUID g_bfmeIidTSA;
+extern "C" GUID __identifier("?g_bfmeIidTSA@@3UBfmeGuidTSA@@A");
 
 extern "C" __declspec(dllimport) void __stdcall CoUninitialize(void);
 
@@ -27,7 +27,7 @@ public:
     // ?shutdown@BfmeObjECF@@QAEXXZ absent-from-retail
     void shutdown() {
         long result = vtable->slot20(this);
-        if (result < 0) _com_issue_errorex(result, (IUnknown *)this, g_bfmeIidTSA);
+        if (result < 0) _com_issue_errorex(result, (IUnknown *)this, __identifier("?g_bfmeIidTSA@@3UBfmeGuidTSA@@A"));
     }
 };
 
