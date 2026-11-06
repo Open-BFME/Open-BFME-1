@@ -145,7 +145,10 @@ private:
 };
 
 // g_ names stand for vftables whose ??_7 names cannot be declared.
-extern const char g_01105690[];
+// retired debt ?g_01105690@@3QBDB: retail 0x01105690 is
+// ??_7BfmeAptScreenSecondary@@6B@, which this TU's own class emits; the
+// dtor below relies on the compiler's implicit vfptr store (which references
+// that recorded name) instead of a TU-local alias.
 // retired debt: ?g_01105A78@@3QBDB replaced with ??_7BfmeAptScreenLanLobby@@6BBfmeAptScreenBase@@@
 extern "C" const char __identifier("??_7BfmeAptScreenLanLobby@@6BBfmeAptScreenBase@@@")[];
 // retired debt: ?g_01105A74@@3QBDB replaced with ??_7BfmeAptScreenLanLobby@@6BS4Owner@@@
@@ -158,7 +161,6 @@ class BfmeAptScreenSecondary
 public:
 	virtual ~BfmeAptScreenSecondary()
 	{
-		*(const void **)this = (const void **)g_01105690;
 	}
 };
 
