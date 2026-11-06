@@ -52,7 +52,11 @@ class ClientRoot4120
 public:
 	unsigned char cameraChangeBlocked;
 };
-extern ClientRoot4120 *TheGameClient;
+// Canonical datum ?TheGameClient@@3PAVGameClient@@A (0x012F1464, defined in
+// GameClient.cpp); the partial ClientRoot4120 view stays a cast at the use
+// site (identity_evidence/012f1464-TheGameClient.md).
+class GameClient;
+extern GameClient *TheGameClient;
 
 class BaseHeightMapRenderObjClass
 {
@@ -257,7 +261,7 @@ private:
 // ?rva00742920@W3DView@@UAEHPAUCoord2D@@@Z
 Int W3DView::rva00742920(Coord2D *delta)
 {
-	if (TheGameClient->cameraChangeBlocked && opaque0044)
+	if (((ClientRoot4120 *)TheGameClient)->cameraChangeBlocked && opaque0044)
 		return 0;
 
 	Int flags = 0;
