@@ -1,72 +1,56 @@
 // ?isMusicAlreadyLoaded@AudioManager@@UBE_NXZ
-// partial score=0.2675 date=2026-09-27
+// partial score=0.1908 date=2026-10-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /EHsc /Iinputs/reference/shims/stringinline
 // stlport
+//
+// Retail 0x006AC1A0, 456 bytes. Probe (relocations masked): 463 bytes,
+// shape 0.972, 5 structural differences, first at +001e. Frame, EH state
+// machine, loop control flow, hash-walk and tail all match retail exactly.
+//
+// FINDINGS SINCE THE 0.81/0.848 BANKS (all measured, keep them):
+//   1. EH MAP (tools/eh_info.py): state 0 is musicToLoad itself -- the class
+//      HAS a tracked destructor (state 0 window, dtor inlined at function end,
+//      folded to nothing on the early return because the exit test reads
+//      musicToLoad.m_ptr directly). State 1 is aet, 2 aud, 3 astr. The
+//      unwind funclets for states 0 and 1 both jmp ILT 0x000362FF ->
+//      0x000877B0, so musicToLoad and aet are the SAME class; the pinned
+//      ledger views for that class are the dtor body at 0x000877B0 and the
+//      assign body at 0x00087750 (via ILT 0x0002C6D8 -- the exact callee of
+//      this body's bind call).
+//   2. The visible __declspec(noinline) operator= body in the TU is what
+//      lets MSVC keep the AudioEventInfo* live in a register across the
+//      bind call (no reload, no null re-test, `lea <reg>,[esi+4]` CSE'd
+//      for both Interlocked pushes). Declaration-only reverts all three.
+//   3. `while ((true) && it == it && it == it && it != end())`: the
+//      self-compares fold to zero bytes and are what stops MSVC rotating
+//      the loop (retail's back-edge targets the head test, no bottom
+//      test). One self-compare also works (463B both, shape 0.965 vs
+//      0.972); plain while/gotos/while(true) all rotate (470-517B).
+//   4. Tail locals at FUNCTION scope (no braces around the tail) give
+//      retail's slot layout exactly: musicToLoad E+0x00, astr E+0x04,
+//      begin's return slot E+0x08 (aet shares it), aud E+0x10, frame
+//      sub esp,0x80. A braced tail block merges astr onto the dead
+//      cursor slot and costs 4 frame bytes.
+//   5. `virtual ~AudioEventRTS()` must NOT be throw(): retail keeps the
+//      `mov byte [esp+0x98],0` state store before the ~aud call (worth 8
+//      bytes; the 0.81 bank's throw() measurements match this).
+//
+// REMAINING BLOCKER (one allocator/PRE decision, ~7 bytes, 2 sites):
+// retail materialises the entry zero in ESI (`xor esi,esi` feeding both
+// the musicToLoad store and the state=0 store), loads musicToLoad.m_ptr
+// into ESI at the latch, and the loop-exit re-test reuses that ESI with
+// no reload (`test esi,esi` at +0x141). This build stores two immediates
+// at entry, loads the latch value into EAX, and reloads at the exit
+// (`mov eax,[esp+0x10]; test eax,eax`, 4 bytes more). A `loaded` local
+// threaded through the latch and exit tests DOES create the unified ESI
+// web (verified: exit becomes `test esi,esi`) but it breaks the
+// path-sensitive fold of musicToLoad's destructor on the early return
+// (the exit test no longer reads the member, so the early path emits the
+// full release, +54B). Everything else then follows from the missing web:
+// cursor lands in EBP instead of EBX, &refcount in EBX instead of EBP,
+// and retail's 2-byte `lea esp,[esp]` alignment pad before the bucket
+// scan loop at +0xdc is absent.
 
-// ?isMusicAlreadyLoaded@AudioManager@@UBE_NXZ
-// Retail 0x006AC1A0, 456 bytes. Replaces the naked __emit copy in
-// AudioManager_isMusicAlreadyLoadedMethodThunk.cpp.
-//
-// Identity: the AudioManager vtable head installed at 0x0111C0C0 carries this
-// method in slot +0x138, and the two named callers (GameAudio.cpp:238/246 and
-// GameEngine.cpp:435) spell it isMusicAlreadyLoaded on TheAudio exactly as
-// Zero Hour GameAudio.h:292 declares it. The name is not contradicted by the
-// body: it returns FileSystem::doesFileExist() on the generated filename of an
-// AT_Music event, and nothing else in the class has that shape.
-//
-// Body: the Zero Hour AudioManager::isMusicAlreadyLoaded walk of
-// m_allAudioEventInfo (+0x70), with the three differences the disassembly
-// proves. The retained handle is a refcounted CountedPtr, not a raw pointer:
-// the entry is Add_Ref'd on inspection (InterlockedIncrement at +0x58),
-// copy-assigned through the shared CountedPtr operator= ILT 0x0002C6D8 when it
-// matches, and released with a deleting destructor when the temporary dies.
-// The scan stops at the FIRST match instead of taking the last, and the entry
-// must also carry none of the m_type (+0x38) mask 0x600. AudioEventRTS is then
-// built from the retained handle with the thin (name, timeOfDay) constructor
-// reached through ILT 0x0001EC13.
-//
-// MEASURED 2026-09-27 (probe, relocations masked): 465 bytes against retail's
-// 456, 316 differing non-reloc bytes, 0.810 of instructions equal once
-// registers and constants are normalised, 21 structural differences. The frame
-// is now retail's exactly -- sub esp,0x80, the four saved registers, the EH
-// scope record at +0x90, the same live slots -- and the entry sequence is
-// retail's instruction for instruction apart from one register name.
-//
-// Levers established, each measured (do not retry them):
-//   LOOP HEADER. The break must be the LAST statement of the loop body and the
-//   ++it must follow the guard, not sit in a for-header. The while spelling
-//   with ++it last duplicates `return false` at the latch and costs 17 bytes
-//   (506 -> 489); the for-header spelling trades retail's folded
-//   `test ebx,ebx` for a materialised cmp and is no better. Either way MSVC
-//   only emits retail's `xor <reg>,<reg>` zero register when the latch
-//   re-tests the loop condition, which is worth 4 bytes at the entry stores.
-//   throw(). `virtual ~AudioEventRTS() throw();` (-8) and
-//   `void bind(const CountedPtr &) throw();` (-16) are worth 24 bytes together.
-//   throw() on ~AudioEventInfo, on rts::hash<AsciiString>::operator() or on
-//   getFilename / bfmeGenerateFilename / doesFileExist / the AudioEventRTS
-//   constructor changes nothing; throw() on isMusicAlreadyLoaded ITSELF drops
-//   the SEH frame and the body (370 bytes) and is wrong.
-//   NOT levers (each byte-identical to the line above, measured): binding the
-//   map to a reference or pointer local; swapping the two declaration orders;
-//   nesting the aet block, the break block, the tail block or the whole loop
-//   one or two levels deeper; an uninitialised pad local in the loop or tail
-//   body; test-operand and comparison-polarity respellings; and the frame,
-//   register, copy, store, sib, bool, test, constant and branch families from
-//   tools/shape_family_levers.py, which generate one choice here.
-//
-// REMAINING BLOCKER: one allocator decision, worth 9 bytes and ~300 of the
-// 316. Retail holds the entry's zero in ESI and the loop cursor in EBX, so the
-// zero dies at +0x2d, ESI is free to carry `second`, and MSVC keeps the
-// AudioEventInfo* live in a register across both Interlocked calls -- giving
-// `lea ebp,[esi+4]` once, no reload of the temporary and no null re-test. This
-// build holds the zero in EBX for the whole body and the cursor in ESI, so it
-// re-reads the temporary out of memory, re-tests it for null twice, and spends
-// `cmp reg,ebx` where retail spends `test reg,reg`. Seventeen source
-// perturbations failed to flip the pair; it is not reachable by respelling.
-// The second, smaller residue is the frame slot: retail's block-scoped aet sits
-// at +0x18, on the dead cursor, and shares it, while its tail-block astr holds
-// +0x14 alone; this build puts both at +0x14. Block nesting does not move it
-// (see the pad-local probe above), so that choice is MSVC-internal.
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
@@ -81,17 +65,12 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 
-// Retail reaches each of these bodies through its own incremental-link thunk,
-// and the thunks are what the call sites name, so the calls are spelled through
-// them (each thunk is a bare jmp, hence the thiscall member-function-pointer
-// union the caller uses to get retail's stack cleanup).
 void j_0000af6f(void);		// hash_map::begin, 0x006A0390
 void j_0000ec91(void);		// rts::hash<AsciiString>::operator(), 0x000B8600
-void j_0002c6d8(void);		// CountedPtr::operator=, 0x00087750
-void j_0001ec13(void);		// AudioEventRTS(name, timeOfDay), 0x000B2D90
-void j_00046a33(void);		// AudioEventRTS::bfmeGenerateFilename, 0x000B4840
-void j_0000b7d5(void);		// AudioEventRTS::getFilename, 0x000B3B70
-void j_00026f35(void);		// ~AudioEventRTS, 0x000B31F0
+void j_0001ec13(void);		// AudioEventRTS(name, timeOfDay), 0x00B2D90
+void j_00046a33(void);		// AudioEventRTS::bfmeGenerateFilename, 0x00B4840
+void j_0000b7d5(void);		// AudioEventRTS::getFilename, 0x00B3B70
+void j_00026f35(void);		// ~AudioEventRTS, 0x00B31F0
 
 enum AudioType
 {
@@ -100,12 +79,6 @@ enum AudioType
 
 namespace rts
 {
-// Retail's instantiation takes the key BY VALUE (0x000B8600 is
-// `int __stdcall rts::hash<AsciiString>::operator()(AsciiString) const`), which
-// is why _M_bkt_num copy-constructs the node key into the outgoing argument
-// slot; the copy is released by the callee. The empty functor is what puts
-// _M_buckets at +0x04 of the hashtable, the layout 0x006A0390 and the inlined
-// _M_skip_to_next both read.
 template <class T>
 struct hash
 {
@@ -139,24 +112,27 @@ public:
 			delete this;
 	}
 
-	long m_refCount;					// +0x04
+	long m_refCount;						// +0x04
 	char m_pad08[0x38 - 0x08];
-	UnsignedInt m_type;					// +0x38
+	UnsignedInt m_type;						// +0x38
 	char m_pad3c[0x84 - 0x3c];
-	AudioType m_soundType;				// +0x84
+	AudioType m_soundType;					// +0x84
 };
 
-// The retained handle. Four bytes holding a refcounted AudioEventInfo: the
-// copy-assign is out of line at the shared CountedPtr operator= ILT
-// 0x0002C6D8, and the destructor hands the reference back, deleting through
-// the vtable when it was the last one.
+// The shared ref-counted handle (CountedPtr). The copy-assign body is the
+// verified 0x00087750 body (ILT 0x0002C6D8) and the destructor body the
+// verified 0x000877B0 body (ILT 0x000362FF); keeping both visible here with
+// __declspec(noinline) / inline lets MSVC prove the assignment does not
+// write through the source reference, as retail's codegen does.
 class CountedPtr
 {
 public:
 	CountedPtr(void) : m_ptr(0) { }
+
 	CountedPtr(AudioEventInfo *info) : m_ptr(info)
 	{
-		m_ptr->Add_Ref();
+		if (info)
+			info->Add_Ref();
 	}
 
 	~CountedPtr(void)
@@ -165,16 +141,17 @@ public:
 			m_ptr->Release_Ref();
 	}
 
-	void bind(const CountedPtr &other) throw()
+	__declspec(noinline) CountedPtr &operator=(const CountedPtr &rhs)
 	{
-		typedef void (CountedPtr::*BindCall)(const CountedPtr &);
-		union BindBits
+		if (this != &rhs)
 		{
-			void (*freeFunction)(void);
-			BindCall memberFunction;
-		} call;
-		call.freeFunction = j_0002c6d8;
-		(this->*call.memberFunction)(other);
+			if (rhs.m_ptr)
+				rhs.m_ptr->Add_Ref();
+			if (m_ptr)
+				m_ptr->Release_Ref();
+			m_ptr = rhs.m_ptr;
+		}
+		return *this;
 	}
 
 	AudioEventInfo *m_ptr;
@@ -187,7 +164,7 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS(const AsciiString &eventName, Int timeOfDay);
-	virtual ~AudioEventRTS() throw();
+	virtual ~AudioEventRTS();
 	void bfmeGenerateFilename(void);
 	AsciiString getFilename(void);
 
@@ -208,11 +185,6 @@ typedef _STL::hash_map<AsciiString, AudioEventInfo *, rts::hash<AsciiString>,
 class AudioEventInfoMap : public AudioEventInfoHash
 {
 public:
-	// Retail's begin() is the ICF-shared out-of-line instantiation reached
-	// through its own ILT, so the map hides the header's inline begin() and
-	// hands the call that address instead. The C-style cast on this is what
-	// lets the pointer-to-member carry the plain thiscall the thunk expects
-	// while the walk itself stays a const one.
 	const_iterator begin(void) const
 	{
 		typedef void (AudioEventInfoMap::*Begin)(const_iterator *result);
@@ -242,30 +214,27 @@ private:
 Bool AudioManager::isMusicAlreadyLoaded(void) const
 {
 	CountedPtr musicToLoad;
-	AudioEventInfoHash::const_iterator it;
-	it = m_allAudioEventInfo.begin();
-	while (it != m_allAudioEventInfo.end())
+	AudioEventInfoHash::const_iterator it = m_allAudioEventInfo.begin();
+	while ((true) && it == it && it == it && it != m_allAudioEventInfo.end())
 	{
-		if (it->second)
+		AudioEventInfo *info = it->second;
+		if (info)
 		{
-			CountedPtr aet(it->second);
-			if (aet.m_ptr->m_soundType == AT_Music && !(aet.m_ptr->m_type & 0x600u))
-				musicToLoad.bind(aet);
+			CountedPtr aet(info);
+			if (info->m_soundType == AT_Music && !(info->m_type & 0x600u))
+				musicToLoad = *(const CountedPtr *)&aet;
 		}
 
+		++it;
 		if (musicToLoad.m_ptr)
 			break;
-
-		++it;
 	}
 	if (!musicToLoad.m_ptr)
 		return false;
 
-	{
-		AudioEventRTS aud(*(const AsciiString *)&musicToLoad, 2);
-		aud.bfmeGenerateFilename();
-		AsciiString astr = aud.getFilename();
+	AudioEventRTS aud(*(const AsciiString *)&musicToLoad, 2);
+	aud.bfmeGenerateFilename();
+	AsciiString astr = aud.getFilename();
 
-		return TheFileSystem->doesFileExist(astr.str());
-	}
+	return TheFileSystem->doesFileExist(astr.str());
 }
