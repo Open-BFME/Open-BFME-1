@@ -63,10 +63,18 @@ struct Q1ReceiverSetNode : public _STL::_Rb_tree_node_base
 	int m_key;
 };
 
+// The dependency closure (0x009EFD40) views the same 12-byte trees as sets of
+// the asset pointers the matched insert_unique (ILT 0x00030413) is pinned on.
+struct Rva001408C0Target;
+typedef Rva001408C0Target *Q1ReceiverKey;
+typedef _STL::set<Q1ReceiverKey> Q1ReceiverPtrSet;
+
 struct Q1ReceiverHashPayload
 {
 	int m_unused;
 	int m_flags;
+	Q1ReceiverKey m_key;			// +0x08
+	Q1ReceiverKey *m_dependencies;	// +0x0C, null-terminated
 };
 
 typedef _STL::hash_map<int, Q1ReceiverHashPayload *> Q1ReceiverHashTable;
@@ -171,6 +179,51 @@ void Q1Receiver0134FAAC::m009ECA30(int value)
 	m_value = value;
 	if (value < 1)
 		m_value = 1;
+}
+
+// Retail 0x009EFD40, 513 bytes (ret 4 at +0x1FE, int3 after; the 504-byte
+// generated row stopped short): grows the caller's key set to its dependency
+// closure. Each pass copies the frontier (0x009EE8E0), clears the frontier,
+// and for every non-null key of the copy looks its payload up in the +0x44
+// table and adds every listed dependency not yet in the caller's set to both
+// sets. The matched m009F0D40 below and m009F0E50 call it with a local
+// wrapper. Shape ported from BFME 2 (Open-BFME-2 dbde7dbe,
+// Code/Libraries/Source/assetmanager/assetmanager_impl.cpp, retail 0x006217F0
+// there, also 513 bytes).
+void Q1Receiver0134FAAC::m009EFD40(Q1ReceiverLocalSet *source)
+{
+	Q1ReceiverLocalSet frontier = { source->m_set.get(), 0, true };
+	Q1ReceiverPtrSet &sourceKeys = (Q1ReceiverPtrSet &)source->m_set.get();
+	Q1ReceiverPtrSet &frontierKeys = (Q1ReceiverPtrSet &)frontier.m_set.get();
+	while (!frontierKeys.empty())
+	{
+		Q1ReceiverLocalSet previous = { frontier.m_set.get(), 0, true };
+		frontierKeys.clear();
+		frontier.m_one = true;
+		Q1ReceiverPtrSet &previousKeys = (Q1ReceiverPtrSet &)previous.m_set.get();
+		for (Q1ReceiverPtrSet::const_iterator it = previousKeys.begin();
+			it != previousKeys.end(); ++it)
+		{
+			Q1ReceiverSetNode *node = (Q1ReceiverSetNode *)it._M_node;
+			if (!node->m_key)
+				continue;
+			Q1ReceiverHashTable::const_iterator found = m_table.find(node->m_key);
+			if (found == m_table.end())
+				continue;
+			Q1ReceiverHashPayload *asset = found->second;
+			if (!asset->m_dependencies)
+				continue;
+			for (int n = 0; asset->m_dependencies[n]; ++n)
+			{
+				Q1ReceiverKey dependency = asset->m_dependencies[n];
+				if (sourceKeys.find(dependency) == sourceKeys.end())
+				{
+					frontierKeys.insert(dependency);
+					sourceKeys.insert(dependency);
+				}
+			}
+		}
+	}
 }
 
 void Q1Receiver0134FAAC::m009F0D40(int value)
