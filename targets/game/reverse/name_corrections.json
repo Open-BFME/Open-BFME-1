@@ -21962,5 +21962,15 @@
   "after_sha256": "0bce662b8c0878acbda809af932afc5988b27c4ccf8d61db2a6b413ae75b6a7c",
   "evidence": "targets/game/reverse/identity_evidence/0x00745370.md",
   "reason": "retail's ILT hash contradicts the ZH decoration ?pickDrawable@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z and every tested access/parameter variant for the 0x00745370 W3DView vtable slot, so the slot keeps an address name; the ZH role stays in comments"
- }
+ },
+{
+ "old_path": "game/GameEngine/Source/GameLogic/Map/Rva0019B030LoadBuildLists.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/Map/Rva0019B030LoadBuildLists.cpp",
+ "old_name": "ParserBase0019B030",
+ "new_name": "BfmeParserBindingBaseVE",
+ "before_sha256": "36572f7feb274aba7175794b98d13764270f45a7752850dd5a902b52fee14c52",
+ "after_sha256": "c13b92b3520614a4e600b2fc76095abf173e9051c7d1977da595815fcc9feb2c",
+ "evidence": "targets/game/reverse/identity_evidence/0107c7d0-parser-binding-base.md",
+ "reason": "TU-local parser base is the DIR32-recorded BfmeParserBindingBaseVE (vtable 0x0107C7D0; canonical definition in BfmeDataChunkParserBinding.cpp shares layout, slot count, constructor shape and drop behavior); the rename retires the keyed dir32 debt without member, call or layout changes"
+}
 ]

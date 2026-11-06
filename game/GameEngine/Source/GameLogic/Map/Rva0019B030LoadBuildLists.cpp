@@ -122,19 +122,22 @@ typedef bool (*CallbackBase0019B030)(DataChunkInput &, DataChunkInfo *, void *);
 extern void bfmeChunkParserVE();
 extern void j_0000f51a();
 extern void j_00013c6e();
-class ParserBase0019B030 {
+// retired debt ??_7ParserBase0019B030@@6B@: retail base vtable 0x0107C7D0 is
+// DIR32-recorded as ??_7BfmeParserBindingBaseVE@@6B@ (its canonical definition
+// lives in game/GameEngine/Source/Common/System/BfmeDataChunkParserBinding.cpp,
+// whose base shares this layout and slot count). This helper carries the recorded
+// class name so the constructor's vfptr store references the defining name
+// instead of a TU-local duplicate vtable; members, virtuals and the
+// registerParser call are untouched, preserving layout and bytes.
+class BfmeParserBindingBaseVE {
 public:
-  ParserBase0019B030(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
+  BfmeParserBindingBaseVE(DataChunkInput *table, const AsciiString &name, const AsciiString &parent) {
     table_ = table;
     parser_ = table->registerParser(name, parent, (CallbackBase0019B030)bfmeChunkParserVE, this);
   }
-  ~ParserBase0019B030() {
+  ~BfmeParserBindingBaseVE() {
     reinterpret_cast<BfmeSubVE *>(table_)->bfmeDropVE(parser_);
   }
-  // Retail base vtable 0x0107C7D0 and binding vtable 0x0109BFD4 hold two
-  // entries each; the two virtuals here are what give this class a vfptr at
-  // offset 0 (the slot retail's own vtable stores) and make the compiler emit
-  // the binding vtable this TU's inline constructor stores.
   virtual void bfmeSlot0(void);
   virtual void bfmeSlot1(void);
 protected:
@@ -142,13 +145,13 @@ protected:
   UserParser *parser_;
 };
 
-class BfmeParserBindingVE : public ParserBase0019B030 {
+class BfmeParserBindingVE : public BfmeParserBindingBaseVE {
   SidesList *owner_;
   BuildListCallback0019B030 callback_;
 public:
   BfmeParserBindingVE(SidesList *owner, BuildListCallback0019B030 callback, DataChunkInput *table,
                       const AsciiString &name, const AsciiString &parent)
-      : ParserBase0019B030(table, name, parent) {
+      : BfmeParserBindingBaseVE(table, name, parent) {
     owner_ = owner;
     callback_ = callback;
   }
