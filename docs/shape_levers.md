@@ -3762,3 +3762,21 @@ ifs, a named mask local and `m_entries + bucket` were inert. The out-of-line
 Source: game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp; handoff
 targets/game/reverse/attempt_support/20261106-0089cef0-tab1024-find-entries-snapshot.md.
 Untested hypothesis: the same lever may fix 0x0089CC80's +0x45 residue.
+
+## A raw-address float operand schedules differently from a named one: fold the scale into one expression (2026-11-06)
+
+Mismatch: Render2DClass::Add_Line (0x006E7530 435 B and 0x006E7750 446 B, VC7.1
+`/DNDEBUG /MD /EHsc`). The bodies matched only while the half-width factor was
+read as `oolen *= *(const float *)0x0107533c;` (a link blocker). With the 0.5f
+literal (`__real@3f000000`) or a named `extern const float`, the `fld X` moved
+above `lea edx` and the `fmul st(1)` moved above `push 6`: two adjacent swaps,
+10 bytes.
+
+Fix: `float oolen = WWMath::Inv_Sqrt(len2) * width * 0.5f;` as one expression
+instead of `oolen = Inv_Sqrt(len2); oolen *= width; oolen *= 0.5f;`. EXACT for both
+overloads; `/ 2.0f`, `corner_offset *= oolen`, and dropping the existing volatile
+Y read were all 270+ bytes off. Measured only: the absolute-address operand and the
+compound-assignment chain evidently give the scheduler different dependence or
+cost inputs. When removing a raw-address cast perturbs scheduling, try reshaping
+the expression that uses it before keeping the cast. Source:
+game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddLine.cpp.
