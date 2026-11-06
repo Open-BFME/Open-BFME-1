@@ -111,7 +111,10 @@ extern "C" int __cdecl atexit(void (__cdecl *function)());
 // Gate debt ?g_vtbl_01112E18@@3PAPAXA: reference the recorded retail vtable directly.
 // Gate debt ?g_vtbl_01112E1C@@3PAPAXA: reference the recorded retail vtable directly.
 
-extern void *g_vtbl_01073744[];
+// retired debt ?g_vtbl_01073744@@3PAPAXA: use recorded owner ??_7?$BasicTimerClass@VSystemTimerClass@@@@6B@
+// (one #define covers all 27 use sites; the emitted reference is the recorded name)
+extern "C" void *__identifier("??_7?$BasicTimerClass@VSystemTimerClass@@@@6B@")[];
+#define g_vtbl_01073744 __identifier("??_7?$BasicTimerClass@VSystemTimerClass@@@@6B@")
 extern void *g_vtbl_01073758[];
 // retired debt ?g_vtbl_01073760@@3PAPAXA: use recorded owner ??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@
 extern "C" void *__identifier("??_7?$CategoryModuleInfo@$0A@@FXParticleSystem@@6B@")[];
