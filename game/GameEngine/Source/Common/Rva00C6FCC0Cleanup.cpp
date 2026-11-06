@@ -12,9 +12,15 @@ void rva00C6FCC0() { RvaGlobal012A7A48 = RvaData0107C7DC; }
 // 14475->681C0 (Dict release);26F35->B31F0 (AudioEventRTS destructor).
 struct Gen00014475 { void handle(); };
 struct Gen00026F35 { void handle(); };
-extern Gen00014475 RvaObject012ED5E0;
+// ?TheWorldDict@MapObject@@2VDict@@A at retail VA 0x012ED5E0: MapObject's
+// upstream world dictionary (matched data row owned by WorldHeightMap.cpp;
+// identity_evidence/012ed5e0-identity-seat15-TheWorldDict.md). Kept TU-local
+// handle() view (-> Dict::releaseData 0x681C0) so rva00C6FCD0 byte-matches;
+// the reference now uses the owned spelling instead of the unrecorded
+// RvaObject012ED5E0 view.
+extern "C" Gen00014475 __identifier("?TheWorldDict@MapObject@@2VDict@@A");
 extern Gen00026F35 RvaObject012EF0E8;
-void rva00C6FCD0() { RvaObject012ED5E0.handle(); }
+void rva00C6FCD0() { __identifier("?TheWorldDict@MapObject@@2VDict@@A").handle(); }
 void rva00C6FD10() { RvaObject012EF0E8.handle(); }
 
 // 0D828->5EE90->887940 is the AsciiString/StringBase release path.
