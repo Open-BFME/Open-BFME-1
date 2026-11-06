@@ -1,8 +1,6 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Retail 0x00299400: OneRingPenaltyUpdate trajectory step (string VA 0x010C06B8 names OneRingPenaltyUpdate.cpp); method name unknown.
-#define _STLP_USE_NEWALLOC 1
-#define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <vector>
 extern "C" float cosf(float);
@@ -23,6 +21,9 @@ class Team; class Waypoint; class PolygonTrigger; class CommandButton; class Pat
 enum AICommandType { AICMD_MOVE_TO_POSITION = 0x00 };
 struct DamageInfo { char m_bfme_body[0x5C]; };
 // Layout and body as landed in AICommandInterfaceMovementOrders.cpp; visible here as in the retail header.
+// The TU compiles like that one (/EHsc, default STLport allocator, exceptions on) so the emitted
+// aiMoveToPosition COMDAT is retail's 219 bytes; the _STLP_NO_EXCEPTIONS/_STLP_USE_NEWALLOC build
+// emitted a 180-byte non-retail copy the link selected. update is unchanged under both.
 class AICommandParms { public:
  AICommandParms( AICommandType cmd, CommandSourceType commandSource );
  AICommandType m_cmd; CommandSourceType m_cmdSource; Coord3D m_pos; Object *m_obj; Object *m_otherObj; const Team *m_team;
