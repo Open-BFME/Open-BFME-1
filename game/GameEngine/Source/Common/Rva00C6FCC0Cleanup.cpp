@@ -2,19 +2,29 @@
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Nine independently int3-bounded startup callbacks, retaining opaque names.
-// 00C6FCC0 writes the witnessed address 0107C7DC to global 012A7A48.
-extern unsigned int RvaData0107C7DC[];
+// retired debt ?RvaData0107C7DC@@3PAIA: 00C6FCC0 writes the witnessed address
+// 0107C7DC to global 012A7A48. Retail 0x0107C7DC is DIR32-recorded as
+// ??_7Rva00087320@@6B@, so reference the defining name directly.
+extern "C" unsigned int __identifier("??_7Rva00087320@@6B@")[];
 extern unsigned int *RvaGlobal012A7A48;
-void rva00C6FCC0() { RvaGlobal012A7A48 = RvaData0107C7DC; }
+void rva00C6FCC0() { RvaGlobal012A7A48 = __identifier("??_7Rva00087320@@6B@"); }
 
 // Existing address-derived callee names; ABI independently checked from
 // the retail bodies: ECX receiver, no stack arguments, plain ret.
 // 14475->681C0 (Dict release);26F35->B31F0 (AudioEventRTS destructor).
 struct Gen00014475 { void handle(); };
 struct Gen00026F35 { void handle(); };
-extern Gen00014475 RvaObject012ED5E0;
+// retired debt ?RvaObject012ED5E0@@3UGen00014475@@A: retail 0x012ED5E0 is
+// DIR32-recorded as ?TheWorldDict@MapObject@@2VDict@@A (matched data row in
+// WorldHeightMap.cpp), so reference the defining name directly.
+class Dict;
+class MapObject
+{
+public:
+	static Dict TheWorldDict;
+};
 extern Gen00026F35 RvaObject012EF0E8;
-void rva00C6FCD0() { RvaObject012ED5E0.handle(); }
+void rva00C6FCD0() { reinterpret_cast<Gen00014475 *>(&MapObject::TheWorldDict)->handle(); }
 void rva00C6FD10() { RvaObject012EF0E8.handle(); }
 
 // 0D828->5EE90->887940 is the AsciiString/StringBase release path.
