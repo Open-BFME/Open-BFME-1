@@ -55,7 +55,7 @@ public:
 };
 
 void GadgetRadioSetText(GameWindow *window, UnicodeString text);
-void rva004BD400(GameWindow *window, UnicodeString text);
+void GadgetButtonSetText(GameWindow *window, UnicodeString text);	// 0x004BD400, GadgetPushButton.cpp
 void GadgetCheckBoxSetText(GameWindow *window, UnicodeString text);
 void GadgetStaticTextSetText(GameWindow *window, UnicodeString text);
 void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
@@ -71,7 +71,7 @@ static __declspec(noinline) void setWindowText(GameWindow *window, AsciiString t
 	if (window->winGetStyle() & 0x00000001)
 		GadgetRadioSetText(window, theText);
 	else if (window->winGetStyle() & 0x00000002)
-		rva004BD400(window, theText);
+		GadgetButtonSetText(window, theText);
 	else if (window->winGetStyle() & 0x00000004)
 		GadgetCheckBoxSetText(window, theText);
 	else if (window->winGetStyle() & 0x00000080)
