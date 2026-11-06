@@ -58,7 +58,10 @@ public:
 };
 
 extern NetworkInterface *TheNetwork;
-extern float g_012A72A4;
+// ?g_012A72A4@@3MA at retail VA 0x012A72A4: logic time scale, retail .data
+// holds 1.0f (see targets/game/reverse/identity_evidence/012a72a4-logic-time-scale.md).
+// Defined here, the TU that reads it via LogicTimeScale.
+float g_012A72A4 = 1.0f;
 #define LogicTimeScale g_012A72A4
 #define One 1.0f
 

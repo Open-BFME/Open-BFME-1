@@ -293,7 +293,6 @@ dir32,0x012A5000,___xc_a,"nothing in the ledger owns 0x012A5000. Give the datum 
 dir32,0x012A617C,___xc_z,"nothing in the ledger owns 0x012A617C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A6280,___xi_a,"nothing in the ledger owns 0x012A6280. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A6384,___xi_z,"nothing in the ledger owns 0x012A6384. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012A72A4,?g_012A72A4@@3MA,"nothing in the ledger owns 0x012A72A4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A77B8,?g_Key001ABC90_012A77B8@@3VKey001ABC90@@A,"nothing in the ledger owns 0x012A77B8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A77C0,?g_Key001ABC90_012A77C0@@3VKey001ABC90@@A,"nothing in the ledger owns 0x012A77C0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A77C8,?g_Key001ABC90_012A77C8@@3VKey001ABC90@@A,"nothing in the ledger owns 0x012A77C8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
