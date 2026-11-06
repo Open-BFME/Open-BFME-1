@@ -37010,7 +37010,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_0015d530@@YAXXZ,,0x0015D530,2514,game/gen_asm/d_00153d10.asm,matched,gen-dump;ghidra=FUN_0055d530
 ?d_001604b0@@YAXXZ,,0x001604B0,4,game/GameEngine/Source/Common/Rva001604B0DwordGetter.cpp,matched,object-symbol=?get@Rva001604B0DwordField@@QBEIXZ;address-derived dword getter;carved boundary and retail bytes prove the body
 ?d_0016bb20@@YAXXZ,,0x0016BB20,8,game/GameEngine/Source/Common/VirtualSlot5CallThunk.cpp,matched,object-symbol=?invokeOne@VirtualSlot5CallThunk@@QAEXXZ;Open-BFME5 clean C++ virtual slot 5 call
-?d_0016f150@@YAXXZ,,0x0016F150,352,game/gen_asm/d_0015f070.asm,matched,gen-dump;ghidra=FUN_0056f150
 ?d_0016f4f0@@YAXXZ,,0x0016F4F0,243,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_0056f4f0
 ?d_00176a50@@YAXXZ,,0x00176A50,1041,game/gen_asm/d_0016f340.asm,matched,gen-dump;ghidra=FUN_00576a50
 ?d_00177720@@YAXXZ,,0x00177720,622,game/gen_asm/d_00177320.asm,matched,gen-dump;ghidra=FUN_00577720
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?bfmeUnlinkBU@BfmeSubBU@@QAEXPAVBfmeHostBU@@@Z,,0x00594FD0,308,game/GameEngine/Source/Common/Rva0058D770Rank.cpp,matched,matched BfmeHostBU::bfmeDieBU calls it through ILT 0x0003C0AB (pinned name); only caller of the EAX rank helper 0x0058D770 in this TU;model=claude-opus-5-5;host=app
 ?rva0058B610@@YA_NPAVObject@@PAHPAM@Z,,0x0058B610,415,game/GameEngine/Source/Common/Rva0058D770Rank.cpp,matched,address-derived static experience-fraction helper; private convention ESI object EDI rank-out EBX fraction-out from the 0x00593440 and 0x00595E60 dump callers; stub caller emits the convention;model=claude-opus-5-5;host=app
 ?m009EFD40@Q1Receiver0134FAAC@@QAEXPAUQ1ReceiverLocalSet@@@Z,,0x009EFD40,513,game/Libraries/Source/assetmanager/assetmanager_impl.cpp,matched,BFME 2 donor port (dbde7dbe assetmanager_impl.cpp AddDependentAssets shape); pinned name called by matched m009F0D40 and m009F0E50;model=claude-opus-5-5;host=app
+?method@Rva0016F150@@QAE_NPAUCoord3D@@PAVObject@@PAX@Z,,0x0016F150,352,game/GameEngine/Source/GameLogic/AI/Rva0016F150.cpp,matched,model=claude-opus-5-5;host=app

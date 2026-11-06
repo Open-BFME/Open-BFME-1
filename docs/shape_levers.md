@@ -3816,3 +3816,26 @@ releases tagged object pointers (`value & ~1`) through a virtual call. Retail:
 Measured: 636 B (with the entries-snapshot lever 621 B) to EXACT. Source:
 game/GameEngine/Source/Common/BfmeStringMap0089CA10.cpp; handoff
 targets/game/reverse/attempt_support/20261106-0089cc80-erase1279-tagged-release.md.
+
+## Memberwise Coord3D copies and an accumulated length fix x87 load order and in-place scaling (2026-11-06)
+
+Mismatch: Rva0016F150::method (0x0016F150, 352 B, VC7.1 `/O2 /DNDEBUG /MD`) builds a
+step direction from a destination minus the object position (z cleared), takes a 2D
+length for a step count, normalizes and scales by 10. Retail: `fld [edi]; mov eax,[edi];
+fld [edi+4]; ...; fxch` (x loaded first), the y scale `fxch st(1); fmul st(1)` consuming
+dy in place, and the 3D sum `faddp st(1)` reusing the 2D squares.
+
+- Field-wise `dir.x = dest->x; ... dir.x -= pos.x` loaded y first; interleaving
+  candidate/dir field copies fixed the loads but kept dy alive (`fld st(0); fmul st(2)`
+  then `fstp st(1)`), and the extra 2 B pulled in loop-head alignment (`jmp` + padding,
+  +14 B). Scalar `dy` locals rescheduled everything (candidate/dir slots swapped).
+- Fix (from the BFME 2 donor of the same body, rva00344D60): two copy-constructed
+  locals `MemberwiseCoord3D direction(*dest), candidate(*dest)` with a memberwise ctor,
+  `direction.sub(pos)` over all three fields, then `direction.z = 0`, a
+  `sqrt(x*x + y*y)` 2D length and `Normalize()` through `a = x*x; a += y*y; a += z*z`.
+  A `sqrt(x*x+y*y+z*z)` 3D length, or the 2D `float a = x, b = y` spelling, each left
+  the 2D sum as `fld st(1); fadd st(1)` and a dead `fstp st(1)`.
+
+Measured: 93 diffs (bank 0.7358) to EXACT. Source:
+game/GameEngine/Source/GameLogic/AI/Rva0016F150.cpp; sibling idiom
+game/GameEngine/Source/GameLogic/AI/Rva0016EE00.cpp.
