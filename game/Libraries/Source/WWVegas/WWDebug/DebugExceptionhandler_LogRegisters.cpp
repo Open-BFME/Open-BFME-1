@@ -30,7 +30,8 @@ extern "C" const char g_011343B4[] = "EIP:";
 extern "C" const char g_011343AC[] = " ESP:";
 // _g_011343A4: 6 retail bytes including the NUL.
 extern "C" const char g_011343A4[] = " EBP:";
-extern "C" const char g_0113439C[];
+// _g_0113439C: 7 retail bytes including the NUL.
+extern "C" const char g_0113439C[] = "Flags:";
 // _g_01134398: 4 retail bytes including the NUL.
 extern "C" const char g_01134398[] = "CS:";
 // _g_01134390: 5 retail bytes including the NUL.
