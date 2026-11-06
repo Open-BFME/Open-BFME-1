@@ -1,6 +1,5 @@
 game/GameEngine/Source/Common/GameStateMapDefaultVirtuals.cpp	game/GameEngine/Source/Common/System/SaveGame/GameStateMapDefaultVirtuals.cpp	GameStateMap
 game/GameEngine/Source/Common/Gen0002857EOwnerDestroy.cpp	game/GameEngineDevice/Source/MilesAudioDevice/Gen0002857EOwnerDestroy.cpp	Gen0002857EOwner
-game/GameEngine/Source/Common/Gen0002857EOwnerDestructor.cpp	game/GameEngineDevice/Source/MilesAudioDevice/Gen0002857EOwnerDestructor.cpp	Gen0002857EOwner
 game/GameEngine/Source/Common/Gen0002857EOwnerRva00693FB0.cpp	game/GameEngineDevice/Source/MilesAudioDevice/Gen0002857EOwnerRva00693FB0.cpp	Gen0002857EOwner
 game/GameEngine/Source/Common/Gen000F9C60Destructor.cpp	game/GameEngine/Source/Common/Audio/Gen000F9C60Destructor.cpp	EA
 game/GameEngine/Source/Common/INI/Rva001BD0D0LocomotorBinding.cpp	game/GameEngine/Source/GameLogic/Object/Rva001BD0D0LocomotorBinding.cpp	LocomotorSet
@@ -13,13 +12,9 @@ game/GameEngine/Source/Common/Rva004B0D40.cpp	game/GameEngine/Source/GameClient/
 game/GameEngine/Source/Common/Rva0058D770Rank.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/Rva0058D770Rank.cpp	EA
 game/GameEngine/Source/Common/Rva007D85C0FilterPreRender.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007D85C0FilterPreRender.cpp	Rva007D85C0
 game/GameEngine/Source/Common/Rva007D85C0FilterShutdown.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007D85C0FilterShutdown.cpp	Rva007D85C0
-game/GameEngine/Source/Common/Rva00893030ManagerCopyOut.cpp	game/Libraries/Source/Apt/Rva00893030ManagerCopyOut.cpp	Rva00893030Manager
 game/GameEngine/Source/Common/Rva00893030ManagerFind.cpp	game/Libraries/Source/Apt/Rva00893030ManagerFind.cpp	Rva00893030Manager
 game/GameEngine/Source/Common/Rva00893CE0ContainerResize.cpp	game/Libraries/Source/Apt/Rva00893CE0ContainerResize.cpp	Gen_uw_00893e70
-game/GameEngine/Source/Common/Rva00893E70ContainerDestructor.cpp	game/Libraries/Source/Apt/Rva00893E70ContainerDestructor.cpp	Gen_uw_00893e70
-game/GameEngine/Source/Common/Rva00895340InlineContainer.cpp	game/Libraries/Source/Apt/Rva00895340InlineContainer.cpp	Gen_uw_00893e70
 game/GameEngine/Source/Common/SmallGaps/Rva008A12C0Fixups.cpp	game/Libraries/Source/Apt/Rva008A12C0Fixups.cpp	EA
-game/GameEngine/Source/Common/System/CollisionDataDestructors.cpp	game/Libraries/Source/collisionmanager/CollisionDataDestructors.cpp	Rva009A45A0CollisionData
 game/GameEngine/Source/GameClient/EffectFactory0040A260Create.cpp	game/GameEngine/Source/GameLogic/Object/BuffLogic.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BannerUIRva005841D0.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/BannerUIRva005841D0.cpp	EA
 game/GameEngine/Source/GameClient/GUI/BannerUIRva00584330.cpp	game/GameEngine/Source/GameClient/GUI/Palantir/BannerUIRva00584330.cpp	EA
@@ -28,7 +23,6 @@ game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp	game/GameEngin
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp	game/GameEngine/Source/GameClient/System/FXParticleSystem/fxpsdefaultdrawmodule.cpp	EA
 game/GameEngine/Source/GameClient/W3DInGameUISubtitleTail0043B4F0.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUISubtitleTail0043B4F0.cpp	W3DInGameUI
 game/GameEngine/Source/GameLogic/AI/DozerPrimaryIdleStateDeletingDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerPrimaryIdleStateDeletingDestructor.cpp	DozerPrimaryIdleState
-game/GameEngine/Source/GameLogic/AI/GiantBirdFollowPathStateDestructor.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdFollowPathStateDestructor.cpp	GiantBirdFollowPathState
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardOuterStateOnEnter.cpp	game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdGuardOuterStateOnEnter.cpp	EA
 game/GameEngine/Source/GameLogic/AI/PathfinderInternalFindPath.cpp	game/GameEngine/Source/GameLogic/Pathfinder/PathfinderInternalFindPath.cpp	EA
 game/GameEngine/Source/GameLogic/LivingWorld/Gen003BFB20OwnerProbe.cpp	game/GameEngine/Source/GameLogic/System/LivingWorld/Gen003BFB20OwnerProbe.cpp	EA
@@ -43,16 +37,13 @@ game/GameEngine/Source/GameLogic/Object/Rva0010FE90CallbackLists.cpp	game/GameEn
 game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D5980.cpp	game/GameEngine/Source/GameLogic/Object/Upgrade/GeometryUpgrade.cpp	EA
 game/GameEngine/Source/GameLogic/ObjectCreationListStoreDefaultVirtuals.cpp	game/GameEngine/Source/GameLogic/Object/ObjectCreationListStoreDefaultVirtuals.cpp	ObjectCreationListStore
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp	game/GameEngine/Source/GameLogic/AI/PathfinderRva003F5C70.cpp	Pathfinder
-game/GameEngine/Source/GameLogic/System/ArmySummaryCollectionXfer.cpp	game/GameEngine/Source/GameLogic/LivingWorld/ArmySummaryCollectionXfer.cpp	BfmeLivingWorldPlayerArmyCollection
 game/GameEngine/Source/GameLogic/System/VictorySystemNewMap.cpp	game/GameEngine/Source/GameLogic/Object/VictorySystemNewMap.cpp	EA
 game/GameEngine/Source/GameNetwork/GameSpy/LobbyUtilsGameSortStruct.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/LobbyUtilsGameSortStruct.cpp	EA
 game/GameEngine/Source/GameNetwork/Rva007E88A0.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DVideoBuffer.cpp	EA
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DScriptedModelDrawFriendNewModuleDataThunk.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DScriptedModelDrawFriendNewModuleDataThunk.cpp	W3DScriptedModelDraw
-game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DGadgetTextEntryDraw.cpp	game/Libraries/Source/WWVegas/WWMath/W3DGadgetTextEntryDraw.cpp	ICoord2D
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva0094D1E0List_ctor.cpp	game/Libraries/Source/WWVegas/WW3D2/texturepacker.cpp	EA
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00C6C4A0MouseTextureArrayInit.cpp	game/Libraries/Source/WWVegas/WW3D2/Rva00C6C4A0MouseTextureArrayInit.cpp	BfmeHandleCX
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringManagerNewDisplayString.cpp	game/GameEngine/Source/GameClient/GUI/W3DDisplayStringManagerNewDisplayString.cpp	EA
-game/Libraries/Source/Apt/AptValue.cpp	game/Libraries/Source/EA/Apt/AptValue.cpp	Rva00899560Value
 game/Libraries/Source/Apt/BfmeNode1236ListProcess.cpp	game/Libraries/Source/Apt/AptMovie.cpp	EA
 game/Libraries/Source/EA/Apt/Rva008AD8F0TextBinding.cpp	game/Libraries/Source/Apt/Rva008AD8F0TextBinding.cpp	EA
 game/Libraries/Source/EA/Apt/Rva008CAAE0CallFrame.cpp	game/Libraries/Source/Apt/Rva008CAAE0CallFrame.cpp	EA
@@ -60,5 +51,4 @@ game/Libraries/Source/EA/Apt/Rva008D1E70.cpp	game/Libraries/Source/Apt/Rva008D1E
 game/Libraries/Source/WWVegas/WW3D2/CullLinkClass_Dtor_Thunk.cpp	game/Libraries/Source/WWVegas/WWMath/CullLinkClass_Dtor_Thunk.cpp	CullLinkClass
 game/Libraries/Source/WWVegas/WW3D2/W3DShroudMaterialPassClassDeletingDestructor.cpp	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudMaterialPassClassDeletingDestructor.cpp	W3DShroudMaterialPassClass
 game/Libraries/Source/ini/INILoadBFMERetail.cpp	game/GameEngine/Source/Common/INI/INILoadBFMERetail.cpp	INI
-game/Libraries/Source/partitionmanager/PartitionFilterLink.cpp	game/GameEngine/Source/GameLogic/PartitionFilterLink.cpp	PartitionFilter
 game/Libraries/Source/subsystem/GameSpyLoginPreferences_addLogin.cpp	game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferences_addLogin.cpp	GameSpyLoginPreferences
