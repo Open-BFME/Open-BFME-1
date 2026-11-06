@@ -1895,7 +1895,8 @@ extern const char *const RotationTypeNames[];
 #define g_01110820 __identifier("??_7?$CategoryModuleClass@$05@FXParticleSystem@@6B@")
 // ?g_01110868@FXParticleSystem@@3QBDB: retail 0x01110868 is ??_7?$CategoryModuleClass@$06@FXParticleSystem@@6B@
 #define g_01110868 __identifier("??_7?$CategoryModuleClass@$06@FXParticleSystem@@6B@")
-extern const char g_01110880[];
+// retired debt ?g_01110880@FXParticleSystem@@3QBDB: retail 0x01110880 is ??_7?$CategoryModuleClass@$03@FXParticleSystem@@6B@
+#define g_01110880 __identifier("??_7?$CategoryModuleClass@$03@FXParticleSystem@@6B@")
 // ?g_0111088C@FXParticleSystem@@3QBDB: retail 0x0111088C is ??_7?$CategoryModuleClass@$04@FXParticleSystem@@6B@
 #define g_0111088C __identifier("??_7?$CategoryModuleClass@$04@FXParticleSystem@@6B@")
 // retired debt: ?g_01110874@FXParticleSystem@@3QBDB replaced with ??_7?$CategoryModuleClass@$07@FXParticleSystem@@6B@
