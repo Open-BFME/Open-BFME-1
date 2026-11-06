@@ -47,3 +47,9 @@ empty branch reloads `m_head`. It must not land until the helper matches too (th
 call ABI depends on the helper's private convention; docs/shape_levers.md
 "Compiler-private ABI"). Compiling the helper beside the real caller instead of a stub
 did not change the helper (still 0.917 / 249).
+
+Also inert (s559, later): visible bodies of `findNameIndex` and
+`rvaLookupReleased0035a220` in the TU; owner-member inline lookup (0.900); suffix/table
+declared before the early return (0.858/0.883); the whole tail inside `if (!lookup) {}`;
+address-taken or out-parameter record index (optimised back to a register). The twin
+0x0035A060 with the same form gives the identical 0.917 / 14 plateau.
