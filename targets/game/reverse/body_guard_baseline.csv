@@ -4,7 +4,6 @@ dir32,0x0040C5E0,?ownerNotDockingOrIdle@SupplyTruckStateMachine@@SA_NPAVState@@P
 dir32,0x00418949,??1List00442C90@@QAE@XZ,"nothing in the ledger owns 0x00418949. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0041AF00,??1?$map@VAsciiString@@HU?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@H@_STL@@@3@@_STL@@QAE@XZ,"nothing in the ledger owns 0x0041AF00. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0041C445,?isForcedIntoBusyState@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0041C445. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0041E6F0,??1Rva0069CEE0@@QAE@XZ,the name encodes 0x0069CEE0 but retail reads 0x0041E6F0
 dir32,0x0042254D,??0Map0044B780@@QAE@XZ,"nothing in the ledger owns 0x0042254D. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00422D3B,??1Rva00127AB0Element@@QAE@XZ,"retail 0x00422D3B is already recorded as ??1Gen_uwm_00022d3b@@QAE@XZ (+3 more); reference that name, not a new one"
 dir32,0x00422FA7,??0Rva00478100@@QAE@XZ,the name encodes 0x00478100 but retail reads 0x00422FA7
