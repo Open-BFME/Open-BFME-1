@@ -39,10 +39,17 @@ struct BfmeGuidTSA
 	char m_bfmeBytes[16];
 };
 
-// Retail 0x0113DF00: the uuid attribute on IFEBrowserEngine2 (see
-// DX8WebBrowserInitialize.cpp) makes the compiler reference this C-linkage
-// GUID constant by its __GUID_<uuid> spelling, so that is the name used here.
-extern "C" BfmeGuidTSA __GUID_ee883b17_0778_4b18_a12b_e44c0d298412;
+// retired debt ___GUID_ee883b17_0778_4b18_a12b_e44c0d298412: retail 0x0113DF00
+// is DIR32-recorded as ?g_bfmeIidTSA@@3UBfmeGuidTSA@@A, the IFEBrowserEngine2
+// interface ID. The TU defines the datum under the recorded name (16 bytes:
+// ee883b17-0778-4b18-a12b-e44c0d298412) and references it below.
+BfmeGuidTSA g_bfmeIidTSA =
+{
+	0x17, 0x3b, (char)0x88, (char)0xee,
+	0x78, 0x07, 0x18, 0x4b,
+	(char)0xa1, 0x2b, (char)0xe4, 0x4c,
+	0x0d, 0x29, (char)0x84, 0x12
+};
 
 class BfmeThingTSA;
 
@@ -81,7 +88,7 @@ long BfmeThingTSA::bfmeGoOneTSA()
 	long hr = m_bfmeVt->m_bfmeOneTSA(this);
 	if (hr < 0)
 		bfmeReportTSA(hr, this,
-			&__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
+			&g_bfmeIidTSA);
 	return hr;
 }
 
@@ -90,6 +97,6 @@ long BfmeThingTSA::bfmeGoTwoTSA()
 	long hr = m_bfmeVt->m_bfmeTwoTSA(this);
 	if (hr < 0)
 		bfmeReportTSA(hr, this,
-			&__GUID_ee883b17_0778_4b18_a12b_e44c0d298412);
+			&g_bfmeIidTSA);
 	return hr;
 }
