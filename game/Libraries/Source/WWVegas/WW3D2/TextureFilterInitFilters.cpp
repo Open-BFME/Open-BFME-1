@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /MD /EHsc
 // TextureFilterClass::_Init_Filters (retail 0x00920D10, 446 bytes).
 // Identity: the matched caller DX8Wrapper::Do_Onetime_Device_Dependent_Inits
 // calls this address as TextureFilterClass::_Init_Filters, as in Zero Hour's
@@ -9,10 +9,11 @@
 // each per-stage table to five ints (NONE FAST BEST spare DEFAULT) over eight
 // stages; the three tables are Min (0x01346BB0), Mag (0x01346C50) and Mip
 // (0x01346CF0), the same Slot arrays the 0x00920BC0 handler reads.
+#include "dx8wrapper.h"
 #include "texturefilter.h"
 #include "TextureFilterTable.h"
 
-struct IDirect3DDevice8
+struct TextureFilterInitDevice
 {
 #define GEN_DEVICE_SLOT(n) virtual void __stdcall slot##n(void);
 	GEN_DEVICE_SLOT(0) GEN_DEVICE_SLOT(1) GEN_DEVICE_SLOT(2)
@@ -43,15 +44,13 @@ struct IDirect3DDevice8
 #undef GEN_DEVICE_SLOT
 };
 
-class DX8Wrapper
+namespace
 {
-public:
-	static IDirect3DDevice8 *D3DDevice;
+struct TextureFilterInitStageAccess : DX8Wrapper
+{
+	static void RecordStageChange() { DX8_RECORD_TEXTURE_STAGE_STATE_CHANGE(); }
 };
-
-extern unsigned int number_of_DX8_calls;
-extern unsigned int Rva01340568StageChanges;
-extern unsigned char *BfmeCurrentCaps;
+}
 
 struct BfmeTextureCaps
 {
@@ -59,7 +58,7 @@ struct BfmeTextureCaps
 	unsigned int m_textureFilterCaps;
 };
 
-#define CAPS ((struct BfmeTextureCaps *)BfmeCurrentCaps)
+#define CAPS (reinterpret_cast<const BfmeTextureCaps *>(DX8Wrapper::Get_Current_Caps()))
 void TextureFilterClass::_Init_Filters(TextureFilterMode filter_type)
 {
 
@@ -106,8 +105,8 @@ void TextureFilterClass::_Init_Filters(TextureFilterMode filter_type)
 		g_bfmeOptionSlots0[i].m_selected = g_bfmeOptionSlots0[i].m_options[2];
 		g_bfmeOptionSlotsA[i].m_selected = g_bfmeOptionSlotsA[i].m_options[2];
 		g_bfmeOptionSlotsB[i].m_selected = g_bfmeOptionSlotsB[i].m_options[2];
-		DX8Wrapper::D3DDevice->SetTextureStageState(i, 10, 2);
+		reinterpret_cast<TextureFilterInitDevice *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(i, 10, 2);
 		number_of_DX8_calls++;
-		Rva01340568StageChanges++;
+		TextureFilterInitStageAccess::RecordStageChange();
 	}
 }
