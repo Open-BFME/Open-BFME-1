@@ -86,3 +86,48 @@ Moving the str() back into the argument list (`text = name->str()` in the call, 
 in the call, `int number = ++suffix`, a `source` copy of name) restores the old 0.925
 allocation; the count lever without the text statement is 0.892. The same two levers should
 be tried on the 0x0035A060 twin.
+
+## 2026-11-07: BFME 2 donor shape (fixupScriptName), 68 raw diffs
+
+The BFME 2 donor `Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptFixupNames.cpp` (at revision dbde7dbe) spells this helper as WB's `fixupScriptName` (the twin is `fixupGroupName`):
+
+    if (!lookup(list, name)) {
+        AsciiString candidate; int suffix = 0;
+        do { candidate.format("%s %d", name.str(), ++suffix); } while (!lookup(list, candidate));
+        name = candidate;
+    }
+
+The donor's names are a hint only; BFME 1 keeps address-derived names. Scratch is under `build/h35a2a0/` (gen.py, gen2.py, gen3.py).
+
+**Inert, across a 32-way factorial plus 8 more variants:**
+- an early return versus an `if` block
+- `AsciiString &` versus `*`
+- a table local versus `&owner->m_nameTable` at the call
+- the lookup rewritten as an index-returning `find()`, as a member or as a free inline, followed by `if (index != -1) return records[index].m_released`
+
+**The donor's argument-form loop (`name.str(), ++suffix` in the call):**
+- It reproduces retail's loop top exactly: `mov ecx,name; inc eax; mov [esp+18h],eax; push eax; str()`.
+- But it flips the allocation: the table goes to ESI and is spilled/reloaded each pass, and the record index takes EBX.
+- Scores: 353 B / 252 diffs with `count`, 351 B / 249 without.
+
+**New best (stashed), 350 B / 68 raw diffs, shape 0.958/7:**
+
+    ++suffix; const char *text = name.str(); candidate.format("%s %d", text, suffix);
+
+What is left in it:
+- Loop top: the suffix is in ECX (retail EAX), and the `push suffix` comes after `str()`.
+- After `findNameIndex`, the begin/count registers are swapped, and the record offset is in EAX where retail uses EBP. That moves the compare temporaries to EDX/EBP (retail EAX/EDX).
+
+**Also measured:**
+
+| Variant | Size | Diffs |
+|---|---|---|
+| `int number = ++suffix` | 353 | 252 |
+| `AsciiString *source = &name` | 353 | 252 |
+| `suffix++` statement | 353 | 252 |
+| `unsigned` suffix | 353 | 252 |
+| a `const AsciiString &` alias | 353 | 252 |
+| an outer `text` declaration assigned in the loop | 350 | 70 |
+| a named `AsciiString fmt` | 395 | 250 |
+
+Only a separate `text` statement keeps the table in EBX.

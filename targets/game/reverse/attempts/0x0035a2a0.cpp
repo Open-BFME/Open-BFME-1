@@ -1,6 +1,8 @@
 // ?d_0035a2a0@@YAXXZ
-// partial score=0.8 date=2026-11-06
-// ?rvaUniqueName0035a2a0@@YAXPAVRva0035A220Owner@@PAVAsciiString@@@Z (row ?d_0035a2a0@@YAXXZ)
+// partial score=0.8057 date=2026-11-07
+// ?d_0035a2a0@@YAXXZ
+// partial: 350/350 68 raw diffs shape 0.958/7 (2026-11-07, donor-form ++suffix then text statement)
+// ?rvaUniqueName0035a2a0@@YAXPAVRva0035A220Owner@@AAVAsciiString@@@Z (row ?d_0035a2a0@@YAXXZ)
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 #include <vector>
@@ -63,24 +65,24 @@ static inline bool rvaLookupReleasedInline(Rva00359530StringRecordTable *table, 
 	return true;
 }
 
-static __declspec(noinline) void rvaUniqueName0035a2a0(Rva0035A220Owner *owner, AsciiString *name)
+static __declspec(noinline) void rvaUniqueName0035a2a0(Rva0035A220Owner *owner, AsciiString &name)
 {
-	if (rvaLookupReleased0035a220(owner, name))
-		return;
-
-	AsciiString candidate;
-	int suffix = 0;
-	Rva00359530StringRecordTable *table = &owner->m_nameTable;
-	do
+	if (!rvaLookupReleased0035a220(owner, &name))
 	{
-		const char *text = name->str();
-		++suffix;
-		candidate.format(AsciiString("%s %d"), text, suffix);
-	} while (!rvaLookupReleasedInline(table, &candidate));
-	name->set(candidate);
+		AsciiString candidate;
+		int suffix = 0;
+		Rva00359530StringRecordTable *table = &owner->m_nameTable;
+		do
+		{
+			++suffix;
+			const char *text = name.str();
+			candidate.format("%s %d", text, suffix);
+		} while (!rvaLookupReleasedInline(table, &candidate));
+		name = candidate;
+}
 }
 
-void rvaUniqueNameStub(Rva0035A220Owner *owner, AsciiString *name)
+void rvaUniqueNameStub(Rva0035A220Owner *owner, AsciiString &name)
 {
 	rvaUniqueName0035a2a0(owner, name);
 }
