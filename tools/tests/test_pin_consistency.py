@@ -401,3 +401,17 @@ def test_two_route_claims_for_one_address_are_refused(tmp_path):
     with pytest.raises(SystemExit) as excinfo:
         pin_consistency.load_routes(clashing)
     assert "two different route= claims" in str(excinfo.value)
+
+
+def test_alias_cleanup_log_accepts_and_deduplicates_pending_pins(tmp_path, monkeypatch):
+    log = tmp_path / "pin_alias_cleanup.tsv"
+    monkeypatch.setenv("BFME_PIN_ALIAS_LOG", str(log))
+    entry = ("alias-pin", "?old@@YAXXZ", 0x1000, "owner recovered", 0x2000, "abc123")
+
+    assert pin_consistency.record_alias_cleanup([entry]) == log
+    pin_consistency.record_alias_cleanup([entry])
+
+    assert log.read_text(encoding="utf-8").splitlines() == [
+        "name\taddress\tbody\tkind\tlanding\twhy",
+        "?old@@YAXXZ\t0x00001000\t0x00002000\talias-pin\tabc123\towner recovered",
+    ]

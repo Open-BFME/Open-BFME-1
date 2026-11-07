@@ -2037,12 +2037,12 @@ def record_alias_cleanup(entries):
     push at once). ENTRIES are (kind, name, address, why, body, landing). Any
     line still in the old five-column shape -- anywhere in the file -- gains its
     kind column (unknown); a file without a final newline gets one first."""
-    import fcntl
+    from portable_lock import lock
     path = alias_log_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     header = "\t".join(ALIAS_LOG_FIELDS)
-    with open(path.with_name(path.name + ".lock"), "w") as lock:
-        fcntl.flock(lock, fcntl.LOCK_EX)
+    with path.with_name(path.name + ".lock").open("a+b") as lock_file:
+        lock(lock_file, exclusive=True)
         lines = path.read_text(encoding="utf-8").splitlines() if path.exists() else []
         body = lines[1:] if lines and lines[0].startswith("name\t") else lines
         migrated = []
