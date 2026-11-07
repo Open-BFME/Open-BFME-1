@@ -1,10 +1,5 @@
 #include "../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
-
-struct Rva00920AE0Slot
-{
-	int m_options[ 4 ];
-	int m_selected;
-};
+#include "../../../Libraries/Source/WWVegas/WW3D2/TextureFilterTable.h"
 
 Rva00920AE0Slot g_bfmeOptionSlotsA[ 8 ] = {};  // retail 0x01346C50
 Rva00920AE0Slot g_bfmeOptionSlotsB[ 8 ] = {};  // retail 0x01346CF0

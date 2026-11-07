@@ -9,6 +9,9 @@
 // each per-stage table to five ints (NONE FAST BEST spare DEFAULT) over eight
 // stages; the three tables are Min (0x01346BB0), Mag (0x01346C50) and Mip
 // (0x01346CF0), the same Slot arrays the 0x00920BC0 handler reads.
+#include "texturefilter.h"
+#include "TextureFilterTable.h"
+
 struct IDirect3DDevice8
 {
 #define GEN_DEVICE_SLOT(n) virtual void __stdcall slot##n(void);
@@ -40,12 +43,6 @@ struct IDirect3DDevice8
 #undef GEN_DEVICE_SLOT
 };
 
-struct Rva00920AE0Slot
-{
-	int m_options[4];
-	int m_selected;
-};
-
 class DX8Wrapper
 {
 public:
@@ -55,26 +52,11 @@ public:
 extern unsigned int number_of_DX8_calls;
 extern unsigned int Rva01340568StageChanges;
 extern unsigned char *BfmeCurrentCaps;
-extern Rva00920AE0Slot g_bfmeOptionSlots0[8];  // retail 0x01346BB0, defined in texturefilter.cpp
-extern Rva00920AE0Slot g_bfmeOptionSlotsA[8];
-extern Rva00920AE0Slot g_bfmeOptionSlotsB[8];
 
 struct BfmeTextureCaps
 {
 	unsigned char m_pad[0x48];
 	unsigned int m_textureFilterCaps;
-};
-
-class TextureFilterClass
-{
-public:
-	enum TextureFilterMode
-	{
-		TEXTURE_FILTER_BILINEAR,
-		TEXTURE_FILTER_TRILINEAR,
-		TEXTURE_FILTER_ANISOTROPIC
-	};
-	static void _Init_Filters(TextureFilterMode filter_type);
 };
 
 #define CAPS ((struct BfmeTextureCaps *)BfmeCurrentCaps)

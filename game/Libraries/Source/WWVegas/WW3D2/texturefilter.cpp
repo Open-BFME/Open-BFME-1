@@ -18,14 +18,9 @@
 */
 
 #include "texturefilter.h"
+#include "TextureFilterTable.h"
 
 const unsigned MAX_TEXTURE_STAGES=8;
-
-struct Rva00920AE0Slot
-{
-	int m_options[4];
-	int m_selected;
-};
 
 Rva00920AE0Slot g_bfmeOptionSlots0[MAX_TEXTURE_STAGES] = {};
 

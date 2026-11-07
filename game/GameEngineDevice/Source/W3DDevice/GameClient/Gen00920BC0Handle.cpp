@@ -1,6 +1,7 @@
 // cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /MD /EHsc
 #include "dx8wrapper.h"
 #include "texturefilter.h"
+#include "TextureFilterTable.h"
 
 // Open-BFME: address-derived DX8 stage-state block at retail 0x00920BC0.
 // The three state bases index 5-int stage tables; modes 0 and 1 select the
@@ -37,17 +38,8 @@ struct Gen00920BC0Device
 #undef GEN_DEVICE_SLOT
 };
 
-struct Rva00920AE0Slot
-{
-	int m_options[4];
-	int m_selected;
-};
-
 extern unsigned int number_of_DX8_calls;
 extern unsigned int Rva01340568StageChanges;
-extern Rva00920AE0Slot g_bfmeOptionSlots0[8];
-extern Rva00920AE0Slot g_bfmeOptionSlotsA[8];
-extern Rva00920AE0Slot g_bfmeOptionSlotsB[8];
 
 void TextureFilterClass::Apply(unsigned int index)
 {
