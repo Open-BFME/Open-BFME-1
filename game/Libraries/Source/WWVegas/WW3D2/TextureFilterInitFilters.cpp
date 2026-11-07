@@ -2,8 +2,8 @@
 // TextureFilterClass::_Init_Filters (retail 0x00920D10, 446 bytes).
 // Identity: the matched caller DX8Wrapper::Do_Onetime_Device_Dependent_Inits
 // calls this address as TextureFilterClass::_Init_Filters, as in Zero Hour's
-// WW3D2/texturefilter.cpp. Kept in its own TU because texturefilter.cpp
-// carries a four-slot table type while retail strides five ints per stage.
+// WW3D2/texturefilter.cpp. The table owners are shared with the setters and
+// the texture-stage handler.
 
 // BFME texture-filter table initialiser at retail 0x00920D10.  Retail widened
 // each per-stage table to five ints (NONE FAST BEST spare DEFAULT) over eight
@@ -55,7 +55,7 @@ public:
 extern unsigned int number_of_DX8_calls;
 extern unsigned int Rva01340568StageChanges;
 extern unsigned char *BfmeCurrentCaps;
-extern Rva00920AE0Slot g_bfmeOptionSlots0[8];  // retail 0x01346BB0 (_MinTextureFilters, defined in texturefilter.cpp)
+extern Rva00920AE0Slot g_bfmeOptionSlots0[8];  // retail 0x01346BB0, defined in texturefilter.cpp
 extern Rva00920AE0Slot g_bfmeOptionSlotsA[8];
 extern Rva00920AE0Slot g_bfmeOptionSlotsB[8];
 

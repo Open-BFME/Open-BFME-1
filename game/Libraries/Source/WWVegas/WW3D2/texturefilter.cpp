@@ -21,13 +21,19 @@
 
 const unsigned MAX_TEXTURE_STAGES=8;
 
-unsigned _MinTextureFilters[MAX_TEXTURE_STAGES][TextureFilterClass::FILTER_TYPE_COUNT];
+struct Rva00920AE0Slot
+{
+	int m_options[4];
+	int m_selected;
+};
+
+Rva00920AE0Slot g_bfmeOptionSlots0[MAX_TEXTURE_STAGES] = {};
 
 void TextureFilterClass::_Set_Default_Min_Filter(FilterType filter)
 {
 	for (int i=0;i<MAX_TEXTURE_STAGES;++i)
 	{
-		_MinTextureFilters[i][FILTER_TYPE_DEFAULT]=_MinTextureFilters[i][filter];
+		g_bfmeOptionSlots0[i].m_selected=g_bfmeOptionSlots0[i].m_options[filter];
 	}
 }
 

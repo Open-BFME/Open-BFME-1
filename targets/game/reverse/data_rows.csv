@@ -1829,3 +1829,4 @@ _bfmeStrDYF,0x01080FB4,va,5,.rdata,game/Libraries/Source/WWVegas/WWLib/Rva0084DB
 ?g_Va012C8390@@3PAXA,0x012C8390,va,4,.data,game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp,matched,targets/game/reverse/identity_evidence/012c8390-string-pointer.md,gpt-6.1-sol
 ?g_bfmeSlots1220@@3RCUBfmeSlot1220@@C,0x012D5D50,va,112,.data,game/Libraries/Source/EA/Apt/BfmeNode1220_bfmeAllows.cpp,matched,targets/game/reverse/identity_evidence/012d5d50-apt-slots.md,gpt-6.1-sol
 ?TheCloudEffectSystem@@3PAVCloudEffectSystem@@A,0x012F1104,va,4,.data,game/GameEngine/Source/Common/Rva00410CC0Fetch.cpp,matched,targets/game/reverse/identity_evidence/012f1104-cloud-system.md,gpt-6.1-sol
+?g_bfmeOptionSlots0@@3PAURva00920AE0Slot@@A,0x01346BB0,va,160,.data,game/Libraries/Source/WWVegas/WW3D2/texturefilter.cpp,matched,targets/game/reverse/identity_evidence/01346bb0-min-texture-filter-slots.md,gpt-6.1-sol
