@@ -58,3 +58,13 @@ The animation-step switch subtracts one from its mode, compares the unsigned res
 Complete decode and checked-callee records are under `build/76eda0/`, including target, caller, animation constructors, frame getters, the interface adjustor, the animation-step code and its tail. Original probes, every trial source and the shape-search manifest are retained there and under the search's generated build directory. No long-running job remains.
 
 Reopen with an evidence-backed scratch-allocation lever that can change the listed operands while preserving the existing instruction stream, output alias behavior and canonical HAnim ABI. The current volatile qualifier remains an unproven original-source property. The original method name remains unknown and is not itself a blocker. The bank is useful evidence, not an exact source recovery.
+
+## 2026-11-07: exact without volatile
+
+The landed source (`game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0076EDA0FrameRanges.cpp`) needs no volatile qualifier. It follows the access structure of the BFME 2 donor, open-bfme-2 dbde7dbe `Code/GameEngine/Source/Common/Rva000B8F5A.cpp` (`W3DScriptedModelDraw::getPlayingAnimationFrameRanges`):
+- The null test and the mode are read through `entries[i]`.
+- Every other field is read through the per-index slot view (`this + i*0x1C`).
+- The two forms do not CSE, so the anim pointer reload comes out naturally.
+- The case-3 else test is `upper < lower`.
+
+The donor name is a lead only: ilt_oracle contradicts it at this address, so the row keeps its address-derived name. Handoff: `targets/game/reverse/attempt_support/20261107-0076eda0-donor-slot-view.md`.
