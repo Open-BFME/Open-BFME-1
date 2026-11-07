@@ -3903,3 +3903,18 @@ temporary changes the IR order that breaks the tie.
 
 Source: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioCacheReadAudioFile00694230.cpp.
 Handoff: targets/game/reverse/attempt_support/20261107-00693b90-iterator-copy-ctor-epilogue.md.
+## Member-order float stores flip a CSE-temp/local slot tie (2026-11-07)
+
+Mismatch: Gen0000D33C ctor (0x004354F0, 517 B, VC7.1 `/O2 /Ob2 /EHsc /MD`, STLport). The
+scheduled instruction stream was identical, but two frame slots were swapped: the CSE temp
+for `(float)m_20` and the `halfTextWidth` local. About 40 earlier spellings kept the same 14
+differences.
+
+Fix: assign the float members in declaration order (`m_30, m_48, m_4c, m_50, m_54, m_58, ...`).
+The bank's order (`m_4c, m_48, m_58, m_50, m_54, m_30`) kept the swap, even with the same
+locals (`rowBottom`, `halfTextWidth`, `earlierRowWidth`). `m_58 = height;` must follow
+`m_54`; moving it earlier gave 61 differences. Only the slot tie-break flipped. Measured on
+this body only.
+
+Source: game/GameEngine/Source/Common/Gen0000D33CCtor004354F0.cpp.
+Handoff: targets/game/reverse/attempt_support/20261107-004354f0-member-order-floats.md.

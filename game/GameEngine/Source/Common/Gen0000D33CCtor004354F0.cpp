@@ -1,12 +1,16 @@
-// ??0Rva00435A40Sink@@QAE@PAVGameFont@@MMHHHH@Z
-// partial score=0.9729 date=2026-09-30
+// ??0Gen0000D33C@@QAE@PAVGameFont@@MMHHHH@Z
+// Constructor of the address-derived font-row display class whose destructor
+// ??1Gen0000D33C@@QAE@XZ (0x00435780) is matched in GenDtor006952C0.cpp.
+// Retail 0x004354F0 (517 B), reached through ILT 0x00026AFD from
+// MilesAudioManager 0x00695B80 and W3DDisplay 0x006EE3F0; the same address is
+// also pinned as ??0Rva00435A40Sink (MilesAudioManagerRva006AF840.cpp view).
+// Shape: the float fields are assigned in member order; m_68 reads back m_60
+// (handoff attempt_support/20261107-004354f0-member-order-floats.md).
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
-#define _M_insert_overflow j_0001be87
 #include <vector>
-#undef _M_insert_overflow
 
 typedef int Int;
 typedef unsigned short WideChar;
@@ -15,11 +19,6 @@ class BfmeItemKA;
 class GameFont;
 class UnicodeString;
 class DisplayString;
-
-struct Gen_t_00435350_m4pod
-{
-	void *m_data;
-};
 
 struct Gen_t_004353c0_p8cd
 {
@@ -106,12 +105,12 @@ public:
 	~UnicodeString() {}
 };
 
-class Rva00435A40Sink : public BfmeItemKA
+class Gen0000D33C : public BfmeItemKA
 {
 public:
-	Rva00435A40Sink(GameFont *font, float width, float height,
+	Gen0000D33C(GameFont *font, float width, float height,
 		Int scaledWidth, Int value60, Int value58, Int value64);
-	~Rva00435A40Sink();
+	~Gen0000D33C();
 	void publish(const UnicodeString &text, unsigned int color);
 
 private:
@@ -142,7 +141,7 @@ private:
 	float m_68;
 };
 
-Rva00435A40Sink::Rva00435A40Sink(GameFont *font, float width, float height,
+Gen0000D33C::Gen0000D33C(GameFont *font, float width, float height,
 	Int scaledWidth, Int value60, Int value58, Int value64) :
 	m_00(0),
 	m_04(font),
@@ -184,14 +183,14 @@ Rva00435A40Sink::Rva00435A40Sink(GameFont *font, float width, float height,
 	Int textHeight;
 	m_34[0]->getSize(&textHeight, &textWidth);
 
-	m_4c = width;
+	m_30 = textWidth;
 	m_48 = (float)textWidth * 0.06666667f;
+	m_4c = width;
 	Int rowWidth = (m_24 - 1) * textWidth;
 	float rowBottom = height - (float)rowWidth;
-	m_58 = height;
 	m_50 = rowBottom;
 	m_54 = (float)m_20 + width;
-	m_30 = textWidth;
+	m_58 = height;
 	Int halfTextWidth = textWidth >> 1;
 	float widthWithHalf = width + (float)halfTextWidth;
 	m_5c = widthWithHalf;
@@ -200,9 +199,7 @@ Rva00435A40Sink::Rva00435A40Sink(GameFont *font, float width, float height,
 	m_64 = (float)m_20 - (float)textWidth + widthWithHalf;
 	m_68 = (float)earlierRowWidth + m_60;
 
-	Gen_t_00435350_m4pod entry;
-	entry.m_data = this;
-	((_STL::vector<Gen_t_00435350_m4pod> *)&g_bfmeBegKA)->push_back(entry);
+	((_STL::vector<BfmeItemKA *> *)&g_bfmeBegKA)->push_back(this);
 
 	m_00 = Rva0048EC80TheManager->newDisplayString();
 	m_00->setFont(font);
