@@ -1,5 +1,5 @@
 // ?rva009148C0@PointGroupClass@@QAEXPAVVector3@@PAMPAEH@Z
-// partial score=0.9955 date=2026-10-25
+// partial score=0.9965 date=2026-11-07
 // ?rva009148C0@PointGroupClass@@QAEXPAVVector3@@PAMPAEH@Z
 // cl: /O2 /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Ported from Open-BFME-2 Code/Libraries/Source/WWVegas/WW3D2/PointGroupClassRva0017A890.cpp
@@ -313,22 +313,23 @@ void PointGroupClass::rva009148C0(Vector3 *point_loc, float *point_size, unsigne
 						vertex_loc[3].X = point_loc->X - dx1;
 						vertex_loc[3].Y = point_loc->Y - dy1;
 						vertex_loc[3].Z = point_loc->Z;
-						Vector4 result = view * vertex_loc[0];
+						Vector4 result;
+						result = view * vertex_loc[0];
 						vertex_loc[0].X = result.X;
 						vertex_loc[0].Y = result.Y;
 						vertex_loc[0].Z = result.Z;
-						result = view * vertex_loc[1];
-						vertex_loc[1].X = result.X;
-						vertex_loc[1].Y = result.Y;
-						vertex_loc[1].Z = result.Z;
-						result = view * vertex_loc[2];
-						vertex_loc[2].X = result.X;
-						vertex_loc[2].Y = result.Y;
-						vertex_loc[2].Z = result.Z;
-						result = view * vertex_loc[3];
-						vertex_loc[3].X = result.X;
-						vertex_loc[3].Y = result.Y;
-						vertex_loc[3].Z = result.Z;
+						Vector4 result1 = view * vertex_loc[1];
+						vertex_loc[1].X = result1.X;
+						vertex_loc[1].Y = result1.Y;
+						vertex_loc[1].Z = result1.Z;
+						Vector4 result2 = view * vertex_loc[2];
+						vertex_loc[2].X = result2.X;
+						vertex_loc[2].Y = result2.Y;
+						vertex_loc[2].Z = result2.Z;
+						Vector4 result3 = view * vertex_loc[3];
+						vertex_loc[3].X = result3.X;
+						vertex_loc[3].Y = result3.Y;
+						vertex_loc[3].Z = result3.Z;
 						vertex_loc += 4;
 						point_loc++;
 						point_orientation++;

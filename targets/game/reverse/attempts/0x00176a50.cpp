@@ -1,48 +1,60 @@
 // ?computePath@AIAttackMeleeApproachState@@MAE_NXZ
-// partial score=0.9769 date=2026-11-06
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// partial score=0.9981 date=2026-11-07
 // ?computePath@AIAttackMeleeApproachState@@MAE_NXZ
-// Retail 00176A50; identity evidence: 00176a50-meleeapproach-computepath.md.
-#include "basetype.h"
-
-inline __declspec(noinline) float __fastcall Rva000B6CA0Length(const Coord3D *position)
-{
-    return (float)sqrt(position->x*position->x + position->y*position->y + position->z*position->z);
+// partial 2/1041 non-reloc bytes differ (residue: 0xAE frame-store register eax vs edx)
+// cl: /DNDEBUG /MD /EHsc /Ob1 /Igame/Libraries/Source/WWVegas/WWMath
+// AIAttackMeleeApproachState::computePath, retail RVA 0x00176A50 (1041 bytes);
+// identity: targets/game/reverse/identity_evidence/00176a50-aiattackmeleeapproachstate-computepath.md
+// /Ob1 and the WWMath include follow the matched sibling of the same class,
+// AIAttackMeleeApproachState_onEnter.cpp.
+// The Coord3D members the body calls (length, normalize, Scale, Add, -=, +=)
+// have visible noinline bodies: VC7.1 then proves `direction` never escapes,
+// shares one 12-byte slot for every direction value (retail sub esp,0x1C) and
+// schedules the unit-direction copy around the x87 radius math as retail does.
+// The two position54 -> m_goalPosition copies before Add are plain word copies:
+// retail copies Coord3D with the implicit (exported ??4Coord3D@@QAEAAV0@ABV0@@Z)
+// block copy, which keeps both lvalues this-relative; an inlined user
+// operator= hides that and serialises the loads.
+#include "coord3d.h"
+#include <math.h>
+typedef bool Bool;
+typedef float Real;
+inline Coord3D::Coord3D() {}
+inline Coord3D::~Coord3D() {}
+__forceinline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &p) {
+    struct Raw { unsigned x,y,z; }; *(Raw*)this=*(const Raw*)&p; return *this;
 }
-
-extern void j_0003a17a();
-extern void j_0000e570();
-extern void j_00031a7f();
-extern void j_000420aa();
-extern void j_0003bcff();
-extern void j_0002fe0f();
-extern void j_0003251f();
-extern void j_0002056d();
-extern void j_00040246();
-extern void j_0000e1c4();
-extern void j_0002f66c();
-extern void j_0003a391();
-extern void j_0002ae23();
-extern void j_0002fc7a();
-extern void j_00048112();
-extern void j_0003bff7();
-extern void j_000126b6();
-extern void j_0002bd82();
-extern void j_0003ce25();
-extern void j_000233ee();
-extern void j_0003e423();
-
-class Rva00176A50Receiver {};
-template<class T> __forceinline T Rva00176A50Member(void (*raw)())
-{
-    union { void (*raw)(); T member; } fn;
-    fn.raw = raw;
-    return fn.member;
+__forceinline Coord3D &Coord3D::operator=(const Coord3D &p) { Coord3DBase *base=this; *base=p; return *this; }
+inline Coord3D::Coord3D(const Coord3D &p) { x=p.x; y=p.y; z=p.z; }
+inline void Coord3D::set(float ax, float ay, float az) { x=ax; y=ay; z=az; }
+inline Coord3D &Coord3D::Sub2D(const Coord3DBase &p) {x-=p.x; y-=p.y; return *this;}
+inline __declspec(noinline) float Coord3D::length() const { return (float)sqrt(x*x+y*y+z*z); }
+inline __declspec(noinline) void Coord3D::normalize() {
+ float len=(float)sqrt(x*x+y*y+z*z);
+ if(len != 0.0f) { float scale=1.0f/len; x*=scale; y*=scale; z*=scale; }
 }
-#define CALL(T, obj, fn) (((Rva00176A50Receiver*)(obj))->*Rva00176A50Member<T>(fn))
+inline __declspec(noinline) Coord3D &Coord3D::Scale(float scale) { x*=scale; y*=scale; z*=scale; return *this; }
+inline __declspec(noinline) Coord3D &Coord3D::Add(const Coord3DBase &that) { x+=that.x; y+=that.y; z+=that.z; return *this; }
+inline __declspec(noinline) Coord3D &Coord3D::operator-=(const Coord3DBase &that) { x-=that.x; y-=that.y; z-=that.z; return *this; }
+inline __declspec(noinline) Coord3D &Coord3D::operator+=(const Coord3DBase &that) { x+=that.x; y+=that.y; z+=that.z; return *this; }
 
-struct Rva00176A50AIUpdate
+
+enum NameKeyType {};
+enum KindOfType { KINDOF_5C = 0x5c, KINDOF_95 = 0x95 };
+enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
+enum WeaponSlotType;
+class Weapon;
+class Module { public: bool is() const; };
+class DynamicPortalBehaviour { public: bool isEndPortalAboveWall(Coord3D *pos); };
+class Pathfinder { public: bool bfmeGroundCellThreshold(const Coord3D *pos, bool flag); };
+class AIUpdateInterface
 {
+public:
+    void requestPath(Coord3D *destination, bool isFinalGoal);
+    bool requestMeleeApproachPath(Coord3D *destination, bool adjusted);
+    bool isBlockedAndStuck() const { return m_isBlockedAndStuck; }
+    void *getPath() const { return m_path; }
+    bool isWaitingForPath() const { return m_waitingForPath; }
     char pad00[0x140];
     void *m_path;
     char pad144[0x31e-0x144];
@@ -50,61 +62,57 @@ struct Rva00176A50AIUpdate
     char pad31f[7];
     bool m_isBlockedAndStuck;
 };
-struct Rva00176A50Object
+class Thing
 {
+public:
+    bool isKindOf(KindOfType kind) const;
+    const Coord3D *getUnitDirectionVector2D() const;
+    const Coord3D *getPosition() const { return &m_cachedPos; }
     char pad00[0x38];
     Coord3D m_cachedPos;
+};
+class Object : public Thing
+{
+public:
+    Weapon *getCurrentWeapon(WeaponSlotType *slot = 0);
+    bool crushPolicy(Object *victim, CrushSquishTestType test) const;
+    int bfmeScale() const;
+    Module *findModule(NameKeyType key) const;
+    AIUpdateInterface *getAI() const { return m_ai; }
     char pad44[0xbc-0x44];
     float valueBC;
     char padC0[0x204-0xc0];
-    Rva00176A50AIUpdate *m_ai;
-    const Coord3D *getPosition() const { return &m_cachedPos; }
+    AIUpdateInterface *m_ai;
 };
-struct Rva00176A50Machine
+class StateMachine
 {
+public:
+    Object *getGoalObject();
     char pad00[0x10];
-    Rva00176A50Object *m_owner;
+    Object *m_owner;
 };
-class GameLogic { public: char pad00[0x3c]; unsigned m_field3C; };
-struct Rva00176A50AIData { char pad00[0x90]; float field90, field94; };
+class GameLogic { public: unsigned getFrame() const { return m_field3C; } char pad00[0x3c]; unsigned m_field3C; };
+struct TAiData { char pad00[0x90]; float field90, field94; };
 class AI
 {
 public:
     char pad00[0xc];
-    void *m_pathfinder;
+    Pathfinder *m_pathfinder;
     char pad10[4];
-    Rva00176A50AIData *m_data;
+    TAiData *m_data;
+    const TAiData *getAiData() const { return m_data; }
 };
 class CRCParameterCheck;
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern bool Glo012F0239;
-enum NameKeyType {};
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
-
-typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *, ...);
-typedef Rva00176A50Object* (Rva00176A50Receiver::*Rva000A1490)();
-typedef void* (Rva00176A50Receiver::*Rva001BE230)(int*);
-typedef bool (Rva00176A50Receiver::*Rva001CC790)(Rva00176A50Object*,int);
-typedef void (Rva00176A50Receiver::*Rva0027BD90)(Coord3D*,bool);
-typedef float (Rva00176A50Receiver::*Rva000B6CA0)() const;
-typedef bool (Rva00176A50Receiver::*Rva000A2CF0)(int) const;
-typedef bool (__cdecl *Rva00175820)(Rva00176A50Object*,Rva00176A50Object*);
-typedef const Coord3D* (Rva00176A50Receiver::*Rva00132140)() const;
-typedef Coord3D& (Rva00176A50Receiver::*Rva0014FFD0)(float);
-typedef Coord3D& (Rva00176A50Receiver::*Rva000EC6F0)(const Coord3D&);
-typedef int (Rva00176A50Receiver::*Rva001BEC20)() const;
-typedef void* (Rva00176A50Receiver::*Rva001BEE60)(NameKeyType) const;
-typedef void* (__cdecl *Rva001F8AB0)(Rva00176A50Object*);
-typedef bool (Rva00176A50Receiver::*Rva00266340)() const;
-typedef bool (Rva00176A50Receiver::*Rva001F9180)(Coord3D*);
-typedef Coord3D& (Rva00176A50Receiver::*Rva0016A240)(const Coord3D&);
-typedef void (Rva00176A50Receiver::*Rva000FB930)();
-typedef bool (Rva00176A50Receiver::*Rva003D8BC0)(const Coord3D*,bool);
-typedef Coord3D& (Rva00176A50Receiver::*Rva00148730)(const Coord3D&);
-typedef bool (Rva00176A50Receiver::*Rva002705D0)(const Coord3D*,bool);
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(void *check, const char *format, ...);
+bool bfmeMeleeHordeTargetInvalid(Object *source, Object *victim);
+DynamicPortalBehaviour *rva001F8AB0(Object *obj);
+struct CoordWords { float x,y,z; };
 
 // ?isSamePosition@@YA_NPBUCoord3D@@00@Z
 static __declspec(noinline) Bool isSamePosition(const Coord3D *ourPos,
@@ -131,7 +139,7 @@ class AIAttackMeleeApproachState : public Rva00176A50Slots<17>
 {
 public:
     char pad004[0x1c-4];
-    Rva00176A50Machine *m_machine;
+    StateMachine *m_machine;
     char pad20[4];
     Coord3D m_goalPosition;
     char pad30[0x4c-0x30];
@@ -142,23 +150,14 @@ public:
     Coord3D position54;
 protected:
     virtual Bool computePath();
-    __forceinline void setGoalAlongDirection00176A50(const Coord3D *directionVector, Rva00176A50Object *targetObject);
 };
-
-__forceinline void AIAttackMeleeApproachState::setGoalAlongDirection00176A50(const Coord3D *directionVector, Rva00176A50Object *targetObject)
-{
-    Coord3D direction = *directionVector;
-    CALL(Rva0014FFD0,&direction,j_0000e1c4)(2.0f*targetObject->valueBC + 60.0f);
-    m_goalPosition = position54;
-    CALL(Rva000EC6F0,&m_goalPosition,j_0002f66c)(direction);
-}
 
 Bool AIAttackMeleeApproachState::computePath()
 {
     if (Glo012F0239 && TheCRCParameterCheck)
-        ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,"CritterDesync: ComputePath18");
+        bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"CritterDesync: ComputePath18");
     bool forceRepath = false;
-    Rva00176A50AIUpdate *ai = m_machine->m_owner->m_ai;
+    AIUpdateInterface *ai = m_machine->m_owner->m_ai;
     if (ai->m_isBlockedAndStuck)
         return false;
     if (m_waitingForPath)
@@ -168,74 +167,75 @@ Bool AIAttackMeleeApproachState::computePath()
     else if (TheGameLogic->m_field3C - frame50 < 5)
         return true;
     frame50 = TheGameLogic->m_field3C;
-    if (CALL(Rva000A1490,m_machine,j_0000e570)())
+    if (m_machine->getGoalObject())
     {
-        Rva00176A50Object *source = m_machine->m_owner;
+        Object *source = m_machine->m_owner;
         if (!forceRepath && isSamePosition(source->getPosition(),&position54,
-            CALL(Rva000A1490,m_machine,j_0000e570)()->getPosition()))
+            m_machine->getGoalObject()->getPosition()))
             return true;
-        void *weapon = CALL(Rva001BE230,source,j_00031a7f)(0);
+        Weapon *weapon = source->getCurrentWeapon();
         if (!weapon)
             goto fail;
-        Rva00176A50Object *victim = CALL(Rva000A1490,m_machine,j_0000e570)();
+        Object *victim = m_machine->getGoalObject();
         position54 = *victim->getPosition();
-        if (CALL(Rva001CC790,source,j_000420aa)(victim,2))
+        if (source->crushPolicy(victim,TEST_CRUSH_OR_SQUISH))
         {
             m_goalPosition = position54;
-            CALL(Rva0027BD90,ai,j_0003bcff)(&m_goalPosition,false);
+            ai->requestPath(&m_goalPosition,false);
             return true;
         }
-        const Rva00176A50AIData *data = TheAI->m_data;
-        Coord3D direction;
-        direction.set(source->getPosition()->x,source->getPosition()->y,0.0f);
-        const Coord3D *victimPos = &position54;
-        direction.x -= victimPos->x;
-        direction.y -= victimPos->y;
-        if (Rva000B6CA0Length(&direction) < data->field90 + data->field94)
+        const TAiData *data = TheAI->m_data;
+        Coord3D direction(*source->getPosition());
+        direction.Sub2D(position54);
+        direction.z = 0.0f;
+        if (direction.length() < TheAI->m_data->field90 + data->field94)
             goto fail;
-        if (CALL(Rva000A2CF0,victim,j_0003251f)(0x95))
+        if (victim->isKindOf(KINDOF_95))
             goto fail;
-        if (((Rva00175820)j_0002056d)(source,victim))
+        if (bfmeMeleeHordeTargetInvalid(source,victim))
         {
-            setGoalAlongDirection00176A50(CALL(Rva00132140,victim,j_00040246)(),victim);
+            direction = *victim->getUnitDirectionVector2D();
+            direction.Scale(2.0f*victim->valueBC + 60.0f);
+            *(CoordWords*)&m_goalPosition = *(const CoordWords*)&position54;
+            m_goalPosition.Add(direction);
             if (Glo012F0239 && TheCRCParameterCheck)
-                ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(FALSE) 30");
+                bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(FALSE) 30");
             m_adjustDestinations = false;
-            CALL(Rva0027BD90,ai,j_0003bcff)(&m_goalPosition,false);
+            ai->requestPath(&m_goalPosition,false);
         }
         else
         {
-        void *module = 0;
-        void *portal = 0;
-        if (CALL(Rva000A2CF0,victim,j_0003251f)(0x5c) && CALL(Rva001BEC20,source,j_0003a391)() != 1)
+        Module *module = 0;
+        DynamicPortalBehaviour *portal = 0;
+        if (victim->isKindOf(KINDOF_5C) && source->bfmeScale() != 1)
         {
             static const NameKeyType key = TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-            module = CALL(Rva001BEE60,victim,j_0002ae23)(key);
-            portal = ((Rva001F8AB0)j_0002fc7a)(victim);
-            if (module && !CALL(Rva00266340,module,j_00048112)())
+            module = victim->findModule(key);
+            portal = rva001F8AB0(victim);
+            if (module && !module->is())
                 module = 0;
         }
         bool adjusted = false;
-        if (module && portal && CALL(Rva001F9180,portal,j_0003bff7)(&m_goalPosition))
+        if (module && portal && portal->isEndPortalAboveWall(&m_goalPosition))
         {
             direction = m_goalPosition;
-            CALL(Rva0016A240,&direction,j_000126b6)(position54);
+            direction -= position54;
             adjusted = true;
         }
-        CALL(Rva000FB930,&direction,j_0002bd82)();
-        CALL(Rva0014FFD0,&direction,j_0000e1c4)(victim->valueBC);
-        m_goalPosition = position54;
-        CALL(Rva000EC6F0,&m_goalPosition,j_0002f66c)(direction);
+        direction.normalize();
+        direction.Scale(victim->valueBC);
+        *(CoordWords*)&m_goalPosition = *(const CoordWords*)&position54;
+        m_goalPosition.Add(direction);
         if (adjusted)
         {
             for (int i=0; i<10; ++i)
             {
-                if (CALL(Rva003D8BC0,TheAI->m_pathfinder,j_0003ce25)(&m_goalPosition,false))
+                if (TheAI->m_pathfinder->bfmeGroundCellThreshold(&m_goalPosition,false))
                     break;
-                CALL(Rva00148730,&m_goalPosition,j_000233ee)(direction);
+                m_goalPosition += direction;
             }
         }
-        if (CALL(Rva002705D0,ai,j_0003e423)(&m_goalPosition,adjusted))
+        if (ai->requestMeleeApproachPath(&m_goalPosition,adjusted))
         {
             m_waitingForPath = ai->m_waitingForPath;
             return true;
