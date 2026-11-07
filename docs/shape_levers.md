@@ -3877,3 +3877,29 @@ scalar field writes. With the scalar sum, all four operand orders gave the fxch 
 costs 4 B. Source: game/GameEngine/Source/GameLogic/AI/PathfinderBuildGroundPath.cpp;
 handoff targets/game/reverse/attempt_support/20261106-003e6b80-buildgroundpath-field-first-access.md.
 Hypothesis about the mechanism only; tested on this body.
+## By-value iterator with a user-declared copy constructor flips the EH epilogue tie (2026-11-07)
+
+Mismatch: audio cache lookup (0x00693B90, 525 B, VC7.1 `/O2 /Ob2 /EHsc /MD`, STLport). The
+only residue was 4 bytes in the EH epilogue. Retail emits `pop ebp; mov fs:[0],ecx; pop ebx`;
+ours emitted `pop ebp; pop ebx; mov fs:[0],ecx`.
+
+Fix: model the list with an `iterator` that has a user-declared copy constructor, as
+STLport's `_List_iterator` has. Pass it by value into the `__forceinline` `insert(iterator,
+const T&)` and `erase(iterator)` on the hit path. In a testbed the epilogue order followed only
+that copy constructor:
+
+| Iterator passed by value | Epilogue order |
+|---|---|
+| plain struct | ours |
+| struct with a base class | ours |
+| aggregate | ours |
+| plain struct with a copy constructor | retail |
+| based struct with a copy constructor | retail |
+
+The instruction stream was otherwise identical. Retail's two epilogue orders are roughly
+50/50 overall, so the order alone does not tell you which source shape produced it.
+Hypothesis only: the scheduler sinks the `fs` store and two orders tie; the copy-constructed
+temporary changes the IR order that breaks the tie.
+
+Source: game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioCacheReadAudioFile00694230.cpp.
+Handoff: targets/game/reverse/attempt_support/20261107-00693b90-iterator-copy-ctor-epilogue.md.

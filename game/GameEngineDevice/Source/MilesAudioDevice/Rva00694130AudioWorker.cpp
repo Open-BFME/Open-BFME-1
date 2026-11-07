@@ -3,7 +3,6 @@
 // Identity and ABI: targets/game/reverse/identity_evidence/20261003-audio-worker-reference-abi.md
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-extern "C" void __cdecl __identifier("?d_00693b90@@YAXXZ")();
 struct AudioEventInfo { char pad0[0x84]; int m_soundType; };
 class RvaAudioEventFilenameForPortion { public: AsciiString getFilenameForPlayPortion(); };
 class AudioEventRTS { public: char pad0[8]; AudioEventInfo *m_eventInfo; };
@@ -20,12 +19,7 @@ class Rva00694710AudioWorker
 {
 public:
  Rva006910F0Handle rva00694130(const AudioEventRef &event,int value);
- Rva006910F0Handle rva00693B90(const AsciiString & a0,int a1) {
-  // retail body is still the gen-dump row ?d_00693b90@@YAXXZ (no C++ row yet); call it by that defined name
-  union { void (__cdecl *symbol)(); Rva006910F0Handle (Rva00694710AudioWorker::*member)(const AsciiString &,int); } c;
-  c.symbol = &__identifier("?d_00693b90@@YAXXZ");
-  return (this->*c.member)(a0,a1);
- }
+ Rva006910F0Handle rva00693B90(const AsciiString & a0,int a1);
 };
 Rva006910F0Handle Rva00694710AudioWorker::rva00694130(const AudioEventRef &event,int value)
 {

@@ -66,6 +66,14 @@ class ScopedMutex {
 public:
  // ??0ScopedMutex@@QAE@XZ absent-from-retail
  ScopedMutex() : m_owned(0), m_enabled(0) {}
+ // ??0ScopedMutex@@QAE@PAX@Z absent-from-retail (inlined into 0x00693B90)
+ ScopedMutex(void *h) {
+  m_enabled = 0;
+  m_owned = h;
+  unsigned long status = WaitForSingleObject(m_owned, 0xffffffff);
+  if (status != 0x102)
+   m_enabled = 1;
+ }
  // ??1ScopedMutex@@QAE@XZ
  ~ScopedMutex() { release(); }
  // ?acquire@ScopedMutex@@QAEKPAX@Z absent-from-retail
@@ -89,6 +97,7 @@ class Gen0002857EOwner {
 public:
  void Rva00694230(Gen0002857E *value);
  void Rva00693FB0();
+ void Rva00693B00(Gen0002857E *value);
  char m_pad0[0x2c];
  _STL::set<AsciiString> m_failed;
  unsigned int m_accountingTotal;
@@ -159,4 +168,234 @@ void Gen0002857EOwner::Rva00694230(Gen0002857E *value)
   }
   return;
  }
+}
+
+// Address-derived cache lookup at retail 0x00693B90 (525 bytes, ret 0xC):
+// under the cache mutex (+0x48, waited on without timeout), find the named
+// sample in the hash map at +0x00; a hit is promoted into the per-priority
+// list (+0x14) for the clamped priority and handed out, a name already in the
+// failed set (+0x2C) yields an empty handle, and a miss creates the 0x44-byte
+// record, registers it in the map and the priority list and hands it out.
+// Callers: Rva00694130 (0x00694130).  Callee identities are the matched rows
+// named below; the hash-map, priority-list and record helpers are still
+// address-named, so they are called through their defined ledger names.
+extern "C" void __cdecl __identifier("??0Rva00691110Handle@@QAE@ABV0@@Z")();
+extern "C" void __cdecl __identifier("??$_M_find@VAsciiString@@@?$hashtable@URva006931A0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva006931A0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva006931A0Value@@@7@@_STL@@ABEPAU?$_Hashtable_node@URva006931A0Value@@@1@ABVAsciiString@@@Z")();
+extern "C" void __cdecl __identifier("??A?$hash_map@VAsciiString@@W4Rva00693020Mapped@@U?$hash@VAsciiString@@@rts@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@6@@_STL@@QAEAAW4Rva00693020Mapped@@ABVAsciiString@@@Z")();
+
+class Rva006910F0Handle
+{
+public:
+	Rva006910F0Handle();
+	Rva006910F0Handle(Gen0002857E *target);
+	// ??0Rva006910F0Handle@@QAE@ABV0@@Z absent-from-retail
+	// The copy constructor at 0x00691110 is ledgered as Rva00691110Handle.
+	Rva006910F0Handle(const Rva006910F0Handle &other)
+	{
+		union { void (__cdecl *symbol)(); void (Rva006910F0Handle::*member)(const Rva006910F0Handle &); } c;
+		c.symbol = &__identifier("??0Rva00691110Handle@@QAE@ABV0@@Z");
+		(this->*c.member)(other);
+	}
+	~Rva006910F0Handle();
+
+	Gen0002857E *m_target;
+};
+
+class Rva006BA130MaxField
+{
+public:
+	void update(int value);
+};
+
+class AsciiStringBQ;
+
+class BfmeRecordBQ
+{
+public:
+	BfmeRecordBQ(int owner, const AsciiStringBQ &name);
+
+	unsigned char m_bytes[0x44];
+};
+
+struct Rva00693B90Record
+{
+	unsigned char m_pad00[0x34];
+	int m_count;					// 0x34
+	unsigned char m_pad38[4];
+	int m_priority;					// 0x3c
+	unsigned char m_pad40;
+	unsigned char m_pinned;				// 0x41
+};
+
+struct Rva00693B90Node
+{
+	Rva00693B90Node *m_next;
+	Rva00693B90Node *m_prev;
+	Gen0002857E *m_data;
+};
+
+struct Rva00693B90HashNode
+{
+	Rva00693B90HashNode *m_next;
+	AsciiString m_key;
+	Gen0002857E *m_value;
+};
+
+class Rva00693B90HashTable;
+
+struct Rva00693B90HashIterator
+{
+	Rva00693B90HashNode *m_cur;
+	Rva00693B90HashTable *m_ht;
+};
+
+class Rva00693B90HashTable
+{
+public:
+	Rva00693B90HashIterator find(const AsciiString &name)
+	{
+		union { void (__cdecl *symbol)(); Rva00693B90HashNode *(Rva00693B90HashTable::*member)(const AsciiString &) const; } c;
+		c.symbol = &__identifier("??$_M_find@VAsciiString@@@?$hashtable@URva006931A0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva006931A0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva006931A0Value@@@7@@_STL@@ABEPAU?$_Hashtable_node@URva006931A0Value@@@1@ABVAsciiString@@@Z");
+		Rva00693B90HashIterator it;
+		it.m_cur = (this->*c.member)(name);
+		it.m_ht = this;
+		return it;
+	}
+
+	Gen0002857E *&operator[](const AsciiString &name)
+	{
+		union { void (__cdecl *symbol)(); Gen0002857E *&(Rva00693B90HashTable::*member)(const AsciiString &); } c;
+		c.symbol = &__identifier("??A?$hash_map@VAsciiString@@W4Rva00693020Mapped@@U?$hash@VAsciiString@@@rts@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva00693020Mapped@@@_STL@@@6@@_STL@@QAEAAW4Rva00693020Mapped@@ABVAsciiString@@@Z");
+		return (this->*c.member)(name);
+	}
+
+	unsigned char m_rep[0x14];
+};
+
+class Rva006925F0List
+{
+public:
+	struct iterator
+	{
+		iterator(Rva00693B90Node *node) : m_node(node) {}
+		iterator(const iterator &other) : m_node(other.m_node) {}
+		Rva00693B90Node *m_node;
+	};
+	__forceinline iterator end() { return iterator(m_node); }
+	__forceinline iterator insert(iterator position, Gen0002857E *const &value)
+	{
+		Rva00693B90Node *node = (Rva00693B90Node *)_STL::__node_alloc<true, 0>::allocate(sizeof(Rva00693B90Node));
+		Gen0002857E **data = &node->m_data;
+		if (data != 0)
+			*data = value;
+		Rva00693B90Node *pos = position.m_node;
+		Rva00693B90Node *last = pos->m_prev;
+		node->m_next = pos;
+		node->m_prev = last;
+		last->m_next = node;
+		pos->m_prev = node;
+		return iterator(node);
+	}
+	__forceinline iterator erase(iterator position)
+	{
+		Rva00693B90Node *next = position.m_node->m_next;
+		Rva00693B90Node *prev = position.m_node->m_prev;
+		Rva00693B90Node *n = position.m_node;
+		prev->m_next = next;
+		next->m_prev = prev;
+		_STL::__node_alloc<true, 0>::deallocate(n, sizeof(Rva00693B90Node));
+		return iterator(next);
+	}
+
+	// ?push_back@Rva006925F0List@@QAEXABQAVGen0002857E@@@Z
+	// Retail 0x006925F0 (45 B), reached only from 0x00693B90 through ILT 0x0001F3A2.
+	// Visible and out of line, as retail calls it: the visible body lets VC7.1
+	// keep the new-record path's single file local out of the escaping slots.
+	__declspec(noinline) void push_back(Gen0002857E *const &value) { insert(end(), value); }
+
+	Rva00693B90Node *m_node;
+};
+
+struct Rva00693B90StringData
+{
+	unsigned short m_refCount;
+	unsigned short m_pad02;
+	unsigned short m_length;			// 0x04
+};
+
+static __forceinline bool isEmptyName(const AsciiString &name)
+{
+	const Rva00693B90StringData *data = *(Rva00693B90StringData *const *)&name;
+	return data == 0 || data->m_length == 0;
+}
+
+class Rva00694710AudioWorker
+{
+public:
+	Rva006910F0Handle rva00693B90(const AsciiString &name, int priority);
+
+	Rva00693B90HashTable m_files;			// 0x00
+	Rva006925F0List m_lists[3];			// 0x14
+	unsigned char m_pad20[0x0c];
+	_STL::set<AsciiString> m_failed;		// 0x2c
+	unsigned int m_accountingTotal;
+	unsigned int m_limit;
+	void *m_thread;
+	char m_stop;
+	void *m_mutex;					// 0x48
+};
+
+
+// ?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z
+Rva006910F0Handle Rva00694710AudioWorker::rva00693B90(const AsciiString &name, int priority)
+{
+	int level;
+	if (priority < 0)
+		level = 0;
+	else if (priority >= 3)
+		level = 2;
+	else
+		level = priority;
+
+	Rva006915E0 mut(m_mutex);
+
+	if (isEmptyName(name))
+		return Rva006910F0Handle();
+
+	Rva00693B90HashIterator it = m_files.find(name);
+	if (it.m_cur != 0)
+	{
+		Gen0002857E *file = it.m_cur->m_value;
+		Rva00693B90Record *record = (Rva00693B90Record *)file;
+		if (record->m_count == 0)
+			((Gen0002857EOwner *)this)->Rva00693B00(file);
+		if (!record->m_pinned && record->m_priority < level)
+		{
+			Rva00693B90Node *head = m_lists[record->m_priority].m_node;
+			bool searching = true;
+			Rva00693B90Node *n = head->m_next;
+			while (searching && n != head)
+			{
+				if (n->m_data == file)
+				{
+					m_lists[record->m_priority].erase(Rva006925F0List::iterator(n));
+
+					m_lists[level].insert(m_lists[level].end(), file);
+					break;
+				}
+				n = n->m_next;
+			}
+		}
+		((Rva006BA130MaxField *)file)->update(level);
+		return Rva006910F0Handle(file);
+	}
+
+	if (m_failed.find(name) != m_failed.end())
+		return Rva006910F0Handle();
+	Gen0002857E *file = (Gen0002857E *)new BfmeRecordBQ((int)this, (const AsciiStringBQ &)name);
+	Rva006910F0Handle handle(file);
+	m_files[name] = file;
+	m_lists[level].push_back(file);
+	((Rva006BA130MaxField *)file)->update(level);
+	return handle;
 }
