@@ -28,7 +28,8 @@ public:
 };
 
 extern Rva008B2EA0Node *rva008B2EA0Create();
-extern Rva008CAEA0RefBlock *g_rva008CAEA0DefaultBlock;
+// The default block is element 7 of the existing Apt string array.
+extern "C" Rva008CAEA0RefBlock *bfmeObjDAE[178];
 // VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
 struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
@@ -37,12 +38,12 @@ void rva008CAEA0NodeAppend(Rva008CAEA0Array *array)
 {
     Rva008B2EA0Node *node = rva008B2EA0Create();
 
-    ++g_rva008CAEA0DefaultBlock->m_refs;
+    ++bfmeObjDAE[7]->m_refs;
     Rva008CAEA0RefBlock *old_block = node->m_block;
     --old_block->m_refs;
     if (old_block->m_refs == 0)
         g_rva01337A30AllocPair->m_free(old_block);
-    node->m_block = g_rva008CAEA0DefaultBlock;
+    node->m_block = bfmeObjDAE[7];
 
     array->m_values[array->m_count] = node;
     ++array->m_count;
