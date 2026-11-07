@@ -88125,6 +88125,7 @@ name,address,notes
 ?rva009F2650@PartitionManager@@QAEXH@Z,0x009F2650,GameLogic::init +0x1E4 calls it on ThePartitionManager with push 7; 8-byte body forwards this+0xC to 0x009F59D0 which ends ret 4
 ?rva009F2700@PartitionManager@@QAEPAVObject@@PBUCoord3D@@PBURegion3D@@MHPAVPartitionFilter@@@Z,0x009F2700,address-derived: direct call at 0x0014DAB0+0x431 with ECX=ThePartitionManager (0x012ED5B8) and five stack args (&owner pos; &region; 9999.9f; 1; filter chain); EAX is null-tested and used as the Object receiver of bfmePostClosest; the ledger view bfmeGo1050C@BfmeC1050 declares no return
 ?rva00C715AARelease@@YAXXZ,0x00C715AA,address-derived callback registered by 0x00C6E2F2; retail 0x00C715AA invokes object teardown and Win32 DeleteCriticalSection for embedded section at +4
+?rva1f8f2@InGameUI@@QAEXXZ,0x0044A6A0,thiscall void() named after its ILT slot 0x0001F8F2: W3DDisplay render pass 0x006EB500+0x2C2 loads ECX from TheInGameUI and calls that ILT then ignores EAX; body 0x0044A6A0 (356 B gen dump) moves ECX into EBP as this and ends in plain ret at +0x163
 ?rva220840Callback@@YAXXZ,0x002207F0,Open-BFME5 dispatch callback pin
 ?rva379ec0SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 small-block deallocator reached by the CrateTemplate node-list destructor
 ?rva423670SmallDeallocate@@YAXPAXI@Z,0x0082E5F0,Open-BFME5 record small-block deallocator pin

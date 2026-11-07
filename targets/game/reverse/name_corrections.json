@@ -21980,5 +21980,25 @@
   "after_sha256": "32a9ef3f519591a83c65b544538def4c4ad86de0eef30ffcf17fb0a5e0fed4b2",
   "evidence": "targets/game/reverse/identity_evidence/0x003e6b80-ilt-address-name.md",
   "reason": "retail's ILT hash contradicts the ZH decoration ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z and every tested access/parameter variant (the whole Pathfinder class is contradicted), so the body keeps the existing address-derived pin rva003E6B80 that the matched findGroundPath caller binds; the ZH role stays in comments"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006eb500.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006EB500.cpp",
+  "old_name": "value100",
+  "new_name": "m_100",
+  "before_sha256": "f6a3d798f77de7cf5b3474b295f25d79785fce3708230ba657a2646cae6aa12a",
+  "after_sha256": "d1b307a83fd3b90eabe79c48d74d7a45717f9888d77ab6d6b4fa714f37323216",
+  "evidence": "targets/game/reverse/attempt_support/20261107-006eb500-drawimage-arguments.md",
+  "reason": "The bank's value100/value104 locals fed the panel's slot 0x3C call; retail pushes -1 and the +0xF8..+0x104 floats straight into the outer W3DDisplay::drawImage (vtable 0xE0, ret 0x18), so the locals were a misattributed codegen device and the members are read directly; restoring them costs 313 bytes"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x006eb500.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006EB500.cpp",
+  "old_name": "value104",
+  "new_name": "m_104",
+  "before_sha256": "f6a3d798f77de7cf5b3474b295f25d79785fce3708230ba657a2646cae6aa12a",
+  "after_sha256": "d1b307a83fd3b90eabe79c48d74d7a45717f9888d77ab6d6b4fa714f37323216",
+  "evidence": "targets/game/reverse/attempt_support/20261107-006eb500-drawimage-arguments.md",
+  "reason": "The bank's value100/value104 locals fed the panel's slot 0x3C call; retail pushes -1 and the +0xF8..+0x104 floats straight into the outer W3DDisplay::drawImage (vtable 0xE0, ret 0x18), so the locals were a misattributed codegen device and the members are read directly; restoring them costs 313 bytes"
  }
 ]

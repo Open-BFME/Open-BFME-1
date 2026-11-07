@@ -1,5 +1,3 @@
-// ?rva006EB500@W3DDisplay@@QAE_NI@Z
-// partial score=0.9827 date=2026-09-30
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x006EB500 (1215 B, ret 4): the per-frame render pass of BFME's
@@ -12,6 +10,16 @@
 // (W3DRadarResetLock ... bfmeUnlock1179), the shroud and taint camera
 // updates, the scene-render object at +0x180 and the video panel at +0x34.
 // No caller or string names the helper, so it keeps the address token.
+// couldRender (VA 0x012BAA54, .data, initial 1) is Zero Hour's function-local
+// `static Bool couldRender = true`. Handoff:
+// targets/game/reverse/attempt_support/20261107-006eb500-drawimage-arguments.md
+//
+// The m_34 block draws the panel's image with W3DDisplay::drawImage (vtable
+// slot 0xE0 -> ILT 0x0001680B -> 0x006EA360, ledger
+// ?drawImage@W3DDisplay@@UAEXPAVImage@@MMMMH@Z, ret 0x18): retail pushes
+// -1, +0x104, +0x100, +0xFC, +0xF8, then the result of the panel's
+// zero-argument slot 0x3C.  BFME 2 0x0004A462 (open-bfme-2 W3DDisplay.cpp,
+// `drawImage(m_38->s3c(), m_fc, m_100, m_104, m_108, -1)`) is the donor lead.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -20,6 +28,7 @@ typedef float Real;
 typedef unsigned char UnsignedByte;
 
 class CameraClass;
+class Image;
 
 class Vector3
 {
@@ -338,7 +347,7 @@ public:
 	virtual void slot030(void);
 	virtual void slot034(void);
 	virtual void slot038(void);
-	virtual Int slot03C(Int a, Int b, Int c, Int d, Int e);
+	virtual Image *slot03C(void);
 	void *m_04;
 	Rva006EB500PanelData *m_data;
 };
@@ -355,6 +364,7 @@ public:
 
 class BfmeThing923E { public: void bfmeGo923E(Int pass, void *mode); };
 class Gen_0040e1f0 { public: void m(void); };
+class Rva0040EE90Owner { public: void update(void); };
 
 class W3DDisplay
 {
@@ -415,7 +425,7 @@ public:
 	virtual void slot0D4(void);
 	virtual void slot0D8(void);
 	virtual void slot0DC(void);
-	virtual void slot0E0(Int value);
+	virtual void drawImage(Image *image, Real startX, Real startY, Real endX, Real endY, Int color);
 	virtual void slot0E4(void);
 	virtual void slot0E8(void);
 	virtual void slot0EC(void);
@@ -452,7 +462,6 @@ public:
 	virtual void slot168(void);
 
 	Bool rva006EB500(UnsignedInt now);
-	void rva0040EE90(void);
 
 protected:
 	void drawCurrentDebugDisplay(void);
@@ -467,21 +476,21 @@ protected:
 	char m_pad038[0xd0 - 0x38];
 	Real m_letterBoxFadeLevel;
 	char m_pad0d4[0xf8 - 0xd4];
-	Int m_f8;
-	Int m_fc;
-	Int m_100;
-	Int m_104;
+	Real m_f8;
+	Real m_fc;
+	Real m_100;
+	Real m_104;
 	char m_pad108[0x13c - 0x108];
 	Bool m_13c;
 	char m_pad13d[0x180 - 0x13d];
 	Rva006FDE50SceneRender *m_180;
 };
 
-extern Bool g_couldRender012BAA54;
 
 Bool W3DDisplay::rva006EB500(UnsignedInt now)
 {
 	Rva006EB500RenderLock lock;
+	static Bool couldRender = true;
 
 	if (DX8Wrapper::_Get_D3D_Device8() && DX8Wrapper::_Get_D3D_Device8()->TestCooperativeLevel() == 0)
 	{
@@ -528,7 +537,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 			return true;
 		}
 
-		g_couldRender012BAA54 = true;
+		couldRender = true;
 		if (numRenderTargetPolygons || numRenderTargetVertices)
 			Debug_Statistics::Record_DX8_Polys_And_Vertices(numRenderTargetPolygons,
 				numRenderTargetVertices, ShaderClass::_PresetOpaqueShader);
@@ -558,7 +567,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 			((BfmeThing923E *)this)->bfmeGo923E(1, (void *)2);
 			((BfmeThing923E *)this)->bfmeGo923E(2, (void *)2);
 			if (!m_34)
-				rva0040EE90();
+				((Rva0040EE90Owner *)this)->update();
 			TheWindowManager->m_renderLock = 1;
 			TheInGameUI->slot01C();
 			if (!fading)
@@ -576,13 +585,9 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		{
 			((BfmeThing923E *)this)->bfmeGo923E(0, (void *)1);
 			((BfmeThing923E *)this)->bfmeGo923E(1, (void *)1);
-			// Retail reads +0x104 and +0x100 before the panel call's other operands.
-			Int value104 = m_104;
-			Int value100 = m_100;
-			Int panelResult = m_34->slot03C(m_f8, m_fc, value100, value104, -1);
-			slot0E0(panelResult);
+			drawImage(m_34->slot03C(), m_f8, m_fc, m_100, m_104, -1);
 			((BfmeThing923E *)this)->bfmeGo923E(2, (void *)1);
-			rva0040EE90();
+			((Rva0040EE90Owner *)this)->update();
 			((Gen_0040e1f0 *)this)->m();
 			Rva0081D520Owner *owner = m_34->m_data->m_18;
 			if (owner)
@@ -611,8 +616,8 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 	}
 	else
 	{
-		if (g_couldRender012BAA54)
-			g_couldRender012BAA54 = false;
+		if (couldRender)
+			couldRender = false;
 	}
 
 	if (TheScriptEngine->frozenPair006EB500() ||
