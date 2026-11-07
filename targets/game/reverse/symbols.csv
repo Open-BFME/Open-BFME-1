@@ -81344,6 +81344,7 @@ name,address,notes
 ?d_00794040@@YAXXZ,0x00794040,Address-only compatibility for the retired dump name; game/gen_asm/d_00793520.asm still calls it; body is drawCenteredScaledImage00794040
 ?d_00794790@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00794790,caller-proven BFME special push-button image path
 ?d_00799900@@YAXXZ,0x00799900,legacy address-only compatibility pin for the retired dump name
+?d_007af940@@YAXXZ,0x007AF940,Address-only compatibility for withdrawn dump; native projectRangesRva007AF940 body (game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp); game/gen_asm/d_00776ac0.asm still calls this name
 ?d_007f4bb0@@YAXXZ,0x007F4BB0,address-only compatibility pin for retired dump name referenced by BfmeConv969.cpp
 ?d_008379c0@@YAXXZ,0x008379C0,Address-only compatibility for withdrawn dump; native ?do_put@?$money_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@MBE?AV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@2@V32@_NAAVios_base@2@DABV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@2@@Z body (game/Libraries/Source/WWVegas/WWLib/MoneyPutCharString.cpp); game/gen_asm/d_00826920.asm still calls this name
 ?d_0083e8f0@@YAXXZ,0x0083E8F0,address-derived tail callee used by Rva005376D0

@@ -1,5 +1,5 @@
 // ?projectRangesRva007AF940@@YAXABVVector3@@0MMMMAAVVector2@@1@Z
-// partial score=0.979 date=2026-09-28
+// Retail 0x007AF710, 0x007AF7E0 and 0x007AF940 are byte-exact here.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // File-static helpers of BFME's W3DProjectedShadow.cpp TU (retail
 // 0x007AF710 / 0x007AF940), the eventual home of the projected-shadow
@@ -64,13 +64,20 @@ static Vector2 minMax4Rva007AF710(float a, float b, float c, float d)
 	return Vector2(lo, hi);
 }
 
+// 0x007AF940: two of the four scaled axis vectors use the component
+// constructor and two use operator*(float, Vector3). The arithmetic is the same
+// (Z is computed and unused either way). With all four in operator form, the
+// first minMax4 call emits its fstp before the hidden-result lea (6 bytes off).
+// Any mix of two or three operator-form vectors gives retail's lea-first
+// order. Handoff:
+// targets/game/reverse/attempt_support/20261107-007af940-axis-construction-mix.md
 static void projectRangesRva007AF940(const Vector3 &axisA, const Vector3 &axisB, float sizeA, float sizeB,
 	float offA, float offB, Vector2 &xr, Vector2 &yr)
 {
 	Vector3 a0 = -((offA + 0.5f) * sizeA) * axisA;
-	Vector3 a1 = (0.5f - offA) * sizeA * axisA;
+	Vector3 a1(axisA.X * ((0.5f - offA) * sizeA), axisA.Y * ((0.5f - offA) * sizeA), axisA.Z * ((0.5f - offA) * sizeA));
 	Vector3 b0 = -((offB + 0.5f) * sizeB) * axisB;
-	Vector3 b1 = (0.5f - offB) * sizeB * axisB;
+	Vector3 b1(axisB.X * ((0.5f - offB) * sizeB), axisB.Y * ((0.5f - offB) * sizeB), axisB.Z * ((0.5f - offB) * sizeB));
 	Vector3 c0 = b0 + a0;
 	Vector3 c1 = b0 + a1;
 	Vector3 c2 = b1 + a1;
