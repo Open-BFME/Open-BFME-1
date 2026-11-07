@@ -651,7 +651,7 @@ static const KindOfType BFME_KINDOF_DISGUISER = static_cast<KindOfType>(89);
 //-------------------------------------------------------------------------------------------------
 /** Render an object list into the texture passed in */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.cpp
 // ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z present-unmatched
 void W3DRadar::renderObjectList( const RadarObject *listHead, TextureClass *texture, Bool calcHero )
 {
@@ -1315,7 +1315,7 @@ void W3DRadar::refreshTerrain( TerrainLogic *terrain )
 
 /*
  *
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.asm
+// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.cpp
 // ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z present-unmatched
 	void W3DRadar::renderObjectList( const RadarObject *listHead, TextureClass *texture, Bool calcHero )
 {

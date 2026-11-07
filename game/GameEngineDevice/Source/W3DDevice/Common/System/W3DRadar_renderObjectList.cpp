@@ -1,8 +1,35 @@
-// ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVTextureClass@@_N@Z
-// partial score=0.9969 date=2026-10-11
-// ?renderObjectList@W3DRadar@@IAEXPBVRadarObject@@PAVW3DRadarResetTexture@@H@Z
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Igame/GameEngine/Source/Common
 // stlport
+//
+// W3DRadar::renderObjectListRva006C43F0, retail 0x006C43F0, 1296 bytes (ret 0Ch).
+// Zero Hour's W3DRadar::renderObjectList walks the radar object list and plots
+// each visible object into the radar texture; this is BFME's version of that
+// body (readable reference:
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar.cpp).
+// Its only caller, 0x006C4A50, calls it twice, for the object list and for the
+// local object list, as Zero Hour's W3DRadar::draw does.
+//
+// Why this name carries its address:
+// - BFME's third parameter is a packed Color, not Zero Hour's Bool calcHero. It
+//   goes straight to the colour multiplier Rva006C0890(Color, Color) as a full
+//   dword. A bool parameter forces a movzx and 325 byte diffs.
+// - ilt_oracle contradicts every renderObjectList decoration tried: the
+//   W3DRadar, Radar and Rva006C4A50Owner classes; QAE/IAE/AAE/UAE/MAE/EAE; const
+//   and non-const list and texture views; and _N/H/I/Bool for the third
+//   parameter.
+// So the role is supported but the decorated name is not.
+//
+// Shape notes:
+// - The two KindOf tests read ThingTemplate's 192-bit mask at +0xC8 through the
+//   inline BitFlags<192>::test chain, as Zero Hour's ThingTemplate::isKindOf
+//   does. The open-coded mask spelling emits the same test instructions but
+//   swaps two reloads after the first circle loop (+0x394).
+// - rva006C42B0, rva006C2A20, rva006C2DD0 and rva006C1D00 are TU-private
+//   copies of bodies whose ledger rows live in W3DRadar.cpp,
+//   W3DRadarAlphaBlob6x6.cpp, W3DRadarBlendBlip2x2.cpp and
+//   W3DRadarScanlineEndpoints.cpp. Keeping them static and visible lets MSVC
+//   choose the private register conventions retail uses at each call.
+//   Handoff: targets/game/reverse/attempt_support/20261107-006c43f0-kindof-bitflags-reload-order.md
 #define BFME_STLP_NODE_ALLOC 1
 #define Matrix4x4 Matrix4
 #include "Common/Player.h"
@@ -210,12 +237,26 @@ static __declspec(noinline) void rva006C1D00(int xStart, int xEnd, int y, Surfac
 }
 static const unsigned char s_blipAlpha006C2DD0[2][2] = {{0, 0x4a}, {0x4a, 0xff}};
 static const unsigned char s_blobAlpha006C2A20[9] = {0x03,0x24,0x45,0x24,0x4f,0x4f,0x45,0x4f,0x4f};
+// BFME ThingTemplate keeps its 192-bit KindOf mask at +0xC8 (word 2 = +0xD0, word 3 = +0xD4).
+// The test goes through the inline BitFlags<192>::test -> bitset::test chain, as
+// Zero Hour ThingTemplate::isKindOf does; the open-coded mask spelling emits the
+// same instructions but leaves the loop-exit reloads at +0x394 in the wrong order.
+struct BfmeTemplateKindView {
+ char m_pad[0xc8];
+ BitFlags<192> m_kindof;
+ inline Bool isKindOf(Int t) const { return m_kindof.test(t); }
+};
+// W3DRadar.cpp: BFME inserts two KindOf entries before AIRCRAFT, making DISGUISER bit 89.
+static const Int BFME_KINDOF_DISGUISER = 89;
+// Bit 119 (word +0xD4, 0x00800000) selects the CastleBehavior path; its name is unproven.
+static const Int BFME_KINDOF_BIT119 = 119;
 class W3DRadar {
 protected:
- void renderObjectList(const RadarObject *listHead, W3DRadarResetTexture *texture, int modulation);
+ void renderObjectListRva006C43F0(const RadarObject *listHead, W3DRadarResetTexture *texture, Color modulation);
  template<class T> __forceinline T &at(int offset) { return *(T*)((char*)this + offset); }
 };
-void W3DRadar::renderObjectList(const RadarObject *listHead, W3DRadarResetTexture *texture, int modulation) {
+// ?renderObjectListRva006C43F0@W3DRadar@@IAEXPBVRadarObject@@PAVW3DRadarResetTexture@@H@Z
+void W3DRadar::renderObjectListRva006C43F0(const RadarObject *listHead, W3DRadarResetTexture *texture, Color modulation) {
  if (listHead == NULL || texture->texture == NULL) return;
  W3DRadarResetSurface surface = texture->getSurfaceLevel();
  SurfaceClass *surfaceClass = (SurfaceClass*)&surface;
@@ -227,7 +268,7 @@ void W3DRadar::renderObjectList(const RadarObject *listHead, W3DRadarResetTextur
  for (const RadarObject *rObj = (const RadarObject*)listHead; rObj; rObj = *(const RadarObject**)((const char*)rObj + 8)) {
   if (rObj->isTemporarilyHidden()) continue;
   const Object *obj = *(const Object**)((const char*)rObj + 4);
-  Bool disguised = (*(const unsigned*)((const char*)obj->getTemplate() + 0xd4) & 0x00800000) != 0;
+  Bool disguised = ((const BfmeTemplateKindView *)obj->getTemplate())->isKindOf(BFME_KINDOF_BIT119);
   Bool skip = obj->getShroudedStatus(playerIndex) > OBJECTSHROUD_PARTIAL_CLEAR;
   if (!disguised) {
    if (skip) continue;
@@ -248,7 +289,7 @@ void W3DRadar::renderObjectList(const RadarObject *listHead, W3DRadarResetTextur
    c = at<int>(0x14ac);
   }
   c = Rva006C0890(c, modulation);
-  if ((*(const unsigned*)((const char*)obj->getTemplate() + 0xd0) & 0x02000000) != 0) {
+  if (((const BfmeTemplateKindView *)obj->getTemplate())->isKindOf(BFME_KINDOF_DISGUISER)) {
    if (!rva006C42B0(obj, &c)) continue;
    UnsignedByte red, green, blue, alpha;
    GameGetColorComponents(c, &red, &green, &blue, &alpha);

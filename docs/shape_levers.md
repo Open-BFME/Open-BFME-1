@@ -3918,3 +3918,27 @@ this body only.
 
 Source: game/GameEngine/Source/Common/Gen0000D33CCtor004354F0.cpp.
 Handoff: targets/game/reverse/attempt_support/20261107-004354f0-member-order-floats.md.
+
+## An inline BitFlags kind test, not an open-coded mask, flips a reload pair after a loop (2026-11-07)
+
+Mismatch: radar object-list renderer (0x006C43F0, 1296 B, VC7.1 `/DNDEBUG /DWIN32 /MD /EHsc
+/D_STLP_USE_STATIC_LIB`, STLport node allocator). The only residue was 4 bytes at +0x394,
+the two reloads right after the first circle loop exits. Retail loads `mov edi,[esp+24h]`
+(`longest`) and then `mov ebx,[esp+30h]` (`yDoubled`); the bank had the opposite order.
+More than 200 local spellings changed nothing: declaration order, loop forms, scopes, named
+temporaries and identity-inline wrappers.
+
+Fix: both ThingTemplate kind tests were open-coded word masks, `*(unsigned*)(tmpl+0xD4) &
+0x00800000` and `*(unsigned*)(tmpl+0xD0) & 0x02000000`. Write them instead as Zero Hour's
+inline `isKindOf` chain, `BitFlags<192>::test -> bitset::test`, through a view with
+`m_kindof` at +0xC8 (bits 119 and 89). The test instructions are the same bytes; only the
+reload order after the loop changes. Each test alone is also enough.
+
+Deletion bisection showed the order depends on context elsewhere in the function: removing
+the whitening branch, the four-pixel branch, the skip block, or only the
+`getRadarPriority()` term each flipped it. Hypothesis: the inline chain adds IR temporaries
+that renumber the allocator's tie-break; the cause is not measured. This is the same family
+as "An accessor the front end can inline is not a cast" above.
+
+Source: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.cpp.
+Handoff: targets/game/reverse/attempt_support/20261107-006c43f0-kindof-bitflags-reload-order.md.
