@@ -1,6 +1,8 @@
 // ?rva0058E390@Rva00592640Owner@@QAEXPBURva0058E390Point@@0II@Z
-// partial score=0.9812 date=2026-10-09
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// partial score=0.9923 date=2026-11-07
+// ?rva0058E390@Rva00592640Owner@@QAEXPBURva0058E390Point@@0II@Z
+// partial wf-retry 2026-11-07: 14 non-reloc diffs (bank was 34); see handoff.md
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include
 #include "unicode_string.h"
 inline UnicodeString::UnicodeString(const UnicodeString &s)
 {
@@ -11,15 +13,7 @@ inline UnicodeString::~UnicodeString()
     ((StringBase<unsigned short>*)this)->~StringBase<unsigned short>();
 }
 template<> inline bool StringBase<unsigned short>::isEmpty() const { return !m_data || m_data->length == 0; }
-extern "C" __declspec(dllimport) double __cdecl floor(double);
-// Native rounding conversion after CRT floor avoids the truncation helper.
-static __forceinline int fast_float2long_round(float value)
-{
-    int result;
-    __asm fld value
-    __asm fistp result
-    return result;
-}
+#include "basetype.h"
 
 struct Rva0058E390Point
 {
@@ -185,8 +179,9 @@ void Rva00592640Owner::rva0058E390(const Rva0058E390Point *pos, const Rva0058E39
     y += height;
     float rowHeight = 0.0f;
     bool center = false;
+    Rva0058E390Data *data = m_memberC;
     typedef void (__cdecl *DrawImage)(int, Rva0058E390Point, const BfmeVec2EV*, const BfmeVec2EV*);
-    if (m_memberC->at10 != 0)
+    if (data->at10 != 0)
     {
         if (!text1.isEmpty())
         {
@@ -230,10 +225,12 @@ void Rva00592640Owner::rva0058E390(const Rva0058E390Point *pos, const Rva0058E39
             float w2 = (float)width;
             float h2 = (float)height;
             rowHeight = largest.m_bfmeYEV > h2 ? largest.m_bfmeYEV : h2;
-            float rowX = (size->x-(w2+largest.m_bfmeXEV))*0.5f+pos->x;
-            ((DrawImage)Rva00589040Draw)(image1, Rva0058E390Point(rowX, (rowHeight-largest.m_bfmeYEV)*0.5f+y), &largest, &imageSize1);
+            float totalWidth = w2+largest.m_bfmeXEV;
+            x = pos->x;
+            x += (size->x-totalWidth)*0.5f;
+            ((DrawImage)Rva00589040Draw)(image1, Rva0058E390Point(x, (rowHeight-largest.m_bfmeYEV)*0.5f+y), &largest, &imageSize1);
             {
-                int ix = fast_float2long_round((float)floor(largest.m_bfmeXEV+rowX+0.5f));
+                int ix = fast_float2long_round((float)floor(largest.m_bfmeXEV+x+0.5f));
                 int iy = fast_float2long_round((float)floor((rowHeight-h2+1.0f)*0.5f+y));
                 m_drop2->draw(ix, iy);
             }
@@ -246,11 +243,11 @@ void Rva00592640Owner::rva0058E390(const Rva0058E390Point *pos, const Rva0058E39
         float w3 = (float)width;
         float h3 = (float)height;
         rowHeight = largest.m_bfmeYEV > h3 ? largest.m_bfmeYEV : h3;
-        float rowX = pos->x;
-        if (center) { float totalWidth = w3+largest.m_bfmeXEV; rowX += (size->x-totalWidth)*0.5f; }
-        ((DrawImage)Rva00589040Draw)(image2, Rva0058E390Point(rowX, (rowHeight-largest.m_bfmeYEV)*0.5f+y), &largest, &first);
+        x = pos->x;
+        if (center) { float totalWidth = w3+largest.m_bfmeXEV; x += (size->x-totalWidth)*0.5f; }
+        ((DrawImage)Rva00589040Draw)(image2, Rva0058E390Point(x, (rowHeight-largest.m_bfmeYEV)*0.5f+y), &largest, &first);
         {
-            int ix = fast_float2long_round((float)floor(largest.m_bfmeXEV+rowX+0.5f));
+            int ix = fast_float2long_round((float)floor(largest.m_bfmeXEV+x+0.5f));
             int iy = fast_float2long_round((float)floor((rowHeight-h3+1.0f)*0.5f+y));
             m_drop3->draw(ix, iy);
         }
