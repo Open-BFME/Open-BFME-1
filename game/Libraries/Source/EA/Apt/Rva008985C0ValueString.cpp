@@ -29,7 +29,8 @@ static inline BfmeStringData3AF0 *sharedEmptyString012D5298()
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 extern const float g_rva01075350;
 extern double g_bfmeSubB3;
-extern "C" BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
+extern "C" BfmeStringData3AF0 * __identifier("bfmeObjDAE")[];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 
 extern "C" int __cdecl sprintf(char *, const char *, ...);
 extern "C" double __cdecl fmod(double, double);

@@ -78,7 +78,8 @@ private:
 };
 
 // 0x01338480 is g_bfmeRouteKeys1282, 0xB2 four-byte string slots; 0x01338660 is slot 120.
-extern int g_bfmeRouteKeys1282[];
+extern "C" int __identifier("bfmeObjDAE")[];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 #define g_bfmeRouteKeys1282Ref (*(const BfmeString0089CBA0 *)&g_bfmeRouteKeys1282[0])
 #define g_bfmeRouteKeys1282SecondRef (*(const BfmeString0089CBA0 *)&g_bfmeRouteKeys1282[120])
 

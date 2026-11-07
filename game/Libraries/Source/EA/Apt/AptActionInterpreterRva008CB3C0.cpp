@@ -49,7 +49,8 @@ public:
 extern AptValue *g_bfmeFallbackDB;
 // 0x01338480 is g_bfmeRouteKeys1282 (four-byte string slots); 0x01338660 is slot 120,
 // the same key BfmeStringList0089CBA0Rva0089D4C0.cpp tests.
-extern int g_bfmeRouteKeys1282[];
+extern "C" int __identifier("bfmeObjDAE")[];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 
 // ?_FunctionRva008CB3C0@AptActionInterpreter@@SAXPAV1@PAULocalContextT@1@@Z
 void AptActionInterpreter::_FunctionRva008CB3C0(AptActionInterpreter *interpreter, LocalContextT *)

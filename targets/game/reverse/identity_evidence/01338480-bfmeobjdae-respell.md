@@ -15,3 +15,5 @@
   the one defined symbol. Bytes are unchanged (scoped gates). No data_rows row
   is added for `_bfmeObjDAE`: `?g_01338524@@3URva008A9A70Str@@A` already owns an
   element inside the array, so add_data_match refuses the 712-byte extent.
+
+The remaining nine authored route-key users keep their existing descriptive spelling through the same compile-time identifier binding. The array's provider and 178-element lifetime are unchanged. All 21 scoped code rows verify, with 17 DIR32 name substitutions and the same retail targets. Generated references are outside this source repair.

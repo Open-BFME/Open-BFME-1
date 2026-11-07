@@ -85,7 +85,8 @@ static inline BfmeStringData3AF0 *rva012D5298Block()
 	return (BfmeStringData3AF0 *)&g_rva012D5298Empty;
 }
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
-extern BfmeStringData3AF0 *g_bfmeRouteKeys1282[];
+extern "C" BfmeStringData3AF0 * __identifier("bfmeObjDAE")[];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 // 0x01338748: the Apt stack depth global, defined in Rva00C6DCC0StaticInit.cpp.
 struct Rva008AE770Stack { int m_count; };
 extern Rva008AE770Stack Rva008AE770TheStack;

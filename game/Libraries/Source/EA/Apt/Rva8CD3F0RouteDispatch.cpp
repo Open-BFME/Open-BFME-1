@@ -36,7 +36,8 @@ public:
 };
 
 extern int g_rva8CD3F0RouteIndices[];
-extern int g_bfmeRouteKeys1282[];
+extern "C" int __identifier("bfmeObjDAE")[];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 
 void rva8CD3F0ResolveValue(void *first, void *second, Rva8CD3F0Value *value,
 	Rva8CD3F0Value **result);

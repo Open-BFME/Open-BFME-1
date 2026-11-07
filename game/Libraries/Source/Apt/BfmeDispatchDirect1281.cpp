@@ -203,7 +203,8 @@ extern Gen_008A0C30 *g_bfmeHolderBU;
 extern AptValue *g_bfmeFallbackDB;
 extern void *g_bfmeExtra1282;
 extern BfmeRoute1285 g_bfmeRouteTable1282[7];
-extern int g_bfmeRouteKeys1282[1];
+extern "C" int __identifier("bfmeObjDAE")[1];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 extern void (__cdecl *g_bfmePlay1282)(void *handle, int zero);
 
 class BfmeSlotDispatcher1281 : public BfmeBroadcast1282

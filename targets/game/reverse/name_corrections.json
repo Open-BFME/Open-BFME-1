@@ -22010,5 +22010,95 @@
   "after_sha256": "532bf594202632d043b4b3953f923ce6675d7981532be56a27eec4d016d40b9d",
   "evidence": "targets/game/reverse/attempt_support/20261107-002c3e00-by-value-position.md",
   "reason": "Retail leaves the hidden return pointer in EAX at every exit of 0x002C3E00, so the sample position is returned by value; ablations show the returned type needs a user-written copy constructor, which BFME 1's Coord3D lacks. The position type is therefore an address-named Coord3D subclass (BFME 2 donor Rva0036C6AFState::rva0036C8A5 shape), not Coord3D itself; Coord3D stays its base"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeRva008C3AF0Unlink.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeRva008C3AF0Unlink.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "5693d947ca55dec72634335fa0d34591747dcf35ea3fb3b4b5f2ccb3129bc17b",
+  "after_sha256": "cf9904875ee6fcc1379b2dde47efd7b459c92dd668680671e7063b2d58ceff57",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeStringList0089CBA0Rva0089D4C0.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeStringList0089CBA0Rva0089D4C0.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "fa054a3f3e3024e73997277e9a88440aca3e8a7a83a6b3a202015e8a25abd4c2",
+  "after_sha256": "b9f0027e2012ea6b66edcd135b411bf8c395cf5299fd523b8a06e878b845bad5",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/AptInput.cpp",
+  "new_path": "game/Libraries/Source/Apt/AptInput.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "e2e5f5bdbb1c2ef824249376678912e25460239f796d7602202d57630e963eac",
+  "after_sha256": "e2f2fbfdde8aba2df0e44ccab504105baf21cd46ff0ff725e2f3459a9684311a",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/BfmeDispatchDirect1281.cpp",
+  "new_path": "game/Libraries/Source/Apt/BfmeDispatchDirect1281.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "c81d934190d39fe92f18a973efb87f12042715f95885192ff97aa395967b0718",
+  "after_sha256": "1847ccc00ad5900c11df69ce21456971b44a3ac1c25e139aeb594c45279bdbf3",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/Apt/BfmeVisibleSlotDispatcher1281.cpp",
+  "new_path": "game/Libraries/Source/Apt/BfmeVisibleSlotDispatcher1281.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "d214bd21190e23b8dbb8ca699887ee8313fa7f8a10bead234946ab6454cd766e",
+  "after_sha256": "986664a32b35ad8fe8b11f2e613f82a83d24203a127ca27c94c9081543189c82",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CB3C0.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CB3C0.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "cc113ad49fbcd5f5fbb5514c2bd614e37b8b847c21509a350ae9404712514a4b",
+  "after_sha256": "c8182dea865111883dda7113f173a5bdc4b96aeb55502085222344208d298da7",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva008985C0ValueString.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva008985C0ValueString.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "4f1189b7b452d80c61757db2c4e2db4c47a61cddad12f10d780eb340077f5b64",
+  "after_sha256": "5b778ba8b765f520de356fac15aa664434660c5f181086ef940e26434315b497",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva8CD2F0GetProperty.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva8CD2F0GetProperty.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "019b3d8e1187020072b0aeb67de75d0de2b4a5ac29fe80967962811280c103fd",
+  "after_sha256": "0f797b783d118d1f277e51378e87c5db725532b3a76413977a94c1e1853cf438",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/Libraries/Source/EA/Apt/Rva8CD3F0RouteDispatch.cpp",
+  "new_path": "game/Libraries/Source/EA/Apt/Rva8CD3F0RouteDispatch.cpp",
+  "old_name": "g_bfmeRouteKeys1282",
+  "new_name": "bfmeObjDAE",
+  "before_sha256": "f76bd22808f9661ab599f9c1fa990d8d9dbfc622d5ad3d8c244b02d12a2b090b",
+  "after_sha256": "f01f4a9351a51e61e8baa951383c3e90a5e364d5a88b50397779e1d9d4d6393b",
+  "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
+  "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
  }
 ]

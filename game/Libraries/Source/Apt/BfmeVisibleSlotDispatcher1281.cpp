@@ -75,7 +75,8 @@ class BfmeItemDX;
 void __cdecl bfmePush(BfmeItemDX *item);
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
 
-extern int g_bfmeRouteKeys1282[1];
+extern "C" int __identifier("bfmeObjDAE")[1];
+#define g_bfmeRouteKeys1282 __identifier("bfmeObjDAE")
 
 struct BfmeRouteMask1281
 {
