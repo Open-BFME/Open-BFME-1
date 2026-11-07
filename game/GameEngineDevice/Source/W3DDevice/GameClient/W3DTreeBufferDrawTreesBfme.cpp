@@ -142,7 +142,8 @@ public:
   int fielda8;
   const Rva00737B70Coord &getField2c() const { return field2c; }
 };
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
+class CloudEffectSystem;
+extern CloudEffectSystem *TheCloudEffectSystem;
 struct Rva00737B70Matrix {
   float m[4][4];
 };
@@ -580,21 +581,21 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
       device->v->SetPixelShader(device, pixelShader);
       ++number_of_DX8_calls;
     }
-    if (g_bfmeGlobCC0 && g_bfmeGlobCC0->v28()) {
-      int kind = g_bfmeGlobCC0->fielda8;
+    if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem) && reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v28()) {
+      int kind = reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->fielda8;
       if ((kind == 1 || kind == 2) && shaderAC) {
         Rva00737B70Matrix matrix = TreeRenderState->matrix;
         D3DXMatrixTranspose(&matrix, &matrix);
         DX8Wrapper::VertexConstant(34, &matrix, 4);
         float v = g_bfmeA1087->map->field8 * 5.0f - 20.0f;
         DX8Wrapper::VertexConstant(38, &Vector4(v, v, v, v), 1);
-        Rva00737B70Coord vec = g_bfmeGlobCC0->getField2c();
+        Rva00737B70Coord vec = reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->getField2c();
         Vector4 factor(vec.x, 1.0f - vec.x, 0, 0);
         DX8Wrapper::VertexConstant(39, &factor, 1);
         Vector4 values(20, 1, 1, 0);
         DX8Wrapper::VertexConstant(40, &values, 1);
       } else if ((kind == 3 || kind == 4) && shaderB0) {
-        Rva00737B70Coord vec = g_bfmeGlobCC0->getField2c();
+        Rva00737B70Coord vec = reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->getField2c();
         Vector4 factor(vec.x, 1.0f - vec.x, 0, 0);
         DX8Wrapper::VertexConstant(39, &factor, 1);
         Rva00737B70Coord pos = TreeRenderState->fieldd4;
@@ -615,8 +616,8 @@ void W3DTreeBuffer::drawTrees(CameraClass *camera,
     DX8Wrapper::Set_Vertex_Buffer(vertex[b], 0);
     DX8Wrapper::Apply_Render_State_Changes();
     if (vertexShader) {
-      if (g_bfmeGlobCC0 && g_bfmeGlobCC0->v28()) {
-        int kind = g_bfmeGlobCC0->fielda8;
+      if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem) && reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v28()) {
+        int kind = reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->fielda8;
         if ((kind == 1 || kind == 2) && shaderAC)
           DX8Wrapper::D3DDevice->v->SetVertexShader(DX8Wrapper::D3DDevice,
                                                     shaderAC);

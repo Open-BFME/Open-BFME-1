@@ -30,8 +30,9 @@ public:
     char unknown04[0x28]; RGBColor value2c; char unknown38[0x70]; int valuea8;
 };
 class BfmeGlobCC0;
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
-#define CLOUD ((Rva0041F070Global*)g_bfmeGlobCC0)
+class CloudEffectSystem;
+extern CloudEffectSystem *TheCloudEffectSystem;
+#define CLOUD ((Rva0041F070Global*)reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem))
 class Rva0041F070 {
 public:
     void method(bool);

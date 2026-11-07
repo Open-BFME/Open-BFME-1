@@ -26,8 +26,9 @@ public:
 	virtual BfmeVecCC0 *bfmeGetCC0(BfmeVecCC0 *);
 };
 
-// Retail VA 0x012F1104 owns one initially null opaque pointer.
-BfmeGlobCC0 *g_bfmeGlobCC0 = 0;
+// Retail VA 0x012F1104 owns one initially null cloud-system pointer.
+class CloudEffectSystem;
+CloudEffectSystem *TheCloudEffectSystem = 0;
 
 class BfmeThingCC0
 {
@@ -39,12 +40,12 @@ public:
 
 BfmeVecCC0 *BfmeThingCC0::bfmeFetchCC0()
 {
-	if (g_bfmeGlobCC0)
+	if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem))
 	{
-		if (g_bfmeGlobCC0->bfmePredCC0())
+		if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->bfmePredCC0())
 		{
 			BfmeVecCC0 tmp;
-			BfmeVecCC0 *p = g_bfmeGlobCC0->bfmeGetCC0(&tmp);
+			BfmeVecCC0 *p = reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->bfmeGetCC0(&tmp);
 			BfmeVecCC0 *d = &m_v;
 			d->a = p->a;
 			d->b = p->b;

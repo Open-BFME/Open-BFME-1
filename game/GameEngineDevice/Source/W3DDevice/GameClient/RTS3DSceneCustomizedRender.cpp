@@ -121,7 +121,8 @@ public:
 	virtual void v38();
 	virtual void v3c();
 };
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
+class CloudEffectSystem;
+extern CloudEffectSystem *TheCloudEffectSystem;
 
 class BfmeGlobQE
 {
@@ -230,10 +231,10 @@ void RTS3DScene::Customized_Render(RenderInfoClass &rinfo)
 			if (m_customPassMode == SCENE_PASS_DEFAULT)
 			{
 				robj->Render(rinfo);
-				if (g_bfmeGlobCC0)
+				if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem))
 				{
-					g_bfmeGlobCC0->v3c();
-					if (g_bfmeGlobCC0->v28())
+					reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v3c();
+					if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v28())
 					{
 						rinfo.Push_Override_Flags(RenderInfoClass::RINFO_OVERRIDE_ADDITIONAL_PASSES_ONLY);
 						rinfo.Push_Material_Pass((MaterialPassClass *)Rva012F8048StateInstance);

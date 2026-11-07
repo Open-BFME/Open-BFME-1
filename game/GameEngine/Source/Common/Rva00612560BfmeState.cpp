@@ -33,23 +33,24 @@ public:
 	void *m_stateA8;
 };
 
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
+class CloudEffectSystem;
+extern CloudEffectSystem *TheCloudEffectSystem;
 
 // ?Rva00612560@@YGXVAsciiString@@@Z
 void __stdcall Rva00612560(AsciiString text)
 {
-	if (g_bfmeGlobCC0 != 0)
+	if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem) != 0)
 	{
-		g_bfmeGlobCC0->v9();
+		reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v9();
 		if (text.StringBase<char>::compare("ACTIVE") == 0)
 		{
-			g_bfmeGlobCC0->m_active = 1;
-			if (g_bfmeGlobCC0->m_stateA8 == 0)
-				g_bfmeGlobCC0->v11();
+			reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->m_active = 1;
+			if (reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->m_stateA8 == 0)
+				reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->v11();
 		}
 		else
 		{
-			g_bfmeGlobCC0->m_active = 0;
+			reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem)->m_active = 0;
 		}
 	}
 }

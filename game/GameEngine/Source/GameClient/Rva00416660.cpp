@@ -36,12 +36,13 @@ public:
 struct Rva00416660EnvelopeView { char head[0x38]; unsigned char mode; };
 struct Rva00416660Global { char head[0x2C]; RGBColor color; int first,second; char pad40[8]; float scale; char pad4C[0xA8-0x4C]; int mode; };
 class BfmeGlobCC0;
-extern BfmeGlobCC0 *g_bfmeGlobCC0;
+class CloudEffectSystem;
+extern CloudEffectSystem *TheCloudEffectSystem;
 class Rva00416660Owner { public: void update(); char head[0x8C]; Rva00412140 *envelope; char pad90[0x11C-0x90]; unsigned current,previous; };
 void Rva00416660Owner::update() {
  if(previous!=current) {
   if(!envelope) envelope=new Rva00412140;
-  Rva00416660Global *global=reinterpret_cast<Rva00416660Global *>(g_bfmeGlobCC0);
+  Rva00416660Global *global=reinterpret_cast<Rva00416660Global *>(reinterpret_cast<BfmeGlobCC0 *>(TheCloudEffectSystem));
   bool scaled=global->mode==3 || global->mode==4;
   if(current&4) {
    int first=global->first;
