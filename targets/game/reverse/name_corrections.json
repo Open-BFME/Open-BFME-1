@@ -22000,5 +22000,15 @@
   "after_sha256": "d1b307a83fd3b90eabe79c48d74d7a45717f9888d77ab6d6b4fa714f37323216",
   "evidence": "targets/game/reverse/attempt_support/20261107-006eb500-drawimage-arguments.md",
   "reason": "The bank's value100/value104 locals fed the panel's slot 0x3C call; retail pushes -1 and the +0xF8..+0x104 floats straight into the outer W3DDisplay::drawImage (vtable 0xE0, ret 0x18), so the locals were a misattributed codegen device and the members are read directly; restoring them costs 313 bytes"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x002c3e00.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C3E00SamplePosition.cpp",
+  "old_name": "Coord3D",
+  "new_name": "Rva002C3E00Position",
+  "before_sha256": "3606b314e3b5a532ffceeabd7c86e73d8ae363dbee1b6e2bbd6b9467e3c3da1f",
+  "after_sha256": "532bf594202632d043b4b3953f923ce6675d7981532be56a27eec4d016d40b9d",
+  "evidence": "targets/game/reverse/attempt_support/20261107-002c3e00-by-value-position.md",
+  "reason": "Retail leaves the hidden return pointer in EAX at every exit of 0x002C3E00, so the sample position is returned by value; ablations show the returned type needs a user-written copy constructor, which BFME 1's Coord3D lacks. The position type is therefore an address-named Coord3D subclass (BFME 2 donor Rva0036C6AFState::rva0036C8A5 shape), not Coord3D itself; Coord3D stays its base"
  }
 ]
