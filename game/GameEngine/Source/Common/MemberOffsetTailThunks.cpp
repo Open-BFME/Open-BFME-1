@@ -36,6 +36,7 @@
 // pins are address-derived and additive.
 
 #include <vector>
+#include "../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 
 class BFMERetailAsciiString
 {
@@ -527,7 +528,16 @@ BFME_OFFSET_TAIL_THUNK( Rva008AC6B0, Gen008BDE20, 36 )
 BFME_OFFSET_TAIL_THUNK( Rva008CBD10, Gen0089C880, 8 )
 BFME_OFFSET_TAIL_THUNK_GET( Rva008CBD50, Rva0089CC10Object, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva008CBD60, Gen0089CC30, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva0090C610, Gen00920BC0, 28 )
+class Rva0090C610
+{
+public:
+	void invoke(unsigned int stage);
+};
+
+void Rva0090C610::invoke(unsigned int stage)
+{
+	reinterpret_cast<TextureFilterClass *>(reinterpret_cast<char *>(this) + 28)->Apply(stage);
+}
 BFME_OFFSET_TAIL_THUNK( Rva00943970, Gen009435A0, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva0094F960, Gen00960050, 224 )
 BFME_OFFSET_TAIL_THUNK( Rva0094F970, Gen0095FEF0, 224 )

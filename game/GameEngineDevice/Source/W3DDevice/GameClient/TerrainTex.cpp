@@ -621,10 +621,10 @@ static __forceinline void AlphaSetTexture(unsigned int stage,
 	++Rva01340560TextureChanges;
 }
 
-class Rva0090C610 { public: void invoke(); };
+class Rva0090C610 { public: void invoke(unsigned int stage); };
 static __forceinline void Rva0090C610Invoke(void *argument)
 {
-	union { void (Rva0090C610::*member)(); void (__stdcall *call)(void *); } thunk = { &Rva0090C610::invoke };
+	union { void (Rva0090C610::*member)(unsigned int); void (__stdcall *call)(void *); } thunk = { &Rva0090C610::invoke };
 	thunk.call(argument);
 }
 extern void __cdecl Rva006D4690Apply(void *argument);

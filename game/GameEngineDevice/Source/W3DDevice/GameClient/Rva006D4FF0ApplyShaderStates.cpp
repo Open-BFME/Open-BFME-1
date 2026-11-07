@@ -100,12 +100,12 @@ struct Rva006D4FF0DX8Access : DX8Wrapper
  static void RecordStageChange() { ++texture_stage_state_changes; }
 };
 
-// Retail 0x0090C610 is the ledger member ?invoke@Rva0090C610@@QAEXXZ (offset tail thunk);
+// Retail 0x0090C610 is the ledger member ?invoke@Rva0090C610@@QAEXI@Z (offset tail thunk);
 // the caller pushes one stack argument and leaves ecx untouched, so call it as __stdcall.
-class Rva0090C610 { public: void invoke(); };
+class Rva0090C610 { public: void invoke(unsigned int stage); };
 static __forceinline void Rva0090C610Invoke( void *argument )
 {
-	union { void (Rva0090C610::*member)(); void (__stdcall *call)( void * ); } thunk = { &Rva0090C610::invoke };
+	union { void (Rva0090C610::*member)(unsigned int); void (__stdcall *call)( void * ); } thunk = { &Rva0090C610::invoke };
 	thunk.call( argument );
 }
 // ILT 0x00038389 reaches the verified cdecl filter helper at RVA 0x006D4690.

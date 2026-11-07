@@ -1,5 +1,6 @@
 // cl: /Igame/Libraries/Source/WWVegas/WW3D2 /DNDEBUG /DWIN32 /D_WINDOWS /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /MD /EHsc
 #include "dx8wrapper.h"
+#include "texturefilter.h"
 
 // Open-BFME: address-derived DX8 stage-state block at retail 0x00920BC0.
 // The three state bases index 5-int stage tables; modes 0 and 1 select the
@@ -48,33 +49,22 @@ extern Rva00920AE0Slot g_bfmeOptionSlots0[8];
 extern Rva00920AE0Slot g_bfmeOptionSlotsA[8];
 extern Rva00920AE0Slot g_bfmeOptionSlotsB[8];
 
-class Gen00920BC0
-{
-public:
-	int m_stateA;
-	int m_stateB;
-	int m_stateC;
-	int m_modeA;
-	int m_modeB;
-	void handle(int index);
-};
-
-void Gen00920BC0::handle(int index)
+void TextureFilterClass::Apply(unsigned int index)
 {
 	int scaled = index * 5;
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 6,
-		((int *)g_bfmeOptionSlots0)[m_stateA + scaled]);
+		((int *)g_bfmeOptionSlots0)[TextureMinFilter + scaled]);
 	number_of_DX8_calls++;
 	Rva01340568StageChanges++;
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 5,
-		((int *)g_bfmeOptionSlotsA)[m_stateB + scaled]);
+		((int *)g_bfmeOptionSlotsA)[TextureMagFilter + scaled]);
 	number_of_DX8_calls++;
 	Rva01340568StageChanges++;
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 7,
-		((int *)g_bfmeOptionSlotsB)[m_stateC + scaled]);
+		((int *)g_bfmeOptionSlotsB)[MipMapFilter + scaled]);
 	number_of_DX8_calls++;
 	Rva01340568StageChanges++;
-	switch (m_modeA)
+	switch (UAddressMode)
 	{
 	case 0:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 1, 1);
@@ -89,7 +79,7 @@ void Gen00920BC0::handle(int index)
 	default:
 		break;
 	}
-	switch (m_modeB)
+	switch (VAddressMode)
 	{
 	case 0:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 2, 1);
