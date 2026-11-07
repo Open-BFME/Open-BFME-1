@@ -12,7 +12,7 @@ extern void *(*Rva008C5D70Alloc)(unsigned int);
 extern "C" void (*TheBfmeFree)(void *, unsigned int);
 struct Rva00899C20Registry;
 extern Rva00899C20Registry *g_Va013387D8;
-extern unsigned char g_Va013385F8;
+extern "C" int bfmeObjDAE[178];
 
 class BfmeStateNode
 {
@@ -99,7 +99,7 @@ Gen_008AC620::Gen_008AC620()
     m_18 = -1;
     m_2c = 0;
     BfmeLookupResult *result = (BfmeLookupResult *)
-        ((BfmeTab1024 *)((char *)g_Va013387D8 + 8))->bfmeFind1024((int)&g_Va013385F8);
+        ((BfmeTab1024 *)((char *)g_Va013387D8 + 8))->bfmeFind1024((int)&bfmeObjDAE[94]);
     BfmeLookupResult *valueResult = result->getValue();
     Rva0089C860State *state = m_10;
     BfmeStateNode *newNode = (BfmeStateNode *)((unsigned int)valueResult->m_node & ~1);

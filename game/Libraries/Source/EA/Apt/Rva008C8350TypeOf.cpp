@@ -69,9 +69,8 @@ struct BfmeStringData3AF0
 
 extern char *g_rva008C8350Builtin851C;
 extern char *g_rva008C8350Builtin86F4;
-extern unsigned char g_Va013385F8;
+extern "C" char * bfmeObjDAE[178];
 extern BfmeStringData3AF0 *g_stringBlock01338724;
-extern char g_rva8D0D80CreateTag;
 extern char *g_rva008C8350Builtin860C;
 extern void *g_rva008B2EA0Base;
 extern char *g_rva008C8350Builtin855C;
@@ -92,16 +91,16 @@ void AptActionInterpreter::rva008C8350StackBuiltin(
 		else if ((top->getType() == 1 || top->getType() == 0x2a) && !top->isUndefined())
 			result->append(g_rva008C8350Builtin86F4 + 8);
 		else if (top->isType(0x1b) || top->isType(0x16))
-			result->append(*(char **)&g_rva8D0D80CreateTag + 8);
+			result->append(bfmeObjDAE[100] + 8);
 		else if (top->getType() >= 0x0c && top->getType() <= 0x13 && !top->isUndefined())
 		{
 			if (top->getType() == 0x0d || top->getType() == 0x12)
-				result->append(*(char **)&g_Va013385F8 + 8);
+				result->append(bfmeObjDAE[94] + 8);
 			else if ((reinterpret_cast<Rva008A0F20Header *>(top)->*
 				reinterpret_cast<Rva008A0F20BoolPredicate>(&Rva008A0F20Header::isKind13))())
 				result->append(g_stringBlock01338724 + 1);
 			else
-				result->append(*(char **)&g_rva8D0D80CreateTag + 8);
+				result->append(bfmeObjDAE[100] + 8);
 		}
 		else if (top->getType() == 3)
 			result->append((char *)g_rva008B2EA0Base + 8);

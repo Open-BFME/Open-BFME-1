@@ -49,7 +49,7 @@ extern Registry008C3F10 *g_registry01337814;
 // Rva008CF740 view: only the address-of spelling changes.
 struct Rva008AE770Stack;
 extern struct Rva008AE770Stack Rva008AE770TheStack;
-extern int g_string01338654;
+extern "C" int bfmeObjDAE[178];
 class Rva008C3F10Value {
 public:
     virtual void slot00(); virtual void slot04(); virtual void slot08();
@@ -86,7 +86,7 @@ void Rva008C3F10Value::cleanup(char mode) {
         if (mode==1) {
             if (isKind(13)) {
                 ((BfmeNodeDX *)this)->bfmeEmit1281(4,0,0);
-                Rva008C3F10Value *value=(Rva008C3F10Value *)((BfmeNode1220 *)this)->bfmeTest1220(&g_string01338654,0);
+                Rva008C3F10Value *value=(Rva008C3F10Value *)((BfmeNode1220 *)this)->bfmeTest1220(&bfmeObjDAE[117],0);
                 if (value && (value->field04&0x8000) && value->isKind(10)) {
                     ((Rva008CF740 *)&Rva008AE770TheStack)->run((Rva008CF740Value *)this,(Rva008CF740Value *)value,0);
                     Rva008C3F10Value *top=((Rva008CF740 *)&Rva008AE770TheStack)->field08[((Rva008CF740 *)&Rva008AE770TheStack)->field00-1];

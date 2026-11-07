@@ -31,13 +31,13 @@ struct Rva8CE890Context
 	int m_unknown08;
 };
 
-extern BfmeStrVKI g_Va01338710String;
+extern "C" int bfmeObjDAE[178];
 
 // ?rva8CE890PushNamedString@@YAXPAVRva008AE770Stack@@PAURva8CE890Context@@@Z
 void rva8CE890PushNamedString(Rva008AE770Stack *state, Rva8CE890Context *context)
 {
 	Rva8CE890Value *value = reinterpret_cast<Rva8CE890Value *>(state->createString(
-		context->m_unknown04, context->m_unknown08, &g_Va01338710String, 1, 1, 0));
+		context->m_unknown04, context->m_unknown08, reinterpret_cast<BfmeStrVKI *>(&bfmeObjDAE[164]), 1, 1, 0));
 	state->m_entries[state->m_count] = value;
 	state->m_count++;
 

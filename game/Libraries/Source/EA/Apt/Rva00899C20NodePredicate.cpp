@@ -36,8 +36,7 @@ struct Rva00899C20Registry
 };
 
 extern Rva00899C20Registry *g_Va013387D8;
-extern unsigned char g_Va013385F8;
-extern char g_rva8D0D80CreateTag;
+extern "C" int bfmeObjDAE[178];
 
 class Rva00899C20Node
 {
@@ -61,10 +60,10 @@ int Rva00899C20Node::rva00899C20()
 {
 	Rva00899C20Node *first = reinterpret_cast<Rva00899C20Node *>(
 		reinterpret_cast<Rva00899C20LookupResult *>(g_Va013387D8->m_table.bfmeFind1024(
-			reinterpret_cast<int>(&g_Va013385F8)))->slot18()->m_flags & ~1u);
+			reinterpret_cast<int>(&bfmeObjDAE[94])))->slot18()->m_flags & ~1u);
 	Rva00899C20Node *second = reinterpret_cast<Rva00899C20Node *>(
 		reinterpret_cast<Rva00899C20LookupResult *>(g_Va013387D8->m_table.bfmeFind1024(
-			reinterpret_cast<int>(&g_rva8D0D80CreateTag)))->slot18()->m_flags & ~1u);
+			reinterpret_cast<int>(&bfmeObjDAE[100])))->slot18()->m_flags & ~1u);
 
 	if (this == first)
 		return 1;

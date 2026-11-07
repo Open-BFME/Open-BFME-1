@@ -83,7 +83,7 @@ public:
 };
 
 struct Rva8D0D80Context { void *m_zero; void *m_owner; void *m_scope; };
-extern char g_rva8D0D80CreateTag;
+extern "C" int bfmeObjDAE[178];
 // 0x013379BC is the fallback value database pointer, defined as AptValue *
 // by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
 class AptValue;
@@ -99,7 +99,7 @@ void rva8D0D80BuildObject(Rva8D0D80State *state, Rva8D0D80Context *context)
 
 	Rva8D0D80Context *callContext = context;
 	Rva8D0D80Result *result = state->create(callContext->m_owner, callContext->m_scope,
-		&g_rva8D0D80CreateTag, 0, 1);
+		reinterpret_cast<char *>(&bfmeObjDAE[100]), 0, 1);
 	if (result != 0)
 	{
 		for (int remaining = count; remaining > 0; --remaining)
