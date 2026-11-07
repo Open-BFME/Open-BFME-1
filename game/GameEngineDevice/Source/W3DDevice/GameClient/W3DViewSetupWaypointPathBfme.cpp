@@ -1,8 +1,8 @@
-// ?setupWaypointPath@W3DView@@AAEXH_NMM@Z
-// partial score=0.9683 date=2026-10-17
-// ?setupWaypointPath@W3DView@@AAEXH_NMM@Z
-// clean ZH-literal rewrite with real wwmath.h/vector2.h/vector3.h; 599/599 19 diffs
-// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include
+// W3DView::setupWaypointPath, retail 0x00740F60 (599 B, ret 0x10): BFME form of Zero Hour
+// W3DView::setupWaypointPath
+// (GeneralsMD W3DView.cpp); heading loop is out-of-line Rva00740440::rva00740440. Handoff:
+// targets/game/reverse/attempt_support/20261107-00740f60-setup-waypoint-path.md
 #include <math.h>
 
 typedef float Real;
@@ -13,14 +13,7 @@ typedef bool Bool;
 #include "vector2.h"
 #include "vector3.h"
 
-// class-gate: allow Coord3D canonical header is struct-keyed; retail ILT proves the class-keyed mangling
-class Coord3D
-{
-public:
-	Real x;
-	Real y;
-	Real z;
-};
+#include "Lib/Coord3D.h"
 
 struct WaypointRecord
 {
@@ -38,12 +31,15 @@ public:
 	virtual void configure(Int timeMultiplier, Int shutter, Real easeIn, Real easeOut,
 		Int arg4, Int arg5);
 	void rva00740440(Bool orient, Real angle, Int firstWaypoint);	// 0x00740440
+	// Inlined into the caller through the +0x280 receiver (EDI); retail's dead
+	// lea of &cameraAngle[numWaypoints+2] is the end pointer.
 	void startAngles(Real angle)
 	{
-		Real *p = &cameraAngle[numWaypoints+2];
-		cameraAngle[1] = angle;
-		p[-1] = p[-2];
-		cameraAngle[0] = cameraAngle[1];
+		Real *begin = cameraAngle;
+		Real *end = begin + numWaypoints + 2;
+		begin[1] = angle;
+		end[-1] = end[-2];
+		begin[0] = begin[1];
 	}
 
 	char m_padding0004[0x2c - 0x04];
@@ -120,7 +116,7 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn, Real ease
 		m_mcwpInfo.totalDistance += m_mcwpInfo.waySegLength[i];
 	}
 	m_mcwpInfo.waySegLength[0] = 0;
-	m_mcwpInfo.waySegLength[m_mcwpInfo.numWaypoints] = 0;
+	m_mcwpInfo.waySegLength[m_mcwpInfo.numWaypoints] = m_mcwpInfo.waySegLength[0];
 	m_mcwpInfo.waySegLength[m_mcwpInfo.numWaypoints+1] = 0;
 
 	m_mcwpInfo.rva00740440(orient, getAngle(), -1);
@@ -132,13 +128,12 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn, Real ease
 	}
 
 	const Coord3D &last = m_mcwpInfo.waypoints[m_mcwpInfo.numWaypoints].position;
-	Coord3D finalPos;
-	finalPos.x = last.x;
-	finalPos.y = last.y;
+	// 12-byte frame local; VC7.1 drops the dead z store.
+	Vector3 finalPos(last.x, last.y, last.z);
 	m_mcwpInfo.initialGroundHeight = m_groundLevel;
-	m_mcwpInfo.finalGroundHeight = TheTerrainLogic->getGroundHeight(finalPos.x, finalPos.y);
+	m_mcwpInfo.finalGroundHeight = TheTerrainLogic->getGroundHeight(finalPos.X, finalPos.Y);
 	if (m_heightField.m_ready)
-		m_mcwpInfo.finalGroundHeight = m_heightField.sample(finalPos.x, finalPos.y);
+		m_mcwpInfo.finalGroundHeight = m_heightField.sample(finalPos.X, finalPos.Y);
 
 	m_doingMoveCameraOnWaypointPath = m_mcwpInfo.numWaypoints > 1;
 	slot27(0);
