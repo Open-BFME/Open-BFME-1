@@ -1346,35 +1346,6 @@ static Bool inWeaponRangeObject(State *thisState, void* userData)
 	return !outOfWeaponRangeObject(thisState, userData);
 }
 
-Bool wantToSquishTarget( State *thisState, void* userData )
-{
-	Object *obj = thisState->getMachineOwner();
-	Object *victim = thisState->getMachineGoalObject();
-
-	if (obj && victim)
-	{
-		if (victim->getContainedBy()) {
-			return false; // can't crush guys in buildings or vehicles.
-		}
-		if( obj->getAI() && (obj->getAI()->getWhichTurretForCurWeapon() != TURRET_INVALID) )
-		{
-			// I can only decide to crush-attack if I am attacking with a turreted weapon.
-			if (TheAI->getAiData()->m_aiCrushesInfantry) {
-				if (obj && obj->getControllingPlayer() && 
-					obj->getControllingPlayer()->getPlayerType()==PLAYER_COMPUTER) {
-					if (obj->canCrushOrSquish(victim)) {
-						if (!obj->isKindOf(KINDOF_DONT_AUTO_CRUSH_INFANTRY)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return false;
-}
-
 Bool outOfWeaponRangePosition( State *thisState, void* userData )
 {
 	Object *obj = thisState->getMachineOwner();
