@@ -28,8 +28,6 @@ class PathfindCellInfo;
 class PathfindCell
 {
 public:
-	inline void releaseInfo();
-
 	PathfindCellInfo *m_info;
 	char m_pad04[8];
 	unsigned int m_packed;
@@ -61,15 +59,14 @@ public:
 };
 
 // Inlined here; its out-of-line retail copy is 0x003F6F10.
-// ?releaseInfo@PathfindCell@@QAEXXZ present-unmatched
-inline void PathfindCell::releaseInfo()
+static __forceinline void releaseCellInfoIfUnused(PathfindCell *cell)
 {
-	unsigned int packed = m_packed;
+	unsigned int packed = cell->m_packed;
 	if ((packed & 7) != 4 && (packed & 0x38) == 0 && (packed & 0x80000) == 0 &&
-		m_info && m_info->m_back == 0 && !m_info->m_open && !m_info->m_closed)
+		cell->m_info && cell->m_info->m_back == 0 && !cell->m_info->m_open && !cell->m_info->m_closed)
 	{
-		reinterpret_cast<MixFileInfoBuffer *>(m_info)->releaseInto(&g_rva012F1094);
-		m_info = 0;
+		reinterpret_cast<MixFileInfoBuffer *>(cell->m_info)->releaseInto(&g_rva012F1094);
+		cell->m_info = 0;
 	}
 }
 
@@ -88,7 +85,7 @@ int method(void *p)
 		cur->m_open = 0;
 		PathfindCell *cell = cur->m_cell;
 		if (cell)
-			cell->releaseInfo();
+			releaseCellInfoIfUnused(cell);
 	}
 	return count;
 }
@@ -109,7 +106,7 @@ int method(void *p)
 		cur->m_closed = 0;
 		PathfindCell *cell = cur->m_cell;
 		if (cell)
-			cell->releaseInfo();
+			releaseCellInfoIfUnused(cell);
 	}
 	return count;
 }
