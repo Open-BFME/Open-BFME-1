@@ -38,8 +38,13 @@ struct Gen00920BC0Device
 #undef GEN_DEVICE_SLOT
 };
 
-extern unsigned int number_of_DX8_calls;
-extern unsigned int Rva01340568StageChanges;
+namespace
+{
+struct TextureFilterStageAccess : DX8Wrapper
+{
+	static void RecordStageChange() { DX8_RECORD_TEXTURE_STAGE_STATE_CHANGE(); }
+};
+}
 
 void TextureFilterClass::Apply(unsigned int index)
 {
@@ -47,26 +52,26 @@ void TextureFilterClass::Apply(unsigned int index)
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 6,
 		((int *)g_bfmeOptionSlots0)[TextureMinFilter + scaled]);
 	number_of_DX8_calls++;
-	Rva01340568StageChanges++;
+	TextureFilterStageAccess::RecordStageChange();
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 5,
 		((int *)g_bfmeOptionSlotsA)[TextureMagFilter + scaled]);
 	number_of_DX8_calls++;
-	Rva01340568StageChanges++;
+	TextureFilterStageAccess::RecordStageChange();
 	reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 7,
 		((int *)g_bfmeOptionSlotsB)[MipMapFilter + scaled]);
 	number_of_DX8_calls++;
-	Rva01340568StageChanges++;
+	TextureFilterStageAccess::RecordStageChange();
 	switch (UAddressMode)
 	{
 	case 0:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 1, 1);
 		number_of_DX8_calls++;
-		Rva01340568StageChanges++;
+		TextureFilterStageAccess::RecordStageChange();
 		break;
 	case 1:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 1, 3);
 		number_of_DX8_calls++;
-		Rva01340568StageChanges++;
+		TextureFilterStageAccess::RecordStageChange();
 		break;
 	default:
 		break;
@@ -76,12 +81,12 @@ void TextureFilterClass::Apply(unsigned int index)
 	case 0:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 2, 1);
 		number_of_DX8_calls++;
-		Rva01340568StageChanges++;
+		TextureFilterStageAccess::RecordStageChange();
 		break;
 	case 1:
 		reinterpret_cast<Gen00920BC0Device *>(DX8Wrapper::_Get_D3D_Device8())->SetTextureStageState(index, 2, 3);
 		number_of_DX8_calls++;
-		Rva01340568StageChanges++;
+		TextureFilterStageAccess::RecordStageChange();
 		break;
 	default:
 		break;
