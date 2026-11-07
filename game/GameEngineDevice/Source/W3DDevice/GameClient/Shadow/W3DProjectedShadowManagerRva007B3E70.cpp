@@ -24,12 +24,13 @@ class Drawable;
 
 extern const Real g_rva01075350;
 
+class BfmeB1050 { public: void bfmeBase1050(); };
+class Rva007AEB70State { public: void initializeFields(); };
+
 class BfmeThingSE
 {
 public:
 	BfmeThingSE() throw();
-	void bfmeBaseSE(void);
-	void bfmeStartSE(void);
 
 	Char m_pad00[0x34];
 	Int m_type;						//retail +0x34
@@ -102,12 +103,12 @@ BfmeThingSE *W3DProjectedShadowManager::rva007B3E70(
 	if (shadow)
 	{
 		m_freeList = shadow->m_next;
-		shadow->bfmeBaseSE();
+		reinterpret_cast<BfmeB1050 *>(shadow)->bfmeBase1050();
 		shadow->m_58 = 0;
 		shadow->m_5c = 0;
 		shadow->m_60 = 20.0f;
 		shadow->m_64 = 0;
-		shadow->bfmeStartSE();
+		reinterpret_cast<Rva007AEB70State *>(shadow)->initializeFields();
 	}
 	else
 	{
