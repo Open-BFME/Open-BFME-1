@@ -6,6 +6,7 @@
 // D3DX and COM declarations follow the calls visible in retail.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Iinputs/reference/shims/sweep
 #define Matrix4x4 Matrix4
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include "winbase_shim.h"
 #define private public
 #define protected public
@@ -14,7 +15,6 @@
 #undef protected
 #include "d3dx8math.h"
 
-class Gen_00920a60 { public: void m(int); };
 class ShroudFilter;
 class ShroudTexture { public: ShroudFilter *getFilter(); };
 class BFMEWaterTrackTextureHandle { public:
@@ -170,13 +170,13 @@ void Rva0071A730::method() {
   field44.assign(BFMEGetWaterTrackTexture("darkcloud.tga",0,0));
   ((Rva0071A730Filter*)field44.filter())->field0c=1;
   ((Rva0071A730Filter*)field44.filter())->field10=1;
-  ((Gen_00920a60*)field44.filter())->m(0);
+  ((TextureFilterClass*)field44.filter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
  }
  if(!field48.p) {
   field48.assign(BFMEGetWaterTrackTexture("exmask_ci.tga",0,0));
   ((Rva0071A730Filter*)field48.filter())->field0c=1;
   ((Rva0071A730Filter*)field48.filter())->field10=1;
-  ((Gen_00920a60*)field48.filter())->m(0);
+  ((TextureFilterClass*)field48.filter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
  }
  BoxSetTexture(0,*(TextureBaseClass**)&field44.p); BoxSetTexture(1,*(TextureBaseClass**)&field48.p);
  ShaderClass shader=ShaderClass::_PresetMultiplicativeShader; *(unsigned*)&shader=(*(unsigned*)&shader&0xfe9fffff)|0x800000;

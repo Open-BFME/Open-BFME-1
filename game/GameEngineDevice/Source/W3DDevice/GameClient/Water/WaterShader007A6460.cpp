@@ -6,6 +6,7 @@
 // 0x009DB7A0), while parsing wwstring.h under the private->public below would
 // spell every reference -- including the ones the inline dx8wrapper.h bodies
 // emit -- ?Free_String@StringClass@@QAEXXZ. Parse the header first, honestly.
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include "wwstring.h"
 #define private public
 #define protected public
@@ -16,7 +17,6 @@
 
 class ShroudFilter {};
 class ShroudTexture { public: ShroudFilter *getFilter(); };
-class Gen_00920a60 { public: void m(int); };
 void BaseHeightMapScorchSetShader(const ShaderClass &);
 
 struct WaterMatrix007A6460 { float m[16]; };
@@ -155,7 +155,7 @@ void WaterShader007A6460::setup(char *settings) {
     REF_PTR_RELEASE(vmat);
     *(int *)((char *)((ShroudTexture *)(settings+0x24))->getFilter()+4)=2;
     *(int *)((ShroudTexture *)(settings+0x24))->getFilter()=2;
-    ((Gen_00920a60 *)((ShroudTexture *)(settings+0x24))->getFilter())->m(2);
+    ((TextureFilterClass *)((ShroudTexture *)(settings+0x24))->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_BEST);
     DX8Wrapper::Apply_Render_State_Changes();
     DX8Wrapper::Set_DX8_Texture_Stage_State(0,(D3DTEXTURESTAGESTATETYPE)4,7);
     waterDevice()->SetTexture(3,((TextureBaseClass *)(settings+0x2c))->Peek_D3D_Base_Texture());

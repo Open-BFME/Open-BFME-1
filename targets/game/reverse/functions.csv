@@ -124409,7 +124409,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?m@Gen_0090ea50@@QAEPAXH@Z,,0x0090EA50,15,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=this-zero3-4;ghidra=FUN_00d0ea50
 ?m@Gen_0090f260@@QAEXXZ,,0x0090F260,1,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=ret-void;ghidra=FUN_00d0f260
 ?m@Gen_00912120@@QAEDXZ,,0x00912120,4,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=getter8-d8;ghidra=FUN_00d12120
-?m@Gen_00920a60@@QAEXH@Z,,0x00920A60,10,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=setter-d8;ghidra=FUN_00d20a60
 ?m@Gen_00923710@@QAEHXZ,,0x00923710,7,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=getter-d32;ghidra=FUN_00d23710
 ?m@Gen_00928ee0@@QAEHH@Z,,0x00928EE0,13,game/gen_small/accessors_000.cpp,matched,gen-shim;accessor-batch;skeleton=access-array-index;source=Code/gen_asm/d_00927c30.asm
 ?m@Gen_00937380@@QAEPAXXZ,,0x00937380,9,game/gen_small/fun_005.cpp,matched,gen-shim;skeleton=this-zero-0;ghidra=FUN_00d37380
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?renderRadarViewBoxRva0079DEE0@AptPalantir@@UAEXXZ,,0x0079DEE0,423,game/GameEngine/Source/GameClient/GUI/AptPalantirRva0079DEE0.cpp,matched,AptPalantir vtable slot +0x28 radar view-box quad render; BFME 2 donor Set_Texture shape; ilt_oracle contradicts renderRadarViewBox so the name carries the address;model=claude-opus-5-5;host=vm
 ?rva006EB500@W3DDisplay@@QAE_NI@Z,,0x006EB500,1215,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006EB500.cpp,matched,BFME W3DDisplay::draw per-frame render pass; ZH loop body with BFME render lock and video panel; drawImage takes the panel slot 0x3C image plus four floats and -1 per the BFME 2 donor;model=claude-opus-5-5;host=vm
 ?rva002C3E00@Rva002C3FE0Owner@@QAE?AURva002C3E00Position@@PA_N_N@Z,,0x002C3E00,382,game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C3E00SamplePosition.cpp,matched,samples positions along the object facing until the 0x002C3FE0 clearance test fails; returns the last accepted position by value per the BFME 2 donor; address-derived name;model=claude-opus-5-5;host=vm
+?Set_Mip_Mapping@TextureFilterClass@@QAEXW4FilterType@1@@Z,,0x00920A60,10,game/Libraries/Source/WWVegas/WW3D2/texturefilter.cpp,matched,Retail shroud caller and pinned BFME 2/Zero Hour provider; targets/game/reverse/identity_evidence/00920a60-texture-filter-mipmap.md;model=gpt-6.1-sol;launched=gpt-6;host=Michael-PC

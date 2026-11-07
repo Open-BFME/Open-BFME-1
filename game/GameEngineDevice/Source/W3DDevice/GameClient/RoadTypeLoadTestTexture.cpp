@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /DLOAD_TEST_ASSETS /MD /EHsc
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 // BFME retail 0x00708200: RoadType::loadTestTexture.
 
 typedef int Int;
@@ -60,7 +61,6 @@ public:
 class Gen_00920a60
 {
 public:
-	void m(Int value);
 
 	Char m_pad00[0x0c];
 	Int m_uAddress;
@@ -106,7 +106,7 @@ void RoadType::loadTestTexture(void)
 	BFMEAssignWaterTrackTexture(m_roadTexture,
 		BFMEGetWaterTrackTexture(m_texturePath.str(), 3, 0));
 
-	((ShroudTexture *)this)->getFilter()->m(2);
+	reinterpret_cast<TextureFilterClass *>(((ShroudTexture *)this)->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_BEST);
 	((ShroudTexture *)this)->getFilter()->m_uAddress = 0;
 	((ShroudTexture *)this)->getFilter()->m_vAddress = 0;
 }

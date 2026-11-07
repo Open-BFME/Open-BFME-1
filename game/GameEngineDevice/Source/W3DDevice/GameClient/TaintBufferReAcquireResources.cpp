@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 // Retail 0x00726DC0: reacquire the taint overlay render texture.
 //
 // TaintBuffer is a descriptive name, not a recovered EA one.  What the exe
@@ -58,12 +59,6 @@ public:
 		unsigned int mipLevels, unsigned int pool, unsigned int renderTarget);
 };
 
-class Gen_00920a60
-{
-public:
-	void m(int value);
-};
-
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);
 
@@ -110,7 +105,7 @@ Bool TaintBuffer::ReAcquireResources(void)
 
 	dstTexture->getFilter()->m_uAddress = 1;
 	dstTexture->getFilter()->m_vAddress = 1;
-	reinterpret_cast<Gen_00920a60 *>(dstTexture->getFilter())->m(0);
+	reinterpret_cast<TextureFilterClass *>(dstTexture->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
 	m_clearDstTexture = 1;
 	bfmeUnlock1179();
 	return 1;

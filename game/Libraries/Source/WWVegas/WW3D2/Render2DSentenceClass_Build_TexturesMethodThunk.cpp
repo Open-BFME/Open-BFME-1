@@ -18,6 +18,7 @@
 // texture handle through its inline operator= and then derives the flag from
 // the stored handle, which gives retail's neg / store +0x4C / sbb interleave.
 
+#include "texturefilter.h"
 #include "../WWLib/vector.h"
 
 class SurfaceClass
@@ -74,12 +75,6 @@ public:
 	unsigned unused;
 	unsigned address_u;
 	unsigned address_v;
-};
-
-class Gen_00920a60
-{
-public:
-	void m(int value);
 };
 
 class ShroudTexture
@@ -278,7 +273,7 @@ void Render2DSentenceClass::Build_Textures(void)
 		filter_owner->getFilter()->address_v = 1;
 		filter_owner->getFilter()->min_filter = 2;
 		filter_owner->getFilter()->mag_filter = 2;
-		((Gen_00920a60 *)filter_owner->getFilter())->m(2);
+		((TextureFilterClass *)filter_owner->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_BEST);
 
 		//
 		//	Copy the contents of the texture from the surface

@@ -17,29 +17,9 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// TextureFilterClass default-filter setters from WW3D2/texturefilter.cpp,
-// verbatim from the Zero Hour reference. The real texturefilter.h reaches
-// dx8wrapper.h and the DirectX 8 SDK, which the fleet toolchains do not have,
-// so the class is cut down to the enum and the filter table these bodies touch;
-// the table is file-scope in Zero Hour too, so its address comes from retail.
+#include "texturefilter.h"
 
 const unsigned MAX_TEXTURE_STAGES=8;
-
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texturefilter.h
-class TextureFilterClass
-{
-public:
-	enum FilterType
-	{
-		FILTER_TYPE_NONE,
-		FILTER_TYPE_FAST,
-		FILTER_TYPE_BEST,
-		FILTER_TYPE_DEFAULT,
-		FILTER_TYPE_COUNT
-	};
-
-	static void _Set_Default_Min_Filter(FilterType filter);
-};
 
 unsigned _MinTextureFilters[MAX_TEXTURE_STAGES][TextureFilterClass::FILTER_TYPE_COUNT];
 
@@ -49,4 +29,9 @@ void TextureFilterClass::_Set_Default_Min_Filter(FilterType filter)
 	{
 		_MinTextureFilters[i][FILTER_TYPE_DEFAULT]=_MinTextureFilters[i][filter];
 	}
+}
+
+void TextureFilterClass::Set_Mip_Mapping(FilterType mipmap)
+{
+	MipMapFilter=mipmap;
 }

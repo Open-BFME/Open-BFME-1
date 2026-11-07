@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 //
 // Retail 0x006CBA30, 223 bytes. Near twin of the one-argument texture-name
 // refresh at 0x006D0150 (Gen_006D0150_UpdateTexture.cpp): same
@@ -16,13 +17,7 @@ public:
 	void Release_Ref(void);
 };
 
-class Gen_00920a60
-{
-public:
-	void m(int value);
-};
-
-class ShroudFilter : public Gen_00920a60
+class ShroudFilter
 {
 };
 
@@ -114,5 +109,5 @@ void Gen006CBA30Owner::updateTexture(UnicodeString textureName)
 	Gen006CBA30AssignTexture(
 		m_texture.m_texture,
 		BFMEGetWaterTrackTexture((char *)text, 0, 0));
-	m_texture.getFilter()->m(1);
+	reinterpret_cast<TextureFilterClass *>(m_texture.getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_FAST);
 }

@@ -24,6 +24,7 @@
 // constructor only default-constructs the set and the destructor only tears it
 // down, so neither is affected by it.
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include <set>
 #include <vector>
 
@@ -96,12 +97,6 @@ class Rva006D6050
 {
 public:
 	void init(unsigned width, unsigned height, unsigned format, unsigned mipLevels, unsigned pool, unsigned renderTarget);
-};
-
-class Gen_00920a60
-{
-public:
-	void m(int value);
 };
 
 void W3DRadarResetLock(void);
@@ -257,8 +252,8 @@ Bool W3DShroud::ReAcquireResources(void)
 
 	reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter()->m_uAddress = 1;
 	reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter()->m_vAddress = 1;
-	reinterpret_cast<Gen_00920a60 *>(
-		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter())->m(0);
+	reinterpret_cast<TextureFilterClass *>(
+		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
 	m_clearDstTexture = 1;
 	bfmeUnlock1179();
 	return 1;

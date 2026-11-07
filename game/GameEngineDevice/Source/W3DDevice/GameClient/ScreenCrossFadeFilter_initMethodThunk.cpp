@@ -7,6 +7,7 @@
 
 // The release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref in the real
 // WW3D2 header, so the stage pointer uses that type rather than a stand-in.
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include <texture.h>
 
 class BFMEWaterTrackTextureHandle
@@ -24,13 +25,7 @@ public:
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
-class Gen_00920a60
-{
-public:
-	void m(int value);
-};
-
-class ShroudFilter : public Gen_00920a60
+class ShroudFilter
 {
 public:
 	char m_padding00[0x0c];
@@ -109,7 +104,7 @@ int ScreenCrossFadeFilter::init(void)
 	int result = 1;
 	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m_uAddress = result;
 	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m_vAddress = result;
-	reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter()->m(0);
+	reinterpret_cast<TextureFilterClass *>(reinterpret_cast<ShroudTexture &>(g_bfmeCurrentCZ).getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
 
 	W3DFilters[4] = &screenCrossFadeFilter;
 	return result;

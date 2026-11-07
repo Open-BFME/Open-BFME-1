@@ -16,6 +16,7 @@
 // spell every reference ?Free_String@StringClass@@QAEXXZ. Nothing here reaches
 // a private member -- the inline ~StringClass the snapshot temporaries run is
 // inside the class -- so parse the header first, honestly.
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include "wwstring.h"
 #define private public
 #define protected public
@@ -27,7 +28,6 @@
 
 class ShroudFilter {};
 class ShroudTexture { public: ShroudFilter *getFilter(); };
-class Gen_00920a60 { public: void m(int); };
 void BoxSetTexture(unsigned, TextureBaseClass *&);
 
 // Counted texture handle returned by W3DShroud::getShroudTexture (0x006D2630).
@@ -216,7 +216,7 @@ void WaterShader007A7240::setup(char *settings) {
     REF_PTR_RELEASE(vmat);
     *(int *)((char *)((ShroudTexture *)(settings+0x24))->getFilter()+4)=2;
     *(int *)((ShroudTexture *)(settings+0x24))->getFilter()=2;
-    ((Gen_00920a60 *)((ShroudTexture *)(settings+0x24))->getFilter())->m(2);
+    ((TextureFilterClass *)((ShroudTexture *)(settings+0x24))->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_BEST);
     DX8Wrapper::Apply_Render_State_Changes();
     if(*(unsigned *)((char *)this+0x2b8)) {
         if(reinterpret_cast<BfmeTerrainRenderObject *>(TheTerrainRenderObject)->getShroud()) {

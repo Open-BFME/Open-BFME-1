@@ -1,4 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+#include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 // Retail 0x006D0150 is the one-argument texture-name refresh on the
 // BFME height-map terrain subobject.  The paired 0x006D0280 body has the
 // same operation with the second terrain slot shifted by four bytes.
@@ -11,13 +12,7 @@ public:
 	void Release_Ref(void);
 };
 
-class Gen_00920a60
-{
-public:
-	void m(int value);
-};
-
-class ShroudFilter : public Gen_00920a60
+class ShroudFilter
 {
 };
 
@@ -114,6 +109,6 @@ void Gen006D0150Owner::updateTexture(AsciiString textureName)
 		Gen006D0150AssignTexture(
 			m_texture.m_texture,
 			BFMEGetWaterTrackTexture((char *)text, 0, 0));
-		m_texture.getFilter()->m(1);
+		reinterpret_cast<TextureFilterClass *>(m_texture.getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_FAST);
 	}
 }

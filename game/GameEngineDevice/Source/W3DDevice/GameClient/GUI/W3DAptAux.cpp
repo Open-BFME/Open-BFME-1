@@ -67,6 +67,7 @@ void Gen_00784480::update(BfmeThingIH &thing)
 }
 
 #define __PLACEMENT_VEC_NEW_INLINE
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 #include <hash_map>
 
 #include "string_base.h"
@@ -151,13 +152,7 @@ public:
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
-class Gen_00920a60
-{
-public:
-	void m(int value);
-};
-
-class ShroudFilter : public Gen_00920a60
+class ShroudFilter
 {
 public:
 	int m_00;
@@ -301,13 +296,13 @@ void Gen_007892D0::bfmeStep2(void)
 			{
 				surface->getFilter()->m_04 = one;
 				surface->getFilter()->m_00 = one;
-				surface->getFilter()->m(one);
+				reinterpret_cast<TextureFilterClass *>(surface->getFilter())->Set_Mip_Mapping(static_cast<TextureFilterClass::FilterType>(one));
 			}
 			else
 			{
 				surface->getFilter()->m_04 = 3;
 				surface->getFilter()->m_00 = 3;
-				surface->getFilter()->m(3);
+				reinterpret_cast<TextureFilterClass *>(surface->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_DEFAULT);
 			}
 			surface->getFilter()->m_0c = one;
 			surface->getFilter()->m_10 = one;

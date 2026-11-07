@@ -24,6 +24,7 @@
 // ?AVBfmeHandleCX@@ resolves through the row name and the symbols.csv pin.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep /Iinputs/toolchains/dx81/include
 
+#include "texturefilter.h"
 #include "chunkio.h"
 #include "w3d_file.h"
 #include <string.h>
@@ -32,8 +33,7 @@ public:
     void Add_Ref() { ++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(this) + 4); }
     void Release_Ref();
 };
-class Gen_00920a60 { public: void m(int); };
-class ShroudFilter : public Gen_00920a60 {
+class ShroudFilter {
 public:
     char before0C[0x0c];
     int field0C;
@@ -112,7 +112,7 @@ BFMEWaterTrackTextureHandle Load_Texture(ChunkLoadClass &cload)
                 }
             }
             BFMEWaterTrackTextureHandle texture=BFMEGetWaterTrackTexture(name,mipcount,format);
-            if (no_lod) ((ShroudTexture*)&texture)->getFilter()->m(0);
+            if (no_lod) reinterpret_cast<TextureFilterClass *>(((ShroudTexture*)&texture)->getFilter())->Set_Mip_Mapping(TextureFilterClass::FILTER_TYPE_NONE);
             bool u_clamp=((texinfo.Attributes&W3DTEXTURE_CLAMP_U)!=0);
             ((ShroudTexture*)&texture)->getFilter()->set0C(u_clamp?1:0);
             bool v_clamp=((texinfo.Attributes&W3DTEXTURE_CLAMP_V)!=0);
