@@ -87369,6 +87369,7 @@ name,address,notes
 ?render007B6520@W3DProjectedShadowManager@@QAEHAAVRenderInfoClass@@@Z,0x007B6520,RVA-derived member ABI from retail callee ret and ECX callers; renderShadows 007B6D30; body pin with automatically discovered ILT
 ?render@BaseHeightMapRenderTreesShim@@QAEXPAVCameraClass@@@Z,0x006CD990,BaseHeightMapRenderObjClass renderTrees incremental-link thunk target through a TU-local forwarding shim
 ?render@BfmeShadowBufferEntry@@QAEXPAXG0PAG@Z,0x0003D253,render buffer entry helper ILT
+?render@RenderBuffer0079DEE0@@QAEXXZ,0x00934940,thiscall void(): AptPalantir 0x0079DEE0+0x189 calls it directly with ECX=renderer from TheDisplay vtable +0x154 and ignores EAX; body 0x00934940 (8277 B gen dump) starts mov edi ecx and ends in plain ret at +0x2054; not Render2DClass::Render (0x00933E50); address-derived class view
 ?renderAsQuads@W3DSnowManager@@QAEXAAVRenderInfoClass@@HHHH@Z,0x00724A20,Full2388 RET20 thiscall ends725374 not truncated inventory2360; ILT499B8 from render725710; upstream camera-oriented quad offsets UVs dynamic vertices and indexed batching; same owner resource layout as matched ReAcquireResources723FB0
 ?renderBuffer@BfmeVolumetricShadowBufferOwner@@QAEXXZ,0x000465C9,render buffer helper ILT
 ?renderBuffer@W3DVolumetricShadow@@QAEXXZ,0x000465C9,render helper ILT
@@ -88894,6 +88895,7 @@ name,address,notes
 ?update@Network@@UAEX_N@Z,0x00682C70,vtable 0x0111A968 slot 10 (+0x28) via ILT 0x00027E12; ZH Network::update with a Bool forwarded to liteupdate: +0x34=0 then PREGAME->INGAME at 0x00682C7E then GetCommandsFromCommandList 0x006828D0 then vslot +0x24 then when status==2 disconnectLocalPlayer 0x006665E0 + TheMessageStream 0x012ED5EC appendMessage(0x1D MSG_CLEAR_GAME_DATA) + status=3 (ZH endOfGameCheck inlined without the canILeave gate) then RelayCommandsToCommandList 0x00682A90; callers GameEngine update core 0x0006BB2C (pushes 1) load screen 0x00491F81 and disconnect menu 0x0050FF3F (push 0)
 ?update@ObjectUpdateUpgradeModulesShim@@QAEXXZ,0x001C5800,Object updateUpgradeModules incremental-link thunk target through a TU-local forwarding shim
 ?update@ProductionUpdate@@UAE?AW4UpdateSleepTime@@XZ,0x0029e330,vtable-slot ??_7ProductionUpdate@@6BUpdateModuleInterface@@@ slot 0 anchors=1
+?update@QuadrilateralInset0079D530@@QAEXXZ,0x0079D530,thiscall void(): AptPalantir 0x0079DEE0+0x57 calls ILT 0x0000CA45 with ECX=this (ebp) after Rva0079D180::compare and ignores EAX; body 0x0079D530 (961 B gen dump) uses ECX as this and ends in plain ret at +0x3C0; address-derived class view
 ?update@Radar@@UAEXXZ,0x00030E77,W3DRadar update retail base thunk
 ?update@RadiusDecal@@QAEXXZ,0x0003FC15,BFME RadiusDecal update ILT called by InGameUI handleRadiusCursor
 ?update@Rva001048C0@@QAE_NPBMPAM@Z,0x001048C0,00756F00+5BD passes owner+2C twice to owner+34; 001048C0 reads second float pointer and advances its five phase envelope; first pointer unused; ILT 000433A1 independently reaches this physical body
