@@ -76,6 +76,7 @@ import pickle
 import re
 import subprocess
 import sys
+import tempfile
 import time
 import zlib
 from collections.abc import Mapping
@@ -229,11 +230,17 @@ def fetch_index():
     if not runs:
         raise SystemExit(f"link_check: no successful {INDEX_WORKFLOW} run to fetch from")
     INDEX.parent.mkdir(parents=True, exist_ok=True)
-    download = subprocess.run(["gh", "run", "download", str(runs[0]["databaseId"]), "-n", "link-census-index",
-                               "-D", str(INDEX.parent)], cwd=ROOT, capture_output=True, text=True)
-    if download.returncode or not INDEX.exists():
-        raise SystemExit(f"link_check: artifact download failed (expired after 7 days?):\n{download.stderr}")
-    meta = load_index()["meta"]
+    # gh refuses to extract over an existing file. Keep the current index
+    # available until its replacement has been downloaded and read.
+    with tempfile.TemporaryDirectory(prefix="fetch-", dir=INDEX.parent) as directory:
+        download = subprocess.run(["gh", "run", "download", str(runs[0]["databaseId"]), "-n", "link-census-index",
+                                   "-D", directory], cwd=ROOT, capture_output=True, text=True)
+        staged_index = Path(directory) / INDEX.name
+        if download.returncode or not staged_index.is_file():
+            raise SystemExit(f"link_check: artifact download failed (expired after 7 days?):\n{download.stderr}")
+        with staged_index.open("rb") as handle:
+            meta = pickle.load(handle)["meta"]
+        staged_index.replace(INDEX)
     print(f"link_check: fetched census index {meta.get('date')} at {meta.get('commit')} "
           f"(workflow run {runs[0]['databaseId']}, {runs[0]['createdAt']}) into {INDEX.relative_to(ROOT).as_posix()}")
     return 0

@@ -1,6 +1,8 @@
 """link_check: the per-file LINKED preview agrees with link.exe's rules."""
 import collections
 import copy
+import pickle
+import subprocess
 import sys
 from unittest.mock import patch
 from pathlib import Path
@@ -16,6 +18,34 @@ def index(strong=None, comdat=None, blockers=None, sizes=None):
     return {"meta": {"date": "d", "commit": "c"}, "objects": ["a.obj", "b.obj", "c.obj"],
             "strong": strong or {}, "comdat": comdat or {}, "blockers": blockers or {}, "bytes": sizes or {},
             "common_schema": C.COMMON_SCHEMA, "common": {}}
+
+
+@pytest.mark.parametrize("download_status", [0, 1])
+def test_fetch_index_replaces_existing_only_after_success(tmp_path, monkeypatch, download_status):
+    current = tmp_path / "link_index.pkl"
+    old = {"meta": {"date": "previous", "commit": "old"}}
+    new = {"meta": {"date": "latest", "commit": "new"}}
+    current.write_bytes(pickle.dumps(old))
+    monkeypatch.setattr(C, "ROOT", tmp_path)
+    monkeypatch.setattr(C, "INDEX", current)
+
+    def gh(args, **kwargs):
+        if args[2] == "list":
+            return subprocess.CompletedProcess(args, 0, '[{"databaseId": 1, "createdAt": "today"}]', "")
+        destination = Path(args[-1]) / current.name
+        assert not destination.exists()
+        destination.write_bytes(pickle.dumps(new))
+        assert C.load_index() == old
+        return subprocess.CompletedProcess(args, download_status, "", "download interrupted")
+
+    monkeypatch.setattr(C.subprocess, "run", gh)
+    if download_status:
+        with pytest.raises(SystemExit, match="download interrupted"):
+            C.fetch_index()
+    else:
+        assert C.fetch_index() == 0
+    assert C.load_index() == (old if download_status else new)
+    assert list(tmp_path.iterdir()) == [current]
 
 
 def test_two_inline_copies_fold_silently():
@@ -59,7 +89,7 @@ def test_stale_object_is_never_evidence(tmp_path, monkeypatch):
     import os
     import link_census
     source, obj = tmp_path / "f.cpp", tmp_path / "f.obj"
-    obj.write_bytes(b"old object")
+    obj.write_bytes(provider_coff())
     source.write_text("int f() { return 2; }\n")
     os.utime(obj, (1_000_000, 1_000_000))
     assert not link_census.object_current(source, obj)  # no sidecar: older than its source
