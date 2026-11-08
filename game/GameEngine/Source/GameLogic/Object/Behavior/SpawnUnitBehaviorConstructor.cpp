@@ -45,8 +45,8 @@ public:
 class SpawnUnitBehaviorBase : public SpawnUnitBehaviorGrandBase, public SpawnUnitBehaviorIface1, public SpawnUnitBehaviorIface2
 {
 public:
-    SpawnUnitBehaviorBase(Thing *t, const ModuleData *m)
-        : SpawnUnitBehaviorGrandBase(t, m), m_14(0), m_18(-1), m_1C(-1) {}
+    SpawnUnitBehaviorBase(Thing *t, const ModuleData *moduleData)
+        : SpawnUnitBehaviorGrandBase(t, moduleData), m_14(0), m_18(-1), m_1C(-1) {}
     virtual ~SpawnUnitBehaviorBase();
 
 private:
@@ -68,8 +68,8 @@ private:
 };
 
 // ??0SpawnUnitBehavior@@QAE@PAVThing@@PBVModuleData@@@Z
-SpawnUnitBehavior::SpawnUnitBehavior(Thing *t, const ModuleData *m)
-    : SpawnUnitBehaviorBase(t, m)
+SpawnUnitBehavior::SpawnUnitBehavior(Thing *t, const ModuleData *moduleData)
+    : SpawnUnitBehaviorBase(t, moduleData)
 {
     m_spawnOnce = *(reinterpret_cast<const unsigned char *>(m_moduleData) + 0x1C);
 }
