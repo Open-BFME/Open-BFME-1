@@ -37,10 +37,7 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 // Reused from the matched game/GameEngine/Source/Common/Rva006187D0MoveArmyToPosition.cpp
 class GameMessage
