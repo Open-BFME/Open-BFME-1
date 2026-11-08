@@ -121,11 +121,16 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class ScriptConditions;
+
+// Retail's Object::findModule (row 0x001BEE60, reached through ILT 0x0002AE23) is protected.
 class Object
 {
 public:
 	Player *getControllingPlayer(void) const;
+protected:
 	Module *findModule(NameKeyType key) const;
+	friend class ScriptConditions;
 };
 
 // The 0x67 question the two-argument body asks an object with no
@@ -142,6 +147,10 @@ class CastleBehavior
 public:
 	Bool hasIncompleteStructure(const ThingTemplate *tmplate);
 };
+
+// Retail calls CastleBehavior::hasIncompleteStructure through ILT 0x00009453 (the defined
+// ?j_00009453 row; body 0x00371340).
+extern void j_00009453();
 
 // The FoundationAIUpdate module's interface, at module+0x20.
 class FoundationIface
@@ -187,7 +196,9 @@ Bool ScriptConditions::evaluateCanBuildObjectTypeAtBase(
 							CastleBehavior *castle =
 								(CastleBehavior *)theUnit->findModule(key);
 							if (castle) {
-								if (castle->hasIncompleteStructure(tmplate))
+								union { void (*raw)(); Bool (CastleBehavior::*member)(const ThingTemplate *); } check;
+								check.raw = j_00009453;
+								if ((castle->*check.member)(tmplate))
 									return true;
 							}
 						}
@@ -217,7 +228,9 @@ Bool ScriptConditions::evaluateCanBuildAtBase(
 						CastleBehavior *castle =
 							(CastleBehavior *)theUnit->findModule(keyCastle);
 						if (castle) {
-							if (castle->hasIncompleteStructure(0))
+							union { void (*raw)(); Bool (CastleBehavior::*member)(const ThingTemplate *); } check;
+							check.raw = j_00009453;
+							if ((castle->*check.member)(0))
 								return true;
 						} else if (((BfmeThingAIA *)theUnit)->bfmeAskAIA(0x67)) {
 							static NameKeyType keyFound =
