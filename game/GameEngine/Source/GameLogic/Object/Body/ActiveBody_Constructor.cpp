@@ -12,8 +12,8 @@ class BodyModuleInterface { public: BodyModuleInterface():field14(1.0f){} virtua
 class __declspec(novtable) BodyModule:public ObjectModule,public BehaviorModuleInterface,public BodyModuleInterface { public:BodyModule(Thing*t,const ModuleData*d):ObjectModule(t,d){} ~BodyModule(); };
 struct CtorTriple00211A50 { float x,y,z;void zero(){x=0.0f;y=0.0f;z=0.0f;} };
 class DamageInfoInput { public:
- virtual void xfer();unsigned field04;unsigned short field08;int field0C,field10,field14;float field18;bool field1C,field1D;unsigned field20,field24,field28;CtorTriple00211A50 field2C;float field38,field3C,field40,field44;
- __forceinline DamageInfoInput(){field04=0;field08=0;field0C=22;field10=15;field14=0;field18=0;field1C=false;field1D=true;field20=0;field24=0;field28=0;field2C.zero();field38=0;field3C=0;field40=0;field44=1.0f;}
+ virtual void xfer();unsigned m_sourceID;unsigned short field08;int m_damageType,field10,field14;float m_amount;bool field1C,field1D;unsigned field20,field24,field28;CtorTriple00211A50 field2C;float field38,field3C,field40,field44;
+ __forceinline DamageInfoInput(){m_sourceID=0;field08=0;m_damageType=22;field10=15;field14=0;m_amount=0;field1C=false;field1D=true;field20=0;field24=0;field28=0;field2C.zero();field38=0;field3C=0;field40=0;field44=1.0f;}
 };
 class DamageInfoOutput { public:virtual void xfer();float actual,clipped;bool noEffect;__forceinline DamageInfoOutput():actual(0),clipped(0),noEffect(false){} };
 class DamageInfo { public:__declspec(dllimport) __forceinline DamageInfo(){} virtual void xfer();DamageInfoInput in;DamageInfoOutput out; };
