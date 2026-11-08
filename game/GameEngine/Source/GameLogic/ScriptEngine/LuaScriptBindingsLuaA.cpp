@@ -12,10 +12,7 @@ unsigned Rva00990030Lookup( lua_State *range, int index );
 
 extern "C" char _bfmeString10CF498[];
 
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Rva002E9F70CommandIface
 {
