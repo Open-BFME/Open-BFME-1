@@ -156,7 +156,7 @@ public:
 class FXList
 {
 public:
-	bool bfmeIsBlocked(void) const;
+	bool bfmeIsBlocked(void);	// retail row ?bfmeIsBlocked@FXList@@QAE_NXZ (non-const)
 	void doFXObj(const Object *primary, const Object *secondary) const;
 };
 
@@ -197,6 +197,8 @@ class Thing
 {
 public:
 	virtual void v00();
+	// Retail's Thing::setPosition (row 0x00132CE0, ILT 0x0003A1A7).
+	void setPosition(const Coord3D *);
 	void setOrientation(Real);
 };
 
@@ -260,7 +262,6 @@ public:
 	virtual Drawable *getDrawable(void);
 	void kill(DamageType, DeathType);
 	void notifyModelConditionChanged(void);
-	void setPosition(const Coord3D *);
 	Real getOrientation(void) const { return m_orientation; }
 	void setModelConditionState(int bit)
 	{
@@ -299,10 +300,17 @@ private:
 
 typedef BitFlags<86> ObjectStatusBits;
 
-class ThingFactory
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate (row 0x00137E80),
+// returning const ThingTemplate *; TheThingFactory keeps its EA-spelled global type, so
+// the call goes through this TU-local ABI view of the defining class.
+class BfmeThingFactory
 {
 public:
-	ThingTemplate *findTemplate(const AsciiString &);
+	const ThingTemplate *findTemplate(const AsciiString &);
+};
+
+class ThingFactory
+{
 };
 
 typedef Object *(ThingFactory::*ThingFactoryNewObjectCall)(
@@ -454,7 +462,7 @@ void ToppleUpdateApplyTopplingForceShim::apply(const Coord3D *toppleDirection, R
 
 	if (d->m_stumpName.m_data && *(unsigned short *)(d->m_stumpName.m_data + 4) != 0)
 	{
-		ThingTemplate *ttn = TheThingFactory->findTemplate(d->m_stumpName);
+		ThingTemplate *ttn = (ThingTemplate *)((BfmeThingFactory *)TheThingFactory)->findTemplate(d->m_stumpName);
 		ObjectStatusBits bits;
 		union { void (*raw)(void); ThingFactoryNewObjectCall member; } newObjectCall;
 		newObjectCall.raw = j_0004494a;
