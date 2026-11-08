@@ -6168,3 +6168,8 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|param|SpawnUnitBehavior::SpawnUnitBehavior|m,1cb567707a9e63bfc3e317ac,claude-sonnet,20261109005732-9c7919,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value14,d38fc70140895a6c14d1ac82,claude-sonnet,20261109005732-7e7e48,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value18,d85364994f48a77b139a3e40,claude-sonnet,20261109005732-7e7e48,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_sourceID008,f21608419e63f53600e53899,claude-sonnet,20261109005840-da0554,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_direction030,5a6ce3e07bd6e1d6dd58c2c1,claude-sonnet,20261109005840-da0554,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount03C,17a5a00b6a1b30a0dac25ed3,claude-sonnet,20261109005840-da0554,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount040,814ce6ccf56dbe144481bd7b,claude-sonnet,20261109005840-da0554,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount044,71e63f58ac478b6379a02eef,claude-sonnet,20261109005840-da0554,2026-11-09
