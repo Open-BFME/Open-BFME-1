@@ -64,10 +64,10 @@ private:
  std::vector<UpdateModule*> at0f4;
  unsigned at100;
  std::list<Object*> at104;
- unsigned at108,at10c,at110;bool at114;char pad115[3];
+ unsigned at108,at10c,m_rankLevelLimit;bool at114;char pad115[3];
  void *m_loadScreen;
- bool at11c,at11d,at11e,at11f;
- bool at120[8];unsigned at128[8];
+ bool at11c,at11d,m_inputEnabledMemory,m_mouseVisibleMemory;
+ bool m_progressComplete[8];unsigned m_progressCompleteTimeout[8];
  bool m_forceGameStartByTimeOut;char pad149[3];unsigned at14c,at150,at154,at158;
  std::vector<unsigned> at15c;unsigned at168,at16c;
  Gen_00366B90 at170;
@@ -83,10 +83,10 @@ GameLogic::GameLogic()
  at078("LoadingRing"),at07c("TitleScreen"),at08c(0),
  at090(false),at091(false),at092(false),at093(false),at094(false),at095(false),at096(false),
  at098(0),at09c(1),at0a0(false),at0a4(0),at0a8(0),at0ac(0),at100(0),
- at108(0),at10c(8),at110(1000),at114(false),m_loadScreen(0),at11c(false),at11d(false),at11e(true),at11f(true),
+ at108(0),at10c(8),m_rankLevelLimit(1000),at114(false),m_loadScreen(0),at11c(false),at11d(false),m_inputEnabledMemory(true),m_mouseVisibleMemory(true),
  m_forceGameStartByTimeOut(false),at14c(0),at150(0),at154(0),at158(0),at168(0),at16c(0),at1a0(0),at1a4(0),at1a8(false)
 {
- for(int i=0;i<8;++i) {at120[i]=false;at128[i]=0;}
+ for(int i=0;i<8;++i) {m_progressComplete[i]=false;m_progressCompleteTimeout[i]=0;}
  at04c.clear();
  for(int j=0;j<8;++j) {
   at1b0[j].at010=true;
