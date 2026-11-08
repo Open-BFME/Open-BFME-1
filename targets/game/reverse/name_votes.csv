@@ -6065,3 +6065,5 @@ game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,e
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|member||m_flag48,95e675a3b46b84b208c81042,claude-sonnet,20261109001647-ab6f19,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|member||m_valueA8,804187506f47ad043a00e317,claude-sonnet,20261109001647-ab6f19,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|local|BezierProjectileBehavior::update|d,5aab4479b3eb710f2ab8e8a6,claude-sonnet,20261109001647-ab6f19,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|member||m_dword2F0,a1360b49f3eb5ff90752d0d5,claude-sonnet,20261109001647-b41d16,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,69cbf2b60006385b72e5d383,claude-sonnet,20261109001647-b41d16,2026-11-09
