@@ -12,31 +12,29 @@ enum ObjectID
 	INVALID_OBJECT_ID = 0
 };
 
-class GameLogicShim
+class GameLogicPortraitShim
 {
 public:
-	Bool unidentified_0001e0ab();
+	Bool isInMultiplayerOrSkirmishGame();
 };
 
 // Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic.
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-class Rva002EE330PlayerListThunk
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`; the ledger row at
+// 0x000DF510 is PlayerList::unidentified_000df510 (this TU's read of its surface).
+class PlayerList
 {
 public:
-	Int unidentified_000389f6(Bool includeFields);
+	Int unidentified_000df510(Bool includeFields);
 };
-
-// 0x012ED748 is retail's `PlayerList *ThePlayerList`; Rva002EE330PlayerListThunk
-// above is this TU's read of its unidentified_000389f6 surface.
-class PlayerList;
 extern PlayerList *ThePlayerList;
 
-class Rva00083240Thunk
+class Gen_00083240
 {
 public:
-	float unidentified_00009e12(Int index) const;
+	float bfmeGet0(Int index) const;
 };
 
 class GlobalData;
@@ -55,10 +53,10 @@ public:
 	void unidentified_00027d6d(UnsignedInt amount, Bool playSound);
 };
 
-class Rva0003A45EScoreKeeper
+class Gen_000E8AF0
 {
 public:
-	void unidentified_0003a45e(Int amount);
+	void bfmeAddCount(Int amount);
 };
 
 class Player
@@ -70,9 +68,9 @@ public:
 			reinterpret_cast<char *>(this) + 0x48);
 	}
 
-	Rva0003A45EScoreKeeper *getScoreKeeper()
+	Gen_000E8AF0 *getScoreKeeper()
 	{
-		return reinterpret_cast<Rva0003A45EScoreKeeper *>(
+		return reinterpret_cast<Gen_000E8AF0 *>(
 			reinterpret_cast<char *>(this) + 0x348);
 	}
 };
@@ -211,12 +209,11 @@ private:
 Bool MoneyCrateCollide::executeCrateBehavior(Object *other)
 {
 	UnsignedInt money = getMoneyCrateCollideModuleData()->m_moneyProvided;
-	if (reinterpret_cast<GameLogicShim *>(TheGameLogic)->unidentified_0001e0ab())
+	if (reinterpret_cast<GameLogicPortraitShim *>(TheGameLogic)->isInMultiplayerOrSkirmishGame())
 	{
-		const Int playerIndex = reinterpret_cast<Rva002EE330PlayerListThunk *>(
-			ThePlayerList)->unidentified_000389f6(false);
-		const float factor = reinterpret_cast<Rva00083240Thunk *>(
-			reinterpret_cast<char *>(TheWritableGlobalData) + 0xee0)->unidentified_00009e12(playerIndex);
+		const Int playerIndex = ThePlayerList->unidentified_000df510(false);
+		const float factor = reinterpret_cast<Gen_00083240 *>(
+			reinterpret_cast<char *>(TheWritableGlobalData) + 0xee0)->bfmeGet0(playerIndex);
 		money = static_cast<UnsignedInt>(money * factor);
 	}
 
@@ -225,7 +222,7 @@ Bool MoneyCrateCollide::executeCrateBehavior(Object *other)
 	{
 		money = reinterpret_cast<Rva000C97C0PlayerThunk *>(player)->unidentified_00024938(money);
 		player->getMoney()->unidentified_00027d6d(money, true);
-		player->getScoreKeeper()->unidentified_0003a45e(money);
+		player->getScoreKeeper()->bfmeAddCount(money);
 	}
 
 	AudioEventRTS soundToPlay = reinterpret_cast<Rva005A00B0AudioClient *>(TheAudio)->getMiscAudio()->m_crateMoney;
