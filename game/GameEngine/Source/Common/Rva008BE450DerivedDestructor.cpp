@@ -21,7 +21,6 @@ extern char g_bfmeDerived1286Vtable;
 extern char g_bfmeSpecialBlock1286;
 extern void (__cdecl *g_bfmeFreePair1286)(void *storage, int count);
 extern void (__cdecl *g_bfmeFreeDWF)(void *storage);
-extern char g_bfmeBase1285Vtable;
 extern void (__cdecl *TheBfmeFree)(void *storage, unsigned int size);
 
 class BfmeString1286

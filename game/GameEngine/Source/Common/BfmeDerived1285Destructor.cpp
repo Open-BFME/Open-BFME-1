@@ -1,5 +1,7 @@
 extern void (__cdecl *TheBfmeFree)(void *storage, unsigned int size);
-extern char g_bfmeBase1285Vtable;
+// Retail 0x01136854 is the vftable COMDAT ??_7BfmeBase1286@@6B@ (emitted by Rva008BE450Constructor/
+// Rva008BE450DerivedDestructor); the stand-in name g_bfmeBase1285Vtable resolved nothing.
+extern "C" const char __identifier("??_7BfmeBase1286@@6B@")[];
 
 class BfmeInner1285
 {
@@ -73,7 +75,7 @@ class BfmeBase1285
 public:
 	~BfmeBase1285()
 	{
-		m_vtable = &g_bfmeBase1285Vtable;
+		m_vtable = (void *)__identifier("??_7BfmeBase1286@@6B@");
 
 		union { void (*asFunction)(); BfmeChildDtorCall1285 asMember; } fnCast;
 		BfmeChildB *child = m_child;
