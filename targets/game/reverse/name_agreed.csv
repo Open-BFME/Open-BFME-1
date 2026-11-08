@@ -1001,3 +1001,4 @@ game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11e,m
 game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11f,m_mouseVisibleMemory,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at120,m_progressComplete,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,m_progressCompleteTimeout,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,MilesAudioManager,claude-sonnet+gpt-6-astra,agreed,2026-11-09

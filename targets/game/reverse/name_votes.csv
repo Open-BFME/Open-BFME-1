@@ -6075,3 +6075,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInAre
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field44,75bf9a976dd6adc29b6d87dc,claude-sonnet,20261109001821-003bd1,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field48,5e9a659608283d0375c86d8e,claude-sonnet,20261109001821-003bd1,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field170d8,b6be86a74dc79d53d5868c35,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,abf80a994d5038eab2a95bf4,claude-sonnet,20261109000907-0194ae,2026-11-09
