@@ -6067,3 +6067,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|local|BezierProjectileBehavior::update|d,5aab4479b3eb710f2ab8e8a6,claude-sonnet,20261109001647-ab6f19,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|member||m_dword2F0,a1360b49f3eb5ff90752d0d5,claude-sonnet,20261109001647-b41d16,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,69cbf2b60006385b72e5d383,claude-sonnet,20261109001647-b41d16,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeNext,d9606d2f07b0056a80b6de0b,claude-sonnet,20261109001747-ced653,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeContainList,f443831c0b20f9fb50535a57,claude-sonnet,20261109001747-ced653,2026-11-09

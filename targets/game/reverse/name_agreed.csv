@@ -988,3 +988,4 @@ game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at120,m
 game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,m_progressCompleteTimeout,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|local|BezierProjectileBehavior::update|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeContainList,m_containList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
