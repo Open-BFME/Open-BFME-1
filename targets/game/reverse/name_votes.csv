@@ -6124,3 +6124,5 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberTarget002439F
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdSwoopStateOnEnter.cpp|member||m_position38,894ef2f26fea3b640503c798,claude-sonnet,20261109003839-fd23a9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdSwoopStateOnEnter.cpp|member||m_ai204,6d7b35c237dc083e31493cb2,claude-sonnet,20261109003839-fd23a9,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp|member||m_bfmeNext,79d3b1eab6e3e0a3411e5479,claude-sonnet,20261109003839-612767,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateModuleDataCtorThunk.cpp|member||m_08,85a50b81e2938968b59b8725,claude-sonnet,20261109003109-3d0514,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateModuleDataCtorThunk.cpp|member||m_10,d65d2723b4a8cee1cff03e2e,claude-sonnet,20261109003109-3d0514,2026-11-09
