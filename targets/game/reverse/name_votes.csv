@@ -6166,3 +6166,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|member||m_18,77b57bda0372851c62423b00,claude-sonnet,20261109005732-9c7919,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|param|SpawnUnitBehaviorBase|m,762f8cc263a3a19bb0b2c7ea,claude-sonnet,20261109005732-9c7919,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|param|SpawnUnitBehavior::SpawnUnitBehavior|m,1cb567707a9e63bfc3e317ac,claude-sonnet,20261109005732-9c7919,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value14,d38fc70140895a6c14d1ac82,claude-sonnet,20261109005732-7e7e48,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value18,d85364994f48a77b139a3e40,claude-sonnet,20261109005732-7e7e48,2026-11-09
