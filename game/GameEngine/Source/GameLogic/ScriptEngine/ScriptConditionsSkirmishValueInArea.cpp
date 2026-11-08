@@ -50,6 +50,10 @@ class BfmeObjectInsideView {
 public:
     Bool isInside(PolygonTrigger *) const;
 };
+// Retail reaches Object::isInside (0x001BEA90) and the player-mask resolver (0x0034DB40)
+// through their ILTs, each a defined ?j_ row: 0x0000D6ED and 0x000230B5.
+extern void j_0000d6ed();
+extern void j_000230b5();
 static const ThingTemplate *getTemplate(const Object *o) {
     const ThingTemplate *t=*(const ThingTemplate *const *)((const char*)o+4);
     if (t && t->m_nextOverride)
@@ -108,7 +112,6 @@ public:
     virtual void slot15(); virtual void slot16(); virtual void slot17();
     virtual void slot18(); virtual void slot19(); virtual void slot20();
     virtual void slot21(); virtual PolygonTrigger *getQualifiedTriggerAreaByName(AsciiString);
-    PlayerMaskType unidentified_0034DB40(const AsciiString &);
     unsigned getFrameObjectCountChanged() const { return field170d8; }
     char pad04[0x170d8-4]; unsigned field170d8;
 };
@@ -123,8 +126,12 @@ Bool ScriptConditions::evaluateSkirmishValueInArea(Condition *pCondition,
     Parameter *pSkirmishPlayerParm, Parameter *pComparisonParm,
     Parameter *pMoneyParm, Parameter *pTriggerParm)
 {
-    // Existing ILT alias is spelled AsciiString&, but retail passes Parameter*.
-    PlayerMaskType mask=TheScriptEngine->unidentified_0034DB40(*(const AsciiString*)pSkirmishPlayerParm);
+    // Retail passes the Parameter* through the ILT.
+    union { void (*raw)(); PlayerMaskType (ScriptEngine::*member)(Parameter *); } resolve;
+    resolve.raw=j_000230b5;
+    PlayerMaskType mask=(TheScriptEngine->*resolve.member)(pSkirmishPlayerParm);
+    union { void (*raw)(); Bool (BfmeObjectInsideView::*member)(PolygonTrigger *) const; } inside;
+    inside.raw=j_0000d6ed;
     int totalCost=0;
     while(mask) {
         Player *player=ThePlayerList->getEachPlayerFromMask(mask);
@@ -156,7 +163,7 @@ Bool ScriptConditions::evaluateSkirmishValueInArea(Condition *pCondition,
                 for(DLINK_ITERATOR<Object> iter=team->iterate_TeamMemberList(); !iter.done(); iter.advance()) {
                     Object *pObj=iter.cur();
                     if(!pObj) continue;
-                    if(!(getTemplate(pObj)->fieldd0 & 0x1000000) && ((BfmeObjectInsideView*)pObj)->isInside(pTrig)) {
+                    if(!(getTemplate(pObj)->fieldd0 & 0x1000000) && (((BfmeObjectInsideView*)pObj)->*inside.member)(pTrig)) {
                         if(!(*(const unsigned char*)((char*)pObj+0x344)&1)) {
                             const ThingTemplate *tt=getTemplate(pObj);
                             if(!tt) continue;
