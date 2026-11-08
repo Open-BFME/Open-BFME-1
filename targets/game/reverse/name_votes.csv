@@ -6091,3 +6091,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|ty
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220ConditionTemplate,02dca5a0b2ef710afe944ae4,claude-sonnet,20261109001242-d6317b,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Condition,81360686239023847b88568f,claude-sonnet,20261109001242-d6317b,2026-11-09
 game/GameEngine/Source/Common/ConvertShortMapPathToLongMapPath.cpp|member||m_bfmeMapName008,93a8b9a55e7a8c958b30f7c7,claude-sonnet,20261109001242-461a61,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp|type||Cell00406EC0,cbe493a32a7bb3f17d6d186e,claude-sonnet,20261109001242-b1f598,2026-11-09
