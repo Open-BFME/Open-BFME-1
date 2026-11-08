@@ -19,13 +19,13 @@ private:
 
 char Rva0013ABC0Table::equals( Rva0013ABC0Table *o )
 {
-	int n = m_count;
+	int count = m_count;
 
-	if( n == o->m_count )
+	if( count == o->m_count )
 	{
 		int i = 0;
 
-		if( n > 0 )
+		if( count > 0 )
 		{
 			do
 			{
