@@ -9,10 +9,15 @@
 
 class BfmeThingTM;
 
-class BfmeInnerTM
+// Retail's override-chain getter (row ?getFinalOverride@Overridable@@QBEPBV1@XZ, 0x00087A80, ILT 0x000022BB).
+class Overridable
 {
 public:
-	BfmeThingTM *bfmeResolveTM(void);
+	const Overridable *getFinalOverride(void) const;
+};
+
+class BfmeInnerTM
+{
 };
 
 class BfmeThingTM
@@ -24,10 +29,18 @@ public:
 	int m_bfmeFlagsTM;
 };
 
+// Retail's kind-of test (row ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z, 0x000A2CF0, ILT 0x0003251F).
+enum KindOfType { KindOfTypeValue59 = 0x59 };
+
+class Thing
+{
+public:
+	bool isKindOf(KindOfType kind) const;
+};
+
 class BfmeActorTM
 {
 public:
-	char bfmeCanTM(int what);
 
 	int m_bfmeSpareTM;
 	BfmeThingTM *m_bfmeThingTM;
@@ -47,11 +60,13 @@ public:
 // above already declares the real GameLogic view this TU calls through.
 extern GameLogic *TheGameLogic;
 
+// The pinned send is ILT 0x0003B372 (the defined ?j_0003b372 row; body ActiveBody::attemptDamage, 0x00211D40).
+extern void j_0003b372();
+
 class BfmeOwnerTM
 {
 public:
 	void bfmeDoTM(BfmeMsgTM *msg);
-	void bfmeSendTM(BfmeMsgTM *msg);
 };
 
 void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
@@ -66,7 +81,7 @@ void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 	BfmeThingTM *thing = actor->m_bfmeThingTM;
 
 	if (thing && thing->m_bfmeInnerTM)
-		thing = thing->m_bfmeInnerTM->bfmeResolveTM();
+		thing = (BfmeThingTM *)((const Overridable *)thing->m_bfmeInnerTM)->getFinalOverride();
 
 	if (thing->m_bfmeFlagsTM & 0x2000000)
 	{
@@ -74,11 +89,13 @@ void BfmeOwnerTM::bfmeDoTM(BfmeMsgTM *msg)
 			gamelogic->findObjectByID(reinterpret_cast<int>(actor->m_bfmeOwnerTM)));
 		if (!target)
 			return;
-		if (!target->bfmeCanTM(0x59))
+		if (!((Thing *)target)->isKindOf((KindOfType)0x59))
 			return;
 	}
-	else if (!actor->bfmeCanTM(0x59))
+	else if (!((Thing *)actor)->isKindOf((KindOfType)0x59))
 		return;
 
-	bfmeSendTM(msg);
+	union { void (*raw)(); void (BfmeOwnerTM::*member)(BfmeMsgTM *); } send;
+	send.raw = j_0003b372;
+	(this->*send.member)(msg);
 }
