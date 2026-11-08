@@ -6036,3 +6036,6 @@ game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field1C,6846404073c4e2ba5ee61fb4,claude-sonnet,20261109001350-6950ed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field24,e57e1f07978db92b0138dbfa,claude-sonnet,20261109001350-6950ed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field28,e22ef2dee70070f6d9b60466,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|type||AI001FFFC0,1451272c7ab5223287a95e08,claude-sonnet,20261109000906-1c3007,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member||field204,63518a4f053ab197bce67fae,claude-sonnet,20261109000906-1c3007,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member||field208,83dbd8b13391c17cc0f02f84,claude-sonnet,20261109000906-1c3007,2026-11-09
