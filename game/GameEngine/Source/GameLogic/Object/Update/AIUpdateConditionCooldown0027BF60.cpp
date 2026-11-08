@@ -82,7 +82,7 @@ public:
   struct { char pad110[4]; unsigned char m_bfmeByte114; char pad115[0x120-0x115]; UnsignedInt m_bfmeFlags120; };
  };
  char pad138[0x204-0x138];
-	void *m_bfmeAi;						///< retail this+0x204, opaque AIUpdateInterface*
+	void *m_ai;						///< retail this+0x204, opaque AIUpdateInterface*
 };
 
 // ?TheBfmeGameLogic@@3PAVBfmeGameLogicLike@@A: reference recorded ?TheBfmeGameLogic@@3PAVGameLogic@@A
@@ -90,8 +90,8 @@ class GameLogic
 {
 public:
 	char m_bfmeUnreconstructed_000[0x3C];
-	UnsignedInt getFrame() const { return m_bfmeFrame; }
-	UnsignedInt m_bfmeFrame;					///< retail this+0x3C
+	UnsignedInt getFrame() const { return m_frame; }
+	UnsignedInt m_frame;					///< retail this+0x3C
 };
 
 // Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
@@ -149,7 +149,7 @@ Int AIUpdateInterface::rva0027bf60(void)
 			if (!outside) {
 				BfmeObjAS *parent = obj->bfmeParentAS(0);
 				if (parent && static_cast<unsigned char>(reinterpret_cast<Rva000D3F10*>(parent)->test(0x25))) {
-					AIUpdateInterface *ai = (AIUpdateInterface*)parent->m_bfmeAi;
+					AIUpdateInterface *ai = (AIUpdateInterface*)parent->m_ai;
 					if (ai && ai->rva002774c0() > reinterpret_cast<const Thing*>(parent)->getTemplate()->getRange())
 						outside = true;
 				}
