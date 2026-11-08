@@ -28,7 +28,7 @@ template<class T> __forceinline T Rva00177A90Member(void (*raw)())
 }
 #define CALL(T, obj, fn) (((Rva00177A90Receiver*)(obj))->*Rva00177A90Member<T>(fn))
 
-struct Rva00177A90AIUpdate
+struct AIUpdateInterface
 {
     char pad00[0x140];
     void *m_path; // oracle AIUpdateInterface+140; retail +67
@@ -44,7 +44,7 @@ struct Rva00177A90Object
     char pad44[0xbc-0x44];
     float valueBC; // 177A90+154/+15c; twice this field plus literal 60.0
     char padC0[0x204-0xc0];
-    Rva00177A90AIUpdate *m_ai;
+    AIUpdateInterface *m_ai;
 };
 struct Rva00177A90Machine
 {
@@ -159,7 +159,7 @@ Bool AIAttackMeleeEngageState::computePath()
         ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
             "CritterDesync: ComputePath26");
     bool forceRepath = false;
-    Rva00177A90AIUpdate *ai = m_machine->m_owner->m_ai;
+    AIUpdateInterface *ai = m_machine->m_owner->m_ai;
     if (ai->m_isBlockedAndStuck)
         return false;
     if (flag4d)
