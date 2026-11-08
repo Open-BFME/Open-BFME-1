@@ -78,7 +78,7 @@ class GlobalData;
 struct Rva006C9270GlobalData
 {
 	unsigned char m_bfmePad000[8];
-	AsciiString m_bfmeMapName008;
+	AsciiString m_mapName;
 	unsigned char m_bfmePad00C[0xB80 - 0xC];
 	AsciiString m_bfmeMapNameB80;
 	unsigned char m_bfmePadB84[4];
@@ -128,8 +128,8 @@ int Rva00062D00ParseMapName(char **arguments, int count)
 {
 	if (localWritableGlobalData() != 0 && count >= 2)
 	{
-		localWritableGlobalData()->m_bfmeMapName008.StringBase<char>::set(arguments[1]);
-		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_bfmeMapName008);
+		localWritableGlobalData()->m_mapName.StringBase<char>::set(arguments[1]);
+		ConvertShortMapPathToLongMapPath(localWritableGlobalData()->m_mapName);
 	}
 
 	return 1;

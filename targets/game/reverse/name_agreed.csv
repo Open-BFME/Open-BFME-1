@@ -1016,3 +1016,4 @@ game/GameEngine/Source/Common/BfmeConv1780.cpp|member||m_bfmeAgentGK,m_pathfinde
 game/GameEngine/Source/Common/BfmeConv1780.cpp|member||m_bfmeAgentGK,m_pathfinder,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeSlotState1289Init.cpp|local|BfmeSlotState1289::rva008AC790|c,cosine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeSlotState1289Init.cpp|local|BfmeSlotState1289::rva008AC790|s,sine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/ConvertShortMapPathToLongMapPath.cpp|member||m_bfmeMapName008,m_mapName,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
