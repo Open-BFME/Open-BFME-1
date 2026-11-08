@@ -1089,3 +1089,5 @@ game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva00
 game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640ThingTemplate,ThingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640Team,Team,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|type||Rva00177A90AIUpdate,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapFileHeader,BITMAPFILEHEADER,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapInfoHeader,BITMAPINFOHEADER,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

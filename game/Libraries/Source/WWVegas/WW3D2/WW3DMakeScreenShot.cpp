@@ -13,7 +13,7 @@
 #include <string.h>
 
 #pragma pack(push, 2)
-struct Rva008FD930BitmapFileHeader
+struct BITMAPFILEHEADER
 {
     unsigned short bfType;
     unsigned long bfSize;
@@ -22,7 +22,7 @@ struct Rva008FD930BitmapFileHeader
     unsigned long bfOffBits;
 };
 #pragma pack(pop)
-struct Rva008FD930BitmapInfoHeader
+struct BITMAPINFOHEADER
 {
     unsigned long biSize;
     long biWidth;
@@ -228,10 +228,10 @@ void WW3D::Make_Screen_Shot( const char * filename_base , const float gamma, con
 		break;
 		case BMP:
 			{
-				Rva008FD930BitmapFileHeader fileheader;
-				Rva008FD930BitmapInfoHeader header;
-				memset(&header, 0, sizeof(Rva008FD930BitmapInfoHeader));
-				header.biSize = sizeof(Rva008FD930BitmapInfoHeader);
+				BITMAPFILEHEADER fileheader;
+				BITMAPINFOHEADER header;
+				memset(&header, 0, sizeof(BITMAPINFOHEADER));
+				header.biSize = sizeof(BITMAPINFOHEADER);
 				header.biWidth = width;
 				header.biHeight = height;
 				header.biPlanes = 1;
@@ -241,20 +241,20 @@ void WW3D::Make_Screen_Shot( const char * filename_base , const float gamma, con
 				header.biYPelsPerMeter = 0xB12;
 				int len = ((width * 24 +31) & ~31) /8;
     
-				memset(&fileheader, 0, sizeof(Rva008FD930BitmapFileHeader));
+				memset(&fileheader, 0, sizeof(BITMAPFILEHEADER));
 				fileheader.bfType = 19778; // BM
-				fileheader.bfOffBits = sizeof(Rva008FD930BitmapFileHeader) + sizeof(Rva008FD930BitmapInfoHeader);
-				fileheader.bfSize = sizeof(Rva008FD930BitmapFileHeader) + sizeof(Rva008FD930BitmapInfoHeader) + 3 * len * height * sizeof(char);
+				fileheader.bfOffBits = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
+				fileheader.bfSize = sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER) + 3 * len * height * sizeof(char);
 
 				FileClass *file = _TheWritingFileFactory->Get_File( filename );
 				if ( file ) {
 					file->Create();
 					file->Open(FileClass::WRITE);
 					int num;
-					num = file->Write(&fileheader, sizeof(Rva008FD930BitmapFileHeader));
-					WWASSERT(num == sizeof(Rva008FD930BitmapFileHeader));
-					num = file->Write(&header, sizeof(Rva008FD930BitmapInfoHeader));
-					WWASSERT(num == sizeof(Rva008FD930BitmapInfoHeader));
+					num = file->Write(&fileheader, sizeof(BITMAPFILEHEADER));
+					WWASSERT(num == sizeof(BITMAPFILEHEADER));
+					num = file->Write(&header, sizeof(BITMAPINFOHEADER));
+					WWASSERT(num == sizeof(BITMAPINFOHEADER));
 					char *temp = new char [3 * len];
 					memset(temp, 0, 3 * len * sizeof(char));
 					// invert image, pad and swap R and B
