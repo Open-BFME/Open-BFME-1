@@ -1095,3 +1095,4 @@ game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva00
 game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640ThingTemplate,ThingTemplate,claude-sonnet+gpt-6.1-sol,blocked: hook: - symbols.csv line 84235: exact duplicate row for ?getFinalOverride@Overridable@@QBEPBV1@XZ. Fix: drop the duplicate record(s) with tools/ledger,2026-11-09
 game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640Team,Team,claude-sonnet+gpt-6.1-sol,blocked: hook: - symbols.csv line 84235: exact duplicate row for ?getFinalOverride@Overridable@@QBEPBV1@XZ. Fix: drop the duplicate record(s) with tools/ledger,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2073.cpp|member||m_bfmeGeomHN,m_geometryInfo,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2073.cpp|member||m_bfmeGeomHN,m_geometryInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

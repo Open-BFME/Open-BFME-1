@@ -20,7 +20,7 @@ public:
 	float m_bfme3cHN;
 	float m_bfme40HN;
 	unsigned char m_bfmeGap2HN[0x68];
-	GeometryInfo m_bfmeGeomHN;
+	GeometryInfo m_geometryInfo;
 };
 
 struct Rva003FD060TerrainLogic
@@ -95,7 +95,7 @@ bool BfmeCheckHN::bfmeTestHN(BfmeVec3HN *p)
 	b.m_bfmeYHN = p->m_bfmeYHN;
 	b.m_bfmeZHN = p->m_bfmeZHN;
 
-	a.m_bfmeZHN = o->m_bfmeGeomHN.getMaxHeightAbovePosition() + a.m_bfmeZHN;
+	a.m_bfmeZHN = o->m_geometryInfo.getMaxHeightAbovePosition() + a.m_bfmeZHN;
 
 	if (!((Rva003FD060TerrainLogic *)TheTerrainLogic)->bfmeReachHN(&a, &b))
 		return false;
