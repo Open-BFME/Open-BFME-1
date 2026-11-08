@@ -6143,3 +6143,6 @@ game/Libraries/Source/EA/Apt/AptString/Rva0089DD40.cpp|function||rva0089DD40,0e9
 game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapFileHeader,9c78ba2247edab542e1f1f4a,claude-sonnet,20261109004400-190150,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapInfoHeader,45d453203187a35e3efbb85a,claude-sonnet,20261109004400-190150,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|type||Rva00177A90AIUpdate,72a3724ee34bd588702a7891,claude-sonnet,20261109004530-faaec2,2026-11-09
+game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640Overridable,99e26c20efe14ae1514dbaf7,claude-sonnet,20261109004530-6cd7aa,2026-11-09
+game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640ThingTemplate,76af91346382d2db8e97f671,claude-sonnet,20261109004530-6cd7aa,2026-11-09
+game/GameEngine/Source/Common/RTS/Rva000F4640TeamTargetableCount.cpp|type||Rva000F4640Team,10e2507918845175e647531a,claude-sonnet,20261109004530-6cd7aa,2026-11-09
