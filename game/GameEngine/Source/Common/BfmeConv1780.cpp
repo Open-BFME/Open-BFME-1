@@ -119,7 +119,7 @@ class AI
 {
 public:
 	unsigned char m_bfmeHeadGK[0xc];
-	BfmeAgentGK *m_bfmeAgentGK;
+	BfmeAgentGK *m_pathfinder;
 };
 
 extern AI *TheAI;
@@ -139,7 +139,7 @@ void BfmeOwnerGK::bfmeRunGK(void)
 	{
 		BfmeItemGK *item = link->m_bfmeItemGK;
 
-		TheAI->m_bfmeAgentGK->bfmeNoteGK(item);
+		TheAI->m_pathfinder->bfmeNoteGK(item);
 
 		BfmeSourceGK *source = item->m_bfmeSourceGK;
 
