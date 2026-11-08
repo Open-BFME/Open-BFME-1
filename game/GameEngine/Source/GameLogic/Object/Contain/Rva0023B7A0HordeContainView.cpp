@@ -140,10 +140,11 @@ public:
 };
 
 // Object methods this body reaches under their pinned spellings
-class BfmeOwnFDH
+// Row at 0x001C4990 (?bfmeHasBit@Gen_001C4990@@QBE_NH@Z, ILT 0x000225F7).
+class Gen_001C4990
 {
 public:
-	char bfmeAskFDH( int bit );
+	bool bfmeHasBit( int bit ) const;
 };
 
 class Gen001C9A10
@@ -203,7 +204,6 @@ class Object
 
 public:
 	void bfmeTransferReplacementState( Object *replacement );
-	Module *findModule( NameKeyType key ) const;
 
 	char m_bfmeHead[ 0x94 ];
 	UnsignedInt m_bfmeStatus;							///< retail this+0x94
@@ -215,6 +215,10 @@ public:
 	UnsignedInt m_bfmeUpgrades[ 6 ];					///< retail this+0x224
 	char m_bfmeGap23c[ 0x370 - 0x23c ];
 	int m_bfmeLogicTag;									///< retail this+0x370
+
+protected:
+	// Retail's Object::findModule (row 0x001BEE60, ILT 0x0002AE23) is protected.
+	Module *findModule( NameKeyType key ) const;
 
 private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate( void ) const;
@@ -302,7 +306,7 @@ Object *Rva0023B7A0HordeContainView::rva0023B7A0( const Matrix3DTN *transform )
 			( (BfmeThingTN *)replacement )->bfmeSetTransformTN( transform );
 			( (BfmeThingCQB *)container )->bfmeGoCQB( replacement );
 
-			if ( ( (BfmeOwnFDH *)owner )->bfmeAskFDH( 0x18 ) )
+			if ( ( (Gen_001C4990 *)owner )->bfmeHasBit( 0x18 ) )
 				( (Gen001C9A10 *)replacement )->handle( 0x18 );
 
 			BfmeExperienceCounters *freshCounters = replacement->m_bfmeExperience;
