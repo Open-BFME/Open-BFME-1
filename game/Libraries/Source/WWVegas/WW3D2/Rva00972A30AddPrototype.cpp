@@ -21,6 +21,6 @@ public:
 
 void Create_Rva00972880_Prototype()
 {
-	Rva00972880 *p = new Rva00972880;
-	Add_Prototype(p);
+	Rva00972880 *prototype = new Rva00972880;
+	Add_Prototype(prototype);
 }
