@@ -6150,3 +6150,7 @@ game/GameEngine/Source/Common/BfmeConv2073.cpp|member||m_bfmeGeomHN,7b895fa1a26c
 game/GameEngine/Source/Common/BfmeConv2073.cpp|param|BfmeCheckHN::bfmeTestHN|p,e5b17885ba42be7524ff5092,claude-sonnet,20261109005206-df5e89,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2073.cpp|local|BfmeCheckHN::bfmeTestHN|a,204518491bdc9993b8d83910,claude-sonnet,20261109005206-df5e89,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2073.cpp|local|BfmeCheckHN::bfmeTestHN|b,92cde5013e88f6af3dde6aef,claude-sonnet,20261109005206-df5e89,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeStatus,c4363a51ff071d5c058cb400,claude-sonnet,20261109005208-f377a8,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeContain,56d774242148e18553b30532,claude-sonnet,20261109005208-f377a8,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeDieFrame,4cbde3b60d3aa0db67c6dcfc,claude-sonnet,20261109005208-f377a8,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeFrame,dcd3725973a2421a8c7db1eb,claude-sonnet,20261109005208-f377a8,2026-11-09
