@@ -71,7 +71,8 @@ struct Boolean008A58C0 {
 // int (the stack depth) is read here, so the rest of the layout stays out of this TU.
 struct Rva008AE770Stack { int count; };
 extern struct Rva008AE770Stack Rva008AE770TheStack;
-extern void (__cdecl *callback0133786C)(const char*,const char*,const char*,const char*,int);
+// Retail VA 0x0133786C: zero-filled .data pointer, only ever called (cdecl, four const char* and an int) from this unit and Rva008A5BF0ReplacePairs, never written by code.
+void (__cdecl *callback0133786C)(const char*,const char*,const char*,const char*,int);
 Boolean008A58C0 *aptCallStrings008A58C0(KeyValuePairs00898D80 *self,int argc) {
  if(argc>0 && argc<=3) {
   Rva8CD130Value *v=(*(Rva8CD130Value ***)((char *)&Rva008AE770TheStack + 8))[Rva008AE770TheStack.count-1];
