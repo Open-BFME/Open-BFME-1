@@ -6017,3 +6017,11 @@ game/GameEngine/Source/Common/BfmeConv982.cpp|local|Rva007845D0::method|h,c5d01f
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021C8A0StatusGate.cpp|param|Rva0021C8A0StatusGate::check|a,8a554ca22dce67d831d522ec,claude-sonnet,20261109000907-e0d41b,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021C8A0StatusGate.cpp|param|Rva0021C8A0StatusGate::check|b,13ff69b8fe880ecfab91b5d6,claude-sonnet,20261109000907-e0d41b,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeMemberOrder00245420.cpp|member||object08,64b397af02bf01ca73768a64,claude-sonnet,20261109000907-7f4c18,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme00,62f55a4b2401ea8537d06f38,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme04,23ba0d82925984a1cf4069b1,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme08,3a732e703cb3894966c295b7,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme0c,31797830db10f20034d7f914,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme10,32b650e8b9d3619098edd62e,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme14,43612914c86fe5a147869877,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme18,968ce414a172777107f391fe,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme1c,50e74a818c2f3c8034f4ae2d,claude-sonnet,20261109001225-e6c491,2026-11-09
