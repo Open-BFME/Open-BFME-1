@@ -6112,3 +6112,5 @@ game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at204,2e
 game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at010,3da94de633e7b51e5bf9f897,claude-sonnet,20261109003259-a2d9ec,2026-11-09
 game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at004,68da84b5c966d913064e2085,claude-sonnet,20261109003259-a2d9ec,2026-11-09
 game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at01c,4c4c410933f0e84e82b37589,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector3,530f59a1bc97737c237c7485,claude-sonnet,20261109003149-9cbc47,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector4,45dad72745b677ab2941f101,claude-sonnet,20261109003149-9cbc47,2026-11-09

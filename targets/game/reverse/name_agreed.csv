@@ -1048,3 +1048,5 @@ game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at010,m_
 game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at01c,m_machine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeGetBlockZone,getBlockZone,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00403520 ?getBlockZone@PathfindZoneManager@@QBEGABUPathfindMovementProfile@@HHPAPAUPathfindCell@@@Z | outside every window of the ta,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeInteractsWithBridge,interactsWithBridge,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00403520 ?getBlockZone@PathfindZoneManager@@QBEGABUPathfindMovementProfile@@HHPAPAUPathfindCell@@@Z | outside every window of the ta,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector3,Vector3,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector4,Vector4,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
