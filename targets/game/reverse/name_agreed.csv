@@ -1010,3 +1010,4 @@ game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bf
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Record,TTree,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Owner,W3DTreeBuffer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Parameter,Parameter,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/ConvertShortMapPathToLongMapPath.cpp|member||m_bfmeMapName008,m_mapName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
