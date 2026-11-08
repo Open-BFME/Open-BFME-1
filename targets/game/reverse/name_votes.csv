@@ -6118,3 +6118,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateSt
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Drawable,06f7f5c14b8eb135f69929ea,claude-sonnet,20261109003150-278cd6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SlavedUpdate,e9fb873eff6abbb89a418ca3,claude-sonnet,20261109003150-278cd6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SpawnBehaviorModuleData,4da7c202dec35b09444a0aa8,claude-sonnet,20261109003150-278cd6,2026-11-09
+game/GameEngine/Source/Common/RTS/PlayerInit.cpp|type||Energy000DA610,a01b59c1e373d49147c0ce06,claude-sonnet,20261109003150-b15747,2026-11-09
+game/GameEngine/Source/Common/RTS/PlayerInit.cpp|type||RGBColor000DA610,e2856ddc83058522083675ce,claude-sonnet,20261109003150-b15747,2026-11-09
