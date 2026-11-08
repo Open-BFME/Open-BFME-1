@@ -57,7 +57,7 @@ public:
 };
 
 extern EAStringC::StringDataC g_rva012D5298Empty;
-int bfmeCompareVSC(const char *left, const char *right);
+extern "C" int __cdecl _strcmpi(const char *left, const char *right);
 
 class BfmeTab1024
 {
@@ -117,7 +117,7 @@ bool BfmeStringList0089CBA0::Rva0089D4C0()
 
 			if (inner->m_data->m_hash == outer->m_data->m_hash)
 			{
-				volatile unsigned char equal = (unsigned char)(bfmeCompareVSC(
+				volatile unsigned char equal = (unsigned char)(_strcmpi(
 					reinterpret_cast<const char *>(inner->m_data) + 8,
 					reinterpret_cast<const char *>(outer->m_data) + 8) == 0);
 				if (equal)

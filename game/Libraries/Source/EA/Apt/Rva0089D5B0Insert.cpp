@@ -13,7 +13,7 @@ extern EAStringC::StringDataC g_rva012D5298Empty;
 // VA 0x01337A30 is Apt.cpp's ?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A (data_rows).
 struct BfmeStringPool3AF0 { void *m_alloc; void (__cdecl *m_free)(void *storage); };
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
-int bfmeCompareVSC(const char *, const char *);
+extern "C" int __cdecl _strcmpi(const char *, const char *);
 
 class Rva8D0D80String
 {
@@ -28,7 +28,7 @@ public:
     {
         if (m_block == other.m_block) return true;
         if (m_block->m_hash != other.m_block->m_hash) return false;
-        bool equal = bfmeCompareVSC((const char *)(m_block + 1), (const char *)(other.m_block + 1)) == 0;
+        bool equal = _strcmpi((const char *)(m_block + 1), (const char *)(other.m_block + 1)) == 0;
         return equal;
     }
     __forceinline void assign(const Rva8D0D80String &other)
@@ -281,12 +281,12 @@ void Rva8D0D80Table::add(Rva8D0D80String *key, Rva8D0D80Value *value)
     if (key->m_block->m_hash == 0)
         ((BfmeThing929G *)key)->bfmeInit929G();
     unsigned int h = key->m_block->m_hash;
-    if (h == 0x699 && bfmeCompareVSC((const char *)(key->m_block + 1), "prototype") == 0)
+    if (h == 0x699 && _strcmpi((const char *)(key->m_block + 1), "prototype") == 0)
     {
         ((Gen_00897510 *)this)->bfmeSet((BfmeTaggedItem *)value);
         return;
     }
-    else if (h == 0x6bbd && bfmeCompareVSC((const char *)(key->m_block + 1), "__proto__") == 0)
+    else if (h == 0x6bbd && _strcmpi((const char *)(key->m_block + 1), "__proto__") == 0)
     {
         ((Gen_008974C0 *)this)->bfmeSet((BfmeTaggedItem *)value);
         return;
