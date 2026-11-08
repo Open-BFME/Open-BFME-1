@@ -1107,3 +1107,5 @@ game/GameEngine/Source/Common/Rva0013ABC0TableEquals.cpp|local|Rva0013ABC0Table:
 game/GameEngine/Source/Common/Rva0013ABC0TableEquals.cpp|local|Rva0013ABC0Table::equals|n,count,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_allows.cpp|member||m_bfmeNextOverride,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE3C0CameraRay.cpp|type||Rva006FE3C0ScreenPoint,ICoord2D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022B3B0,TransportContainModuleData,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022A450,RiderChangeContainModuleData,claude-sonnet+gpt-6-astra,agreed,2026-11-09
