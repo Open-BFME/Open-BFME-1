@@ -5,8 +5,10 @@
 
 #include "ascii_string.h"
 
-struct Vector3
+// Retail's accessor row returns the class-keyed Vector3 (?AVVector3@@).
+class Vector3
 {
+public:
 	float X;
 	float Y;
 	float Z;
@@ -31,15 +33,21 @@ private:
 	friend class WaterRenderObjClass;
 };
 
+// Row at 0x0079F360 (ILT 0x00010F14): the sky-box position getter is a method of this accessor view.
+class WaterSkyBoxPositionAccessor
+{
+public:
+	Vector3 getSkyBoxPosition(void) const;
+};
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterRenderObjClass
 {
 public:
 	void writeSkyBoxSettings0079F480(DataChunkOutput *output);
+	float bfmeSkyBoxZRotation0079F3E0(void) const;	// row ?bfmeSkyBoxZRotation0079F3E0@WaterRenderObjClass@@QBEMXZ
 
 private:
-	Vector3 bfmeSkyBoxPosition0079F360(void) const;
-	float bfmeSkyBoxZRotation0079F3E0(void) const;
 
 	unsigned char m_beforeSkyBox[0x250];
 	SkyBoxRenderObject *m_skyBox;
@@ -51,7 +59,7 @@ void WaterRenderObjClass::writeSkyBoxSettings0079F480(DataChunkOutput *output)
 {
 	output->openDataChunk("SkyboxSettings", 1);
 
-	Vector3 position = bfmeSkyBoxPosition0079F360();
+	Vector3 position = ((const WaterSkyBoxPositionAccessor *)this)->getSkyBoxPosition();
 	float scale = 1.0f;
 	if (m_skyBox != 0)
 		scale = m_skyBox->m_scale;
