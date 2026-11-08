@@ -143,10 +143,10 @@ extern TerrainLogic* TheTerrainLogic;
 class StealthCleanup00299250 { public: void apply(); };
 extern float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char*,int);
 struct Config00299400 { char pad00[12]; unsigned at0c,at10; char pad14[4]; float at18; };
-class OneRingTrajectory00299400 { public: void update(); char pad00[4]; Config00299400* at04; Object* at08; char pad0c[0x18]; int at24; unsigned at28; float at2c; };
+class OneRingTrajectory00299400 { public: void update(); char pad00[4]; Config00299400* m_moduleData; Object* at08; char pad0c[0x18]; int at24; unsigned at28; float at2c; };
 inline float lerp00299400(float a,float b,float t) { return a+(b-a)*t; }
 void OneRingTrajectory00299400::update() {
- Config00299400* config=at04;
+ Config00299400* config=m_moduleData;
  Object* owner=at08;
  Object* target=TheGameLogic->findObjectByID(at24);
  unsigned frame=TheGameLogic->frame;

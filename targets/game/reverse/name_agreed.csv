@@ -990,3 +990,9 @@ game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeContainList,m_containList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeContainList,m_containList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field08,m_int,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field10,m_string,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field44,m_customData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field48,m_customFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field170d8,m_frameObjectCountChanged,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at04,m_moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
