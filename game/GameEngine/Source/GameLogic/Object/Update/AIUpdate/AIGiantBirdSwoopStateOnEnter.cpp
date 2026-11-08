@@ -125,7 +125,7 @@ public:
 	char m_before1FC[0x1fc - 0xac - sizeof(GeometryInfo)];
 	class Rva002C3020Contain *m_contain1fc;
 	char m_before204[4];
-	AIUpdateInterface *m_ai204;
+	AIUpdateInterface *m_ai;
 	char m_before214[0x214 - 0x208];
 	Object *m_container214;
 	char m_before344[0x344 - 0x218];
@@ -313,7 +313,7 @@ public:
 StateReturnType AIGiantBirdSwoopState::onEnter()
 {
 	Object *owner = getMachineOwner();
-	AIUpdateInterface *ai = owner->m_ai204;
+	AIUpdateInterface *ai = owner->m_ai;
 	Object *victim = 0;
 	if (ai == 0 || (owner->m_privateStatus & 1) != 0)
 		return STATE_FAILURE;
@@ -391,7 +391,7 @@ StateReturnType AIGiantBirdSwoopState::onEnter()
 			ai->m_flags3f0 |= 8;
 
 		ai->m_mode494 = 2;
-		AIUpdateInterface *victimAI = victim->m_ai204;
+		AIUpdateInterface *victimAI = victim->m_ai;
 		if (victimAI != 0)
 		{
 			AIUpdateInterface *other = victimAI->slot150();

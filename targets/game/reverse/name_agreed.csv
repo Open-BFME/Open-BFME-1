@@ -1063,3 +1063,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdSwoopStateOnE
 game/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberTarget002439F0.cpp|member||field204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdSwoopStateOnEnter.cpp|member||m_ai204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
