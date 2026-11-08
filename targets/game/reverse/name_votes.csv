@@ -6069,3 +6069,9 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAtta
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,69cbf2b60006385b72e5d383,claude-sonnet,20261109001647-b41d16,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeNext,d9606d2f07b0056a80b6de0b,claude-sonnet,20261109001747-ced653,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_getContainCount.cpp|member||m_bfmeContainList,f443831c0b20f9fb50535a57,claude-sonnet,20261109001747-ced653,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field08,7a58b15e8c90c2245acf059c,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field0c,266d836937db8cbe8ce9ca95,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field10,8a5f8a2e2231a8a0746675ca,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field44,75bf9a976dd6adc29b6d87dc,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field48,5e9a659608283d0375c86d8e,claude-sonnet,20261109001821-003bd1,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field170d8,b6be86a74dc79d53d5868c35,claude-sonnet,20261109001821-003bd1,2026-11-09
