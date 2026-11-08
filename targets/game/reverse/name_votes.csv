@@ -6016,3 +6016,4 @@ game/GameEngine/Source/Common/BfmeConv982.cpp|local|Rva007845D0::method|w,a5ce2e
 game/GameEngine/Source/Common/BfmeConv982.cpp|local|Rva007845D0::method|h,c5d01f0b2701c380f50b52ce,claude-sonnet,20261109000907-e4b94c,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021C8A0StatusGate.cpp|param|Rva0021C8A0StatusGate::check|a,8a554ca22dce67d831d522ec,claude-sonnet,20261109000907-e0d41b,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021C8A0StatusGate.cpp|param|Rva0021C8A0StatusGate::check|b,13ff69b8fe880ecfab91b5d6,claude-sonnet,20261109000907-e0d41b,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeMemberOrder00245420.cpp|member||object08,64b397af02bf01ca73768a64,claude-sonnet,20261109000907-7f4c18,2026-11-09
