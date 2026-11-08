@@ -6126,3 +6126,12 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdSwoopStateOnE
 game/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp|member||m_bfmeNext,79d3b1eab6e3e0a3411e5479,claude-sonnet,20261109003839-612767,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateModuleDataCtorThunk.cpp|member||m_08,85a50b81e2938968b59b8725,claude-sonnet,20261109003109-3d0514,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/SpecialEnemySenseUpdateModuleDataCtorThunk.cpp|member||m_10,d65d2723b4a8cee1cff03e2e,claude-sonnet,20261109003109-3d0514,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|type||Rva000B9EA0Store,9769367846dd118a48a4c5ea,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_00,1778d51ad1712868cb197434,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_04,8707aa67a65b8abac5f55b24,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_08,933d8ad96529640ec8a5dba1,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_10,ca28bb69e04b885f22a952ff,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_14,8743ae64edbbcb70e9c4dcb7,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_18,0e63f55a10165d6b87b31590,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_1c,551903d669c1ab1b300ae8ea,claude-sonnet,20261109003109-3627d1,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_20,f66b16dfbfe91ddafe1714a6,claude-sonnet,20261109003109-3627d1,2026-11-09
