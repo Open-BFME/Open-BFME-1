@@ -6025,3 +6025,7 @@ game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme10,32b650e8b9d36190
 game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme14,43612914c86fe5a147869877,claude-sonnet,20261109001225-e6c491,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme18,968ce414a172777107f391fe,claude-sonnet,20261109001225-e6c491,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1209.cpp|member||m_bfme1c,50e74a818c2f3c8034f4ae2d,claude-sonnet,20261109001225-e6c491,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c0,79ca5667b1c1bbe843ddb630,claude-sonnet,20261109001225-f6f94a,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c1,3692f7f12257715fe92e6c97,claude-sonnet,20261109001225-f6f94a,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c2,e40639eb6248ace7d8b86bab,claude-sonnet,20261109001225-f6f94a,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c3,96b4d511aef1c7b69f575faf,claude-sonnet,20261109001225-f6f94a,2026-11-09
