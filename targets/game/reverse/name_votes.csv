@@ -6155,3 +6155,5 @@ game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeDieFrame,4cbde3b60d3aa0db67c6dcfc,claude-sonnet,20261109005208-f377a8,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeFrame,dcd3725973a2421a8c7db1eb,claude-sonnet,20261109005208-f377a8,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_allows.cpp|member||m_bfmeNextOverride,1c4c87706c357f1cd8ae6482,claude-sonnet,20261109005206-0e2fcd,2026-11-09
+game/GameEngine/Source/Common/Rva0013ABC0TableEquals.cpp|param|Rva0013ABC0Table::equals|o,6bae3fdc9a7a06b8ec7113d2,claude-sonnet,20261109005206-f036f0,2026-11-09
+game/GameEngine/Source/Common/Rva0013ABC0TableEquals.cpp|local|Rva0013ABC0Table::equals|n,7fb44753d15001c50f15410e,claude-sonnet,20261109005206-f036f0,2026-11-09
