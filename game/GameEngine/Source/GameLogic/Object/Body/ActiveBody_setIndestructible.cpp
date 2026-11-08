@@ -14,12 +14,12 @@ enum BridgeTowerType
 	BRIDGE_TOWER_0
 };
 
-class BfmeActiveBodySetOverridable
+class Overridable
 {
 public:
 	unsigned char m_memoryPoolObject[4];
-	BfmeActiveBodySetOverridable *m_nextOverride;
-	const BfmeActiveBodySetOverridable *getFinalOverride() const;
+	Overridable *m_nextOverride;
+	const Overridable *getFinalOverride() const;
 };
 
 class BridgeBehaviorInterface
@@ -33,7 +33,7 @@ public:
 	virtual Bool isScaffoldPresent() = 0;
 };
 
-class BfmeActiveBodySetBridgeBehavior
+class BridgeBehavior
 {
 public:
 	static BridgeBehaviorInterface *getBridgeBehaviorInterfaceFromObject( Object *object );
@@ -60,21 +60,19 @@ class Object
 {
 public:
 	virtual void pad00() = 0;
-	BfmeActiveBodySetOverridable *m_template;
+	Overridable *m_template;
 	unsigned char m_padding[0x1F8];
 	BodyModuleInterface *m_body;
 };
 
 // Retail global at 0x012F0898 is GameLogic *TheGameLogic (defined once in
-// game_logic.cpp). This TU calls through a local view type, so keep the view
-// and cast at the use; the global itself uses the canonical spelling.
-class BfmeActiveBodySetGameLogic
+// game_logic.cpp); this TU's GameLogic view carries only findObjectByID.
+class GameLogic
 {
 public:
 	Object *findObjectByID( int id );
 };
 
-class GameLogic;
 extern GameLogic *TheGameLogic;
 
 class ActiveBody
@@ -89,19 +87,19 @@ void ActiveBody::setIndestructible( Bool indestructible )
 	*(unsigned char *)((unsigned char *)this + 0x97) = (unsigned char)indestructible;
 
 	Object *us = *(Object **)((unsigned char *)this - 8);
-	BfmeActiveBodySetOverridable *thingTemplate = us->m_template;
+	Overridable *thingTemplate = us->m_template;
 	if( thingTemplate && thingTemplate->m_nextOverride )
 	{
-		thingTemplate = (BfmeActiveBodySetOverridable *)thingTemplate->m_nextOverride->getFinalOverride();
+		thingTemplate = (Overridable *)thingTemplate->m_nextOverride->getFinalOverride();
 	}
 	if( (*(unsigned int *)((unsigned char *)thingTemplate + 0xC8) & 0x400000) != 0 )
 	{
-		BridgeBehaviorInterface *bbi = BfmeActiveBodySetBridgeBehavior::getBridgeBehaviorInterfaceFromObject( us );
+		BridgeBehaviorInterface *bbi = BridgeBehavior::getBridgeBehaviorInterfaceFromObject( us );
 		if( bbi )
 		{
 			for( Int i = 0; i < 4; ++i )
 			{
-				Object *tower = reinterpret_cast<BfmeActiveBodySetGameLogic *>(TheGameLogic)
+				Object *tower = TheGameLogic
 						->findObjectByID( bbi->getTowerID( (BridgeTowerType)i ) );
 				if( tower )
 				{
