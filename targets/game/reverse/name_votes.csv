@@ -6041,3 +6041,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member|
 game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member||field208,83dbd8b13391c17cc0f02f84,claude-sonnet,20261109000906-1c3007,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeAi,6caa91f8f643452a6bfa2c4a,claude-sonnet,20261109000906-59fd0f,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeFrame,bffd8af895cdde508bcf140b,claude-sonnet,20261109000906-59fd0f,2026-11-09
+game/GameEngine/Source/Common/RTS/UnitRevivalTracker.cpp|type||Rva000F9FF0ExperienceTracker,e5c139c0060ebac1f5223fdd,claude-sonnet,20261109001027-738da0,2026-11-09
