@@ -36,6 +36,10 @@ template <int NUMBITS>
 class BitFlags
 {
 public:
+	BitFlags()
+	{
+		memset(m_bits, 0, sizeof(m_bits));
+	}
 	BitFlags(Int bit)
 	{
 		memset(m_bits, 0, sizeof(m_bits));
@@ -44,21 +48,14 @@ public:
 	UnsignedInt m_bits[(NUMBITS + 31) / 32];
 };
 
-// 320-bit model-condition mask, zeroed wholesale like the 0x0028DDC0 parser's.
-class BfmeConditionFlags
-{
-public:
-	BfmeConditionFlags()
-	{
-		memset(m_bits, 0, sizeof(m_bits));
-	}
-	UnsignedInt m_bits[10];
-};
+// 320-bit model-condition mask, zeroed wholesale like the 0x0028DDC0 parser's; retail's
+// Object::clearAndSetModelConditionFlags takes BitFlags<320> (...ABV?$BitFlags@$0BEA@@@0@Z).
+typedef BitFlags<320> BfmeConditionFlags;
 
 class S4Sink004135C0
 {
 public:
-	void invoke(const AsciiString &name, bool active, Int a, Int b, Int c);
+	void invoke(const AsciiString &name, Int active, Int a, Int b, Int c);	// row ?invoke@S4Sink004135C0@@QAEXABVAsciiString@@HHHH@Z
 };
 
 class AICommandInterface
@@ -81,10 +78,11 @@ public:
 	bool bfmeDoneCN();
 };
 
-class BfmeItem1005
+// Retail row ?bfmeGo916D@BfmeThing916D@@QAEXPAX@Z (reached through an ILT; pointer argument).
+class BfmeThing916D
 {
 public:
-	void bfmeDoD1005(Int value);
+	void bfmeGo916D(void *value);
 };
 
 class RiderCarrier;
@@ -383,7 +381,7 @@ UpdateSleepTime DetachableRiderUpdate::update()
 				sink->invoke(data->m_riderSubObjects[i], true, 0, 0, 0);
 		}
 
-		((BfmeItem1005 *)object)->bfmeDoD1005(2);
+		((BfmeThing916D *)object)->bfmeGo916D((void *)2);
 		object->setStatus(BitFlags<86>(OBJECT_STATUS_BIT_38), false);
 
 		if (object->m_modelConditionFlags.test(MODELCONDITION_BIT_264))
