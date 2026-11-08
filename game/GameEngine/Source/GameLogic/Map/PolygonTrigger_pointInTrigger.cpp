@@ -10,10 +10,7 @@ typedef float Real;
 
 // BFME float-coordinate overload: the original method name is not recovered.
 // Only the three scalar coordinates are used by this TU's ABI view.
-struct Coord3D
-{
-	float x, y, z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct ICoord3D
 {
