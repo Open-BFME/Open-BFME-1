@@ -6142,3 +6142,4 @@ game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicRva006BE890.cpp|
 game/Libraries/Source/EA/Apt/AptString/Rva0089DD40.cpp|function||rva0089DD40,0e91752fd18655ec2872cb0b,claude-sonnet,20261109004225-e388bc,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapFileHeader,9c78ba2247edab542e1f1f4a,claude-sonnet,20261109004400-190150,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapInfoHeader,45d453203187a35e3efbb85a,claude-sonnet,20261109004400-190150,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|type||Rva00177A90AIUpdate,72a3724ee34bd588702a7891,claude-sonnet,20261109004530-faaec2,2026-11-09
