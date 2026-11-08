@@ -97,7 +97,7 @@ class DX8Wrapper
 public:
 	static void Begin_Scene_Inner(void);
 
-private:
+protected:
 	static IDirect3DDevice8 *D3DDevice;
 };
 
