@@ -13,7 +13,7 @@ struct SixWords001FFFC0 { unsigned int words[6]; };
 struct Data001FFFC0 { char pad000[0x224]; SixWords001FFFC0 field224; float field23c; };
 struct Speed001FFFC0 { char pad000[0x470]; float field470; };
 class PhysicsBehavior { public: char pad00[0x5d]; bool field5d; void rva0029AB10(const Rva0029AB10Coord3D *,float,unsigned int); };
-class AI001FFFC0 { public:
+class AIUpdateInterface { public:
 virtual void slot000();
 virtual void slot004();
 virtual void slot008();
@@ -111,7 +111,7 @@ virtual void slot14();
 virtual float slot18(float,float,void *);
 };
 extern TerrainLogic *TheTerrainLogic;
-struct Object001FFFC0 { char pad00[0x38]; Rva0029AB10Coord3D field38; float field44; char pad48[0x114-0x48]; unsigned int field114; char pad118[0x204-0x118]; AI001FFFC0 *field204; PhysicsBehavior *field208; };
+struct Object001FFFC0 { char pad00[0x38]; Rva0029AB10Coord3D field38; float field44; char pad48[0x114-0x48]; unsigned int field114; char pad118[0x204-0x118]; AIUpdateInterface *m_ai; PhysicsBehavior *m_physics; };
 class DeathFlight001FFFC0 { public:
 char pad00[0xa0]; Rva0029AB10Coord3D fielda0;
 void begin(const DamageInfo *info);
@@ -122,8 +122,8 @@ void DeathFlight001FFFC0::begin(const DamageInfo *info)
  ((SlowDeathBehavior *)this)->SlowDeathBehavior::beginSlowDeath(info);
  Object001FFFC0 *object=*(Object001FFFC0 **)((char *)this-0x1c);
  Rva0029AB10Coord3D position; position.x=object->field38.x; position.y=object->field38.y; position.z=object->field38.z;
- AI001FFFC0 *ai=object->field204;
- PhysicsBehavior *physics=object->field208;
+ AIUpdateInterface *ai=object->m_ai;
+ PhysicsBehavior *physics=object->m_physics;
  if(ai) {
   if(object->field114 & 0x10000000) {
    Speed001FFFC0 *speed=ai->slot150();

@@ -972,3 +972,6 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60
 game/GameEngine/Source/Common/RTS/UnitRevivalTracker.cpp|type||Rva000F9FF0ExperienceTracker,ExperienceTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field04,m_sourceID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/UnitRevivalTracker.cpp|type||Rva000F9FF0ExperienceTracker,ExperienceTracker,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|type||AI001FFFC0,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member||field204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member||field208,m_physics,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
