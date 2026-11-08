@@ -106,10 +106,24 @@ public:
 	ThingTemplate *m_template;
 };
 
-class Object : public Thing
+// Retail's Object::find is the row ?find@AssistedTargetingObjectShim@@QAEPAXH@Z (0x001BE270, ILT 0x00009C41).
+class AssistedTargetingObjectShim
 {
 public:
 	void *find(Int key);
+};
+
+// Retail's WeaponTemplate::bfmeAllowsRelationship is the row ?allows@Rva001E4090@@QAE_NPAX0@Z
+// (0x001E4090, ILT 0x00037349): both arguments travel as pointers.
+class Rva001E4090
+{
+public:
+	Bool allows(void *kind, void *entry);
+};
+
+class Object : public Thing
+{
+public:
 	Relationship getRelationship(const Object *that) const;
 	Player *getControllingPlayer() const;
 	Bool testStatus(Int status) const;
@@ -134,7 +148,6 @@ extern GameLogic *TheGameLogic;
 class WeaponTemplate
 {
 public:
-	Bool bfmeAllowsRelationship(Int kind, void *entry) const;
 	Bool shouldProjectileCollideWith(
 		const Object *projectileLauncher,
 		const Object *projectile,
@@ -167,7 +180,7 @@ Bool WeaponTemplate::shouldProjectileCollideWith(
 			return false;
 		if (projectileLauncher->m_containedBy == vic)
 			return false;
-		if (self->bfmeAllowsRelationship(6, const_cast<Object *>(projectileLauncher)->find(0)))
+		if (((Rva001E4090 *)self)->allows((void *)6, ((AssistedTargetingObjectShim *)projectileLauncher)->find(0)))
 		{
 			if (vic->testStatus(OBJECT_STATUS_BURNED))
 				return false;
