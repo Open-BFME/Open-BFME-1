@@ -53,6 +53,8 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 };
 
+class AIAttackMeleeHordeWaitPathState;
+
 class Object : public Thing
 {
 public:
@@ -61,7 +63,10 @@ public:
 		return (const Coord3D *)((const char *)this + 0x38);
 	}
 
+	// Retail's Object::findModule (row 0x001BEE60, ILT 0x0002AE23) is protected.
+protected:
 	Module *findModule(NameKeyType key) const;
+	friend class AIAttackMeleeHordeWaitPathState;
 };
 
 class BfmeAttackQuery

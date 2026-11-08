@@ -40,10 +40,14 @@ class Module
 {
 };
 
+namespace Rva002EFB20 { void __cdecl helper( void *obj, bool flag ); }
+
+// Retail's Object::findModule (row 0x001BEE60, ILT 0x0002AE23) is protected.
 class Object
 {
-public:
+protected:
 	Module *findModule( NameKeyType key ) const;
+	friend void __cdecl Rva002EFB20::helper( void *obj, bool flag );
 };
 
 class FlammableUpdate
