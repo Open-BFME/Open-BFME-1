@@ -22,7 +22,7 @@ public:
 	Overridable *friend_getFinalOverride(void);		// ILT 0x00048C61
 
 	char m_bfmeHeadA[0x04];
-	Overridable *m_bfmeNextOverride;			// +0x04
+	Overridable *m_nextOverride;			// +0x04
 	char m_bfmeHeadB[0x20 - 0x08];
 	Int m_bfmeRequired;					// +0x20
 };
@@ -61,12 +61,12 @@ unsigned char BfmeSpecialPowerAllowanceStore::_bfme_allows(
 	// The walk writes back over the argument rather than into a second
 	// variable: with two names the compiler keeps two registers and copies
 	// the template into the one the requirement is read through.
-	Overridable *next = tmpl->m_bfmeNextOverride;
+	Overridable *next = tmpl->m_nextOverride;
 
 	if (next)
 	{
-		if (next->m_bfmeNextOverride)
-			next = next->m_bfmeNextOverride->friend_getFinalOverride();
+		if (next->m_nextOverride)
+			next = next->m_nextOverride->friend_getFinalOverride();
 
 		tmpl = (const SpecialPowerTemplate *)next;
 	}
