@@ -1102,3 +1102,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeContain,m_contain,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeDieFrame,m_dieFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_allows.cpp|member||m_bfmeNextOverride,m_nextOverride,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
