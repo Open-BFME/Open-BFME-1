@@ -6162,3 +6162,7 @@ game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022B3B0,9d1cb693bae
 game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022A450,6f38e48cb4bfbd4561916bc7,claude-sonnet,20261109005732-eefb5c,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsGarrisonedUnits.cpp|type||Rva003252A0Contain,34243fae4c9b1094a7a4f38f,claude-sonnet,20261109010152-87dca5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/SpecialPowerModule_initiateIntentToDoSpecialPower.cpp|local|SpecialPowerModule::initiateIntentToDoSpecialPower|tmpl,dc973b281609142527982a18,claude-sonnet,20261109010152-972844,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|member||m_14,973bd78b02858c8724bc6bb5,claude-sonnet,20261109005732-9c7919,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|member||m_18,77b57bda0372851c62423b00,claude-sonnet,20261109005732-9c7919,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|param|SpawnUnitBehaviorBase|m,762f8cc263a3a19bb0b2c7ea,claude-sonnet,20261109005732-9c7919,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorConstructor.cpp|param|SpawnUnitBehavior::SpawnUnitBehavior|m,1cb567707a9e63bfc3e317ac,claude-sonnet,20261109005732-9c7919,2026-11-09
