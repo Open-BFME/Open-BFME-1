@@ -21,23 +21,13 @@
 //
 // Declared once, that Team is a single layout instead of three overlapping
 // guesses: the state string at +0x18, the created flag at +0x32, the ready
-// flag at +0xFC. The state comparison keeps its own shim class because the
-// callee it reaches is pinned under that name -- AsciiString::compare through
-// the ILT thunk at 0x000220C5, not a member of the string model below.
+// flag at +0xFC. The state comparison is AsciiString::compare (reached through
+// the ILT thunk at 0x000220C5), declared on the string model below; the
+// pinned ?compare@AsciiStringCompareShim name it used to carry defined nothing.
 
 typedef bool Bool;
 
 class AsciiString;
-
-// The string comparison the state conditions reach; retail 0x000220C5.
-class AsciiStringCompareShim
-{
-public:
-	int compare(const AsciiString &other) const throw();
-
-private:
-	char *m_text;
-};
 
 template <class T> class StringBase
 {
@@ -60,25 +50,33 @@ public:
 			*(const StringBase<char> *)&that);
 	}
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+	// The string comparison the state conditions reach (ILT 0x000220C5 to the StringBase body).
+	int compare(const AsciiString &other) const throw();
 
 private:
 	char *m_text;
+};
+
+// Team::contains is reached through ILT 0x0002E23F to this row (0x000F72B0).
+class Rva000F72B0AsciiHashOwner
+{
+public:
+	unsigned char contains(const AsciiString &key);
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team
 {
 public:
-	Bool hasAnyObjects(Bool includeDead);
-	char contains(const AsciiString &key);
+	Bool hasAnyObjects(Bool includeDead) const;	// row ?hasAnyObjects@Team@@QBE_N_N@Z
 
-	const AsciiStringCompareShim &getState(void) const { return m_state; }
+	const AsciiString &getState(void) const { return m_state; }
 	Bool isCreated(void) { return m_created; }
 	Bool isReady(void) { return m_ready; }
 
 private:
 	unsigned char m_pad[0x18];
-	AsciiStringCompareShim m_state;				// this+0x18
+	AsciiString m_state;				// this+0x18
 	unsigned char m_pad1C[0x32 - 0x1C];
 	Bool m_created;						// this+0x32
 	unsigned char m_pad33[0xFC - 0x33];
@@ -163,7 +161,7 @@ Bool ScriptConditions::evaluateTeamHasNamed(Parameter *pTeamParm, Parameter *pNa
 	if (!theTeam) {
 		return false;
 	}
-	if (theTeam->contains(pNameParm->getString())) {
+	if (((Rva000F72B0AsciiHashOwner *)theTeam)->contains(pNameParm->getString())) {
 		return true;
 	}
 	return false;
