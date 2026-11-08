@@ -20,8 +20,14 @@ inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 class Drawable;
 int rva0075B4A0(const Drawable *, bool *);
-class DrawableApplyPendingThunk { public: void apply(bool value); };
+class Rva0075CC80Owner;
+// Retail's Drawable::applyPendingModelConditionFlags (row 0x0041AA90, ILT 0x0002D439) is private.
+class Drawable { void applyPendingModelConditionFlags(bool value); friend class Rva0075CC80Owner; };
 class BFMERopeDrawableGetPositionShim { public: const Coord3D *get() const; };
+// The rope getter's row (?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ, reached by retail through
+// ILT 0x0004B12D) names its struct-keyed Coord3D; this unit's Coord3D is class-keyed, so the call
+// names that symbol exactly.
+extern "C" void __identifier("?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ")(void);
 struct Rva0075CC80Vector { float x,y,z; };
 class View;
 extern View *TheTacticalView;
@@ -140,7 +146,7 @@ void Rva0075CC80Owner::rva0075CC80()
   int kind=rva0075B4A0(kindDrawable,0);
   if(kind!=m_0A4) {
    m_0A4=kind;
-   ((DrawableApplyPendingThunk*)drawable)->apply(true);
+   ((Drawable*)drawable)->applyPendingModelConditionFlags(true);
   }
   return;
  }
@@ -154,7 +160,9 @@ void Rva0075CC80Owner::rva0075CC80()
   memcpy(&offset.x,&cameraX,4);
   memcpy(&offset.y,&cameraY,4);
   memcpy(&offset.z,&cameraZ,4);
-  const Coord3D *position=((BFMERopeDrawableGetPositionShim*)drawable)->get();
+  union { void (*raw)(); const Coord3D *(BFMERopeDrawableGetPositionShim::*member)() const; } ropePosition;
+  ropePosition.raw=__identifier("?getPosition@BFMERopeDrawable@@QBEPBUCoord3D@@XZ");
+  const Coord3D *position=(((BFMERopeDrawableGetPositionShim*)drawable)->*ropePosition.member)();
   offset.x-=position->x;
   offset.y-=position->y;
   offset.z-=position->z;
@@ -171,7 +179,7 @@ void Rva0075CC80Owner::rva0075CC80()
    m_0A4=kind;
   } else if(kind!=m_0A0) {
    m_0A4=kind;
-   ((DrawableApplyPendingThunk*)drawable)->apply(false);
+   ((Drawable*)drawable)->applyPendingModelConditionFlags(false);
   }
  }
 }
