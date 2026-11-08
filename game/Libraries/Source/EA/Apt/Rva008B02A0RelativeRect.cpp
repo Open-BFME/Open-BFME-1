@@ -79,8 +79,12 @@ extern struct Rva008AE770Stack Rva008AE770TheStack;
 // by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
-extern void *global01337A04;
-extern char key01338734[],key01338738[],key01338740[],key01338744[];
+// Retail VA 0x01337A04 is the int cell Rva0089BBF0InitGlobals.cpp defines as g_bfmeB1038.
+extern int g_bfmeB1038;
+// Four-byte string-object cells at 0x01338734/38/40/44: retail pushes each one's address as
+// the table key (push imm32 at 0x008B046E/0526/05DE/0696) and a startup initializer stores the string
+// data pointer into the cell; defined here once.
+char key01338734[4], key01338738[4], key01338740[4], key01338744[4];
 Rva00899F00Base *aptRelativeRect008B02A0(Value008B02A0 *self,int argc) {
  if(argc>1) return (Rva00899F00Base *)g_bfmeFallbackDB;
  Value008B02A0 *other=self;
@@ -94,7 +98,7 @@ Rva00899F00Base *aptRelativeRect008B02A0(Value008B02A0 *self,int argc) {
  Rect008B02A0 rect;
  rect.m_f0=1000000000.0f; rect.m_f8=-1000000000.0f;
  rect.m_fC=-1000000000.0f; rect.m_f4=1000000000.0f;
- ((BfmeN1235*)self)->bfmeDo1235(global01337A04,&rect);
+ ((BfmeN1235*)self)->bfmeDo1235((void*)g_bfmeB1038,&rect);
  rect.m_f8-=other->m_f20; rect.m_f0-=other->m_f20;
  rect.m_f4-=other->m_f24; rect.m_fC-=other->m_f24;
  Rva8D0D80Value *first=(Rva8D0D80Value*)Float008B02A0::create(rect.m_f8);
