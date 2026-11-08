@@ -6114,3 +6114,7 @@ game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at004,68
 game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at01c,4c4c410933f0e84e82b37589,claude-sonnet,20261109003259-a2d9ec,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector3,530f59a1bc97737c237c7485,claude-sonnet,20261109003149-9cbc47,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector4,45dad72745b677ab2941f101,claude-sonnet,20261109003149-9cbc47,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Coord3D,f200bf2d08639f2552586ff8,claude-sonnet,20261109003150-278cd6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Drawable,06f7f5c14b8eb135f69929ea,claude-sonnet,20261109003150-278cd6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SlavedUpdate,e9fb873eff6abbb89a418ca3,claude-sonnet,20261109003150-278cd6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SpawnBehaviorModuleData,4da7c202dec35b09444a0aa8,claude-sonnet,20261109003150-278cd6,2026-11-09

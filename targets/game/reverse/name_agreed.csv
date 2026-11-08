@@ -1050,3 +1050,6 @@ game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|Pathfi
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeInteractsWithBridge,interactsWithBridge,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00403520 ?getBlockZone@PathfindZoneManager@@QBEGABUPathfindMovementProfile@@HHPAPAUPathfindCell@@@Z | outside every window of the ta,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector3,Vector3,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Rva0090FBA0ConvertColors.cpp|type||Rva0090FBA0Vector4,Vector4,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Coord3D,Coord3D,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0Drawable,Drawable,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorComputeAggregateStates.cpp|type||Rva0020BAE0SpawnBehaviorModuleData,SpawnBehaviorModuleData,claude-sonnet+gpt-6-astra,agreed,2026-11-09
