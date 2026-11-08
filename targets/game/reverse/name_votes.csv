@@ -6009,3 +6009,4 @@ game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029B4E0.cpp|me
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|type||Rva001B7200Locomotor,e3e086d4f60919605b2c7e15,claude-sonnet,20261109000316-6785d6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|member||m_coord04,aae2a4c19d00f449e190997f,claude-sonnet,20261109000316-6785d6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectBuildObjectInfo.cpp|type||BfmeExperienceTrackerFields,b15cb643f4c409bdf60f3b9d,claude-sonnet,20261109000237-bcba52,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/AudioLoopUpgradeCtorModuleFactory.cpp|member||m_f14,54e85f5c3e1592306361f159,claude-sonnet,20261109000307-3dc3e5,2026-11-09
