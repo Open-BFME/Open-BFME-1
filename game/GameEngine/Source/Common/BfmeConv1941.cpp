@@ -12,33 +12,26 @@ struct BfmeMsgDN
 	int m_bfmeZeroDN;
 };
 
-class BfmeObjDN;
-
-struct Rva00367E30Logic
-{
-	BfmeObjDN *bfmeFindDN(int id);
-};
+class Object;
 
 // retail global at 0x012F0898 is EA's `GameLogic *TheGameLogic`, defined once in
-// game/GameEngine/Source/GameLogic/System/GameLogic.cpp.  Only the symbol name
-// matters here; Rva00367E30Logic is this TU's view of the pointee.
-class GameLogic;
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp; this view carries the pinned
+// findObjectByID row (0x0009A510, ILT 0x0001F253).
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
 extern GameLogic *TheGameLogic;
 
-static inline Rva00367E30Logic *theBfmeGameLogic()
+// retail's player-list global at 0x012ED748 links against
+// game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition; this view carries the pinned
+// isLocalAlliedWith row (0x000DF810, ILT 0x00003A85).
+class PlayerList
 {
-	return (Rva00367E30Logic *)TheGameLogic;
-}
-
-// Rva002EE330PlayerList is this TU's view of retail's player-list global at
-// 0x012ED748.  The global itself carries its canonical spelling, so it links
-// against game/GameEngine/Source/Common/RTS/PlayerList.cpp's definition.
-struct Rva002EE330PlayerList
-{
-	char bfmeOwnsDN(BfmeObjDN *o);
+public:
+	unsigned char isLocalAlliedWith(Object *o);
 };
-
-class PlayerList;
 extern PlayerList *ThePlayerList;
 
 class ControlBar
@@ -65,7 +58,7 @@ void BfmeHostDN::bfmeNotifyDN(void *unused)
 	if (id == 0)
 		return;
 
-	BfmeObjDN *o = theBfmeGameLogic()->bfmeFindDN(id);
+	Object *o = TheGameLogic->findObjectByID(id);
 
 	if (o == 0)
 		return;
@@ -73,7 +66,7 @@ void BfmeHostDN::bfmeNotifyDN(void *unused)
 	if (ThePlayerList == 0)
 		return;
 
-	if (((Rva002EE330PlayerList *)ThePlayerList)->bfmeOwnsDN(o) == 0)
+	if (ThePlayerList->isLocalAlliedWith(o) == 0)
 		return;
 
 	int again = m_bfmeIdDN;
