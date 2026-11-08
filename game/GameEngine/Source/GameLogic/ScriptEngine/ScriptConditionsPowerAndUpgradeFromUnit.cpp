@@ -42,29 +42,32 @@ private:
 };
 
 // Player (upstream Player.h m_playerIndex; retail reads it at +0x24, see
-// RTS/Player.cpp:638). The invented name stays because bfmeLook1088's
-// symbols.csv pin mangles it.
-struct BfmeR1088
+// RTS/Player.cpp:638).
+class Player
 {
+public:
 	char m_bfmePad[0x24];
 	Int m_playerIndex;
 };
 
-// PlayerList (ThePlayerList shares g_bfmeD1088's address); bfmeLook1088 is the
-// getEachPlayerFromMask ILT thunk, pinned under this name. The global itself is
-// retail's ThePlayerList and is declared with the defining spelling
-// ?ThePlayerList@@3PAVPlayerList@@A; bfmeLook1088 is still called through the
-// class symbols.csv pins it under, hence the casts.
-class PlayerList;
-
-class BfmeD1088
+// PlayerList (ThePlayerList shares g_bfmeD1088's address); getEachPlayerFromMask is
+// the ILT-called row at the pinned name. The global is retail's ThePlayerList,
+// declared with the defining spelling ?ThePlayerList@@3PAVPlayerList@@A.
+class PlayerList
 {
 public:
-	BfmeR1088 *bfmeLook1088(short *h);
+	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
-// ScriptEngine (TheScriptEngine shares g_bfmeP1088's address). bfmeNext1088 is
-// the pinned name of the resolver that turns a player Parameter into a mask.
+// ScriptEngine's player-mask resolver is the pinned row at 0x0034DB40.
+class ScriptEngine
+{
+public:
+	unsigned short unidentified_0034DB40(Parameter *parameter);
+};
+
+// ScriptEngine (TheScriptEngine shares g_bfmeP1088's address): this view carries
+// only the vtable slots the bodies below call.
 class BfmeP1088
 {
 public:
@@ -118,16 +121,23 @@ public:
 	virtual Bool isSpecialPowerComplete(Int playerIndex, const AsciiString &completedPower, Bool removeFromList, ObjectID sourceObj);
 	virtual Bool isUpgradeComplete(Int playerIndex, const AsciiString &upgrade, Bool removeFromList, ObjectID sourceObj);
 	virtual void bfmeSlot1088P_49(void);
-	int bfmeNext1088(int a);
 };
 
 // 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
-// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
-// BfmeP1088 surface above is only the stand-in for the vtable slots and the
-// resolver this body calls, so the real global is reinterpreted at each call.
-class ScriptEngine;
+// GameLogic/ScriptEngine/script_engine.h; the BfmeP1088 surface above is only the
+// stand-in for the vtable slots this body calls, so the real global is
+// reinterpreted at each call.
 extern PlayerList *ThePlayerList;
 extern ScriptEngine *TheScriptEngine;
+
+// Retail keeps the resolver's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int nextPlayerMask(Parameter *parameter)
+{
+	typedef int (ScriptEngine::*Raw)(Parameter *);
+	Raw raw = reinterpret_cast<Raw>(&ScriptEngine::unidentified_0034DB40);
+	return (TheScriptEngine->*raw)(parameter);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
@@ -160,9 +170,9 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitTriggered(
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = nextPlayerMask(pPlayerParm);
 	while (playerMask) {
-		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -187,9 +197,9 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitMidway(
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = nextPlayerMask(pPlayerParm);
 	while (playerMask) {
-		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -214,9 +224,9 @@ Bool ScriptConditions::evaluatePlayerSpecialPowerFromUnitComplete(
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = nextPlayerMask(pPlayerParm);
 	while (playerMask) {
-		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;
@@ -241,9 +251,9 @@ Bool ScriptConditions::evaluateUpgradeFromUnitComplete(
 			return false;
 		sourceID = pUnit->getID();
 	}
-	PlayerMaskType playerMask = reinterpret_cast<BfmeP1088 *>(TheScriptEngine)->bfmeNext1088(reinterpret_cast<int>(pPlayerParm));
+	PlayerMaskType playerMask = nextPlayerMask(pPlayerParm);
 	while (playerMask) {
-		BfmeR1088 *pPlayer = reinterpret_cast<BfmeD1088 *>(ThePlayerList)->bfmeLook1088(reinterpret_cast<short *>(&playerMask));
+		Player *pPlayer = ThePlayerList->getEachPlayerFromMask(playerMask);
 
 		if (pPlayer) {
 			Int playerIndex = pPlayer->m_playerIndex;

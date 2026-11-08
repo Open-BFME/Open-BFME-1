@@ -7,19 +7,21 @@ struct BfmeT1090
 	int m_bfme08;
 };
 
-class BfmeS1090
+// Row at 0x004C7E10 (pinned ?isLimitAtLeastCount@Rva000C7E10Object@@QBE_NXZ): the sub-object at Player+0xA4.
+class Rva000C7E10Object
 {
 public:
-	char bfmeChk1090(void);
+	bool isLimitAtLeastCount(void) const;
 	char m_bfmePad[4];
 };
 
-class BfmeR1090
+// TU-local layout view of Player; getRankLevelCap is the pinned row at the call's ILT.
+class Player
 {
 public:
-	int bfmeVal1090(void);
+	int getRankLevelCap(void);
 	char m_bfmePad[0xa4];
-	BfmeS1090 m_bfmeSub;
+	Rva000C7E10Object m_bfmeSub;
 	char m_bfmePad1[0x17c];
 	int m_bfme224;
 	char m_bfmePad2[0x30];
@@ -27,31 +29,35 @@ public:
 };
 
 // The global at 0x00EED748 is retail's ThePlayerList, declared with the
-// defining spelling ?ThePlayerList@@3PAVPlayerList@@A. bfmeLook1090 is still
-// called through the class symbols.csv pins it under, hence the casts.
-class PlayerList;
-
-class BfmeD1090
+// defining spelling ?ThePlayerList@@3PAVPlayerList@@A.
+class PlayerList
 {
 public:
-	BfmeR1090 *bfmeLook1090(short *h);
+	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
-class BfmeP1090
+class Parameter;
+
+class ScriptEngine
 {
 public:
-	int bfmeNext1090(int a);
+	unsigned short unidentified_0034DB40(Parameter *parameter);
 };
 
 // 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
-// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
-// BfmeP1090 surface below is only the stand-in for the methods this body calls,
-// so the real global is reinterpreted at the call sites.
-class ScriptEngine;
+// GameLogic/ScriptEngine/script_engine.h, and this TU's ScriptEngine view above
+// carries only the pinned player-mask resolver (row 0x0034DB40) this body calls.
 extern PlayerList *ThePlayerList;
 extern ScriptEngine *TheScriptEngine;
 
-class Parameter;
+// Retail keeps the resolver's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int nextPlayerMask(Parameter *parameter)
+{
+	typedef int (ScriptEngine::*Raw)(Parameter *);
+	Raw raw = reinterpret_cast<Raw>(&ScriptEngine::unidentified_0034DB40);
+	return (TheScriptEngine->*raw)(parameter);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
@@ -62,9 +68,9 @@ protected:
 
 char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 {
-	a = reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(a);
+	a = nextPlayerMask((Parameter *)a);
 	while ((short)a) {
-		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
 		if (r && t->m_bfme08 - 1 == r->m_bfme224)
 			return 1;
@@ -74,14 +80,14 @@ char __stdcall bfmeGo1090A(int a, BfmeT1090 *t)
 
 char __stdcall bfmeGo1090B(int a)
 {
-	a = reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(a);
+	a = nextPlayerMask((Parameter *)a);
 	while ((short)a) {
-		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
 		if (r) {
-			BfmeS1090 *s = &r->m_bfmeSub;
+			Rva000C7E10Object *s = &r->m_bfmeSub;
 
-			if (s && s->bfmeChk1090())
+			if (s && s->isLimitAtLeastCount())
 				return 1;
 		}
 	}
@@ -92,15 +98,15 @@ char __stdcall bfmeGo1090B(int a)
 bool ScriptConditions::evaluatePlayerHasPower(Parameter *playerParm)
 {
 	playerParm = reinterpret_cast<Parameter *>(
-		reinterpret_cast<BfmeP1090 *>(TheScriptEngine)->bfmeNext1090(reinterpret_cast<int>(playerParm)));
+		nextPlayerMask(playerParm));
 	while ((short)reinterpret_cast<int>(playerParm)) {
-		BfmeR1090 *r = reinterpret_cast<BfmeD1090 *>(ThePlayerList)->bfmeLook1090(
-			reinterpret_cast<short *>(&playerParm));
+		Player *r = ThePlayerList->getEachPlayerFromMask(
+			*reinterpret_cast<unsigned short *>(&playerParm));
 
 		if (r) {
 			int v = r->m_bfme258;
 
-			if (v >= r->bfmeVal1090())
+			if (v >= r->getRankLevelCap())
 				return 1;
 		}
 	}

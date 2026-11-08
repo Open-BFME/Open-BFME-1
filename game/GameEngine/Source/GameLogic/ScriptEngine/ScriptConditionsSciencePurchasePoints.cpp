@@ -7,38 +7,52 @@ struct BfmeT1089
 	int m_bfme08;
 };
 
-class BfmeR1089
+// TU-local layout view of Player. The `this`-only helpers are the pinned rows at the ILTs
+// retail calls: 0x000C9580 (?call@Rva000C9580, bool) and Player::countBuildings.
+class Rva000C9580
 {
 public:
-	char bfmeChk1089(void);
-	int bfmeVal1089(void);
+	bool call(void);
+};
+
+class Player
+{
+public:
+	int countBuildings(void);
 	char m_bfmePad[0x264];
-	int m_bfme264;
+	int m_sciencePurchasePoints;
 };
 
-class BfmeD1089
+class PlayerList
 {
 public:
-	BfmeR1089 *bfmeLook1089(short *h);
+	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
-class BfmeP1089
+class Parameter;
+
+class ScriptEngine
 {
 public:
-	int bfmeNext1089(int a);
+	unsigned short unidentified_0034DB40(Parameter *parameter);
 };
 
 // Retail 0x00EED748 is ThePlayerList (see game_engine_subsystems.h), so the
-// global is spelled with its defining name; the BfmeD1089 surface below is only
-// the stand-in for the PlayerList methods this body calls.
-// 0x012F076C is retail's TheScriptEngine singleton; the class is declared by
-// GameLogic/ScriptEngine/script_engine.h and only forward-declared here. The
-// BfmeP1089 surface below is only the stand-in for the methods this body calls,
-// so the real global is reinterpreted at the call sites.
-class ScriptEngine;
-class PlayerList;
+// global is spelled with its defining name; the PlayerList above carries only the
+// pinned getEachPlayerFromMask row this body calls.
+// 0x012F076C is retail's TheScriptEngine singleton; the ScriptEngine view above
+// carries only the pinned player-mask resolver (row 0x0034DB40).
 extern PlayerList *ThePlayerList;
 extern ScriptEngine *TheScriptEngine;
+
+// Retail keeps the resolver's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int nextPlayerMask(Parameter *parameter)
+{
+	typedef int (ScriptEngine::*Raw)(Parameter *);
+	Raw raw = reinterpret_cast<Raw>(&ScriptEngine::unidentified_0034DB40);
+	return (TheScriptEngine->*raw)(parameter);
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter
@@ -65,12 +79,12 @@ bool ScriptConditions::evaluateSciencePurchasePoints(
 	int n = pointsParm->getInt();
 
 	pointsParm = reinterpret_cast<Parameter *>(
-		reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(reinterpret_cast<int>(playerParm)));
+		nextPlayerMask(playerParm));
 	while ((short)reinterpret_cast<int>(pointsParm)) {
-		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089(
-			reinterpret_cast<short *>(&pointsParm));
+		Player *r = ThePlayerList->getEachPlayerFromMask(
+			*reinterpret_cast<unsigned short *>(&pointsParm));
 
-		if (r && r->m_bfme264 >= n)
+		if (r && r->m_sciencePurchasePoints >= n)
 			return true;
 	}
 	return false;
@@ -78,11 +92,11 @@ bool ScriptConditions::evaluateSciencePurchasePoints(
 
 char __stdcall bfmeGo1089B(int a)
 {
-	a = reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(a);
+	a = nextPlayerMask((Parameter *)a);
 	while ((short)a) {
-		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
-		if (r && r->bfmeChk1089())
+		if (r && reinterpret_cast<Rva000C9580 *>(r)->call())
 			return 1;
 	}
 	return 0;
@@ -92,13 +106,13 @@ char __stdcall bfmeGo1089C(BfmeT1089 *t, int a)
 {
 	int n;
 
-	a = reinterpret_cast<BfmeP1089 *>(TheScriptEngine)->bfmeNext1089(a);
+	a = nextPlayerMask((Parameter *)a);
 	n = 0;
 	while ((short)a) {
-		BfmeR1089 *r = reinterpret_cast<BfmeD1089 *>(ThePlayerList)->bfmeLook1089((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
 		if (r)
-			n += r->bfmeVal1089();
+			n += r->countBuildings();
 	}
 	return t->m_bfme08 >= n;
 }
