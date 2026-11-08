@@ -147,13 +147,13 @@ public:
 	}
 };
 
-class Rva000F9FF0ExperienceTracker
+class ExperienceTracker
 {
 public:
 	// Thiscall body 0x001B2070 reached through ILT 0x000347E3.
 	int rva001B2070() const
 	{
-		union { void (*entry)(); int (Rva000F9FF0ExperienceTracker::*member)() const; } call;
+		union { void (*entry)(); int (ExperienceTracker::*member)() const; } call;
 		call.entry = j_000347e3;
 		return (this->*call.member)();
 	}
@@ -178,7 +178,7 @@ public:
 class Object
 {
 public:
-	Rva000F9FF0ExperienceTracker *getExperienceTracker() const { return m_experienceTracker; }
+	ExperienceTracker *getExperienceTracker() const { return m_experienceTracker; }
 	int getF370() const { return m_f370; }
 
 	// The null path writes 0 into the result temporary before the join (xor eax, eax).
@@ -198,7 +198,7 @@ public:
 	unsigned char m_vtable[4];
 	ThingTemplate *m_template;
 	unsigned char m_pad008[0x210 - 8];
-	Rva000F9FF0ExperienceTracker *m_experienceTracker;
+	ExperienceTracker *m_experienceTracker;
 	unsigned char m_pad214[0x224 - 0x214];
 	Rva000F9FF0Block14 m_completedUpgrades;
 	unsigned char m_pad23c[0x370 - 0x23c];
