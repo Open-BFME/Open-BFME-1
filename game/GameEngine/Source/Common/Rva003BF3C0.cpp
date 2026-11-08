@@ -3,7 +3,7 @@
 // Conditional expression reproduces the retail null-result path.
 struct ICoord2D { int x; int y; };
 struct Rva00615D50Object { char pad[8]; int id; };
-class Gen_00609320 { public: unsigned char bfmeDisabled() const; };
+class Gen_00609320 { public: int bfmeDisabled() const; };
 
 class Glo012F7048Type
 {
@@ -25,10 +25,14 @@ extern Rva006092D0State *g_rva012F7048LivingWorld;
 // calls.
 class BfmeGameCW;
 
+// ILT-called helpers keep the pinned owners' names (rows at 0x003BDEC0, 0x003BD830, 0x0060D480).
+class Rva003BDEC0 { public: bool anyMatching( int mask ); };
+class Rva003BD830Owner { public: bool anyReady() const; };
+class Rva0060D480CampaignGate { public: bool isOpen() const; };
+
 class Glo012F706CType
 {
 public:
-	bool isOpen() const;
 	Rva00615D50Object *lookup(const ICoord2D *position, int category);
 };
 
@@ -49,8 +53,6 @@ class Rva003BF540
 {
 public:
 	void run();
-	bool anyMatching( int mask );
-	bool anyReady() const;
 	Gen003BD7D0Node *find( int id );
 	void applyOwner( Gen003BD7D0Node *owner );
 
@@ -64,7 +66,7 @@ public:
 
 void Rva003BF540::run()
 {
-	if( !reinterpret_cast<Glo012F706CType *>(g_bfmeGameCW)->isOpen() )
+	if( !reinterpret_cast<Rva0060D480CampaignGate *>(g_bfmeGameCW)->isOpen() )
 		goto fail;
 	Glo012F7048Type *state = Glo012F7048;
 	if( state->m_at04 != 0 )
@@ -73,15 +75,15 @@ void Rva003BF540::run()
 			goto fail;
 		if( m_at78 )
 			goto fail;
-		if( anyMatching( 4 ) )
+		if( ((Rva003BDEC0 *)this)->anyMatching( 4 ) )
 			goto fail;
-		if( anyMatching( 8 ) )
+		if( ((Rva003BDEC0 *)this)->anyMatching( 8 ) )
 			goto fail;
 		state = Glo012F7048;
 	}
-	if( ((Gen_00609320 *)state)->bfmeDisabled() )
+	if( (unsigned char)((Gen_00609320 *)state)->bfmeDisabled() )
 		goto fail;
-	if( anyReady() )
+	if( ((Rva003BD830Owner *)this)->anyReady() )
 		goto fail;
 	if( m_at1C )
 	{
