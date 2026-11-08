@@ -125,7 +125,7 @@ class AICommandInterface {public: void aiIdle(CommandSourceType cmdSource);};
 class Commands002439F0 { public: void idle(CommandSourceType source) {((AICommandInterface *)this)->aiIdle(source);} };
 class Member002439F0 {public:
  char pad000[0x74]; int field074; int field078; char pad07C[0x94-0x7c]; unsigned field094;
- char pad098[0x204-0x98]; AI002439F0 *field204; char pad208[12]; Member002439F0 *field214;
+ char pad098[0x204-0x98]; AI002439F0 *m_ai; char pad208[12]; Member002439F0 *field214;
  Member002439F0 *parent(bool b) {
   union {void (*p)(); Member002439F0 *(Member002439F0::*m)(int);} c;
   c.p=j_0000faa6; return (this->*c.m)(b);
@@ -236,7 +236,7 @@ bool MemberTarget002439F0::check(Member002439F0 *arg) {
  for(_STL::list<Member002439F0 *>::iterator it=members.begin();it!=members.end();++it) {
   Member002439F0 *member=*it;
   if(found) break;
-  AI002439F0 *ai=member->field204;
+  AI002439F0 *ai=member->m_ai;
   if(!ai) continue;
   if(ai->slot184()) {
    if(close) found=true;
