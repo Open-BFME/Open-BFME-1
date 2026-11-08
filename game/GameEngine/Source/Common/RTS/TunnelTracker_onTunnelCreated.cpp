@@ -23,7 +23,7 @@ class Object
 {
 public:
 	char m_bfmeHead[0x74];
-	ObjectID m_bfmeID;					// +0x74
+	ObjectID m_id;					// +0x74
 };
 
 namespace _STL
@@ -89,14 +89,14 @@ public:
 
 private:
 	char m_bfmeHeadA[0x04];
-	BfmeObjectIDList m_bfmeList;				// +0x04
+	BfmeObjectIDList m_tunnelIDs;				// +0x04
 	char m_bfmeHeadB[0x14 - 0x08];
-	int m_bfmeCount;					// +0x14
+	int m_tunnelCount;					// +0x14
 };
 
 // ?onTunnelCreated@TunnelTracker@@QAEXPBVObject@@@Z
 void TunnelTracker::onTunnelCreated(const Object *object)
 {
-	++m_bfmeCount;
-	m_bfmeList.push_back(object->m_bfmeID);
+	++m_tunnelCount;
+	m_tunnelIDs.push_back(object->m_id);
 }
