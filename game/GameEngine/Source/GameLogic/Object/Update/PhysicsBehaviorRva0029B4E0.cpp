@@ -24,13 +24,13 @@ extern int GetGameLogicRandomValue(int,int,char*,int);
 struct Config0029B4E0 { char pad00[0x18]; int at18,at1c,at20,at24; char pad28[0x28]; FXList* at50; char pad54[4]; bool at58; };
 class PhysicsBehavior { public:
  void rva0029B4E0(); void rva0029B350(bool); void rva0029B120(bool);
- char pad00[4]; Config0029B4E0* at04; Object* at08; char pad0c[0x14]; _STL::vector<Coord3D> at20; char pad2c[0x28]; int at54,at58; bool at5c,at5d;
+ char pad00[4]; Config0029B4E0* m_moduleData; Object* at08; char pad0c[0x14]; _STL::vector<Coord3D> at20; char pad2c[0x28]; int at54,at58; bool at5c,at5d;
 };
 inline void set0029B4E0(Object* o,int n) { if(!o->m_modelConditionFlags.test(n)) { o->m_modelConditionFlags.set(n); o->notifyModelConditionChanged(); } }
 inline void reset0029B4E0(Object* o,int n) { if(o->m_modelConditionFlags.test(n)) { o->m_modelConditionFlags.reset(n); o->notifyModelConditionChanged(); } }
 void PhysicsBehavior::rva0029B4E0() {
  if(at20.size()==0) return;
- Config0029B4E0* data=at04;
+ Config0029B4E0* data=m_moduleData;
  Object* obj=at08;
  FXList* fx=data->at50;
  if(fx && !fx->bfmeIsBlocked()) fx->doFXPos((const Coord3D*)&obj->m_cachedPos,0,0.0f,0);
