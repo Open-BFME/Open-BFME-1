@@ -7,7 +7,7 @@
 // cl: /DNDEBUG /MD /EHsc
 struct Rva00733E30Coord3 { float x,y,z; };
 struct Rva00733E30Coord2 { float x,y; };
-struct Rva00733E30Record {
+struct TTree {
     Rva00733E30Coord3 position;
     float scale;
     char pad10[0x30];
@@ -27,17 +27,17 @@ struct Rva00733E30Type {
     unsigned char textureFlags[4];
     char pad48[0x14];
 };
-class Rva00733E30Owner {
+class W3DTreeBuffer {
 public:
     bool query(int index, Rva00733E30Coord3 *position, float *radius,
         Rva00733E30Coord2 *primary, Rva00733E30Coord2 *secondary);
     char pad000[0x1b0];
-    Rva00733E30Record records[12000];
+    TTree records[12000];
     int count;
     char pad2a7cb4[8];
     Rva00733E30Type types[64];
 };
-bool Rva00733E30Owner::query(int index, Rva00733E30Coord3 *position,
+bool W3DTreeBuffer::query(int index, Rva00733E30Coord3 *position,
     float *radius, Rva00733E30Coord2 *primary, Rva00733E30Coord2 *secondary)
 {
     if (index < count) {
