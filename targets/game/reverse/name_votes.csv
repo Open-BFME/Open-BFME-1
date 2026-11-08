@@ -6011,3 +6011,6 @@ game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|member||m_coor
 game/GameEngine/Source/GameLogic/Object/ObjectBuildObjectInfo.cpp|type||BfmeExperienceTrackerFields,b15cb643f4c409bdf60f3b9d,claude-sonnet,20261109000237-bcba52,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/AudioLoopUpgradeCtorModuleFactory.cpp|member||m_f14,54e85f5c3e1592306361f159,claude-sonnet,20261109000307-3dc3e5,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Rva00972A30AddPrototype.cpp|local|Create_Rva00972880_Prototype|p,9b071d2964517af04d128059,claude-sonnet,20261109000907-faa848,2026-11-09
+game/GameEngine/Source/Common/BfmeConv982.cpp|param|bfmeGo982C|t,85c3c0864616bf608766d445,claude-sonnet,20261109000907-e4b94c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv982.cpp|local|Rva007845D0::method|w,a5ce2e63a11a06822cc8925a,claude-sonnet,20261109000907-e4b94c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv982.cpp|local|Rva007845D0::method|h,c5d01f0b2701c380f50b52ce,claude-sonnet,20261109000907-e4b94c,2026-11-09
