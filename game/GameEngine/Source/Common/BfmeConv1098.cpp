@@ -10,36 +10,50 @@ struct BfmeQ1098
 	char m_bfmebd;
 };
 
-class BfmeR1098
-{
-public:
-	char bfmeOk1098(void);
-	int bfmeEach1098(void *f, void *ctx);
-	char m_bfmePad[4];
-	BfmeQ1098 *m_bfme04;
-};
+class Object;
 
-class BfmeD1098
+// The row name of bfmeGo1098A keeps its invented return type; the object is a Player.
+class BfmeR1098;
+
+// TU-local layout view of Player. The `this`-only helpers are the rows at the ILTs retail
+// calls: Player::isPlayerActive (0x000C9D10) and Player::iterateObjects (0x000CDCF0).
+class Player
 {
 public:
-	BfmeR1098 *bfmeLook1098(short *h);
-	int bfmeStart1098(int a, int b, int c);
+	bool isPlayerActive(void) const;
+	int iterateObjects(void (*callback)(Object *, void *), void *context) const;
+	char m_bfmePad[4];
+	BfmeQ1098 *m_playerTemplate;
 };
 
 // 0x012ED748 is retail's PlayerList singleton (game/GameEngine/Source/Common/RTS/PlayerList.cpp
-// defines `PlayerList *ThePlayerList`); only the address-derived lookups this TU
-// spells are still unnamed, so the global keeps its real spelling and the reads are cast.
-class PlayerList;
+// defines `PlayerList *ThePlayerList`); this view carries the pinned rows
+// getEachPlayerFromMask (0x000DF4A0) and getPlayersWithRelationship (0x000DF5A0).
+class PlayerList
+{
+public:
+	Player *getEachPlayerFromMask(unsigned short &mask);
+	unsigned short getPlayersWithRelationship(int playerIndex, int relationship, bool flag);
+};
 
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
+
+// Retail keeps the relationship mask's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int playersWithRelationship(int playerIndex, int relationship, bool flag)
+{
+	typedef int (PlayerList::*Raw)(int, int, bool);
+	Raw raw = reinterpret_cast<Raw>(&PlayerList::getPlayersWithRelationship);
+	return (ThePlayerList->*raw)(playerIndex, relationship, flag);
+}
 
 BfmeR1098 *bfmeGo1098A(short *h)
 {
 	while (*h) {
-		BfmeR1098 *r = ((BfmeD1098 *)ThePlayerList)->bfmeLook1098(h);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)h);
 
-		if (r && r->bfmeOk1098() && r->m_bfme04 && r->m_bfme04->m_bfmebd)
-			return r;
+		if (r && r->isPlayerActive() && r->m_playerTemplate && r->m_playerTemplate->m_bfmebd)
+			return (BfmeR1098 *)r;
 	}
 	return 0;
 }
@@ -47,14 +61,24 @@ BfmeR1098 *bfmeGo1098A(short *h)
 class BfmeCtx1098
 {
 public:
-	void bfmeInit1098(int a, int b);
 	char m_bfmePad[0x0c];
 	Coord3D m_bfmeCoord;
 	char m_bfme18;
 	char m_bfmePad1[3];
 };
 
-void __cdecl bfmeCb1098(void);
+// Row at 0x0036BDD0 (?set@Rva0036BDD0@@QAEAAV1@PBURva0036BDD0Vec@@0@Z), reached through
+// ILT 0x00021F21; the context block is its receiver.
+struct Rva0036BDD0Vec;
+class Rva0036BDD0
+{
+public:
+	Rva0036BDD0 &set(const Rva0036BDD0Vec *first, const Rva0036BDD0Vec *second);
+};
+
+// The player-object walk callback is Rva00372210::callback (defined below); retail passes
+// its ILT (0x00012D69, the defined row ?j_00012d69@@YAXXZ).
+void __cdecl j_00012d69(void);
 
 enum NameKeyType
 {
@@ -94,8 +118,10 @@ class Object
 public:
 	char m_bfmeHead[4];
 	Overridable *m_bfmeTemplate;
-	Module *findModule(NameKeyType key) const;
 	char m_bfmePad08[0xe0];
+protected:
+	Module *findModule(NameKeyType key) const;
+	friend class Rva00372210;
 };
 
 class Module
@@ -182,12 +208,12 @@ char bfmeGo1098B(int a, int b, int c)
 	BfmeCtx1098 ctx;
 	int h;
 
-	h = ((BfmeD1098 *)ThePlayerList)->bfmeStart1098(a, 3, 0);
-	ctx.bfmeInit1098(b, c);
+	h = playersWithRelationship(a, 3, false);
+	((Rva0036BDD0 *)&ctx)->set((const Rva0036BDD0Vec *)b, (const Rva0036BDD0Vec *)c);
 	while ((short)h) {
-		BfmeR1098 *r = ((BfmeD1098 *)ThePlayerList)->bfmeLook1098((short *)&h);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&h);
 
-		if (r && !r->bfmeEach1098((void *)bfmeCb1098, &ctx))
+		if (r && !r->iterateObjects((void (*)(Object *, void *))j_00012d69, &ctx))
 			return 0;
 	}
 	return ctx.m_bfme18;

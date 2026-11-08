@@ -8124,7 +8124,6 @@ name,va
 ?bfmeBlurRowsMmx@@YAXPAX0IHH@Z,0x00DBD660
 ?bfmeBlurRowsSse@@YAXPAX0IHH@Z,0x00DC0C40
 ?bfmeCantConnectBeforeOnline@@3EA,0x012F716D
-?bfmeCb1098@@YAXXZ,0x00412D69
 ?bfmeCb974D@@YGXXZ,0x0064F2D0
 ?bfmeChunkParserVE@@YAXXZ,0x0041579E
 ?bfmeContainedAttackVisitor@@YAXPAVObject@@PAX@Z,0x0040DE6D
