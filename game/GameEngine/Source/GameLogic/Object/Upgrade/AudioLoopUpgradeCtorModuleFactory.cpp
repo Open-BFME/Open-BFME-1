@@ -31,14 +31,14 @@ class ALU_UpdateModule : public ALU_DeepBase, public ALU_Iface1, public ALU_Ifac
 {
 public:
 	ALU_UpdateModule(Thing *thing, const ModuleData *moduleData)
-		: ALU_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+		: ALU_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0), m_f18(-1), m_f1c(-1) {}
 
 protected:
 	void setWakeFrame(Object *, UpdateSleepTime);
 	Object *getObject(void) const { return m_object; }
 
 private:
-	unsigned int m_f14;
+	unsigned int m_nextCallFrameAndPhase;
 	int m_f18;
 	int m_f1c;
 };
