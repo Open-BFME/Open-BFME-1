@@ -6083,3 +6083,7 @@ game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bf
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmePrev,d76ada156264e504f806858c,claude-sonnet,20261109001059-c199c7,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeList,a7722d0d9eddafb99e174ae7,claude-sonnet,20261109001059-c199c7,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeCount,d256818ccf26b59a10a01d23,claude-sonnet,20261109001059-c199c7,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Coord3,5a5a3069030e0e9b3e5cb80a,claude-sonnet,20261109001153-391377,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Coord2,33ebae01451d124a8765bc1f,claude-sonnet,20261109001153-391377,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Record,eb012e55a880e3b9c7b5908b,claude-sonnet,20261109001153-391377,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Owner,6e86dd2fd6e85d4d2c66819d,claude-sonnet,20261109001153-391377,2026-11-09

@@ -1007,3 +1007,5 @@ game/GameEngine/Source/Common/BfmeSlotState1289Init.cpp|local|BfmeSlotState1289:
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeID,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeList,m_tunnelIDs,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeCount,m_tunnelCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Record,TTree,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Owner,W3DTreeBuffer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
