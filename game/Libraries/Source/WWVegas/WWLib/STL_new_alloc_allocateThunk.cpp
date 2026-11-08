@@ -12,14 +12,17 @@
 // destructor is inlined after the return value has been copied to its
 // temporary, that home lands below the temporary.
 
+// Retail's spinlock release (0x0082AD50, `mov [ecx],0; ret`) is ledgered as
+// this class; the mutex inherits it so the unlock call names that row.
+struct Gen_0082ad50 { void m(); };
+
 namespace _STL
 {
 
-class NodeAllocMutex
+class NodeAllocMutex : public Gen_0082ad50
 {
 public:
     void _M_acquire_lock();
-    void _M_release_lock();
 };
 
 template <bool __threads, int __inst>
@@ -35,7 +38,7 @@ public:
     ~_Node_Alloc_Lock()
     {
         if (__threads) {
-            _S_lock._M_release_lock();
+            _S_lock.m();
         }
         int unused;
     }
@@ -76,6 +79,9 @@ void *__node_alloc<__threads, __inst>::_M_allocate(unsigned int n)
 
     return result;
 }
+
+template <bool __threads, int __inst>
+typename __node_alloc<__threads, __inst>::_Obj * __node_alloc<__threads, __inst>::_S_free_list[0x10];
 
 template class __node_alloc<true, 0>;
 
