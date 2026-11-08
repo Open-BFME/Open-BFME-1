@@ -15,13 +15,13 @@ class DamageInfoInput
 {
 public:
 	char m_00[4];		// +0x00, untouched by operator=
-	int m_04;		// +0x04
+	int m_sourceID;		// +0x04
 	short m_08;		// +0x08
 	char m_0a[2];		// +0x0a .. +0x0b, untouched padding
-	int m_0c;		// +0x0c
+	int m_damageType;		// +0x0c
 	int m_10;		// +0x10
 	int m_14;		// +0x14
-	int m_18;		// +0x18
+	int m_amount;		// +0x18
 	char m_1c;		// +0x1c
 	char m_1d;		// +0x1d
 	char m_1e[2];		// +0x1e .. +0x1f, untouched padding
@@ -41,12 +41,12 @@ public:
 // ??4DamageInfoInput@@QAEAAV0@ABV0@@Z
 DamageInfoInput &DamageInfoInput::operator=(const DamageInfoInput &other)
 {
-	m_04 = other.m_04;
+	m_sourceID = other.m_sourceID;
 	m_08 = other.m_08;
-	m_0c = other.m_0c;
+	m_damageType = other.m_damageType;
 	m_10 = other.m_10;
 	m_14 = other.m_14;
-	m_18 = other.m_18;
+	m_amount = other.m_amount;
 	m_1c = other.m_1c;
 	m_1d = other.m_1d;
 	m_20 = other.m_20;
