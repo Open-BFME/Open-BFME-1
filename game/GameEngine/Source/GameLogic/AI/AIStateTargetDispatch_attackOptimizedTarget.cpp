@@ -13,12 +13,7 @@ enum PathfindLayerEnum
 	LAYER_GROUND = 1
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 __forceinline float operator *(const Coord2D &left,const Coord2D &right){return left.x*right.x+left.y*right.y;}
