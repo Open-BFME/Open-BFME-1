@@ -6105,3 +6105,10 @@ game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_40,f
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateConstructor.cpp|member||m_f14,1b44bfeb822e294b1bf27866,claude-sonnet,20261109002640-2f00fc,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeGetBlockZone,ed251d891eaac443e442e250,claude-sonnet,20261109003259-616902,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeInteractsWithBridge,a9e7a548847193381d350940,claude-sonnet,20261109003259-616902,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|type||FollowPathEntry00178EA0Path,805c6d31cd1f565cae75ce77,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|type||FollowPathEntry00178EA0AI,d76eeb6d955fec9f61d38c49,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|type||FollowPathEntry00178EA0Machine,040142f98f0c764ea9b4f2de,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at204,2ee1d7e4c2d23d81c913da62,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at010,3da94de633e7b51e5bf9f897,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at004,68da84b5c966d913064e2085,claude-sonnet,20261109003259-a2d9ec,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at01c,4c4c410933f0e84e82b37589,claude-sonnet,20261109003259-a2d9ec,2026-11-09

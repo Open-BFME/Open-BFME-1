@@ -1040,3 +1040,6 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInAre
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp|member||field170d8,m_frameObjectCountChanged,claude-sonnet+gpt-6.1-sol,blocked: hook: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishValueInArea.cpp -> game/GameEngine/Source/GameLogic/ScriptEngine/ScriptCon,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeGetBlockZone,getBlockZone,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneBlockQueries.cpp|function|PathfindZoneManager@|bfmeInteractsWithBridge,interactsWithBridge,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at010,m_owner,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/FollowPathEntry00178EA0.cpp|member||at01c,m_machine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
