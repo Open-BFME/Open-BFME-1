@@ -75,7 +75,7 @@ public:
 	Bool bfmeIsComputerControlled( void ) const;
 };
 
-struct Coord3D { float x,y,z; };
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 struct ICoord2D { int x,y; };
 enum PathfindLayerEnum { LAYER_INVALID=0 };
 
