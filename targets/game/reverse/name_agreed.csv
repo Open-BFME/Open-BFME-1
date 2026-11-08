@@ -1082,3 +1082,5 @@ game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_1c,m_sus
 game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_20,m_releaseTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AttackHordeStateMachineCtor.cpp|type||Rva00171B40AIAttackFireWeaponState,AIAttackFireWeaponState,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AttackHordeStateMachineCtor.cpp|type||Rva00171B40AIAttackFireWeaponState,AIAttackFireWeaponState,claude-sonnet+gpt-6.1-sol,"blocked: hook: skipped 3: base class of unknown size | skipped 1: member declaration without an m_ prefix | ??_7Rva00171B40AIAttackFireWeaponState@@6B@,0x01097",2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapFileHeader,BITMAPFILEHEADER,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/WW3DMakeScreenShot.cpp|type||Rva008FD930BitmapInfoHeader,BITMAPINFOHEADER,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
