@@ -14,15 +14,15 @@ extern "C" int __cdecl strcmp(const char *, const char *);
 class Rva000B9EA0Store
 {
 public:
-	float m_00;
-	float m_04;
-	float m_08;
+	float m_initialOpacity;
+	float m_peakOpacity;
+	float m_sustainOpacity;
 	int m_0c;
-	int m_10;
-	int m_14;
-	int m_18;
-	int m_1c;
-	int m_20;
+	int m_initialDelay;
+	int m_attackTime;
+	int m_decayTime;
+	int m_sustainTime;
+	int m_releaseTime;
 	int m_24;
 };
 class Rva000B9EA0Parse
@@ -38,21 +38,21 @@ void Rva000B9EA0Parse::parse(INI *ini, void *instance, void *store, const void *
 	for (const char *token = ini->getNextTokenOrNull(); token != NULL; token = ini->getNextTokenOrNull())
 	{
 		if (strcmp(token, "InitialOpacity") == 0)
-			s->m_00 = INI::scanReal(ini->getNextToken());
+			s->m_initialOpacity = INI::scanReal(ini->getNextToken());
 		else if (strcmp(token, "PeakOpacity") == 0)
-			s->m_04 = INI::scanReal(ini->getNextToken());
+			s->m_peakOpacity = INI::scanReal(ini->getNextToken());
 		else if (strcmp(token, "SustainOpacity") == 0)
-			s->m_08 = INI::scanReal(ini->getNextToken());
+			s->m_sustainOpacity = INI::scanReal(ini->getNextToken());
 		else if (strcmp(token, "AttackTime") == 0)
-			s->m_14 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_attackTime = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "DecayTime") == 0)
-			s->m_18 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_decayTime = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "SustainTime") == 0)
-			s->m_1c = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_sustainTime = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "ReleaseTime") == 0)
-			s->m_20 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_releaseTime = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "InitialDelay") == 0)
-			s->m_10 = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
+			s->m_initialDelay = (int)ceil(Rva000B9EA0Arithmetic::ConvertDurationFromMsecsToFrames((float)INI::scanUnsignedInt(ini->getNextToken())));
 		else if (strcmp(token, "End") == 0)
 			break;
 	}

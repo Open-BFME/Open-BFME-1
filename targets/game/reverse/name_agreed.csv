@@ -1072,3 +1072,11 @@ game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_14,m_att
 game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_18,m_decayTime,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_1c,m_sustainTime,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_20,m_releaseTime,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_00,m_initialOpacity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_04,m_peakOpacity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_08,m_sustainOpacity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_10,m_initialDelay,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_14,m_attackTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_18,m_decayTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_1c,m_sustainTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/INI/INIOpacityEnvelopeParse.cpp|member||m_20,m_releaseTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
