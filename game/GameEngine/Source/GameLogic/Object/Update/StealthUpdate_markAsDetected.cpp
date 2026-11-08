@@ -114,6 +114,7 @@ class Rva002AD380Contain { public:
  virtual void slot58();
  virtual const ObjectList002AD380& slotEC();
 };
+class StealthUpdate;
 class Object { public:
  virtual void slot0();
  virtual void slot1();
@@ -129,18 +130,23 @@ class Object { public:
 
  const ThingTemplate* getTemplate() const;
  Player* getControllingPlayer() const;
- Module* findModule(NameKeyType) const;
  void setStatus(const BitFlags<86>&,bool);
  
  void* unidentified_001BFE20() const;
  char pad004[0x8c]; BitFlags<86> status;
+ protected:
+ // Retail's Object::findModule (row 0x001BEE60, ILT 0x0002AE23) is protected.
+ Module* findModule(NameKeyType) const;
+ friend class StealthUpdate;
 };
 struct StealthUpdateModuleData {
  char pad000[8]; unsigned m_stealthDelay; unsigned m_stealthLevel;
  char pad010[0x24]; bool m_orderIdleEnemiesToAttackMeUponReveal;
  char pad035[0x1f]; unsigned m_disguiseTransitionFrames; unsigned m_disguiseRevealTransitionFrames;
 };
-class UpdateModule { public: void setWakeFrame(Object*,int); };
+// Retail's UpdateModule::setWakeFrame (ILT-called row, protected, UpdateSleepTime argument).
+enum UpdateSleepTime { UpdateSleepTimeValue1 = 1 };
+class UpdateModule { protected: void setWakeFrame(Object*,UpdateSleepTime); friend class StealthUpdate; };
 class StealthUpdate { public:
  void markAsDetected(unsigned frames,bool propagate);
 
@@ -178,7 +184,7 @@ class StealthUpdate { public:
 		m_transitioningToDisguise = 1;
 		m_disguiseTransitionFrames = data->m_disguiseTransitionFrames;
 		m_disguiseHalfpointReached = 0;
-		((UpdateModule*)this)->setWakeFrame(object,1);
+		((UpdateModule*)this)->setWakeFrame(object,(UpdateSleepTime)1);
 	}
 	else if (m_disguised)
 	{
