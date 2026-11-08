@@ -6030,3 +6030,9 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecal
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c2,e40639eb6248ace7d8b86bab,claude-sonnet,20261109001225-f6f94a,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowDecalHelpers.cpp|local|projectRangesRva007AF940|c3,96b4d511aef1c7b69f575faf,claude-sonnet,20261109001225-f6f94a,2026-11-09
 game/GameEngine/Source/Common/Rva009A3290HashInsert.cpp|local|Rva009A3290Owner::insertNode|h,60096bf4aab69404b6d504b8,claude-sonnet,20261109001225-f34e05,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field0C,e7125a29860a276b5b5e9855,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field10,3533db6a3937c37a63e32b54,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field18,6dbc6b65dba830ab1e538f42,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field1C,6846404073c4e2ba5ee61fb4,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field24,e57e1f07978db92b0138dbfa,claude-sonnet,20261109001350-6950ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field28,e22ef2dee70070f6d9b60466,claude-sonnet,20261109001350-6950ed,2026-11-09
