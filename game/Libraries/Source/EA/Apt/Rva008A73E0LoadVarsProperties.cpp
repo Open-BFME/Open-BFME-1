@@ -63,7 +63,7 @@ public:
 };
 class Rva00899FC0 : public Rva00897670HeaderedDelete {
 public:
-    static void *operator new(unsigned n) { return Rva00897640(n); }
+    static void *operator new(unsigned n);
     __declspec(noinline) Rva00899FC0(int callback);
     void *vtable;
     unsigned flags;

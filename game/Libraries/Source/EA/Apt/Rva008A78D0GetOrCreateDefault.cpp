@@ -20,12 +20,10 @@ public:
 class Rva00899FC0 : public Rva00897670HeaderedDelete
 {
 public:
-	// Share the independently matched headered allocator at retail0x00897640.
-	// An outlined copy here differs under this unit's /O2 compiler flags.
-	static __forceinline void *operator new(unsigned int n)
-	{
-		return Rva00897640(n);
-	}
+	// Retail 0x00897640 is ??2Rva00899FC0@@SAPAXI@Z; the retail-exact copy is emitted by
+	// Rva008B4DA0CandidateLookup.cpp, so this unit only declares it (a thin wrapper here
+	// was a non-retail 5-byte COMDAT).
+	static void *operator new(unsigned int n);
 
 	__declspec(noinline) Rva00899FC0(int callback);
 
