@@ -1012,3 +1012,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|t
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Parameter,Parameter,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/Common/ConvertShortMapPathToLongMapPath.cpp|member||m_bfmeMapName008,m_mapName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp|type||Cell00406EC0,PathfindCell,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1780.cpp|member||m_bfmeAgentGK,m_pathfinder,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
