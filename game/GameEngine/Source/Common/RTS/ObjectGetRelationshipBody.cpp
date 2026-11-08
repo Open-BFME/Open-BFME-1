@@ -61,8 +61,14 @@ class BfmeRelationEntry;
 
 class BfmeRelationTest
 {
+};
+
+// Retail's relation test is the row ?allows@Rva001E4090@@QAE_NPAX0@Z (0x001E4090, ILT 0x00037349):
+// both arguments travel as pointers.
+class Rva001E4090
+{
 public:
-	Bool bfmeAllowsRelationship(Int test, const BfmeRelationEntry *entry) const;
+	Bool allows(void *kind, void *entry);
 };
 
 class BfmeRelationEntry
@@ -98,7 +104,8 @@ public:
 class Object : public Thing
 {
 public:
-	BfmeRelationInterface *bfmeGetRelationInterface() const;
+	// Retail's row ?unidentified_001BFE20@Object@@QBEPAXXZ (ILT-called); the result is the relation interface.
+	void *unidentified_001BFE20() const;
 
 	const ThingTemplate *getFinalTemplate() const
 	{
@@ -160,11 +167,11 @@ Relationship ObjectGetRelationshipShim::get(const Object *that) const
 				if (!isKindOf(KINDOF_UNRECONSTRUCTED_108))
 					goto ordinary_relationship;
 
-				BfmeRelationInterface *relationInterface = bfmeGetRelationInterface();
+				BfmeRelationInterface *relationInterface = (BfmeRelationInterface *)unidentified_001BFE20();
 				if (!relationInterface)
 					goto ordinary_relationship;
 
-				const Object *containedSource = bfmeGetRelationInterface()->bfmeGetRelationSource();
+				const Object *containedSource = ((BfmeRelationInterface *)unidentified_001BFE20())->bfmeGetRelationSource();
 				if (!containedSource || !containedSource->isKindOf(KINDOF_UNRECONSTRUCTED_132))
 					goto ordinary_relationship;
 				relationSource = containedSource;
@@ -175,7 +182,7 @@ Relationship ObjectGetRelationshipShim::get(const Object *that) const
 				&& relationSource->m_relationEntries[relationSource->m_relationIndex])
 			{
 				BfmeRelationEntry *entry = relationSource->m_relationEntries[relationSource->m_relationIndex];
-				if (entry->m_test->bfmeAllowsRelationship(6, entry))
+				if (((Rva001E4090 *)entry->m_test)->allows((void *)6, entry))
 					return ENEMIES;
 			}
 		}
