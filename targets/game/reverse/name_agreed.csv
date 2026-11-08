@@ -1004,3 +1004,6 @@ game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,m
 game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,MilesAudioManager,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeSlotState1289Init.cpp|local|BfmeSlotState1289::rva008AC790|c,cosine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeSlotState1289Init.cpp|local|BfmeSlotState1289::rva008AC790|s,sine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeID,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeList,m_tunnelIDs,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeCount,m_tunnelCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
