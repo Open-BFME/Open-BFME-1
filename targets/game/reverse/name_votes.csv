@@ -6093,3 +6093,12 @@ game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|ty
 game/GameEngine/Source/Common/ConvertShortMapPathToLongMapPath.cpp|member||m_bfmeMapName008,93a8b9a55e7a8c958b30f7c7,claude-sonnet,20261109001242-461a61,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp|type||Cell00406EC0,cbe493a32a7bb3f17d6d186e,claude-sonnet,20261109001242-b1f598,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1780.cpp|member||m_bfmeAgentGK,f7bbdd1dca7a977368fca218,claude-sonnet,20261109001403-06d8ee,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_04,aea5492b6a6a8d3355d307d2,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_0c,c82d80306641c0bd0e76fb61,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_10,5ac67240d86d3d3f3234c514,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_18,cde1596f835b245a24d6bd57,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_1c,63ee4a81eaa70676c18b1a42,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_2c,65e323bdddc2b69fe4504730,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_38,ae5e38603b045cdac93b2453,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_3c,737ae64acbba87f25de9ee3d,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_40,fd158ab836eec9de1164a429,claude-sonnet,20261109002640-85df4b,2026-11-09
