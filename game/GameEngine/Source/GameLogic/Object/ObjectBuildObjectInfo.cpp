@@ -26,7 +26,7 @@ public:
 	AsciiString m_name;
 };
 
-struct BfmeExperienceTrackerFields
+struct ExperienceTracker
 {
 	unsigned char m_pad000[0x0c];
 	int m_veterancyLevel;
@@ -91,7 +91,7 @@ private:
 	unsigned char m_vtable[4];
 	ThingTemplate *m_template;
 	unsigned char m_pad008[0x210 - 8];
-	BfmeExperienceTrackerFields *m_experienceTracker;
+	ExperienceTracker *m_experienceTracker;
 	unsigned char m_pad214[0x224 - 0x214];
 	BfmeUpgradeMask m_completedUpgrades;
 	unsigned char m_pad23c[0x374 - 0x23c];
@@ -106,7 +106,7 @@ private:
 
 void Object::bfmeBuildObjectInfo(BfmeObjectInfo *info) const
 {
-	BfmeExperienceTrackerFields *experienceTracker = m_experienceTracker;
+	ExperienceTracker *experienceTracker = m_experienceTracker;
 	info->m_templateName = getFinalTemplate()->m_name;
 	info->m_veterancyLevel = experienceTracker->m_veterancyLevel;
 	info->m_experience = experienceTracker->m_experience;
