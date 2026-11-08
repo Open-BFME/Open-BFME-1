@@ -12,9 +12,13 @@ extern GameWindowManager *TheWindowManager;
 class ControlBar;
 extern ControlBar *TheControlBar;
 
-void HideControlBar(bool immediate);
-void ShowControlBar(bool immediate);
+void j_00002847(void);
+void j_00024848(void);
 void j_00012f21(void);
+
+typedef void (__cdecl *ControlBarLetterboxFn)(bool immediate);
+#define HideControlBar(immediate) (((ControlBarLetterboxFn)j_00002847)(immediate))
+#define ShowControlBar(immediate) (((ControlBarLetterboxFn)j_00024848)(immediate))
 
 void Rva004C1040(int unused)
 {

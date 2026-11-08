@@ -24,7 +24,10 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-void HideControlBar(bool immediate);
+// Retail reaches HideControlBar(bool) through ILT 0x00002847.
+void j_00002847(void);
+typedef void (__cdecl *HideControlBarFn)(bool immediate);
+#define HideControlBar(immediate) (((HideControlBarFn)j_00002847)(immediate))
 
 // The mapped value type. Only the one method this file calls is needed and that
 // method is real (see the header comment), so no layout is invented here; the
