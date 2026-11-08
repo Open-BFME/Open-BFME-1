@@ -13,15 +13,15 @@ public:
  virtual unsigned getWidth(); virtual unsigned getHeight();
 };
 extern Display* TheDisplay;
-struct Rva006FE3C0ScreenPoint { int x,y; };
+struct ICoord2D { int x,y; };
 class Rva006FE3C0CameraRay {
 public:
- void build(const Rva006FE3C0ScreenPoint* screen, Vector3* origin, Vector3* direction);
+ void build(const ICoord2D* screen, Vector3* origin, Vector3* direction);
  char pad000[0x70]; CameraClass* camera70;
 };
 // ?sqr@@YAMM@Z absent-from-retail
 inline float sqr(float value) { return value*value; }
-void Rva006FE3C0CameraRay::build(const Rva006FE3C0ScreenPoint* screen, Vector3* origin, Vector3* direction) {
+void Rva006FE3C0CameraRay::build(const ICoord2D* screen, Vector3* origin, Vector3* direction) {
  const Matrix3D& transform=camera70->Get_Transform();
  Vector2 minimum, maximum;
  camera70->Get_View_Plane(minimum,maximum);
