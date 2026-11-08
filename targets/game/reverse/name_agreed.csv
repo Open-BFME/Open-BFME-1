@@ -1021,3 +1021,4 @@ game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bf
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeList,m_tunnelIDs,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/RTS/TunnelTracker_onTunnelCreated.cpp|member||m_bfmeCount,m_tunnelCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp|type||Cell00406EC0,PathfindCell,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/Rva00354220ConditionSetType.cpp|type||Rva00354220Parameter,Parameter,claude-sonnet+gpt-6-astra,applied,2026-11-09

@@ -21,11 +21,11 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
-class Rva00354220Parameter
+class Parameter
 {
 public:
 	enum ParameterType { INT = 0 };
-	Rva00354220Parameter(ParameterType type, int value = 0) :
+	Parameter(ParameterType type, int value = 0) :
 		m_initialized(false),
 		m_paramType(type),
 		m_int(value),
@@ -53,14 +53,14 @@ class Rva00354220ConditionTemplate
 {
 	unsigned char m_pad[0x44];
 	int m_numParameters;
-	Rva00354220Parameter::ParameterType m_parameters[12];
+	Parameter::ParameterType m_parameters[12];
 public:
 	int getNumParameters() const { return m_numParameters; }
-	Rva00354220Parameter::ParameterType getParameterType(int index) const
+	Parameter::ParameterType getParameterType(int index) const
 	{
 		if (index >= 0 && index < m_numParameters)
 			return m_parameters[index];
-		return Rva00354220Parameter::INT;
+		return Parameter::INT;
 	}
 };
 
@@ -105,7 +105,7 @@ private:
 	unsigned int m_poolLink;
 	ConditionType m_conditionType;
 	int m_numParms;
-	Rva00354220Parameter *m_parms[12];
+	Parameter *m_parms[12];
 };
 
 // @?setConditionType@Rva00354220Condition@@QAEXW4ConditionType@1@@Z 0x00354220
@@ -124,5 +124,5 @@ void Rva00354220Condition::setConditionType(ConditionType type)
 		((Rva00354220ScriptEngine*)TheScriptEngine)->getConditionTemplate(m_conditionType);
 	m_numParms = conditionTemplate->getNumParameters();
 	for (i = 0; i < m_numParms; ++i)
-		m_parms[i] = new Rva00354220Parameter(conditionTemplate->getParameterType(i));
+		m_parms[i] = new Parameter(conditionTemplate->getParameterType(i));
 }
