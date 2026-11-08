@@ -47,13 +47,14 @@
 //
 // unidentified_0034DB40 keeps its address-derived name: it forwards to
 // TheScriptEngine's virtual at +0x4C and no identity has been proven for it.
-// It appears here under both of its overloads on purpose, because they are not
-// the same call: the AsciiString one is the ILT thunk at 0x000230B5, which is
-// the route the owner check takes, while the Parameter one is the body at
-// 0x0034DB40 that ScriptEngineGetPlayerMaskFromParameter.cpp defines. Spelling
-// either call the other way moves the call target. The same is true of the
-// light-point reader, which is still reached through the thunk at 0x00047D34
-// rather than by name.
+// Its Parameter overload is the body at 0x0034DB40 that
+// ScriptEngineGetPlayerMaskFromParameter.cpp defines; the model-condition and
+// owner checks reach it through the ILT thunk at 0x000230B5 instead, which is
+// a defined ?j_000230b5 row, so those two call it by that name (the ILT's own
+// pinned spellings, bfmeNext1087 and the AsciiString overload, defined nothing).
+// The same is true of the kill counter (ILT 0x00036D72), of
+// BitFlags::getSingleBitFromName (ILT 0x000190F1) and of the light-point reader
+// (thunk 0x00047D34), none of which is reachable by name.
 
 #include "ascii_string.h"
 #include <bitset>
@@ -114,7 +115,6 @@ public:
 class PlayerKills
 {
 public:
-	int getKillsOfKindOf(KindOfMaskType setMask, KindOfMaskType clearMask);	// retail 0x00036D72
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Money.h
@@ -196,24 +196,38 @@ public:
 	virtual Object *getUnitNamed(const AsciiString &name) = 0;	// slot 26, vtable+0x68
 
 	PlayerMaskType unidentified_0034DB40(Parameter *playerParm);	///< body at 0x0034DB40
-	PlayerMaskType unidentified_0034DB40(const AsciiString &name);	///< ILT thunk at 0x000230B5
 };
 
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 extern const KindOfMaskType KINDOFMASK_NONE;
 extern void j_00047d34();
-int bfmeLookup_001c62b0( void *name );
+// ILT thunks retail calls (each a defined ?j_ row): 0x000230B5 -> player-mask resolver,
+// 0x000190F1 -> BitFlags::getSingleBitFromName, 0x00036D72 -> the kill counter.
+extern void j_000230b5();
+extern void j_000190f1();
+extern void j_00036d72();
 
-class BfmeP1087
+// The resolver's ILT thunk (0x000230B5) takes the Parameter or its string; retail's
+// model-condition and owner checks reach it through the thunk.
+static __forceinline PlayerMaskType resolveMaskThroughIlt(Parameter *parameter)
 {
-public:
-	PlayerMaskType bfmeNext1087( Parameter *parameter );
-};
+	union { void (*raw)(); PlayerMaskType (ScriptEngine::*member)(Parameter *); } call;
+	call.raw = j_000230b5;
+	return (TheScriptEngine->*call.member)(parameter);
+}
 
-// Retail spells the singleton at 0x012F076C TheScriptEngine (declared above);
-// BfmeP1087 is this TU's view of the reviewed player-mask thunk, so it is cast
-// at the use instead of being a second name for the global.
+static __forceinline PlayerMaskType resolveMaskThroughIlt(const AsciiString &name)
+{
+	union { void (*raw)(); PlayerMaskType (ScriptEngine::*member)(const AsciiString &); } call;
+	call.raw = j_000230b5;
+	return (TheScriptEngine->*call.member)(name);
+}
+
+static __forceinline int singleBitFromName(void *name)
+{
+	return ((int (*)(void *))j_000190f1)(name);
+}
 
 // The per-player light-point reader is only known as the thunk at 0x00047D34,
 // so it is called through the thunk's address rather than by name.
@@ -363,13 +377,13 @@ Bool ScriptConditions::evaluatePlayerHasNumberObjectsWithModelCondition(
 	Parameter *playerParm, Parameter *modelConditionParm,
 	Parameter *comparisonParm, Parameter *countParm)
 {
-	PlayerMaskType mask = ((BfmeP1087 *)TheScriptEngine)->bfmeNext1087(playerParm);
+	PlayerMaskType mask = resolveMaskThroughIlt(playerParm);
 	int limit = countParm->getInt();
 	int count = 0;
 	{
 		char *stringData = *(char **)((char *)modelConditionParm + 0x10);
 		char *name = stringData ? stringData + 8 : "";
-		int modelCondition = bfmeLookup_001c62b0((void *)name);
+		int modelCondition = singleBitFromName((void *)name);
 		while (mask)
 		{
 			Player *player = ThePlayerList->getEachPlayerFromMask(mask);
@@ -408,7 +422,9 @@ Bool ScriptConditions::evaluatePlayerHasKilledKindOfUnits(
 			setMask.set(pKindOfParm->getInt());
 			KindOfMaskType clearMask;
 			clearMask.clear();
-			int value = kills->getKillsOfKindOf(setMask, clearMask);
+			union { void (*raw)(); int (PlayerKills::*member)(KindOfMaskType, KindOfMaskType); } killsCall;
+			killsCall.raw = j_00036d72;
+			int value = (kills->*killsCall.member)(setMask, clearMask);
 			return value >= pCountParm->getInt();
 		}
 	}
@@ -455,7 +471,7 @@ Bool ScriptConditions::evaluateNamedOwnedByPlayer(Parameter *unitParm, Parameter
 		return false;
 	}
 
-	PlayerMaskType mask = TheScriptEngine->unidentified_0034DB40(*(const AsciiString *)playerParm);
+	PlayerMaskType mask = resolveMaskThroughIlt(*(const AsciiString *)playerParm);
 	while (mask != 0) {
 		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
 		if (theUnit->getControllingPlayer() == player) {
