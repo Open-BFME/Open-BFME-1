@@ -952,3 +952,5 @@ game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|x1,endX
 game/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp|param|drawImage|y1,endY,claude-opus+gpt-6.1-sol,applied,2026-11-03
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029B4E0.cpp|member||at04,m_moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029B4E0.cpp|member||at04,m_moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|type||Rva001B7200Locomotor,Locomotor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|member||m_coord04,m_position,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

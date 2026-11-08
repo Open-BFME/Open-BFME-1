@@ -6006,3 +6006,5 @@ game/GameEngine/Source/Common/BfmeConv1269.cpp|type||BfmeVec1269,d3a9e9e2ae2374f
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapUpdateScorches.cpp|type||BFMEScorchEntry,0f72000c4fef60bc4e9bc390,claude-opus,20261103082927-2800b1,2026-11-03
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029B4E0.cpp|type||Config0029B4E0,79c1acc118432a83d5927dfe,claude-sonnet,20261109000239-0afad1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029B4E0.cpp|member||at04,65a6ba5e2c25b6d201500a7f,claude-sonnet,20261109000239-0afad1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|type||Rva001B7200Locomotor,e3e086d4f60919605b2c7e15,claude-sonnet,20261109000316-6785d6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp|member||m_coord04,aae2a4c19d00f449e190997f,claude-sonnet,20261109000316-6785d6,2026-11-09
