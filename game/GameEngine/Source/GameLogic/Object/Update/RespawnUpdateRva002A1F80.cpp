@@ -14,7 +14,9 @@ template<int N> class BitFlags {
  _STL::bitset<N> bits;
  public: enum Init { kInit }; BitFlags(){} BitFlags(Init,int bit){bits.set(bit);}
 };
-class Player; class BfmeConditionFlags;
+// Retail's ModelConditionFlags is BitFlags<320> (?clearAndSetModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BEA@@@0@Z).
+typedef BitFlags<320> BfmeConditionFlags;
+class Player;
 enum DisabledType { Disabled4 = 4 };
 class Object;
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
@@ -38,11 +40,11 @@ struct Rva002A23B0Record {
  bool operator<(const Rva002A23B0Record& v)const{return level<v.level;}
 };
 typedef _STL::set<Rva002A23B0Record> Records;
-class BfmeConditionFlags { _STL::bitset<304> bits; public: BfmeConditionFlags(){} };
 extern void j_00022bba();
-class FXList { public: static void applyFX(const FXList* fx,Object* obj){if (fx && !fx->bfmeIsBlocked()) fx->doFXObj(obj,0);} bool bfmeIsBlocked() const; void doFXObj(const Object*,const Object*)const; };
+// bfmeIsBlocked is retail's non-const row ?bfmeIsBlocked@FXList@@QAE_NXZ.
+class FXList { public: static void applyFX(FXList* fx,Object* obj){if (fx && !fx->bfmeIsBlocked()) fx->doFXObj(obj,0);} bool bfmeIsBlocked(); void doFXObj(const Object*,const Object*)const; };
 struct Rva002A30D0Data { char p00[12]; BfmeConditionFlags flags; char p34[0x84-0x34]; FXList* fx; FXList* fx88;FXList* fx8c;unsigned f90,f94,f98,f9c; Records levels; };
-class Player; class BfmeConditionFlags;
+class Player;
 class Rva000FB2E0Owner {public:int Gen000FB2E0Method(Object*,bool);};
 enum UpdateSleepTime { Forever = 0x3fffffff }; class UpdateModule {protected:void setWakeFrame(Object*,UpdateSleepTime);};
 struct Rva002A30D0State { char p00[0x28]; unsigned level; };
@@ -63,7 +65,7 @@ void RespawnUpdate::rva002A1F80(Object* source){
  Object* obj=object;
  Coord3D position;position.x=((Rva002A30D0Object*)source)->position.x;position.y=((Rva002A30D0Object*)source)->position.y;position.z=((Rva002A30D0Object*)source)->position.z;
  ExitInterface* exit=source->getObjectExitInterface();if(exit)exit->slot24(&position,true);
- const FXList* fx;unsigned delay;
+ FXList* fx;unsigned delay;
  if(f41){obj->clearAndSetModelConditionFlags(BfmeConditionFlags(),*(BfmeConditionFlags*)((char*)d+0x5c));delay=d->f98;fx=d->fx8c;if(fx&&!fx->bfmeIsBlocked())fx->doFXObj(obj,0);}
  else{obj->clearAndSetModelConditionFlags(BfmeConditionFlags(),*(BfmeConditionFlags*)((char*)d+0x34));delay=d->f94;fx=d->fx88;if(fx&&!fx->bfmeIsBlocked())fx->doFXObj(obj,0);}
  f2c=4;
