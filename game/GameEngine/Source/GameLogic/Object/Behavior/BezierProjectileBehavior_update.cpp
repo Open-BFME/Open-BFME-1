@@ -345,9 +345,9 @@ static WWINLINE void BfmeRetailOrderNormalize(Vector3 &v)
 // ?update@BezierProjectileBehavior@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime BezierProjectileBehavior::update()
 {
-	const BezierProjectileBehaviorModuleData *d = m_moduleData;
+	const BezierProjectileBehaviorModuleData *moduleData = m_moduleData;
 	Object *obj = m_object;
-	if (!d || !obj)
+	if (!moduleData || !obj)
 		return UPDATE_SLEEP_FOREVER;
 
 	Int size = m_flightPath.size();
@@ -357,14 +357,14 @@ UpdateSleepTime BezierProjectileBehavior::update()
 		return calcSleepTime();
 	}
 
-	if (d->m_fxLeadSteps != 0 && m_currentFlightPathStep == size - d->m_fxLeadSteps)
+	if (moduleData->m_fxLeadSteps != 0 && m_currentFlightPathStep == size - moduleData->m_fxLeadSteps)
 	{
 		if (!(obj->m_modelConditionBits & 0x20000))
 		{
 			obj->m_modelConditionBits |= 0x20000;
 			obj->notifyModelConditionChanged();
 		}
-		if (d->m_invalidA4 != -1)
+		if (moduleData->m_invalidA4 != -1)
 		{
 			if (TheWritableGlobalData->m_ec8)
 			{
@@ -373,22 +373,22 @@ UpdateSleepTime BezierProjectileBehavior::update()
 				pos.y = m_flightPathEnd.y;
 				pos.z = m_flightPathEnd.z;
 				pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, 0);
-				TheTacticalView->addIcon(&pos, d->m_valueA8, 0xFFFF00FF, 0);
+				TheTacticalView->addIcon(&pos, moduleData->m_valueA8, 0xFFFF00FF, 0);
 			}
 			Rva0025ED50WideResult iterator = ThePartitionManager->iterate(
-				&m_flightPathEnd, d->m_valueA8, ITER_SORTED_NEAR_TO_FAR,
+				&m_flightPathEnd, moduleData->m_valueA8, ITER_SORTED_NEAR_TO_FAR,
 				PartitionFilterRelationship(obj, 7, false).link(
 					Rva0025ED50RootFilter().link(&Rva0025ED50ObjectFilter(obj))), true);
 			Object *other;
 			while (iterator.next(other))
 			{
 				if (other != obj)
-					other->bfmeApplySpecialModelCondition(d->m_invalidA4, obj, 1);
+					other->bfmeApplySpecialModelCondition(moduleData->m_invalidA4, obj, 1);
 			}
 		}
 	}
 
-	if (m_victimID != 0 && d->m_flightPathAdjustDistPerFrame > 0.0f)
+	if (m_victimID != 0 && moduleData->m_flightPathAdjustDistPerFrame > 0.0f)
 	{
 		Object *victim = TheGameLogic->findObjectByID(m_victimID);
 		if (victim)
@@ -403,8 +403,8 @@ UpdateSleepTime BezierProjectileBehavior::update()
 			if (distVictimMovedSqr > 0.1f)
 			{
 				Real distVictimMoved = sqrtf(distVictimMovedSqr);
-				if (distVictimMoved > d->m_flightPathAdjustDistPerFrame)
-					distVictimMoved = d->m_flightPathAdjustDistPerFrame;
+				if (distVictimMoved > moduleData->m_flightPathAdjustDistPerFrame)
+					distVictimMoved = moduleData->m_flightPathAdjustDistPerFrame;
 				delta.normalize();
 				m_flightPathEnd.x += distVictimMoved * delta.x;
 				m_flightPathEnd.y += distVictimMoved * delta.y;
@@ -420,7 +420,7 @@ UpdateSleepTime BezierProjectileBehavior::update()
 
 	const Coord3D *flightStep = &m_flightPath[m_currentFlightPathStep];
 
-	if (d->m_enabled && !d->m_flag48)
+	if (moduleData->m_enabled && !moduleData->m_flag48)
 	{
 		Real drop = m_heightScale * 20.0f;
 		Coord3D prevPos;
