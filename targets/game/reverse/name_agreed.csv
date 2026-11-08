@@ -970,3 +970,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member|
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeAi,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/UnitRevivalTracker.cpp|type||Rva000F9FF0ExperienceTracker,ExperienceTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field04,m_sourceID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

@@ -6042,3 +6042,13 @@ game/GameEngine/Source/GameLogic/Object/Behavior/DeathFlight001FFFC0.cpp|member|
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeAi,6caa91f8f643452a6bfa2c4a,claude-sonnet,20261109000906-59fd0f,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeFrame,bffd8af895cdde508bcf140b,claude-sonnet,20261109000906-59fd0f,2026-11-09
 game/GameEngine/Source/Common/RTS/UnitRevivalTracker.cpp|type||Rva000F9FF0ExperienceTracker,e5c139c0060ebac1f5223fdd,claude-sonnet,20261109001027-738da0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|type||ActiveData00211A50,8855c94b1df2c662f72221ca,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field04,8d9e6b01d00ed3f401c40bdf,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field0C,e7125a29860a276b5b5e9855,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field10,3533db6a3937c37a63e32b54,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field18,6dbc6b65dba830ab1e538f42,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field1C,6846404073c4e2ba5ee61fb4,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field2C,ba12a7c4f29d04b8cab781c2,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field38,14c7e163a810e5ed49ebc8b5,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field3C,7da1ea06c6a3ce5f16b46e55,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field40,5f2231da398830fce9887fd4,claude-sonnet,20261109001027-bc8eee,2026-11-09
