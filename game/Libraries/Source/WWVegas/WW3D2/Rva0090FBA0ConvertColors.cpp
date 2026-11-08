@@ -9,14 +9,14 @@
 
 #include "cpudetect.h"
 
-struct Rva0090FBA0Vector3
+struct Vector3
 {
 	float x;
 	float y;
 	float z;
 };
 
-struct Rva0090FBA0Vector4
+struct Vector4
 {
 	float x;
 	float y;
@@ -27,7 +27,7 @@ struct Rva0090FBA0Vector4
 	float &operator[](int index) { return (&x)[index]; }
 };
 
-static __forceinline void rva0090FBA0Clamp(Rva0090FBA0Vector4 &color)
+static __forceinline void rva0090FBA0Clamp(Vector4 &color)
 {
 	if (!CPUDetectClass::Has_CMOV_Instruction())
 	{
@@ -85,7 +85,7 @@ static __forceinline void rva0090FBA0Clamp(Rva0090FBA0Vector4 &color)
 }
 
 static __forceinline unsigned int rva0090FBA0Pack(
-	const Rva0090FBA0Vector3 &color, float alpha)
+	const Vector3 &color, float alpha)
 {
 	const float scale = 255.0f;
 	unsigned int col;
@@ -143,18 +143,18 @@ rva0090fba0_fpu_restored:
 }
 
 static __forceinline unsigned int rva0090FBA0ConvertColorClamp(
-	const Rva0090FBA0Vector4 &color)
+	const Vector4 &color)
 {
-	Rva0090FBA0Vector4 clamped_color = color;
+	Vector4 clamped_color = color;
 	rva0090FBA0Clamp(clamped_color);
 	return rva0090FBA0Pack(
-		reinterpret_cast<const Rva0090FBA0Vector3 &>(clamped_color),
+		reinterpret_cast<const Vector3 &>(clamped_color),
 		clamped_color[3]);
 }
 
 void rva0090FBA0ConvertColors(
 	unsigned int *out, int stride,
-	const Rva0090FBA0Vector4 *colors, int count)
+	const Vector4 *colors, int count)
 {
 	for (; count; --count)
 	{
