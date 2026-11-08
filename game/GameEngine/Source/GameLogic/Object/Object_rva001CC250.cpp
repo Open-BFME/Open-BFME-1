@@ -101,10 +101,16 @@ extern AudioManager *TheAudio;
 class BfmeSub1CC_EC3
 {
 public:
-	float queryCached(class Object *val);
+	float queryCached(void *val);	// row ?queryCached@BfmeSub1CC_EC3@@QAEMPAX@Z
 	// 0x001BD790 through ILT 0x00032A24: lowers the float at +0x3C to the value.
 	void rva001BD790(float value);
-	void cache1B4980(float value, unsigned int frames);
+};
+
+// Row at 0x001B4980 (ILT 0x00013016): a two-field setter; the float travels as its bits.
+class Rva001B4980Object
+{
+public:
+	void set(int value, int frames);
 };
 
 class AIUpdateInterface
@@ -258,6 +264,6 @@ void Object::rva001CC250(Object *other)
 		if (speed < 0.0f)
 			speed = 0.0f;
 		locomotor->rva001BD790(speed);
-		locomotor->cache1B4980(speed, 5);
+		((Rva001B4980Object *)locomotor)->set(*(int *)&speed, 5);
 	}
 }

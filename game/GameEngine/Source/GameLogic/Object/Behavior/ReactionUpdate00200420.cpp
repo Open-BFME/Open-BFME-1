@@ -5,7 +5,11 @@
 // Bit-test callee 0x000D2F40 is independently decoded and takes one unsigned index.
 // cl: /DNDEBUG /MD /EHsc
 struct WordBitTest000D2F40 { bool test(unsigned index) const; };
-class DrawableApplyPendingThunk { public: void apply(bool); };
+class ReactionUpdate00200420;
+// Retail's Drawable::applyPendingModelConditionFlags (row 0x0041AA90, ILT 0x0002D439) is private.
+class Object;
+struct Drawable00200420;
+class Drawable { void applyPendingModelConditionFlags(bool); friend class ReactionUpdate00200420; friend void clearReaction00200420(Object*,Drawable00200420*); };
 struct Drawable00200420 { char pad00[0x250]; WordBitTest000D2F40 conditions250; };
 class Body00200420 { public:
  virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3(); virtual float value10();
@@ -109,7 +113,8 @@ class AI00200420 { public:
  virtual void slot95();
  virtual bool predicate180();
 };
-class BfmeInterface001BF6B0 { public: virtual void slot0(); virtual void slot1(); virtual void slot2(int); };
+// Retail's Object::getCountermeasuresBehaviorInterface (row 0x001BF6B0, ILT 0x0000F8E4) returns this interface.
+class CountermeasuresBehaviorInterface { public: virtual void slot0(); virtual void slot1(); virtual void slot2(int); };
 enum DisabledType { Disabled00200420=4 };
 class Object { public:
  virtual void slot0();
@@ -126,7 +131,7 @@ class Object { public:
  char pad04[0x120]; unsigned flags124; char pad128[0xd8];
  Body00200420* body200; AI00200420* ai204; char pad208[0x13c]; unsigned status344;
  void notifyModelConditionChanged();
- BfmeInterface001BF6B0* queryInterfaceRva001BF6B0();
+ CountermeasuresBehaviorInterface* getCountermeasuresBehaviorInterface();
  void setDisabledUntil(DisabledType,unsigned);
  template<int bit> void clearBit() { if(*(unsigned char*)&flags124 & (1u<<bit)) { flags124 &= ~(1u<<bit); notifyModelConditionChanged(); } }
  template<int bit> __forceinline void setBit() { if(!(*(unsigned char*)&flags124 & (1u<<bit))) { flags124 |= 1u<<bit; notifyModelConditionChanged(); } }
@@ -143,7 +148,7 @@ class ReactionUpdate00200420 { public:
 };
 __forceinline void clearReaction00200420(Object* object,Drawable00200420* drawable) {
  object->clearBit<2>(); object->clearBit<3>(); object->clearBit<4>(); object->clearBit<5>();
- ((DrawableApplyPendingThunk*)drawable)->apply(false);
+ ((Drawable*)drawable)->applyPendingModelConditionFlags(false);
 }
 int ReactionUpdate00200420::update() {
  Object* obj=object();
@@ -174,10 +179,10 @@ int ReactionUpdate00200420::update() {
    if(count10>0 && !drawable->conditions250.test(162)) {
     obj->setBit<2>();
     switch(level) { case 0: obj->setBit<3>();break; case 1: obj->setBit<4>();break; case 2: obj->setBit<5>();break; }
-    BfmeInterface001BF6B0* interface=obj->queryInterfaceRva001BF6B0();
+    CountermeasuresBehaviorInterface* interface=obj->getCountermeasuresBehaviorInterface();
     if(interface) interface->slot2(0);
     if(settings->flag21) obj->setDisabledUntil(Disabled00200420,frameView00200420()->frame3C+count10);
-    ((DrawableApplyPendingThunk*)drawable)->apply(false);
+    ((Drawable*)drawable)->applyPendingModelConditionFlags(false);
    }
   }
  }
