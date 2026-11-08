@@ -72,7 +72,7 @@ class ScreenshotAsciiString : private AsciiString
 public:
 	ScreenshotAsciiString(const ScreenshotAsciiString &that)
 		: AsciiString((const AsciiString &)that) {}
-	~ScreenshotAsciiString() {}
+	~ScreenshotAsciiString();
 };
 
 class ScreenshotGlobalData
