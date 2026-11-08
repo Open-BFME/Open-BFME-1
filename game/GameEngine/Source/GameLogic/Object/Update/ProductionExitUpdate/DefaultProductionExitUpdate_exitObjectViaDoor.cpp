@@ -26,12 +26,7 @@ enum ExitDoorType { DOOR_1 = 0 };
 enum PathfindLayerEnum { LAYER_GROUND = 0 };
 #include "../../../command_source_type.h"
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 class LocomotorSet;
