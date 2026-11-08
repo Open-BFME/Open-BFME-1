@@ -11,13 +11,12 @@ public:
 	virtual ~SlaughterHordeContainModuleData();
 
 private:
-	// This inline helper only materializes the vtable. Keep its private
-	// spelling distinct from the public constructor owned by CtorThunk.cpp.
-	SlaughterHordeContainModuleData() {}
-	friend void forceSlaughterHordeContainModuleDataDeletingDestructor();
+	friend void forceSlaughterHordeContainModuleDataDeletingDestructor(const SlaughterHordeContainModuleData &that);
 };
 
-void forceSlaughterHordeContainModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceSlaughterHordeContainModuleDataDeletingDestructor(const SlaughterHordeContainModuleData &that)
 {
-	SlaughterHordeContainModuleData value;
+	SlaughterHordeContainModuleData value(that);
 }

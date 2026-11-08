@@ -10,10 +10,12 @@ class SquishCollideModuleData
 public:
 	virtual ~SquishCollideModuleData();
 private:
-	friend void forceSquishCollideModuleDataDeletingDestructor();
+	friend void forceSquishCollideModuleDataDeletingDestructor(const SquishCollideModuleData &that);
 };
 
-void forceSquishCollideModuleDataDeletingDestructor()
+// The implicit copy constructor (no retail twin) emits the vftable and with
+// it ??_G without a second, non-retail copy of the default constructor.
+void forceSquishCollideModuleDataDeletingDestructor(const SquishCollideModuleData &that)
 {
-	SquishCollideModuleData value;
+	SquishCollideModuleData value(that);
 }
