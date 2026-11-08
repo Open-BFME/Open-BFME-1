@@ -108,7 +108,7 @@ inline bool Object::isKindOf(KindOfType t) const
 
 struct BfmeListNodeBase
 {
-	BfmeListNodeBase *m_bfmeNext;
+	BfmeListNodeBase *m_next;
 	BfmeListNodeBase *m_bfmePrev;
 };
 
@@ -191,9 +191,9 @@ void AIGroup::recompute(void)
 
 	m_speed = 9999999999.9f;
 
-	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+	for (BfmeListNodeBase *it = m_memberList->m_next;
 		it != m_memberList;
-		it = it->m_bfmeNext)
+		it = it->m_next)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
 
