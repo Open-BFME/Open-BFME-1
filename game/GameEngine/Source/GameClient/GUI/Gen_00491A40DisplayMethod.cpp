@@ -56,6 +56,12 @@ public:
 class GameFont;
 class FontLibrary
 {
+};
+
+// Retail's getFont row belongs to FontLibraryBFMERetail (0x004772D0, ILT 0x0000ABC3); TheFontLibrary
+// keeps its EA-spelled global type, so the call goes through this TU-local ABI view.
+class FontLibraryBFMERetail
+{
 public:
 	GameFont *getFont(AsciiString *name, float pointSize, unsigned char bold);
 };
@@ -86,11 +92,21 @@ public:
 
 // Receiver is TheDisplay. The callee at 0x0040E0D0 multiplies its four
 // trailing dwords by the receiver's width and height, so they are floats.
+// The callee is ILT 0x00015451 (the defined ?j_00015451 row; body ?bfmeGo1VMZ@BfmeThingVMZ@@QAEXHHHHHH@Z):
+// the member-pointer view keeps the four trailing dwords as the floats they are.
 class BfmeThingVMZ
 {
 public:
 	void bfmeGo1VMZ(int image, int index, float a, float b, float c, float d);
 };
+extern void j_00015451();
+typedef void (BfmeThingVMZ::*BfmeGo1VMZCall)(int image, int index, float a, float b, float c, float d);
+static __forceinline BfmeGo1VMZCall bfmeGo1VMZThroughIlt()
+{
+	union { void (*raw)(); BfmeGo1VMZCall member; } call;
+	call.raw = j_00015451;
+	return call.member;
+}
 
 class BfmeObjEE
 {
@@ -178,7 +194,7 @@ void Gen_00491880::rva00491A40(int unused)
 	AsciiString foreground("LoadScreenForeground");
 	const Image *image = TheMappedImageCollection->findImageByName(foreground);
 	if (image != 0)
-		((BfmeThingVMZ *)TheDisplay)->bfmeGo1VMZ((int)image, 2, 0.0f, 0.0f, 1.0f, 1.0f);
+		(((BfmeThingVMZ *)TheDisplay)->*bfmeGo1VMZThroughIlt())((int)image, 2, 0.0f, 0.0f, 1.0f, 1.0f);
 
 	if (m_bfmeFirst.isNotEmpty())
 	{
@@ -186,7 +202,7 @@ void Gen_00491880::rva00491A40(int unused)
 		if (picture != 0)
 		{
 			int height = picture->getImageHeight();
-			((BfmeThingVMZ *)TheDisplay)->bfmeGo1VMZ((int)picture, 0, 0.0f, 0.1640625f, 1.0f,
+			(((BfmeThingVMZ *)TheDisplay)->*bfmeGo1VMZThroughIlt())((int)picture, 0, 0.0f, 0.1640625f, 1.0f,
 				(float)height / 768.0f + 0.1640625f);
 		}
 	}
@@ -212,7 +228,7 @@ void Gen_00491880::rva00491A40(int unused)
 	GameFont *font;
 	{
 		AsciiString fontName("SachaWynter");
-		font = TheFontLibrary->getFont(&fontName, 18.0f, 0);
+		font = ((FontLibraryBFMERetail *)TheFontLibrary)->getFont(&fontName, 18.0f, 0);
 	}
 
 	UnicodeString text = TheGameText->fetch("GUI:Loading", &exists);
