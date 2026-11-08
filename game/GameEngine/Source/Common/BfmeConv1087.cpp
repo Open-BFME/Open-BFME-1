@@ -13,65 +13,94 @@ struct BfmeB1087
 	char m_bfme93;
 };
 
-class BfmeN1087
+// Rows the ILTs retail calls: GameLODManager::findDynamicLODLevel (0x0007C440, float),
+// BfmeThingAQ::bfmeChooseAQ (0x0007CA40) and W3DDisplay::calculateTerrainLOD (0x006E8E60).
+enum DynamicGameLODLevel { DYNAMIC_GAME_LOD_UNKNOWN = -1 };
+
+class GameLODManager
 {
 public:
-	int bfmeConv1087(int a);
-	void bfmeSet1087(int a);
+	DynamicGameLODLevel findDynamicLODLevel(float value);
+};
+
+class BfmeThingAQ
+{
+public:
+	unsigned char bfmeChooseAQ(int level);
 };
 
 class BfmeA1087;
 
-extern BfmeM1087 *g_bfmeM1087;
+// Retail 0x012ED5C8 is `GlobalData *TheWritableGlobalData` (GlobalData.cpp); BfmeM1087 is the view.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define g_bfmeM1087 ((BfmeM1087 *)TheWritableGlobalData)
 // Retail's global at 0x012F0898 is GameLogic.cpp's `GameLogic *TheGameLogic`;
 // the TU keeps its own offset view and casts at each use.
 class GameLogic;
 extern GameLogic *TheGameLogic;
-extern BfmeN1087 *g_bfmeN1087;
+// Retail 0x012ED5AC is `GameLODManager *TheGameLODManager` (GameLOD.cpp).
+extern GameLODManager *TheGameLODManager;
 // Retail 0x012F7FE0 is ?TheTerrainRenderObject@@3PAVBaseHeightMapRenderObjClass@@A (data_rows.csv,
 // W3DDevice/GameClient/BaseHeightMap.cpp); g_bfmeA1087 was only a pin.
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 #define g_bfmeA1087 ( *(BfmeA1087 **)&TheTerrainRenderObject )
 
+class BfmeQ1087;
+
+class W3DDisplay
+{
+protected:
+	void calculateTerrainLOD();
+	friend class BfmeQ1087;
+};
+
 class BfmeQ1087
 {
 public:
 	void bfmeGo1087A(void);
-	void bfmeTail1087(void);
 	char m_bfmePad[0x17c];
-	int m_bfme17c;
+	float m_bfme17c;
 };
 
 void BfmeQ1087::bfmeGo1087A(void)
 {
 	if (g_bfmeM1087->m_bfme58 && ((BfmeB1087 *)TheGameLogic)->m_bfme93)
-		g_bfmeN1087->bfmeSet1087(g_bfmeN1087->bfmeConv1087(m_bfme17c));
+		((BfmeThingAQ *)TheGameLODManager)->bfmeChooseAQ(TheGameLODManager->findDynamicLODLevel(m_bfme17c));
 	else
-		g_bfmeN1087->bfmeSet1087(4);
+		((BfmeThingAQ *)TheGameLODManager)->bfmeChooseAQ(4);
 	if (g_bfmeM1087->m_bfme54 == 8 && g_bfmeA1087)
-		bfmeTail1087();
+		((W3DDisplay *)this)->calculateTerrainLOD();
 }
 
-class BfmeC1087
+// Rows at the ILTs: ScienceStore::getScienceFromInternalName (0x000E7460) and the
+// player-mask resolver ScriptEngine::unidentified_0034DB40 (0x0034DB40).
+enum ScienceType { SCIENCE_INVALID = -1 };
+class AsciiString;
+
+class ScienceStore
 {
 public:
-	int bfmeFind1087(int a);
+	ScienceType getScienceFromInternalName(const AsciiString &name) const;
 };
 
-struct BfmeR1087
+class Player
 {
+public:
 	char m_bfmePad[0x24];
-	int m_bfme24;
+	int m_playerIndex;
 };
 
-class BfmeD1087
+class PlayerList
 {
 public:
-	BfmeR1087 *bfmeLook1087(short *h);
+	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
-class BfmeP1087
+class Parameter;
+
+class ScriptEngine
 {
 public:
 	virtual void bfmeSlot1087P_0(void);
@@ -124,34 +153,41 @@ public:
 	virtual void bfmeSlot1087P_47(void);
 	virtual void bfmeSlot1087P_48(void);
 	virtual char bfmeSlot1087P_49(int a, int b, int c);
-	int bfmeNext1087(int a);
+	unsigned short unidentified_0034DB40(Parameter *parameter);
 };
 
-class ScienceStore;
 extern ScienceStore *TheScienceStore;
-extern BfmeP1087 *g_bfmeP1087;
+// Retail 0x012F076C is `ScriptEngine *TheScriptEngine`; the view above carries the vtable slot
+// this body calls and the resolver row.
+extern ScriptEngine *TheScriptEngine;
+
+// Retail keeps the resolver's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int nextPlayerMask(int parameter)
+{
+	typedef int (ScriptEngine::*Raw)(Parameter *);
+	Raw raw = reinterpret_cast<Raw>(&ScriptEngine::unidentified_0034DB40);
+	return (TheScriptEngine->*raw)((Parameter *)parameter);
+}
 
 // Retail's global at 0x012ED748 is PlayerList.cpp's `PlayerList *ThePlayerList`
-// (mangled ?ThePlayerList@@3PAVPlayerList@@A), so the reference carries the
-// real name; BfmeD1087 stays this TU's offset view of the pointee and is
-// reached by a no-op pointer cast.
-class PlayerList;
+// (mangled ?ThePlayerList@@3PAVPlayerList@@A).
 extern PlayerList *ThePlayerList;
 
 char __stdcall bfmeGo1087B(int a, int b)
 {
-	int e = ((BfmeC1087 *)TheScienceStore)->bfmeFind1087(b + 0x10);
+	ScienceType e = TheScienceStore->getScienceFromInternalName(*(const AsciiString *)(b + 0x10));
 
-	if (e == -1)
+	if (e == SCIENCE_INVALID)
 		return 0;
-	b = g_bfmeP1087->bfmeNext1087(a);
+	b = nextPlayerMask(a);
 	while ((short)b) {
-		BfmeR1087 *r = ((BfmeD1087 *)ThePlayerList)->bfmeLook1087((short *)&b);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&b);
 
 		if (r) {
-			int m = r->m_bfme24;
+			int m = r->m_playerIndex;
 
-			if (g_bfmeP1087->bfmeSlot1087P_49(m, e, 1))
+			if (TheScriptEngine->bfmeSlot1087P_49(m, e, 1))
 				return 1;
 		}
 	}
