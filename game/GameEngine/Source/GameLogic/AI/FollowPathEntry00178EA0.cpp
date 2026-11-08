@@ -68,7 +68,7 @@ void extra(float f) {
 };
 class FollowPathEntry00178EA0Object {
 public:
-    char pad000[0x204]; FollowPathEntry00178EA0AI *at204;
+    char pad000[0x204]; FollowPathEntry00178EA0AI *m_ai;
 bool kind(int i) const {
     typedef bool (FollowPathEntry00178EA0Object::*Method)(int) const;
     union { void (*raw)(); Method method; } call;
@@ -76,12 +76,12 @@ bool kind(int i) const {
 }
 };
 struct FollowPathEntry00178EA0Machine {
-    char pad000[0x10]; FollowPathEntry00178EA0Object *at010;
+    char pad000[0x10]; FollowPathEntry00178EA0Object *m_owner;
 };
 class FollowPathEntry00178EA0 {
 public:
     char pad000[4]; int at004; char pad008[0x1c-8];
-    FollowPathEntry00178EA0Machine *at01c;
+    FollowPathEntry00178EA0Machine *m_machine;
     char pad020[4]; Coord3D at024; char pad030[0x4c-0x30];
     bool at04c; char pad04d[3]; int at050; bool at054;
 int hub() {
@@ -90,8 +90,8 @@ int hub() {
 };
 #define PATH_LOG ((void (__cdecl *)(void*,const char*,...))j_0003a17a)
 int FollowPathEntry00178EA0::run() {
-    FollowPathEntry00178EA0Object *obj=at01c->at010;
-    FollowPathEntry00178EA0AI *ai=obj->at204;
+    FollowPathEntry00178EA0Object *obj=m_machine->m_owner;
+    FollowPathEntry00178EA0AI *ai=obj->m_ai;
     at050=0;
     const Coord3D *pos=ai->point(at050);
     if (!pos) return -2;
