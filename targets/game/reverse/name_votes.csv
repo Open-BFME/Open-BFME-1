@@ -6052,3 +6052,13 @@ game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field38,14c7e163a810e5ed49ebc8b5,claude-sonnet,20261109001027-bc8eee,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field3C,7da1ea06c6a3ce5f16b46e55,claude-sonnet,20261109001027-bc8eee,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||field40,5f2231da398830fce9887fd4,claude-sonnet,20261109001027-bc8eee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at04,2bd9ecad3c88563c653ab7b0,claude-sonnet,20261109001348-9ada16,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at24,763d49f0871327458c314adf,claude-sonnet,20261109001348-9ada16,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at28,477792379f2a47faa726f20d,claude-sonnet,20261109001348-9ada16,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at2c,97e684c86c6b81dccd253d3a,claude-sonnet,20261109001348-9ada16,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at110,9ce29099fb711982e64a1698,claude-sonnet,20261109001348-6a3f84,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11d,7d4dbed286001f2d9cc68248,claude-sonnet,20261109001348-6a3f84,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11e,4e6d31e901df1b0713f09019,claude-sonnet,20261109001348-6a3f84,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11f,4f016ce9e47f34f4b4eb5c4f,claude-sonnet,20261109001348-6a3f84,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at120,6c0f8b04132c1881e52d40ba,claude-sonnet,20261109001348-6a3f84,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,e795b69d06fd3bb297790713,claude-sonnet,20261109001348-6a3f84,2026-11-09

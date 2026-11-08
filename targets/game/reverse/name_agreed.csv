@@ -981,3 +981,8 @@ game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_Constructor.cpp|member||
 game/GameEngine/Source/GameLogic/Object/Update/OneRingTrajectory00299400.cpp|member||at04,m_moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeAi,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateConditionCooldown0027BF60.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at110,m_rankLevelLimit,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11e,m_inputEnabledMemory,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at11f,m_mouseVisibleMemory,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at120,m_progressComplete,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicConstructor.cpp|member||at128,m_progressCompleteTimeout,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
