@@ -960,3 +960,4 @@ game/GameEngine/Source/GameLogic/Object/ObjectBuildObjectInfo.cpp|type||BfmeExpe
 game/GameEngine/Source/GameLogic/Object/Upgrade/AudioLoopUpgradeCtorModuleFactory.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectBuildObjectInfo.cpp|type||BfmeExperienceTrackerFields,ExperienceTracker,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/AudioLoopUpgradeCtorModuleFactory.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Rva00972A30AddPrototype.cpp|local|Create_Rva00972880_Prototype|p,prototype,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
