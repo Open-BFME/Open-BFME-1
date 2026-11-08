@@ -14,14 +14,22 @@ struct Coord3D
 class WeaponTemplate
 {
 public:
-	Coord3D *getAimPosition(Coord3D *result, const Object *source,
-		const Object *victim, int weaponSlot);
 };
+
+// Retail reaches WeaponTemplate::getAimPosition (0x001E65C0) through its ILT
+// 0x00001C17, a defined ?j_ row.
+extern void j_00001c17();
 
 Coord3D::Coord3D(WeaponTemplate *weaponTemplate, const Object *source,
 	const Object *victim, int weaponSlot)
 {
-	weaponTemplate->getAimPosition(this, source, victim, weaponSlot);
+	union {
+		void (*raw)();
+		Coord3D *(WeaponTemplate::*member)(Coord3D *, const Object *,
+			const Object *, int);
+	} aim;
+	aim.raw = j_00001c17;
+	(weaponTemplate->*aim.member)(this, source, victim, weaponSlot);
 }
 
 class Weapon
