@@ -6139,3 +6139,4 @@ game/GameEngine/Source/GameLogic/AI/AttackHordeStateMachineCtor.cpp|type||Rva001
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdate_aiDoCommand_BFME.cpp|type||Rva002B5600Coord3D,825c622f2777b986482084ce,claude-sonnet,20261109004424-54a170,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DeployStyleAIUpdate_aiDoCommand_BFME.cpp|type||Rva002B5600DeployStyleAIUpdate,3ff71fbe11beb287555fe052,claude-sonnet,20261109004424-54a170,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicRva006BE890.cpp|function|W3DTerrainLogic@|rva006BE890,7eff35546a4722190a60910f,claude-sonnet,20261109004225-099ad3,2026-11-09
+game/Libraries/Source/EA/Apt/AptString/Rva0089DD40.cpp|function||rva0089DD40,0e91752fd18655ec2872cb0b,claude-sonnet,20261109004225-e388bc,2026-11-09
