@@ -89,7 +89,8 @@ extern int Rva00898D20Get();
 extern BfmeS1238 *Rva00898D40At(void *unused, int index);
 extern void __cdecl bfmeAppend(int, int, int);
 extern "C" void (*TheBfmeFree)(void *, UnsignedInt);
-extern const char vtable01135D68[];
+extern "C" const char __identifier("??_7Rva00899560Value@@6B@")[];
+// 0x01135D68 is the compiler-emitted vftable COMDAT of Rva00899560Value; the stand-in name resolved nothing.
 // 0x011360A8 is Rva008995E0Value's vftable, emitted as a COMDAT by
 // Rva008995E0AptBoolValueCtor.cpp; the stand-in name declared here resolved
 // nothing.  __identifier spells the compiler-emitted symbol, and the array
@@ -169,7 +170,7 @@ struct Rva00899800Boolean
 		object = (Rva00899800Boolean *)Rva008C5D70Alloc(12);
 		if (object != 0)
 		{
-			object->m_vtable = (void *)vtable01135D68;
+			object->m_vtable = (void *)__identifier("??_7Rva00899560Value@@6B@");
 			object->m_flags = (object->m_flags & 0xf0008005) | 0x40008005;
 			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_vtable = (void *)__identifier("??_7Rva008995E0Value@@6B@");
@@ -197,7 +198,7 @@ struct Rva00899800Boolean
 		{
 			UnsignedInt flags =
 				(object->m_flags & 0xf0008005) | 0x40008005;
-			object->m_vtable = (void *)vtable01135D68;
+			object->m_vtable = (void *)__identifier("??_7Rva00899560Value@@6B@");
 			object->m_flags = flags;
 			g_rva01337810GcRoots->addPooled((Rva008D2A30Node *)object);
 			object->m_vtable = (void *)__identifier("??_7Rva008995E0Value@@6B@");

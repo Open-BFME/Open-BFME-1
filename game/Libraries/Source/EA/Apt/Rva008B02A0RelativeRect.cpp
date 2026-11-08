@@ -17,7 +17,10 @@ class Rva008D29A0;
 extern Rva008D29A0 *g_rva008D29A0;
 extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
-extern const char vtable01135D68[],vtable01136698[];
+extern "C" const char __identifier("??_7Rva00899560Value@@6B@")[];
+extern "C" const char __identifier("??_7Rva008A4C00Value@@6B@")[];
+// 0x01135D68 / 0x01136698 are compiler-emitted vftable COMDATs of Rva00899560Value / Rva008A4C00Value;
+// the stand-in names declared here resolved nothing.
 struct Float008B02A0 {
  void *m_vtable; unsigned m_flags;
  union { Float008B02A0 *m_next; float m_value; };
@@ -33,10 +36,10 @@ struct Float008B02A0 {
  }
  void *operator new(unsigned size) { return Rva008C5D70Alloc(size); }
  __forceinline Float008B02A0(float value) {
-   m_vtable=(void*)vtable01135D68;
+   m_vtable=(void*)__identifier("??_7Rva00899560Value@@6B@");
    m_flags=(m_flags&0xf0008006)|0x40008006;
    g_rva01337810GcRoots->addPooled((Rva008D2950Node*)this);
-   m_vtable=(void*)vtable01136698;
+   m_vtable=(void*)__identifier("??_7Rva008A4C00Value@@6B@");
    m_value=value;
  }
 

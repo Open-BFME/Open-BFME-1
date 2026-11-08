@@ -34,7 +34,8 @@ class Rva008D2A80;
 extern Rva008D2A80 *g_rva008D2A80;
 extern Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned);
-extern const char vtable01135D68[];
+extern "C" const char __identifier("??_7Rva00899560Value@@6B@")[];
+// 0x01135D68 is the compiler-emitted vftable COMDAT of Rva00899560Value; the stand-in name resolved nothing.
 // 0x011360A8 is Rva008995E0Value's vftable, emitted as a COMDAT by
 // Rva008995E0AptBoolValueCtor.cpp; the stand-in name declared here resolved
 // nothing.  __identifier spells the compiler-emitted symbol, and the array
@@ -56,7 +57,7 @@ struct Boolean008A58C0 {
  }
  void *operator new(unsigned size) { return Rva008C5D70Alloc(size); }
  __forceinline Boolean008A58C0(bool value) {
-   m_vtable=(void*)vtable01135D68;
+   m_vtable=(void*)__identifier("??_7Rva00899560Value@@6B@");
    m_flags=(m_flags&0xf0008005)|0x40008005;
    g_rva01337810GcRoots->addPooled((Rva008D2A30Node*)this);
    m_vtable=(void*)__identifier("??_7Rva008995E0Value@@6B@");
