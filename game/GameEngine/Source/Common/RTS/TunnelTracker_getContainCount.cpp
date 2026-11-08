@@ -62,7 +62,7 @@ public:
 
 private:
 	unsigned char m_bfmeHead[0x08 - 0x00];
-	BfmeListNodeBase *m_bfmeContainList;		// +0x08, the list's sentinel
+	BfmeListNodeBase *m_containList;		// +0x08, the list's sentinel
 	unsigned char m_bfmeGap[0x10 - 0x0C];
 	UnsignedInt m_containListSize;			// +0x10
 };
@@ -77,8 +77,8 @@ UnsignedInt TunnelTracker::getContainCount(Int filterArg)
 
 	UnsignedInt count = 0;
 
-	for (BfmeListNodeBase *it = m_bfmeContainList->m_bfmeNext;
-			it != m_bfmeContainList;
+	for (BfmeListNodeBase *it = m_containList->m_bfmeNext;
+			it != m_containList;
 			it = it->m_bfmeNext)
 	{
 		if (filter->accepts(((BfmeObjectNode *)it)->m_bfmeValue, 0))
