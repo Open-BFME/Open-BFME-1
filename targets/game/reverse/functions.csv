@@ -124635,7 +124635,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?member@Rva0037AAB0Object@@QAEPADXZ,,0x0037AAB0,6,game/GameEngine/Source/Common/Rva0037A7D0TinyAccessors.cpp,matched,address-derived member address adds 0x10 to the dword at this
 ?memrev@@YAXPADI@Z,,0x009E8C50,33,game/Libraries/Source/WWVegas/WWLib/mpmath.cpp,matched,
 ?merge@LList@@QAEXPAV1@@Z,,0x00105890,49,game/GameEngine/Source/Common/System/List.cpp,matched,
-?merge@PairMerge00406EC0@@QAEXPBUCell00406EC0@@0@Z,,0x00406EC0,283,game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp,matched,zone-worker callers 00407030 and 004085F0; native bitfield access and STLport iterator copy ABI; opaque method identity;model=gpt-6-astra
+?merge@PairMerge00406EC0@@QAEXPBUPathfindCell@@0@Z,,0x00406EC0,283,game/GameEngine/Source/GameLogic/AI/PathfindCellPairMerge00406EC0.cpp,matched,zone-worker callers 00407030 and 004085F0; native bitfield access and STLport iterator copy ABI; opaque method identity;model=gpt-6-astra
 ?merge@Rva000F93A0@@QAEXABU1@@Z,,0x000F93A0,53,game/GameEngine/Source/Common/Bfme/Rva000F93A0_merge.cpp,matched,
 ?merge@Rva000F9F20@@QAEXABU1@@Z,,0x000F9F20,53,game/GameEngine/Source/Common/Bfme/Rva000F9F20_merge.cpp,matched,address-derived structural OR merge; retail combines six dwords from source into this
 ?merge@Rva000FA140@@QAEXABURva000FA140Source@@@Z,,0x000FA140,78,game/GameEngine/Source/Common/Bfme/Rva000FA140_merge.cpp,matched,address-derived structural OR merge; retail combines six source dwords into offsets +0x224 through +0x238

@@ -13,7 +13,7 @@
 // hidden output argument. ILT 0x369BC -> 0x404A70; ILT 0xE5A2 -> 0x406C50.
 
 
-struct Cell00406EC0
+struct PathfindCell
 {
     char pad[10];
     unsigned short zone;
@@ -59,13 +59,13 @@ typedef _STL::map<Rva00406C50Key, Rva00406C50Value> IndexMap00406EC0;
 class PairMerge00406EC0
 {
 public:
-    void merge(const Cell00406EC0 *a, const Cell00406EC0 *b);
+    void merge(const PathfindCell *a, const PathfindCell *b);
 private:
     char pad[0x235fc];
     Map00406EC0 map;
 };
 
-void PairMerge00406EC0::merge(const Cell00406EC0 *a, const Cell00406EC0 *b)
+void PairMerge00406EC0::merge(const PathfindCell *a, const PathfindCell *b)
 {
     unsigned short za = a->zone, zb = b->zone;
     if (za == zb)
@@ -75,7 +75,7 @@ void PairMerge00406EC0::merge(const Cell00406EC0 *a, const Cell00406EC0 *b)
         unsigned short t = za;
         za = zb;
         zb = t;
-        const Cell00406EC0 *p = a;
+        const PathfindCell *p = a;
         a = b;
         b = p;
     }
