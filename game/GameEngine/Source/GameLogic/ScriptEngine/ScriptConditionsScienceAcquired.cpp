@@ -13,47 +13,65 @@ struct BfmeM1091
 	float m_bfme11f8;
 };
 
-class BfmeR1091
+// Rows at the ILTs retail calls: Player::isCapableOfPurchasingScience (0x000CFDF0),
+// hasAnyBuildFacility (0x000CE100), hasAnyObjects (0x000CE0B0); the view carries only those.
+enum ScienceType { SCIENCE_INVALID = -1 };
+
+class Player
 {
 public:
-	char bfmeHas1091(int a);
-	char bfmeChk1091(void);
-	char bfmeTest1091(int a);
+	bool isCapableOfPurchasingScience(ScienceType science) const;
+	bool hasAnyBuildFacility() const;
+	bool hasAnyObjects(bool flag) const;
 };
 
-class BfmeD1091
+class PlayerList
 {
 public:
-	BfmeR1091 *bfmeLook1091(short *h);
+	Player *getEachPlayerFromMask(unsigned short &mask);
 };
 
-class BfmeP1091
+class AsciiString;
+
+// ScienceStore::getScienceFromInternalName (0x000E7460).
+class ScienceStore
 {
 public:
-	int bfmeNext1091(int a);
+	ScienceType getScienceFromInternalName(const AsciiString &name) const;
 };
 
-class BfmeC1091
+class Parameter;
+
+// Retail's TheScriptEngine (0x012F076C); the view carries the player-mask resolver (row 0x0034DB40).
+class ScriptEngine
 {
 public:
-	int bfmeFind1091(int a);
+	unsigned short unidentified_0034DB40(Parameter *parameter);
 };
+extern ScriptEngine *TheScriptEngine;
+
+// Retail keeps the resolver's whole EAX (no zero-extension of the 16-bit mask),
+// so the row is called through its own symbol with an int result view.
+static __forceinline int nextPlayerMask(int parameter)
+{
+	typedef int (ScriptEngine::*Raw)(Parameter *);
+	Raw raw = reinterpret_cast<Raw>(&ScriptEngine::unidentified_0034DB40);
+	return (TheScriptEngine->*raw)((Parameter *)parameter);
+}
 
 class GameLogic;
 // 0x012F0898 is retail's `GameLogic *TheGameLogic`; BfmeB1091 is this TU's
 // local view of the same global, so cast at the use.
 extern GameLogic *TheGameLogic;
-extern BfmeM1091 *g_bfmeM1091;
-class ScienceStore;
+// 0x012ED5C8 is retail's `GlobalData *TheWritableGlobalData`; BfmeM1091 is the TU's view of it.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
+#define g_bfmeM1091 ((BfmeM1091 *)TheWritableGlobalData)
 extern ScienceStore *TheScienceStore;
-// 0x012ED748 is retail's `PlayerList *ThePlayerList`; BfmeD1091 is this
-// TU's view of the getEachPlayer surface, so cast at the use.
-class PlayerList;
+// 0x012ED748 is retail's `PlayerList *ThePlayerList`.
 extern PlayerList *ThePlayerList;
-static inline BfmeD1091 *localThePlayerList() { return (BfmeD1091 *)ThePlayerList; }
-extern BfmeP1091 *g_bfmeP1091;
 
-class Parameter;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions
@@ -66,18 +84,18 @@ protected:
 bool ScriptConditions::evaluateScienceAcquired(
 	Parameter *playerParm, Parameter *scienceParm)
 {
-	int e = ((BfmeC1091 *)TheScienceStore)->bfmeFind1091(
-		reinterpret_cast<int>(scienceParm) + 0x10);
+	ScienceType e = TheScienceStore->getScienceFromInternalName(
+		*reinterpret_cast<const AsciiString *>(reinterpret_cast<char *>(scienceParm) + 0x10));
 
-	if (e == -1)
+	if (e == SCIENCE_INVALID)
 		return false;
 	scienceParm = reinterpret_cast<Parameter *>(
-		g_bfmeP1091->bfmeNext1091(reinterpret_cast<int>(playerParm)));
+		nextPlayerMask(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(scienceParm)) {
-		BfmeR1091 *r = localThePlayerList()->bfmeLook1091(
-			reinterpret_cast<short *>(&scienceParm));
+		Player *r = ThePlayerList->getEachPlayerFromMask(
+			*reinterpret_cast<unsigned short *>(&scienceParm));
 
-		if (r && r->bfmeHas1091(e))
+		if (r && r->isCapableOfPurchasingScience(e))
 			return true;
 	}
 	return false;
@@ -89,11 +107,11 @@ char __stdcall bfmeGo1091B(int a)
 
 	if (n < (unsigned int)(int)(g_bfmeM1091 ? g_bfmeM1091->m_bfme11f8 * 5.0f : 25.0f))
 		return 0;
-	a = g_bfmeP1091->bfmeNext1091(a);
+	a = nextPlayerMask(a);
 	while ((short)a) {
-		BfmeR1091 *r = localThePlayerList()->bfmeLook1091((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
-		if (r && r->bfmeChk1091())
+		if (r && r->hasAnyBuildFacility())
 			return 0;
 	}
 	return 1;
@@ -105,11 +123,11 @@ char __stdcall bfmeGo1091C(int a)
 
 	if (n < (unsigned int)(int)(g_bfmeM1091 ? g_bfmeM1091->m_bfme11f8 * 5.0f : 25.0f))
 		return 0;
-	a = g_bfmeP1091->bfmeNext1091(a);
+	a = nextPlayerMask(a);
 	while ((short)a) {
-		BfmeR1091 *r = localThePlayerList()->bfmeLook1091((short *)&a);
+		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
-		if (r && r->bfmeTest1091(0))
+		if (r && r->hasAnyObjects(false))
 			return 0;
 	}
 	return 1;
