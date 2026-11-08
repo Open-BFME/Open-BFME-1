@@ -6173,3 +6173,4 @@ game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_di
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount03C,17a5a00b6a1b30a0dac25ed3,claude-sonnet,20261109005840-da0554,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount040,814ce6ccf56dbe144481bd7b,claude-sonnet,20261109005840-da0554,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount044,71e63f58ac478b6379a02eef,claude-sonnet,20261109005840-da0554,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva001695B0AdjustBuildList.cpp|type||Rva001695B0,f13810888d903256f698d353,claude-sonnet,20261109005840-115835,2026-11-09
