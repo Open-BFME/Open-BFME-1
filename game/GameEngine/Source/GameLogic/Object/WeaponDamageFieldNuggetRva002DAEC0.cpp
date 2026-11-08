@@ -63,12 +63,18 @@ private:
 	Team *m_defaultTeam;
 };
 
+// Retail's Thing::setPosition (row 0x00132CE0, ILT 0x0003A1A7).
+class Thing
+{
+public:
+	void setPosition(const Coord3D *pos);
+};
+
 class Object
 {
 public:
 	Player *getControllingPlayer() const;
 	void setProducer(const Object *obj);
-	void setPosition(const Coord3D *pos);
 	Module *findUpdateModule(NameKeyType key) const { return findModule(key); }
 
 protected:
@@ -82,10 +88,18 @@ public:
 	void destroyObject(Object *obj);
 };
 
-class ThingFactory
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate (row 0x00137E80);
+// TheThingFactory keeps its EA-spelled global type, so the call goes through this
+// TU-local ABI view of the defining class.
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
+class ThingFactory
+{
+public:
 	Object *newObject(const ThingTemplate *tmplate, Team *team,
 		const ObjectStatusMaskType &statusBits = ObjectStatusMaskType(),
 		UnsignedInt flags = 0);
@@ -134,7 +148,7 @@ private:
 void BfmeThingUBA::rva002DAEC0(const DamageInfo *damageInfo, const Coord3D *pos) const
 {
 	const AsciiString &name = TheGlobalData->m_genericDamageFieldName;
-	const ThingTemplate *tmpl = TheThingFactory->findTemplate(name);
+	const ThingTemplate *tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(name);
 	if (tmpl == 0 || m_weaponTemplate == 0)
 		return;
 
@@ -145,7 +159,7 @@ void BfmeThingUBA::rva002DAEC0(const DamageInfo *damageInfo, const Coord3D *pos)
 
 	Object *field = TheThingFactory->newObject(tmpl, source->getControllingPlayer()->getDefaultTeam());
 	field->setProducer(source);
-	field->setPosition(pos);
+	((Thing *)field)->setPosition(pos);
 
 	static NameKeyType key_FireWeaponUpdate = NAMEKEY("FireWeaponUpdate");
 	BfmeC1010 *fireWeaponUpdate = (BfmeC1010 *)field->findUpdateModule(key_FireWeaponUpdate);

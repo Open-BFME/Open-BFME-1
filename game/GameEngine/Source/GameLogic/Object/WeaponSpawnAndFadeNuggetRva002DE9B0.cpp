@@ -74,6 +74,8 @@ class Thing
 {
 public:
 	void setOrientation(Real angle);
+	// Retail's Thing::setPosition (row 0x00132CE0, ILT 0x0003A1A7).
+	void setPosition(const Coord3D *pos);
 };
 
 class Object : public Thing
@@ -90,7 +92,6 @@ public:
 	Real getOrientation() const { return m_angle; }
 	Team *getTeam() const { return m_team; }
 	int getLayer() const;
-	void setPosition(const Coord3D *pos);
 	void kill(DamageType damageType, DeathType deathType);
 
 private:
@@ -109,10 +110,18 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-class ThingFactory
+// Retail defines the factory lookup as BfmeThingFactory::findTemplate (row 0x00137E80);
+// TheThingFactory keeps its EA-spelled global type, so the call goes through this
+// TU-local ABI view of the defining class.
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
+class ThingFactory
+{
+public:
 	Object *newObject(const ThingTemplate *tmplate, Team *team,
 		const ObjectStatusMaskType &statusBits = ObjectStatusMaskType(),
 		UnsignedInt flags = 0);
@@ -166,7 +175,7 @@ private:
 void Made001E6170::rva002DE9B0(const DamageInfo *damageInfo, const Coord3D *) const
 {
 	Object *source = TheGameLogic->findObjectByID(damageInfo->m_sourceID);
-	const ThingTemplate *tmpl = TheThingFactory->findTemplate(m_spawnName);
+	const ThingTemplate *tmpl = ((BfmeThingFactory *)TheThingFactory)->findTemplate(m_spawnName);
 	if (tmpl == 0)
 		return;
 
