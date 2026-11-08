@@ -1099,3 +1099,6 @@ game/GameEngine/Source/Common/BfmeConv2073.cpp|member||m_bfmeGeomHN,m_geometryIn
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeContain,m_contain,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeDieFrame,m_dieFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeContain,m_contain,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeDieFrame,m_dieFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0023B7A0HordeContainView.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

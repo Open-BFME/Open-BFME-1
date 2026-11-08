@@ -208,7 +208,7 @@ public:
 	char m_bfmeHead[ 0x94 ];
 	UnsignedInt m_bfmeStatus;							///< retail this+0x94
 	char m_bfmeGap98[ 0x1fc - 0x98 ];
-	ContainModuleInterface *m_bfmeContain;				///< retail this+0x1fc
+	ContainModuleInterface *m_contain;				///< retail this+0x1fc
 	char m_bfmeGap200[ 0x210 - 0x200 ];
 	BfmeExperienceCounters *m_bfmeExperience;			///< retail this+0x210
 	char m_bfmeGap214[ 0x224 - 0x214 ];
@@ -230,7 +230,7 @@ public:
 	void setLifetimeRange( UnsignedInt minFrames, UnsignedInt maxFrames );
 
 	char m_bfmeHead[ 0x20 ];
-	UnsignedInt m_bfmeDieFrame;							///< retail this+0x20
+	UnsignedInt m_dieFrame;							///< retail this+0x20
 };
 
 class ExperienceLevelSystem
@@ -248,7 +248,7 @@ public:
 struct Rva00367E30Logic
 {
 	char m_bfmeHead[ 0x3c ];
-	UnsignedInt m_bfmeFrame;							///< retail this+0x3c
+	UnsignedInt m_frame;							///< retail this+0x3c
 };
 
 // Retail 0x012F0898 is ?TheGameLogic@@3PAVGameLogic@@A (data_rows.csv,
@@ -284,7 +284,7 @@ Object *Rva0023B7A0HordeContainView::rva0023B7A0( const Matrix3DTN *transform )
 	if ( !owner )
 		return 0;
 
-	ContainModuleInterface *contain = owner->m_bfmeContain;
+	ContainModuleInterface *contain = owner->m_contain;
 	Object *replacement = 0;
 
 	if ( contain )
@@ -333,7 +333,7 @@ Object *Rva0023B7A0HordeContainView::rva0023B7A0( const Matrix3DTN *transform )
 
 				if ( fresh )
 				{
-					UnsignedInt remaining = previous->m_bfmeDieFrame - TheBfmeGameLogic->m_bfmeFrame;
+					UnsignedInt remaining = previous->m_dieFrame - TheBfmeGameLogic->m_frame;
 
 					fresh->setLifetimeRange( remaining, remaining );
 				}
