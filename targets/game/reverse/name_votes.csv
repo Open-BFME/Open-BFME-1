@@ -6102,3 +6102,4 @@ game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_2c,6
 game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_38,ae5e38603b045cdac93b2453,claude-sonnet,20261109002640-85df4b,2026-11-09
 game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_3c,737ae64acbba87f25de9ee3d,claude-sonnet,20261109002640-85df4b,2026-11-09
 game/GameEngine/Source/GameLogic/System/DamageInfoInputAssign.cpp|member||m_40,fd158ab836eec9de1164a429,claude-sonnet,20261109002640-85df4b,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateConstructor.cpp|member||m_f14,1b44bfeb822e294b1bf27866,claude-sonnet,20261109002640-2f00fc,2026-11-09
