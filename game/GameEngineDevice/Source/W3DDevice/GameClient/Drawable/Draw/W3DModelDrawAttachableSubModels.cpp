@@ -218,9 +218,9 @@ void W3DModelDraw::rva00769720()
 	m_renderObject->_bfme_ro_v40();
 
 	const Drawable *draw = m_drawable;
-	const W3DModelDrawModuleData *d = m_moduleData;
-	for (_STL::vector<AttachableSubModel00769720>::const_iterator it = d->m_attachableSubModels.begin();
-		it != d->m_attachableSubModels.end(); ++it)
+	const W3DModelDrawModuleData *moduleData = m_moduleData;
+	for (_STL::vector<AttachableSubModel00769720>::const_iterator it = moduleData->m_attachableSubModels.begin();
+		it != moduleData->m_attachableSubModels.end(); ++it)
 	{
 		ModelConditionFlags tmp = m_conditionFlags148;
 		tmp.m_bits &= it->m_conditionMask.m_bits;

@@ -1026,3 +1026,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|t
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00733E30.cpp|type||Rva00733E30Owner,W3DTreeBuffer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp|type||Rva006B1E60Owner,MilesAudioManager,claude-sonnet+gpt-6-astra,blocked: hook: functions 0x006B1E60 ?evaluate@MilesAudioManager@@QAE_N_N@Z | outside every window of the target's slots 52868:31133-31134 | PRE-COMMIT FAILED: ,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_update.cpp|local|BezierProjectileBehavior::update|d,moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawAttachableSubModels.cpp|local|W3DModelDraw::rva00769720|d,moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
