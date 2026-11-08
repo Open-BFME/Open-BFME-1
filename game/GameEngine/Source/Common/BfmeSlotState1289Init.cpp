@@ -68,25 +68,25 @@ void BfmeSlotState1289::rva008AC790()
 	float combined = delta + second;
 	m_values[6] = combined * BfmeKTHE;
 
-	float c = cosf(combined);
-	float s = sinf(combined);
-	if (c > BfmeAxisLimit && c < BfmeAxisLimitOther)
+	float cosine = cosf(combined);
+	float sine = sinf(combined);
+	if (cosine > BfmeAxisLimit && cosine < BfmeAxisLimitOther)
 	{
-		if (s > BfmeAxisLimit && s < BfmeAxisLimitOther)
+		if (sine > BfmeAxisLimit && sine < BfmeAxisLimitOther)
 		{
 			m_values[2] = 100.0f;
 			m_values[3] = 100.0f;
 		}
 		else
 		{
-			float reciprocal = BfmeUnit / s;
+			float reciprocal = BfmeUnit / sine;
 			m_values[2] = (m_output10[1] * reciprocal) * BfmeAxisScale;
 			m_values[3] = (m_output10[2] * reciprocal) * BfmeAxisScaleY;
 		}
 	}
 	else
 	{
-		float reciprocal = BfmeUnit / c;
+		float reciprocal = BfmeUnit / cosine;
 		m_values[2] = (m_output10[0] * reciprocal) * BfmeAxisScale;
 		m_values[3] = (m_output10[3] * reciprocal) * BfmeAxisScale;
 	}
