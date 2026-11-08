@@ -73,11 +73,6 @@ class AIUpdateInterface
 public:
 	const AIStateMachine *getStateMachine(void) const { return m_stateMachine; }
 
-	AIStateType getAIStateType(void) const
-	{
-		return (AIStateType)getStateMachine()->getCurrentStateID();
-	}
-
 	Int friend_getWaypointGoalPathSize(void) const;
 
 private:
@@ -87,7 +82,9 @@ private:
 
 Int AIUpdateInterface::friend_getWaypointGoalPathSize(void) const
 {
-	if (getAIStateType() != AI_FOLLOW_PATH)
+	// getAIStateType() spelled inline: declaring it here would emit a second,
+	// non-retail definition of the 0x0026F8F0 row (AIUpdate.cpp owns it).
+	if ((AIStateType)getStateMachine()->getCurrentStateID() != AI_FOLLOW_PATH)
 		return 0;
 
 	return getStateMachine()->getGoalPathSize();
