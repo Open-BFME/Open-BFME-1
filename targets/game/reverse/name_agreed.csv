@@ -1962,3 +1962,4 @@ game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,m_prev,cl
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva008063B0AddSlot.cpp|local|Rva008063B0Owner::addSlot|s,slot,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
