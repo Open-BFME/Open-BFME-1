@@ -2021,3 +2021,4 @@ game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,drawable,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|member||m_machine30,m_stateMachine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,drawable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|member||m_machine30,m_stateMachine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

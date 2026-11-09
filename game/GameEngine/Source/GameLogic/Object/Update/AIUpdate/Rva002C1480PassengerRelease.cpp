@@ -64,7 +64,7 @@ public:
     const Rva002C1480Data *m_data04;
     Object *m_object08;
     char m_prefix0c[0x30-0x0c];
-    Rva002C1480Machine *m_machine30;
+    Rva002C1480Machine *m_stateMachine;
     char m_prefix34[0x1cc-0x34];
     void *m_locomotor1cc;
     char m_prefix1d0[0x3f0-0x1d0];
@@ -122,7 +122,7 @@ void Rva002C1480Owner::method()
         m_id3fc = 0;
         contain->remove(passenger, false);
         ((Thing *)passenger)->setOrientation(object->m_transform.Get_Z_Rotation());
-        m_machine30->setGoalObject(0);
+        m_stateMachine->setGoalObject(0);
         PhysicsBehavior *physics = passenger->m_physics;
         if (physics && m_locomotor1cc)
         {
