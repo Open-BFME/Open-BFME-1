@@ -54,12 +54,12 @@ private:
 
 inline const ThingTemplate *Thing::getTemplate( void ) const
 {
-	const ThingTemplate *tmpl = m_template;
-	if( tmpl == 0 )
+	const ThingTemplate *thingTemplate = m_template;
+	if( thingTemplate == 0 )
 		return 0;
-	if( tmpl->m_nextOverride )
-		tmpl = (const ThingTemplate *)tmpl->m_nextOverride->getFinalOverride();
-	return tmpl;
+	if( thingTemplate->m_nextOverride )
+		thingTemplate = (const ThingTemplate *)thingTemplate->m_nextOverride->getFinalOverride();
+	return thingTemplate;
 }
 
 Bool Thing::isKindOf( KindOfType t ) const
