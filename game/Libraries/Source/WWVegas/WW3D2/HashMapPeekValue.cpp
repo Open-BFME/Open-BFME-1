@@ -7,7 +7,11 @@
 typedef _STL::map<int, void *, _STL::less<unsigned int> > HashMap008FF850;
 typedef HashMap008FF850::iterator HashIter008FF850;
 
-extern HashMap008FF850 g_map008FF850;
+// The map storage at VA 0x0133F468 is owned by data row g_bfmeList1016; view it
+// as this map through that pinned spelling.
+class BfmeList1016;
+extern BfmeList1016 g_bfmeList1016;
+#define g_map008FF850 (*(HashMap008FF850 *)&g_bfmeList1016)
 
 void *PeekHashMapValue008FF850(int key)
 {
