@@ -1430,3 +1430,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|me
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag44,m_useLightMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag38,m_useCloudMap,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag44,m_useLightMap,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_list74,m_updateList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_list8C,m_lightList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_listA4,m_releaseList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
