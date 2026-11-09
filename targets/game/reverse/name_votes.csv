@@ -6373,3 +6373,11 @@ game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,e
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,263cadf80a2cce937bd9b4ec,claude-sonnet,20261109024225-ff2729,2026-11-09
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeNext,61675b7b57165ee823a6d54b,claude-sonnet,20261109024100-45f265,2026-11-09
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeField,96d1445260561a00b3d65793,claude-sonnet,20261109024100-45f265,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|type||BfmeItemAH,4d8132900e9aacc971523bad,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|type||BfmeOwnerAH,ac38250ff2bc0c366e0a4006,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeItemAH,b76646737ef4a4b16550139a,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeNextAH,76447f5b1979c77761ab0109,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeIndexAH,7b0b50e7a05643b2a605e9ef,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeListsAH,56618daeb41bc19d42217303,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|function|BfmeOwnerAH@|bfmeClearAH,151712ade335284eeb6e9933,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|local|BfmeOwnerAH::bfmeClearAH|p,7e04f437ad166334f9fac78a,claude-sonnet,20261109024100-29b9a6,2026-11-09
