@@ -7740,3 +7740,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfm
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field2429,a44beade5b3af2d1b62f3f37,claude-sonnet,20261109104845-52f8d4,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field242c,cf5cdade141ecd6e8b1380ef,claude-sonnet,20261109104845-52f8d4,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field2430,3625e676f6b265a0cc630737,claude-sonnet,20261109104845-52f8d4,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1921.cpp|member||m_bfme24BX,05c49855eea27068565e8e62,claude-sonnet,20261109104956-c3ad3e,2026-11-09
