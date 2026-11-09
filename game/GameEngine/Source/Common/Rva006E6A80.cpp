@@ -61,7 +61,7 @@ public:
     Triple006E2540 fc4, fd0, fdc;
     unsigned fe8;
     const void *fec;
-    unsigned ff0;
+    unsigned m_lastUpdateFrame;
     int ff4;
 };
 
@@ -70,9 +70,9 @@ void Rva006E2540::rva006E6A80()
 {
     unsigned frame = g_012F1464->slot68();
     bool unchanged = false;
-    if (ff0 == frame)
+    if (m_lastUpdateFrame == frame)
         unchanged = true;
-    ff0 = frame;
+    m_lastUpdateFrame = frame;
     if (unchanged)
         return;
 
