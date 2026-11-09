@@ -51,6 +51,11 @@ public:
 	void writeDict(const Dict &value);
 };
 
+// Retail calls ILT 0x00045377, which the ledger defines as ?j_00045377@@YAXXZ.
+extern void j_00045377();
+typedef void (DataChunkOutput::*WriteDictCall)(const Dict &);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 void bfmeWriteObjectsDataChunk00087610(MapObject *objects, DataChunkOutput *output,
 	MapObjectWriterFilter *filter)
 {
@@ -72,7 +77,7 @@ void bfmeWriteObjectsDataChunk00087610(MapObject *objects, DataChunkOutput *outp
 		output->writeReal(object->m_angle);
 		output->writeInt(object->m_flags);
 		output->writeAsciiString(object->m_objectName);
-		output->writeDict(object->m_properties);
+		(output->*iltMemberCall<WriteDictCall>(j_00045377))(object->m_properties);
 		output->closeDataChunk();
 	}
 
