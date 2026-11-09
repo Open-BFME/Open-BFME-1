@@ -58,10 +58,10 @@ void BfmeA1137Release::bfmeReleaseResources()
 {
 	W3DResourceResetGuard lock;
 
-	TextureBaseClass *t = m_bfme6c;
-	if (t)
+	TextureBaseClass *texture = m_bfme6c;
+	if (texture)
 	{
-		t->Release_Ref();
+		texture->Release_Ref();
 		m_bfme6c = 0;
 	}
 
