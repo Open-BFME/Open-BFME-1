@@ -7199,3 +7199,5 @@ game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeCount,b3960f
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005FDC70Method.cpp|member||m_at04,69fdc722edac350b82fc6b70,claude-sonnet,20261109072610-62a6f7,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005FDC70Method.cpp|member||m_at10,1a7783c592ae23a90065a3d3,claude-sonnet,20261109072610-62a6f7,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005FDC70Method.cpp|member||m_at1C,ec9e68b9e4168c99bc20b889,claude-sonnet,20261109072610-62a6f7,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrDataAQ,c379be7862b97c7dd31df942,claude-sonnet,20261109072610-ed2435,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrAQ,8f623dbc7fd2034bc26bc65b,claude-sonnet,20261109072610-ed2435,2026-11-09
