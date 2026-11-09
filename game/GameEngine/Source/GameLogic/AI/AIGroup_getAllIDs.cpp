@@ -37,7 +37,7 @@ public:
 
 private:
 	char m_bfmeHead[0x04];
-	BfmeListNodeBase *m_bfmeMembers;
+	BfmeListNodeBase *m_memberList;
 	char m_bfmeMid[0x34 - 0x08];
 	mutable _STL::vector<ObjectID> m_lastRequestedIDList;
 };
@@ -46,8 +46,8 @@ private:
 const _STL::vector<ObjectID> &AIGroup::getAllIDs(void) const
 {
 	m_lastRequestedIDList.clear();
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
