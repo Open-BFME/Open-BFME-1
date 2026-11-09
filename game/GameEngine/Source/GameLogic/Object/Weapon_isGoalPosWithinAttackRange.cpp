@@ -93,7 +93,7 @@ public:
         return (this->*call.predicate)();
     }
 };
-struct Rva001E6930AIUpdate { char m_00[0x1cc]; void *m_1cc; };
+struct AIUpdateInterface { char m_00[0x1cc]; void *m_1cc; };
 struct Rva001E6930ObjectFields
 {
     char m_00[0x94];
@@ -102,16 +102,16 @@ struct Rva001E6930ObjectFields
     char m_9c[0xac-0x9c];
     Rva0087E8D0Geometry m_ac;
     char m_ad[0x204-0xac-sizeof(Rva0087E8D0Geometry)];
-    Rva001E6930AIUpdate *m_204;
+    AIUpdateInterface *m_ai;
 };
 struct Rva001E6930Module { char m_00[0x3c]; bool m_3c; };
 struct Rva001E6930AIData { char m_00[0xcc]; float m_cc; };
-struct Rva001E6930AI { char m_00[0xc]; void *m_0c; char m_10[4]; Rva001E6930AIData *m_14; };
+struct Rva001E6930AI { char m_00[0xc]; void *m_pathfinder; char m_10[4]; Rva001E6930AIData *m_aiData; };
 class AI;
 extern AI *TheAI;
 #define ai001E6930 ((Rva001E6930AI*)TheAI)
 extern const float g_rva01075350;
-struct Rva001E6930WeaponTemplate
+struct WeaponTemplate
 {
     char m_00[0x18];
     float m_minimumAttackRange;
@@ -127,7 +127,7 @@ public:
     float getAttackRange(const Object *source,float height) const;
 private:
     char m_00[4];
-    Rva001E6930WeaponTemplate *m_template;
+    WeaponTemplate *m_template;
 };
 
 bool Weapon::isGoalPosWithinAttackRange(const Object *source,const Coord3D *goalPos,
@@ -139,15 +139,15 @@ bool Weapon::isGoalPosWithinAttackRange(const Object *source,const Coord3D *goal
     {
         if (!target) return false;
         if ((s->m_94&0x10) && (t->m_94&0x10)) return true;
-        if (kind001E6930(target,7) || (t->m_204 && t->m_204->m_1cc))
+        if (kind001E6930(target,7) || (t->m_ai && t->m_ai->m_1cc))
         {
             Rva001E6930AI *ai=ai001E6930;
             if (s->m_98&0x400)
             {
-                float radius=ai->m_14->m_cc;
+                float radius=ai->m_aiData->m_cc;
                 if (gap001E6930(source,target)<radius*radius) return true;
             }
-            bool result=obstacle001E6930(ai->m_0c,source,goalPos,target);
+            bool result=obstacle001E6930(ai->m_pathfinder,source,goalPos,target);
             if (result && !kind001E6930(target,0x95))
             {
                 int sourceLayer=layer001E6930(source);
