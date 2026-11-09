@@ -6718,3 +6718,11 @@ game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeWidth,1eb9a367
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeHeight,e39d77c49fcf0f8a44a42179,claude-sonnet,20261109045711-f05aee,2026-11-09
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeCells,a7ed4d13650db8ae9d8446b0,claude-sonnet,20261109045711-f05aee,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1070.cpp|function||bfmeGo1070B,8debb64da33d5f7031dd42d2,claude-sonnet,20261109045655-6259f6,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f05c,3e7219d6a78d65aea823f132,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f060,ee342cb2413cdf42634ac2ef,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f064,e3a7481aac4f55e76cc0a797,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f068,f90394d8c412a86efd2a5c5a,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f06c,bcd42f8ec86d4cd798d3d3b9,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f070,284d8fe1224e8ba263233fe1,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f26c,5b4165cf3b71dea15b272447,claude-sonnet,20261109045655-f0fbf0,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,3ea7963d36486468f3450bee,claude-sonnet,20261109045655-f0fbf0,2026-11-09
