@@ -1602,3 +1602,4 @@ game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_offsetY1258,m_offsetY
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionX1274,m_xPos,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionY1278,m_yPos,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeApplyPosition1291,applyPosition,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Gen_00943CF0_Second.cpp|member||m_cells18,m_cells,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

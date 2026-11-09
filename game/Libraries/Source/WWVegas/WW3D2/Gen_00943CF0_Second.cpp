@@ -24,7 +24,7 @@ class Gen_00943CF0
 	void second(void *value, void *x, void *y, void *span);
 
 	unsigned char m_unmodelled00[0x18];
-	Gen_00943CF0_Cell *m_cells18;
+	Gen_00943CF0_Cell *m_cells;
 	unsigned m_dword1C;
 	unsigned m_unmodelled20;
 	unsigned m_dword24;
@@ -32,7 +32,7 @@ class Gen_00943CF0
 
 void Gen_00943CF0::second(void *value, void *x, void *y, void *span)
 {
-	Gen_00943CF0_Cell *cell = m_cells18;
+	Gen_00943CF0_Cell *cell = m_cells;
 	unsigned bit = m_dword24 >> 1;
 	unsigned stride = m_dword1C >> 2;
 	while (stride != 0) {
