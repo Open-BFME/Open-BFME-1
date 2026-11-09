@@ -7021,3 +7021,4 @@ game/GameEngine/Source/Common/Rva00352810ParserRegistrationCtor.cpp|member||m_10
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0Invoke|x,6b8fad49c0cfaad9e937aff1,claude-sonnet,20261109064403-727965,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0Flags|x,4bc2b8ae217a49ce85d55f59,claude-sonnet,20261109064403-727965,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0C3E0|x,7cbb4fd47d3a02f3ee890b1c,claude-sonnet,20261109064403-727965,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,f7489b8c3135606ddd8b8ecb,claude-sonnet,20261109064504-99f3de,2026-11-09
