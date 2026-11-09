@@ -22,15 +22,15 @@ public:
 	virtual ~SupplyCenterDockUpdateModuleData();
 
 private:
-	float m_10;
-	int m_14;
-	float m_18;
+	float m_valueMultiplier;
+	int m_bonusScience;
+	float m_bonusScienceMultiplier;
 };
 
 // ??0SupplyCenterDockUpdateModuleData@@QAE@XZ
 SupplyCenterDockUpdateModuleData::SupplyCenterDockUpdateModuleData()
 {
-	m_10 = 1.0f;
-	m_18 = 1.0f;
-	m_14 = -1;
+	m_valueMultiplier = 1.0f;
+	m_bonusScienceMultiplier = 1.0f;
+	m_bonusScience = -1;
 }
