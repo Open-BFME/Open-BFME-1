@@ -1440,3 +1440,4 @@ game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member
 game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_listA4,m_releaseList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,m_sinkRate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,m_sinkRate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,State,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
