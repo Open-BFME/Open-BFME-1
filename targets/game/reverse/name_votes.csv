@@ -7415,3 +7415,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransf
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransform007629F0.cpp|type||Data007629F0,e7961b597abef8e09f5728a7,claude-sonnet,20261109082533-c62001,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransform007629F0.cpp|member||data04,d8df1b547adb3c30c953cff3,claude-sonnet,20261109082533-c62001,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransform007629F0.cpp|member||drawable08,7a68ebd9aec9e5ae411f5d9d,claude-sonnet,20261109082533-c62001,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1430.cpp|member||m_bfme00,7fc614155129c66668c2d393,claude-sonnet,20261109082533-17173b,2026-11-09
