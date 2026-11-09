@@ -60,9 +60,9 @@ class Rva00418200Owner { public: void method(unsigned); };
 void Rva008FEB90(RenderObjClass*);
 void Rva008FF6A0(RenderObjClass*,const _STL::string&,const _STL::string&,int);
 struct Rva002D8C10Record { AsciiString first,second; int number; };
-struct Rva002D8D90Data {
+struct SubObjectsUpgradeModuleData {
  char pad[0x70]; _STL::vector<AsciiString> m_showSubObjectNames; _STL::vector<AsciiString> m_hideSubObjectNames;
- _STL::vector<AsciiString> field0088; _STL::vector<Rva002D8C10Record*> textures;
+ _STL::vector<AsciiString> m_excludeSubobjects; _STL::vector<Rva002D8C10Record*> textures;
  float field00a0; float field00a4; bool flag00a8; bool flag00a9;
  // FieldParse VA010CE0A8: Show70, Hide7C, Exclude88, Texture94, FadeA0, WaitA4, RecolorA8, SkipA9.
 };
@@ -87,7 +87,7 @@ public:
 };
 void Rva002D8D90Owner::method()
 {
- const Rva002D8D90Data *data=*(const Rva002D8D90Data**)((char*)this-12);
+ const SubObjectsUpgradeModuleData *data=*(const SubObjectsUpgradeModuleData**)((char*)this-12);
  BitFlags<192> activation,conflicting;
  masks(activation,conflicting);
  Rva002D8D90Object *object=*(Rva002D8D90Object**)((char*)this-8);
@@ -112,7 +112,7 @@ void Rva002D8D90Owner::method()
    ((BfmeOwnerAE*)draw)->bfmeSetAE((BfmeStrAE*)&*n,1);
    (((S4Sink004135C0*)draw)->*static_cast<Rva002D8D90FadeCall>(reinterpret_cast<Rva002D8D90FadeCall>(&S4Sink004135C0::invoke)))(*n,1,1,field00a0,field00a4);changed=true;
   }
-  const Rva002D8D90Data *textureData=*(const Rva002D8D90Data**)((char*)this-12);
+  const SubObjectsUpgradeModuleData *textureData=*(const SubObjectsUpgradeModuleData**)((char*)this-12);
   for(_STL::vector<Rva002D8C10Record*>::const_iterator t=textureData->textures.begin();t!=textureData->textures.end();++t){
    Rva002D8C10Record *record=*t;
    BfmeItemBP **items=draw->bfmeListBP();
@@ -125,6 +125,6 @@ void Rva002D8D90Owner::method()
    }
   }
   if(changed)((S4Sink004135C0*)draw)->finish();
-  if(data->flag00a8)((Rva00418200Owner*)draw)->method((unsigned)&data->field0088);
+  if(data->flag00a8)((Rva00418200Owner*)draw)->method((unsigned)&data->m_excludeSubobjects);
  }
 }
