@@ -2,7 +2,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-struct BfmeCoordA2
+struct ICoord3D
 {
 	int m_x;
 	int m_y;
@@ -15,7 +15,7 @@ struct BfmeElemA2
 	int m_04;
 	int m_08;
 	int m_0C;
-	BfmeCoordA2 m_10;
+	ICoord3D m_10;
 	StringBase<char> m_1C;
 	char m_20;
 	char m_pad[3];
