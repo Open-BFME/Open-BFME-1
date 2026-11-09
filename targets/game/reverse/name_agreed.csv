@@ -2793,3 +2793,12 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39c,m_isAttackMove,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39d,m_isAttackObject,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39e,m_newOccupantsAreNewMembers,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_arrByte1,m_memberHealing,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_arrByte2,m_newMember,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_38c,m_designatedTarget,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_390,m_state,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_394,m_framesRemaining,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_398,m_currentMembers,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39c,m_isAttackMove,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39d,m_isAttackObject,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39e,m_newOccupantsAreNewMembers,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

@@ -25,42 +25,42 @@ protected:
 public:
 	Byte m_pad000[0x344];
 	Int m_arrDword[10];		// +0x344 .. +0x36c
-	Byte m_arrByte1[10];		// +0x36c .. +0x376
-	Byte m_arrByte2[10];		// +0x376 .. +0x380
+	Byte m_memberHealing[10];		// +0x36c .. +0x376
+	Byte m_newMember[10];		// +0x376 .. +0x380
 	UnsignedInt m_380;
 	UnsignedInt m_384;
 	UnsignedInt m_388;
-	UnsignedInt m_38c;
-	UnsignedInt m_390;
-	UnsignedInt m_394;
-	Int m_398;
-	Byte m_39c;
-	Byte m_39d;
-	Byte m_39e;
+	UnsignedInt m_designatedTarget;
+	UnsignedInt m_state;
+	UnsignedInt m_framesRemaining;
+	Int m_currentMembers;
+	Byte m_isAttackMove;
+	Byte m_isAttackObject;
+	Byte m_newOccupantsAreNewMembers;
 };
 
 // ?call_0002105d@AssaultTransportAIUpdateBase@@IAEXXZ
 void AssaultTransportAIUpdateBase::call_0002105d( void )
 {
-	Int count = m_398;
+	Int count = m_currentMembers;
 	if( count > 0 )
 	{
-		for( Int i = 0; i < m_398; ++i )
+		for( Int i = 0; i < m_currentMembers; ++i )
 		{
 			m_arrDword[i] = 0;
-			m_arrByte1[i] = 0;
-			m_arrByte2[i] = 0;
+			m_memberHealing[i] = 0;
+			m_newMember[i] = 0;
 		}
 	}
 
-	m_398 = 0;
+	m_currentMembers = 0;
 	m_380 = 0;
 	m_384 = 0;
 	m_388 = 0;
-	m_38c = 0;
-	m_390 = 0;
-	m_394 = 0;
-	m_39c = 0;
-	m_39d = 0;
-	m_39e = 0;
+	m_designatedTarget = 0;
+	m_state = 0;
+	m_framesRemaining = 0;
+	m_isAttackMove = 0;
+	m_isAttackObject = 0;
+	m_newOccupantsAreNewMembers = 0;
 }
