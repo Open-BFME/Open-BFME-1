@@ -7014,3 +7014,5 @@ game/GameEngine/Source/Common/Rva003D6690_layerHeight.cpp|member||m_at08,ac14864
 game/GameEngine/Source/Common/Rva003D6690_layerHeight.cpp|member||m_at0C,711e8d4b8e4b004e38ebd79a,claude-sonnet,20261109064038-ed1af1,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIRva0014DAB0AreaEnemy.cpp|type||ContainModule0014DAB0,1a5017d9b1d3be02157016fa,claude-sonnet,20261109064038-7c27a7,2026-11-09
 game/GameEngine/Source/GameClient/InGameUI_SelectMatchingAcrossRegion.cpp|local|InGameUI::selectMatchingAcrossRegion|templates,ce058bcf40f1278c8af9fda7,claude-sonnet,20261109064404-ec04ec,2026-11-09
+game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|p,ae561cd94a12b0a7d71ed250,claude-sonnet,20261109064404-13b5af,2026-11-09
+game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|r,1dc45bda04dc69c9d6d7dbd6,claude-sonnet,20261109064404-13b5af,2026-11-09
