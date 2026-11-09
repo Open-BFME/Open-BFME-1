@@ -7330,3 +7330,5 @@ game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClas
 game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClass::Evaluate|h1,f485aeab4c2618b44ccec4b0,claude-sonnet,20261109075948-5142ac,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClass::Evaluate|h2,ae5662856b025ec57c0b1a44,claude-sonnet,20261109075948-5142ac,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClass::Evaluate|h3,1942581cc21f44454117b842,claude-sonnet,20261109075948-5142ac,2026-11-09
+game/GameEngine/Source/Common/Rva009C8130ByteDispersion.cpp|local|rva009C8130|y,3c85a28314866734fad00e0b,claude-sonnet,20261109080135-222f28,2026-11-09
+game/GameEngine/Source/Common/Rva009C8130ByteDispersion.cpp|local|rva009C8130|p,cf7c2c49b9f2e18731b96617,claude-sonnet,20261109080135-222f28,2026-11-09
