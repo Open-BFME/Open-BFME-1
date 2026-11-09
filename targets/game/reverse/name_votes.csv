@@ -6756,3 +6756,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/Rva00126080ModuleData.cpp|type|
 game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field28,c910d4daf7e05e795383458a,claude-sonnet,20261109052642-88207c,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field2c,d58db0dc8125da9b52ee6748,claude-sonnet,20261109052642-88207c,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|local|PathfindLayer::xfer|field28,759bd128706fe594d836ab56,claude-sonnet,20261109052642-88207c,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|x0,44d98c3a912d3f0dfca3ae73,claude-sonnet,20261109052642-5b5055,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|y0,15305985d9f6d15f74fe2b7a,claude-sonnet,20261109052642-5b5055,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|x1,dbc9f0c29a9ff8879621d9e8,claude-sonnet,20261109052642-5b5055,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|y1,71b4378dded0a2bf809ccd50,claude-sonnet,20261109052642-5b5055,2026-11-09
