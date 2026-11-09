@@ -15,7 +15,7 @@ extern EAStringC::StringDataC g_rva012D5298Empty;
 struct Rva008BE2C0String
 {
     unsigned short field00;
-    unsigned short length02;
+    unsigned short m_length;
     unsigned field04;
     char text08[1];
 };
@@ -73,8 +73,8 @@ void Rva008BE2C0::walk(Rva008BE2C0Node *argument)
                         break;
                     Rva008BE2C0String *first = iterator->field00;
                     Rva008BE2C0String *second = node->field0c;
-                    int firstLength = first->length02;
-                    int secondLength = second->length02;
+                    int firstLength = first->m_length;
+                    int secondLength = second->m_length;
                     if (firstLength == secondLength &&
                         (first == second || memcmp(first->text08, second->text08, firstLength) == 0))
                         break;
