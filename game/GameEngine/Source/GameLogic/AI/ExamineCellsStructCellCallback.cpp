@@ -27,7 +27,7 @@ public:
 class Rva003D54E0 {
 public:
  Rva003D54E0();
- ICoord2D m_cell; int m_08,m_0c; char m_centerInCell,m_considerTransient;
+ ICoord2D m_cell; int m_layer,m_radius; char m_centerInCell,m_considerTransient;
  int m_14,m_18,m_1c; char m_20,m_21;
  int m_24,m_28; char m_2c,m_2d,m_2e; int m_30;
 };
@@ -45,7 +45,7 @@ public:
  char pad83d[0xc9c-0x83d]; BfmeGridAL m_zoneManager;
 };
 struct ExamineCellsStruct {
- Pathfinder *thePathfinder; int m_04,m_08,m_0c;
+ Pathfinder *thePathfinder; int m_04,m_layer,m_radius;
  bool centerInCell,isHuman; int radius; Object *obj; PathfindCell *goalCell;
  int m_20; ICoord2D m_previous; int m_2c;
  int cellCallback(PathfindCell *,PathfindCell *,int,int);
@@ -77,7 +77,7 @@ int ExamineCellsStruct::cellCallback(PathfindCell *from,PathfindCell *to,int to_
   // Its cell prefix is passed through the established ICoord2D pointer ABI.
   Rva003D54E0 info;
   info.m_cell.x=to_x; info.m_cell.y=to_y;
-  info.m_08=from->getLayer(); info.m_centerInCell=centerInCell; info.m_0c=radius;
+  info.m_layer=from->getLayer(); info.m_centerInCell=centerInCell; info.m_radius=radius;
   info.m_considerTransient=false; info.m_14=3; info.m_18=m_20;
   if (!thePathfinder->bfmeStepE0930(obj,&info.m_cell,&m_previous) || info.m_30) return 1;
   ICoord2D newCellCoord; newCellCoord.x=to_x; newCellCoord.y=to_y;

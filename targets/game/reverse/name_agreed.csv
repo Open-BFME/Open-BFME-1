@@ -2390,3 +2390,5 @@ game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProdu
 game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_1c,m_naturalRallyPointZ,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,m_layer,claude-sonnet+gpt-6-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,m_radius,claude-sonnet+gpt-6-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,m_layer,claude-sonnet+gpt-6-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,m_radius,claude-sonnet+gpt-6-sol,applied,2026-11-09
