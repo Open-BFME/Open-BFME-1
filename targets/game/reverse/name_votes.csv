@@ -6617,3 +6617,7 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cp
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeName,746ddccdf3d552f72639d4b4,claude-sonnet,20261109042841-087cee,2026-11-09
 game/GameEngine/Source/Common/Bfme5FortyFour.cpp|member||m_bfmePrev,ab5f487290f5f35d343fbb9b,claude-sonnet,20261109042841-8618ce,2026-11-09
 game/GameEngine/Source/Common/Bfme5FortyFour.cpp|member||m_bfmeNext,cc8dcbb2a3d78e465dbf959c,claude-sonnet,20261109042841-8618ce,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeNextOverride,ff03840f3581b00b9e129a91,claude-sonnet,20261109043121-7ffa72,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeIsOverride,7338473e1188a790c75f1859,claude-sonnet,20261109043121-7ffa72,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeName,c31bc43320bf7ffbed9b0e76,claude-sonnet,20261109043121-7ffa72,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeLevels,8cff0944a27cca279b526afc,claude-sonnet,20261109043121-7ffa72,2026-11-09
