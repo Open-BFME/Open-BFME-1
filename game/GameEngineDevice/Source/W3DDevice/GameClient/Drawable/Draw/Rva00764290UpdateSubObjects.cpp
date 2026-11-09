@@ -99,19 +99,19 @@ public:
 #include "Lib/BaseType.h"
 #include "Common/GameMemory.h"
 #include "Common/Override.h"
-class Rva00764290Template : public Overridable
+class ThingTemplate : public Overridable
 {
 public:
     unsigned char m_pad0c[0x14];
     AsciiString m_name;
 };
 
-class Rva00764290Drawable
+class Drawable
 {
 public:
     void *m_pad00;
-    OVERRIDE<Rva00764290Template> m_template;
-    const Rva00764290Template *getTemplate() const { return m_template; }
+    OVERRIDE<ThingTemplate> m_template;
+    const ThingTemplate *getTemplate() const { return m_template; }
 };
 
 static void doHideShowBoneSubObjs(Bool state, Int numSubObjects, Int boneIdx, RenderObjClass *fullObject, const HTreeClass *htree)
@@ -207,9 +207,9 @@ void BfmeRva64290::method()
 					{
 						_bfme_debugRecordCallsite(1);
 						DebugGlobal00409E20->Begin_Report();
-						Rva00764290Drawable *drawable =
-							*(Rva00764290Drawable **)((char *)this - 4);
-						const Rva00764290Template *thing = drawable->getTemplate();
+						Drawable *drawable =
+							*(Drawable **)((char *)this - 4);
+						const ThingTemplate *thing = drawable->getTemplate();
 						const char *templateName =
 							thing->m_name.str();
 						const char *entryName = entry->name();
@@ -237,8 +237,8 @@ void BfmeRva64290::method()
 			{
 				if (entry->m_f8 != g_rva01075350)
 				{
-					Rva00764290Drawable *drawable =
-						*(Rva00764290Drawable **)((char *)this - 4);
+					Drawable *drawable =
+						*(Drawable **)((char *)this - 4);
 					if (!*((unsigned char *)drawable + 0x3b2))
 					{
 						entry->m_f10 = 0.0f;
