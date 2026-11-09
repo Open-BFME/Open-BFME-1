@@ -1882,3 +1882,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|local|Rva00373B30Receiver::update|t,drawable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstructor.cpp|member||m_unmodelled_08,m_minFrames,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstructor.cpp|member||m_unmodelled_0C,m_maxFrames,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|member||m_bfmeMajorAL,m_major,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|member||m_bfmeMinorAL,m_minor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|function|BfmeVersionAL@|bfmeVersionTextAL,getUnicodeVersion,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

@@ -6767,3 +6767,6 @@ game/GameEngine/Source/Common/Bfme5EightyOne.cpp|type||Gen_0013CE90,5f53ca94f469
 game/GameEngine/Source/Common/Bfme5EightyOne.cpp|member||m_bfmeRefs,ac284bd868e0275fd845976f,claude-sonnet,20261109052642-31d781,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstructor.cpp|member||m_unmodelled_08,c33609226882630d9473dc76,claude-sonnet,20261109052920-b01fdc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstructor.cpp|member||m_unmodelled_0C,dafd1c439d78a1cdaedf8532,claude-sonnet,20261109052920-b01fdc,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|member||m_bfmeMajorAL,8471272156c7aa7dad8b5ccc,claude-sonnet,20261109052920-b8bc7b,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|member||m_bfmeMinorAL,5f7b3b1b7aeb46f210b12b6b,claude-sonnet,20261109052920-b8bc7b,2026-11-09
+game/GameEngine/Source/Common/BfmeVersionTextAL.cpp|function|BfmeVersionAL@|bfmeVersionTextAL,aebbf872c7155be5823f9d94,claude-sonnet,20261109052920-b8bc7b,2026-11-09
