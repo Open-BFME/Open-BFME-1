@@ -7332,3 +7332,10 @@ game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClas
 game/Libraries/Source/WWVegas/WWMath/hermitespline.cpp|local|HermiteSpline1DClass::Evaluate|h3,1942581cc21f44454117b842,claude-sonnet,20261109075948-5142ac,2026-11-09
 game/GameEngine/Source/Common/Rva009C8130ByteDispersion.cpp|local|rva009C8130|y,3c85a28314866734fad00e0b,claude-sonnet,20261109080135-222f28,2026-11-09
 game/GameEngine/Source/Common/Rva009C8130ByteDispersion.cpp|local|rva009C8130|p,cf7c2c49b9f2e18731b96617,claude-sonnet,20261109080135-222f28,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeLength|s,b81fcae24805e21af4041f00,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeStr|s,0e5118e6c5915f77e4add374,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeConcat|s,a4b6aa7d170bbbd1161a6097,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeConcat|v,377fc86b9a329732f0aa5c86,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeConcat#2|s,29d5e9fc4b43dc3b0f6e1647,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeConcat#3|s,ef1e326d50d7dc875f58347c,claude-sonnet,20261109075959-05a6b1,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|local|Win32LocalFileSystem::getFileListInDirectory|tempsearchstr,bf392179bd213b96816ceb95,claude-sonnet,20261109075959-05a6b1,2026-11-09
