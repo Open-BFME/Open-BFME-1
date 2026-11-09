@@ -18,7 +18,7 @@ enum DamageType { DAMAGE8=8 }; enum DeathType { DEATH0=0 };
 #define BFME_HAVE_OBJECTID
 #define OBJECT_TU_MEMBERS void clearStatus(ObjectStatusTypes); void bfmeApplySpecialModelCondition(int,const void*,int); void kill(DamageType,DeathType);
 #include "../object.h"
-class GameLogic { public: Object* findObjectByID(int); char pad00[0x3c]; unsigned at3c; };
+class GameLogic { public: Object* findObjectByID(int); char pad00[0x3c]; unsigned m_frame; };
 extern GameLogic* TheGameLogic;
 class AudioDispatch00299250 { public: virtual void s00(); virtual void s04(); virtual void s08(); virtual void s0c(); virtual void s10(); virtual void s14(); virtual void s18(); virtual void s1c(); virtual void s20(); virtual void s24(); virtual void s28(); virtual void s2c(); virtual void s30(); virtual void s34(); virtual void s38(); virtual void s3c(); virtual void s40(); virtual void add(AudioEventRTS*); };
 // Retail's global at 0x012ED668 is EA's `AudioManager *TheAudio`, defined once in
@@ -37,7 +37,7 @@ class StealthCleanup00299250 { public: void apply(); char pad00[4]; Config002992
 extern "C" void __cdecl __identifier("?j_0002ae23@@YAXXZ")();
 extern "C" void __cdecl __identifier("?j_000272af@@YAXXZ")();
 void StealthCleanup00299250::apply() {
- unsigned frame=TheGameLogic->at3c;
+ unsigned frame=TheGameLogic->m_frame;
  Config00299250* config=at04;
  at30=frame;
  Object* object=at08;
