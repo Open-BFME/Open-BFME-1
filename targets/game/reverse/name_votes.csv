@@ -6863,3 +6863,6 @@ game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeNext,bb5ef7bce5a8eb
 game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeList,127b0d82993b519f4d14d6a6,claude-sonnet,20261109055538-b91e03,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva00571780FunctorWrapper|b,30222565a7f86cb1160bda70,claude-sonnet,20261109060233-d84713,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva005717D0FunctorWrapper|b,f52779fa33ba7148946c0a20,claude-sonnet,20261109060233-d84713,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|type||Override2140,c995a555805ea02a59e75172,claude-sonnet,20261109060233-f22342,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|local|Pathfinder::validateEndpoint003E2140|b,19b328cb910eaf7286a62e3f,claude-sonnet,20261109060233-f22342,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|local|Pathfinder::validateEndpoint003E2140|a,b1a0adfb186e97d6d6237059,claude-sonnet,20261109060233-f22342,2026-11-09
