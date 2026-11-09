@@ -4,7 +4,7 @@ class BfmeE1280
 {
 public:
 	void bfmeClose1280();
-	BfmeE1280 *m_bfme00;
+	BfmeE1280 *m_next;
 };
 
 struct BfmeR1280
@@ -43,7 +43,7 @@ void BfmeA1280::bfmeRemove1280(int i)
 
 	r = &m_bfme0c[i];
 	e = r->m_bfme10;
-	r->m_bfme10 = e->m_bfme00;
+	r->m_bfme10 = e->m_next;
 	((Rva00354A00Node *)e)->~Rva00354A00Node();
 	operator delete(e);
 	((Rva00359330StringRecordTable *)this)->release(i);
