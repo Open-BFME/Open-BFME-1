@@ -6316,3 +6316,10 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.c
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field04,ff452bf096f1fec4cc8c8b9b,claude-sonnet,20261109021901-a1bba9,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||m_status98,1ea35bfb849883e4146a081d,claude-sonnet,20261109022018-f9c7e3,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||adjust4c,b00b3373a9d121371d46e572,claude-sonnet,20261109022018-f9c7e3,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||byte_22,d52f3a36c611eea6e3b39944,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field1c,5efa6d72c5b3e04534549f2d,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field1d,37ddc0561f07fe5f7648e535,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field38,2fac00db7bd50289b1e650ab,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field45,89aca9b8976ce60a2b392d77,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field46,69880b359f3e39bec70493f5,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field68,ce2111bbf18473114d6abc2f,claude-sonnet,20261109022708-f9e608,2026-11-09
