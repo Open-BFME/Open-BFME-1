@@ -6989,3 +6989,4 @@ game/GameEngine/Source/Common/BfmeConv2078.cpp|local|BfmeListJS::bfmeSetJS|n,692
 game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,51fadc82e27ced3296edffec,claude-sonnet,20261109063319-196d2a,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMapTerrainTextureGetters.cpp|param|TerrainTextureRef::TerrainTextureRef|p,f2058e6a916e6333f66039b2,claude-sonnet,20261109063457-ab4703,2026-11-09
 game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_draw.cpp|type||BfmeMediumScaleUpWindow,fb376cccc495e7cdd80c560f,claude-sonnet,20261109063457-d34836,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindZoneFlatten.cpp|function|PathfindZoneManager@|bfmeFlattenZones,b453855367db953bea98e30a,claude-sonnet,20261109063825-eeaf2a,2026-11-09
