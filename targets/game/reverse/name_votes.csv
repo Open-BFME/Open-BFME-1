@@ -7352,3 +7352,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVe
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeWaterSetting,9e519aeb0f7a20c9ad16c3b6,claude-sonnet,20261109075732-30f32d,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeSeaPatchVertex,a763b219226223896c3aaf7e,claude-sonnet,20261109075732-30f32d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1973.cpp|member||m_bfmeIdESK,864e8dc35b867952de1714a0,claude-sonnet,20261109080246-253228,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|member||field08,588253a2c93afe7413e4fb64,claude-sonnet,20261109075733-469bc2,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|member||fielda0,212f6df201b66e0b152ad8f2,claude-sonnet,20261109075733-469bc2,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|member||field480,6aa1ae63e6d7a5160cabf8c8,claude-sonnet,20261109075733-469bc2,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|local|LightningDraw005F43B0::draw|p,69f2b448716f3db1994c89da,claude-sonnet,20261109075733-469bc2,2026-11-09

@@ -2488,3 +2488,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVe
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeSeaPatchVertex,SEA_PATCH_VERTEX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1973.cpp|member||m_bfmeIdESK,m_objectID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1973.cpp|member||m_bfmeIdESK,m_objectID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|local|LightningDraw005F43B0::draw|p,particle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
