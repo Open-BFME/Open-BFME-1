@@ -1174,3 +1174,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInit.cpp|m
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInit.cpp|member||m_248,m_fBumpScale,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInit.cpp|member||m_250,m_skyBox,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInit.cpp|member||m_254,m_waterTrackSystem,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateCtorThunk.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
