@@ -6924,3 +6924,16 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cp
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte228,c02cca82e6ee4d38aa81b1d6,claude-sonnet,20261109061414-2ecd14,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp|type||TeamState00164750,c5669f0f6a4e33a45346d35a,claude-sonnet,20261109061829-78675e,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp|type||Money00164750,9af801d1f4bc25205af9a356,claude-sonnet,20261109061829-78675e,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_1708C,d1358c42ad61ce420d7d3c36,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17090,bc996476c455ccde992d00d8,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17094,0c263ee272e89fdfd1f2fd3b,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17098,017077ebcd9ec26635cb86ef,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170A8,182d93adbe7939df1a662eea,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170AC,5b0eff92cdff66d833c3b7ff,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170B0,4659a420202f920f937981fb,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17620,3b8f18b1a9ecdbc92d8a5d57,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17624,b00956186e142424b3ec4f33,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17640,6831aa839e2d0d189e34a392,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17648,5b7b6b1288e722e1fee89a12,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17650,3e417e043ac9fb8da5af8cf8,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17658,76cfdf6f71186e65419c3233,claude-sonnet,20261109061402-c56500,2026-11-09
