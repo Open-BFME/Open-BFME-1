@@ -7153,3 +7153,5 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRec
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|function|BfmeHordeContainRoster@|rva0023B9F0,60885da6cb910a5486030c6b,claude-sonnet,20261109071709-d2fae1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|t,d6c7504a31eae1063d926e0f,claude-sonnet,20261109071709-d2fae1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|p,b963bf47f890f392287ab8a0,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2152.cpp|local|BfmeHostCA::bfmeRemoveCA|m,0849b0b8472e4804f509a098,claude-sonnet,20261109072034-8e93c9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2152.cpp|local|BfmeHostCA::bfmeRemoveCA|n,a294a4da16e559c48159140d,claude-sonnet,20261109072034-8e93c9,2026-11-09
