@@ -6834,3 +6834,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShortVecWNCtor.cpp|local|B
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeStart,e84b085c032b175e4e633920,claude-sonnet,20261109054355-b008ef,2026-11-09
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeFinish,edc32bfbda9f7faf5005768b,claude-sonnet,20261109054355-b008ef,2026-11-09
 game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeHolder,c665cd7b728a921331f985d6,claude-sonnet,20261109054355-b008ef,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2211.cpp|type||Coord3D007AE900,0d80d78139876aed17a7fad5,claude-sonnet,20261109054500-f8448b,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2211.cpp|local|Rva007AE900Body|h,18eca0009269d39078ffa5b2,claude-sonnet,20261109054500-f8448b,2026-11-09
