@@ -6254,3 +6254,10 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|y0,2bd4647a88da93582411c117,claude-sonnet,20261109013714-9982a0,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|x1,07c7ff3236ea9e8c1c38f861,claude-sonnet,20261109013714-9982a0,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|y1,96f4e11926d65af90fa11414,claude-sonnet,20261109013714-9982a0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|type||Rva001B80D0AI,d44c1f8c23394f3ca2cad322,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|type||Rva001B80D0Body,104a2dc2c1685a724a66856b,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|type||Rva001B80D0Template,4c2e9b79fb0365349c4d9618,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||objectId74,75f1ab8d357ba5c659a67496,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||body200,4b99bfdca96b2891913193d2,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||ai204,d33509c806b1630e3870bff4,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||height44,d35cb978cad7c333a6e4abf4,claude-sonnet,20261109013714-1577c4,2026-11-09
