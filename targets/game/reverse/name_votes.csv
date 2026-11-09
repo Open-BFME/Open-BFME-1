@@ -6407,3 +6407,4 @@ game/GameEngine/Source/GameLogic/Object/Update/EmotionTrackerUpdateNearbyFilter.
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||status1A4,5e01f548f04c5ba177cadd6b,claude-sonnet,20261109025212-d8cc18,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||frame3C,2202b03b91f4ddc143d8a28f,claude-sonnet,20261109025212-d8cc18,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,caf8c671acc7b34b21b84039,claude-sonnet,20261109025212-d8cc18,2026-11-09
+game/GameEngine/Source/Common/Rva008802E0Overflow.cpp|type||BfmeElem2E,7d9f6ed0ece0e22facab1d78,claude-sonnet,20261109025251-587ff9,2026-11-09
