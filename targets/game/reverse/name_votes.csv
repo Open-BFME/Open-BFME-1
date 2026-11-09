@@ -6613,3 +6613,5 @@ game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeCount,c35e41643e7a6
 game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeNext,02874d17f23b127c09ccb736,claude-sonnet,20261109042712-158609,2026-11-09
 game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmePrev,ca4f6ea01d203ddd466f5b3d,claude-sonnet,20261109042712-158609,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp|type||Rva001E9E60ContainView,cb149445b499a90276b8c03b,claude-sonnet,20261109042712-f8b9ae,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeId,c41fadbe7a2ae80c011fd2a2,claude-sonnet,20261109042841-087cee,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeName,746ddccdf3d552f72639d4b4,claude-sonnet,20261109042841-087cee,2026-11-09
