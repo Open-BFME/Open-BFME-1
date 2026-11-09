@@ -39,7 +39,7 @@ class Object
 {
 public:
 	char m_bfmeHead[0x2A0];
-	UnsignedInt m_bfmeBonusMask;				// +0x2A0
+	UnsignedInt m_weaponBonusCondition;				// +0x2A0
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
@@ -69,7 +69,7 @@ protected:
 
 private:
 	char m_bfmeHead[0x04];
-	WeaponTemplate *m_bfmeTemplate;				// +0x04
+	WeaponTemplate *m_template;				// +0x04
 };
 
 // ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z
@@ -83,14 +83,14 @@ void Weapon::computeBonus(const Object *source, UnsignedInt extra,
 	bonus.m_bfmeE = 1.0f;
 	bonus.m_bfmeF = 1.0f;
 
-	UnsignedInt mask = source->m_bfmeBonusMask | extra;
+	UnsignedInt mask = source->m_weaponBonusCondition | extra;
 
 	WeaponBonusSet *global = TheWritableGlobalData->m_weaponBonusSet;
 
 	if (global)
 		global->bfmeApplyBonuses(mask, bonus);
 
-	WeaponBonusSet *own = m_bfmeTemplate->m_bfmeBonuses;
+	WeaponBonusSet *own = m_template->m_bfmeBonuses;
 
 	if (own)
 		own->bfmeApplyBonuses(mask, bonus);

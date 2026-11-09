@@ -2278,3 +2278,5 @@ game/GameEngine/Source/Common/BfmeConv829.cpp|member||m_sub210,m_experienceTrack
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp|member||m_field71,m_activeDuringConstruction,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,m_weaponBonusCondition,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,m_template,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,m_weaponBonusCondition,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
