@@ -6792,3 +6792,13 @@ game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,69e87c6afc37e0b40933b24a,claude-sonnet,20261109052946-818894,2026-11-09
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,a83dabc05029d4af15675354,claude-sonnet,20261109052946-818894,2026-11-09
 game/GameEngine/Source/Common/BfmeStateAY.cpp|type||BfmeStateAY,6bb348ae70da38fa4b012e38,claude-sonnet,20261109054119-4e5c80,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||fieldD0,94fa3d58cfd0fcb4b0efddf9,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||fieldD4,0e703e9267eec08d7d55c4e8,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||field3008,2630ae61c77b43c3c682e6a8,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||field3014,1db491520be5ea26a8870328,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||field301C,c941132bf91fa2b0bb4bc58f,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer3098,d9e205a1bb28b6c7e5c28e8f,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30A4,444fc1d5b4a9adf0c2c5940c,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30A8,601581a33fbbe292c021f377,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30B0,8880eafaa62002f17eb5a627,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30BC,3e9fe889830af803286f43e8,claude-sonnet,20261109054121-ed932b,2026-11-09
