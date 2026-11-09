@@ -7510,3 +7510,6 @@ game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPla
 game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPlanes|source0,8ff38c57c0421d90f64e0196,claude-sonnet,20261109091743-0ee0d8,2026-11-09
 game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPlanes|source1,aa54fbc4d5085f8a54faf6f3,claude-sonnet,20261109091743-0ee0d8,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1172.cpp|member||m_bfme2c,5830c1e018c2be1b7bc5582e,claude-sonnet,20261109091836-97af24,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeStatus,a36d599322bc41c6a660bb21,claude-sonnet,20261109091559-bb1cfc,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeAI,c88b4823c7a3844944c1a51a,claude-sonnet,20261109091559-bb1cfc,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeNext,75c9d4c2054d3dcceef7104e,claude-sonnet,20261109091559-bb1cfc,2026-11-09
