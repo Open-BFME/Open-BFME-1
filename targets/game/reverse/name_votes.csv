@@ -6915,3 +6915,10 @@ game/GameEngine/Source/GameClient/InGameUIRva00442FD0.cpp|member||m_field_12b1,0
 game/GameEngine/Source/GameLogic/Object/LocomotorCopyAssignment.cpp|type||BfmeLocomotorCoord3D,bd3be8f6433892766f0d4f87,claude-sonnet,20261109061452-8770f2,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1173.cpp|member||m_bfme40,a9c050cf073507055cea3a2e,claude-sonnet,20261109061414-a56c40,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1173.cpp|member||m_bfme44,c0fc33fda4a8042f6e74ff49,claude-sonnet,20261109061414-a56c40,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|type||Rva00745B10Info1AC,dabc51b2001bfe7da1204a2a,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_1ac,add53a034a6dedc099d2a427,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte1DC,54232ac0fb9f0a946496378a,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_1e0,069a2204c03b38640fb67964,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte204,8494af9db703e58687d64bd9,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_208,cfd5bdc146c5e45166f3361c,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte228,c02cca82e6ee4d38aa81b1d6,claude-sonnet,20261109061414-2ecd14,2026-11-09
