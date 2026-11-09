@@ -58,15 +58,15 @@ Win32LocalFileSystem::~Win32LocalFileSystem() {
 // down to ensureUniqueBufferOfSize the reference header does. Declaring
 // StringBase here rather than inventing a name makes these calls mangle to the
 // bodies the ledger already claims.
-static inline Int bfmeLength( const AsciiString &s )
+static inline Int bfmeLength( const AsciiString &str )
 {
-	const char *d = *(const char * const *)&s;
+	const char *d = *(const char * const *)&str;
 	return d ? *(const unsigned short *)(d + 4) : 0;
 }
 
-static inline const char *bfmeStr( const AsciiString &s )
+static inline const char *bfmeStr( const AsciiString &str )
 {
-	const char *d = *(const char * const *)&s;
+	const char *d = *(const char * const *)&str;
 	return d ? d + 8 : "";
 }
 
@@ -77,28 +77,28 @@ public:
 	void concat( const T *s, int len );
 };
 
-static inline void bfmeSet( AsciiString &s, const char *v )
+static inline void bfmeSet( AsciiString &str, const char *v )
 {
-	((StringBase<char> *)&s)->set( v, v ? (int)strlen( v ) : 0 );
+	((StringBase<char> *)&str)->set( v, v ? (int)strlen( v ) : 0 );
 }
 
-static inline void bfmeConcat( AsciiString &s, const AsciiString &v )
+static inline void bfmeConcat( AsciiString &str, const AsciiString &v )
 {
-	((StringBase<char> *)&s)->concat( bfmeStr( v ), bfmeLength( v ) );
+	((StringBase<char> *)&str)->concat( bfmeStr( v ), bfmeLength( v ) );
 }
 
-static inline void bfmeConcat( AsciiString &s, char c )
+static inline void bfmeConcat( AsciiString &str, char c )
 {
-	((StringBase<char> *)&s)->concat( &c, 1 );
+	((StringBase<char> *)&str)->concat( &c, 1 );
 }
 
 static void (AsciiString::* const bfmeKeepAsciiConcat)(const AsciiString &) =
 	&AsciiString::concat;
 
-static inline const char *bfmeFind( const AsciiString &s, char c )
+static inline const char *bfmeFind( const AsciiString &str, char c )
 {
-	const char *p = bfmeStr( s );
-	const char *end = p + bfmeLength( s );
+	const char *p = bfmeStr( str );
+	const char *end = p + bfmeLength( str );
 	for (; p != end; ++p) {
 		if (*p == c) {
 			return p;
