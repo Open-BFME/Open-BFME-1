@@ -28,8 +28,8 @@ static inline void nodePoolDeallocate(void *block, unsigned int bytes) { __node_
 class BfmeNodeJS
 {
 public:
-	BfmeNodeJS *m_bfmeF0JS;
-	BfmeNodeJS *m_bfmeF4JS;
+	BfmeNodeJS *m_next;
+	BfmeNodeJS *m_prev;
 	void *m_bfmeValJS;
 };
 
@@ -45,36 +45,36 @@ public:
 void BfmeListJS::bfmeSetJS(void *v)
 {
 	BfmeNodeJS *h = m_bfme10JS;
-	BfmeNodeJS *p = h->m_bfmeF0JS;
+	BfmeNodeJS *p = h->m_next;
 
 	while (p != h)
 	{
 		if (p->m_bfmeValJS == v)
 		{
-			BfmeNodeJS *nx = p->m_bfmeF0JS;
-			BfmeNodeJS *pv = p->m_bfmeF4JS;
+			BfmeNodeJS *nx = p->m_next;
+			BfmeNodeJS *pv = p->m_prev;
 
-			pv->m_bfmeF0JS = nx;
-			nx->m_bfmeF4JS = pv;
+			pv->m_next = nx;
+			nx->m_prev = pv;
 
 			_STL::nodePoolDeallocate(p, 12);
 			break;
 		}
 
-		p = p->m_bfmeF0JS;
+		p = p->m_next;
 	}
 
 	BfmeNodeJS *e = m_bfme10JS;
-	BfmeNodeJS *n = (BfmeNodeJS *)_STL::vectorSmallAllocate(12);
-	void **q = &n->m_bfmeValJS;
+	BfmeNodeJS *newNode = (BfmeNodeJS *)_STL::vectorSmallAllocate(12);
+	void **q = &newNode->m_bfmeValJS;
 
 	if (q != 0)
 		*q = v;
 
-	BfmeNodeJS *nx2 = e->m_bfmeF4JS;
+	BfmeNodeJS *nx2 = e->m_prev;
 
-	n->m_bfmeF0JS = e;
-	n->m_bfmeF4JS = nx2;
-	nx2->m_bfmeF0JS = n;
-	e->m_bfmeF4JS = n;
+	newNode->m_next = e;
+	newNode->m_prev = nx2;
+	nx2->m_next = newNode;
+	e->m_prev = newNode;
 }
