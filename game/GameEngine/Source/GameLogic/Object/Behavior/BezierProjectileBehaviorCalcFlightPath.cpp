@@ -113,17 +113,17 @@ inline const T &refMax001EF5E0(const T &x, const T &y)
 
 Bool BezierProjectileBehavior::calcFlightPath(Bool recalcNumSegments)
 {
-	const BezierProjectileBehaviorModuleData *d = m_moduleData;
+	const BezierProjectileBehaviorModuleData *moduleData = m_moduleData;
 	Real firstPct;
 	Real secondPct;
 	if (!m_altCurve)
-		firstPct = d->m_firstPercentA;
+		firstPct = moduleData->m_firstPercentA;
 	else
-		firstPct = d->m_firstPercentB;
+		firstPct = moduleData->m_firstPercentB;
 	if (!m_altCurve)
-		secondPct = d->m_secondPercentA;
+		secondPct = moduleData->m_secondPercentA;
 	else
-		secondPct = d->m_secondPercentB;
+		secondPct = moduleData->m_secondPercentB;
 	m_heightScale = 1.0f;
 
 	Coord3D controlPoints[4];
@@ -134,10 +134,10 @@ Bool BezierProjectileBehavior::calcFlightPath(Bool recalcNumSegments)
 	controlPoints[2].x = (controlPoints[3].x - controlPoints[0].x) * secondPct + controlPoints[0].x;
 	controlPoints[2].y = (controlPoints[3].y - controlPoints[0].y) * secondPct + controlPoints[0].y;
 
-	if (d->m_useSimpleZ)
+	if (moduleData->m_useSimpleZ)
 	{
-		controlPoints[1].z = (controlPoints[3].z - controlPoints[0].z) * d->m_firstPercentIndent + controlPoints[0].z;
-		controlPoints[2].z = (controlPoints[3].z - controlPoints[0].z) * d->m_secondPercentIndent + controlPoints[0].z;
+		controlPoints[1].z = (controlPoints[3].z - controlPoints[0].z) * moduleData->m_firstPercentIndent + controlPoints[0].z;
+		controlPoints[2].z = (controlPoints[3].z - controlPoints[0].z) * moduleData->m_secondPercentIndent + controlPoints[0].z;
 	}
 	else
 	{
@@ -145,17 +145,17 @@ Bool BezierProjectileBehavior::calcFlightPath(Bool recalcNumSegments)
 		Real firstHeight;
 		Real secondHeight;
 		if (!m_altCurve)
-			firstHeight = d->m_firstHeightA;
+			firstHeight = moduleData->m_firstHeightA;
 		else
-			firstHeight = d->m_firstHeightB;
+			firstHeight = moduleData->m_firstHeightB;
 		if (!m_altCurve)
-			secondHeight = d->m_secondHeightA;
+			secondHeight = moduleData->m_secondHeightA;
 		else
-			secondHeight = d->m_secondHeightB;
+			secondHeight = moduleData->m_secondHeightB;
 
-		if (d->m_heightRange > g_rva01075350)
+		if (moduleData->m_heightRange > g_rva01075350)
 		{
-			Real thresh = d->m_heightRange * 0.5f;
+			Real thresh = moduleData->m_heightRange * 0.5f;
 			Vector3 targetVector;
 			targetVector.X = controlPoints[3].x - controlPoints[0].x;
 			targetVector.Y = controlPoints[3].y - controlPoints[0].y;
@@ -163,7 +163,7 @@ Bool BezierProjectileBehavior::calcFlightPath(Bool recalcNumSegments)
 			Real targetDistance = targetVector.Length();
 			if (targetDistance < thresh)
 				m_heightScale = 0.0f;
-			else if (targetDistance < d->m_heightRange)
+			else if (targetDistance < moduleData->m_heightRange)
 				m_heightScale = (targetDistance - thresh) / thresh;
 
 			controlPoints[1].z = firstPct * (controlPoints[3].z - controlPoints[0].z) + controlPoints[0].z;
