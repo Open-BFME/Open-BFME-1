@@ -23,16 +23,16 @@ class BitFlagSnapshot0020F000 { public: void xfer(FlagXfer0020F000*);unsigned bi
 class BodyParticleSystem { public: virtual ~BodyParticleSystem(){}unsigned id;BodyParticleSystem *next; };
 struct Snapshot0020F330 { virtual void xfer(FlagPairTarget*);char pad[0x58]; };
 class Gen0020F330 { public:
- char pad[0x18]; float f18,f1c,f20,f24,f28,f2c;unsigned f30,f34,f38,f3c;Snapshot0020F330 snapshot;unsigned f9c,fa0;bool fa4,fa5,fa6,fa7;BodyParticleSystem *head;float fac[4];bool fbc[4];char gapc0[12];unsigned fcc;BitFlagSnapshot0020F000 fd0;
+ char pad[0x18]; float m_currentHealth,f1c,f20,f24,f28,f2c;unsigned f30,f34,f38,f3c;Snapshot0020F330 snapshot;unsigned m_lastDamageTimestamp,fa0;bool fa4,fa5,fa6,fa7;BodyParticleSystem *head;float fac[4];bool fbc[4];char gapc0[12];unsigned fcc;BitFlagSnapshot0020F000 fd0;
  void handle(FlagPairTarget*);
 };
 void Gen0020F330::handle(FlagPairTarget *target) {
  ((Gen_00212790*)this)->bfmeSeed((BfmeSeedTarget*)target);
  if(target->isLightCRC())return;
  FlagPair flags;flags.first=1;flags.second=1;target->applyFlags(&flags);
- target->real(&f18);target->real(&f1c);target->real(&f20);target->real(&f24);target->real(&f28);target->real(&f2c);
+ target->real(&m_currentHealth);target->real(&f1c);target->real(&f20);target->real(&f24);target->real(&f28);target->real(&f2c);
  Rva0010C0A0((MidVirtualSlot90Receiver*)target,&f30);Rva0010C0C0((MidVirtualSlot90Receiver*)target,&f34);target->uint32(&f38);Rva0010C160((MidVirtualSlot90Receiver*)target,&f3c);
- snapshot.xfer(target);target->uint32(&f9c);target->uint32(&fa0);target->boolean(&fa4);target->boolean(&fa5);target->boolean(&fa6);target->boolean(&fa7);
+ snapshot.xfer(target);target->uint32(&m_lastDamageTimestamp);target->uint32(&fa0);target->boolean(&fa4);target->boolean(&fa5);target->boolean(&fa6);target->boolean(&fa7);
  unsigned id;
  if(!target->isCRC()) {
   unsigned short count=0;
