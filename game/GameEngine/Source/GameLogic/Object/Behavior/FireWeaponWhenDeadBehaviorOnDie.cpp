@@ -129,7 +129,7 @@ public:
 	Bool m_initiallyActive;
 	Bool m_skipStatus2Check71;
 	char m_unreconstructed72[ 0x78 - 0x72 ];
-	Coord3D m_weaponOffset78;
+	Coord3D m_weaponOffset;
 	DieMuxData m_dieMuxData;
 	char m_unreconstructed85[ 0xb0 - 0x85 ];
 	const WeaponTemplate *m_deathWeapon;
@@ -233,7 +233,7 @@ void FireWeaponWhenDeadBehavior::onDie( const DamageInfo *damageInfo )
 	{
 		Coord3D position;
 		reinterpret_cast<BfmeThingFV *>( getObject() )->bfmeComputeFV(
-			reinterpret_cast<BfmeArgFV *>( const_cast<Coord3D *>( &d->m_weaponOffset78 ) ),
+			reinterpret_cast<BfmeArgFV *>( const_cast<Coord3D *>( &d->m_weaponOffset ) ),
 			reinterpret_cast<BfmeVec3FV *>( &position ) );
 		TheWeaponStore->createAndFireTempWeapon( d->m_deathWeapon, getObject(), &position );
 	}
