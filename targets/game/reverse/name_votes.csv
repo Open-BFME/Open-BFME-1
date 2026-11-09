@@ -6523,3 +6523,5 @@ game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type|
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||StartAudioStream006AE2C0,c765d0d240ffbb98132486fc,claude-sonnet,20261109035219-b6dcb7,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|member||flags_3c,79ae859588698ca8a2b54b7a,claude-sonnet,20261109035219-b6dcb7,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|member||list_9d0,34f0f4cfd7fa29695a374845,claude-sonnet,20261109035219-b6dcb7,2026-11-09
+game/GameEngine/Source/Common/StateMachineCtorThunk.cpp|member||m_slot20,8b98eef4f08dda5d48837585,claude-sonnet,20261109035732-1337f0,2026-11-09
+game/GameEngine/Source/Common/StateMachineCtorThunk.cpp|member||m_slot41,269c3305c69e8833f2062538,claude-sonnet,20261109035732-1337f0,2026-11-09

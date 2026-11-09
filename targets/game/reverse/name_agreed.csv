@@ -1574,3 +1574,4 @@ game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type|
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||Event006AE2C0,AudioEventRTS,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||StartAudioStream006AE2C0,MilesAudioManager,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|member||flags_3c,m_control,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/StateMachineCtorThunk.cpp|member||m_slot20,m_goalObjectID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
