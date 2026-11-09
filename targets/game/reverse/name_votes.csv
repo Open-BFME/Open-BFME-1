@@ -7409,3 +7409,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field10,
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|function|BfmeResolverAS@|bfmeResolveAS,2e63632d7f2ec1223eab8124,claude-sonnet,20261109082639-8216d4,2026-11-09
 game/GameEngine/Source/Common/Rva0016A490Set.cpp|type||Rva0016A490Node,ad6938d7e8a1e8e4a73a27a0,claude-sonnet,20261109082417-020b49,2026-11-09
 game/GameEngine/Source/Common/Rva0016A490Set.cpp|type||Rva0016A490,bda34c092e7cc84492d60129,claude-sonnet,20261109082417-020b49,2026-11-09
+game/GameEngine/Source/Common/Rva002C4530Fetch.cpp|type||ContainRva002C4530,b7d584f993a042587b81223a,claude-sonnet,20261109082417-e65547,2026-11-09
