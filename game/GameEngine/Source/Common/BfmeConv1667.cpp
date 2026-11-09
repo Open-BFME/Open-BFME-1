@@ -5,7 +5,7 @@ struct BfmeThingEQA
 	char bfmeGoEQA();
 	unsigned char m_bfmeFlagEQA;
 	unsigned char m_bfmePadEQA[3];
-	void *m_bfmeHEQA;
+	void *m_sample;
 	unsigned char m_bfmeMidEQA[4];
 	unsigned char m_bfmeReadyEQA;
 };
@@ -16,8 +16,8 @@ char BfmeThingEQA::bfmeGoEQA()
 		return 0;
 	if (m_bfmeReadyEQA == 0)
 		return 0;
-	void *h = m_bfmeHEQA;
-	if (!h)
+	void *sample = m_sample;
+	if (!sample)
 		return 1;
-	return AIL_3D_sample_status(h) != 4;
+	return AIL_3D_sample_status(sample) != 4;
 }
