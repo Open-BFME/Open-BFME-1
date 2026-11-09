@@ -2894,3 +2894,4 @@ game/GameEngine/Source/Common/BfmeConv1312.cpp|member||m_bfmeCritical,m_critical
 game/GameEngine/Source/GameLogic/Object/Update/TargetEligibility00290990.cpp|local|TargetEligibility00290990::accepts|templ,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1312.cpp|member||m_bfmeCritical,m_criticalSection,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/TargetEligibility00290990.cpp|local|TargetEligibility00290990::accepts|templ,thingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_xfer.cpp|member||m_field5C,m_prevVictimPos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
