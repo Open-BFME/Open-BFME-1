@@ -6409,3 +6409,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|mem
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,caf8c671acc7b34b21b84039,claude-sonnet,20261109025212-d8cc18,2026-11-09
 game/GameEngine/Source/Common/Rva008802E0Overflow.cpp|type||BfmeElem2E,7d9f6ed0ece0e22facab1d78,claude-sonnet,20261109025251-587ff9,2026-11-09
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,8bc8d722011fce33d8e5562b,claude-sonnet,20261109025251-d87dbb,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeColour,4e03dd62121fdef61de77095,claude-sonnet,20261109025455-ca0640,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeParent,3b92430e3101773ca82acfb5,claude-sonnet,20261109025455-ca0640,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeLeft,fdb4801b00c62b894de81b91,claude-sonnet,20261109025455-ca0640,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRight,7d0b00cf07a07eea7759d340,claude-sonnet,20261109025455-ca0640,2026-11-09

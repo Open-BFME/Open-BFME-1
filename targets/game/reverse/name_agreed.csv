@@ -1442,3 +1442,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|mem
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,m_sinkRate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,State,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,State,claude-sonnet+gpt-6.1-sol,blocked: hook: pins 0x000035B2 ??0State@@QAE@PAXVAsciiString@@@Z | outside every window of the target's slots 1929:2035-2039 | PRE-COMMIT FAILED: retail's thun,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeColour,m_color,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeParent,m_parent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeLeft,m_left,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRight,m_right,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
