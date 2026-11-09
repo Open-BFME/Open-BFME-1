@@ -154,8 +154,8 @@ private:
 	UnsignedInt m_wasIdle;					// +0x40
 	Bool m_shouldAttemptGenericScript[32];	// +0x44
 	void *m_genericScriptsToRun[32];		// +0x64
-	Bool m_wordE4;							// +0xe4
-	Bool m_wordE5;							// +0xe5
+	Bool m_isRecruitablitySet;							// +0xe4
+	Bool m_isRecruitable;							// +0xe5
 	Bool m_wordE6;							// +0xe6
 	Bool m_wordE7;							// +0xe7
 	UnsignedInt m_commonAttackTarget;		// +0xe8
@@ -224,8 +224,8 @@ Team::Team(TeamPrototype *proto, UnsignedInt id) :
 	m_destroyThreshold(0),
 	m_curUnits(0),
 	m_wasIdle(0),
-	m_wordE4(false),
-	m_wordE5(false),
+	m_isRecruitablitySet(false),
+	m_isRecruitable(false),
 	m_wordE6(false),
 	m_wordE7(false),
 	m_wordF4(0),
