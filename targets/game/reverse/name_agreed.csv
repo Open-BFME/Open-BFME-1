@@ -1528,3 +1528,17 @@ game/GameEngine/Source/GameLogic/AI/BfmeHostEZ_bfmeConsiderEZ.cpp|member||m_bfme
 game/GameEngine/Source/GameLogic/AI/BfmeHostEZ_bfmeConsiderEZ.cpp|member||m_bfmePathEZ,m_pathfinder,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberDestroy002408E0.cpp|member||frame3C,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/AptPalantirHeroSelectorResetSlots.cpp|function|AptPalantirHeroSelector@|rva0058d930,resetSlots,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|type||BfmeArgGS,Player,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|type||BfmeStateGS,AIPlayer,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfmeFrameGS,m_frame,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfmeRateGS,m_teamSeconds,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfmeDataGS,m_aiData,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfmeFlagGS,m_canBuildUnits,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme10GS,m_readyToBuildTeam,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme11GS,m_readyToBuildStructure,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme14GS,m_teamTimer,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme18GS,m_structureTimer,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme28GS,m_frameLastBuildingBuilt,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme2cGS,m_difficulty,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme30GS,m_skillsetSelector,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme40GS,m_baseCenterSet,claude-sonnet+gpt-6-astra,agreed,2026-11-09
