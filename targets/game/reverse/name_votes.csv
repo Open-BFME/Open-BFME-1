@@ -7574,3 +7574,8 @@ game/GameEngine/Source/GameClient/GUI/OnlineLoginApplyGadgets0054FB10.cpp|local|
 game/GameEngine/Source/Common/Rva0035ED70Restore.cpp|member||m_20,da8cbeb68e72506f345c4bee,claude-sonnet,20261109094007-698101,2026-11-09
 game/GameEngine/Source/Common/Rva0035ED70Restore.cpp|member||m_24,497c5e1a2f7661eafdb13cff,claude-sonnet,20261109094007-698101,2026-11-09
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|local|getTemplate|t,69d8683040048f4f31f424e6,claude-sonnet,20261109094055-f2acea,2026-11-09
+game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeName,bcb5689b3ea2da5c59d85644,claude-sonnet,20261109094932-04d36e,2026-11-09
+game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeSize,45af172dff04488a96e54489,claude-sonnet,20261109094932-04d36e,2026-11-09
+game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeBold,bef9a897c526697b65777cea,claude-sonnet,20261109094932-04d36e,2026-11-09
+game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeColor,5444a2fddfe81cc721a64e98,claude-sonnet,20261109094932-04d36e,2026-11-09
+game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeItalic,6c4a672f062a1e785d7f82c5,claude-sonnet,20261109094932-04d36e,2026-11-09
