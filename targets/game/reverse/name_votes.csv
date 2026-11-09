@@ -6982,3 +6982,7 @@ game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva0018AD
 game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_04,6263445d83e365cf39182e42,claude-sonnet,20261109063022-f626c0,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_flag08,f2056b7b82d7e74c06c2141f,claude-sonnet,20261109063022-f626c0,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_0C,2a1c9d97a898a7ab54874001,claude-sonnet,20261109063022-f626c0,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF0JS,85e6cba237571d7b6f355a4b,claude-sonnet,20261109063129-f33f9a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF4JS,943c74d3aad3afe3350b6f41,claude-sonnet,20261109063129-f33f9a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfme10JS,df9485973c5d80947133d201,claude-sonnet,20261109063129-f33f9a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|local|BfmeListJS::bfmeSetJS|n,692d371e0b593945a9e4850c,claude-sonnet,20261109063129-f33f9a,2026-11-09

@@ -2106,3 +2106,6 @@ game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171610State,AIExitState,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00171610 ??0AIExitState@@QAE@PAX@Z | outside every window of the target's slots 981:1028-1036 | functions 0x001716D0 ??0AIGuardState,2026-11-09
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva001716D0State,AIGuardState,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00171610 ??0AIExitState@@QAE@PAX@Z | outside every window of the target's slots 981:1028-1036 | functions 0x001716D0 ??0AIGuardState,2026-11-09
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171820State,AIHuntState,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00171610 ??0AIExitState@@QAE@PAX@Z | outside every window of the target's slots 981:1028-1036 | functions 0x001716D0 ??0AIGuardState,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF0JS,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF4JS,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2078.cpp|local|BfmeListJS::bfmeSetJS|n,newNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
