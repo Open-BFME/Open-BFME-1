@@ -15,8 +15,8 @@ struct TerrainTrackEdge
 		value7 = 0;
 		value8 = 0;
 		value9 = 0;
-		value10 = 0;
-		value11 = 0;
+		m_timeAdded = 0;
+		m_alpha = 0;
 	}
 
 	int value0;
@@ -29,8 +29,8 @@ struct TerrainTrackEdge
 	int value7;
 	int value8;
 	int value9;
-	int value10;
-	int value11;
+	int m_timeAdded;
+	int m_alpha;
 };
 
 // Retail vftable symbol, bound directly by its decorated name.
