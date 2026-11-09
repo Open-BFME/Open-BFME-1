@@ -6879,3 +6879,9 @@ game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|rva001C15F0NightCo
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,c0a48d2b69d620e5aca038c1,claude-sonnet,20261109055352-df37f6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|type||Rva002C1480Machine,66bfbcad2c03c0de4cff92ad,claude-sonnet,20261109055352-06c727,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|member||m_machine30,3a7e2b9f8ea3b77037a04bcc,claude-sonnet,20261109055352-06c727,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|type||Rva000ED2D0,7c654db724cebea0833c5aab,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_04,61f7d61688de463c75ca7fde,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_08,5ba2fc745882e5c98eb186cf,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_0C,c3593e61575f22ce5417b979,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_10,cf1292a2ff605dce01210ea6,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_14,c97af83ca71ad6d45d475b3f,claude-sonnet,20261109060232-7297d9,2026-11-09
