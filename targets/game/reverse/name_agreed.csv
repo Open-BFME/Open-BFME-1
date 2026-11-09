@@ -1522,3 +1522,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruSta
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_machine1c,m_machine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_weaponOffset78,m_weaponOffset,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_weaponOffset78,m_weaponOffset,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1970.cpp|member||m_bfmeRefESG,m_refCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

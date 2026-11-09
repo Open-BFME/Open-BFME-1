@@ -6495,3 +6495,4 @@ game/GameEngine/Source/GameClient/GlobalLanguage_onGameEngineExit.cpp|type||Bfme
 game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_54,93e221658577637c1a6ae4c6,claude-sonnet,20261109033748-b6fed3,2026-11-09
 game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_58,471807a7c0c91bcf493e226c,claude-sonnet,20261109033748-b6fed3,2026-11-09
 game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_5C,b19e29360a39cb2ee599a807,claude-sonnet,20261109033748-b6fed3,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1970.cpp|member||m_bfmeRefESG,af0be4a31ae388f5f5b552cf,claude-sonnet,20261109033748-eb3c9c,2026-11-09
