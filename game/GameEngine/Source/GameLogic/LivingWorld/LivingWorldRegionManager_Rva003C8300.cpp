@@ -5,7 +5,7 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-struct Rva003C8300Pair { int first, second; };
+struct ICoord2D { int first, second; };
 class LivingWorldRegion;
 
 class Rva003C8300State
@@ -14,7 +14,7 @@ public:
     virtual void slot00(); virtual void slot01(); virtual void slot02();
     virtual void slot03(); virtual void slot04(); virtual void slot05();
     virtual void slot06(); virtual void slot07();
-    virtual void slot08(const Rva003C8300Pair *pair, Coord3D *out);
+    virtual void slot08(const ICoord2D *pair, Coord3D *out);
 };
 
 class Rva006092D0State;
@@ -23,7 +23,7 @@ extern Rva006092D0State *g_rva012F7048LivingWorld;
 class LivingWorldRegionManager
 {
 public:
-    LivingWorldRegion *rva003C8300(const Rva003C8300Pair *pair);
+    LivingWorldRegion *rva003C8300(const ICoord2D *pair);
 };
 
 extern void j_00046150();
@@ -40,7 +40,7 @@ static __forceinline LivingWorldRegion *callRegionLookup(
 }
 
 LivingWorldRegion *LivingWorldRegionManager::rva003C8300(
-    const Rva003C8300Pair *pair)
+    const ICoord2D *pair)
 {
     Coord3D position;
     reinterpret_cast<Rva003C8300State *>(

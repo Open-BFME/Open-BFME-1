@@ -2657,3 +2657,4 @@ game/GameEngine/Source/Common/BfmeConv574.cpp|member||m_bfmeOwner,m_machine,clau
 game/GameEngine/Source/Common/BfmeConv574.cpp|member||m_bfmeMid,m_owner,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv574.cpp|member||m_bfmeOwner,m_machine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300Pair,ICoord2D,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300Pair,ICoord2D,claude-sonnet+gpt-6-astra,applied,2026-11-09
