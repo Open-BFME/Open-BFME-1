@@ -66,7 +66,7 @@ void MainMenuSmallScaleDownTransition::draw()
 
 	Int x = m_pos.x - ((m_incrementSize.x * m_drawState) / 2);
 	Int y = m_pos.y - ((m_incrementSize.y * m_drawState) / 2);
-	Int x1 = m_pos.x + m_size.x + ((m_incrementSize.x * m_drawState) / 2);
-	Int y1 = m_pos.y + m_size.y + ((m_incrementSize.y * m_drawState) / 2);
-	TheDisplay->drawImage(image, (Real)x, (Real)y, (Real)x1, (Real)y1, -1, 2);
+	Int endX = m_pos.x + m_size.x + ((m_incrementSize.x * m_drawState) / 2);
+	Int endY = m_pos.y + m_size.y + ((m_incrementSize.y * m_drawState) / 2);
+	TheDisplay->drawImage(image, (Real)x, (Real)y, (Real)endX, (Real)endY, -1, 2);
 }
