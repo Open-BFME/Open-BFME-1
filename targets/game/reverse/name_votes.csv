@@ -6630,3 +6630,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FD990CameraCorners.cpp|m
 game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeNext,34232223c58b1dbc4edc58bc,claude-sonnet,20261109043013-c223c3,2026-11-09
 game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeBegin,2400d369207ed9fdbe612f25,claude-sonnet,20261109043013-c223c3,2026-11-09
 game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeEnd,7ae8645329349460ae7f3335,claude-sonnet,20261109043013-c223c3,2026-11-09
+game/GameEngine/Source/GameNetwork/LANAPIConstructor.cpp|member||m_bfme_0x34,7efec201f36e32502f017f7a,claude-sonnet,20261109043304-a5cdd6,2026-11-09
