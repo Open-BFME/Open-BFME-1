@@ -35,8 +35,8 @@ class PeerResponse {
 public:
  PeerResponse();
  ~PeerResponse();
- int field00;
- const char *field04;
+ int m_peerResponseType;
+ const char *m_groupRoomName;
  unsigned char field08[0xec];
  int fieldF4[143];
 };
@@ -190,12 +190,12 @@ void BfmeAptScreenOnlineHome::updatePeerResponses00547160() {
   bool sawImportantMessage=false;
   PeerResponse resp;
   while(allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse(resp)) {
-   switch(resp.field00) {
+   switch(resp.m_peerResponseType) {
    case 3: {
     GameSpyGroupRoom room;
     room.m_groupID=resp.fieldF4[0];
     room.m_maxWaiting=resp.fieldF4[2];
-    room.m_name=resp.field04;
+    room.m_name=resp.m_groupRoomName;
     room.m_translatedName=UnicodeString(L"TEST");
     room.m_numGames=resp.fieldF4[3];
     room.m_numPlaying=resp.fieldF4[4];
