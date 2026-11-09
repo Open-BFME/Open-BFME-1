@@ -75,12 +75,12 @@ public:
 	void bfmeNotifyAll(void);
 
 	char m_bfmePad[0x1f0];
-	Bfme5WalkItem **m_bfmeItems;
+	Bfme5WalkItem **m_behaviors;
 };
 
 void Bfme5WalkOwner::bfmeNotifyAll(void)
 {
-	for (Bfme5WalkItem **p = m_bfmeItems; *p; ++p) {
+	for (Bfme5WalkItem **p = m_behaviors; *p; ++p) {
 		Bfme5WalkSub *s = (*p)->m_bfmeIface.bfmeGetSub();
 
 		if (s)
@@ -90,7 +90,7 @@ void Bfme5WalkOwner::bfmeNotifyAll(void)
 
 Bfme5WalkHit * __cdecl bfme5WalkFindHit(Bfme5WalkOwner *o)
 {
-	for (Bfme5WalkItem **p = o->m_bfmeItems; *p; ++p) {
+	for (Bfme5WalkItem **p = o->m_behaviors; *p; ++p) {
 		Bfme5WalkHit *h = (Bfme5WalkHit *)(*p)->m_bfmeIface.bfmeFind();
 
 		if (h)
@@ -102,7 +102,7 @@ Bfme5WalkHit * __cdecl bfme5WalkFindHit(Bfme5WalkOwner *o)
 
 int __cdecl bfme5WalkFirstValue(Bfme5WalkOwner *o)
 {
-	for (Bfme5WalkItem **p = o->m_bfmeItems; *p; ++p) {
+	for (Bfme5WalkItem **p = o->m_behaviors; *p; ++p) {
 		Bfme5WalkAnswer *a = (Bfme5WalkAnswer *)(*p)->m_bfmeIface.bfmePick();
 
 		if (a)

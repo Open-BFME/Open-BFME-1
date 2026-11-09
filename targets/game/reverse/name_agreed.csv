@@ -1559,3 +1559,4 @@ game/GameEngine/Source/Common/BfmeConv2070.cpp|member||m_bfme40GS,m_baseCenterSe
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberDestroy002408E0.cpp|member||frame3C,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/AptPalantirHeroSelectorResetSlots.cpp|function|AptPalantirHeroSelector@|rva0058d930,resetSlots,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x0058D930 ?resetSlots@AptPalantirHeroSelector@@QAEXXZ | outside every window of the target's slots 8363:7330-7337 | PRE-COMMIT FAILED,2026-11-09
 game/GameEngine/Source/Common/Bfme5IfaceWalk.cpp|member||m_bfmeItems,m_behaviors,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5IfaceWalk.cpp|member||m_bfmeItems,m_behaviors,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
