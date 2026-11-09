@@ -18,7 +18,7 @@
 struct BfmeHandleBlock
 {
 	char m_bfmeHead[4];
-	unsigned short m_bfmeRefCount;				// +0x04
+	unsigned short m_refCount;				// +0x04
 };
 
 // The release leaf at 0x009EB7A0 is TextureBaseClass::Release_Ref, so the block
@@ -147,7 +147,7 @@ bool Gen_0054F230::bfmeDiffers(const Gen_0054F230 &other) const
 Gen_005D1E50 &Gen_005D1E50::operator=(const Gen_005D1E50 &other)
 {
 	if (other.m_bfmeData)
-		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
+		++((BfmeHandleBlock *)other.m_bfmeData)->m_refCount;
 
 	if (m_bfmeData)
 		m_bfmeData->Release_Ref();
@@ -161,7 +161,7 @@ Gen_005D1E50 &Gen_005D1E50::operator=(const Gen_005D1E50 &other)
 Gen_005D2040 &Gen_005D2040::operator=(const Gen_005D2040 &other)
 {
 	if (other.m_bfmeData)
-		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
+		++((BfmeHandleBlock *)other.m_bfmeData)->m_refCount;
 
 	if (m_bfmeData)
 		m_bfmeData->Release_Ref();
@@ -175,7 +175,7 @@ Gen_005D2040 &Gen_005D2040::operator=(const Gen_005D2040 &other)
 Gen_00749D90 &Gen_00749D90::operator=(const Gen_00749D90 &other)
 {
 	if (other.m_bfmeData)
-		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
+		++((BfmeHandleBlock *)other.m_bfmeData)->m_refCount;
 
 	if (m_bfmeData)
 		m_bfmeData->Release_Ref();
@@ -189,7 +189,7 @@ Gen_00749D90 &Gen_00749D90::operator=(const Gen_00749D90 &other)
 Gen_00749DD0 &Gen_00749DD0::operator=(const Gen_00749DD0 &other)
 {
 	if (other.m_bfmeData)
-		++((BfmeHandleBlock *)other.m_bfmeData)->m_bfmeRefCount;
+		++((BfmeHandleBlock *)other.m_bfmeData)->m_refCount;
 
 	if (m_bfmeData)
 		m_bfmeData->Release_Ref();
