@@ -7383,3 +7383,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F8
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||barrels7C,064091de90d32a04dffe8f9f,claude-sonnet,20261109081339-fa341b,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||active120,0de56c0f2dc2ffef8bb8a114,claude-sonnet,20261109081339-fa341b,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1885.cpp|local|BfmeOwnerZS::bfmeNotifyZS|p,7d3f4e5c4c56cb326c80a218,claude-sonnet,20261109081642-96f686,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1046.cpp|param|piSBStopListingAutoMatches|p,c5c5f9e5a6f8a5f877b81e3c,claude-sonnet,20261109081642-ae4956,2026-11-09
