@@ -1415,3 +1415,14 @@ game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeNext,m_left,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeField,m_right,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeIndexAH,m_localPlayer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme78IA,m_minTargetPitch,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme7cIA,m_maxTargetPitch,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4d0IA,m_shotsPerBarrel,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme04IA,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme30IA,m_suspendFXFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme10IA,m_status,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme14IA,m_ammoInClip,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme34IA,m_maxShotCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme38IA,m_curBarrel,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme3cIA,m_numShotsForCurBarrel,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4cIA,m_pitchLimited,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
