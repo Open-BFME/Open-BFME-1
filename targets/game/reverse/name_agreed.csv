@@ -1714,3 +1714,8 @@ game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AD,m_h
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,m_hiddenByStealth,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,m_instanceIsIdentity,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/Player_resetOrStartSpecialPowerReadyFrame.cpp|member||m_bfmeFrame,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|type||DrawModule00421830,DrawModule,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field2E4,m_secondMaterialPassOpacity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AD,m_hidden,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,m_hiddenByStealth,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,m_instanceIsIdentity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

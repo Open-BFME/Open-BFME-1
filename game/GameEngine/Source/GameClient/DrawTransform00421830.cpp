@@ -21,7 +21,7 @@ class BfmeCalc919G { public: int bfmeCalc919G(); };
 struct BfmeMatETE;
 class BfmeHostETE { public: BfmeMatETE *bfmeGetETE(); };
 
-class DrawModule00421830
+class DrawModule
 {
 public:
     virtual void slot00(); virtual void slot04(); virtual void slot08();
@@ -39,11 +39,11 @@ class DrawTransform00421830
     unsigned char pad100[0x14];
     unsigned int field114;
     unsigned char pad118[0x38];
-    DrawModule00421830 **field150;
+    DrawModule **field150;
     unsigned char pad154[0x190];
-    float field2E4;
+    float m_secondMaterialPassOpacity;
     unsigned char pad2E8[0xC5];
-    bool field3AD, field3AE, field3AF, field3B0;
+    bool m_hidden, m_hiddenByStealth, m_instanceIsIdentity, field3B0;
 public:
     void draw(void *unused);
 };
@@ -109,24 +109,24 @@ void DrawTransform00421830::draw(void *unused)
     {
         char *object = m_object;
         if (object && (static_cast<unsigned char>(object[0x344]) & 1))
-            field2E4 = 0.0f;
-        else if (field2E4 > 0.001f)
-            field2E4 *= 0.8f;
+            m_secondMaterialPassOpacity = 0.0f;
+        else if (m_secondMaterialPassOpacity > 0.001f)
+            m_secondMaterialPassOpacity *= 0.8f;
         else
-            field2E4 = 0.0f;
+            m_secondMaterialPassOpacity = 0.0f;
     }
 
-    if (field3AD || field3AE || field3B0)
+    if (m_hidden || m_hiddenByStealth || field3B0)
         return;
 
     Matrix3D transform = *reinterpret_cast<const Matrix3D *>(
         reinterpret_cast<BfmeCalc919G *>(this)->bfmeCalc919G());
-    if (!field3AF)
+    if (!m_instanceIsIdentity)
         compose00421830(transform, *reinterpret_cast<const Matrix3D *>(
             reinterpret_cast<BfmeHostETE *>(this)->bfmeGetETE()));
 
     reinterpret_cast<Drawable *>(this)->applyPhysicsXform(&transform);
-    for (DrawModule00421830 **module = field150;
+    for (DrawModule **module = field150;
          *module; ++module)
         (*module)->slot24(&transform);
 }
