@@ -7513,3 +7513,6 @@ game/GameEngine/Source/Common/BfmeConv1172.cpp|member||m_bfme2c,5830c1e018c2be1b
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeStatus,a36d599322bc41c6a660bb21,claude-sonnet,20261109091559-bb1cfc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeAI,c88b4823c7a3844944c1a51a,claude-sonnet,20261109091559-bb1cfc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cpp|member||m_bfmeNext,75c9d4c2054d3dcceef7104e,claude-sonnet,20261109091559-bb1cfc,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field04,1b77a235257a867a7799d83d,claude-sonnet,20261109091746-f5a6f3,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,4a39756220cd8d5429d25487,claude-sonnet,20261109091746-f5a6f3,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,d6a4b8b90dbfa54cb50b4983,claude-sonnet,20261109091746-f5a6f3,2026-11-09
