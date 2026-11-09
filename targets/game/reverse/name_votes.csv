@@ -6277,3 +6277,5 @@ game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeValueEVI,dd9e7194ab
 game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeLimitEVI,86ea0e0c165c3b669a3f3f07,claude-sonnet,20261109015121-d6f640,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeSinkEVI,e19289597eb0165641f622f7,claude-sonnet,20261109015121-d6f640,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1999.cpp|function|BfmeHostEVI@|bfmeAdvanceEVI,b89508af75d5e37c4f6e4e07,claude-sonnet,20261109015121-d6f640,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp|member||m_bfmeAI,39d23e6c3ba090b98f8ed1e2,claude-sonnet,20261109020415-193670,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp|member||m_bfmeVisionBonus,dd4a4e530fc5493c3300ef10,claude-sonnet,20261109020415-193670,2026-11-09
