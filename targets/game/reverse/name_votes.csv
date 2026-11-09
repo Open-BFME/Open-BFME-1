@@ -6903,3 +6903,4 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSpellStoreOnClosed.cpp|member
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|type||Rva00377740Owner,ecd87297c7aa27cf0bac12a8,claude-sonnet,20261109061241-da2cdc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|function|Rva00377740Interface@|Rva00377740,67051a7cfd6f9c743fb9d4fa,claude-sonnet,20261109061241-da2cdc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|type||BfmeDataIS,31926923aa3eb83355f5ce25,claude-sonnet,20261109061402-93063e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/UnitHelpText.cpp|function|Rva004B2300@|slot04,21aa3718103cc165b96bf15a,claude-sonnet,20261109061240-f6b240,2026-11-09
