@@ -7592,3 +7592,4 @@ game/GameEngine/Source/Common/BfmeConv884.cpp|local|BfmeThingESCb::bfmeGoESCb|s,
 game/GameEngine/Source/Common/BfmeConv1474.cpp|member||m_bfme04,66dce3b6b91f955f394cabf0,claude-sonnet,20261109094838-57681c,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1474.cpp|local|BfmeListVMU::bfmeEraseVMU|q,ebd58df5440349592d5b8207,claude-sonnet,20261109094838-57681c,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1474.cpp|local|BfmeListVMU::bfmeEraseVMU|n,433f1e4244c01c7e62b35078,claude-sonnet,20261109094838-57681c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv997.cpp|type||BfmeA997,9bfb42e98c252e33056d571a,claude-sonnet,20261109095055-e53a48,2026-11-09
