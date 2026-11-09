@@ -61,7 +61,7 @@ public:
 private:
     FWWDead_UpgradeMuxData m_upgradeMuxData;
     bool m_initiallyActive;
-    bool m_field71;
+    bool m_activeDuringConstruction;
     unsigned int m_field74;
     unsigned int m_field78;
     unsigned int m_field7c;
@@ -74,7 +74,7 @@ private:
 FireWeaponWhenDeadBehaviorModuleData::FireWeaponWhenDeadBehaviorModuleData()
 {
     m_initiallyActive = false;
-    m_field71 = false;
+    m_activeDuringConstruction = false;
     m_field74 = 0;
     m_deathWeapon = 0;
     m_field78 = 0;
