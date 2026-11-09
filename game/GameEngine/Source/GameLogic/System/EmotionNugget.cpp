@@ -12,9 +12,9 @@
 #include "ascii_string.h"
 class Rva001CF980Result;
 class ThingTemplate;
-class Overridable { public: const Overridable *getFinalOverride() const; void *vtable; Overridable *next04; };
-class ThingTemplate : public Overridable { public: char pad08[0x470]; unsigned short at478; unsigned short getTemplateID() const { return at478; } };
-#define THING_TU_MEMBERS const ThingTemplate *getTemplate() const { if(!m_template) return 0; if(m_template->next04) return (const ThingTemplate *)m_template->next04->getFinalOverride(); return m_template; } bool isSignificantlyAboveTerrain() const;
+class Overridable { public: const Overridable *getFinalOverride() const; void *vtable; Overridable *m_nextOverride; };
+class ThingTemplate : public Overridable { public: char pad08[0x470]; unsigned short m_templateID; unsigned short getTemplateID() const { return m_templateID; } };
+#define THING_TU_MEMBERS const ThingTemplate *getTemplate() const { if(!m_template) return 0; if(m_template->m_nextOverride) return (const ThingTemplate *)m_template->m_nextOverride->getFinalOverride(); return m_template; } bool isSignificantlyAboveTerrain() const;
 #define OBJECT_TU_MEMBERS int getID() const { return m_id; } Rva001CF980Result *queryAt001CF980(); void rva001CD300(int,int); void notifyModelConditionChanged(); void clearAndSetModelConditionFlags(const ModelConditionFlags &,const ModelConditionFlags &);
 class ModelConditionFlags { public: unsigned bits[10]; void set(int i) { bits[i>>5] |= 1u << (i&31); } unsigned test(int i) const { return bits[i>>5] & (1u << (i&31)); } };
 #define BFME_HAVE_MODELCONDITIONFLAGS
@@ -41,7 +41,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 // ?TheGameLogic0037C030@@3PAUGameLogic0037C030@@A: reference recorded ?TheGameLogic@@3PAVGameLogic@@A
 class GameLogic;
 extern GameLogic *TheGameLogic;
-struct GameLogic0037C030 { char pad00[0x3c]; unsigned frame3c; };
+struct GameLogic0037C030 { char pad00[0x3c]; unsigned m_frame; };
 struct NarrowHeader0037C030 { int refs; unsigned short len,cap; char text[1]; };
 inline const NarrowHeader0037C030 *header0037C030(const AsciiString &s) { return *(const NarrowHeader0037C030 *const *)&s; }
 inline bool empty0037C030(const AsciiString &s) { const NarrowHeader0037C030 *p=header0037C030(s); return !p || !p->len; }
@@ -57,7 +57,7 @@ class Rva0037C310Owner { public:
 };
 void Rva0037C310Owner::apply0037C030(Object *target)
 {
-    unsigned frame=((GameLogic0037C030 *)TheGameLogic)->frame3c;
+    unsigned frame=((GameLogic0037C030 *)TheGameLogic)->m_frame;
     frame30=frame;
     if(target) { id08=target->getID(); type0c=target->getTemplate()->getTemplateID(); }
     else { id08=0; type0c=0; }

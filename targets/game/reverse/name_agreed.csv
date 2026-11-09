@@ -1456,3 +1456,6 @@ game/Libraries/Source/EA/Apt/AptString/EAStringCTrimRight.cpp|function|EAStringC
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||next04,m_nextOverride,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||at478,m_templateID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||frame3c,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||next04,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||at478,m_templateID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||frame3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
