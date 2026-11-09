@@ -35,14 +35,14 @@ public:
 
 void BfmeList1005::bfmeGoC1005(int a)
 {
-	for (BfmeNode1005 *n = m_bfmeHead->m_bfmeNext; n != m_bfmeHead; n = n->m_bfmeNext)
-		((Object *)n->m_bfmeItem)->bfmeWakeAutoPickup(a);
+	for (BfmeNode1005 *node = m_bfmeHead->m_bfmeNext; node != m_bfmeHead; node = node->m_bfmeNext)
+		((Object *)node->m_bfmeItem)->bfmeWakeAutoPickup(a);
 }
 
 void BfmeList1005::bfmeGoD1005(int a)
 {
-	for (BfmeNode1005 *n = m_bfmeHead->m_bfmeNext; n != m_bfmeHead; n = n->m_bfmeNext)
-		((BfmeThing916D *)n->m_bfmeItem)->bfmeGo916D((void *)a);
+	for (BfmeNode1005 *node = m_bfmeHead->m_bfmeNext; node != m_bfmeHead; node = node->m_bfmeNext)
+		((BfmeThing916D *)node->m_bfmeItem)->bfmeGo916D((void *)a);
 }
 
 class BfmeMgr1005
