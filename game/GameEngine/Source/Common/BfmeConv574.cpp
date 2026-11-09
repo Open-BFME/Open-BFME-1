@@ -8,7 +8,7 @@
 struct BfmeOwnerCCC
 {
 	unsigned char m_bfmeHead[0x10];
-	Object *m_bfmeMid;
+	Object *m_owner;
 };
 
 class BfmeThingCCC
@@ -16,12 +16,12 @@ class BfmeThingCCC
 public:
 	void bfmeGoCCC(void *spare);
 	unsigned char m_bfmeHead[0x1c];
-	BfmeOwnerCCC *m_bfmeOwner;
+	BfmeOwnerCCC *m_machine;
 };
 
 void BfmeThingCCC::bfmeGoCCC(void *spare)
 {
-	Object *sub = m_bfmeOwner->m_bfmeMid;
+	Object *sub = m_machine->m_owner;
 	if (sub->m_modelConditionFlags[1] & 0x20000000u)
 	{
 		sub->m_modelConditionFlags[1] &= ~0x20000000u;
