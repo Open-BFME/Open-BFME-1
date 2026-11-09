@@ -6181,3 +6181,5 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementat
 game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|param|bfmeDoZD|c,b5e33a8c553871435b963aae,claude-sonnet,20261109011212-a88420,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|local|LevelUpUpgrade::upgradeImplementation|a,1d09a2f1ace289e1d886e267,claude-sonnet,20261109011212-a88420,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|local|LevelUpUpgrade::upgradeImplementation|c,4d9d1c0ee6d970fe1857d477,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/Serialize0020C190.cpp|type||Template0020C190,224b638ac994489cdcb5450f,claude-sonnet,20261109011212-4169de,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/Serialize0020C190.cpp|member||name20,f34182dcf070101d4be138e0,claude-sonnet,20261109011212-4169de,2026-11-09
