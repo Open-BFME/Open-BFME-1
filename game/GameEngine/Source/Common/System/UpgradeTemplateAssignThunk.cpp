@@ -34,8 +34,8 @@ protected:
 
 private:
 	unsigned int m_type;
-	AsciiString m_member08;
-	unsigned int m_word0c;
+	AsciiString m_name;
+	unsigned int m_nameKey;
 	AsciiString m_displayNameLabel;
 	AsciiString m_member14;
 	unsigned int m_buildTime;
@@ -57,8 +57,8 @@ private:
 UpgradeTemplate &UpgradeTemplate::operator=(const UpgradeTemplate &other)
 {
 	m_type = other.m_type;
-	m_member08 = other.m_member08;
-	m_word0c = other.m_word0c;
+	m_name = other.m_name;
+	m_nameKey = other.m_nameKey;
 	m_displayNameLabel = other.m_displayNameLabel;
 	m_member14 = other.m_member14;
 	m_buildTime = other.m_buildTime;
