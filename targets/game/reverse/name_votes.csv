@@ -6446,3 +6446,6 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|b,4842ac7deaf1d594f18e5ebf,claude-sonnet,20261109030604-e1d840,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|a,4e88dfece0e527a1eb3ee4ca,claude-sonnet,20261109030604-e1d840,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp|local|FormationBuild00245010::build|r,f0ad3060ad6cff204f6f6081,claude-sonnet,20261109030604-dbf205,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_08,7840a78df6be9653cc0b0e78,claude-sonnet,20261109030604-adf036,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_0C,d2c98fb61b320c827cef14e3,claude-sonnet,20261109030604-adf036,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_20,2939db8e731545af5e9ce55e,claude-sonnet,20261109030604-adf036,2026-11-09
