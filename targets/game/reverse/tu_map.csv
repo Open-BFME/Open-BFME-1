@@ -19462,7 +19462,7 @@ rva,size,kind,tu,confidence,by,evidence,source
 0x005D2C00,5,code,game/GameEngine/Source/GameClient/System/Image.cpp,approved,C,C=0x005D2BD0..0x005D2CD0,game/gen_small/thunks_037.cpp
 0x005D2C10,139,code,,displaced,-,Z=game/GameEngine/Source/GameLogic/Object/Locomotor.cpp S=game/GameEngine/Source/GameLogic/Object/Locomotor.cpp N=game/GameEngine/Source/GameLogic/Object/LocomotorStore.cpp,game/GameEngine/Source/GameLogic/Object/Locomotor.cpp
 0x005D2CC0,1,code,,displaced,-,S=game/GameEngine/Source/GameLogic/Object/Locomotor.cpp N=game/GameEngine/Source/GameLogic/Object/LocomotorStore.cpp,game/GameEngine/Source/GameLogic/Object/LocomotorStoreInit.cpp
-0x005D2CD0,1,code,game/GameEngine/Source/GameClient/System/Image.cpp,approved,C,C=0x005D2BD0..0x005D2CF0,game/GameEngine/Source/GameLogic/Object/LocomotorStoreResetEmpty.cpp
+0x005D2CD0,1,code,game/GameEngine/Source/GameClient/System/Image.cpp,approved,C,C=0x005D2BD0..0x005D2CF0,game/GameEngine/Source/GameClient/System/Image.cpp
 0x005D2CE0,1,code,,displaced,-,Z=game/GameEngine/Source/GameLogic/Object/Locomotor.cpp S=game/GameEngine/Source/GameLogic/Object/Locomotor.cpp N=game/GameEngine/Source/GameLogic/Object/LocomotorStore.cpp,game/GameEngine/Source/GameLogic/Object/Locomotor.cpp
 0x005D2CF0,84,code,game/GameEngine/Source/GameClient/System/Image.cpp,approved,Z,Z=game/GameEngine/Source/GameClient/System/Image.cpp S=game/GameEngine/Source/GameClient/System/Image.cpp N=game/GameEngine/Source/GameClient/System/ImageCollection.cpp,game/GameEngine/Source/GameClient/System/Image.cpp
 0x005D2D60,54,code,game/GameEngine/Source/GameClient/System/Image.cpp,approved,C,C=0x005D2CF0..0x005D2DF0,game/gen_small/tgrid_002.cpp

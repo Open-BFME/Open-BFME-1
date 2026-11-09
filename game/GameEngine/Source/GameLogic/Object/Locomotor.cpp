@@ -572,43 +572,11 @@ void LocomotorStore::update()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?reset@LocomotorStore@@UAEXXZ present-unmatched
-//
-// Retail's is one byte -- a bare ret. LocomotorStore's vtable is 0x01110104 and
-// its slot 4 points at 0x005D2CD0, which is an empty function sitting between
-// init at 0x005D2CC0 and update at 0x005D2CE0 in LocomotorStore's own code. The
-// slot order is not guessed: SubsystemLegend's own vtable has init at slot 1,
-// reset at slot 4 and update at slot 5, all three already matched by name, and
-// PlayerList and TeamFactory agree on slot 4.
-//
-// So BFME appears to have dropped the override cleanup below. That is a claim
-// about behaviour rather than about bytes, so the Zero Hour body stays here
-// unclaimed rather than being deleted to make a one-byte row match -- a bare ret
-// matches every empty function in the image and would prove nothing on its own.
-//
-// There is now a second, concrete reason not to empty it, found by trying. The
-// loop below is the only thing in this TU that instantiates
-// _Rb_tree_iterator<pair<const NameKeyType, LocomotorTemplate*>>, and its
-// constructor is a separate matched row attributed to this file. Emptying reset
-// stops that instantiation being emitted, so the one-byte row it would buy costs
-// a real one that is already verified. If reset is ever claimed, that row needs
-// somewhere else to live first.
-void LocomotorStore::reset()
-{
-	// cleanup overrides.
-	LocomotorTemplateMap::iterator it;
-	for (it = m_locomotorTemplates.begin(); it != m_locomotorTemplates.end(); ) {
-		Overridable *locoTemp = it->second->deleteOverrides();
-		if (!locoTemp)
-		{
-			m_locomotorTemplates.erase(it);
-		}
-		else
-		{
-			++it;
-		}
-	}
-}
+// ?reset@LocomotorStore@@UAEXXZ lives in LocomotorStore_reset.cpp: retail's
+// 123-byte override cleanup at 0x001B7160 (ILT 0x0004867B, ilt_oracle exact).
+// The one-byte slot at 0x005D2CD0 this comment once described is
+// ImageCollection::reset (identity_evidence/005d2cd0-reset-is-imagecollection.md).
+// The iterator constructor alias row this body instantiated is homed there too.
 
 //-------------------------------------------------------------------------------------------------
 // BFME's LocomotorTemplate is 0x140 bytes where the vendored class is 0xEC, and
