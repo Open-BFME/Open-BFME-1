@@ -145,9 +145,9 @@ void FormationBuild00245010::build( Int arg )
 	m_memberStates.reserve( total );
 
 	Coord2D jitter = data->m_jitter;
-	for ( UnsignedInt r = 0; r < ranks.size(); ++r )
+	for ( UnsignedInt rankIndex = 0; rankIndex < ranks.size(); ++rankIndex )
 	{
-		Rank00245010 *rank = ranks[ r ];
+		Rank00245010 *rank = ranks[ rankIndex ];
 		Int value = rank->field000;
 		const _STL::vector<Coord3D> &positions = rank->m_positions;
 		for ( UnsignedInt j = 0; j < positions.size(); ++j )
