@@ -136,14 +136,14 @@ struct Target0026DA00 {
     int field00; Template0026DA00* field04;
     char pad08[0x30]; Position0026DA00 field38;
     char pad44[0x30]; int m_id;
-    char pad78[0x174]; Tracker0026DA00* field1EC;
+    char pad78[0x174]; Tracker0026DA00* m_firingTracker;
     int getID() const { return m_id; }
     Interface0026DA00* interfacePtr() const { return (Interface0026DA00*)reinterpret_cast<const Object*>(this)->unidentified_001BFE20(); }
     void deadline(int n) { reinterpret_cast<Object*>(this)->rva001CE6F0(n); }
 };
 struct Data0026DA00 { char pad00[0x260]; int field260; bool field264; };
 class GameLogic { public:
-    char pad00[0x3c]; int field3C;
+    char pad00[0x3c]; int m_frame;
     Object* findObjectByID(int);
 };
 extern GameLogic* TheGameLogic;
@@ -166,7 +166,7 @@ public:
 void WeaponFireSpecialAbilityUpdate::triggerAbilityEffect() {
     Data0026DA00* data=field04;
     Target0026DA00* object=field08;
-    object->field1EC->cool(true);
+    object->m_firingTracker->cool(true);
     Target0026DA00* target=(Target0026DA00*)TheGameLogic->findObjectByID(fieldAC);
     int id=target ? target->getID() : 0;
     if(target) {
@@ -184,18 +184,18 @@ void WeaponFireSpecialAbilityUpdate::triggerAbilityEffect() {
         fieldE8->field08=object->getID();
         if(target) {
             fieldE8->fire(object,id,target,0);
-            if(object->field1EC) object->field1EC->fired(fieldE8,id,0,1);
+            if(object->m_firingTracker) object->m_firingTracker->fired(fieldE8,id,0,1);
         } else {
             if(!fieldB0.equal(Coord3D(0.0f,0.0f,0.0f)) && !data->field264) {
                 fieldE8->force(object,&fieldB0);
-                if(object->field1EC) object->field1EC->fired(fieldE8,0,&fieldB0,1);
+                if(object->m_firingTracker) object->m_firingTracker->fired(fieldE8,0,&fieldB0,1);
             } else {
                 const Position0026DA00* pos=&object->field38;
                 fieldE8->force(object,pos);
-                if(object->field1EC) object->field1EC->fired(fieldE8,0,pos,1);
+                if(object->m_firingTracker) object->m_firingTracker->fired(fieldE8,0,pos,1);
             }
         }
-        object->deadline(TheGameLogic->field3C+field04->field260);
+        object->deadline(TheGameLogic->m_frame+field04->field260);
     }
     finish();
     Power0026DA00* p=power();
