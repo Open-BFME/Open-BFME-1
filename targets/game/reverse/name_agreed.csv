@@ -2156,3 +2156,18 @@ game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeTagBV,m_commandType
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeEntryBV,m_msg,claude-sonnet+gpt-6.1-sol,blocked: hook: [row-on-other-identity] ?bfmeFindBV@NetCommandList@@QAEPAVNetCommandRef@@GEPAX@Z 0x00672FC0 | the body already carries ?findMessage@NetCommandLi,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeNextBV,m_next,claude-sonnet+gpt-6.1-sol,blocked: hook: [row-on-other-identity] ?bfmeFindBV@NetCommandList@@QAEPAVNetCommandRef@@GEPAX@Z 0x00672FC0 | the body already carries ?findMessage@NetCommandLi,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeListBV,m_first,claude-sonnet+gpt-6.1-sol,blocked: hook: [row-on-other-identity] ?bfmeFindBV@NetCommandList@@QAEPAVNetCommandRef@@GEPAX@Z 0x00672FC0 | the body already carries ?findMessage@NetCommandLi,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_04,m_attackRateX,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_08,m_attackRateY,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_0C,m_attackRateZ,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_10,m_decayRateX,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_14,m_decayRateY,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_18,m_decayRateZ,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_1C,m_peakColorX,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_20,m_peakColorY,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_24,m_peakColorZ,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_28,m_currentColorX,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_2C,m_currentColorY,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_30,m_currentColorZ,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_34,m_sustainCounter,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_38,m_envState,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00412140Ctor.cpp|member||m_39,m_affect,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
