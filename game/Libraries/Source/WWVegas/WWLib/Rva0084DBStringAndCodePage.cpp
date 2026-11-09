@@ -35,25 +35,25 @@ struct Rva0084D860CodePage
     unsigned int codePage;
 };
 
-struct Rva0084D860CpInfo
+struct CPINFO
 {
     unsigned int MaxCharSize;
     unsigned char remainder[16];
 };
 extern "C" {
-__declspec(dllimport) int __stdcall GetCPInfo(unsigned int, Rva0084D860CpInfo *);
+__declspec(dllimport) int __stdcall GetCPInfo(unsigned int, CPINFO *);
 }
 
 bool Rva0084D860IsSingleByte(const Rva0084D860CodePage *owner)
 {
-    Rva0084D860CpInfo info;
+    CPINFO info;
     GetCPInfo(owner->codePage, &info);
     return info.MaxCharSize == 1;
 }
 
 unsigned int Rva0084D820(const Rva0084D860CodePage *owner)
 {
-    Rva0084D860CpInfo info;
+    CPINFO info;
     if (GetCPInfo(owner->codePage, &info))
         return info.MaxCharSize;
     return 0;
