@@ -6236,3 +6236,6 @@ game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,11f6e5eb6d
 game/GameEngine/Source/GameLogic/Object/Rva001C0010GeometryPosition.cpp|member||m_rva001C0010_ac,d99bc7cdfc8f27fa1bb4f5e5,claude-sonnet,20261109012304-60a209,2026-11-09
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|local|compare|n,e476e4fa25fe76b7175a8cbb,claude-sonnet,20261109012304-be99f6,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva007FF250Base64Decode.cpp|function||rva007FF250Decode,d2710f4811c93b5cd4c362da,claude-sonnet,20261109012304-530858,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|type||Rva001D4010Template,cfae234ebc0d32568202a284,claude-sonnet,20261109012304-94f946,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|type||Rva001D4010Geometry,aae231586a9618b655726c1b,claude-sonnet,20261109012304-94f946,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|member||m_rva16c,953cec7bfa284b5dd4d543f2,claude-sonnet,20261109012304-94f946,2026-11-09
