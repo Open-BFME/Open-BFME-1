@@ -126,7 +126,7 @@ class Object { public:
 char pad000[0x7c]; int m_builderID;
 char pad080[0xbc-0x80]; float field0bc;
 char pad0c0[0x110-0xc0]; unsigned int flags[4];
-char pad120[0x200-0x120]; Body001FF5C0 *field200; AIUpdateInterface *field204;
+char pad120[0x200-0x120]; Body001FF5C0 *m_body; AIUpdateInterface *m_ai;
 char pad208[0x220-0x208]; union { float field220; unsigned int bits220; };
 void notifyModelConditionChanged(); void setBuilder(const Object *);
 __forceinline const Coord3D *position() const { return (const Coord3D *)((const char *)this+0x38); }
@@ -156,24 +156,24 @@ void rva001FF5C0();
 void GettingBuiltBehavior::rva001FF5C0()
 {
  Object *object=m_object;
- Body001FF5C0 *body=object->field200;
+ Body001FF5C0 *body=object->m_body;
  if(!body) return;
  Object *builder=TheGameLogic->findObjectByID(object->m_builderID);
  if ((secondary.slot28() || body->slot10() >= body->slot18()) &&
      (object->field220 >= 100.0f || object->bits220 == 0xbf800000)) {
   object->setBuilder(builder);
-  if(builder && builder->field204 && builder!=object) {
-   builder->field204->ignoreObstacle(object);
-   ((AICommandInterface *)((char *)builder->field204+0x20))->aiMoveToPosition(object->position(),CMD_FROM_AI);
+  if(builder && builder->m_ai && builder!=object) {
+   builder->m_ai->ignoreObstacle(object);
+   ((AICommandInterface *)((char *)builder->m_ai+0x20))->aiMoveToPosition(object->position(),CMD_FROM_AI);
    field30=true;
   }
   object->clear(0,8); object->clear(0,16); object->clear(2,4); object->clear(2,16); object->clear(2,8);
   if(secondary.slot14()) secondary.slot0c(0);
   field28=field04->field20; field33=true; field36=false;
- } else if(!field33 && !field30 && builder && builder!=object && builder->field204 && builder->field204->slot180()) {
+ } else if(!field33 && !field30 && builder && builder!=object && builder->m_ai && builder->m_ai->slot180()) {
   float radius=builder->field0bc*1.5f;
   if(((Gen_000ED3B0 *)object)->bfmeGapSq((Gen_000ED3B0 *)builder)>radius*radius) builder->set(3,8);
-  builder->field204->field1cc->bfmeGoD820(builder,object->position(),0);
+  builder->m_ai->field1cc->bfmeGoD820(builder,object->position(),0);
  }
 }
 
