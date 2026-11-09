@@ -123,7 +123,7 @@ public:
 struct Rva00173FB0FrameView
 {
 	unsigned char m_pad00[0x3c];
-	UnsignedInt m_field3c;
+	UnsignedInt m_frame;
 };
 
 extern GameLogic *TheGameLogic;
@@ -193,7 +193,7 @@ StateReturnType AIFearState::update()
 		if ((goal->m_privateStatus & 1) != 0)
 			return (StateReturnType)-1;
 
-		UnsignedInt currentFrame = ((Rva00173FB0FrameView *)TheGameLogic)->m_field3c;
+		UnsignedInt currentFrame = ((Rva00173FB0FrameView *)TheGameLogic)->m_frame;
 		if (currentFrame > m_field5c)
 			return (StateReturnType)-1;
 
@@ -242,7 +242,7 @@ StateReturnType AIFearState::update()
 		if (ai->m_flag332)
 		{
 			UnsignedInt delay = ai->m_field04->m_field38 >> 2;
-			UnsignedInt frame = ((Rva00173FB0FrameView *)TheGameLogic)->m_field3c;
+			UnsignedInt frame = ((Rva00173FB0FrameView *)TheGameLogic)->m_frame;
 			m_field5c = frame + delay;
 		}
 		else
@@ -250,7 +250,7 @@ StateReturnType AIFearState::update()
 			Rva00173FB0ConfigView *config = ai->m_field04;
 			int high = config->m_field34;
 			int low = config->m_field38;
-			UnsignedInt frame = ((Rva00173FB0FrameView *)TheGameLogic)->m_field3c;
+			UnsignedInt frame = ((Rva00173FB0FrameView *)TheGameLogic)->m_frame;
 			m_field5c = frame + GetGameLogicRandomValue(
 				low,
 				high,
