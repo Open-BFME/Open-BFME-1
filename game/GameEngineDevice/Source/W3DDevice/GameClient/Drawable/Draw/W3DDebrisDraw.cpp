@@ -149,7 +149,7 @@ void W3DDebrisDraw::setFullyObscuredByShroud(Bool fullyObscured)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-void W3DDebrisDraw::setModelName(AsciiString name, Color color, ShadowType t)
+void W3DDebrisDraw::setModelName(AsciiString name, Color color, ShadowType shadowType)
 {
   if (m_renderObject == NULL && !name.isEmpty())
 	{
@@ -174,11 +174,11 @@ void W3DDebrisDraw::setModelName(AsciiString name, Color color, ShadowType t)
 			reinterpret_cast<BfmeRenderObjectView *>(m_renderObject)->setTransform(transform);
 		}
 		
-		if (t != SHADOW_NONE)
+		if (shadowType != SHADOW_NONE)
 		{
 			shadowInfo.m_unmodelled9c = 20.0f;
 			shadowInfo.m_unmodelleda0 = false;
-			shadowInfo.m_type = t;
+			shadowInfo.m_type = shadowType;
 			shadowInfo.m_sizeX=0;
 			shadowInfo.m_sizeY=0;
 			shadowInfo.m_unmodelled98 = 0.0f;
@@ -238,11 +238,11 @@ void W3DDebrisDraw::setAnimNames(AsciiString initial, AsciiString flying, AsciiS
 }
 
 //-------------------------------------------------------------------------------------------------
-static Bool isAnimationComplete(RenderObjClass* r)
+static Bool isAnimationComplete(RenderObjClass* renderObject)
 {
-	if (r->Class_ID() == RenderObjClass::CLASSID_HLOD)
+	if (renderObject->Class_ID() == RenderObjClass::CLASSID_HLOD)
 	{
-		HLodClass *hlod = (HLodClass*)r;
+		HLodClass *hlod = (HLodClass*)renderObject;
 		return hlod->Is_Animation_Complete();
 	}
 
