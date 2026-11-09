@@ -35,15 +35,15 @@ public:
     SLOT(30) SLOT(34) SLOT(38) SLOT(3C) SLOTS40_5C SLOT(60) SLOT(64)
     virtual unsigned int slot68();
 };
-class Contain007629F0 {
+class ContainModuleInterface {
 public:
     SLOTS00_1C SLOTS20_3C SLOTS40_5C SLOTS60_7C SLOTS80_9C
     virtual bool slotA0();
 };
 struct ObjectFields007629F0 {
     char unknown00[0x1FC];
-    Contain007629F0 *m_contain;
-    Contain007629F0 *contain() const { return m_contain; }
+    ContainModuleInterface *m_contain;
+    ContainModuleInterface *contain() const { return m_contain; }
     char unknown200[0x20];
     float value220;
     float buildRate() { return reinterpret_cast<BfmeHostYA *>(this)->bfmeGetYA(); }
@@ -58,14 +58,14 @@ extern GameEngine *TheGameEngine;
 extern int AttachmentFailures007629F0;
 void stepAngleToward(float *, float);
 struct State007629F0 { char unknown00[0x38]; unsigned flags38; };
-struct Data007629F0 { char unknown00[0x40]; AsciiString AttachToBoneInAnotherModule; };
+struct W3DModelDrawModuleData { char unknown00[0x40]; AsciiString AttachToBoneInAnotherModule; };
 class AttachmentTransform007629F0 {
 public:
     void adjust(Matrix3D &);
     bool angle0075F210(float *); // Independent full helper: ECX input; ret4; AL success; writes *arg at +146.
     char unknown00[4];
-    const Data007629F0 *data04;
-    Drawable *drawable08;
+    const W3DModelDrawModuleData *m_moduleData;
+    Drawable *m_drawable;
     char unknown0C[8];
     State007629F0 *m_curState;
     char unknown18[0x70-0x18];
@@ -106,10 +106,10 @@ void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
             if (AttachmentFailures007629F0 < 100) ++AttachmentFailures007629F0;
         }
     }
-    const Data007629F0 *d = data04;
+    const W3DModelDrawModuleData *d = m_moduleData;
     if (d->AttachToBoneInAnotherModule.isNotEmpty()) {
         Matrix3D boneMtx;
-        if (drawable08->getCurrentWorldspaceClientBonePositions(d->AttachToBoneInAnotherModule.str(), boneMtx))
+        if (m_drawable->getCurrentWorldspaceClientBonePositions(d->AttachToBoneInAnotherModule.str(), boneMtx))
             mtx = boneMtx;
     }
     if (blend264 < 1.0f) {
@@ -124,7 +124,7 @@ void AttachmentTransform007629F0::adjust(Matrix3D &mtx)
         frame268 = ~0u;
     }
     if (m_curState && (m_curState->flags38 & 8)) {
-        ObjectFields007629F0 *object = drawable08->m_object;
+        ObjectFields007629F0 *object = m_drawable->m_object;
         if (object) {
             if (TheGameEngine->mode30 == 1) value20C = object->value220;
             if (value20C >= 0.0f) {
