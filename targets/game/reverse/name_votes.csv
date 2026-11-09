@@ -7087,3 +7087,8 @@ game/GameEngine/Source/Common/BfmeConv1112.cpp|member||m_bfme144,94ca81b628dc284
 game/GameEngine/Source/Common/BfmeConv1112.cpp|member||m_bfme150,7c8d0a292ae754c4d95855ed,claude-sonnet,20261109064610-479711,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1112.cpp|function|BfmeV1112@|bfmeGo1112A,484c7d5240a1573b9fd29857,claude-sonnet,20261109064610-479711,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Collide/AODCrushCollideModuleDataConstructor.cpp|type||BfmeCollideModuleDataBase,122177f776815a1cee3509bb,claude-sonnet,20261109065709-60de4f,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|type||Refresh0023FA80AI,ee2315d006f4c85c20f2d05c,claude-sonnet,20261109065709-6f5ac1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|type||Refresh0023FA80Pathfinder,af979b112a0b5baadec98536,claude-sonnet,20261109065709-6f5ac1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at110,36d523e75cccdbd4b20f1ad9,claude-sonnet,20261109065709-6f5ac1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at204,b54d83b0c1f200984fcb7705,claude-sonnet,20261109065709-6f5ac1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at03c,8d3ca71cb077647df223a5e1,claude-sonnet,20261109065709-6f5ac1,2026-11-09
