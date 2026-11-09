@@ -11,7 +11,7 @@ extern void * (*Rva008C5D70Alloc)(unsigned int bytes);
 class BfmeRefBC
 {
 public:
-	int m_bfmeRefs;						// +0x00
+	int m_refCount;						// +0x00
 };
 
 class BfmeNodeBC
@@ -27,13 +27,13 @@ public:
 		m_bfmeValue = value;
 
 		if (value)
-			++value->m_bfmeRefs;
+			++value->m_refCount;
 
-		m_bfmeNext = 0;
+		m_next = 0;
 	}
 
 	BfmeRefBC *m_bfmeValue;					// +0x00
-	BfmeNodeBC *m_bfmeNext;					// +0x04
+	BfmeNodeBC *m_next;					// +0x04
 };
 
 class Gen_00896500
@@ -42,7 +42,7 @@ public:
 	void bfmePush(BfmeRefBC **value);
 
 private:
-	BfmeNodeBC *m_bfmeHead;					// +0x00
+	BfmeNodeBC *m_head;					// +0x00
 };
 
 // ?bfmePush@Gen_00896500@@QAEXPAPAVBfmeRefBC@@@Z
@@ -50,7 +50,7 @@ void Gen_00896500::bfmePush(BfmeRefBC **value)
 {
 	BfmeNodeBC *node = new BfmeNodeBC(*value);
 
-	node->m_bfmeNext = m_bfmeHead;
+	node->m_next = m_head;
 
-	m_bfmeHead = node;
+	m_head = node;
 }
