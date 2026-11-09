@@ -6432,3 +6432,7 @@ game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::re
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::setValue|p,bccff60ffcb4da4264fec530,claude-sonnet,20261109030604-f1abe5,2026-11-09
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00808C80Owner::find|p,084d2541b8b357f9c4c48635,claude-sonnet,20261109030604-f1abe5,2026-11-09
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00808E60Owner::find|p,0c01da0fde51158d76de6d72,claude-sonnet,20261109030604-f1abe5,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::getName|m,fd326d2a95254c9e40361ba9,claude-sonnet,20261109030604-8b75bb,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::findMapping|m,5ceda60ab0cc32fc4818120e,claude-sonnet,20261109030604-8b75bb,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::read|m,cd7fd3c72696bb01e3457037,claude-sonnet,20261109030604-8b75bb,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::write|m,5d0a706ec6615ab6352b0739,claude-sonnet,20261109030604-8b75bb,2026-11-09
