@@ -6857,3 +6857,7 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThun
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNext,f2560ffc74b55341cf2518a6,claude-sonnet,20261109055538-ef1d51,2026-11-09
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmePrev,99477610ee12bab2bf51855a,claude-sonnet,20261109055538-ef1d51,2026-11-09
 game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNode,60c90db15a1946eee13a1612,claude-sonnet,20261109055538-ef1d51,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1010.cpp|type||BfmeA1010,5109fb9adbb7f245f9597ac4,claude-sonnet,20261109055538-b91e03,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1010.cpp|type||BfmeHeld1010,fcc041831e058269d7aeb669,claude-sonnet,20261109055538-b91e03,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeNext,bb5ef7bce5a8eb267c4b52b8,claude-sonnet,20261109055538-b91e03,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeList,127b0d82993b519f4d14d6a6,claude-sonnet,20261109055538-b91e03,2026-11-09
