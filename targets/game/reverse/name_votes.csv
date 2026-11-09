@@ -6528,3 +6528,4 @@ game/GameEngine/Source/Common/StateMachineCtorThunk.cpp|member||m_slot41,269c330
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|type||BfmeWorldHeightMap,73a6c7e83a57db9af374fe65,claude-sonnet,20261109040012-fbb91f,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeBorderSize,004a09e3b54f2bbf969ed8f2,claude-sonnet,20261109040012-fbb91f,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeMap,5274d40bc044a425bf7784d5,claude-sonnet,20261109040012-fbb91f,2026-11-09
+game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cpp|function||Rva003B88F0ParseAnimObjectUpdate,1b2e6f1419537422527d191f,claude-sonnet,20261109035219-96b97b,2026-11-09
