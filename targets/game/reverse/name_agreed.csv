@@ -2808,3 +2808,4 @@ game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_me
 game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_word0c,m_nameKey,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_member08,m_name,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_word0c,m_nameKey,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme/Rva006D51B0Ctor.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
