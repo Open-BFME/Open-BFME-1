@@ -22140,5 +22140,35 @@
   "after_sha256": "9bc83ec4ef0d0799d9ae05d2474ac29c272663a1d6f23ca8c0e6587ac96fc242",
   "evidence": "targets/game/reverse/identity_evidence/0x001edca0-autoability-update.md",
   "reason": "The landed source adopts the name dir32_addresses.csv records for the vtable at VA 0x010956B0 (??_7BfmeObjEQT@@6B@), which the DIR32 gate requires; ObjectFilter010956B0 was an attempt-local address label with no ledger record"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter.cpp",
+  "old_name": "m_unreconstructed_04",
+  "new_name": "m_pad004",
+  "before_sha256": "05a44e6a687f5c067b4630a40bb3b51496622816e383c71f9f99129c06e3ed63",
+  "after_sha256": "6e8ed8cd16dc08c530a50a5273e206a72ed47a6b4236b079ba0ef6fad095c7ef",
+  "evidence": "targets/game/reverse/identity_evidence/aimoveanddelete-onenter-thunk-removed.md",
+  "reason": "Deleted duplicate lift paired with the verified owner: the placeholder layout pad views vanished with the file, no descriptive name was lost"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter.cpp",
+  "old_name": "m_unreconstructed_20",
+  "new_name": "m_pad020",
+  "before_sha256": "05a44e6a687f5c067b4630a40bb3b51496622816e383c71f9f99129c06e3ed63",
+  "after_sha256": "6e8ed8cd16dc08c530a50a5273e206a72ed47a6b4236b079ba0ef6fad095c7ef",
+  "evidence": "targets/game/reverse/identity_evidence/aimoveanddelete-onenter-thunk-removed.md",
+  "reason": "Deleted duplicate lift paired with the verified owner: the placeholder layout pad views vanished with the file, no descriptive name was lost"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter_Thunk.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIMoveAndDeleteState_onEnter.cpp",
+  "old_name": "m_unreconstructed_30",
+  "new_name": "m_pad030",
+  "before_sha256": "05a44e6a687f5c067b4630a40bb3b51496622816e383c71f9f99129c06e3ed63",
+  "after_sha256": "6e8ed8cd16dc08c530a50a5273e206a72ed47a6b4236b079ba0ef6fad095c7ef",
+  "evidence": "targets/game/reverse/identity_evidence/aimoveanddelete-onenter-thunk-removed.md",
+  "reason": "Deleted duplicate lift paired with the verified owner: the placeholder layout pad views vanished with the file, no descriptive name was lost"
  }
 ]
