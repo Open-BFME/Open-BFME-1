@@ -1940,3 +1940,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|m
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30A8,m_waypointBuffer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30B0,m_bridgeBuffer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30BC,m_taintBuffer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.cpp|member||field200,m_body,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.cpp|member||field204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
