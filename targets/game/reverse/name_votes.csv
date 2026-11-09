@@ -7671,3 +7671,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp|member||m_bfmeNext,c1f42d80fbc79a186c7d26ab,claude-sonnet,20261109101428-1dd450,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp|member||m_bfmeMembers,f6dbd56ad6f8c7fcdd31b2a4,claude-sonnet,20261109101428-1dd450,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_006CC000_TerrainBit.cpp|type||Gen_006CC000Terrain,d9a49a85b611006ddc5f7f46,claude-sonnet,20261109101428-84659a,2026-11-09
+game/GameEngine/Source/GameClient/GUI/AptMainMenuCredits.cpp|member||m_flag59,1425c536134303934a93f141,claude-sonnet,20261109101428-da0011,2026-11-09
