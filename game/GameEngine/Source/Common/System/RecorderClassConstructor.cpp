@@ -16,11 +16,11 @@
 // nulled members cannot throw: the compiler only writes the state where a call
 // follows, and by then those two are already accounted for.
 
-class BfmeRecorderStore
+class ReplayGameInfo
 {
 public:
-	BfmeRecorderStore();					// ILT 0x00016D47
-	~BfmeRecorderStore();
+	ReplayGameInfo();					// ILT 0x00016D47
+	~ReplayGameInfo();
 
 private:
 	// ReplayGameInfo is 0x278 bytes in this image: a 0x58-byte GameInfo
@@ -125,17 +125,17 @@ private:
 	void bfmeInit(void);					// ILT 0x0000B721
 
 	char m_bfmeHeadA[0x0C - 0x08];
-	void *m_bfmeFile;						// +0x0C
-	AsciiString m_bfmeFileName;				// +0x10
-	int m_bfmeCurrentFilePosition;				// +0x14
-	int m_bfmeMode;						// +0x18
+	void *m_file;						// +0x0C
+	AsciiString m_fileName;				// +0x10
+	int m_currentFilePosition;				// +0x14
+	int m_mode;						// +0x18
 	AsciiString m_bfmeCurrentReplayFilename;			// +0x1C
-	BfmeRecorderStore m_bfmeGameInfo;				// +0x20
+	ReplayGameInfo m_gameInfo;				// +0x20
 	int m_bfmeNetworkCrcInterval;				// +0x298
-	int m_bfmeOriginalGameMode;				// +0x29C
-	int m_bfmeNextFrame;					// +0x2A0
+	int m_originalGameMode;				// +0x29C
+	int m_nextFrame;					// +0x2A0
 	int m_bfmeSeedOrDesync;					// +0x2A4
-	unsigned char m_bfmeDoingAnalysis;				// +0x2A8
+	unsigned char m_doingAnalysis;				// +0x2A8
 	char m_bfmeModePadding[0x2AC - 0x2A9];
 	int m_bfmeGameMode;					// +0x2AC
 	int m_bfme2B0;						// +0x2B0
@@ -156,12 +156,12 @@ void RecorderClass::bfmeInit(void)
 	// the embedded ReplayGameInfo before selecting the pending map (or the
 	// current map when no pending map is present).
 	m_bfmeGameMode = 8;
-	m_bfmeMode = 2;
-	m_bfmeFile = 0;
-	static_cast<StringBase<char> &>(m_bfmeFileName).clear();
+	m_mode = 2;
+	m_file = 0;
+	static_cast<StringBase<char> &>(m_fileName).clear();
 
-	GameInfo *gameInfo = reinterpret_cast<GameInfo *>(&m_bfmeGameInfo);
-	m_bfmeCurrentFilePosition = 0;
+	GameInfo *gameInfo = reinterpret_cast<GameInfo *>(&m_gameInfo);
+	m_currentFilePosition = 0;
 	gameInfo->clearSlotList();
 	gameInfo->reset();
 
@@ -181,9 +181,9 @@ void RecorderClass::bfmeInit(void)
 	seed.integer = Rva00096A50Get();
 	seedView->setOptimalExtrusionPadding(seed.real);
 
-	m_bfmeOriginalGameMode = -1;
+	m_originalGameMode = -1;
 	m_bfmeNetworkCrcInterval = NET_CRC_INTERVAL;
-	m_bfmeNextFrame = 0;
-	m_bfmeDoingAnalysis = 0;
+	m_nextFrame = 0;
+	m_doingAnalysis = 0;
 	m_bfmeSeedOrDesync = -1;
 }
