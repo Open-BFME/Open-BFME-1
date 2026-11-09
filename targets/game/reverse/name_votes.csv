@@ -7422,3 +7422,5 @@ game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|member||m_field3c,e06
 game/GameEngine/Source/Common/BfmeConv1240.cpp|member||m_bfme00,3088f2dbe64ae8cce506208f,claude-sonnet,20261109082606-1e2cad,2026-11-09
 game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchSaveOptions.cpp|function|BfmeAptScreenOnlineQuickMatch@|rva005585B0SaveOptions,e33aca24df3990e6ccc07476,claude-sonnet,20261109082606-b28436,2026-11-09
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,e83b07ad487ad5ae86397ee2,claude-sonnet,20261109083007-de40be,2026-11-09
+game/GameEngine/Source/GameClient/System/CampaignManager_setCampaignAndMissionThunk.cpp|param|compare|s,b1da33d6288ab908f33332d5,claude-sonnet,20261109083453-5b18b4,2026-11-09
+game/GameEngine/Source/GameClient/System/CampaignManager_setCampaignAndMissionThunk.cpp|local|compare|n,459015a78fc2a332c8c98c80,claude-sonnet,20261109083453-5b18b4,2026-11-09
