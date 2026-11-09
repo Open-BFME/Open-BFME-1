@@ -7812,3 +7812,4 @@ game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme28cJT,879c5b5abd4f9
 game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme290JT,c7301fffd6b267d2e2e04c77,claude-sonnet,20261109113424-4f497a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|a,146b7c650b31a86ec24244a8,claude-sonnet,20261109113925-e90e5c,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|b,94e2a8324e81f2b2738ba79a,claude-sonnet,20261109113925-e90e5c,2026-11-09
+game/GameEngine/Source/Common/Rva008A0FF0ValueStackReleaseAll.cpp|local|Rva008A0FF0ValueStack::releaseAll|n,4ffc1513e3396f4e2eeebc8e,claude-sonnet,20261109113928-fd15c2,2026-11-09
