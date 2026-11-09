@@ -35,8 +35,8 @@ public:
  int m_enemyCount,m_allyCount;
  Object *m_cached;bool m_tested;
 };
-Rva010BE170::Rva010BE170(EmotionTrackerUpdate *m):m_module(m),m_cached(0),m_tested(false){
- m_object=reinterpret_cast<Rva0028F2A0TrackerView *>(m)->m_object;
+Rva010BE170::Rva010BE170(EmotionTrackerUpdate *module):m_module(module),m_cached(0),m_tested(false){
+ m_object=reinterpret_cast<Rva0028F2A0TrackerView *>(module)->m_object;
  m_enemyCount=0;m_allyCount=0;
  m_player=m_object?m_object->getControllingPlayer():0;
  if(m_player){
