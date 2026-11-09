@@ -74,9 +74,14 @@ void W3DTerrainLogic::reset( void )
 	WorldHeightMap::freeListOfMapObjects();
 }  // end reset
 
+// Retail tail-jumps to ILT 0x0004568D, which the ledger defines as ?j_0004568d@@YAXXZ.
+extern void j_0004568d();
+typedef void (TerrainLogic::*TerrainLogicUpdateIlt)(void);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 //-------------------------------------------------------------------------------------------------
 // ?update@W3DTerrainLogic@@UAEXXZ (retail 0x006BE180)
 void W3DTerrainLogic::update( void )
 {
-	TerrainLogic::update();
+	(this->*iltMemberCall<TerrainLogicUpdateIlt>(j_0004568d))();
 }  // end update
