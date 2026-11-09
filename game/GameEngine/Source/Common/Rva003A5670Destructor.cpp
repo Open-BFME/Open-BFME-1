@@ -6,7 +6,7 @@
 
 #include "System/snapshot.h"
 
-extern int g_010EC738;
+extern "C" int __identifier("?g_OwnerBaseVftable@@3PAPAXA")[];
 
 // Direct destructor ABI through the existing address-derived ILT pin.
 class Gen_dtor_003a3d90
@@ -80,7 +80,7 @@ public:
 Rva003A5670Owner::~Rva003A5670Owner()
 {
     // Install the dispatch table already recorded for the constructor.
-    *reinterpret_cast<void **>(this) = &g_010EC738;
+    *reinterpret_cast<void **>(this) = __identifier("?g_OwnerBaseVftable@@3PAPAXA");
     for (unsigned int i = 0; i < m_at48.size(); ++i)
     {
         Gen_dtor_003a3d90 *item = m_at48[i];

@@ -1,6 +1,18 @@
 // cl: /O2 /Ob0
 
-extern int g_010EC738;
+void j_00032f24();
+void j_00018764();
+void j_0002b9f4();
+void j_00003ec7();
+
+// Retail VA010EC738: four existing ILT entries (vtable_lookup.py), the vftable installed by
+// the 0x003A5450 constructor and the 0x003A5670 destructor.
+void *g_OwnerBaseVftable[4] = {
+	reinterpret_cast<void *>(&j_00032f24),
+	reinterpret_cast<void *>(&j_00018764),
+	reinterpret_cast<void *>(&j_0002b9f4),
+	reinterpret_cast<void *>(&j_00003ec7),
+};
 
 class Rva003A5450
 {
@@ -35,7 +47,7 @@ public:
 
 Rva003A5450::Rva003A5450()
 {
-	m_00 = &g_010EC738;
+	m_00 = g_OwnerBaseVftable;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
