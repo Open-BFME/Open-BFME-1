@@ -6355,3 +6355,4 @@ game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeSink,7a9a5d7f8f71127
 game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|x,e98ea918a3aa142d51508d7e,claude-sonnet,20261109023201-e56659,2026-11-09
 game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|s,ad340362354306e7820e3917,claude-sonnet,20261109023201-e56659,2026-11-09
 game/GameEngine/Source/GameLogic/Map/BfmeHostBJXfer.cpp|param|BfmeHostBJ::xfer|x,a32c11c945786c78ff244879,claude-sonnet,20261109023201-fa92c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehavior_update.cpp|member||m_field220,da9074f83d8467ecc969a4b9,claude-sonnet,20261109022708-25f18c,2026-11-09
