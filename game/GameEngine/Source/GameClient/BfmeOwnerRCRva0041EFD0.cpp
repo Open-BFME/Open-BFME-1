@@ -54,7 +54,7 @@ public:
 	unsigned char m_bfmeHeadRC[4];
 	Overridable *m_bfmeInnerRC;
 	unsigned char m_bfmeGapRC[0x68];
-	int m_bfmeKindRC;
+	int m_appearance;
 };
 
 class BfmeHolderRC
@@ -71,20 +71,20 @@ public:
 	BfmeThingRC *m_bfmeThingRC;
 };
 
-class BfmeStateRC
+class AIUpdateInterface
 {
 public:
 	unsigned char m_bfmeHeadRC[0x1cc];
-	BfmeHolderRC *m_bfmeHolderRC;
+	BfmeHolderRC *m_curLocomotor;
 };
 
 class BfmeUnitRC
 {
 public:
-	BfmeStateRC *getStateRC() const { return m_bfmeStateRC; }
+	AIUpdateInterface *getStateRC() const { return m_ai; }
 
 	unsigned char m_bfmeHeadRC[0x204];
-	BfmeStateRC *m_bfmeStateRC;
+	AIUpdateInterface *m_ai;
 };
 
 class BfmeOwnerRC
@@ -101,15 +101,15 @@ public:
 char BfmeOwnerRC::Rva0041EFD0(void *first, void *second)
 {
 	BfmeUnitRC *unit = m_bfmeUnitRC;
-	BfmeStateRC *state = unit ? unit->getStateRC() : 0;
+	AIUpdateInterface *state = unit ? unit->getStateRC() : 0;
 
 	if (state)
 	{
-		BfmeHolderRC *holder = state->m_bfmeHolderRC;
+		BfmeHolderRC *holder = state->m_curLocomotor;
 
 		if (holder)
 		{
-			if (holder->getThingRC()->m_bfmeKindRC == 1)
+			if (holder->getThingRC()->m_appearance == 1)
 			{
 				const Coord3D *a = ((const BFMERopeDrawable *)this)->getPosition();
 				const Coord3D *b = ((const Thing *)this)->getUnitDirectionVector2D();
