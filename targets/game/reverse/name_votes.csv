@@ -7736,3 +7736,7 @@ game/GameEngine/Source/Common/Rva006995F0Attenuate.cpp|local|Rva006995F0Owner::a
 game/GameEngine/Source/Common/Rva006995F0Attenuate.cpp|local|Rva006995F0Owner::attenuate|z,5f308f6157314f909284d7d8,claude-sonnet,20261109104528-176b6d,2026-11-09
 game/GameEngine/Source/GameLogic/Map/FootprintIterator001A1460.cpp|local|FootprintIterator001A1460::FootprintIterator001A1460|c,bf72f45f27b577eb7107b08c,claude-sonnet,20261109104823-b88f35,2026-11-09
 game/GameEngine/Source/GameLogic/Map/FootprintIterator001A1460.cpp|local|FootprintIterator001A1460::FootprintIterator001A1460|s,e448e7065832028b103330c0,claude-sonnet,20261109104823-b88f35,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field2428,a78628025bd0cb8efac321e6,claude-sonnet,20261109104845-52f8d4,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field2429,a44beade5b3af2d1b62f3f37,claude-sonnet,20261109104845-52f8d4,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field242c,cf5cdade141ecd6e8b1380ef,claude-sonnet,20261109104845-52f8d4,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field2430,3625e676f6b265a0cc630737,claude-sonnet,20261109104845-52f8d4,2026-11-09
