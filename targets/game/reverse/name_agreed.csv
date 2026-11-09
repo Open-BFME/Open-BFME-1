@@ -2070,3 +2070,10 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170A8,m_firstUpdate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170AC,m_currentPlayer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17620,m_gameDifficulty,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_1708C,m_callingTeam,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17090,m_callingObject,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17094,m_conditionTeam,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17098,m_conditionObject,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170A8,m_firstUpdate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_170AC,m_currentPlayer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17620,m_gameDifficulty,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

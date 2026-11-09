@@ -137,7 +137,7 @@ protected:
 	virtual void xfer(Xfer *xfer);
 	virtual void loadPostProcess();
 
-	void setGlobalDifficulty(int difficulty) { m_17620 = difficulty; }
+	void setGlobalDifficulty(int difficulty) { m_gameDifficulty = difficulty; }
 
 	_STL::vector<SequentialScript *> m_sequentialScripts;             // +0x0C
 	int m_00018;
@@ -153,13 +153,13 @@ protected:
 	int m_17080;
 	int m_17084;
 	AsciiString m_17088;
-	int m_1708C;
-	int m_17090;
-	int m_17094;
-	int m_17098;
+	int m_callingTeam;
+	int m_callingObject;
+	int m_conditionTeam;
+	int m_conditionObject;
 	_STL::vector<_STL::pair<AsciiString, ObjectID> > m_1709C;
-	bool m_170A8;
-	int m_170AC;
+	bool m_firstUpdate;
+	int m_currentPlayer;
 	int m_170B0;
 	int m_170B4;
 	bool m_170B8;
@@ -187,7 +187,7 @@ protected:
 	Rva00347E60PointerPair m_namedReveals;                     // +0x175F8
 	void *m_17600;                                    // +0x17600
 	BreezeInfo m_breezeInfo;                                          // +0x17604
-	int m_17620;
+	int m_gameDifficulty;
 	bool m_17624;
 	_STL::vector<ObjectTypes *> m_17628;
 	bool m_objectsShouldReceiveDifficultyBonus;                       // +0x17634
@@ -212,12 +212,12 @@ ScriptEngine::ScriptEngine()
 	  m_numAttackInfo(0),
 	  m_17080(0),
 	  m_17084(0),
-	  m_1708C(0),
-	  m_17090(0),
-	  m_17094(0),
-	  m_17098(0),
-	  m_170A8(true),
-	  m_170AC(0),
+	  m_callingTeam(0),
+	  m_callingObject(0),
+	  m_conditionTeam(0),
+	  m_conditionObject(0),
+	  m_firstUpdate(true),
+	  m_currentPlayer(0),
 	  m_170B0(0),
 	  m_170B4(0),
 	  m_170B8(false),
