@@ -6350,3 +6350,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||R
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590Parameter,88c1231e99c94bbbc785c492,claude-sonnet,20261109022705-4e3d00,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590ScriptActions,4f3c95f9658c8a6a37519a1e,claude-sonnet,20261109022705-4e3d00,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|member||value08,45768a4d1be322c4f3ecdcf8,claude-sonnet,20261109022705-4e3d00,2026-11-09
+game/GameEngine/Source/Common/Rva006F8340Init.cpp|type||Rva006F8340String,6cd26dc8eaebc78db926b2a6,claude-sonnet,20261109022705-78071a,2026-11-09

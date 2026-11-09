@@ -1343,3 +1343,4 @@ game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|type||BfmeEvacuateContai
 game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_contain1FC,m_contain,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_effectivelyDead344,m_privateStatus,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590Player,Player,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva006F8340Init.cpp|type||Rva006F8340String,AsciiString,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
