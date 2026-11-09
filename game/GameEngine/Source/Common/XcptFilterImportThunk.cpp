@@ -7,7 +7,7 @@
 // the leading underscore.
 extern "C" int (__cdecl *__identifier("_imp___XcptFilter"))(unsigned long code, void *info);
 
-extern "C" int __cdecl _XcptFilter(unsigned long code, void *info)
+int __cdecl Rva009F7EEC_XcptFilter(unsigned long code, void *info)
 {
 	return __identifier("_imp___XcptFilter")(code, info);
 }

@@ -22100,5 +22100,25 @@
   "after_sha256": "f01f4a9351a51e61e8baa951383c3e90a5e364d5a88b50397779e1d9d4d6393b",
   "evidence": "targets/game/reverse/identity_evidence/01338480-bfmeobjdae-respell.md",
   "reason": "The descriptive identifier remains a source alias. Both link spellings are recorded at VA 0x01338480, where only _bfmeObjDAE is defined."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/XcptFilterImportThunk.cpp",
+  "new_path": "game/GameEngine/Source/Common/XcptFilterImportThunk.cpp",
+  "old_name": "_XcptFilter",
+  "new_name": "Rva009F7EEC_XcptFilter",
+  "before_sha256": "6122b1d0372e2c5f482978e5604070241fd40c8a1bf929c1e74b19567fa155f0",
+  "after_sha256": "536080414e7cf6b7350970bfb8ee4bee8e744e613016988951abe9f9042e735c",
+  "evidence": "targets/game/reverse/identity_evidence/009f7eec-import-stub.md",
+  "reason": "_XcptFilter is the import library's own call stub for this import; the TU's definition of the same name collides with it (LNK2005), so the body at 0x009F7EEC keeps its bytes under an address-owned name."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "_XcptFilter",
+  "new_name": "Rva009F7EEC_XcptFilter",
+  "before_sha256": "8a409ccba572a36255359c0bab661c9d18a43addb6f5420743d727a82388e23a",
+  "after_sha256": "3f2efe8ac43db47bab0e10e94f89ce9b53ae1b06ec6faa3e37b2eaa33a05b1bb",
+  "evidence": "targets/game/reverse/identity_evidence/009f7eec-import-stub.md",
+  "reason": "_XcptFilter is the import library's own call stub for this import; the TU's definition of the same name collides with it (LNK2005), so the ledger row at 0x009F7EEC keeps its bytes under an address-owned name."
  }
 ]
