@@ -1392,3 +1392,6 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00243EA0.cpp|type||Pathfinder00243EA0,Pathfinder,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Template,ThingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Drawable,Drawable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,m_count,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,m_host,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,m_buffer,claude-sonnet+gpt-6-astra,agreed,2026-11-09

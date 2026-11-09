@@ -6368,3 +6368,6 @@ game/GameEngine/Source/Common/BfmeConv980.cpp|member||m_bfmeMgr,228efef88a842e9d
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Template,c5cb54841c9ee708e118535d,claude-sonnet,20261109023530-fd2eea,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Drawable,9691d27649ef7027cef5a28b,claude-sonnet,20261109023530-fd2eea,2026-11-09
 game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeMode,09f0456155a36736ca6e83be,claude-sonnet,20261109023530-500c5c,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,1ca1bda91dfe972369b4cbe2,claude-sonnet,20261109024225-ff2729,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,e25535e06fa878c96490aa40,claude-sonnet,20261109024225-ff2729,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,263cadf80a2cce937bd9b4ec,claude-sonnet,20261109024225-ff2729,2026-11-09
