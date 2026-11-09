@@ -26,7 +26,7 @@ class AI
 {
 public:
 	unsigned char m_bfmeHeadEZ[0xc];
-	Pathfinder *m_bfmePathEZ;
+	Pathfinder *m_pathfinder;
 };
 
 extern AI *TheAI;
@@ -70,12 +70,12 @@ void BfmeHostEZ::bfmeConsiderEZ(BfmeNodeEZ *n, const BfmeVec2EZ *p)
 	if (m_bfmeTagEZ != 0 && d2 >= m_bfmeBestEZ)
 		return;
 
-	Pathfinder *path = TheAI->m_bfmePathEZ;
+	Pathfinder *path = TheAI->m_pathfinder;
 	if (!path->slowDoesPathExist(m_bfmeObjEZ,
 		&m_bfmeObjEZ->m_bfmePosEZ, &n->m_bfmePosEZ, OBJECT_ID_NONE))
 		return;
 
-	Pathfinder *path2 = TheAI->m_bfmePathEZ;
+	Pathfinder *path2 = TheAI->m_pathfinder;
 	if (!path2->worldLineNoHit(&m_bfmeObjEZ->m_bfmePosEZ,
 		&n->m_bfmePosEZ))
 		return;
