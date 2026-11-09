@@ -5,7 +5,7 @@ class BfmeSubESG
 public:
 	virtual void bfmeDropESG(int flag);
 
-	long m_bfmeRefESG;
+	long m_refCount;
 };
 
 inline void bfmeKillESG(BfmeSubESG *sub)
@@ -30,7 +30,7 @@ public:
 		{
 			BfmeSubESG *sub = &m_bfmeOwnerESG->m_bfmeSubESG;
 
-			if (InterlockedDecrement(&sub->m_bfmeRefESG) <= 0)
+			if (InterlockedDecrement(&sub->m_refCount) <= 0)
 				bfmeKillESG(sub);
 		}
 	}
