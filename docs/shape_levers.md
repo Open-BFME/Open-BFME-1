@@ -3969,8 +3969,25 @@ directly without the pointer-returning accessors, gives the exchanged 11-diff fo
 Hypothesis, not measured: the multi-word aggregate is scalar-replaced after the pass that
 hoists invariant expressions.
 
-Likely the same family (not yet tested): 0x00896390, 0x00895790, 0x008941A0, which show
-the same "base re-read at the back-edge, count*8 kept from the guard" tail.
+Second body, 0x00896390 (214 B, same flags, handle vector at tracker+4), landed with the
+same range temporary plus three further measured steps:
 
-Source: game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp. Donor lead: Open-BFME-2
+- Retail's guard there is `mov esi,edx / lea eax,[esi+eax*4]` and the loop reloads the count
+  (`mov edi,[ecx] / shl edi,2`) instead of sharing a guard `shl`. Writing the loop directly in
+  the member (`for (it = v.begin(); it != v.end(); ++it) if (...) return; v.push_back(x);`)
+  gives that; the same loop inside an inlined `contains()` returning bool shares count*4
+  between guard and loop (211 B, 50 diffs).
+- The released handle's `dec [eax] / cmp [eax],0` (and load/dec/store on the found path) needs
+  the decrement read back through a value-returning helper, `if (p && dec(p) == 0) delete p;`
+  with `static unsigned dec(unsigned *c) { return --*c; }`. `--*p == 0` in place is 209 B.
+- The last residue was an ESI/EDI exchange between the searched pointer and count*4 (9 diffs).
+  Comparing through the handle's inline accessor on BOTH sides, `it->get() == x.get()`, is
+  exact; `it->m_obj == x.m_obj`, `operator==`, or get() on one side only keep the exchange.
+  Reading the count through a by-value `size()` also puts the pointer in ESI but turns the
+  shift into `mov eax,[ecx] / lea edi,[eax*4]` (215 B).
+
+Still untested: 0x00895790 and 0x008941A0, which show the same back-edge tail.
+
+Sources: game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp,
+game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp. Donor lead: Open-BFME-2
 67a8a17e42 `Bfme5ThirtyFour.cpp` `PlaybackRange`.
