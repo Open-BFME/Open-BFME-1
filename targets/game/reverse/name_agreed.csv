@@ -2592,3 +2592,5 @@ game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeValVNJ,AsciiString,clau
 game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeThingVNJ,Dict,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00068680 ?getNthAsciiString@Dict@@QAE?AVAsciiString@@H@Z | outside every window of the target's slots 29446:18567-18572 | PRE-COMMIT,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1515.cpp|function|BfmeThingVNJ@|bfmeGetVNJ,getNthAsciiString,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00068680 ?getNthAsciiString@Dict@@QAE?AVAsciiString@@H@Z | outside every window of the target's slots 29446:18567-18572 | PRE-COMMIT,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1515.cpp|local|BfmeThingVNJ::bfmeGetVNJ|p,pair,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00068680 ?getNthAsciiString@Dict@@QAE?AVAsciiString@@H@Z | outside every window of the target's slots 29446:18567-18572 | PRE-COMMIT,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeHead,m_head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

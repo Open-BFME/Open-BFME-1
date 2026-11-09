@@ -7478,3 +7478,8 @@ game/GameEngine/Source/Common/BfmeConv1515.cpp|local|BfmeThingVNJ::bfmeGetVNJ|p,
 game/GameEngine/Source/Common/BfmeConv1980.cpp|type||BfmeStrDataETA,dfc003ddb8149b1e99cd6770,claude-sonnet,20261109090131-0978d2,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1158.cpp|function|BfmeOwner1158@|bfmeStartAll1158,30c7de5d6faaa9441a46664b,claude-sonnet,20261109090211-e59681,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1158.cpp|function|BfmeOwner1158@|bfmeStopAll1158,9371fc84bbaaed29426bc6dd,claude-sonnet,20261109090211-e59681,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeIndex,1b86fe196a255b3556d14cfe,claude-sonnet,20261109090247-fe25a4,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeNext,0e375b287a2627c2c6a49755,claude-sonnet,20261109090247-fe25a4,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeHead,5f2102017f19d2fd53f6e485,claude-sonnet,20261109090247-fe25a4,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|function|Gen_0029D2E0@|bfmeCountMarked,dee79bde54c5930a49d43df2,claude-sonnet,20261109090247-fe25a4,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|function||bfmeSetBit,06be0418e13e408d75fc060e,claude-sonnet,20261109090247-fe25a4,2026-11-09
