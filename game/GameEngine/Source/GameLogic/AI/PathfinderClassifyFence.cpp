@@ -76,11 +76,16 @@ private:
 class PathfindZoneManager
 {
 public:
-	void markZonesDirty(const IRegion2D *bounds, Bool force);
+	void markZonesDirtyIlt(const IRegion2D *bounds, Bool force);
 
 private:
 	Bool m_bfmeDirty;
 };
+
+// Retail calls ILT 0x00015307, which the ledger defines as ?j_00015307@@YAXXZ.
+extern void j_00015307();
+typedef void (PathfindZoneManager::*MarkZonesDirtyIlt)(const IRegion2D *bounds, Bool force);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 
 static int RealToIntFloor(float v)
 {
@@ -186,6 +191,6 @@ void Pathfinder::classifyFence(Object *fenceObject, Bool insertFence)
 
 	if (cellBounds.hiX != -1)
 	{
-		m_zoneManager.markZonesDirty(&cellBounds, false);
+		(m_zoneManager.*iltMemberCall<MarkZonesDirtyIlt>(j_00015307))(&cellBounds, false);
 	}
 }
