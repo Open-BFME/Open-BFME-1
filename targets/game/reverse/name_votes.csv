@@ -6225,3 +6225,5 @@ game/GameEngine/Source/Common/BfmeThreeHundredTwentyThree.cpp|member||m_bfmePrev
 game/GameEngine/Source/GameLogic/AI/Rva00170BD0AIGuardState_onExit.cpp|type||Rva00170BD0GuardMachine,080796d7f43b638928175f66,claude-sonnet,20261109011814-f3361e,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva00170BD0AIGuardState_onExit.cpp|type||Rva00170BD0AIUpdate,c9d2a15a1e6a43f887b48b3d,claude-sonnet,20261109011814-f3361e,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva00170BD0AIGuardState_onExit.cpp|type||Rva00170BD0AIGuardState,b39171776b556eb99042686d,claude-sonnet,20261109011814-f3361e,2026-11-09
+game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva00087A80View,8df2ebdd23d23aa90e57d8cc,claude-sonnet,20261109011814-7910b3,2026-11-09
+game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva001CCFC0TemplateView,afb88b946bc3686f9e0832f3,claude-sonnet,20261109011814-7910b3,2026-11-09
