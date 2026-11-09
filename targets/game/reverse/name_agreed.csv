@@ -2567,3 +2567,8 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e8
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2ec,m_ambientVolumeSlider,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0,m_movieVolumeSlider,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,m_scrollSpeedSlider,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e0,m_musicVolumeSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e8,m_voiceVolumeSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2ec,m_ambientVolumeSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0,m_movieVolumeSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,m_scrollSpeedSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

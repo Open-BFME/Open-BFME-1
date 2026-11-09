@@ -232,12 +232,12 @@ class BfmeAptScreenOptions { public:
  GameWindow *w2d4;
  GameWindow *w2d8;
  GameWindow *w2dc;
- GameWindow *w2e0;
+ GameWindow *m_musicVolumeSlider;
  GameWindow *w2e4;
- GameWindow *w2e8;
- GameWindow *w2ec;
- GameWindow *w2f0;
- GameWindow *w2f4;
+ GameWindow *m_voiceVolumeSlider;
+ GameWindow *m_ambientVolumeSlider;
+ GameWindow *m_movieVolumeSlider;
+ GameWindow *m_scrollSpeedSlider;
  GameWindow *w2f8;
  GameWindow *w2fc;
  GameWindow *w300;
@@ -268,7 +268,7 @@ void BfmeAptScreenOptions::_bfme_reset(const char *) {
     }
    }
   }
-  if(w2f4) wm->slot53(w2f4,0x400d,(int)(global->m_keyboardDefaultScrollFactor*50.0f),0);
+  if(m_scrollSpeedSlider) wm->slot53(m_scrollSpeedSlider,0x400d,(int)(global->m_keyboardDefaultScrollFactor*50.0f),0);
   if(w290) {
    int level=prefs()->rva00090900IdealStaticGameDetail();
    if(level==0 || level==1) { GadgetCheckBoxSetChecked(w290,true); w290->winEnable(false); }
@@ -285,11 +285,11 @@ void BfmeAptScreenOptions::_bfme_reset(const char *) {
   if(w2a8) GadgetCheckBoxSetChecked(w2a8,false);
   if(w2b4) { audio->slot91(false); GadgetCheckBoxSetChecked(w2b4,false); }
   if(w2b8) { if(((Rva0007C510*)TheGameLODManager)->ge()==1) GadgetCheckBoxSetChecked(w2b8,true); else GadgetCheckBoxSetChecked(w2b8,false); }
-  if(w2e0) { volume=(int)(audio->slot72()->m_defaultMusicVolume*100.0f); wm->slot53(w2e0,0x400d,volume,0); audio->slot50(volume*0.01f); }
+  if(m_musicVolumeSlider) { volume=(int)(audio->slot72()->m_defaultMusicVolume*100.0f); wm->slot53(m_musicVolumeSlider,0x400d,volume,0); audio->slot50(volume*0.01f); }
   if(w2e4) { volume=(int)(audio->slot72()->m_defaultSoundVolume*100.0f); wm->slot53(w2e4,0x400d,volume,0); audio->slot48(volume*0.01f); }
-  if(w2e8) { volume=(int)(audio->slot72()->m_defaultVoiceVolume*100.0f); wm->slot53(w2e8,0x400d,volume,0); audio->slot49(volume*0.01f); }
-  if(w2ec) { volume=(int)(audio->slot72()->m_defaultAmbientVolume*100.0f); wm->slot53(w2ec,0x400d,volume,0); audio->slot52(volume*0.01f); }
-  if(w2f0) { volume=(int)(audio->slot72()->m_defaultMovieVolume*100.0f); wm->slot53(w2f0,0x400d,volume,0); audio->slot51(volume*0.01f); }
+  if(m_voiceVolumeSlider) { volume=(int)(audio->slot72()->m_defaultVoiceVolume*100.0f); wm->slot53(m_voiceVolumeSlider,0x400d,volume,0); audio->slot49(volume*0.01f); }
+  if(m_ambientVolumeSlider) { volume=(int)(audio->slot72()->m_defaultAmbientVolume*100.0f); wm->slot53(m_ambientVolumeSlider,0x400d,volume,0); audio->slot52(volume*0.01f); }
+  if(m_movieVolumeSlider) { volume=(int)(audio->slot72()->m_defaultMovieVolume*100.0f); wm->slot53(m_movieVolumeSlider,0x400d,volume,0); audio->slot51(volume*0.01f); }
  }
  if(m_page==4) {
   int level=4;
