@@ -7264,3 +7264,5 @@ game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,5b
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,15a5647612898909a90f2106,claude-sonnet,20261109074116-c6295e,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,cfbb25999817b7c48ad44941,claude-sonnet,20261109074116-c6295e,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,4772252ca9a9b2f78037f625,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp|param|W3DDebrisDraw::setModelName|t,f842d0a8b18c5311c2c983af,claude-sonnet,20261109074137-84b4cf,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp|param|isAnimationComplete|r,49759fc3bb2edda97fb60417,claude-sonnet,20261109074137-84b4cf,2026-11-09
