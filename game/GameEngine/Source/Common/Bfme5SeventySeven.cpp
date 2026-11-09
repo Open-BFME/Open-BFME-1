@@ -44,16 +44,16 @@ public:
 
 private:
 	int m_bfmeHead[9];					// +0x00
-	int m_bfmeWidth;					// +0x24
-	int m_bfmeHeight;					// +0x28
-	BfmeCellFD *m_bfmeCells;				// +0x2C
+	int m_width;					// +0x24
+	int m_height;					// +0x28
+	BfmeCellFD *m_cells;				// +0x2C
 };
 
 // ?bfmeAt@Gen_008F7CD0@@QBEPAVBfmeCellFD@@HH@Z
 BfmeCellFD *Gen_008F7CD0::bfmeAt(int x, int y) const
 {
-	if (x >= 0 && x < m_bfmeWidth && y >= 0 && y < m_bfmeHeight)
-		return &m_bfmeCells[m_bfmeWidth * y + x];
+	if (x >= 0 && x < m_width && y >= 0 && y < m_height)
+		return &m_cells[m_width * y + x];
 
 	return 0;
 }
