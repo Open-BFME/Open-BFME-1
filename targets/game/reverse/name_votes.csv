@@ -6991,3 +6991,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMapTerrainTextureGe
 game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_draw.cpp|type||BfmeMediumScaleUpWindow,fb376cccc495e7cdd80c560f,claude-sonnet,20261109063457-d34836,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindZoneFlatten.cpp|function|PathfindZoneManager@|bfmeFlattenZones,b453855367db953bea98e30a,claude-sonnet,20261109063825-eeaf2a,2026-11-09
 game/Libraries/Source/Apt/Rva8CD520ConfigureState.cpp|function||rva8CD520ConfigureState,92122261674f6fd5fef8a59b,claude-sonnet,20261109063620-816289,2026-11-09
+game/GameEngine/Source/Common/Rva0018C480Xfer.cpp|type||Rva0018C480Xfer,cd974a83044801e4c087a865,claude-sonnet,20261109063620-e2f27f,2026-11-09
