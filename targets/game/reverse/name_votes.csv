@@ -6247,3 +6247,4 @@ game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Position0
 game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Key001ABC90,9141deddd65dc969d8e3dcc7,claude-sonnet,20261109012304-b83e96,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Properties001ABC90,dfea2062b6639ba962872ee8,claude-sonnet,20261109012304-b83e96,2026-11-09
 game/GameEngine/Source/Common/MapObject.cpp|local|Rva00088B70ReadMapObject|tmplate,7478964d130cd7d6cf8cbbbd,claude-sonnet,20261109013714-e3efb7,2026-11-09
+game/GameEngine/Source/Common/Rva0087EBB0Max.cpp|type||BfmeCoordEB,14efcf59dbbb1cae2962348d,claude-sonnet,20261109013714-3416f0,2026-11-09
