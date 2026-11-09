@@ -6963,3 +6963,5 @@ game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb8,fad51f
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_c4,56d31c2a74001051439b19c3,claude-sonnet,20261109062459-1802b3,2026-11-09
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|t,5bbf34b6f0e378b281abfa88,claude-sonnet,20261109062459-1802b3,2026-11-09
 game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|v,29152991b782e106168bbad2,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Bfme5FortyNine.cpp|member||m_bfmeNext,b8b2c7d0d6030d05dbd01cd8,claude-sonnet,20261109062746-20250c,2026-11-09
+game/GameEngine/Source/Common/Bfme5FortyNine.cpp|member||m_bfmeGap,1b002d96f2373d19b0694219,claude-sonnet,20261109062746-20250c,2026-11-09
