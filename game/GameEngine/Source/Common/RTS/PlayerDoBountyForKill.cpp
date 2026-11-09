@@ -13,7 +13,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 
 // This pinned IAT slot is MSVCR71.dll!ceil (0x01359394).
-extern "C" __declspec(dllimport) double __cdecl bfmeMathVE(double value);
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 
 class Object
 {
@@ -174,7 +174,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 	if (bountyPercent == g_rva01075350)
 		bountyPercent = m_cashBountyPercent;
 
-	Real roundedBounty = (Real)bfmeMathVE((double)((Real)bounty * bountyPercent));
+	Real roundedBounty = (Real)ceil((double)((Real)bounty * bountyPercent));
 	bounty = (UnsignedInt)fast_float2long_round(roundedBounty);
 
 	if (((GameLogicShim *)TheGameLogic)->unidentified_0001e0ab())
