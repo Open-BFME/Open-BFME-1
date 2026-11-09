@@ -1965,3 +1965,4 @@ game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,m_next,cl
 game/GameEngine/Source/Common/SmallGaps/Rva008063B0AddSlot.cpp|local|Rva008063B0Owner::addSlot|s,slot,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva008063B0AddSlot.cpp|local|Rva008063B0Owner::addSlot|s,slot,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva00181DF0OwnerDtor.cpp|type||Rva00181DF0Owner,AIStateMachine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva00181DF0OwnerDtor.cpp|type||Rva00181DF0Owner,AIStateMachine,claude-sonnet+gpt-6.1-sol,blocked: hook: [row-on-other-identity] ??1AIStateMachine@@UAE@XZ 0x00181DF0 | the body already carries ??1AIStateMachine@@MAE@XZ | Pin the body the name really,2026-11-09
