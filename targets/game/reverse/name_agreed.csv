@@ -1441,3 +1441,4 @@ game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,m_sinkRate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorUpdate.cpp|member||sinkRate34,m_sinkRate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,State,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/GiantBirdGuardAttackAggressorState_ctor.cpp|type||Rva002C11E0StateBase,State,claude-sonnet+gpt-6.1-sol,blocked: hook: pins 0x000035B2 ??0State@@QAE@PAXVAsciiString@@@Z | outside every window of the target's slots 1929:2035-2039 | PRE-COMMIT FAILED: retail's thun,2026-11-09
