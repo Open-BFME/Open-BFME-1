@@ -7536,3 +7536,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|me
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalPosition47c,c02956899fb2caa6b79b41fa,claude-sonnet,20261109092321-24e7e4,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva001559B0Owner::notifyMembers|n,220d570a420c5503ab8e991b,claude-sonnet,20261109092750-31b312,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva001559B0Owner::notifyMembers|t,ba8ee5ea85214dd07a3538b6,claude-sonnet,20261109092750-31b312,2026-11-09
+game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstFlagged|e,6500359ecd9fe92f5dc1aeb4,claude-sonnet,20261109092541-fdfea9,2026-11-09
+game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstMapped|e,62065f317f3c63c1845ef006,claude-sonnet,20261109092541-fdfea9,2026-11-09

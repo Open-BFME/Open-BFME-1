@@ -2648,3 +2648,5 @@ game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalPosition47c,m_goalPosition,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalPosition47c,m_goalPosition,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstFlagged|e,end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstMapped|e,end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
