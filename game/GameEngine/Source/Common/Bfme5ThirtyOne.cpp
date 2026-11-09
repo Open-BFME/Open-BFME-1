@@ -92,12 +92,12 @@ public:
 
 	BfmeVec2CY(const BfmeVec2CY &other)
 	{
-		m_bfmeX = other.m_bfmeX;
-		m_bfmeY = other.m_bfmeY;
+		m_x = other.m_x;
+		m_y = other.m_y;
 	}
 
-	float m_bfmeX;						// +0x00
-	float m_bfmeY;						// +0x04
+	float m_x;						// +0x00
+	float m_y;						// +0x04
 };
 
 // ?bfmeSubtract@@YA?AVBfmeVec2CY@@MMPBV1@@Z
@@ -105,8 +105,8 @@ BfmeVec2CY __cdecl bfmeSubtract(float x, float y, const BfmeVec2CY *other)
 {
 	BfmeVec2CY out;
 
-	out.m_bfmeX = x - other->m_bfmeX;
-	out.m_bfmeY = y - other->m_bfmeY;
+	out.m_x = x - other->m_x;
+	out.m_y = y - other->m_y;
 
 	return out;
 }
