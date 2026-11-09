@@ -6717,3 +6717,4 @@ game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|local|BFMEActi
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeWidth,1eb9a36735cab6e9bb9fbc27,claude-sonnet,20261109045711-f05aee,2026-11-09
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeHeight,e39d77c49fcf0f8a44a42179,claude-sonnet,20261109045711-f05aee,2026-11-09
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeCells,a7ed4d13650db8ae9d8446b0,claude-sonnet,20261109045711-f05aee,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1070.cpp|function||bfmeGo1070B,8debb64da33d5f7031dd42d2,claude-sonnet,20261109045655-6259f6,2026-11-09
