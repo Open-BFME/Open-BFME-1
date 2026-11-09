@@ -2429,3 +2429,4 @@ game/GameEngine/Source/Common/BfmeConv1380.cpp|param|bfmeGoVIX|m,message,claude-
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,message,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/BfmeConv1380.cpp: game\GameEngine\Source\Common\BfmeConv1380.cpp(119) : error C2065: 'm' : undeclared identifier,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,message,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/BfmeConv1380.cpp: game\GameEngine\Source\Common\BfmeConv1380.cpp(119) : error C2065: 'm' : undeclared identifier,2026-11-09
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09

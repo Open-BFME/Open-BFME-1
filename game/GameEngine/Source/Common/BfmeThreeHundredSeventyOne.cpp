@@ -10,7 +10,7 @@ class BfmeListXA
 {
 public:
 	BfmeHeadXA *m_bfmeHead;
-	int m_bfmeCount;
+	int m_numNodes;
 };
 
 // The drop goes through the five-byte ILT thunk at 0x0001FF82, defined as
@@ -37,7 +37,7 @@ public:
 void BfmeThingXA::bfmeClearXA()
 {
 	BfmeListXA *list = &m_bfmeList;
-	if (list->m_bfmeCount != 0)
+	if (list->m_numNodes != 0)
 	{
 		BfmeDropXAThunkCast cast;
 		cast.freeFunction = reinterpret_cast<void (__cdecl *)(void *)>(&::j_0001ff82);
@@ -45,6 +45,6 @@ void BfmeThingXA::bfmeClearXA()
 		list->m_bfmeHead->m_bfmeTwo = list->m_bfmeHead;
 		list->m_bfmeHead->m_bfmeOne = 0;
 		list->m_bfmeHead->m_bfmeThree = list->m_bfmeHead;
-		list->m_bfmeCount = 0;
+		list->m_numNodes = 0;
 	}
 }
