@@ -80300,7 +80300,7 @@ name,address,notes
 ?bfmeTickAAW@BfmeHostAAW@@QAEXXZ,0x0004ACC8,Open-BFME5 ILT pre-step the 0x006FD3C0 update calls first
 ?bfmeToCellETD@BfmeGridETD@@QAEXPAVBfmePosETD@@PAUBfmePairETD@@@Z,0x000171E8,pin
 ?bfmeToUserVIF@@YAPAXPAUBfmeLuaVHR@@H@Z,0x00990330,pin
-?bfmeToggle997@BfmeA997@@QAEXXZ,0x000200D1,pin
+?bfmeToggle997@Drawable@@QAEXXZ,0x000200D1,pin
 ?bfmeTopZJ@BfmeHostZJ@@QAEPAVBfmeTargetZJ@@XZ,0x0000DE9F
 ?bfmeTouch1176@BfmeW1176@@QAEXXZ,0x0003336B,pin
 ?bfmeTouch982C@BfmeT982@@QAEXXZ,0x0002D2C7,pin

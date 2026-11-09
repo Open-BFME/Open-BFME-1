@@ -42,7 +42,7 @@ extern GameClient *TheGameClient;
 // retail reaches 0x00411CD0 through ILT 0x200D1
 extern void j_000200d1();
 
-class BfmeA997
+class Drawable
 {
 public:
 	void bfmeGo997A(int a);
@@ -60,11 +60,11 @@ public:
 	char m_bfmeOn;
 };
 
-void BfmeA997::bfmeGo997A(int a)
+void Drawable::bfmeGo997A(int a)
 {
 	if (m_bfmeOn) {
 		m_bfmeOn = 0;
-		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		union { void (*fn)(); void (Drawable::*call)(); } toggle = { j_000200d1 };
 		(this->*toggle.call)();
 	}
 
@@ -74,11 +74,11 @@ void BfmeA997::bfmeGo997A(int a)
 	m_bfmeStamp = reinterpret_cast<BfmeClock997 *>(TheGameClient)->bfmeNow997();
 }
 
-void BfmeA997::bfmeGo997B(int a)
+void Drawable::bfmeGo997B(int a)
 {
 	if (m_bfmeOn != 1) {
 		m_bfmeOn = 1;
-		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		union { void (*fn)(); void (Drawable::*call)(); } toggle = { j_000200d1 };
 		(this->*toggle.call)();
 	}
 
@@ -88,11 +88,11 @@ void BfmeA997::bfmeGo997B(int a)
 	m_bfmeStamp = reinterpret_cast<BfmeClock997 *>(TheGameClient)->bfmeNow997();
 }
 
-void BfmeA997::bfmeGo997C(int a, int b)
+void Drawable::bfmeGo997C(int a, int b)
 {
 	if (m_bfmeOn != 1) {
 		m_bfmeOn = 1;
-		union { void (*fn)(); void (BfmeA997::*call)(); } toggle = { j_000200d1 };
+		union { void (*fn)(); void (Drawable::*call)(); } toggle = { j_000200d1 };
 		(this->*toggle.call)();
 	}
 

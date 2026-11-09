@@ -30550,9 +30550,9 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeGo995C@BfmeC995@@QAEXH@Z,,0x00537AB0,74,game/GameEngine/Source/Common/BfmeConv995.cpp,matched,
 ?bfmeGo996A@@YGXPAVBfmeThing996@@@Z,,0x00751BE0,58,game/GameEngine/Source/Common/BfmeConv996.cpp,matched,
 ?bfmeGo996B@BfmeB996@@QAEDHHPAD@Z,,0x007E31D0,67,game/GameEngine/Source/Common/BfmeConv996.cpp,matched,
-?bfmeGo997A@BfmeA997@@QAEXH@Z,,0x004142B0,76,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
-?bfmeGo997B@BfmeA997@@QAEXH@Z,,0x00414310,79,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
-?bfmeGo997C@BfmeA997@@QAEXHH@Z,,0x00414380,89,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
+?bfmeGo997A@Drawable@@QAEXH@Z,,0x004142B0,76,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
+?bfmeGo997B@Drawable@@QAEXH@Z,,0x00414310,79,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
+?bfmeGo997C@Drawable@@QAEXHH@Z,,0x00414380,89,game/GameEngine/Source/Common/BfmeConv997.cpp,matched,
 ?bfmeGo998C@BfmeC998@@QAEXH@Z,,0x009272E0,44,game/GameEngine/Source/Common/BfmeConv998.cpp,matched,
 ?bfmeGo999A@BfmeA999@@QAEDXZ,,0x002A59A0,63,game/GameEngine/Source/Common/BfmeConv999.cpp,matched,
 ?bfmeGo9A@BfmeObj9A@@QAEXPAVBfmeSrc9A@@@Z,,0x00409A60,122,game/GameEngine/Source/Common/Rva00409A60Walk.cpp,matched,Open-BFME5 convert 0x00409A60 two-byte flags virt walk and global
