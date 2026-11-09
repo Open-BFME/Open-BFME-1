@@ -6184,3 +6184,7 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementat
 game/GameEngine/Source/GameLogic/Object/Behavior/Serialize0020C190.cpp|type||Template0020C190,224b638ac994489cdcb5450f,claude-sonnet,20261109011212-4169de,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Serialize0020C190.cpp|member||name20,f34182dcf070101d4be138e0,claude-sonnet,20261109011212-4169de,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/BloodthirstyUpdateModuleDataConstructor.cpp|type||BfmeUpdateModuleDataBase,c809b25c0d2421a3db4cc82d,claude-sonnet,20261109011213-ea4415,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|param|BfmeHostESF::bfmeTestESF|a,54199ec9a52f3db4dc9e9d3b,claude-sonnet,20261109011213-db922f,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|param|BfmeHostESF::bfmeTestESF|b,2b629572409fa516a61b4136,claude-sonnet,20261109011213-db922f,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|local|BfmeHostESF::bfmeTestESF|c,3977b211ff3dac6123ad8742,claude-sonnet,20261109011213-db922f,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|param|bfmeKindOkESF|c,8f448c694105d2e98cc88ac2,claude-sonnet,20261109011213-db922f,2026-11-09
