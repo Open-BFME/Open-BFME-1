@@ -49,8 +49,8 @@ static unsigned int rva001C15F0NightColor(const Object *self) {
  return 0xff000000;
 }
 void Object::rva001C15F0() {
- Drawable *r=getDrawable();
- if(r==0) return;
- if(((const Rva006C9270GlobalData *)TheWritableGlobalData)->m_bfmeModeCA==4) r->setIndicatorColor(rva001C15F0NightColor(this));
- else r->setIndicatorColor(getIndicatorColor(this));
+ Drawable *drawable=getDrawable();
+ if(drawable==0) return;
+ if(((const Rva006C9270GlobalData *)TheWritableGlobalData)->m_bfmeModeCA==4) drawable->setIndicatorColor(rva001C15F0NightColor(this));
+ else drawable->setIndicatorColor(getIndicatorColor(this));
 }
