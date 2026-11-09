@@ -22,6 +22,7 @@ class GameLogic { public: Object *findObjectByID(ObjectID id); };
 extern GameLogic *TheGameLogic;
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
+extern void j_0003369f();  // retail reaches Object::onDie (0x001CEFC0) through this ILT
 class Object {
 public:
     Player *getControllingPlayer() const;
@@ -84,7 +85,7 @@ void RespawnBody::internalChangeHealth(float amount, DamageInfo *info)
                 } else {
                     ((LevelState002A30D0 *)respawn)->apply();
                 }
-                obj->onDie(info);
+                { typedef void (Object::*OnDieFn)(DamageInfo *); union { void (*fn)(); OnDieFn call; } u = { j_0003369f }; (obj->*u.call)(info); }
             }
         } else if (respawn) {
             respawn->rva002A21F0();

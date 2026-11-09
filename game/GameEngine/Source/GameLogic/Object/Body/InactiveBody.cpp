@@ -16,6 +16,7 @@ public:
 	float m_amount;
 };
 
+extern void j_0003369f();  // retail reaches Object::onDie (0x001CEFC0) through this ILT
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object
 {
@@ -87,7 +88,7 @@ void InactiveBody::attemptDamage(DamageInfo *damageInfo)
 	if (damageInfo->m_damageType == 8) {
 		damageInfo->m_noEffect = false;
 		if (!m_dieCalled) {
-			m_object->onDie(damageInfo);
+			{ typedef void (Object::*OnDieFn)(DamageInfo *); union { void (*fn)(); OnDieFn call; } u = { j_0003369f }; (m_object->*u.call)(damageInfo); }
 			m_dieCalled = true;
 		}
 	}
