@@ -6281,3 +6281,8 @@ game/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp|membe
 game/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp|member||m_bfmeVisionBonus,dd4a4e530fc5493c3300ef10,claude-sonnet,20261109020415-193670,2026-11-09
 game/GameEngine/Source/Common/U2CStringScans.cpp|local|Rva00850790Hash|h,1b7249f9415614b3746d4fb1,claude-sonnet,20261109020415-42d822,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1361.cpp|local|bfmeGoVHG|n,19a24fb1b582334b02af1e4d,claude-sonnet,20261109020415-de0327,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_99c,929fc03c025739384c58e391,claude-sonnet,20261109020416-87a1a0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9a8,25b104e2ea71154b257b4b3c,claude-sonnet,20261109020416-87a1a0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b4,3da3636eb789bbca779a3e68,claude-sonnet,20261109020416-87a1a0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b5,8ccec57ba6737d77830fc0d8,claude-sonnet,20261109020416-87a1a0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b6,50712a943392eda138af7602,claude-sonnet,20261109020416-87a1a0,2026-11-09
