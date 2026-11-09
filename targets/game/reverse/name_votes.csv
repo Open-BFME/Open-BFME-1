@@ -7750,3 +7750,9 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||direction14,c0258324e4f01af603d02279,claude-sonnet,20261109105551-0e65f5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||objectID20,8fefa054c0073e97ec3363e0,claude-sonnet,20261109105551-0e65f5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||entries24,c2547502971a2239e22f3250,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f18,e2d609a623d257b371d39d27,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f1c,0cffcfda4010c0fb95e1504a,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f20,5a1918072cf1e6deabc2aed6,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f24,ad7adaee6721aba177434973,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f28,3ce9222a829c7863f1c6fdf7,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f9c,820c92b5f64351c65d9382a9,claude-sonnet,20261109105714-7c4d0e,2026-11-09

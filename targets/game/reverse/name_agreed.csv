@@ -2874,3 +2874,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||position08,m_position,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||direction14,m_direction,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||objectID20,m_objectID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f18,m_currentHealth,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f9c,m_lastDamageTimestamp,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
