@@ -7706,3 +7706,5 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectorTooltip.cpp|
 game/GameEngine/Source/GameClient/GUI/WindowFieldParsersBfme.cpp|local|parseTooltipCallback|c,418889d75de6306f178c8f92,claude-sonnet,20261109103443-6807eb,2026-11-09
 game/GameEngine/Source/GameClient/GUI/WindowFieldParsersBfme.cpp|local|parseText|c,1fe0e3253b54959f8e5a6a29,claude-sonnet,20261109103443-6807eb,2026-11-09
 game/GameEngine/Source/GameClient/GUI/WindowFieldParsersBfme.cpp|local|parseTooltipText|c,9f59429c2db07515deb97761,claude-sonnet,20261109103443-6807eb,2026-11-09
+game/GameEngine/Source/Common/INI/INIMultiplayer.cpp|local|MultiplayerSettings::newMultiplayerColorDefinition|tmp,46bb1a759a1582eee07d0ba1,claude-sonnet,20261109103443-cc8dba,2026-11-09
+game/GameEngine/Source/Common/INI/INIMultiplayer.cpp|local|INI::parseMultiplayerColorDefinition|c,69465a22ad46ea92631e86e2,claude-sonnet,20261109103443-cc8dba,2026-11-09
