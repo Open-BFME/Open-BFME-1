@@ -18,7 +18,7 @@ extern UpgradeCenter *TheUpgradeCenter;
 // Retail 0x00256240; see identity_evidence/00256240-upgrade-die.md.
 void UpgradeDie::onDie( const DamageInfo *damageInfo )
 {
-	if (!isDieApplicable(damageInfo))
+	if (!static_cast<const DieModuleData *>(getModuleData())->m_dieMuxData.isDieApplicable(getObject(), damageInfo))
 		return;
 
 	Object *producer = TheGameLogic->findObjectByID(getObject()->getProducerID());
