@@ -30,16 +30,37 @@ extern GameLogic *TheGameLogic;
 // compiler-emitted symbol so the reference links to that real definition.
 extern "C" const char __identifier("??_7AISkirmishPlayer@@6B@")[];
 
+// Retail reaches the base constructor through ILT 0x0002D731 (?j_0002d731@@YAXXZ),
+// which jumps to the AIPlayer body at 0x00160D20 owned by BfmeConv2070.cpp.
+// Call the ILT by its row name; a file-local AIPlayer keeps this TU from
+// defining or naming a second ??0AIPlayer@@QAE@PAVPlayer@@@Z.
+extern "C" void __identifier("?j_0002d731@@YAXXZ")();
+
+namespace
+{
 class AIPlayer
 {
 public:
-	AIPlayer(Player *player);
+	typedef void (AIPlayer::*Rva0002D731Call)(Player *);
+	union Rva0002D731CallAddress
+	{
+		void *raw;
+		Rva0002D731Call member;
+	};
+
+	AIPlayer(Player *player)
+	{
+		Rva0002D731CallAddress call;
+		call.raw = (void *)&__identifier("?j_0002d731@@YAXXZ");
+		(this->*call.member)(player);
+	}
 
 protected:
 	char m_beforeSkillsetSelector[0x28];
 	int m_skillsetSelector;
 	char m_afterSkillsetSelector[0x4c];
 };
+}
 
 class AISkirmishPlayer : public AIPlayer
 {
