@@ -2274,3 +2274,4 @@ game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A8DC0.cpp|f
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A8DC0.cpp|function|MilesAudioManager@|rva006A8DC0,killAudioEventImmediately,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv829.cpp|member||m_sub210,m_experienceTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp|member||m_field71,m_activeDuringConstruction,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv829.cpp|member||m_sub210,m_experienceTracker,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

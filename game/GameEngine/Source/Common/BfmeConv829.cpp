@@ -51,14 +51,14 @@ public:
 struct BfmeObj4B0
 {
 	unsigned char pad[0x210];
-	BfmeSub210_4B0 *m_sub210;
+	BfmeSub210_4B0 *m_experienceTracker;
 };
 
 void __stdcall bfmeApplyIntAsFloat4B0(void *key, int intArg)
 {
 	BfmeObj4B0 *obj = (BfmeObj4B0*)bfmeScriptEngine()->vfn26(key);
-	if (obj && obj->m_sub210) {
-		obj->m_sub210->apply((float)intArg, 1);
+	if (obj && obj->m_experienceTracker) {
+		obj->m_experienceTracker->apply((float)intArg, 1);
 	}
 }
 
