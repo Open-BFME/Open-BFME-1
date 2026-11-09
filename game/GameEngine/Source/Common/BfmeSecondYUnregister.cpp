@@ -21,7 +21,7 @@ class BfmeNodeY
 public:
 	~BfmeNodeY(void);					// retail 0x00028EC0 (ILT, +4 adjustor to 0x00354A60)
 
-	BfmeNodeY *m_bfmeNext;					// +0x00
+	BfmeNodeY *m_next;					// +0x00
 };
 
 // The element teardown at 0x00351980 (ILT 0x0001FD0C) is matched as Rva00351980::invoke.
@@ -43,26 +43,26 @@ public:
 class BfmeSecondY
 {
 public:
-	BfmeElementY *m_bfmeBegin;				// +0x00
-	BfmeElementY *m_bfmeEnd;				// +0x04
+	BfmeElementY *m_begin;				// +0x00
+	BfmeElementY *m_end;				// +0x04
 };
 
 // ?bfmeUnregisterY@@YAXPAVBfmeSecondY@@@Z
 void __cdecl bfmeUnregisterY(BfmeSecondY *second)
 {
-	while (second->m_bfmeBegin != second->m_bfmeEnd)
+	while (second->m_begin != second->m_end)
 	{
-		BfmeElementY *e = second->m_bfmeEnd - 1;
+		BfmeElementY *e = second->m_end - 1;
 
 		while (e->m_bfmeList)
 		{
 			BfmeNodeY *n = e->m_bfmeList;
 
-			e->m_bfmeList = e->m_bfmeList->m_bfmeNext;
+			e->m_bfmeList = e->m_bfmeList->m_next;
 			delete n;
 		}
 
-		--second->m_bfmeEnd;
-		((Rva00351980 *)second->m_bfmeEnd)->invoke();
+		--second->m_end;
+		((Rva00351980 *)second->m_end)->invoke();
 	}
 }
