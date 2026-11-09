@@ -7156,3 +7156,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRec
 game/GameEngine/Source/Common/BfmeConv2152.cpp|local|BfmeHostCA::bfmeRemoveCA|m,0849b0b8472e4804f509a098,claude-sonnet,20261109072034-8e93c9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2152.cpp|local|BfmeHostCA::bfmeRemoveCA|n,a294a4da16e559c48159140d,claude-sonnet,20261109072034-8e93c9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LeafletDropBehaviorCtorThunk.cpp|member||m_f14,442bc4ee74370b769f236ff9,claude-sonnet,20261109072135-64bda8,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseV,795c93f1daff7ab1bc2276d1,claude-sonnet,20261109072130-980256,2026-11-09
