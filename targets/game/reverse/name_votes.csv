@@ -7223,3 +7223,7 @@ game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProdu
 game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_1c,ba6f849f0981ef59caa65ef2,claude-sonnet,20261109073722-322d96,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,9843979801068296d4f0e5d8,claude-sonnet,20261109073651-20714c,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,2fee95384e6de415f883b578,claude-sonnet,20261109073651-20714c,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|x,dbd09e57625c44a150a826ef,claude-sonnet,20261109073650-05ed0e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y,e291e731242cd40eae3c2dfc,claude-sonnet,20261109073650-05ed0e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|x1,2febc516bb73ea65cb87c53d,claude-sonnet,20261109073650-05ed0e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y1,9c09122b05676a5c1c94b5a6,claude-sonnet,20261109073650-05ed0e,2026-11-09

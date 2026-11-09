@@ -2392,3 +2392,5 @@ game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,m_radius,claude-sonnet+gpt-6-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,m_layer,claude-sonnet+gpt-6-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,m_radius,claude-sonnet+gpt-6-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|x1,endX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y1,endY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
