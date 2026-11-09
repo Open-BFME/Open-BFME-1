@@ -7099,3 +7099,4 @@ game/GameEngine/Source/GameLogic/Object/Update/StickyBombUpdateCtorThunk.cpp|mem
 game/GameEngine/Source/Common/BfmeConv1494.cpp|local|bfmeGetParamVMZ|p,288d2e56e70dc3eb4125f0a6,claude-sonnet,20261109070331-825aff,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1494.cpp|local|bfmeGetParamVMZ|e,c9fce5705d27f39ecddec319,claude-sonnet,20261109070331-825aff,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1494.cpp|function||bfmeGetParamVMZ,3a26b0ad453283d7a85098f3,claude-sonnet,20261109070431-9ff1df,2026-11-09
+game/Libraries/Source/collisionmanager/BfmeConv597.cpp|function|BfmeThingCGD@|bfmeGoCGD,7bed1c4d7dc688e4786f19c2,claude-sonnet,20261109070332-1e707a,2026-11-09
