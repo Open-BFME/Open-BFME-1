@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // stlport
 // Open-BFME7: STLport vector<0xB4-byte polymorphic element>::erase(first, last),
 // retail 0x00363820, 80 bytes -- a byte twin of INILivingWorldPlayerArmy.cpp's

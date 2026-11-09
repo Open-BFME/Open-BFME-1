@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_NO_EXCEPTIONS
 // stlport
 //
 // The Region field table registers this callback for LivingWorldRegion.  The

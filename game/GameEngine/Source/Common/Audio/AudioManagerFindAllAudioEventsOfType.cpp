@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Iinputs/reference/shims/stringinline /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // ?findAllAudioEventsOfType@AudioManager@@ -- retail 0x006AEAE0, 401 bytes.

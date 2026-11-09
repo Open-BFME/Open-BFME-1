@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_NO_EXCEPTIONS
 
 // Open-BFME5: _STL::_Rb_tree<Int, pair<const Int, AsciiString> >::_M_insert,
 // retail 0x000AA290, 176 bytes. The body carried only a machine byte-dump row;

@@ -1,6 +1,6 @@
 // ?addObjectID@Rva003C5700Holder@@QAEXUGen_t_003c54a0_m4pod@@@Z
 // partial score=0.95 date=2026-09-05
-// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB
+// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 //
 // Twin of 0x0018B9A0 (Rva0018B9A0AddObjectID.cpp): vector push_back at +0x04,

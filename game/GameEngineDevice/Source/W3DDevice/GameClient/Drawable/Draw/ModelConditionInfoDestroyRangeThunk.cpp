@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // Open-BFME5: the STLport _Destroy(first, last) instantiated for
 // ModelConditionInfo*, retail 0x0013C610.
 //

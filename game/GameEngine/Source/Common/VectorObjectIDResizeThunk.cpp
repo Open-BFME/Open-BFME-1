@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // Open-BFME5: lift vector<ObjectID>::resize __emit thunk to clean C++.
 // STLport shape: shrink goes through erase(begin()+n, end()), whose
 // copy(__last, end(), __first) range is empty by construction (__last==end()),

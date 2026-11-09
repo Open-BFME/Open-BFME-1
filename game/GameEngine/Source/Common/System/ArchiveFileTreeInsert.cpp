@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_NO_EXCEPTIONS
 
 // Complete ArchiveFile pointer-tree insertion at retail RVA 0x00063140.
 // ArchiveFileSystem callers establish the mapped type; node layout and

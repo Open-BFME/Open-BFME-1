@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc /MD
+// cl: /O2 /EHsc /MD /D_STLP_NO_EXCEPTIONS
 // stlport
 
 #include <algorithm>

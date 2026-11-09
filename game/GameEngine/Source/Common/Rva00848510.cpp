@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 #include <iterator>
 #include <algorithm>

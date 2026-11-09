@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // stlport
 #include <vector>
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // Open-BFME5: the STLport _Destroy(first, last) instantiated for FlightDeckBehavior::RunwayInfo*,
 // retail 0x002BDB00.
 //

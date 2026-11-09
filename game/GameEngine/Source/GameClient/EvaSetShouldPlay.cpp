@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /D_STLP_NO_EXCEPTIONS
 // stlport
 #include <vector>
 

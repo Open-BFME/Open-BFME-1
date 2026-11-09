@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // Open-BFME: hash_map<AsciiString, ParticleSystemTemplate *>::hashtable::erase,

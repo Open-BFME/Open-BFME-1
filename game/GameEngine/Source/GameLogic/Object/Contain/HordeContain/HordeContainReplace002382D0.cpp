@@ -1,7 +1,7 @@
 // ?changeToFormation@HordeContain@@UAEXPBVThingTemplate@@@Z
 // Secondary-interface slot 25; owner and method identities remain address-qualified.
 // Evidence: targets/game/reverse/identity_evidence/0x002382d0-exact-getter-lifetimes.md.
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Igame/GameEngine/Source/GameLogic/Object
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Igame/GameEngine/Source/GameLogic/Object /D_STLP_NO_EXCEPTIONS
 // stlport
 #include <list>
 #include <string.h>

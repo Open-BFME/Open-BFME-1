@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 
 // Open-BFME5: _STL::_Rb_tree<UnsignedShort, pair<const UnsignedShort, Int> >::_M_insert,
 // retail 0x0037B600, 178 bytes. The body carried only a machine byte-dump row;

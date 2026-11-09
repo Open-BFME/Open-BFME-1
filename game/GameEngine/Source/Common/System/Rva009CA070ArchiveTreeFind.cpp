@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // RVA 0x009CA070: public tree find wrapper around the matched 0x009C9AA0
 // _M_find specialization. The address-derived callable is pinned to that
 // proven target. Several retail copies share these bytes, so the

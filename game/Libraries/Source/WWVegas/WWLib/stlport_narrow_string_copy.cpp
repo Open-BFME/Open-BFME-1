@@ -1,4 +1,4 @@
-// cl: /Od /Oi /Ob2 /DNDEBUG /MD /EHsc-
+// cl: /Od /Oi /Ob2 /DNDEBUG /MD /EHsc- /D_STLP_NO_EXCEPTIONS
 
 /*
  * Copyright (c) 1997-1999

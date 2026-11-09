@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 
 // Open-BFME5: STLport vector<float>::resize, retail 0x00459F70.
 //

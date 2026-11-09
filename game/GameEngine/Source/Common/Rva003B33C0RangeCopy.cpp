@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /D_STLP_NO_EXCEPTIONS
 // stlport
 //
 // Open-BFME: STLport random-access __copy<const T *, T *> for the 32-byte

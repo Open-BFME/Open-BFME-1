@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 
 // STLport vector<T>::resize, retail 0x003D4210, for the LargeGroupAudioKeyMap
 // word vector (callers: bfmeMerge 0x003D4580, bfmeAddKey 0x003D46A0).

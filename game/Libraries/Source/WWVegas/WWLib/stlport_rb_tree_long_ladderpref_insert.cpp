@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 
 // Open-BFME5: _STL::_Rb_tree<Long, pair<const Long, LadderPref> >::_M_insert,
 // retail 0x000AAD50, 176 bytes. The body carried only a machine byte-dump row;

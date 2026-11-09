@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 //
 // Retail 0x003BE980 is the STLport vector<Gen_t_003c0ce0_p2pod>
 // _M_allocate_and_copy body called by reserve in tgrid_114.cpp. The

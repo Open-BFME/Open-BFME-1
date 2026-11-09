@@ -13,7 +13,7 @@
 // This body therefore lands under the address-derived owner Rva00374CF0Owner
 // with the field-table name kept as the method name, pending independent
 // naming evidence. Evidence: targets/game/reverse/identity_evidence/00374cf0-stl46-ilt-review.md
-// cl: /DNDEBUG /MD /EHsc /D_OPERATOR_NEW_DEFINED_ /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/shims/ini_noinline /Iinputs/reference/shims/iniexception /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// cl: /DNDEBUG /MD /EHsc /D_OPERATOR_NEW_DEFINED_ /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/shims/ini_noinline /Iinputs/reference/shims/iniexception /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /D_STLP_NO_EXCEPTIONS
 // stlport
 
 #include "Common/INI.h"
