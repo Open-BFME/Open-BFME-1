@@ -7802,3 +7802,11 @@ game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeSlots,c6c86820a382
 game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeDeadline,45ab10ccb2e34fe6589898ed,claude-sonnet,20261109113118-f39ac6,2026-11-09
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|constructPeerResponse|p,d76e915593d832d52ac15f69,claude-sonnet,20261109113424-0a2e6b,2026-11-09
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,85f0d9655082bcbb89b662fd,claude-sonnet,20261109113424-0a2e6b,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme270JT,98bea71ce02d534ca0535326,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme274JT,0ff121699b953c28cd4276cf,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme27cJT,860332cb4d8c7dca54c22f35,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme280JT,7e201bf457313161a66d84cd,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme284JT,eb1d0693cdaefa9ad97e9073,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme288JT,47671aa9795bff59d4ad329f,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme28cJT,879c5b5abd4f99e7e91283b1,claude-sonnet,20261109113424-4f497a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2079.cpp|member||m_bfme290JT,c7301fffd6b267d2e2e04c77,claude-sonnet,20261109113424-4f497a,2026-11-09
