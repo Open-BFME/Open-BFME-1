@@ -6289,3 +6289,7 @@ game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||
 game/GameEngine/Source/GameLogic/AI/AIGroup_groupEnter.cpp|member||m_bfmeAI,28e73a1c2638046d86edbc8f,claude-sonnet,20261109020416-3c2b36,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateModuleDataCtorThunk.cpp|member||m_08,44a504eea1d6a643742f249f,claude-sonnet,20261109020416-a04646,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateModuleDataCtorThunk.cpp|member||m_18,09b467fcde180c3dd36e1b12,claude-sonnet,20261109020416-a04646,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeSet|s,ecf828b462f219f6c20f94f4,claude-sonnet,20261109020416-a568c4,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat|s,f4e8c45694023f2fac62a1df,claude-sonnet,20261109020416-a568c4,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat#2|s,f6778076e171ef50a93f7c33,claude-sonnet,20261109020416-a568c4,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|local|bfmeFind|p,f75f8a19967ef0c8206d0d32,claude-sonnet,20261109020416-a568c4,2026-11-09
