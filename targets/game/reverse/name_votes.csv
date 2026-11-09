@@ -7244,3 +7244,6 @@ game/GameEngine/Source/Common/BfmeScoreEntryMedian.cpp|param|Rva00570AC0|b,b726a
 game/GameEngine/Source/Common/BfmeScoreEntryMedian.cpp|param|Rva00570AC0|c,11d19a02536466b27efa0e43,claude-sonnet,20261109073649-5b84b9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|local|parseAttributeModifierNugget|m,e62909eeffbb112a78f45db4,claude-sonnet,20261109073927-f7c7c1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|local|parseWeaponOCLNugget|m,9c2f726b299a62a83debaa66,claude-sonnet,20261109073927-f7c7c1,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|bfmeGoVIX|m,935ac6a70bb325af039e8512,claude-sonnet,20261109073927-f20612,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,0a04d60c23eda69bbf1228fa,claude-sonnet,20261109073927-f20612,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,c0f892c4544705affc6b12b7,claude-sonnet,20261109073927-f20612,2026-11-09

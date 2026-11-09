@@ -2418,3 +2418,6 @@ game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,he
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,tail,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,head,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,tail,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|bfmeGoVIX|m,message,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,message,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,message,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
