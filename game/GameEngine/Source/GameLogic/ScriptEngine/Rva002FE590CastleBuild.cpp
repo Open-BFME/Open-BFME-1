@@ -22,7 +22,7 @@ template<class R,class A> __forceinline R call1(void (*p)(), void *self,A a) {
  typedef R (Rva002FE590Calls::*F)(A); union {void (*p)(); F f;} u; u.p=p;
  return (((Rva002FE590Calls*)self)->*u.f)(a);
 }
-struct Rva002FE590Player {char pad00[0x295]; bool flag295;};
+struct Player {char pad00[0x295]; bool flag295;};
 class Object {public: char pad00[0x38]; Coord3D m_position;};
 class ScriptEngine { public:
  virtual void slot00()=0; virtual void slot01()=0; virtual void slot02()=0;
@@ -31,7 +31,7 @@ class ScriptEngine { public:
  virtual void slot09()=0; virtual void slot10()=0; virtual void slot11()=0;
  virtual void slot12()=0; virtual void slot13()=0; virtual void slot14()=0;
  virtual void slot15()=0; virtual void slot16()=0; virtual void slot17()=0;
- virtual void slot18()=0; virtual Rva002FE590Player *getPlayer()=0; virtual void slot20()=0;
+ virtual void slot18()=0; virtual Player *getPlayer()=0; virtual void slot20()=0;
  virtual void slot21()=0; virtual void slot22()=0; virtual void slot23()=0;
  virtual void slot24()=0; virtual void slot25()=0;
  virtual Object *getUnitNamed(const AsciiString&)=0; virtual void slot27()=0; virtual void slot28()=0; virtual void setName(Object*,const AsciiString&)=0;
@@ -62,7 +62,7 @@ extern ScriptEngine *TheScriptEngine;
 class Rva002FE590ScriptActions {public: void apply(const AsciiString&,Rva002FE590Parameter*,const AsciiString&,const AsciiString&,const AsciiString&);};
 void Rva002FE590ScriptActions::apply(const AsciiString &type,Rva002FE590Parameter *option,const AsciiString &slot,const AsciiString &unitName,const AsciiString &newName) {
  Object *unit=TheScriptEngine->getUnitNamed(unitName); if(!unit)return;
- Rva002FE590Player *player=call0<Rva002FE590Player*>(j_00020824,unit);
+ Player *player=call0<Player*>(j_00020824,unit);
  if(!player || !player->flag295 || player!=TheScriptEngine->getPlayer())return;
  void *thing=call1<void*>(j_00028560,TheThingFactory,&type); if(!thing)return;
  static int key=call1<int>(j_0003add7,TheNameKeyGenerator,(const char*)"CastleBehavior");
