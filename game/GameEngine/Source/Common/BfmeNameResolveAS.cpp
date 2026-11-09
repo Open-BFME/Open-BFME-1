@@ -46,7 +46,7 @@ class BfmeResolverAS
 public:
 	void bfmeRefreshAS(void);
 
-	void bfmeResolveAS(void);
+	void resolveWeaponTemplate(void);
 
 	char m_bfmePadAAS[0x58];
 	void *m_weaponTemplate;
@@ -54,7 +54,7 @@ public:
 	AsciiStringAS m_weaponName;
 };
 
-void BfmeResolverAS::bfmeResolveAS(void)
+void BfmeResolverAS::resolveWeaponTemplate(void)
 {
 	bfmeRefreshAS();
 

@@ -2539,3 +2539,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field008
 game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|type||Rva002D8D90Data,SubObjectsUpgradeModuleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field0088,m_excludeSubobjects,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|function|BfmeResolverAS@|bfmeResolveAS,resolveWeaponTemplate,claude-sonnet+glm,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|function|BfmeResolverAS@|bfmeResolveAS,resolveWeaponTemplate,claude-sonnet+glm,applied,2026-11-09
