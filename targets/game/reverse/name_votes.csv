@@ -7648,3 +7648,4 @@ game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|member||m_24,7811
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|local|Rva007E8D30|p,9648ebc637284afaea2a16a5,claude-sonnet,20261109101323-7428c9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv900.cpp|param|bfmeGoIC|n,a8628cf0c40ed55942216600,claude-sonnet,20261109101323-a401e3,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva008030C0FeslPoolInit.cpp|local|Rva00803080::initPool|p,ac2b021904947218cc28fc80,claude-sonnet,20261109101323-f6ec7e,2026-11-09
+game/GameEngine/Source/Common/System/GeometryInfoRva0087E190.cpp|member||m_scalar10,924a46811e9bfc48c2cff6a7,claude-sonnet,20261109101630-3fdce7,2026-11-09
