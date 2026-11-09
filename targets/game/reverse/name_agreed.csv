@@ -1865,3 +1865,4 @@ game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m
 game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,m_damage,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineAttackInfo.cpp|param|friend_setName|n,name,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00126080ModuleData.cpp|type||Rva000441CAModuleDataBase,CrateCollideModuleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/Rva00126080ModuleData.cpp|type||Rva000441CAModuleDataBase,CrateCollideModuleData,claude-sonnet+gpt-6.1-sol,blocked: hook: - symbols.csv line 3512: exact duplicate row for ??0CrateCollideModuleData@@QAE@XZ. Fix: drop the duplicate record(s) with tools/ledger_io.py ke,2026-11-09
