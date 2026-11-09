@@ -7051,3 +7051,8 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdAttackState_u
 game/GameEngine/Source/Common/Rva001B49E0SetPosition.cpp|member||m_bfmeRow0,24a43574ebdce978667af441,claude-sonnet,20261109064609-6aae72,2026-11-09
 game/GameEngine/Source/Common/Rva001B49E0SetPosition.cpp|member||m_bfmeRow1,77e87ab9015461ba4087cead,claude-sonnet,20261109064609-6aae72,2026-11-09
 game/GameEngine/Source/Common/Rva001B49E0SetPosition.cpp|member||m_bfmeRow2,53d7c12ea1f462aec1c9a1b2,claude-sonnet,20261109064609-6aae72,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|member||m_scanDelay08,946b619af7413241d844ea3f,claude-sonnet,20261109064609-631ec2,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|member||m_range24,e02a9a7231c8c258cbe53e60,claude-sonnet,20261109064609-631ec2,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|Rva001DCBB0Filter|p,d2c3f611464a6362112ed9ae,claude-sonnet,20261109064609-631ec2,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|PartitionFilterPlayerAffiliation|p,82e717cfe0b4c82b3c096522,claude-sonnet,20261109064609-631ec2,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|Rva00265150RJFilter|p,7f9c414ba10b5a60205bc3e3,claude-sonnet,20261109064609-631ec2,2026-11-09
