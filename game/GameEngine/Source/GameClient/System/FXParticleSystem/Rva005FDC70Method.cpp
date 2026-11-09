@@ -53,7 +53,7 @@ public:
 	char m_prefix[0x4];
 	Coord3D m_at04;
 	Coord3D m_at10;
-	Coord3D m_at1C;
+	Coord3D m_pos;
 	char m_pad28[0x24];
 	BfmeHandleERU m_handle;
 };
@@ -111,12 +111,12 @@ void Rva005FDC70Owner::method()
 	if (vector != 0)
 	{
 		float vectorX = *(volatile float *)vector;
-		float x = vectorX + particle->m_at1C.x;
-		particle->m_at1C.x = x + particle->m_at10.x;
-		float y = vector[1] + particle->m_at1C.y;
-		particle->m_at1C.y = y + particle->m_at10.y;
+		float x = vectorX + particle->m_pos.x;
+		particle->m_pos.x = x + particle->m_at10.x;
+		float y = vector[1] + particle->m_pos.y;
+		particle->m_pos.y = y + particle->m_at10.y;
 		float z = vector[2] + particle->m_at10.z;
-		particle->m_at1C.z = z + particle->m_at1C.z;
+		particle->m_pos.z = z + particle->m_pos.z;
 	}
 
 	particle->m_at04.x = 0;
