@@ -5,7 +5,7 @@
 struct Rva006C9270GlobalData
 {
 	unsigned char m_bfmeHeadRW[0x1ac];
-	float m_bfmeScaleRW;
+	float m_gravity;
 };
 
 class GlobalData;
@@ -43,5 +43,5 @@ int BfmeOwnerRW::bfmeCheckRW(void)
 		m_bfmeFlagsRW |= 2;
 	}
 
-	return *(volatile float *)&( (Rva006C9270GlobalData *)TheWritableGlobalData )->m_bfmeScaleRW * BfmeCachedThresholdScaleHolder::value < m_bfmeCachedRW;
+	return *(volatile float *)&( (Rva006C9270GlobalData *)TheWritableGlobalData )->m_gravity * BfmeCachedThresholdScaleHolder::value < m_bfmeCachedRW;
 }
