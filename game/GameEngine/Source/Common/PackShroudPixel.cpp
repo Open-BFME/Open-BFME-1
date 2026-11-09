@@ -22,9 +22,9 @@ extern GlobalData *TheWritableGlobalData;
 unsigned int packShroudPixel(UnsignedByte level)
 {
 	Real s = (Real)level;
-	unsigned int b = (unsigned int)(s * TheWritableGlobalData->m_shroudColorB);
-	Int g = (Int)(s * TheWritableGlobalData->m_shroudColorG);
-	Int r = (Int)(s * TheWritableGlobalData->m_shroudColorR);
+	unsigned int blue = (unsigned int)(s * TheWritableGlobalData->m_shroudColorB);
+	Int green = (Int)(s * TheWritableGlobalData->m_shroudColorG);
+	Int red = (Int)(s * TheWritableGlobalData->m_shroudColorR);
 
 	Int cap = 255;
 	Int v = (Int)level - 4;
@@ -36,11 +36,11 @@ unsigned int packShroudPixel(UnsignedByte level)
 
 	if (level == 255)
 	{
-		r = 255;
-		g = 255;
-		b = 255;
+		red = 255;
+		green = 255;
+		blue = 255;
 		q = 255;
 	}
 
-	return ((q & 0xf0) << 8) | ((r & 0xf0) << 4) | ((b >> 4) & 0xf) | (g & 0xf0);
+	return ((q & 0xf0) << 8) | ((red & 0xf0) << 4) | ((blue >> 4) & 0xf) | (green & 0xf0);
 }
