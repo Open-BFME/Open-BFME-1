@@ -6937,3 +6937,13 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17648,5b7b6b1288e722e1fee89a12,claude-sonnet,20261109061402-c56500,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17650,3e417e043ac9fb8da5af8cf8,claude-sonnet,20261109061402-c56500,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineRva00347E60.cpp|member||m_17658,76cfdf6f71186e65419c3233,claude-sonnet,20261109061402-c56500,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|function||Rva009AF840FilterVert,2f22ba59807da0097aecee53,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|function||Rva009AFA60FilterHoriz,e0dc3b41fec67c33d07a6320,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AF840FilterVert|t,09e9610c75e9b707390c536c,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AF840FilterVert|v,e2a77d77b9540be81151b572,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFCA0FilterVert|t,5d8ef491c65b00a861349fb3,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFCA0FilterVert|v,d27738a1d9741188c78a7bb2,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFA60FilterHoriz|t,47edfc5e8913381b2884d903,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFA60FilterHoriz|v,ac8227f8a409d35ad9e8bfa6,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFEC0FilterHoriz|t,b7129885798d22297f2e0314,claude-sonnet,20261109062458-e08ce0,2026-11-09
+game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFEC0FilterHoriz|v,0b56faf9ade522ffd23b68f0,claude-sonnet,20261109062458-e08ce0,2026-11-09
