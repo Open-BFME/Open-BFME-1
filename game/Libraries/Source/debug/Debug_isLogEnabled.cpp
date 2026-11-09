@@ -1,5 +1,14 @@
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
 
+// Retail's 0x0088A7E0 body is the ledger row ?UpdateFrameStatus@Rva0088A7E0Debug;
+// call it through that spelling (same this, same single reference argument).
+struct Rva0088A7E0FrameHashEntry;
+class Rva0088A7E0Debug
+{
+public:
+    void UpdateFrameStatus(Rva0088A7E0FrameHashEntry &entry);
+};
+
 class Debug
 {
 public:
@@ -43,6 +52,6 @@ bool Debug::isLogEnabled(unsigned address)
     if (entry == 0)
         entry = AddFrameEntry(address, 4, (const char *)address, 0);
     if (entry->status == 0)
-        UpdateFrameStatus(*entry);
+        ((Rva0088A7E0Debug *)this)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
     return entry->status == 2 || entry->status == 3;
 }

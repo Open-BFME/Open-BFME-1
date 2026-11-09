@@ -3,6 +3,15 @@
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
+// Retail's 0x0088A7E0 body is the ledger row ?UpdateFrameStatus@Rva0088A7E0Debug;
+// call it through that spelling (same this, same single reference argument).
+struct Rva0088A7E0FrameHashEntry;
+class Rva0088A7E0Debug
+{
+public:
+    void UpdateFrameStatus(Rva0088A7E0FrameHashEntry &entry);
+};
+
 class Debug
 {
 private:
@@ -57,6 +66,6 @@ Debug::FrameHashEntry *Debug::GetFrameEntry(unsigned int addr, unsigned int type
     if (!entry)
         entry = AddFrameEntry(addr, type, fileOrGroup, line);
     if (entry->status == Unknown)
-        UpdateFrameStatus(*entry);
+        ((Rva0088A7E0Debug *)this)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
     return entry;
 }

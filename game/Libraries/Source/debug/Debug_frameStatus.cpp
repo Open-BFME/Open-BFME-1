@@ -6,6 +6,15 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(void *);
 struct BfmeCsDWA;
 extern BfmeCsDWA g_bfmeCsDWC;
 
+// Retail's 0x0088A7E0 body is the ledger row ?UpdateFrameStatus@Rva0088A7E0Debug;
+// call it through that spelling (same this, same single reference argument).
+struct Rva0088A7E0FrameHashEntry;
+class Rva0088A7E0Debug
+{
+public:
+    void UpdateFrameStatus(Rva0088A7E0FrameHashEntry &entry);
+};
+
 class Debug
 {
 public:
@@ -69,7 +78,7 @@ bool Debug::frameStatus(unsigned address, bool reset)
         return false;
     }
     if (entry->status == 0)
-        UpdateFrameStatus(*entry);
+        ((Rva0088A7E0Debug *)this)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
     LeaveCriticalSection(&g_bfmeCsDWC);
     return entry->status == 1;
 }

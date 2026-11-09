@@ -34,6 +34,15 @@
 #include <stdio.h>
 #include <string.h>
 #include <new>      // needed for placement new prototype
+// Retail's 0x0088A7E0 body is the ledger row ?UpdateFrameStatus@Rva0088A7E0Debug;
+// call it through that spelling (same this, same single reference argument).
+struct Rva0088A7E0FrameHashEntry;
+class Rva0088A7E0Debug
+{
+public:
+    void UpdateFrameStatus(Rva0088A7E0FrameHashEntry &entry);
+};
+
 
 // a little dummy variable that makes the linker actually include
 // us...
@@ -172,7 +181,7 @@ bool Debug::SkipNext(void)
 
   // status is unknown, must update
   if (e->status==Unknown)
-    Instance.UpdateFrameStatus(*e);
+    ((Rva0088A7E0Debug *)&Instance)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)e);
 
   // now we now wether to skip or not
   return e->status==Skip;
@@ -362,7 +371,7 @@ Debug& Debug::CrashBegin(const char *file, int line)
   if (!entry)
     entry=Instance.AddFrameEntry(curStackFrame,FrameTypeAssert,file,line);
   if (entry->status==Unknown)
-    Instance.UpdateFrameStatus(*entry);
+    ((Rva0088A7E0Debug *)&Instance)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
   Instance.curFrameEntry=entry;
   if (Instance.curFrameEntry->status==NoSkip)
   {
@@ -1860,7 +1869,7 @@ bool Debug::IsLogEnabled(const char *fileOrGroup)
   if (!e)
     e=Instance.AddFrameEntry((unsigned)fileOrGroup,FrameTypeLog,fileOrGroup,0);
   if (e->status==Unknown)
-    Instance.UpdateFrameStatus(*e);
+    ((Rva0088A7E0Debug *)&Instance)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)e);
   return e->status==NoSkip;
 }
 
@@ -2090,28 +2099,10 @@ Debug::FrameHashEntry* Debug::AddFrameEntry(unsigned addr, unsigned type,
   return e;
 }
 
-// ?UpdateFrameStatus@Debug@@AAEXAAUFrameHashEntry@1@@Z present-unmatched
-void Debug::UpdateFrameStatus(FrameHashEntry &entry)
-{
-  // build pattern match entry
-  char help[512];
-  if (entry.frameType==FrameTypeAssert||
-      entry.frameType==FrameTypeCheck)
-    wsprintf(help,"%s(%i)",entry.fileOrGroup,entry.line);
-  else
-    strcpy(help,entry.fileOrGroup);
-  
-  // update frame status
-  bool active=entry.frameType!=FrameTypeLog;
-  for (PatternListEntry *cur=firstPatternEntry;cur;cur=cur->next)
-  {
-    if (!(cur->frameTypes&entry.frameType))
-      continue;
-    if (SimpleMatch(help,cur->pattern))
-      active=cur->isActive;
-  }
-  entry.status=active?NoSkip:Skip;
-}
+// Debug::UpdateFrameStatus is retail's 0x0088A7E0 body (ledger row
+// ?UpdateFrameStatus@Rva0088A7E0Debug, Rva0088A7E0UpdateFrameStatus.cpp, pinned
+// to ?UpdateFrameStatus@Debug in symbols.csv); declared only so this TU does not
+// emit a non-retail copy that wins at link time.
 
 // Retail AddLogGroup implementation: Debug_AddLogGroup_0088A020.cpp.
 
