@@ -1701,3 +1701,5 @@ game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeEnd,m_end,
 game/GameEngine/Source/GameNetwork/LANAPIConstructor.cpp|member||m_bfme_0x34,m_directConnectRemotePort,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f18,m_indexInLogic,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f18,m_indexInLogic,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

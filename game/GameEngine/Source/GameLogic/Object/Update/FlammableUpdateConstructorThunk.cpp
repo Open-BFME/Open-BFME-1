@@ -29,7 +29,7 @@ class UpdateModule : public FU_DeepBase, public FU_Iface1, public FU_Iface2
 {
 public:
     UpdateModule(Thing *thing, const ModuleData *moduleData)
-        : FU_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+        : FU_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0), m_indexInLogic(-1), m_f1c(-1) {}
 
 protected:
     void setWakeFrame(Object *, UpdateSleepTime);
@@ -37,8 +37,8 @@ protected:
     const ModuleData *getModuleData() const { return m_moduleData; }
 
 private:
-    unsigned int m_f14;
-    int m_f18;
+    unsigned int m_nextCallFrameAndPhase;
+    int m_indexInLogic;
     int m_f1c;
 };
 
