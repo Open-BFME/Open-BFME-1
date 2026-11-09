@@ -7483,3 +7483,7 @@ game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeNext,0e375b287a26
 game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|member||m_bfmeHead,5f2102017f19d2fd53f6e485,claude-sonnet,20261109090247-fe25a4,2026-11-09
 game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|function|Gen_0029D2E0@|bfmeCountMarked,dee79bde54c5930a49d43df2,claude-sonnet,20261109090247-fe25a4,2026-11-09
 game/GameEngine/Source/Common/Bfme5EightyTwo.cpp|function||bfmeSetBit,06be0418e13e408d75fc060e,claude-sonnet,20261109090247-fe25a4,2026-11-09
+game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|c,c354d29158a856191fa9bd50,claude-sonnet,20261109090134-c4c7f2,2026-11-09
+game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|s,8824c2a742f169a3ee9c16a2,claude-sonnet,20261109090134-c4c7f2,2026-11-09
+game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|x,13b8b9a786497dddfa33715d,claude-sonnet,20261109090134-c4c7f2,2026-11-09
+game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|y,fd64b48f6208b2bcac2d09c9,claude-sonnet,20261109090134-c4c7f2,2026-11-09
