@@ -6518,3 +6518,8 @@ game/GameEngine/Source/Common/Bfme5IfaceWalk.cpp|member||m_bfmeItems,cadee71b2d4
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Coord,d2993e9fd8285d50c4629a54,claude-sonnet,20261109035219-9c9fbc,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Event,c7a9b78a5646e151c19ce0be,claude-sonnet,20261109035219-9c9fbc,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Region,1477a063f262e71b50ba6824,claude-sonnet,20261109035219-9c9fbc,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||Info006AE2C0,9af870642da2887ffdcf3e0a,claude-sonnet,20261109035219-b6dcb7,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||Event006AE2C0,7657f07fcc46460241b522a2,claude-sonnet,20261109035219-b6dcb7,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|type||StartAudioStream006AE2C0,c765d0d240ffbb98132486fc,claude-sonnet,20261109035219-b6dcb7,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|member||flags_3c,79ae859588698ca8a2b54b7a,claude-sonnet,20261109035219-b6dcb7,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/StartAudioStream006AE2C0.cpp|member||list_9d0,34f0f4cfd7fa29695a374845,claude-sonnet,20261109035219-b6dcb7,2026-11-09
