@@ -16,7 +16,7 @@ extern GameLogic* TheGameLogic;
 class BfmeThingXJ;
 class DamageInfo;
 class Rva002DB880DamageInfoView { public:
- char m_pad00[8]; int m_08; unsigned short m_0c, m_0e; int m_10, m_14, m_18; float m_1c; char m_20, m_21, m_22[2]; float m_24; int m_28;
+ char m_pad00[8]; int m_sourceID; unsigned short m_sourcePlayerMask, m_0e; int m_10, m_14, m_18; float m_amount; char m_20, m_21, m_22[2]; float m_24; int m_28;
 };
 // Retail calls ILT 0x0001DA34 -> 0x003A04A0, matched as Rva2225E0Filter::accepts(Object*, Player*).
 class Rva2225E0Filter { public: bool accepts(Object*,Player*); };
@@ -93,7 +93,7 @@ class Rva002DB880Contain { public:
 template<class T> __forceinline T& at(void* p,unsigned n) { return *(T*)((char*)p+n); }
 class DamageNugget { public:
  bool generateDamageInfo(void*,BfmeThingXJ*,DamageInfo*);
- char m_pad[0x58]; float m_58; char m_5c[12]; bool m_68; char m_69[3]; unsigned m_6c; int m_70,m_74,m_78;
+ char m_pad[0x58]; float m_damage; char m_5c[12]; bool m_68; char m_69[3]; unsigned m_6c; int m_70,m_74,m_78;
  _STL::vector<Rva002DB880Scale> m_7c; float m_88;
 };
 bool DamageNugget::generateDamageInfo(void* weapon,BfmeThingXJ* thing,DamageInfo* damage) {
@@ -101,24 +101,24 @@ bool DamageNugget::generateDamageInfo(void* weapon,BfmeThingXJ* thing,DamageInfo
  float multiplier;
  if(!source) return false;
  Rva002DB880DamageInfoView* out=(Rva002DB880DamageInfoView*)damage;
- out->m_1c=m_58;
+ out->m_amount=m_damage;
  if(at<char>(at<void*>(weapon,4),0x508) && source->m_contain) {
   unsigned count=((Rva002DB880Contain*)source->m_contain)->members()->size();
   int maximum=at<unsigned char>(at<void*>(weapon,4),0x509);
-  if(maximum>0) { float ratio=(float)count/maximum; const float& capped=_STL::min(ratio,1.0f); out->m_1c*=capped; }
+  if(maximum>0) { float ratio=(float)count/maximum; const float& capped=_STL::min(ratio,1.0f); out->m_amount*=capped; }
  }
  int count=m_7c.size();
  for(int i=0;i<count;++i) {
   if(m_7c[i].filter.accepts((Object*)thing,source->getControllingPlayer())) {
-   out->m_1c*=m_7c[i].factor; break;
+   out->m_amount*=m_7c[i].factor; break;
   }
  }
  float bonus=0.0f;
- if(m_68 && out->m_1c!=0.0f && source->getAttributeModifierBonus(2,&bonus))
-  out->m_1c+=bonus;
+ if(m_68 && out->m_amount!=0.0f && source->getAttributeModifierBonus(2,&bonus))
+  out->m_amount+=bonus;
  {
   multiplier=1.0f;
-  if(m_70==15) { if(source->getAttributeModifierMultiplier(10,&multiplier)) out->m_1c*=multiplier; } else { if(source->getAttributeModifierMultiplier(3,&multiplier)) out->m_1c*=multiplier; }
+  if(m_70==15) { if(source->getAttributeModifierMultiplier(10,&multiplier)) out->m_amount*=multiplier; } else { if(source->getAttributeModifierMultiplier(3,&multiplier)) out->m_amount*=multiplier; }
  }
  float delay=(float)m_6c;
  if(m_88>0.0f && thing) {
@@ -130,8 +130,8 @@ bool DamageNugget::generateDamageInfo(void* weapon,BfmeThingXJ* thing,DamageInfo
  out->m_14=m_78;
  out->m_18=m_74;
  out->m_24=delay;
- out->m_08=at<int>(weapon,8);
- out->m_0c=(unsigned short)(1<<at<int>(source->getControllingPlayer(),0x24));
+ out->m_sourceID=at<int>(weapon,8);
+ out->m_sourcePlayerMask=(unsigned short)(1<<at<int>(source->getControllingPlayer(),0x24));
  out->m_28=at<int>(at<void*>(weapon,4),0x10);
  out->m_21=at<char>(at<void*>(weapon,4),0x535);
  return true;

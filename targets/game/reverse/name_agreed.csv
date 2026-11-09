@@ -1859,3 +1859,7 @@ game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m
 game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_1c,m_amount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,m_damage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineAttackInfo.cpp|param|friend_setName|n,name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_08,m_sourceID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_0c,m_sourcePlayerMask,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_1c,m_amount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,m_damage,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
