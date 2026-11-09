@@ -1,4 +1,4 @@
-extern int BfmeVfZQ;
+extern "C" int __identifier("?g_BfmeVftZQ@@3PAPAXA")[];
 
 class BfmeOwnerZQ
 {
@@ -12,7 +12,7 @@ public:
 BfmeOwnerZQ *BfmeOwnerZQ::bfmeInitZQ(void *first, void *second, void *third, void *fourth)
 {
 	bfmeBaseInitZQ(first, second, third, fourth, 1, 0);
-	m_bfmeVfZQ = &BfmeVfZQ;
+	m_bfmeVfZQ = __identifier("?g_BfmeVftZQ@@3PAPAXA");
 
 	return this;
 }

@@ -26,7 +26,45 @@ public:
 	void Release_Ref(void);
 };
 
-extern int BfmeVfZQ;
+extern "C" char __identifier("?bfmeGo1035G@BfmeG1035@@QAEPADXZ");
+extern "C" char __identifier("?bfmeMakeGR@BfmeHostGR@@QAEXXZ");
+extern "C" char __identifier("?rva0090c570@Rva0090C570Outer@@QAEXXZ");
+extern "C" char __identifier("?bfmeGo937B@BfmeThing937B@@QAEXXZ");
+void j_000213d7();
+void Rva0090C5F0Noop();
+void Rva0090C600Noop();
+extern "C" char __identifier("?bfmeGo911E@BfmeThing911E@@QAEXXZ");
+extern "C" char __identifier("?bfmeAdvanceStages@BfmeFlagStageSequence@@QAEIXZ");
+void j_00045c37();
+extern "C" char __identifier("?ready@Rva009EB940Receiver@@QAE_NXZ");
+extern "C" char __identifier("?method@Rva009EB8A0@@QAEXXZ");
+extern "C" char __identifier("?bfmeGo1024E@BfmeE1024@@QAEXXZ");
+void j_0000d413();
+extern "C" char __identifier("?bytes@Rva0090C5C0TextureBytes@@QBEIXZ");
+void j_0001d408();
+void j_00009a9d();
+
+// Retail VA 0x0111DFB0: seventeen function slots (vtable_lookup.py), the vftable
+// installed by the constructors at 0x006D51B0 and 0x006D5280 and by 0x006D4620.
+void *g_BfmeVftZQ[17] = {
+	reinterpret_cast<void *>(&__identifier("?bfmeGo1035G@BfmeG1035@@QAEPADXZ")),
+	reinterpret_cast<void *>(&__identifier("?bfmeMakeGR@BfmeHostGR@@QAEXXZ")),
+	reinterpret_cast<void *>(&__identifier("?rva0090c570@Rva0090C570Outer@@QAEXXZ")),
+	reinterpret_cast<void *>(&__identifier("?bfmeGo937B@BfmeThing937B@@QAEXXZ")),
+	reinterpret_cast<void *>(&j_000213d7),
+	reinterpret_cast<void *>(&Rva0090C5F0Noop),
+	reinterpret_cast<void *>(&Rva0090C600Noop),
+	reinterpret_cast<void *>(&__identifier("?bfmeGo911E@BfmeThing911E@@QAEXXZ")),
+	reinterpret_cast<void *>(&__identifier("?bfmeAdvanceStages@BfmeFlagStageSequence@@QAEIXZ")),
+	reinterpret_cast<void *>(&j_00045c37),
+	reinterpret_cast<void *>(&__identifier("?ready@Rva009EB940Receiver@@QAE_NXZ")),
+	reinterpret_cast<void *>(&__identifier("?method@Rva009EB8A0@@QAEXXZ")),
+	reinterpret_cast<void *>(&__identifier("?bfmeGo1024E@BfmeE1024@@QAEXXZ")),
+	reinterpret_cast<void *>(&j_0000d413),
+	reinterpret_cast<void *>(&__identifier("?bytes@Rva0090C5C0TextureBytes@@QBEIXZ")),
+	reinterpret_cast<void *>(&j_0001d408),
+	reinterpret_cast<void *>(&j_00009a9d),
+};
 
 class Rva006D5280Texture : public Rva006D51B0TextureBase
 {
@@ -35,7 +73,7 @@ public:
 		unsigned pool, unsigned renderTarget, unsigned reducible)
 		: Rva006D51B0TextureBase(width, height, mip, pool, renderTarget, reducible)
 	{
-		*reinterpret_cast<unsigned *>(this) = reinterpret_cast<unsigned>(&BfmeVfZQ);
+		*reinterpret_cast<unsigned *>(this) = reinterpret_cast<unsigned>(g_BfmeVftZQ);
 	}
 };
 
