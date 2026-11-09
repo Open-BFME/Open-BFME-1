@@ -112,9 +112,9 @@ private:
 	Coord3D m_garrisonPoint[MAX_GARRISON_POINT_CONDITIONS][MAX_GARRISON_POINTS];
 	int m_unmodelled_99c[MAX_GARRISON_POINT_CONDITIONS];
 	unsigned int m_unmodelled_9a8[3];
-	bool m_unmodelled_9b4;
+	bool m_garrisonPointsInitialized;
 	bool m_unmodelled_9b5;
-	bool m_unmodelled_9b6;
+	bool m_rallyValid;
 };
 
 // ??0GarrisonContain@@QAE@PAVThing@@PBVModuleData@@@Z
@@ -124,7 +124,7 @@ GarrisonContain::GarrisonContain(Thing *thing, const ModuleData *moduleData)
 	m_unmodelled_d4 = 0;
 	m_unmodelled_9b5 = false;
 	m_garrisonPointsInUse = 0;
-	m_unmodelled_9b4 = false;
+	m_garrisonPointsInitialized = false;
 
 	for (int i = 0; i != MAX_GARRISON_POINTS; ++i)
 	{
@@ -145,7 +145,7 @@ GarrisonContain::GarrisonContain(Thing *thing, const ModuleData *moduleData)
 	m_unmodelled_99c[0] = 0;
 	m_unmodelled_99c[1] = 0;
 	m_unmodelled_99c[2] = 0;
-	m_unmodelled_9b6 = false;
+	m_rallyValid = false;
 	m_unmodelled_9a8[0] = 0;
 	m_unmodelled_9a8[1] = 0;
 	m_unmodelled_9a8[2] = 0;
