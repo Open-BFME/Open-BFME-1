@@ -1830,3 +1830,4 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|membe
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f06c,m_displayedOCLTimerSeconds,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f26c,m_buildUpClockColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,m_commandBarBorderColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva003BD700Ctor.cpp|type||Rva003BD700String,UnicodeString,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
