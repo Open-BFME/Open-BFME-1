@@ -7756,3 +7756,9 @@ game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f2
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f24,ad7adaee6721aba177434973,claude-sonnet,20261109105714-7c4d0e,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f28,3ce9222a829c7863f1c6fdf7,claude-sonnet,20261109105714-7c4d0e,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f9c,820c92b5f64351c65d9382a9,claude-sonnet,20261109105714-7c4d0e,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeLength|s,76827e9e51ddb69f0e914529,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeStr|s,3cccfcbd58d5f0f4eda6d003,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeSet|s,fd3a27a76a29dd1815d1fc8f,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat|s,9e45a18882e962a7aff94638,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat#2|s,2aa23c604e165786f00c36bd,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeFind|s,560932da0c322262d4c50854,claude-sonnet,20261109105549-4b78ed,2026-11-09

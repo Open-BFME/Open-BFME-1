@@ -2878,3 +2878,9 @@ game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f1
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f9c,m_lastDamageTimestamp,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f18,m_currentHealth,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Body/BodySnapshot0020F330.cpp|member||f9c,m_lastDamageTimestamp,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeLength|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeStr|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeSet|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat#2|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeFind|s,str,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
