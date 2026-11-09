@@ -6675,3 +6675,4 @@ game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|BfmeThingCK::bfm
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE200Scroll.cpp|local|Rva006FE200Owner::Rva006FE200|s,075c83b5d46555f870e5836b,claude-sonnet,20261109045404-b95a56,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE200Scroll.cpp|local|Rva006FE200Owner::Rva006FE200|c,db275cfefdea07696a7f47b1,claude-sonnet,20261109045404-b95a56,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeLighting_006F7DA0.cpp|type||Rva006F7DA0TreeBuffer,933b79107e09f1877bf078fa,claude-sonnet,20261109045404-8e1f0e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1370.cpp|member||m_bfmeRefs,6174bcef923bf3273fef08eb,claude-sonnet,20261109045450-daa318,2026-11-09
