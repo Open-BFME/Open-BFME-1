@@ -7204,3 +7204,4 @@ game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrAQ,8f623dbc7fd2034bc
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp|member||m_status94,3e330c391a763858d61e5610,claude-sonnet,20261109072929-e7ee70,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|x,404caa29b6387da629b4a193,claude-sonnet,20261109072929-7a114a,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,95111af3bbba7003a7daa702,claude-sonnet,20261109072929-7a114a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1340.cpp|type||BfmeChunkUQB,1cd8af85dc1546ef3288095c,claude-sonnet,20261109072929-90d1a4,2026-11-09
