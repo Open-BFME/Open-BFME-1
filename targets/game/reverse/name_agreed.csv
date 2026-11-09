@@ -2116,3 +2116,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|memb
 game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,m_id,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMapTerrainTextureGetters.cpp|param|TerrainTextureRef::TerrainTextureRef|p,texture,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_draw.cpp|type||BfmeMediumScaleUpWindow,GameWindow,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_draw.cpp|type||BfmeMediumScaleUpWindow,GameWindow,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

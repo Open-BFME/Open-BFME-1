@@ -51,7 +51,7 @@ private:
 	void *m_growWin;
 };
 
-struct BfmeMediumScaleUpWindow
+struct GameWindow
 {
 	unsigned char m_unreconstructed_00[ 0x48 ];
 	const Image *m_enabledImage;
@@ -63,7 +63,7 @@ void MainMenuMediumScaleUpTransition::draw()
 	if(!m_win)
 		return;
 
-	const Image *image = ((const BfmeMediumScaleUpWindow *)m_win)->m_enabledImage;
+	const Image *image = ((const GameWindow *)m_win)->m_enabledImage;
 	if(m_drawState <= m_startFrame || m_drawState >= m_endFrame)
 		return;
 
