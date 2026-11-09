@@ -2346,3 +2346,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassCto
 game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassCtor.cpp|member||value11,m_alpha,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathCL,m_pathfinder,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathCL,m_pathfinder,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,m_file,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
