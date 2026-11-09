@@ -7059,3 +7059,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|
 game/GameEngine/Source/GameLogic/Object/Update/WallUpgradeUpdateCtorThunk.cpp|member||m_f14,74b93bf7b6ef344697f5e92b,claude-sonnet,20261109064956-f466cf,2026-11-09
 game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehaviorModuleDataMemberDestructor.cpp|member||m_bfmeHeader,1db840fe2905552938acdbc5,claude-sonnet,20261109065140-734c47,2026-11-09
 game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehaviorModuleDataMemberDestructor.cpp|member||m_bfmeCount,7ad1dcde452da56c50f730c3,claude-sonnet,20261109065140-734c47,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|d,3c3fb0553ba998b236c4b850,claude-sonnet,20261109065024-729d54,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|z2,2133731453726d6961b36ad9,claude-sonnet,20261109065024-729d54,2026-11-09

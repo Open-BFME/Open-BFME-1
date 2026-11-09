@@ -2198,3 +2198,4 @@ game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehavior
 game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehaviorModuleDataMemberDestructor.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehaviorModuleDataMemberDestructor.cpp|member||m_bfmeHeader,m_header,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehaviorModuleDataMemberDestructor.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
