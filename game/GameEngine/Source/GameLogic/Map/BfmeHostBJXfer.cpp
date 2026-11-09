@@ -107,17 +107,17 @@ public:
 };
 
 // ?xfer@BfmeHostBJ@@QAEXPAVXfer@@@Z
-void BfmeHostBJ::xfer(Xfer *x)
+void BfmeHostBJ::xfer(Xfer *xfer)
 {
-	if (x->isLightCRC())
+	if (xfer->isLightCRC())
 		return;
 
 	BfmeVersionFrame versionFrame;
 	versionFrame.version.version = 1;
 	versionFrame.version.currentVersion = 1;
-	x->xferVersion(&versionFrame.version);
+	xfer->xferVersion(&versionFrame.version);
 	versionFrame.count = m_bfmeCountBJ;
-	x->xferInt(&versionFrame.count);
+	xfer->xferInt(&versionFrame.count);
 
 	if (versionFrame.count != m_bfmeCountBJ)
 	{
@@ -138,7 +138,7 @@ void BfmeHostBJ::xfer(Xfer *x)
 		BfmeSnapshotBJ *item = entry->m_bfmeItemBJ;
 		Bool present = (item != 0);
 
-		x->xferBool(&present);
+		xfer->xferBool(&present);
 
 		if (item == 0)
 		{
@@ -151,13 +151,13 @@ void BfmeHostBJ::xfer(Xfer *x)
 				goto mismatch;
 		}
 		if (present)
-			x->xferSnapshot(item);
+			xfer->xferSnapshot(item);
 
 		++i;
 		offset += 0x18;
 	}
 
-	x->xferBool(&m_bfmeFlagBJ);
+	xfer->xferBool(&m_bfmeFlagBJ);
 	return;
 
 mismatch:
