@@ -74,11 +74,11 @@ public:
 
 extern Display *TheDisplay;
 
-inline void drawImage(Display *display, const Image *image, Real x0,
-	Real y0, Real x1, Real y1, Int color, Int mode)
+inline void drawImage(Display *display, const Image *image, Real startX,
+	Real startY, Real endX, Real endY, Int color, Int mode)
 {
 	display->beginImageDraw();
-	display->drawImageCore(image, x0, y0, x1, y1, color, mode);
+	display->drawImageCore(image, startX, startY, endX, endY, color, mode);
 	display->endImageDraw();
 }
 

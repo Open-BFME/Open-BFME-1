@@ -1738,3 +1738,7 @@ game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|x0,star
 game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|y0,startY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|x1,endX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|y1,endY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|x0,startX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|y0,startY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|x1,endX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva0046F060DrawImageAt.cpp|param|drawImage|y1,endY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
