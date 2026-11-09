@@ -84,18 +84,18 @@ protected:
 bool ScriptConditions::evaluateScienceAcquired(
 	Parameter *playerParm, Parameter *scienceParm)
 {
-	ScienceType e = TheScienceStore->getScienceFromInternalName(
+	ScienceType science = TheScienceStore->getScienceFromInternalName(
 		*reinterpret_cast<const AsciiString *>(reinterpret_cast<char *>(scienceParm) + 0x10));
 
-	if (e == SCIENCE_INVALID)
+	if (science == SCIENCE_INVALID)
 		return false;
 	scienceParm = reinterpret_cast<Parameter *>(
 		nextPlayerMask(reinterpret_cast<int>(playerParm)));
 	while ((short)reinterpret_cast<int>(scienceParm)) {
-		Player *r = ThePlayerList->getEachPlayerFromMask(
+		Player *player = ThePlayerList->getEachPlayerFromMask(
 			*reinterpret_cast<unsigned short *>(&scienceParm));
 
-		if (r && r->isCapableOfPurchasingScience(e))
+		if (player && player->isCapableOfPurchasingScience(science))
 			return true;
 	}
 	return false;
@@ -109,9 +109,9 @@ char __stdcall bfmeGo1091B(int a)
 		return 0;
 	a = nextPlayerMask(a);
 	while ((short)a) {
-		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
+		Player *player = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
-		if (r && r->hasAnyBuildFacility())
+		if (player && player->hasAnyBuildFacility())
 			return 0;
 	}
 	return 1;
@@ -125,9 +125,9 @@ char __stdcall bfmeGo1091C(int a)
 		return 0;
 	a = nextPlayerMask(a);
 	while ((short)a) {
-		Player *r = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
+		Player *player = ThePlayerList->getEachPlayerFromMask(*(unsigned short *)&a);
 
-		if (r && r->hasAnyObjects(false))
+		if (player && player->hasAnyObjects(false))
 			return 0;
 	}
 	return 1;
