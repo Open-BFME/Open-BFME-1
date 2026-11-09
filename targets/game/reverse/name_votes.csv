@@ -7373,3 +7373,12 @@ game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|mem
 game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|member||at1dc,c13a48e7066f10f0c4357ef5,claude-sonnet,20261109081106-1f2879,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|function|AIUpdateInterface@|rva002774c0,d62d9e962e358ddafc12363d,claude-sonnet,20261109081106-1f2879,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|param|ground|l,966ad090361e80e5b9ab2774,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilRender0075F810,d15eb26ab51e7807736d169c,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||BarrelRecord0075F810,b1e49efc1f2e08e472ae0bec,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilEntry0075F810,0c404c37c65d48e08424630b,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilState0075F810,e38bf61f97a6d2e317d479ba,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilData0075F810,b6dd49f41d8399bcbbc57f17,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||recoilBone00,aea16ed6bc7db29b6a1e1fe0,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||muzzleFlashBone08,393761b56a75d865a7b2d1ec,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||barrels7C,064091de90d32a04dffe8f9f,claude-sonnet,20261109081339-fa341b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||active120,0de56c0f2dc2ffef8bb8a114,claude-sonnet,20261109081339-fa341b,2026-11-09
