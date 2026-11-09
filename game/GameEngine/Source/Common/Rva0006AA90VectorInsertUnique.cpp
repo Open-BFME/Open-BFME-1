@@ -31,7 +31,9 @@ struct Rva0006AA90InsertResult
 // that retail passes the raw pointers to), so declare that real name here and
 // reach its pointer-returning result through a call through it: the retail
 // body keeps the returned iterator in eax.
-void __cdecl bfmeSendEventA19(void *, void *, void *, unsigned int, int);
+// Retail calls it through ILT 0x00049896, which the ledger defines as the
+// thunk j_00049896.
+extern void j_00049896();
 
 typedef void *(__cdecl *Rva0006AA90CurveFind)(void *, void *, void *,
 	unsigned int, int);
@@ -62,7 +64,7 @@ Rva0006AA90InsertResult Rva0006AA90Vector::insertUnique(
 	Rva0006AA90Element *start = m_start;
 	Rva0006AA90Element *finish = m_finish;
 	Rva0006AA90Element *position = (Rva0006AA90Element *)((
-		Rva0006AA90CurveFind)(void *)bfmeSendEventA19)(
+		Rva0006AA90CurveFind)(void *)j_00049896)(
 			start, finish, (void *)&value, code, 0);
 	if (position == finish || value.m_key < position->m_key)
 	{

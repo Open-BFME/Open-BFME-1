@@ -13,7 +13,9 @@ public:
 	void *m_bfmePayload;
 };
 
-char __cdecl bfmeSameUW( void *payload, BfmeItemUW *item, void *other );
+// Retail calls ILT 0x000162E8, which the ledger defines as ?j_000162e8@@YAXXZ.
+extern void j_000162e8();
+typedef char (__cdecl *BfmeSameUWCall)( void *payload, BfmeItemUW *item, void *other );
 
 struct Rva00452FE0Key
 {
@@ -30,7 +32,7 @@ int __cdecl Rva00452FE0Same( const Rva00452FE0Key &first,
 		BfmeItemUW *item = first.m_bfmeItem;
 		void *mine = item->m_bfmePayload;
 
-		if( bfmeSameUW( mine, item, theirs ) )
+		if( ((BfmeSameUWCall)j_000162e8)( mine, item, theirs ) )
 			return 1;
 	}
 
