@@ -44,11 +44,13 @@ public:
 	Int compare(const AsciiString &other) const;
 };
 
+// Retail reaches the item's name getter (body at 0x003A72F0) through the ILT
+// thunk at 0x0000CA95, a defined ?j_0000ca95 row; the body has no name here.
+extern void j_0000ca95();
+
 class Glo012F1024Item
 {
 public:
-	AsciiString name003A72F0(void);
-
 	char m_bfmeBody[0xDC];
 };
 
@@ -66,7 +68,7 @@ public:
 	Glo012F1024Item *m_bfmeFinish;
 };
 
-Int AsciiString::compare(const AsciiString &other) const
+inline Int AsciiString::compare(const AsciiString &other) const
 {
 	Int otherLength = other.len();
 	const char *otherText = other.str();
@@ -95,7 +97,9 @@ Glo012F1024Item *Glo012F1024Entry::select(AsciiString *key)
 	UnsignedInt i = 0;
 	for (; i < m_bfmeItems.size(); ++i)
 	{
-		if (m_bfmeItems.m_bfmeStart[i].name003A72F0().compare(*key) == 0)
+		union { void (*raw)(); AsciiString (Glo012F1024Item::*member)(void); } nameCall;
+		nameCall.raw = j_0000ca95;
+		if ((m_bfmeItems.m_bfmeStart[i].*nameCall.member)().compare(*key) == 0)
 			return m_bfmeItems.m_bfmeStart + i;
 	}
 	return 0;
