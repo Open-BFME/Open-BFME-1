@@ -7066,3 +7066,4 @@ game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_setCorrectDamageState.cp
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeNext,e3c5cb401b164dc8d85f5623,claude-sonnet,20261109065242-78a308,2026-11-09
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmePrev,25dae7857a829723d33e5cf8,claude-sonnet,20261109065242-78a308,2026-11-09
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeTime,e218b38dab36f1c7d532d0ab,claude-sonnet,20261109065242-78a308,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp|member||m_field3c,06d299a7795da077ab62ea8a,claude-sonnet,20261109065242-1f205d,2026-11-09
