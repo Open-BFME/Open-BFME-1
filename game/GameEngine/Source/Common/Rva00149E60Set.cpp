@@ -1,6 +1,16 @@
 // cl: /O2 /Ob0
 
-extern const void *g_010956C4[];
+void j_00039f04();
+void j_0000783d();
+void j_0003b9e4();
+
+// Retail VA010956C4: three existing ILT entries (vtable_lookup.py 0x010956C4), the
+// vftable of the partition filter stored by the AI and filter constructors.
+const void *g_010956C4[3] = {
+	reinterpret_cast<const void *>(&j_00039f04),
+	reinterpret_cast<const void *>(&j_0000783d),
+	reinterpret_cast<const void *>(&j_0003b9e4),
+};
 
 class Rva00149E60
 {
