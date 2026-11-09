@@ -46,7 +46,7 @@ struct Rva00177A90Object
     char padC0[0x204-0xc0];
     AIUpdateInterface *m_ai;
 };
-struct Rva00177A90Machine
+struct StateMachine
 {
     char pad00[0x10];
     Rva00177A90Object *m_owner;
@@ -55,7 +55,7 @@ class GameLogic
 {
 public:
     char pad00[0x3c];
-    unsigned m_field3C;
+    unsigned m_frame;
     char pad40[0x1a0-0x40];
     int m_field1A0;
 };
@@ -127,7 +127,7 @@ class AIAttackMeleeEngageState : public Rva00177A90Slots<17>
 {
 public:
     char pad004[0x1c-4];
-    Rva00177A90Machine *m_machine;
+    StateMachine *m_machine;
     char pad20[4];
     Coord3D m_goalPosition;
     char pad30[0x4c-0x30];
@@ -170,9 +170,9 @@ Bool AIAttackMeleeEngageState::computePath()
     }
     if (!ai->m_path && !ai->flag31e)
         forceRepath = true;
-    if (!forceRepath && TheGameLogic->m_field3C - frame58 < 5)
+    if (!forceRepath && TheGameLogic->m_frame - frame58 < 5)
         return true;
-    frame58 = TheGameLogic->m_field3C;
+    frame58 = TheGameLogic->m_frame;
     if (CALL(Rva000A1490,m_machine,j_0000e570)())
     {
         Rva00177A90Object *source = m_machine->m_owner;
@@ -228,7 +228,7 @@ Bool AIAttackMeleeEngageState::computePath()
                 return true;
             }
             flag74 = true;
-            frame70 = TheGameLogic->m_field3C + 50;
+            frame70 = TheGameLogic->m_frame + 50;
             return true;
         }
         void *pathfinder = TheAI->m_pathfinder;
