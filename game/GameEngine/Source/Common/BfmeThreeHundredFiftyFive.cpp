@@ -1,5 +1,6 @@
 // cl: /O2 /Os
-extern "C" unsigned char bfmeVftUD[];
+// Retail 0x01158598 is the d3dx9 archive vftable ??_7CPSProgram@D3DXShader@@6B@; the stand-in name resolved nothing.
+extern "C" const char __identifier("??_7CPSProgram@D3DXShader@@6B@")[];
 
 
 // The base destructor this deleting destructor calls is at 0x00AB8350, which
@@ -23,7 +24,7 @@ public:
 
 void *BfmeThingUD::bfmeKillUD(int flags)
 {
-	m_bfmeVft = bfmeVftUD;
+	m_bfmeVft = (void *)__identifier("??_7CPSProgram@D3DXShader@@6B@");
 	reinterpret_cast<D3DXShader::CShaderProgram *>(this)->D3DXShader::CShaderProgram::~CShaderProgram();
 	if ((flags & 1) != 0)
 		::operator delete(this);
