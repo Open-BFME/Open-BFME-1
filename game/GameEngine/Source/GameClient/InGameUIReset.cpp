@@ -102,7 +102,6 @@ static inline Rva0048EC80Manager *theDisplayStringManagerView()
 {
 	return (Rva0048EC80Manager *)TheDisplayStringManager;
 }
-extern const AsciiString Rva01336E50EmptyString;
 
 void ResetInGameChat();
 void UpdateDiplomacyBriefingText(const AsciiString &text, bool clear);
@@ -311,5 +310,5 @@ void InGameUI::reset()
 
 	m_tooltipsDisabledUntil = 0;
 
-	UpdateDiplomacyBriefingText(Rva01336E50EmptyString, true);
+	UpdateDiplomacyBriefingText(AsciiString::TheEmptyString, true);
 }

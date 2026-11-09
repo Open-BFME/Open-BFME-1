@@ -5,7 +5,6 @@
 #include "unicode_string.h"
 #include <string.h>
 
-extern const AsciiString Rva01336E50EmptyString;
 
 template<int N> struct Rva00362670Words
 {
@@ -36,7 +35,7 @@ private:
 
 void Rva00362670Owner::reset()
 {
-    field04 = Rva01336E50EmptyString;
+    field04 = AsciiString::TheEmptyString;
     field08 = 0;
     field0C = 0;
     field10.clear();

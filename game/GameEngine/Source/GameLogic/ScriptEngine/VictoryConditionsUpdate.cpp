@@ -9,7 +9,6 @@
 // Its independently probed 53-byte emission matches retail 0035F150.
 #include <wchar.h>
 #include "ascii_string.h"
-extern const AsciiString Rva01336E50EmptyString;
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 enum Relationship { ALLIES = 2 };
@@ -242,7 +241,7 @@ void VictoryConditions::update() {
                                 AsciiString gui("Gui_DefeatScreen");
                                 AsciiString apt("APT:EndDefeat");
                                 showEndGame(apt, ((Rva00267FA0 *)local2)->get(), gui,
-                                            Rva01336E50EmptyString);
+                                            AsciiString::TheEmptyString);
                             }
                         }
                     }

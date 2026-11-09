@@ -68,7 +68,6 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern const AsciiString Rva01336E50EmptyString;
 
 // ?rva00349730@ScriptEngine@@QAEXPAVObject@@ABVAsciiString@@@Z
 void ScriptEngine::rva00349730(Object *object, const AsciiString &fallback)
@@ -78,7 +77,7 @@ void ScriptEngine::rva00349730(Object *object, const AsciiString &fallback)
 
     AsciiString name(object->getName());
     bool replaced = false;
-    if (((const StringBase<char> &)name).compare((const StringBase<char> &)Rva01336E50EmptyString) == 0)
+    if (((const StringBase<char> &)name).compare((const StringBase<char> &)AsciiString::TheEmptyString) == 0)
     {
         if (fallback.isEmpty())
             return;

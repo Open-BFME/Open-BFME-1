@@ -87,7 +87,6 @@ class NameKeyGenerator
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern const AsciiString Rva01336E50EmptyString;
 
 // Retail ILT 0x0003ADD7 carries thiscall NameKeyGenerator::nameToKey.
 static __forceinline NameKeyType rva0003ADD7(NameKeyGenerator *generator, const char *name)
@@ -260,5 +259,5 @@ Rva000FB210Element::Rva000FB210Element(Object *object)
 		m_f34 = module->rva002A23B0();
 		thingTemplate = module->rva002A1B20();
 	}
-	m_name.set(thingTemplate != 0 ? thingTemplate->m_name : Rva01336E50EmptyString);
+	m_name.set(thingTemplate != 0 ? thingTemplate->m_name : AsciiString::TheEmptyString);
 }
