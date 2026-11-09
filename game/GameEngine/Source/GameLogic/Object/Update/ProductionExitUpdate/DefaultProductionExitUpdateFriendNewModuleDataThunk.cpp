@@ -14,12 +14,12 @@ public:
 
 private:
 	unsigned int m_gap4;
-	unsigned int m_08;
-	unsigned int m_0c;
-	unsigned int m_10;
-	unsigned int m_14;
-	unsigned int m_18;
-	unsigned int m_1c;
+	unsigned int m_unitCreatePointX;
+	unsigned int m_unitCreatePointY;
+	unsigned int m_unitCreatePointZ;
+	unsigned int m_naturalRallyPointX;
+	unsigned int m_naturalRallyPointY;
+	unsigned int m_naturalRallyPointZ;
 };
 
 class MultiIniFieldParse;
@@ -46,12 +46,12 @@ public:
 
 DefaultProductionExitUpdateModuleData::DefaultProductionExitUpdateModuleData()
 {
-	m_08 = 0;
-	m_0c = 0;
-	m_10 = 0;
-	m_14 = 0;
-	m_18 = 0;
-	m_1c = 0;
+	m_unitCreatePointX = 0;
+	m_unitCreatePointY = 0;
+	m_unitCreatePointZ = 0;
+	m_naturalRallyPointX = 0;
+	m_naturalRallyPointY = 0;
+	m_naturalRallyPointZ = 0;
 }
 
 // ?friend_newModuleData@DefaultProductionExitUpdate@@SAPAVModuleData@@PAVINI@@@Z
