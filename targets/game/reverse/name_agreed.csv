@@ -1971,3 +1971,7 @@ game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128A|v,text,claude-s
 game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128B|v,text,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128C|v,text,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/AODHordeContainUpdateFormationMembers.cpp|param|Coord3D::Coord3D#3|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1128.cpp|member||m_bfme00,m_text,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128A|v,text,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128B|v,text,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128C|v,text,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
