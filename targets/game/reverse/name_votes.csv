@@ -6473,3 +6473,4 @@ game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCellSizeI
 game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeWidth,5f672635fbf7ab338114f06f,claude-sonnet,20261109032522-b15300,2026-11-09
 game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeHeight,5ef6ee96939334e10836be96,claude-sonnet,20261109032522-b15300,2026-11-09
 game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCells,6e0f01bc77c2c8cf522e27dc,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|function|Gen_00945B20@|bfmeGet,aeab57bbeceb4941999407c8,claude-sonnet,20261109031912-9e764b,2026-11-09
