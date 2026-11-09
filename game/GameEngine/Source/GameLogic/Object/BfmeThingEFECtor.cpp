@@ -118,13 +118,20 @@ public:
 
 extern ExperienceLevelSystem *TheExperienceLevelSystem;
 
+// Retail 0x0109C9BC is recorded under both ??_7BfmeThingEFE@@6B@ and
+// ??_7Rva001B24D0Deleting@@6B@ (dir32_addresses.csv); ScalarDeletingDestructors.cpp
+// emits the latter with the 0x001B24D0 deleting destructor. A virtual ~BfmeThingEFE
+// here had no body (retail inlines it into that helper), so the store names the
+// emitted vftable instead.
+extern "C" void *__identifier("??_7Rva001B24D0Deleting@@6B@")[];
+
 class BfmeThingEFE
 {
 public:
 	BfmeThingEFE(ExperienceTracker *tracker);
-	virtual ~BfmeThingEFE();
 
 private:
+	void **m_vtable;
 	ExperienceTracker *m_tracker;
 	Real m_scalar;
 	int m_baseCount;
@@ -132,6 +139,7 @@ private:
 };
 
 BfmeThingEFE::BfmeThingEFE(ExperienceTracker *tracker) :
+	m_vtable(__identifier("??_7Rva001B24D0Deleting@@6B@")),
 	m_tracker(tracker),
 	m_scalar(1.0f),
 	m_baseCount(1),
