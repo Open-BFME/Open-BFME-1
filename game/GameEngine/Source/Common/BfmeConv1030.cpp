@@ -12,14 +12,14 @@ public:
 	void bfmeBase1030(void);
 
 	void *m_bfmeVfptr;
-	int m_bfmeH;
+	int m_mutex;
 };
 
 BfmeA1030 *BfmeA1030::bfmeGo1030A(void)
 {
 	bfmeBase1030();
 	m_bfmeVfptr = bfmeVft1030A;
-	m_bfmeH = CreateMutexA(0, 0, 0);
+	m_mutex = CreateMutexA(0, 0, 0);
 	return this;
 }
 
