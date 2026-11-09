@@ -6491,3 +6491,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruSta
 game/GameEngine/Source/GameLogic/Object/Damage/EvacuateDamageModuleDataConstructor.cpp|type||BfmeDamageModuleDataBase,dd6a86578068a53bbb6bcd41,claude-sonnet,20261109033345-9695d5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_statusBits98,74fef498c0d43870037a6051,claude-sonnet,20261109033345-3c98cb,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_weaponOffset78,2ca52ff21aa64d49356c5e70,claude-sonnet,20261109033345-3c98cb,2026-11-09
+game/GameEngine/Source/GameClient/GlobalLanguage_onGameEngineExit.cpp|type||BfmeFindData,39333b5de63179eb97bfd207,claude-sonnet,20261109033649-386ed7,2026-11-09
