@@ -33051,7 +33051,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeSizeVOG@BfmeThingVOG@@QAEHXZ,,0x0095B410,52,game/GameEngine/Source/Common/BfmeConv1531.cpp,matched,
 ?bfmeSkip@Gen_0059bce0@@QAEXXZ,,0x0059BCE0,17,game/GameEngine/Source/Common/S3SplitTails.cpp,matched,Open-BFME5 split body reunited
 ?bfmeSkip@Gen_005a03c0@@QAEXXZ,,0x005A03C0,17,game/GameEngine/Source/Common/S3SplitTails.cpp,matched,Open-BFME5 split body reunited
-?bfmeSkipCommentEAO@BfmeLexEAO@@QAEDXZ,,0x0035EC70,94,game/GameEngine/Source/Common/BfmeConv2009.cpp,matched,XML comment skipper; member stored back after every advance
+?skipComment@BfmeLexEAO@@QAEDXZ,,0x0035EC70,94,game/GameEngine/Source/Common/BfmeConv2009.cpp,matched,XML comment skipper; member stored back after every advance
 ?bfmeSkipLevelPrefix@@YAPBDPBD@Z,,0x0046EE10,78,game/GameEngine/Source/Common/BfmeSkipLevelPrefix.cpp,matched,
 ?bfmeSkipPrefixed@Gen009D8C30@@QAEXXZ,,0x009D8C30,110,game/Libraries/Source/xfer/xfer_load.cpp,matched,Open BFME 2 donor conditional skip count; complete caller and File slot ABI; identity evidence targets/game/reverse/identity_evidence/009d8c30-bfme2-donor.md;model=gpt-6.1-sol;host=fleet
 ?bfmeSkipUntil0035E800@@YAPBDPBDD@Z,,0x0035E800,19,game/GameEngine/Source/Common/INI/SkipUntilChar.cpp,matched,scan until delimiter or null using compiler private EAX and DL convention;model=openai-codex/gpt-6-sol

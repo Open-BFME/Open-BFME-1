@@ -38698,3 +38698,4 @@ Gen_f265_b7a8aa_00434ff0,0x00434FF0,"gen-shim scaffold placeholder superseded by
 ?bfmeApplyETB@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z,0x001CDA40,renamed to ?fireCurrentWeapon@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z by tools/name_lane.py: two models agreed
 ??0Rva003BD700@@QAE@ABVRva003BD700String@@H@Z,0x003BD700,renamed to ??0Rva003BD700@@QAE@ABVUnicodeString@@H@Z by tools/name_lane.py: two models agreed
 ?bfmeVersionTextAL@BfmeVersionAL@@QAE?AVUnicodeStringAL@@XZ,0x000AED00,renamed to ?getUnicodeVersion@BfmeVersionAL@@QAE?AVUnicodeStringAL@@XZ by tools/name_lane.py: two models agreed
+?bfmeSkipCommentEAO@BfmeLexEAO@@QAEDXZ,0x0035EC70,renamed to ?skipComment@BfmeLexEAO@@QAEDXZ by tools/name_lane.py: two models agreed

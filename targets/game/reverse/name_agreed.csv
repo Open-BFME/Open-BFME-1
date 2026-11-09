@@ -1921,3 +1921,5 @@ game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeMode,
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue,m_weaponSlot,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,m_laserFromAssisted,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,m_laserToTarget,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2009.cpp|member||m_bfmePosEAO,m_pos,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2009.cpp|function|BfmeLexEAO@|bfmeSkipCommentEAO,skipComment,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

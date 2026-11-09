@@ -1,35 +1,35 @@
 class BfmeLexEAO
 {
 public:
-	char bfmeSkipCommentEAO();
+	char skipComment();
 
-	char *m_bfmePosEAO;
+	char *m_pos;
 };
 
-char BfmeLexEAO::bfmeSkipCommentEAO()
+char BfmeLexEAO::skipComment()
 {
-	char *p = m_bfmePosEAO + 2;
+	char *p = m_pos + 2;
 
-	m_bfmePosEAO = p;
-
-	if (*p != 0x2d)
-		return 0;
-
-	p++;
-	m_bfmePosEAO = p;
+	m_pos = p;
 
 	if (*p != 0x2d)
 		return 0;
 
 	p++;
-	m_bfmePosEAO = p;
+	m_pos = p;
+
+	if (*p != 0x2d)
+		return 0;
+
+	p++;
+	m_pos = p;
 
 	if (*p == 0)
 		return 0;
 
 	for (;;)
 	{
-		char *q = m_bfmePosEAO;
+		char *q = m_pos;
 		char c = *q;
 
 		while (c != 0 && c != 0x2d)
@@ -38,13 +38,13 @@ char BfmeLexEAO::bfmeSkipCommentEAO()
 			q++;
 		}
 
-		m_bfmePosEAO = q;
+		m_pos = q;
 
 		if (*q == 0)
 			return 0;
 
 		q++;
-		m_bfmePosEAO = q;
+		m_pos = q;
 
 		c = *q;
 
@@ -54,7 +54,7 @@ char BfmeLexEAO::bfmeSkipCommentEAO()
 		if (c == 0x2d)
 		{
 			q++;
-			m_bfmePosEAO = q;
+			m_pos = q;
 
 			c = *q;
 
@@ -64,7 +64,7 @@ char BfmeLexEAO::bfmeSkipCommentEAO()
 			if (c == 0x3e)
 			{
 				q++;
-				m_bfmePosEAO = q;
+				m_pos = q;
 
 				return 1;
 			}
