@@ -7531,3 +7531,6 @@ game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,e346e4b781b5e8c9df8adab9,claude-sonnet,20261109092244-715660,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|s_bfmeKeyERI,51e965f14a4c5e9d021896a1,claude-sonnet,20261109092244-715660,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFXRubbleNeighbors.cpp|local|TransitionDamageFX::rva002539F0|d,0392be3b4f03e60f8e869d94,claude-sonnet,20261109092244-1014c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalRange470,e9eaef0d0c0082498c39cc79,claude-sonnet,20261109092321-24e7e4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalMode478,ea265e35b8ed4525ac72d663,claude-sonnet,20261109092321-24e7e4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalPosition47c,c02956899fb2caa6b79b41fa,claude-sonnet,20261109092321-24e7e4,2026-11-09
