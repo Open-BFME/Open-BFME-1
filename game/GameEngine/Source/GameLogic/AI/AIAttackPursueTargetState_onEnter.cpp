@@ -398,12 +398,12 @@ protected:
 	StateMachine *getMachine() { return machine; }
 	Object *getMachineOwner() { return machine->m_owner; }
 	Object *getMachineGoalObject() { return machine->getGoalObject(); }
-	void setAdjustsDestination(Bool b) { adjust4c = b; }
+	void setAdjustsDestination(Bool b) { m_adjustDestinations = b; }
 
 	UnsignedByte m_pad004[0x1c - 0x04];
 	StateMachine *machine;					// +0x1c
 	UnsignedByte pad20[0x4c - 0x20];
-	Bool adjust4c;							// +0x4c
+	Bool m_adjustDestinations;							// +0x4c
 	UnsignedByte pad4d[0x50 - 0x4d];
 	Coord3D m_prevVictimPos;				// +0x50
 	int m_approachTimestamp;				// +0x5c

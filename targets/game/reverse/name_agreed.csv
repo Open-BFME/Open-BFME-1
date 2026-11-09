@@ -1317,3 +1317,4 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.c
 game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||adjust4c,m_adjustDestinations,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field00,m_peerResponseType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field04,m_groupRoomName,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||adjust4c,m_adjustDestinations,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
