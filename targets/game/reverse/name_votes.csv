@@ -7385,3 +7385,10 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F8
 game/GameEngine/Source/Common/BfmeConv1885.cpp|local|BfmeOwnerZS::bfmeNotifyZS|p,7d3f4e5c4c56cb326c80a218,claude-sonnet,20261109081642-96f686,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1046.cpp|param|piSBStopListingAutoMatches|p,c5c5f9e5a6f8a5f877b81e3c,claude-sonnet,20261109081642-ae4956,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|param|UnicodeString::UnicodeString#2|s,c22475c6f3cb025e6e745a28,claude-sonnet,20261109081831-fdb9a0,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_list04,dd47d74e7df57994a3fcd0eb,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_list08,0526f93b527c8a620a3e6502,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_context0C,62be55cd0c0f55937ce18e63,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field10,a830873450160ae1cf45143e,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field11,38fc4f3e6e4fba37e8657607,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field14,356fb8864d77f27c10c71683,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field18,e493c7343d7c0fa5586c1e8b,claude-sonnet,20261109081642-3d4a86,2026-11-09
