@@ -34,6 +34,16 @@
 #include <stdio.h>
 #include <string.h>
 #include <new>      // needed for placement new prototype
+// Retail's 0x00889F20 body is the ledger row ?insert@Dictionary@@QAEPAUDictNode@@HHPBDH@Z
+// (Dictionary_insert.cpp); the frame-entry add reaches it with the same this and
+// four arguments, so call it through that spelling.
+struct DictNode;
+class Dictionary
+{
+public:
+    DictNode *insert(int, int, const char *, int);
+};
+
 // Retail's 0x0088A7E0 body is the ledger row ?UpdateFrameStatus@Rva0088A7E0Debug;
 // call it through that spelling (same this, same single reference argument).
 struct Rva0088A7E0FrameHashEntry;
@@ -369,7 +379,7 @@ Debug& Debug::CrashBegin(const char *file, int line)
   // retail row, without emitting a conflicting GetFrameEntry COMDAT.
   FrameHashEntry *entry=Instance.LookupFrame(curStackFrame);
   if (!entry)
-    entry=Instance.AddFrameEntry(curStackFrame,FrameTypeAssert,file,line);
+    entry=(FrameHashEntry *)((Dictionary *)&Instance)->insert(curStackFrame,FrameTypeAssert,file,line);
   if (entry->status==Unknown)
     ((Rva0088A7E0Debug *)&Instance)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
   Instance.curFrameEntry=entry;
@@ -1867,7 +1877,7 @@ bool Debug::IsLogEnabled(const char *fileOrGroup)
   // that strings address as frame address...
   FrameHashEntry *e=Instance.LookupFrame((unsigned)fileOrGroup);
   if (!e)
-    e=Instance.AddFrameEntry((unsigned)fileOrGroup,FrameTypeLog,fileOrGroup,0);
+    e=(FrameHashEntry *)((Dictionary *)&Instance)->insert((unsigned)fileOrGroup,FrameTypeLog,fileOrGroup,0);
   if (e->status==Unknown)
     ((Rva0088A7E0Debug *)&Instance)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)e);
   return e->status==NoSkip;
@@ -2056,48 +2066,9 @@ void Debug::Update(void)
   }
 }
 
-// ?AddFrameEntry@Debug@@AAEPAUFrameHashEntry@1@IIPBDH@Z present-unmatched
-Debug::FrameHashEntry* Debug::AddFrameEntry(unsigned addr, unsigned type,
-                                            const char *fileOrGroup, int line)
-{
-  __ASSERT(LookupFrame(addr)==NULL);
-
-  // get new entry
-  if (!numAvailableFrameHash)
-  {
-    numAvailableFrameHash=FRAME_HASH_ALLOC_COUNT;
-    nextUnusedFrameHash=(FrameHashEntry *)
-      DebugAllocMemory(numAvailableFrameHash*sizeof(FrameHashEntry));
-  }
-  FrameHashEntry *e=nextUnusedFrameHash++;
-  --numAvailableFrameHash;
-
-  // fill entry
-  e->next=frameHash[addr%FRAME_HASH_SIZE];
-  e->frameAddr=addr;
-  e->frameType=type;
-  e->line=line;
-  e->status=Unknown;
-  e->hits=0;
-
-  // log?
-  if (type&FrameTypeLog)
-  {
-    // must add to list of known logs,
-    // store translated name 
-    e->fileOrGroup=AddLogGroup(fileOrGroup,NULL);
-  }
-  else
-  {
-    // no, just add file name (without path though)
-    e->fileOrGroup=fileOrGroup?strrchr(fileOrGroup,'\\'):NULL;
-    e->fileOrGroup=e->fileOrGroup?e->fileOrGroup+1:fileOrGroup;
-  }
-
-  // add to hash
-  frameHash[addr%FRAME_HASH_SIZE]=e;
-  return e;
-}
+// Debug::AddFrameEntry is retail's 0x00889F20 body (ledger row
+// ?insert@Dictionary, Dictionary_insert.cpp); callers use that spelling and no
+// non-retail copy is emitted here.
 
 // Debug::UpdateFrameStatus is retail's 0x0088A7E0 body (ledger row
 // ?UpdateFrameStatus@Rva0088A7E0Debug, Rva0088A7E0UpdateFrameStatus.cpp, pinned

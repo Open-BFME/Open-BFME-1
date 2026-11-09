@@ -9,6 +9,16 @@ public:
     void UpdateFrameStatus(Rva0088A7E0FrameHashEntry &entry);
 };
 
+// Retail's 0x00889F20 body is the ledger row ?insert@Dictionary@@QAEPAUDictNode@@HHPBDH@Z
+// (Dictionary_insert.cpp); the frame-entry add reaches it with the same this and
+// four arguments, so call it through that spelling.
+struct DictNode;
+class Dictionary
+{
+public:
+    DictNode *insert(int, int, const char *, int);
+};
+
 class Debug
 {
 public:
@@ -50,7 +60,7 @@ bool Debug::isLogEnabled(unsigned address)
 {
     FrameHashEntry *entry = LookupFrame(address);
     if (entry == 0)
-        entry = AddFrameEntry(address, 4, (const char *)address, 0);
+        entry = (FrameHashEntry *)((Dictionary *)this)->insert(address, 4, (const char *)address, 0);
     if (entry->status == 0)
         ((Rva0088A7E0Debug *)this)->UpdateFrameStatus(*(Rva0088A7E0FrameHashEntry *)entry);
     return entry->status == 2 || entry->status == 3;
