@@ -8,7 +8,8 @@
 //
 // Provenance: [BFME 2 donor] Open-BFME-2 2bac16a6
 // Code/Libraries/Source/WWVegas/WWLib/stlport_ostreambuf_iterator_assign.cpp
-// (narrow instantiation only; the wide instantiation is not ledgered here).
+// BFME1 wide assignment is 0x00835E90 (53 bytes) and calls the
+// native wide sputc at 0x00835ED0.
 
 typedef unsigned short wchar_t;
 
@@ -23,6 +24,13 @@ class char_traits<char>
 {
 public:
 	typedef int int_type;
+};
+
+template <>
+class char_traits<wchar_t>
+{
+public:
+	typedef wchar_t int_type;
 };
 
 template <class CharT, class Traits>
@@ -53,5 +61,6 @@ ostreambuf_iterator<CharT, Traits>::operator=(CharT value)
 }
 
 template class ostreambuf_iterator<char, char_traits<char> >;
+template class ostreambuf_iterator<wchar_t, char_traits<wchar_t> >;
 
 }
