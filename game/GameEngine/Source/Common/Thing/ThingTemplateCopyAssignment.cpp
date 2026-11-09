@@ -229,7 +229,7 @@ private:
 	unsigned char m_byte048f;
 	unsigned char m_radarPriority;
 	unsigned char m_transportSlotCount;
-	unsigned char m_byte0492;
+	unsigned char m_buildable;
 	unsigned char m_buildCompletion;
 	unsigned char m_editorSorting;
 	unsigned char m_byte0495;
@@ -412,7 +412,7 @@ ThingTemplate &ThingTemplate::operator=(const ThingTemplate &other)
 	m_byte048f = other.m_byte048f;
 	m_radarPriority = other.m_radarPriority;
 	m_transportSlotCount = other.m_transportSlotCount;
-	m_byte0492 = other.m_byte0492;
+	m_buildable = other.m_buildable;
 	m_buildCompletion = other.m_buildCompletion;
 	m_editorSorting = other.m_editorSorting;
 	m_byte0495 = other.m_byte0495;
