@@ -7364,3 +7364,12 @@ game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_by
 game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_byte0492,db953725c68ddb8fc4a45fd8,claude-sonnet,20261109075733-0b35f0,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1305.cpp|member||m_bfmeAddr,bf8f88ebc188431dfd9b9468,claude-sonnet,20261109081106-65f47b,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1305.cpp|member||m_bfmeRec,e6e67a13043e63c860496ce9,claude-sonnet,20261109081106-65f47b,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|type||DistanceMachine002774C0,193053efe52b4f1c11a78fba,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|type||DistanceLocomotor002774C0,14389eb04f179730b68dd2a9,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|type||DistanceNode002774C0,220f5e3fa68a57c2ed85a113,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|type||DistancePath002774C0,29c529874276d642de27608b,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|member||at00c,9c160c19dea435f751b095a1,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|member||at1d8,753874ddc65533ff1d1685a2,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|member||at1dc,c13a48e7066f10f0c4357ef5,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|function|AIUpdateInterface@|rva002774c0,d62d9e962e358ddafc12363d,claude-sonnet,20261109081106-1f2879,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/LocomotorDistance002774C0.cpp|param|ground|l,966ad090361e80e5b9ab2774,claude-sonnet,20261109081106-1f2879,2026-11-09
