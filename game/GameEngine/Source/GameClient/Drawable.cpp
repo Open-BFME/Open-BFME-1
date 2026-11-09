@@ -40,6 +40,12 @@
 // offsets (0x145/0x146); declare it out of line instead, so this unit emits no COMDAT
 // copy unlike retail's 0x00410BA0 (BFME reads 0x3AD/0x3AE).
 #define isDrawableEffectivelyHidden() isDrawableEffectivelyHidden() const; Bool zhInlineIsDrawableEffectivelyHidden()
+// Retail imports msvcr71!_strcmpi, not _stricmp: route the local and
+// BitFlags.h stricmp uses to retail's spelling before any header sees them.
+// (No windows.h reorder here: PreRTS.h owns the platform include sequence.
+// string.h already declares _strcmpi with dllimport; redeclaring it here with
+// different linkage is a C2375 error, so only the spelling is redirected.)
+#define stricmp _strcmpi
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #define ASCIISTRING_H
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
