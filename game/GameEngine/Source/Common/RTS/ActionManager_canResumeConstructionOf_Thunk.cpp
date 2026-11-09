@@ -51,9 +51,9 @@ public:
 	ObjectID getSoleHealingBenefactor(void) const;
 
 	unsigned char m_unreconstructed_00[0x74];
-	Int m_id74;												///< retail this+0x74
+	Int m_id;												///< retail this+0x74
 	unsigned char m_unreconstructed_78[0x90 - 0x78];
-	unsigned char m_status90;								///< retail this+0x90
+	unsigned char m_status;								///< retail this+0x90
 	unsigned char m_unreconstructed_91[0x344 - 0x91];
 	unsigned char m_flags344;								///< retail this+0x344
 };
@@ -77,11 +77,11 @@ Bool ActionManager::canResumeConstructionOf(const Object *obj, const Object *obj
 		&& objectToResume != 0
 		&& obj->isKindOf(KINDOF_UNRECONSTRUCTED_0E)
 		&& obj->getRelationship(objectToResume) == ALLIES
-		&& (objectToResume->m_status90 & 4) != 0
+		&& (objectToResume->m_status & 4) != 0
 		&& (obj->m_flags344 & 1) == 0)
 	{
 		Int builder = objectToResume->getSoleHealingBenefactor();
-		if (builder == 0 || builder == obj->m_id74)
+		if (builder == 0 || builder == obj->m_id)
 			return true;
 	}
 
