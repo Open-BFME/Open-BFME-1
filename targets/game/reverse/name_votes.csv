@@ -6753,3 +6753,6 @@ game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field28,c910
 game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field2c,d58db0dc8125da9b52ee6748,claude-sonnet,20261109052642-21afa1,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|local|PathfindLayer::xfer|field28,759bd128706fe594d836ab56,claude-sonnet,20261109052642-21afa1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00126080ModuleData.cpp|type||Rva000441CAModuleDataBase,7cd2942edaa52bedffd5cced,claude-sonnet,20261109052635-847f2c,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field28,c910d4daf7e05e795383458a,claude-sonnet,20261109052642-88207c,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field2c,d58db0dc8125da9b52ee6748,claude-sonnet,20261109052642-88207c,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|local|PathfindLayer::xfer|field28,759bd128706fe594d836ab56,claude-sonnet,20261109052642-88207c,2026-11-09
