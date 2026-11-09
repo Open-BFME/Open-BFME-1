@@ -2042,3 +2042,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImpl
 game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|type||BfmeDataIS,ObjectCreationUpgradeModuleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/UnitHelpText.cpp|function|Rva004B2300@|slot04,clone,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/UnitHelpText.cpp|function|Rva004B2300@|slot04,clone,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|member||m_bfmeDataIS,m_moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
