@@ -10,9 +10,9 @@ public:
 	unsigned m_bfme00;
 	unsigned m_bfme04;
 	char m_bfmePad08[0x20 - 0x08];
-	BfmeE1242 **m_bfme20;
+	BfmeE1242 **m_elements;
 	char m_bfmePad24[4];
-	int m_bfme28;
+	int m_length;
 };
 
 // Rva00C6DCC0StaticInit.cpp owns the 88-byte stack at VA 0x01338748;
@@ -34,32 +34,32 @@ public:
 	static AptInteger *Create(int n);
 };
 
-void *bfmeInsert1242(BfmeN1242 *a, int k)
+void *bfmeInsert1242(BfmeN1242 *array, int k)
 {
 	int i;
 	int n;
-	BfmeE1242 *e;
+	BfmeE1242 *element;
 
-	if ((a->m_bfme04 & 0x3f) == 0x16 && !((unsigned char)(~(a->m_bfme04 >> 15)) & 1)) {
-		a->bfmeReserve1242(a->m_bfme28 + k);
+	if ((array->m_bfme04 & 0x3f) == 0x16 && !((unsigned char)(~(array->m_bfme04 >> 15)) & 1)) {
+		array->bfmeReserve1242(array->m_length + k);
 		if (k) {
 			((void *(__cdecl *)(void *, const void *, unsigned int))ji_009f6ec6)(
-				a->m_bfme20 + k, a->m_bfme20, a->m_bfme28 * 4);
-			a->m_bfme28 += k;
+				array->m_elements + k, array->m_elements, array->m_length * 4);
+			array->m_length += k;
 			for (i = 0; i < k; ++i) {
-				a->m_bfme20[i] = 0;
-				e = Rva008AE770TheStack.m_08[Rva008AE770TheStack.m_count - i - 1];
+				array->m_elements[i] = 0;
+				element = Rva008AE770TheStack.m_08[Rva008AE770TheStack.m_count - i - 1];
 				if (i >= 0) {
-					a->bfmeReserve1242(i + 1);
-					a->bfmePut1242(i, e);
-					n = a->m_bfme28;
+					array->bfmeReserve1242(i + 1);
+					array->bfmePut1242(i, element);
+					n = array->m_length;
 					if (i + 1 > n)
 						n = i + 1;
-					a->m_bfme28 = n;
+					array->m_length = n;
 				}
 			}
 		}
-		return AptInteger::Create(a->m_bfme28);
+		return AptInteger::Create(array->m_length);
 	}
 	return g_bfmeFallbackDB;
 }
