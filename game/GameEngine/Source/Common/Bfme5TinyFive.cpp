@@ -84,13 +84,13 @@ public:
 
 private:
 	int m_bfmeHead[219];					// +0x000
-	int m_bfmeDeadline;					// +0x36C
+	int m_deadline;					// +0x36C
 };
 
 // ?bfmeArm@Gen_001BFF50@@QAEXXZ
 void Gen_001BFF50::bfmeArm(void)
 {
-	m_bfmeDeadline = g_bfmeClockBL->m_frame + 50;
+	m_deadline = g_bfmeClockBL->m_frame + 50;
 }
 
 class Gen_001E19F0
@@ -100,11 +100,11 @@ public:
 
 private:
 	int m_bfmeHead[20];					// +0x00
-	int m_bfmeDeadline;					// +0x50
+	int m_deadline;					// +0x50
 };
 
 // ?bfmeArm@Gen_001E19F0@@QAEXH@Z
 void Gen_001E19F0::bfmeArm(int delay)
 {
-	m_bfmeDeadline = g_bfmeClockBL->m_frame + delay;
+	m_deadline = g_bfmeClockBL->m_frame + delay;
 }
