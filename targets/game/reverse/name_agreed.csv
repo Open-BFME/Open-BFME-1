@@ -1854,3 +1854,7 @@ game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp
 game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp|type||Rva001A66C0TerrainVisualView,TerrainVisual,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp|type||Rva001A66C0PolygonView,PolygonTrigger,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp: game\GameEngine\Source\GameLogic\Map\TerrainLogicFindAxisAlignedBoun,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp|type||Rva001A66C0TerrainVisualView,TerrainVisual,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp: game\GameEngine\Source\GameLogic\Map\TerrainLogicFindAxisAlignedBoun,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_08,m_sourceID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_0c,m_sourcePlayerMask,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_1c,m_amount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,m_damage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

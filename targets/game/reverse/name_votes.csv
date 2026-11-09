@@ -6743,3 +6743,8 @@ game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown58,c416cb38
 game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|member||m_bfmeWords,365858557f64075258eb6292,claude-sonnet,20261109050900-733c2e,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp|type||Rva001A66C0PolygonView,08599e19ff272d7dfb51bb5a,claude-sonnet,20261109051314-7018c9,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicFindAxisAlignedBoundingRect.cpp|type||Rva001A66C0TerrainVisualView,8c0905174f5c03f092f9f6cd,claude-sonnet,20261109051314-7018c9,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_08,908a8b561c848325c6dd55f8,claude-sonnet,20261109051116-670508,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_0c,91f1f5da1e1c8e14306bc8a7,claude-sonnet,20261109051116-670508,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_10,18d28dbebfdc324852592e55,claude-sonnet,20261109051116-670508,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_1c,579b8fdc69b7976e1e6183c2,claude-sonnet,20261109051116-670508,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,a1a6a8f360dcd6cba3f84456,claude-sonnet,20261109051116-670508,2026-11-09
