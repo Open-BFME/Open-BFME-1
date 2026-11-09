@@ -182,9 +182,9 @@ public:
 
 private:
 	void *m_vftable;
-	DX8VertexBufferClass *m_04;
-	DX8IndexBufferClass *m_08;
-	VertexMaterialClass *m_0c;
+	DX8VertexBufferClass *m_vertexBuffer;
+	DX8IndexBufferClass *m_indexBuffer;
+	VertexMaterialClass *m_vertexMaterial;
 	Rva006D6050 m_10;
 	void *m_14;
 	void *m_18;
@@ -200,7 +200,7 @@ void W3DFloorBuffer::init(void)
 {
 	Rva006F92D0ResetGuard lock;
 
-	if (m_04 || m_08)
+	if (m_vertexBuffer || m_indexBuffer)
 	{
 		typedef void (W3DFloorBuffer::*Cleanup)(void);
 		union { void *asVoid; Cleanup asMember; } cleanup;
@@ -208,10 +208,10 @@ void W3DFloorBuffer::init(void)
 		(this->*cleanup.asMember)();
 	}
 
-	m_04 = new DX8VertexBufferClass(0x152, 0x3a9c,
+	m_vertexBuffer = new DX8VertexBufferClass(0x152, 0x3a9c,
 		DX8VertexBufferClass::USAGE_DYNAMIC, 0);
-	m_08 = new DX8IndexBufferClass(0x7534, DX8IndexBufferClass::USAGE_DYNAMIC);
-	m_0c = VertexMaterialClass::Get_Preset((VertexMaterialClass::PresetType)0);
+	m_indexBuffer = new DX8IndexBufferClass(0x7534, DX8IndexBufferClass::USAGE_DYNAMIC);
+	m_vertexMaterial = VertexMaterialClass::Get_Preset((VertexMaterialClass::PresetType)0);
 	m_14 = 0;
 	m_18 = 0;
 	reinterpret_cast<Rva006D6050 *>(&m_1c)->init(1, 1, 0x15, 1, 1, 0);
