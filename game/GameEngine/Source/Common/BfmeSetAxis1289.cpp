@@ -28,15 +28,15 @@ void BfmeSlotState1289::bfmeSetAxis1289(int axis, float value, int enabled)
 
 	float *v = m_values;
 	float angle = *(volatile float *)(v + 6) * g_01075954;
-	float c = cosf(angle);
-	float s = sinf(angle);
-	float x = *(volatile float *)(v + 2) * g_01076C24;
-	float y = *(volatile float *)(v + 3) * g_01076C24;
+	float cosAngle = cosf(angle);
+	float sinAngle = sinf(angle);
+	float scaleX = *(volatile float *)(v + 2) * g_01076C24;
+	float scaleY = *(volatile float *)(v + 3) * g_01076C24;
 
-	m_output10[0] = x * c;
-	m_output10[1] = x * s;
-	m_output10[2] = -(y * s);
-	m_output10[3] = y * c;
+	m_output10[0] = scaleX * cosAngle;
+	m_output10[1] = scaleX * sinAngle;
+	m_output10[2] = -(scaleY * sinAngle);
+	m_output10[3] = scaleY * cosAngle;
 	m_output10[4] = v[0];
 	m_output10[5] = v[1];
 	m_output10[6] = *(volatile float *)(v + 7) * g_01076C24;
