@@ -1501,3 +1501,4 @@ game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmePrevXY,m_prev,claud
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmeNextXY,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmePrevXY,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

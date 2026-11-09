@@ -9,7 +9,7 @@
 struct S4Named0052E880
 {
 	int m_bfmeUnused;
-	StringBase<char> m_bfmeName;
+	StringBase<char> m_name;
 };
 
 struct S4SortElem12
@@ -27,8 +27,8 @@ static bool bfmeLessVal(const S4SortElem12 &left, const S4SortElem12 &right)
 		{
 			if (right.m_bfmeObj == 0)
 				goto retFalse;
-			return left.m_bfmeObj->m_bfmeName.compareNoCase(
-				right.m_bfmeObj->m_bfmeName) < 0;
+			return left.m_bfmeObj->m_name.compareNoCase(
+				right.m_bfmeObj->m_name) < 0;
 		}
 		if (right.m_bfmeObj == 0)
 		{
