@@ -74,7 +74,7 @@ void __cdecl rva0014b880PriorityMaximum(Rva0014B880Candidate *candidate,
 	Rva0014B880Context *context);
 typedef void (__cdecl *ContainIterateFunc)(Rva0014B880Candidate *, Rva0014B880Context *);
 
-class ContainModule0014DAB0
+class ContainModuleInterface
 {
 public:
 #define SLOT(N) virtual void slot##N();
@@ -95,7 +95,7 @@ public:
 struct SpecialOwner0014DAB0
 {
 	unsigned char m_pad[0x1fc];
-	ContainModule0014DAB0 *m_module;
+	ContainModuleInterface *m_module;
 };
 
 class Object
@@ -121,7 +121,7 @@ public:
 	unsigned char m_pad44[0x94 - 0x44];
 	unsigned char m_flags94;
 	unsigned char m_pad95[0x1fc - 0x95];
-	ContainModule0014DAB0 *m_contain;
+	ContainModuleInterface *m_contain;
 	unsigned char m_pad200[0x214 - 0x200];
 	SpecialOwner0014DAB0 *m_special;
 };
@@ -320,7 +320,7 @@ Object *AI::rva0014DAB0(PolygonTrigger *area, Object *me, const AttackPriorityIn
 
 	PartitionFilterPolygonTrigger filterArea(area);
 
-	ContainModule0014DAB0 *module;
+	ContainModuleInterface *module;
 	if ((me->m_flags94 & 0x10) != 0 && me->m_special != 0 &&
 		(module = me->m_special->m_module) != 0)
 	{
@@ -374,7 +374,7 @@ Object *AI::rva0014DAB0(PolygonTrigger *area, Object *me, const AttackPriorityIn
 		if (curPriority == 0)
 			continue;
 
-		ContainModule0014DAB0 *contain = theEnemy->m_contain;
+		ContainModuleInterface *contain = theEnemy->m_contain;
 		if (contain != 0)
 		{
 			Rva0014B880Context priorityInfo;
