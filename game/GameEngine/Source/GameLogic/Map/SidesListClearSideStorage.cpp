@@ -92,6 +92,10 @@ private:
 	UnicodeString *m_capacity;
 };
 
+// File-local view: an external ?clear@SidesInfo COMDAT here would compete with
+// retail's own 0x0019AED0 body (SidesInfo_clear.cpp).
+namespace
+{
 class SidesInfo
 {
 public:
@@ -113,6 +117,7 @@ private:
 	ScriptList *m_scripts;
 	Rva0019BE80UnicodeStrings m_strings;
 };
+}
 
 class Rva0019BE80SidesList
 {
