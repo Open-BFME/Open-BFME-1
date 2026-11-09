@@ -6413,3 +6413,5 @@ game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeColour,4e03dd621
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeParent,3b92430e3101773ca82acfb5,claude-sonnet,20261109025455-ca0640,2026-11-09
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeLeft,fdb4801b00c62b894de81b91,claude-sonnet,20261109025455-ca0640,2026-11-09
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRight,7d0b00cf07a07eea7759d340,claude-sonnet,20261109025455-ca0640,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370TurretInfo,efd987dce4f2a95bf1a89595,claude-sonnet,20261109024824-fc943b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370ModelConditionInfo,0ab04bd58c62f51c077c7ba0,claude-sonnet,20261109024824-fc943b,2026-11-09
