@@ -65,11 +65,11 @@ bool Rva001CA9C0::rva001CA9C0(int n)
 
 	int playerIndex = n;
 	Player *p = ThePlayerList->getNthPlayer(playerIndex);
-	Relationship r = p->getRelationship(m_ptr01D8);
+	Relationship relationship = p->getRelationship(m_ptr01D8);
 	register Thing *o;
 	const KindOfType hostKind = KINDOF_2;
 
-	if (r == NEUTRAL)
+	if (relationship == NEUTRAL)
 	{
 		o = (Thing *)((char *)this - 0x64);
 		if (o->isKindOf(hostKind) && !o->isKindOf(KINDOF_B2))
