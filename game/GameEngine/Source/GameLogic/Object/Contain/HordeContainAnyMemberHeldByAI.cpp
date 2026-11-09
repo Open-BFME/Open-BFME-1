@@ -60,14 +60,14 @@ class Object
 {
 public:
 	char m_bfmeHead[ 0x90 ];
-	UnsignedInt m_bfmeStatus[ 2 ];								///< retail this+0x90
+	UnsignedInt m_status[ 2 ];								///< retail this+0x90
 	char m_bfmeGap[ 0x204 - 0x98 ];
-	BfmeMemberAIInterface *m_bfmeAI;							///< retail this+0x204
+	BfmeMemberAIInterface *m_ai;							///< retail this+0x204
 };
 
 struct BfmeContainedNode
 {
-	BfmeContainedNode *m_bfmeNext;								///< +0x00
+	BfmeContainedNode *m_next;								///< +0x00
 	BfmeContainedNode *m_bfmePrev;								///< +0x04
 	Object *m_bfmeObject;										///< +0x08
 };
@@ -89,13 +89,13 @@ Bool BfmeContainInterfaceView::bfmeAnyMemberHeldByAI( void ) const
 {
 	BfmeContainedNode *sentinel = bfmeContainList();
 
-	for ( BfmeContainedNode *node = sentinel->m_bfmeNext; node != sentinel;
-		node = node->m_bfmeNext, sentinel = bfmeContainList() )
+	for ( BfmeContainedNode *node = sentinel->m_next; node != sentinel;
+		node = node->m_next, sentinel = bfmeContainList() )
 	{
 		Object *member = node->m_bfmeObject;
-		BfmeMemberAIInterface *ai = member->m_bfmeAI;
+		BfmeMemberAIInterface *ai = member->m_ai;
 
-		if ( ai && ai->bfmeIsAIHolding() && ( member->m_bfmeStatus[ 0 ] & 0x10000000 ) )
+		if ( ai && ai->bfmeIsAIHolding() && ( member->m_status[ 0 ] & 0x10000000 ) )
 			return true;
 	}
 
