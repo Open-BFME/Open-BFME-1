@@ -44,7 +44,7 @@ public:
 };
 class Rva001DCBB0Filter : public PartitionFilter {
 public:
-    Rva001DCBB0Filter(Player *p, Bool match) : m_player(p), m_match(match) {}
+    Rva001DCBB0Filter(Player *player, Bool match) : m_player(player), m_match(match) {}
     virtual ~Rva001DCBB0Filter() {}
     virtual Bool allow(Object *);
     Player *m_player;
@@ -58,8 +58,8 @@ public:
 };
 class PartitionFilterPlayerAffiliation : public PartitionFilter {
 public:
-    PartitionFilterPlayerAffiliation(Player *p, Int flags, Bool match)
-        : m_player(p), m_match(match), m_affiliation(flags) {}
+    PartitionFilterPlayerAffiliation(Player *player, Int flags, Bool match)
+        : m_player(player), m_match(match), m_affiliation(flags) {}
     virtual ~PartitionFilterPlayerAffiliation() {}
     virtual Bool allow(Object *);
     virtual Int getPlayerMask();
@@ -70,8 +70,8 @@ public:
 class Rva002DC6D0Filter;
 class Rva00265150RJFilter : public PartitionFilter {
 public:
-    __forceinline Rva00265150RJFilter(const Rva002DC6D0Filter &filter, Player *p, Bool match)
-        : m_subobject(&filter), m_player(p), m_match(match) {}
+    __forceinline Rva00265150RJFilter(const Rva002DC6D0Filter &filter, Player *player, Bool match)
+        : m_subobject(&filter), m_player(player), m_match(match) {}
     virtual ~Rva00265150RJFilter() {}
     virtual Bool allow(Object *);
     const Rva002DC6D0Filter *m_subobject;
