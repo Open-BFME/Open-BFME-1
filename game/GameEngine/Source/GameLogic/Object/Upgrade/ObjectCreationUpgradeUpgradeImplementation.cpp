@@ -48,7 +48,7 @@ protected:
 public:
 	unsigned char m_bfmeHeadIS[4]; // +0x04, after the vptr
 	BfmeWakeIS m_bfmeWakeIS;
-	ObjectCreationUpgradeModuleData *m_bfmeDataIS;
+	ObjectCreationUpgradeModuleData *m_moduleData;
 	void *m_bfmeObjIS;
 	unsigned char m_bfmeMidIS[0x14];
 	int m_bfmeFrameIS;
@@ -60,7 +60,7 @@ void ObjectCreationUpgrade::upgradeImplementation()
 	if (m_bfmeDoneIS)
 		return;
 
-	m_bfmeFrameIS = ((RvaBfmeConv1721GameLogic *)TheGameLogic)->m_bfmeFrameIS - (int)(m_bfmeDataIS->m_bfmeDelayIS * -5.0f);
+	m_bfmeFrameIS = ((RvaBfmeConv1721GameLogic *)TheGameLogic)->m_bfmeFrameIS - (int)(m_moduleData->m_bfmeDelayIS * -5.0f);
 	m_bfmeDoneIS = 1;
 	BfmeSetWakeISThunkRef thunk;
 	thunk.m_thunk = (void *)&__identifier("?j_000157da@@YAXXZ");
