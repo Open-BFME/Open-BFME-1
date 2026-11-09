@@ -37,7 +37,7 @@ class BfmeVecCZ
 {
 public:
 	BfmeSlotCZ *m_bfmeStart;
-	int m_bfmeCount;
+	int m_count;
 };
 
 class Rva00801670Host
@@ -97,9 +97,9 @@ public:
 	void rva00801670( Rva007FBC60Game *rec );
 
 	void *m_bfmeVfptr;
-	Rva00801670Host *m_bfme04;
+	Rva00801670Host *m_host;
 	char m_bfmePad08[8];
-	Rva00800290Buffer m_bfme10;
+	Rva00800290Buffer m_buffer;
 };
 
 void BfmeThingVHW::rva00801670( Rva007FBC60Game *rec )
@@ -110,17 +110,17 @@ void BfmeThingVHW::rva00801670( Rva007FBC60Game *rec )
 	BfmeVecCZ *vector;
 	char *key;
 
-	m_bfme10.addString( rec->m_n );
-	m_bfme10.addString( rec->m_hn );
-	m_bfme10.addString( rec->m_v );
+	m_buffer.addString( rec->m_n );
+	m_buffer.addString( rec->m_hn );
+	m_buffer.addString( rec->m_v );
 	if( reinterpret_cast<Gen_007fbe70 *>(rec)->bfmeText() )
-		m_bfme10.addPadded( 0x28 );
+		m_buffer.addPadded( 0x28 );
 	else
-		m_bfme10.addPadded( 0x10 );
+		m_buffer.addPadded( 0x10 );
 
-	vector = &m_bfme04->m_gameKeys;
-	count = vector->m_bfmeCount;
-	m_bfme10.addPadded( count * 4 );
+	vector = &m_host->m_gameKeys;
+	count = vector->m_count;
+	m_buffer.addPadded( count * 4 );
 	for( i = 0; i < count; i++ )
 	{
 		union
@@ -129,9 +129,9 @@ void BfmeThingVHW::rva00801670( Rva007FBC60Game *rec )
 			int *(Rva00801670Host::*member)( BfmeVecCZ *, int );
 		} at;
 		at.function = bfmeAt;
-		key = (char *)(m_bfme04->*at.member)( vector, i );
+		key = (char *)(m_host->*at.member)( vector, i );
 		slot[0] = 0;
 		if( reinterpret_cast<Rva007FBEF0GameRecord *>(rec)->Rva007FBE80( key, slot, 0x40 ) )
-			m_bfme10.addString( slot );
+			m_buffer.addString( slot );
 	}
 }

@@ -1395,3 +1395,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290Updat
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,m_count,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,m_host,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,m_buffer,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,m_count,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,m_host,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,m_buffer,claude-sonnet+gpt-6-astra,applied,2026-11-09
