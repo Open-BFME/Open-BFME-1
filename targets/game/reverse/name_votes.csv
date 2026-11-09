@@ -6844,3 +6844,13 @@ game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubInnerD77,c8de70915023
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubD77,65086061eeeaf841974a0b0a,claude-sonnet,20261109055652-7af808,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateUpdate.cpp|member||m_bfmeFrameFV,2afc12df8c52ab731af6e055,claude-sonnet,20261109055858-f007a5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_startUnpacking.cpp|local|SpecialAbilityUpdate::startUnpacking|d,1dc5627335703195b9c102ac,claude-sonnet,20261109055538-3bc9b3,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field04,15bbc06656a1bfd6ae93046f,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field14,61e299c0c52b4e1e8ca76e48,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field18,fb3d6cc8f72244fcabb81b8c,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field1c,9b9d258f5c6a50b1f68726c2,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field20,67fc807d4ae068dbe97eef8a,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field28,34d81802e4038f06166a9f11,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field2c,78b796dd655327e550dab4c3,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field34,b74a4aa294a0ca93f9008df5,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field38,b545d9072e152f825f7ce820,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field3c,af988d488a9c230cdc6861e1,claude-sonnet,20261109055538-5696b1,2026-11-09
