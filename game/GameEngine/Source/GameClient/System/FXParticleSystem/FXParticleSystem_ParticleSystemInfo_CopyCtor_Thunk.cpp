@@ -40,10 +40,10 @@ public:
 	virtual ~ParticleSystemInfo();
 
 private:
-	unsigned char m_byte4;
-	unsigned int m_dword8;
+	unsigned char m_isOneShot;
+	unsigned int m_shader;
 	unsigned int m_dwordC;
-	AsciiString m_string10;
+	AsciiString m_particleTypeName;
 	ThreeDwords m_block14;
 	unsigned int m_dword20;
 	unsigned int m_dword24;
@@ -71,10 +71,10 @@ private:
 };
 
 ParticleSystemInfo::ParticleSystemInfo(const ParticleSystemInfo &source)
-	: m_byte4(source.m_byte4)
-	, m_dword8(source.m_dword8)
+	: m_isOneShot(source.m_isOneShot)
+	, m_shader(source.m_shader)
 	, m_dwordC(source.m_dwordC)
-	, m_string10(source.m_string10)
+	, m_particleTypeName(source.m_particleTypeName)
 	, m_block14(source.m_block14)
 	, m_dword20(source.m_dword20)
 	, m_dword24(source.m_dword24)
