@@ -234,7 +234,7 @@ Bool SkirmishPreferences::usesSystemMapDir(void)
 	if (it == end())
 		return TRUE;
 
-	if (stricmp(it->second.str(), "yes") == 0) {
+	if (_strcmpi(it->second.str(), "yes") == 0) {
 		return TRUE;
 	}
 	return FALSE;
