@@ -41,7 +41,7 @@ class BfmeGhostAH
 {
 public:
 	unsigned char m_bfmeHeadAH[4];
-	int m_bfmeIndexAH;
+	int m_localPlayer;
 };
 
 class BfmeABP;
@@ -70,7 +70,7 @@ public:
 
 void BfmeOwnerAH::bfmeClearAH()
 {
-	int index = ((BfmeGhostAH *)TheGhostObjectManager)->m_bfmeIndexAH;
+	int index = ((BfmeGhostAH *)TheGhostObjectManager)->m_localPlayer;
 	BfmeNodeAH *node = m_bfmeListsAH[index];
 
 	if (node == 0)

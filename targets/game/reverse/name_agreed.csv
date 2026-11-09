@@ -1414,3 +1414,4 @@ game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme
 game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4cIA,m_pitchLimited,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeNext,m_left,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeField,m_right,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeIndexAH,m_localPlayer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
