@@ -22,7 +22,7 @@ private:
 class BfmeThingVNQ
 {
 public:
-	int bfmeTotalVNQ();
+	int Compute_Ram_Size();
 	char m_bfmePad00[0xc];
 	BfmeThingNH **m_bfme0c;
 	char m_bfmePad10[8];
@@ -31,7 +31,7 @@ public:
 	int m_bfme30;
 };
 
-int BfmeThingVNQ::bfmeTotalVNQ()
+int BfmeThingVNQ::Compute_Ram_Size()
 {
 	int n = m_bfme18;
 	int total = (m_bfme30 + n) * 4 + 0x38;

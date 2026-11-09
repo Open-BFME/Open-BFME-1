@@ -33291,7 +33291,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeTooLong@@YGHPBVBfmeThingDX@@@Z,,0x007F8F10,39,game/GameEngine/Source/Common/Bfme5FiftyFour.cpp,matched,
 ?bfmeTotal899410@BfmeThing899410@@QBEHXZ,,0x00899410,24,game/GameEngine/Source/Common/BfmeTotal899410.cpp,matched,
 ?bfmeTotal@Bfme5Holder@@QAEHXZ,,0x0092D090,28,game/GameEngine/Source/Common/Bfme5SmallBodies.cpp,matched,
-?bfmeTotalVNQ@BfmeThingVNQ@@QAEHXZ,,0x0092F140,63,game/GameEngine/Source/Common/BfmeConv1517.cpp,matched,
+?Compute_Ram_Size@BfmeThingVNQ@@QAEHXZ,,0x0092F140,63,game/GameEngine/Source/Common/BfmeConv1517.cpp,matched,
 ?bfmeTouch@Gen_0069ADF0@@QAEXPAPAVBfmeThingIA@@@Z,,0x0069ADF0,59,game/GameEngine/Source/Common/Bfme5EightyNine.cpp,matched,
 ?bfmeTouchVT@BfmeOwnerVT@@QAEHXZ,,0x001FFE10,37,game/GameEngine/Source/Common/BfmeConv1802.cpp,matched,secondary-base body marking dirty on a state flag then notifying when a mask bit is set
 ?bfmeTrackLargeUnit@AODHordeContainInterfaceView@@QAEXPAVObject@@0@Z,,0x00231980,96,game/GameEngine/Source/GameLogic/Object/Contain/AODHordeContain_trackLargeUnit.cpp,matched,Open-BFME5 AOD live-treaded-unit tracking hook at HordeContainInterface slot 67

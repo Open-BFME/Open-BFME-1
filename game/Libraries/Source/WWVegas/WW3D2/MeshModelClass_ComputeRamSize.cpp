@@ -17,7 +17,7 @@ public:
 class BfmeThingVNQ
 {
 public:
-	int bfmeTotalVNQ();
+	int Compute_Ram_Size();
 };
 
 class MeshModelClass : public MeshGeometryClass
@@ -39,6 +39,6 @@ int MeshModelClass::Compute_Ram_Size()
 	if (AlternateMatDesc != 0)
 		size += AlternateMatDesc->Compute_Ram_Size();
 	if (MatInfo != 0)
-		size += MatInfo->bfmeTotalVNQ();
+		size += MatInfo->Compute_Ram_Size();
 	return size;
 }
