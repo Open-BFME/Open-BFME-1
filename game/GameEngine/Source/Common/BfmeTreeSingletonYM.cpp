@@ -27,10 +27,10 @@ static __forceinline void *vectorSmallAllocate(unsigned int bytes)
 
 struct BfmeNodeYM
 {
-	char m_bfmeColour;					// +0x00
-	BfmeNodeYM *m_bfmeParent;				// +0x04
-	BfmeNodeYM *m_bfmeLeft;					// +0x08
-	BfmeNodeYM *m_bfmeRight;				// +0x0C
+	char m_color;					// +0x00
+	BfmeNodeYM *m_parent;				// +0x04
+	BfmeNodeYM *m_left;					// +0x08
+	BfmeNodeYM *m_right;				// +0x0C
 };
 
 class BfmeTreeYM
@@ -38,22 +38,22 @@ class BfmeTreeYM
 public:
 	BfmeTreeYM(void)
 	{
-		m_bfmeNode = 0;
+		m_header = 0;
 
-		m_bfmeNode = (BfmeNodeYM *)_STL::vectorSmallAllocate(0x18);
+		m_header = (BfmeNodeYM *)_STL::vectorSmallAllocate(0x18);
 
-		m_bfmeCount = 0;
+		m_numNodes = 0;
 
-		m_bfmeNode->m_bfmeColour = 0;
-		m_bfmeNode->m_bfmeParent = 0;
-		m_bfmeNode->m_bfmeLeft = m_bfmeNode;
-		m_bfmeNode->m_bfmeRight = m_bfmeNode;
+		m_header->m_color = 0;
+		m_header->m_parent = 0;
+		m_header->m_left = m_header;
+		m_header->m_right = m_header;
 		// The matched retail callback forwards to this singleton's tree destructor.
 		atexit(bfmeForward_00C6FC90);
 	}
 
-	BfmeNodeYM *m_bfmeNode;					// +0x00
-	int m_bfmeCount;					// +0x04
+	BfmeNodeYM *m_header;					// +0x00
+	int m_numNodes;					// +0x04
 };
 
 // ?bfmeTreeYM@@YAPAVBfmeTreeYM@@XZ
