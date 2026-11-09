@@ -5,7 +5,7 @@ extern "C" double __cdecl sin(double);
 float normalizeAngle(float);
 float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char*,int);
 class Rva002BC310Owner { public: unsigned char checkHeight(); };
-class Rva001B80D0AI { public:
+class AIUpdateInterface { public:
 virtual void slot00();
 virtual void slot01();
 virtual void slot02();
@@ -92,7 +92,7 @@ virtual void slot82();
 virtual void slot83();
 virtual Rva002BC310Owner *query001B80D0(); };
 enum BodyDamageType { BODY_OK, BODY_DAMAGED };
-class Rva001B80D0Body { public:
+class BodyModuleInterface { public:
 virtual void slot00();
 virtual void slot01();
 virtual void slot02();
@@ -118,14 +118,14 @@ class Object : public Thing { public:
     float positionZ40;
     float m_cachedAngle;
     char before74[0x74-0x48];
-    int objectId74;
+    int m_id;
     char beforec0[0xc0-0x78];
     float valueC0;
     char before110[0x110-0xc4];
     Rva001B80D0Flags m_modelConditionFlags;
     char before200[0x200-0x138];
-    Rva001B80D0Body *body200;
-    Rva001B80D0AI *ai204;
+    BodyModuleInterface *m_body;
+    AIUpdateInterface *m_ai;
     void notifyModelConditionChanged();
 };
 class Overridable { public:
@@ -133,7 +133,7 @@ class Overridable { public:
     Overridable *m_nextOverride;
     const Overridable *getFinalOverride() const;
 };
-struct Rva001B80D0Template : Overridable {
+struct LocomotorTemplate : Overridable {
     char before14[0x14-8];
     float scale14;
 };
@@ -146,16 +146,16 @@ static inline Rva001B80D0GameLogic *localTheGameLogic(void) { return (Rva001B80D
 class Locomotor { public: float rva001B5A30(Object*,BodyDamageType) const; };
 class Rva002C12E0Locomotor { public:
     void *vtable;
-    Rva001B80D0Template *m_template;
+    LocomotorTemplate *m_template;
     char before44[0x44-8];
-    float height44;
+    float m_preferredHeight;
     char before9c[0x9c-0x48];
     float velocity9c;
     float angleDeltaA0;
     void locoUpdate1(void *object);
-    Rva001B80D0Template *getResolved() const {
-        Rva001B80D0Template *result=m_template;
-        if(result && result->m_nextOverride) result=(Rva001B80D0Template*)result->m_nextOverride->getFinalOverride();
+    LocomotorTemplate *getResolved() const {
+        LocomotorTemplate *result=m_template;
+        if(result && result->m_nextOverride) result=(LocomotorTemplate*)result->m_nextOverride->getFinalOverride();
         return result;
     }
 };
@@ -165,13 +165,13 @@ void Rva002C12E0Locomotor::locoUpdate1(void *object)
     if(!obj) return;
     float amplitude=obj->valueC0*0.5f;
     if(getResolved()->scale14>1.0f) amplitude*=getResolved()->scale14;
-    Rva001B80D0AI *ai=obj->ai204;
+    AIUpdateInterface *ai=obj->m_ai;
     if(!ai) return;
     Rva002BC310Owner *heightView=ai->query001B80D0();
     if(!heightView) return;
-    Rva001B80D0Body *body=obj->body200;
+    BodyModuleInterface *body=obj->m_body;
     if(!body) return;
-    float desired=(float)sin((int)(localTheGameLogic()->m_frame+obj->objectId74)*0.1f)*amplitude*0.2f+height44;
+    float desired=(float)sin((int)(localTheGameLogic()->m_frame+obj->m_id)*0.1f)*amplitude*0.2f+m_preferredHeight;
     float current=obj->getHeightAboveTerrainOrWater();
     bool outside=desired+amplitude*0.2f>current || desired*1.5f<current;
     if(heightView->checkHeight() | outside) velocity9c+=desired-current;
