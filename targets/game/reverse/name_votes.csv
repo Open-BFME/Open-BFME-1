@@ -6979,3 +6979,6 @@ game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva001716
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva001716D0State,9f836c5b810fac72e10e605e,claude-sonnet,20261109063022-d3cba0,2026-11-09
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171820State,f5b9f142f072dd2a58502ea4,claude-sonnet,20261109063022-d3cba0,2026-11-09
 game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva0018AD60State,ff791e7e68e5e7a045d47a98,claude-sonnet,20261109063022-d3cba0,2026-11-09
+game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_04,6263445d83e365cf39182e42,claude-sonnet,20261109063022-f626c0,2026-11-09
+game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_flag08,f2056b7b82d7e74c06c2141f,claude-sonnet,20261109063022-f626c0,2026-11-09
+game/GameEngine/Source/GameLogic/LivingWorld/ParseFlashRegionsEvent.cpp|member||m_0C,2a1c9d97a898a7ab54874001,claude-sonnet,20261109063022-f626c0,2026-11-09
