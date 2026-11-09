@@ -144,12 +144,12 @@ public:
 	friend class BfmeTaintManager;
 
 private:
-	Region3D m_bfmeRegion;					// +0x00
-	Real m_bfmeCellSize;					// +0x18
-	float m_bfmeCellSizeInv;				// +0x1C
-	int m_bfmeWidth;					// +0x20
-	int m_bfmeHeight;					// +0x24
-	BfmeCellFC *m_bfmeCells;				// +0x28
+	Region3D m_region;					// +0x00
+	Real m_cellSize;					// +0x18
+	float m_cellSizeInv;				// +0x1C
+	int m_width;					// +0x20
+	int m_height;					// +0x24
+	BfmeCellFC *m_cells;				// +0x28
 	BfmeCellVisitorFC m_bfmeVisitor;			// +0x2C
 };
 
@@ -179,15 +179,15 @@ private:
 // ??0Gen_008812D0@@QAE@XZ
 Gen_008812D0::Gen_008812D0()
 {
-	m_bfmeRegion.lo.zero();
-	m_bfmeWidth = 0;
-	m_bfmeHeight = 0;
-	m_bfmeCells = 0;
+	m_region.lo.zero();
+	m_width = 0;
+	m_height = 0;
+	m_cells = 0;
 	m_bfmeVisitor = 0;
-	m_bfmeCellSize = 1.0f;
-	m_bfmeRegion.hi.zero();
+	m_cellSize = 1.0f;
+	m_region.hi.zero();
 
-	bfmeConfigure(m_bfmeRegion, 1.0f);
+	bfmeConfigure(m_region, 1.0f);
 }
 
 // ?bfmeConfigure@Gen_008812D0@@QAEXURegion3D@@M@Z
@@ -213,19 +213,19 @@ void Gen_008812D0::bfmeConfigure(Region3D region, Real cellSize)
 	for (unsigned int y = 0; y < (unsigned int)height; ++y)
 	{
 		int oldY = bfmeFloatToLongFC(bfmeFloatFloorFC(
-			((Real)y * cellSize + region.lo.y - m_bfmeRegion.lo.y)
-				* m_bfmeCellSizeInv));
-		if (oldY >= 0 && oldY < m_bfmeHeight)
+			((Real)y * cellSize + region.lo.y - m_region.lo.y)
+				* m_cellSizeInv));
+		if (oldY >= 0 && oldY < m_height)
 		{
 			for (unsigned int x = 0; x < (unsigned int)width;
 				++x, ++cell)
 			{
 				int oldX = bfmeFloatToLongFC(bfmeFloatFloorFC(
-					((Real)x * cellSize + region.lo.x - m_bfmeRegion.lo.x)
-						* m_bfmeCellSizeInv));
-				if (oldX >= 0 && oldX < m_bfmeWidth)
-					cell->m_bfmeKind = m_bfmeCells[
-						oldY * m_bfmeWidth + oldX].m_bfmeKind;
+					((Real)x * cellSize + region.lo.x - m_region.lo.x)
+						* m_cellSizeInv));
+				if (oldX >= 0 && oldX < m_width)
+					cell->m_bfmeKind = m_cells[
+						oldY * m_width + oldX].m_bfmeKind;
 			}
 		}
 		else
@@ -234,19 +234,19 @@ void Gen_008812D0::bfmeConfigure(Region3D region, Real cellSize)
 		}
 	}
 
-	delete[] m_bfmeCells;
-	m_bfmeCells = cells;
-	m_bfmeRegion = region;
-	m_bfmeCellSizeInv = cellSizeInv;
-	m_bfmeWidth = width;
-	m_bfmeHeight = height;
-	m_bfmeCellSize = cellSize;
+	delete[] m_cells;
+	m_cells = cells;
+	m_region = region;
+	m_cellSizeInv = cellSizeInv;
+	m_width = width;
+	m_height = height;
+	m_cellSize = cellSize;
 }
 
 // ??1Gen_008812D0@@QAE@XZ
 Gen_008812D0::~Gen_008812D0()
 {
-	delete[] m_bfmeCells;
+	delete[] m_cells;
 }
 
 // The retail 30-byte wrapper is the scalar-deleting destructor for this
@@ -261,7 +261,7 @@ void Force_Gen_008812D0_DeletingDestructor(Gen_008812D0 *value)
 void Gen_008812D0::bfmeSetRegion(const Region3D *region, Real cellSize)
 {
 	if (cellSize <= 0.0f)
-		cellSize = m_bfmeCellSize;
+		cellSize = m_cellSize;
 
 	if (!(region->width() < 0.0f)
 		&& !(region->height() < 0.0f))
@@ -284,8 +284,8 @@ void BfmeTaintManager::bfmeResetGrid()
 // ?bfmeAt@Gen_008812D0@@QBEPAVBfmeCellFC@@HH@Z
 BfmeCellFC *Gen_008812D0::bfmeAt(int x, int y) const
 {
-	if (x >= 0 && x < m_bfmeWidth && y >= 0 && y < m_bfmeHeight)
-		return &m_bfmeCells[m_bfmeWidth * y + x];
+	if (x >= 0 && x < m_width && y >= 0 && y < m_height)
+		return &m_cells[m_width * y + x];
 
 	return 0;
 }
@@ -294,20 +294,20 @@ BfmeCellFC *Gen_008812D0::bfmeAt(int x, int y) const
 void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 	BfmeCellFC **last, int x1, int x2, int y)
 {
-	if (x2 < 0 || x1 >= m_bfmeWidth || y < 0 || y >= m_bfmeHeight)
+	if (x2 < 0 || x1 >= m_width || y < 0 || y >= m_height)
 	{
 		*last = 0;
 		*first = 0;
 		return;
 	}
 
-	BfmeCellFC *row = m_bfmeCells + y * m_bfmeWidth;
+	BfmeCellFC *row = m_cells + y * m_width;
 	*last = row;
 	*first = row;
 	if (x1 > 0)
 		*first = row + x1;
 
-	*last += x2 < m_bfmeWidth ? x2 + 1 : m_bfmeWidth;
+	*last += x2 < m_width ? x2 + 1 : m_width;
 }
 
 // 0x00880E70, 0x00880EA0 and 0x00880ED0 are out-of-line Gen_008812D0 helpers
@@ -320,50 +320,50 @@ void Gen_008812D0::bfmeGetCellRange(BfmeCellFC **first,
 int Gen_008812D0::rva00880E70(Real worldX) const
 {
 	return bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldX - m_bfmeRegion.lo.x) * m_bfmeCellSizeInv));
+		(worldX - m_region.lo.x) * m_cellSizeInv));
 }
 
 // ?rva00880EA0@Gen_008812D0@@QBEHM@Z
 int Gen_008812D0::rva00880EA0(Real worldY) const
 {
 	return bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldY - m_bfmeRegion.lo.y) * m_bfmeCellSizeInv));
+		(worldY - m_region.lo.y) * m_cellSizeInv));
 }
 
 // ?rva00880ED0@Gen_008812D0@@QBEHM@Z
 int Gen_008812D0::rva00880ED0(Real distance) const
 {
-	return bfmeFloatToLongFC(bfmeFloatCeilFC(distance * m_bfmeCellSizeInv));
+	return bfmeFloatToLongFC(bfmeFloatCeilFC(distance * m_cellSizeInv));
 }
 
 // ?bfmeCellAtWorld@Gen_008812D0@@QBEPAVBfmeCellFC@@MM@Z
 BfmeCellFC *Gen_008812D0::bfmeCellAtWorld(Real worldX, Real worldY) const
 {
 	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldX - m_bfmeRegion.lo.x) * m_bfmeCellSizeInv));
-	if (x < 0 || x >= m_bfmeWidth)
+		(worldX - m_region.lo.x) * m_cellSizeInv));
+	if (x < 0 || x >= m_width)
 		return 0;
 
 	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(worldY - m_bfmeRegion.lo.y) * m_bfmeCellSizeInv));
-	if (y < 0 || y >= m_bfmeHeight)
+		(worldY - m_region.lo.y) * m_cellSizeInv));
+	if (y < 0 || y >= m_height)
 		return 0;
 
-	return &m_bfmeCells[y * m_bfmeWidth + x];
+	return &m_cells[y * m_width + x];
 }
 
 // ?bfmeVisitCells@Gen_008812D0@@QAEXXZ
 void Gen_008812D0::bfmeVisitCells(void)
 {
-	BfmeCellFC *end = m_bfmeCells + m_bfmeWidth * m_bfmeHeight;
+	BfmeCellFC *end = m_cells + m_width * m_height;
 	int x = 0;
 	int y = 0;
 
-	for (BfmeCellFC *cell = m_bfmeCells; cell != end; ++cell)
+	for (BfmeCellFC *cell = m_cells; cell != end; ++cell)
 	{
 		m_bfmeVisitor(x, y, cell->m_bfmeKind);
 		++x;
-		if (x == m_bfmeWidth)
+		if (x == m_width)
 		{
 			x = 0;
 			++y;
@@ -447,13 +447,13 @@ void BfmeTaintManager::bfmeApplyCircleWorld(const BfmePointFC *point,
 	Real radius, int amount, bool absolute)
 {
 	int cellRadius = bfmeFloatToLongFC(bfmeFloatCeilFC(
-		radius * m_bfmeGrid->m_bfmeCellSizeInv));
+		radius * m_bfmeGrid->m_cellSizeInv));
 	int y = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(point->y - m_bfmeGrid->m_bfmeRegion.lo.y)
-			* m_bfmeGrid->m_bfmeCellSizeInv));
+		(point->y - m_bfmeGrid->m_region.lo.y)
+			* m_bfmeGrid->m_cellSizeInv));
 	int x = bfmeFloatToLongFC(bfmeFloatFloorFC(
-		(point->x - m_bfmeGrid->m_bfmeRegion.lo.x)
-			* m_bfmeGrid->m_bfmeCellSizeInv));
+		(point->x - m_bfmeGrid->m_region.lo.x)
+			* m_bfmeGrid->m_cellSizeInv));
 
 	((Rva00881B90Class *)m_bfmeGrid)->update(x, y, cellRadius, amount, absolute);
 }
