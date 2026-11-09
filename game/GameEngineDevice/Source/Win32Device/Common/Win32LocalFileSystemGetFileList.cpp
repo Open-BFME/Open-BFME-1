@@ -12,15 +12,15 @@
 #include "Win32Device/Common/Win32LocalFileSystem.h"
 #include <io.h>
 
-static inline Int bfmeLength( const AsciiString &s )
+static inline Int bfmeLength( const AsciiString &string )
 {
-	const char *d = *(const char * const *)&s;
+	const char *d = *(const char * const *)&string;
 	return d ? *(const unsigned short *)(d + 4) : 0;
 }
 
-static inline const char *bfmeStr( const AsciiString &s )
+static inline const char *bfmeStr( const AsciiString &string )
 {
-	const char *d = *(const char * const *)&s;
+	const char *d = *(const char * const *)&string;
 	return d ? d + 8 : "";
 }
 

@@ -2476,3 +2476,5 @@ game/Libraries/Source/WWVegas/WWMath/quat.cpp|param|Axis_To_Quat|a,axis,claude-s
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Axis_To_Quat|tmp,normalizedAxis,claude-sonnet+gpt-6.1-sol,blocked: game/Libraries/Source/WWVegas/WWMath/quat.cpp: game\Libraries\Source\WWVegas\WWMath\quat.cpp(37) : error C2065: 'c' : undeclared identifier,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeLength|s,string,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeStr|s,string,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeLength|s,string,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeStr|s,string,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
