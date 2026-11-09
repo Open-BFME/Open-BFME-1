@@ -14,7 +14,7 @@ struct Drawable00200420 { char pad00[0x250]; WordBitTest000D2F40 conditions250; 
 class Body00200420 { public:
  virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3(); virtual float value10();
 };
-class AI00200420 { public:
+class AIUpdateInterface { public:
  virtual void slot0();
  virtual void slot1();
  virtual void slot2();
@@ -129,7 +129,7 @@ class Object { public:
  virtual void slot9();
  virtual Drawable00200420* drawable28();
  char pad04[0x120]; unsigned flags124; char pad128[0xd8];
- Body00200420* body200; AI00200420* ai204; char pad208[0x13c]; unsigned status344;
+ Body00200420* m_body; AIUpdateInterface* m_ai; char pad208[0x13c]; unsigned status344;
  void notifyModelConditionChanged();
  CountermeasuresBehaviorInterface* getCountermeasuresBehaviorInterface();
  void setDisabledUntil(DisabledType,unsigned);
@@ -152,8 +152,8 @@ __forceinline void clearReaction00200420(Object* object,Drawable00200420* drawab
 }
 int ReactionUpdate00200420::update() {
  Object* obj=object();
- AI00200420* ai=obj->ai204;
- Body00200420* body=obj->body200;
+ AIUpdateInterface* ai=obj->m_ai;
+ Body00200420* body=obj->m_body;
  Drawable00200420* drawable=obj->drawable28();
  ReactionData00200420* settings=data();
  if(ai && drawable && body) {

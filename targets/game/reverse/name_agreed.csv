@@ -2123,3 +2123,6 @@ game/GameEngine/Source/Common/Rva0018C480Xfer.cpp|type||Rva0018C480Xfer,Xfer,cla
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|type||AI00200420,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||body200,m_body,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||ai204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|type||AI00200420,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||body200,m_body,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||ai204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
