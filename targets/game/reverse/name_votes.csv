@@ -7184,3 +7184,5 @@ game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029A150.cpp|me
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029A150.cpp|member||at20,d2c1c557553c6f431aa26f87,claude-sonnet,20261109071132-8e0bd0,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029A150.cpp|member||at4c,7904858797a59f4b993a947e,claude-sonnet,20261109071132-8e0bd0,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorRva0029A150.cpp|function|PhysicsBehavior@|rva0029A150,76aa653e54eb824b43a20db9,claude-sonnet,20261109071132-8e0bd0,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassCtor.cpp|member||value10,63c75286bff813e0c135578d,claude-sonnet,20261109071132-578afa,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassCtor.cpp|member||value11,1a486340e2f9790d8381da46,claude-sonnet,20261109071132-578afa,2026-11-09
