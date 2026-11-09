@@ -34,7 +34,7 @@ union BfmeSetWakeISThunkRef
 	BfmeSetWakeISThunk m_call;
 };
 
-class BfmeDataIS
+class ObjectCreationUpgradeModuleData
 {
 public:
 	unsigned char m_bfmeHeadIS[0xc];
@@ -48,7 +48,7 @@ protected:
 public:
 	unsigned char m_bfmeHeadIS[4]; // +0x04, after the vptr
 	BfmeWakeIS m_bfmeWakeIS;
-	BfmeDataIS *m_bfmeDataIS;
+	ObjectCreationUpgradeModuleData *m_bfmeDataIS;
 	void *m_bfmeObjIS;
 	unsigned char m_bfmeMidIS[0x14];
 	int m_bfmeFrameIS;
