@@ -139,7 +139,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 	for ( const char *token = ini->getNextTokenOrNull( ini->getSepsColon() ); token != 0;
 		token = ini->getNextTokenOrNull( ini->getSepsColon() ) )
 	{
-		if ( _stricmp( token, "Label" ) == 0 && text.isEmpty() )
+		if ( _strcmpi( token, "Label" ) == 0 && text.isEmpty() )
 		{
 			const char *label = ini->getNextTokenOrNull( ini->getSeps() );
 			if ( label == 0 || !text.isEmpty() || !( (Rva0081DE40SubtitleManagerView *)manager )->m_fetchLabel( label, &text ) )
@@ -148,7 +148,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 					ini->getFilename(), ini->getLineNum() );
 			}
 		}
-		else if ( _stricmp( token, "Color" ) == 0 && color == 0 )
+		else if ( _strcmpi( token, "Color" ) == 0 && color == 0 )
 		{
 			const char *names[ 3 ] = { "R", "G", "B" };
 			for ( int i = 0; i < 3; ++i )
@@ -163,7 +163,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 			}
 			color |= 0xff000000;
 		}
-		else if ( _stricmp( token, "Style" ) == 0 && style == SUBTITLE_FIELD_UNSET )
+		else if ( _strcmpi( token, "Style" ) == 0 && style == SUBTITLE_FIELD_UNSET )
 		{
 			const char *value = ini->getNextTokenOrNull( ini->getSepsColon() );
 			if ( value == 0 )
@@ -173,7 +173,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 			}
 			style = INI::scanIndexList( value, Rva012C5190SubtitleStyleNames );
 		}
-		else if ( _stricmp( token, "Align" ) == 0 && align == SUBTITLE_FIELD_UNSET )
+		else if ( _strcmpi( token, "Align" ) == 0 && align == SUBTITLE_FIELD_UNSET )
 		{
 			const char *value = ini->getNextTokenOrNull( ini->getSepsColon() );
 			if ( value == 0 )
@@ -183,7 +183,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 			}
 			align = INI::scanIndexList( value, Rva012C51ACSubtitleAlignNames );
 		}
-		else if ( _stricmp( token, "Line" ) == 0 && line == SUBTITLE_FIELD_UNSET )
+		else if ( _strcmpi( token, "Line" ) == 0 && line == SUBTITLE_FIELD_UNSET )
 		{
 			const char *value = ini->getNextTokenOrNull( ini->getSepsColon() );
 			if ( value != 0 )
@@ -201,7 +201,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 					ini->getFilename(), ini->getLineNum() );
 			}
 		}
-		else if ( _stricmp( token, "StartFrame" ) == 0 && startFrame == SUBTITLE_FIELD_UNSET )
+		else if ( _strcmpi( token, "StartFrame" ) == 0 && startFrame == SUBTITLE_FIELD_UNSET )
 		{
 			const char *value = ini->getNextTokenOrNull( ini->getSepsColon() );
 			if ( value != 0 )
@@ -219,7 +219,7 @@ void rva0081DE40ParseSubTitleEntry( INI *ini, void *, void *store, const void * 
 					ini->getFilename(), ini->getLineNum() );
 			}
 		}
-		else if ( _stricmp( token, "EndFrame" ) == 0 && endFrame == SUBTITLE_FIELD_UNSET )
+		else if ( _strcmpi( token, "EndFrame" ) == 0 && endFrame == SUBTITLE_FIELD_UNSET )
 		{
 			const char *value = ini->getNextTokenOrNull( ini->getSepsColon() );
 			if ( value != 0 )
