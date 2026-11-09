@@ -121,12 +121,12 @@ class BfmeOverridableBase
 public:
 	BfmeOverridableBase()
 	{
-		m_bfmeNextOverride = 0;
-		m_bfmeIsOverride = 0;
+		m_nextOverride = 0;
+		m_isOverride = 0;
 	}
 
-	LightPointLevel *m_bfmeNextOverride;
-	unsigned char m_bfmeIsOverride;
+	LightPointLevel *m_nextOverride;
+	unsigned char m_isOverride;
 	unsigned char m_bfmePad009[ 3 ];
 };
 
@@ -139,7 +139,7 @@ public:
 	{
 	}
 
-	BfmeNameField m_bfmeName;
+	BfmeNameField m_name;
 	int m_bfmeA;
 	int m_bfmeB;
 	int m_bfmeC;
@@ -153,7 +153,7 @@ public:
 	LightPointLevel *find( void *levels, AsciiString *name ) const;
 
 	unsigned char m_bfmePad000[ 8 ];
-	unsigned char m_bfmeLevels[ 12 ];
+	unsigned char m_level[ 12 ];
 };
 
 extern LightPointSystem *TheLightPointSystem;
@@ -185,7 +185,7 @@ void INI::parseLightPointLevel( INI *ini )
 	if ( ini->getLoadType() == 2 )
 	{
 		LightPointLevel *found =
-			TheLightPointSystem->find( &TheLightPointSystem->m_bfmeLevels, &name );
+			TheLightPointSystem->find( &TheLightPointSystem->m_level, &name );
 
 		if ( found == 0 )
 			throw INIException( 3, "Light point level %s not found in map.ini", name.str() );
@@ -193,13 +193,13 @@ void INI::parseLightPointLevel( INI *ini )
 		LightPointLevel *level = new LightPointLevel;
 
 		LightPointLevel *base = found;
-		if ( found->m_bfmeNextOverride != 0 )
+		if ( found->m_nextOverride != 0 )
 			base = (LightPointLevel *)
-				( (Overridable *)found->m_bfmeNextOverride )->friend_getFinalOverride();
+				( (Overridable *)found->m_nextOverride )->friend_getFinalOverride();
 
 		*(Rva0039C830 *)level = *(const Rva0039C830 *)base;
-		base->m_bfmeNextOverride = level;
-		level->m_bfmeIsOverride = 1;
+		base->m_nextOverride = level;
+		level->m_isOverride = 1;
 
 		ini->initFromINI( level, g_010EBE44 );
 	}
@@ -207,7 +207,7 @@ void INI::parseLightPointLevel( INI *ini )
 	{
 		LightPointLevel *level = new LightPointLevel;
 
-		level->m_bfmeName = name;
+		level->m_name = name;
 
 		ini->initFromINI( level, g_010EBE44 );
 

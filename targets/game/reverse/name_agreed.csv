@@ -1684,3 +1684,7 @@ game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeX,m_x,claude-sonn
 game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeY,m_y,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeX,m_x,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeY,m_y,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeNextOverride,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeIsOverride,m_isOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeLevels,m_level,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
