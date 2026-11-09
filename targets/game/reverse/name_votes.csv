@@ -6727,3 +6727,6 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|membe
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f26c,5b4165cf3b71dea15b272447,claude-sonnet,20261109045655-f0fbf0,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,3ea7963d36486468f3450bee,claude-sonnet,20261109045655-f0fbf0,2026-11-09
 game/GameEngine/Source/Common/Rva003BD700Ctor.cpp|type||Rva003BD700String,15217d1003936b999d108d3b,claude-sonnet,20261109050126-43bb32,2026-11-09
+game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field0,3fe05f2591121fac92f351eb,claude-sonnet,20261109050726-11f0ec,2026-11-09
+game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field4,b6ea96930d865261a314b66c,claude-sonnet,20261109050726-11f0ec,2026-11-09
+game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field8,63a9f09acb0ea6ab3409be4e,claude-sonnet,20261109050726-11f0ec,2026-11-09
