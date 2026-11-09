@@ -7429,3 +7429,5 @@ game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,123b6a7cc2c8f51
 game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeThingHF,6782dfe4c41ac2c3e6cf55cf,claude-sonnet,20261109083454-65d7e9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeSlotHF,e196870eb201b74bccbf82e0,claude-sonnet,20261109083454-65d7e9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorModuleDataCtor.cpp|member||m_x85,bad35e664a23c4b5fbf4bb62,claude-sonnet,20261109083454-39ac69,2026-11-09
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,825acd6c0b0c0a1a8a160adf,claude-sonnet,20261109083454-05eff6,2026-11-09
+game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,dded64e7ad4dc6a16c403c2e,claude-sonnet,20261109083454-05eff6,2026-11-09
