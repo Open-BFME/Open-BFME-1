@@ -2891,3 +2891,4 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|b
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat#2|s,str,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeFind|s,str,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1312.cpp|member||m_bfmeCritical,m_criticalSection,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/TargetEligibility00290990.cpp|local|TargetEligibility00290990::accepts|templ,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
