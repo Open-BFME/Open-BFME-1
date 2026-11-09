@@ -6450,3 +6450,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDa
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_0C,d2c98fb61b320c827cef14e3,claude-sonnet,20261109030604-adf036,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_20,2939db8e731545af5e9ce55e,claude-sonnet,20261109030604-adf036,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva007F6A10AllocSlot.cpp|local|Rva007F6A10Owner::allocSlot|s,1f6caceac4b878bdb6241749,claude-sonnet,20261109031159-0a5385,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|ScriptConditions::evaluateScienceAcquired|e,2d8871066deb4df1399a01f9,claude-sonnet,20261109031200-ffa026,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|ScriptConditions::evaluateScienceAcquired|r,114e8be1b5bd623b54b2faa4,claude-sonnet,20261109031200-ffa026,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091B|r,cc39aed842a4dffd66e41197,claude-sonnet,20261109031200-ffa026,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091C|r,c6bf1c54a04a546028d7034c,claude-sonnet,20261109031200-ffa026,2026-11-09
