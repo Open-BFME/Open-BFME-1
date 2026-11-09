@@ -2924,3 +2924,5 @@ game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.c
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,response,claude-sonnet+gpt-6-astra+gpt-6-sol+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1030.cpp|member||m_bfmeH,m_mutex,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1030.cpp|member||m_bfmeH,m_mutex,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1667.cpp|member||m_bfmeHEQA,m_sample,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1667.cpp|local|BfmeThingEQA::bfmeGoEQA|h,sample,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
