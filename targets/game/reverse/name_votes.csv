@@ -6786,3 +6786,8 @@ game/GameEngine/Source/Common/BfmeConv1280.cpp|member||m_bfme00,9578fa328193153d
 game/GameEngine/Source/Common/System/GeometryInfoRva0087E370.cpp|type||Rva0087E370,1265ea0cbdd9f36720dbf1ea,claude-sonnet,20261109053956-f637c1,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2009.cpp|member||m_bfmePosEAO,76cf0bdbce1ce9b260198f14,claude-sonnet,20261109052946-756e58,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2009.cpp|function|BfmeLexEAO@|bfmeSkipCommentEAO,ff0bc14b9b867db3398316a6,claude-sonnet,20261109052946-756e58,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|type||BfmeAttackForwardInfo,d63b09d31648d009bbc5fd23,claude-sonnet,20261109052946-818894,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeMode,fb82531b705c5970fb7acc9a,claude-sonnet,20261109052946-818894,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue,b1bdd81bef71ba7a29e2c26e,claude-sonnet,20261109052946-818894,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,69e87c6afc37e0b40933b24a,claude-sonnet,20261109052946-818894,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,a83dabc05029d4af15675354,claude-sonnet,20261109052946-818894,2026-11-09

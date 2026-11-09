@@ -1916,3 +1916,8 @@ game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|closeDataChunk|c,c
 game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::readArrayOfBytes|c,chunk,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/System/DataChunkInput.cpp: game\GameEngine\Source\Common\System\DataChunkInput.cpp(281) : error C2065: 'c' : undeclared ,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2009.cpp|member||m_bfmePosEAO,m_pos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2009.cpp|function|BfmeLexEAO@|bfmeSkipCommentEAO,skipComment,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|type||BfmeAttackForwardInfo,AssistedTargetingUpdateModuleData,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeMode,m_clipSize,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue,m_weaponSlot,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,m_laserFromAssisted,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,m_laserToTarget,claude-sonnet+gpt-6-astra,agreed,2026-11-09
