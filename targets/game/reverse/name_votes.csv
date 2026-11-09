@@ -7606,3 +7606,4 @@ game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfme
 game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeDoingAnalysis,904cb3f2d081239c7d8965d9,claude-sonnet,20261109094939-016646,2026-11-09
 game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp|member||m_1c,63aa187b8a96b10539373a68,claude-sonnet,20261109100419-56752b,2026-11-09
 game/GameEngine/Source/Common/GlobalDataParseDefinition.cpp|local|GlobalData::parseGameDataDefinition|temp,712be6b9afa04ad4c56cf2a1,claude-sonnet,20261109100416-1f6b82,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Render2DClassAddTri.cpp|param|convertPosition006e|v,771be72b60306851a94c3fd9,claude-sonnet,20261109100505-3c3eab,2026-11-09
