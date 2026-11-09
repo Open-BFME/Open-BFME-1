@@ -7128,3 +7128,4 @@ game/GameEngine/Source/Common/Bfme5TinyFive6.cpp|member||m_bfmeFlags,f356016badd
 game/GameEngine/Source/Common/Bfme5TinyFive6.cpp|member||m_bfmeMode,99a78bb14fabf7393c6ac807,claude-sonnet,20261109071040-eb67e9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponCopyAssignment.cpp|member||m_field28,c25a36f117bc5dc19546d494,claude-sonnet,20261109071237-465a63,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponCopyAssignment.cpp|member||m_reset2C,9bfc465e02e6d82a6c9687cc,claude-sonnet,20261109071237-465a63,2026-11-09
+game/GameEngine/Source/Common/BfmeConv829.cpp|member||m_sub210,b9f02fae7bab11e62c959e08,claude-sonnet,20261109071049-269894,2026-11-09
