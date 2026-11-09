@@ -7770,3 +7770,5 @@ game/GameEngine/Source/GameLogic/Object/Update/TargetEligibility00290990.cpp|loc
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|p,5c0e3c57655ebfcc9c9886fb,claude-sonnet,20261109110228-7e0af7,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_xfer.cpp|member||m_field5C,b94907a50ef4ca9d2bb02bc4,claude-sonnet,20261109110228-8d2e69,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1807.cpp|member||m_bfmeScaleRW,99cfd3c83d79e9b0b452348f,claude-sonnet,20261109110836-63272b,2026-11-09
+game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE4,60377d0eb878cb5a31406b66,claude-sonnet,20261109111231-d2db56,2026-11-09
+game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE5,2f6243c70b1cc1053388d575,claude-sonnet,20261109111231-d2db56,2026-11-09
