@@ -64,7 +64,7 @@ extern void *GadgetComboBoxGetItemData( GameWindow *combo, int selected );
 class BfmeAptScreenOnlineQuickMatch
 {
 public:
-	void rva005585B0SaveOptions();
+	void saveOptions();
 
 private:
 	unsigned char m_unmodelled[ 0x5C ];
@@ -82,7 +82,7 @@ template <typename T> const T &max( const T &a, const T &b )
 	return b;
 }
 
-void BfmeAptScreenOnlineQuickMatch::rva005585B0SaveOptions()
+void BfmeAptScreenOnlineQuickMatch::saveOptions()
 {
 	QuickMatchPreferences pref;
 	int selected;
