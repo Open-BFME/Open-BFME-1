@@ -6465,3 +6465,4 @@ game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmePrevXY,989774339e75
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|member||m_bfmeName,940c00759c6f571b526bc271,claude-sonnet,20261109031911-d4b725,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|param|_Construct|p,b07d5d03dc4d7154e0a3a25c,claude-sonnet,20261109031911-e6458a,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|local|_M_create_node|tmp,9c5429e2966b981349b6cdfd,claude-sonnet,20261109031911-e6458a,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||field_0c,8db5ba40a697addf683c7958,claude-sonnet,20261109032344-dd6c69,2026-11-09
