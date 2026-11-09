@@ -6449,3 +6449,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBu
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_08,7840a78df6be9653cc0b0e78,claude-sonnet,20261109030604-adf036,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_0C,d2c98fb61b320c827cef14e3,claude-sonnet,20261109030604-adf036,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_20,2939db8e731545af5e9ce55e,claude-sonnet,20261109030604-adf036,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva007F6A10AllocSlot.cpp|local|Rva007F6A10Owner::allocSlot|s,1f6caceac4b878bdb6241749,claude-sonnet,20261109031159-0a5385,2026-11-09

@@ -1484,3 +1484,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDa
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_0C,m_scanDelayInFrames,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/PropagandaTowerBehaviorModuleDataConstructor.cpp|member||m_unmodelled_20,m_upgradedPulseFX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp|local|FormationBuild00245010::build|r,rankIndex,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva007F6A10AllocSlot.cpp|local|Rva007F6A10Owner::allocSlot|s,slot,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
