@@ -7521,3 +7521,5 @@ game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|b,ebcc34
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapUpdateScorches.cpp|type||BFMEScorchEntry,0f72000c4fef60bc4e9bc390,claude-sonnet,20261109092402-5b4c0a,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|type||Rva00C73744SnapshotBase,472ba339f0c9f30241cdb370,claude-sonnet,20261109092245-802aaa,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|member||m_at034,ef89188cd859d02e29f7000b,claude-sonnet,20261109092245-802aaa,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeGetModelVertices.cpp|param|Rva006D7EA0TransformVector|A,31c86702b997716fb98950ea,claude-sonnet,20261109092245-ddfe9d,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeGetModelVertices.cpp|param|Rva006D7EA0RotateVector|A,ef060c04d267ebb7e7515003,claude-sonnet,20261109092245-ddfe9d,2026-11-09
