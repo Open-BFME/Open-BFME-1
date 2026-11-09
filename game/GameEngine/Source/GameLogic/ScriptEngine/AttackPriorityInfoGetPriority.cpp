@@ -47,6 +47,9 @@ private:
 // so the call names it through a member pointer.
 extern void j_000022bb(void);
 
+// bfmeFind is reached through ILT 0x0001FF05, which the ledger defines as j_0001ff05.
+extern void j_0001ff05(void);
+
 Int AttackPriorityInfo::getPriority(const ThingTemplate *thingTemplate) const
 {
 	Int priority = m_defaultPriority;
@@ -65,7 +68,10 @@ Int AttackPriorityInfo::getPriority(const ThingTemplate *thingTemplate) const
 		if (priorityMap && priorityMap->m_size)
 		{
 			BfmeAttackPriorityNode *found;
-			priorityMap->bfmeFind(&found, &thingTemplate);
+			typedef void (BfmeAttackPriorityMap::*FindCall)(BfmeAttackPriorityNode **, const ThingTemplate **);
+			union { void (*raw)(void); FindCall member; } find;
+			find.raw = j_0001ff05;
+			(priorityMap->*find.member)(&found, &thingTemplate);
 
 			if (found == priorityMap->m_end)
 				return priority;

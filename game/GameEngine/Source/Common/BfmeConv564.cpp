@@ -6,6 +6,9 @@ public:
 	int m_bfmeCount;
 };
 
+// bfmeDtorCAD is reached through ILT 0x00030841, which the ledger defines as j_00030841.
+extern void j_00030841();
+
 class BfmeThingCAD
 {
 public:
@@ -22,7 +25,10 @@ void BfmeThingCAD::bfmeGoCAD()
 	{
 		if (m_bfmeRef != 0)
 		{
-			ref->bfmeDtorCAD();
+			typedef void (BfmeRefCAD::*DtorCall)();
+			union { void (*raw)(); DtorCall member; } dtor;
+			dtor.raw = j_00030841;
+			(ref->*dtor.member)();
 			::operator delete(ref);
 		}
 	}
