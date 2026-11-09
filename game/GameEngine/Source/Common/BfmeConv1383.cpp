@@ -46,21 +46,21 @@ public:
 	void bfmeGoVJE(BfmeMsgVJC *m, int downloadMin, int downloadMax, int topN, int periodType, int periodsPast, void *b);
 };
 
-void BfmeThingVJE::bfmeGoVJE(BfmeMsgVJC *m, int downloadMin, int downloadMax, int topN, int periodType, int periodsPast, void *b)
+void BfmeThingVJE::bfmeGoVJE(BfmeMsgVJC *message, int downloadMin, int downloadMax, int topN, int periodType, int periodsPast, void *b)
 {
 	void *g = g_Va0130A5B8;
-	((Rva007E8AC0*)m)->run();
-	m->m_bfme1c = 0x626c6f62;
-	((BfmeC994 *)m)->addString("TXN", (const char *)g);
-	((Rva007F1800Search *)this)->serialize((Rva007E8810Message *)m, topN, b);
+	((Rva007E8AC0*)message)->run();
+	message->m_bfme1c = 0x626c6f62;
+	((BfmeC994 *)message)->addString("TXN", (const char *)g);
+	((Rva007F1800Search *)this)->serialize((Rva007E8810Message *)message, topN, b);
 	if (downloadMin > -1)
-		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMin", (void *)downloadMin);
+		((BfmeThingCIB *)message)->bfmeGoCIB("downloadMin", (void *)downloadMin);
 	if (downloadMax > -1)
-		((BfmeThingCIB *)m)->bfmeGoCIB("downloadMax", (void *)downloadMax);
+		((BfmeThingCIB *)message)->bfmeGoCIB("downloadMax", (void *)downloadMax);
 	if (topN > -1)
-		((BfmeThingCIB *)m)->bfmeGoCIB("topN", (void *)topN);
+		((BfmeThingCIB *)message)->bfmeGoCIB("topN", (void *)topN);
 	if (periodType > -1)
-		((BfmeThingCIB *)m)->bfmeGoCIB("periodType", (void *)periodType);
+		((BfmeThingCIB *)message)->bfmeGoCIB("periodType", (void *)periodType);
 	if (periodsPast > -1)
-		((BfmeThingCIB *)m)->bfmeGoCIB("periodsPast", (void *)periodsPast);
+		((BfmeThingCIB *)message)->bfmeGoCIB("periodsPast", (void *)periodsPast);
 }
