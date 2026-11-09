@@ -7762,3 +7762,4 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|b
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat|s,9e45a18882e962a7aff94638,claude-sonnet,20261109105549-4b78ed,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat#2|s,2aa23c604e165786f00c36bd,claude-sonnet,20261109105549-4b78ed,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeFind|s,560932da0c322262d4c50854,claude-sonnet,20261109105549-4b78ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateApplyTopplingForce.cpp|type||BfmeToppleCollideModuleInterface,76caf6011df9ef0d3b09f479,claude-sonnet,20261109110331-3fce3a,2026-11-09
