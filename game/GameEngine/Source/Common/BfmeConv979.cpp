@@ -60,7 +60,7 @@ public:
 struct BfmeX979
 {
 	char m_bfmePad[0x22c];
-	TunnelTracker *m_bfmeSink;
+	TunnelTracker *m_tunnelSystem;
 };
 
 class BfmeB979
@@ -85,15 +85,15 @@ void BfmeB979::bfmeGo979B()
 	Object *k = *(Object **)((char *)this - 0x2c);
 	m_bfmeFlagA = 0;
 
-	BfmeX979 *x = (BfmeX979 *)k->getControllingPlayer();
-	if (!x)
+	BfmeX979 *player = (BfmeX979 *)k->getControllingPlayer();
+	if (!player)
 		return;
 
-	TunnelTracker *s = x->m_bfmeSink;
-	if (!s)
+	TunnelTracker *tunnelSystem = player->m_tunnelSystem;
+	if (!tunnelSystem)
 		return;
 
-	s->onTunnelCreated(*(Object **)((char *)this - 0x2c));
+	tunnelSystem->onTunnelCreated(*(Object **)((char *)this - 0x2c));
 	m_bfmeFlagB = 1;
 }
 

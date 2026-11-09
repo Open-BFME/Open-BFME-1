@@ -1368,3 +1368,6 @@ game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeSink,m_tunnelSystem,
 game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|x,player,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|s,tunnelSystem,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Map/BfmeHostBJXfer.cpp|param|BfmeHostBJ::xfer|x,xfer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeSink,m_tunnelSystem,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|x,player,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv979.cpp|local|BfmeB979::bfmeGo979B|s,tunnelSystem,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
