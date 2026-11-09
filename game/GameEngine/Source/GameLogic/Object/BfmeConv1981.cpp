@@ -8,15 +8,15 @@ class BfmeSinkETB;
 class BfmeHostETB
 {
 public:
-	void bfmeApplyETB(BfmeArgETB *arg);
+	void fireCurrentWeapon(BfmeArgETB *arg);
 
 	unsigned char m_bfmeHeadETB[0x94];
 	char m_bfme94ETB;
 	unsigned char m_bfmeMid1ETB[0x157];
-	BfmeSinkETB *m_bfme1ecETB;
+	BfmeSinkETB *m_firingTracker;
 	unsigned char m_bfmeMid2ETB[0x7c];
-	BfmeItemETB *m_bfme26cETB[4];
-	int m_bfme27cETB;
+	BfmeItemETB *m_weapons[4];
+	int m_curWeapon;
 	unsigned char m_bfmeMid3ETB[0xc4];
 	char m_bfme344ETB;
 };
@@ -57,15 +57,15 @@ public:
 #define bfmeNotifyETB(item, first, arg, second) rva001B3510((item), (first), (arg), (second))
 #define bfmeFinishETB(mode) bfmeGo916D((void *)(mode))
 
-void BfmeHostETB::bfmeApplyETB(BfmeArgETB *arg)
+void BfmeHostETB::fireCurrentWeapon(BfmeArgETB *pos)
 {
-	if (arg == 0)
+	if (pos == 0)
 		return;
 
 	if ((m_bfme94ETB & 0x10) != 0)
 		return;
 
-	Weapon *item = (Weapon *)m_bfme26cETB[m_bfme27cETB];
+	Weapon *item = (Weapon *)m_weapons[m_curWeapon];
 
 	if (item == 0)
 		return;
@@ -73,10 +73,10 @@ void BfmeHostETB::bfmeApplyETB(BfmeArgETB *arg)
 	if (item->bfmeBusyETB() != 0)
 		return;
 
-	char ok = item->bfmeRunETB(this, arg, 0);
+	char ok = item->bfmeRunETB(this, pos, 0);
 
-	if (m_bfme1ecETB != 0)
-		((Rva001CD990FiringTracker *)m_bfme1ecETB)->bfmeNotifyETB(item, 0, arg, 0);
+	if (m_firingTracker != 0)
+		((Rva001CD990FiringTracker *)m_firingTracker)->bfmeNotifyETB(item, 0, pos, 0);
 
 	if (ok != 0)
 		((BfmeThing916D *)this)->bfmeFinishETB(1);

@@ -28780,7 +28780,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeApplyERK@@YAXPAVBfmeThingERK@@0@Z,,0x000CDBB0,149,game/GameEngine/Source/Common/BfmeConv1955.cpp,matched,CastleBehavior static key; both module lookups hoisted into locals for left-to-right order
 ?bfmeApplyESI@BfmeHostESI@@QAEXPAVBfmeDictESI@@@Z,,0x007F6520,106,game/GameEngine/Source/Common/BfmeConv1972.cpp,matched,gamebrowser PID apply with an hp assert on the failure path
 ?bfmeApplyESP@@YAXPBD0@Z,,0x00891E70,192,game/GameEngine/Source/Common/BfmeApplyESP.cpp,matched,symbols pin and retail address identify the Apt tracker wrapper; Common source preserves both string lifetimes
-?bfmeApplyETB@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z,,0x001CDA40,111,game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp,matched,indexed item dispatch with a notify hook; ebx save shrink-wrapped into the call setup
+?fireCurrentWeapon@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z,,0x001CDA40,111,game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp,matched,indexed item dispatch with a notify hook; ebx save shrink-wrapped into the call setup
 ?bfmeApplyETH@BfmeViewETH@@QAEXPAVBfmeSubETH@@@Z,,0x0073B8E0,152,game/GameEngine/Source/Common/BfmeViewETHApply.cpp,matched,matched caller bfmeSetAngleETH via ILT 0x00030846; in-place Vector3 offset with literal 0.25f
 ?bfmeApplyEVF@@YAXPAXPAVBfmeStrVKI@@H@Z,,0x008C4FA0,541,game/Libraries/Source/Apt/BfmeApplyEVF.cpp,matched,Open-BFME7 recursive Apt path builder; callers bfmeResetEVF 0x008C52C0 and bfmeNormalizeEVF 0x008C51C0
 ?bfmeApplyEW@BfmeOwnerEW@@QAEXXZ,,0x0075C210,36,game/GameEngine/Source/Common/BfmeConv1685.cpp,matched,Open-BFME5 guarded setReference forward; this parks in eax because the target member claims ecx as the later receiver

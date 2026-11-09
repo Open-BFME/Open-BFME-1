@@ -38695,3 +38695,4 @@ Gen_f265_b7a8aa_00434ff0,0x00434FF0,"gen-shim scaffold placeholder superseded by
 ??0BfmeStateGS@@QAE@PAVBfmeArgGS@@@Z,0x00160D20,renamed to ??0AIPlayer@@QAE@PAVPlayer@@@Z by tools/name_lane.py: two models agreed
 ?start@StartAudioStream006AE2C0@@QAEXABVRef006AE2C0@@M@Z,0x006AE2C0,renamed to ?start@MilesAudioManager@@QAEXABVRef006AE2C0@@M@Z by tools/name_lane.py: two models agreed
 ?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,renamed to ?applyPosition@BfmeSlotDispatcher1281@@QAEXXZ by tools/name_lane.py: two models agreed
+?bfmeApplyETB@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z,0x001CDA40,renamed to ?fireCurrentWeapon@BfmeHostETB@@QAEXPAVBfmeArgETB@@@Z by tools/name_lane.py: two models agreed

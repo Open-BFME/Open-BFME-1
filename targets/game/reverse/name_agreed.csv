@@ -1621,3 +1621,8 @@ game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_elements28,m_elements
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_node00,m_node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_count818,m_entryCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_entries81c,m_entries,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme1ecETB,m_firingTracker,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme26cETB,m_weapons,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme27cETB,m_curWeapon,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|function|BfmeHostETB@|bfmeApplyETB,fireCurrentWeapon,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|param|BfmeHostETB::bfmeApplyETB|arg,pos,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
