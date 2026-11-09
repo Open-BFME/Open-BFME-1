@@ -8,7 +8,7 @@ class BfmeGlobalCBE
 {
 public:
 	unsigned char m_bfmeHead[0x68];
-	void *m_bfmeCur;
+	void *m_textureReductionFactor;
 };
 
 // retail 0x012ED5C8 is EA's `GlobalData *TheWritableGlobalData`, defined once
@@ -28,7 +28,7 @@ void __stdcall bfmeGoCBE(void *spare)
 {
 	if (TheWritableGlobalData != 0)
 	{
-		void *cur = ((BfmeGlobalCBE *)TheWritableGlobalData)->m_bfmeCur;
+		void *cur = ((BfmeGlobalCBE *)TheWritableGlobalData)->m_textureReductionFactor;
 		if ((void *)Rva008FD440Get() != cur)
 			WW3D::Set_Texture_Reduction((int)cur, 6);
 	}
