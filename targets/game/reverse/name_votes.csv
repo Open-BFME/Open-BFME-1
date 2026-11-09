@@ -7016,3 +7016,5 @@ game/GameEngine/Source/GameLogic/AI/AIRva0014DAB0AreaEnemy.cpp|type||ContainModu
 game/GameEngine/Source/GameClient/InGameUI_SelectMatchingAcrossRegion.cpp|local|InGameUI::selectMatchingAcrossRegion|templates,ce058bcf40f1278c8af9fda7,claude-sonnet,20261109064404-ec04ec,2026-11-09
 game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|p,ae561cd94a12b0a7d71ed250,claude-sonnet,20261109064404-13b5af,2026-11-09
 game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|r,1dc45bda04dc69c9d6d7dbd6,claude-sonnet,20261109064404-13b5af,2026-11-09
+game/GameEngine/Source/Common/Rva00352810ParserRegistrationCtor.cpp|member||m_0c,964e082413de48d3d0528cc4,claude-sonnet,20261109064403-c71bdf,2026-11-09
+game/GameEngine/Source/Common/Rva00352810ParserRegistrationCtor.cpp|member||m_10,0a7f827c2c8a58b2fead51e9,claude-sonnet,20261109064403-c71bdf,2026-11-09
