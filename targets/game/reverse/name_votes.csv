@@ -7343,3 +7343,4 @@ game/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp|local|Object:
 game/GameEngine/Source/Common/SmallGaps/Rva009A2C30ReleaseNode.cpp|param|Rva009A2C30Table::releaseNode|n,33f3f0127a95bf3599b0d4c1,claude-sonnet,20261109075745-d09040,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00377D70DataCtor.cpp|type||Rva00377D70Base,de0cf4e2aeee62e9084830ef,claude-sonnet,20261109075745-166a94,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00377D70DataCtor.cpp|type||Rva00377D70Data,81d5641f39a15e28d0efb508,claude-sonnet,20261109075745-166a94,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate_update.cpp|member||m_flag21,955fcb15748c97afa567e298,claude-sonnet,20261109080610-e1c729,2026-11-09
