@@ -7362,3 +7362,5 @@ game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_un
 game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_scalar03ac,3e27a35576cbd1ff89d9f7f7,claude-sonnet,20261109075733-0b35f0,2026-11-09
 game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_byte0486,c9176441705350c016ec50cb,claude-sonnet,20261109075733-0b35f0,2026-11-09
 game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_byte0492,db953725c68ddb8fc4a45fd8,claude-sonnet,20261109075733-0b35f0,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1305.cpp|member||m_bfmeAddr,bf8f88ebc188431dfd9b9468,claude-sonnet,20261109081106-65f47b,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1305.cpp|member||m_bfmeRec,e6e67a13043e63c860496ce9,claude-sonnet,20261109081106-65f47b,2026-11-09
