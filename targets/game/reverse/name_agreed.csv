@@ -2675,3 +2675,14 @@ game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at11f,m_mouse
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at120,m_progressComplete,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at128,m_progressCompleteTimeout,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at1ac,m_objectTOC,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at090,m_isScoringEnabled,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at091,m_showBehindBuildingMarkers,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at092,m_drawIconUI,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at093,m_showDynamicLOD,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at098,m_scriptHulkMaxLifetimeOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at0b0,m_objHash,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at11e,m_inputEnabledMemory,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at11f,m_mouseVisibleMemory,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at120,m_progressComplete,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at128,m_progressCompleteTimeout,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at1ac,m_objectTOC,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

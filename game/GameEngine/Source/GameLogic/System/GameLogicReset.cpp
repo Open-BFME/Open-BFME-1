@@ -58,23 +58,23 @@ private:
  bool at074; char pad075[3];
  AsciiString at078,at07c,at080,at084,at088;
  unsigned at08c;
- bool at090,at091,at092,at093,at094,at095,at096;char pad097;
- unsigned at098,at09c;bool at0a0;char pad0a1[3];unsigned at0a4,at0a8,at0ac;
- CtorObjectMap at0b0;
+ bool m_isScoringEnabled,m_showBehindBuildingMarkers,m_drawIconUI,m_showDynamicLOD,at094,at095,at096;char pad097;
+ unsigned m_scriptHulkMaxLifetimeOverride,at09c;bool at0a0;char pad0a1[3];unsigned at0a4,at0a8,at0ac;
+ CtorObjectMap m_objHash;
  std::vector<UpdateModule*> at0c4[4];
  std::vector<UpdateModule*> at0f4;
  unsigned at100;
  std::list<Object*> at104;
  unsigned at108,m_gameMode,at110;bool at114;char pad115[3];
  void *m_loadScreen;
- bool at11c,at11d,at11e,at11f;
- bool at120[8];unsigned at128[8];
+ bool at11c,at11d,m_inputEnabledMemory,m_mouseVisibleMemory;
+ bool m_progressComplete[8];unsigned m_progressCompleteTimeout[8];
  bool m_forceGameStartByTimeOut;char pad149[3];unsigned at14c,at150,at154,at158;
  std::vector<unsigned> at15c;unsigned at168,at16c;
  Gen_00366B90 at170;
  unsigned at1a0,at1a4;bool at1a8;char pad1a9[3];
  struct ObjectTOCEntry {AsciiString name;unsigned short id;};
- std::list<ObjectTOCEntry> at1ac;
+ std::list<ObjectTOCEntry> m_objectTOC;
  Rva00386080AsciiStringElement at1b0[8];
  unsigned at290;
 };
@@ -118,9 +118,9 @@ void GameLogic::reset() {
  if(!at1a0) setFPMode(); ++at1a0;
  call0_0038F4B0(&at00c,j_0002c327);
  call0_0038F4B0(&m_controlBarOverrides,j_0002775a);
- call0_0038F4B0(&at0b0,j_00044b16);
- call1_0038F4B0(&at0b0,j_00040cf0,8192);
- at11c=false;at11d=false;at11e=true;at11f=true;at096=true;
+ call0_0038F4B0(&m_objHash,j_00044b16);
+ call1_0038F4B0(&m_objHash,j_00040cf0,8192);
+ at11c=false;at11d=false;m_inputEnabledMemory=true;m_mouseVisibleMemory=true;at096=true;
  setFPMode();at14c=0;at150=0;at154=0;at158=0;
  call0_0038F4B0(this,j_00041641);
  at108=1;at16c=0;
@@ -134,15 +134,15 @@ void GameLogic::reset() {
  ((ResetSlot0038F4B0*)TheScriptEngine)->reset();
  ((ResetSlot0038F4B0*)TheLargeGroupAudio)->reset();
  ((ResetSlot0038F4B0*)((char*)g_012EF4F0+4))->reset();
- for(int i=0;i<8;++i) {at120[i]=false;at128[i]=0;}
+ for(int i=0;i<8;++i) {m_progressComplete[i]=false;m_progressCompleteTimeout[i]=0;}
  m_forceGameStartByTimeOut=false;
  if(TheStatsCollector) {delete TheStatsCollector;TheStatsCollector=0;}
- TocNode0038F4B0*& head=*(TocNode0038F4B0**)&at1ac;
+ TocNode0038F4B0*& head=*(TocNode0038F4B0**)&m_objectTOC;
  TocNode0038F4B0* cur=head->next;
  while(cur!=head) {TocNode0038F4B0* old=cur;cur=cur->next;call0_0038F4B0(&old->name,j_0004a133);std::__node_alloc<true,0>::deallocate(old,16);}
  head->next=head;head->prev=head;
  setDefaults(false);
- at090=true;at091=true;at092=true;at093=true;at098=-1;at09c=1;
+ m_isScoringEnabled=true;m_showBehindBuildingMarkers=true;m_drawIconUI=true;m_showDynamicLOD=true;m_scriptHulkMaxLifetimeOverride=-1;at09c=1;
  {Overridable* p=(Overridable*)TheWaterTransparency.ptr;
  if(p->at008) {delete p;p=0;}
  else if(p->at004) {p->at004=p->at004->deleteOverrides();}
