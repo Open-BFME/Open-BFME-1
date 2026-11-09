@@ -7431,3 +7431,9 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecial
 game/GameEngine/Source/GameLogic/Object/Behavior/AutoHealBehaviorModuleDataCtor.cpp|member||m_x85,bad35e664a23c4b5fbf4bb62,claude-sonnet,20261109083454-39ac69,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,825acd6c0b0c0a1a8a160adf,claude-sonnet,20261109083454-05eff6,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,dded64e7ad4dc6a16c403c2e,claude-sonnet,20261109083454-05eff6,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e0,487c7c9700336afc79df5b67,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e4,af29e4b803801d040376e56d,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e8,de9d9148d067a7041be1ac8f,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2ec,2f5351a08eccb0ad33417107,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0,ba48b691e8f7b6dc56952cd1,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,47f097c5b36a1da019e0b8b3,claude-sonnet,20261109083454-90535e,2026-11-09
