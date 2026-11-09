@@ -6581,3 +6581,8 @@ game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,738d9
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberMotion00230BF0.cpp|member||samples610,8f53a0377e08ef1434bf8c13,claude-sonnet,20261109041720-09a004,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberMotion00230BF0.cpp|member||count7F4,03c66e9814aa01e0fe7353ba,claude-sonnet,20261109041720-09a004,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_onEnter.cpp|member||m_field5C,07542764180c4d0202dcad69,claude-sonnet,20261109041720-5e1157,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field001C,0d8275a42cd1e2302792091e,claude-sonnet,20261109041720-710cce,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field003C,fe5489b9f51d8817fd723576,claude-sonnet,20261109041720-710cce,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field0008,f6ef9046a102f1afcfea69dd,claude-sonnet,20261109041720-710cce,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field0010,953915e409b48505a918e236,claude-sonnet,20261109041720-710cce,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field00A0,aa27494dd6f861412b5cf3a3,claude-sonnet,20261109041720-710cce,2026-11-09
