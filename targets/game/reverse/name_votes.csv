@@ -7550,3 +7550,4 @@ game/GameEngine/Source/Common/BfmeConv2039.cpp|member||m_bfmeInvER,d92d2ef92d489
 game/GameEngine/Source/Common/BfmeConv2039.cpp|member||m_bfmeCountER,fb77f24fd624755edddaabf5,claude-sonnet,20261109093142-97d8d8,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300Pair,046fcba349d382abac592dd2,claude-sonnet,20261109093142-7c7804,2026-11-09
 game/GameEngine/Source/Common/FCurve.cpp|type||Rva00069DF0Element,6febc7509c6243bee816de93,claude-sonnet,20261109093243-f569a4,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240DefaultConstructor.cpp|member||m_vector70,a0b3d126839775cbae1ec042,claude-sonnet,20261109093243-e7221e,2026-11-09
