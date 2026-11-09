@@ -7062,3 +7062,4 @@ game/GameEngine/Source/GameClient/Drawable/Behavior/AnimationSoundClientBehavior
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|d,3c3fb0553ba998b236c4b850,claude-sonnet,20261109065024-729d54,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|z2,2133731453726d6961b36ad9,claude-sonnet,20261109065024-729d54,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferFillTaintSurface.cpp|local|TaintBuffer::fillTaintSurface|g,73525544e9c70bd05a9cb698,claude-sonnet,20261109065103-71a248,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Body/ActiveBody_setCorrectDamageState.cpp|member||m_field34,20fe9bbe106e1abf986e295f,claude-sonnet,20261109065242-6093ae,2026-11-09
