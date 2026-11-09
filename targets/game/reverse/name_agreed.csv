@@ -2246,3 +2246,5 @@ game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|param|co
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|DistanceUpdate003C5990::update|p,neighbor,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|param|contains|p,node,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|DistanceUpdate003C5990::update|p,neighbor,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||Gen_000F8A40,TunnelTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|member||m_bfmeFirst,m_tunnelIDs,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

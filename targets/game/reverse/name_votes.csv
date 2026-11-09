@@ -7102,3 +7102,6 @@ game/GameEngine/Source/Common/BfmeConv1494.cpp|function||bfmeGetParamVMZ,3a26b0a
 game/Libraries/Source/collisionmanager/BfmeConv597.cpp|function|BfmeThingCGD@|bfmeGoCGD,7bed1c4d7dc688e4786f19c2,claude-sonnet,20261109070332-1e707a,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|param|contains|p,25428fcd48c9b68091dedf16,claude-sonnet,20261109070427-5ef64d,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|DistanceUpdate003C5990::update|p,315cf38c7fcc372c198695d8,claude-sonnet,20261109070427-5ef64d,2026-11-09
+game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||BfmeBaseE,d51e952159be2edbd91471bc,claude-sonnet,20261109070507-9caec0,2026-11-09
+game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||Gen_000F8A40,1095440ce2ac835868a35842,claude-sonnet,20261109070507-9caec0,2026-11-09
+game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|member||m_bfmeFirst,91f7eb9d4962b9f6bea013fa,claude-sonnet,20261109070507-9caec0,2026-11-09
