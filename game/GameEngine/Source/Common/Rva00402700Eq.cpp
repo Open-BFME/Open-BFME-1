@@ -14,9 +14,9 @@ struct Rva00402700Pair
 	Rva00402700Half m_second;
 };
 
-bool Rva00402700(const Rva00402700Pair *p)
+bool Rva00402700(const Rva00402700Pair *pair)
 {
-	int second = p->m_second.m_count == 2;
-	int first = p->m_first.m_count == 2;
+	int second = pair->m_second.m_count == 2;
+	int first = pair->m_first.m_count == 2;
 	return first == second;
 }
