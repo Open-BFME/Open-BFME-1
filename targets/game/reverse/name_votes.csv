@@ -6475,3 +6475,12 @@ game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeHeight,5e
 game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCells,6e0f01bc77c2c8cf522e27dc,claude-sonnet,20261109032522-b15300,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Gen_00945B20.cpp|function|Gen_00945B20@|bfmeGet,aeab57bbeceb4941999407c8,claude-sonnet,20261109031912-9e764b,2026-11-09
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|member||m_bfmeName,940c00759c6f571b526bc271,claude-sonnet,20261109032023-0e3f58,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBa|o,b8b176fdee6e411a052c6f28,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBa|p,3ededf2bc80cc4d6de709357,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBa|q,c1deec6124e5f005e79e9621,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBb|o,80b24159fd6e90657299ba6f,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBb|p,edc34f57398103a3c4760ddc,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBb|q,02d78abb5c4d44eb088e3ea3,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|o,f6a1aac3e1eea2ca20685960,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|p,92ffe2b63e23d3c178135ebb,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|q,e840fc06c3b39baec71176e5,claude-sonnet,20261109032023-7094ae,2026-11-09
