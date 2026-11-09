@@ -2018,3 +2018,4 @@ game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f2C,m_textureTileFactor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f30,m_lastUsedSyncTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f44,m_bits,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,drawable,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

@@ -6871,3 +6871,9 @@ game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f2C,5275b99095de6fd91f9c0662,claude-sonnet,20261109060234-c333e5,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f30,7e5a938ba5f1f7b9f5d8ac03,claude-sonnet,20261109060234-c333e5,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f44,0ee9e1229c55dc1dae43cedb,claude-sonnet,20261109060234-c333e5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|member||m_bfmePlainCA,66e273b1832346ff3559f9e7,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|member||m_bfmeAltCA,44a4bf309dd7b9e93b93d63c,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|member||m_bfmeModeCA,6bac2392f90124b8931c8d32,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|getIndicatorColor|p,c6b6afb88c1d8ae33781a32f,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|rva001C15F0NightColor|p,341cfef9c47aeb6f85d48f34,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,c0a48d2b69d620e5aca038c1,claude-sonnet,20261109055352-df37f6,2026-11-09
