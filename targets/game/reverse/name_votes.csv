@@ -7692,3 +7692,7 @@ game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipSepsW|s,66
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|c,297a27e11f40e1b1e2d06d27,claude-sonnet,20261109102711-ea80a0,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|s,b8580888ebaae1de96ecc205,claude-sonnet,20261109102711-ea80a0,2026-11-09
 game/GameEngine/Source/Common/Rva002DCAE0WeaponRecord.cpp|type||Rva002DCAE0Module,461459dc40db04c3bbe83cfd,claude-sonnet,20261109102711-c2e586,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|param|walk|d,0ca09d4831d2a4def0633b01,claude-sonnet,20261109102713-462ab6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|walk|f,f3710fd49f3e57a8d1542db3,claude-sonnet,20261109102713-462ab6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|BfmeA1137::copyFromOverride|d,2253489233b50a98996c75b3,claude-sonnet,20261109102713-462ab6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|BfmeA1137::copyFromOverride|f,af52512e50853ec6d723b4f8,claude-sonnet,20261109102713-462ab6,2026-11-09
