@@ -6546,3 +6546,4 @@ game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionY1278,6078df1
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeApplyPosition1291,5ba3958dc54b8648ea9a43b8,claude-sonnet,20261109035219-3e47ce,2026-11-09
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeFlushSlots1289,0ad7cc80097b457ce4e1e82a,claude-sonnet,20261109035219-3e47ce,2026-11-09
 game/Libraries/Source/Apt/Rva008AE7C0CreateChannels.cpp|local|aptCreateChannels008AE7C0|s,d59096eb09c51b14f8153338,claude-sonnet,20261109035219-ac19c1,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/Gen_00943CF0_Second.cpp|member||m_cells18,14fcbf769ac49d7c9b9904cf,claude-sonnet,20261109035219-cb6d4d,2026-11-09
