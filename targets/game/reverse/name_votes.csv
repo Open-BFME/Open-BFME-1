@@ -7773,3 +7773,4 @@ game/GameEngine/Source/Common/BfmeConv1807.cpp|member||m_bfmeScaleRW,99cfd3c83d7
 game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE4,60377d0eb878cb5a31406b66,claude-sonnet,20261109111231-d2db56,2026-11-09
 game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE5,2f6243c70b1cc1053388d575,claude-sonnet,20261109111231-d2db56,2026-11-09
 game/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfo_getPingValue.cpp|type||BfmePingStringData,c27759c20d452ee4eb2b68af,claude-sonnet,20261109111557-c7b3d7,2026-11-09
+game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,d6f9c3a383682794a5834e74,claude-sonnet,20261109111712-06ad5a,2026-11-09
