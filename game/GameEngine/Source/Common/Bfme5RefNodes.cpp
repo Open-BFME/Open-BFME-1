@@ -11,7 +11,7 @@ extern "C" void *__identifier("??_7Rva001DDC90Poly@@6B@");
 struct Bfme5RefY
 {
 	void *m_bfmeVptr;
-	int m_bfmeRefCount;
+	int m_refCount;
 	Bfme5RefY *m_bfmeInner0;
 	Bfme5RefY *m_bfmeInner1;
 };
@@ -36,7 +36,7 @@ Bfme5RefHolderD::Bfme5RefHolderD(Bfme5RefPair *s)
 	Bfme5RefY *p;
 
 	if (q) {
-		q->m_bfmeRefCount = 0;
+		q->m_refCount = 0;
 		q->m_bfmeVptr = &g_bfmeRva010FE034Vt;
 
 		Bfme5RefY *r0 = s->m_bfmeA;
@@ -44,14 +44,14 @@ Bfme5RefHolderD::Bfme5RefHolderD(Bfme5RefPair *s)
 		q->m_bfmeInner0 = r0;
 
 		if (r0)
-			++r0->m_bfmeRefCount;
+			++r0->m_refCount;
 
 		Bfme5RefY *r1 = s->m_bfmeB;
 
 		q->m_bfmeInner1 = r1;
 
 		if (r1)
-			++r1->m_bfmeRefCount;
+			++r1->m_refCount;
 
 		p = q;
 	} else {
@@ -61,7 +61,7 @@ Bfme5RefHolderD::Bfme5RefHolderD(Bfme5RefPair *s)
 	m_bfmeNode = p;
 
 	if (p)
-		++p->m_bfmeRefCount;
+		++p->m_refCount;
 }
 
 class Bfme5RefHolderE
@@ -78,7 +78,7 @@ Bfme5RefHolderE::Bfme5RefHolderE(Bfme5RefPair *s)
 	Bfme5RefY *p;
 
 	if (q) {
-		q->m_bfmeRefCount = 0;
+		q->m_refCount = 0;
 		q->m_bfmeVptr = &__identifier("??_7Rva004C5FB0VptrZeroRefObject@@6B@");
 
 		Bfme5RefY *r0 = s->m_bfmeA;
@@ -86,14 +86,14 @@ Bfme5RefHolderE::Bfme5RefHolderE(Bfme5RefPair *s)
 		q->m_bfmeInner0 = r0;
 
 		if (r0)
-			++r0->m_bfmeRefCount;
+			++r0->m_refCount;
 
 		Bfme5RefY *r1 = s->m_bfmeB;
 
 		q->m_bfmeInner1 = r1;
 
 		if (r1)
-			++r1->m_bfmeRefCount;
+			++r1->m_refCount;
 
 		p = q;
 	} else {
@@ -103,7 +103,7 @@ Bfme5RefHolderE::Bfme5RefHolderE(Bfme5RefPair *s)
 	m_bfmeNode = p;
 
 	if (p)
-		++p->m_bfmeRefCount;
+		++p->m_refCount;
 }
 
 struct Bfme5PushNode
