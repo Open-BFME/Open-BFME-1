@@ -6730,3 +6730,4 @@ game/GameEngine/Source/Common/Rva003BD700Ctor.cpp|type||Rva003BD700String,15217d
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field0,3fe05f2591121fac92f351eb,claude-sonnet,20261109050726-11f0ec,2026-11-09
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field4,b6ea96930d865261a314b66c,claude-sonnet,20261109050726-11f0ec,2026-11-09
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field8,63a9f09acb0ea6ab3409be4e,claude-sonnet,20261109050726-11f0ec,2026-11-09
+game/GameEngine/Source/Common/Rva005C36C0Forward.cpp|type||Rva005C36C0Vec3,20cb10bc168dd2fdb1d649ec,claude-sonnet,20261109050736-116f77,2026-11-09
