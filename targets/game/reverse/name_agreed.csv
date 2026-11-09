@@ -1461,3 +1461,4 @@ game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||at478,m_templa
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||frame3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370TurretInfo,TurretInfo,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00769370ModelConditionInfoValidateTurret.cpp|type||Rva00769370ModelConditionInfo,ModelConditionInfo,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/Libraries/Source/EA/Apt/AptString/EAStringCTrimRight.cpp|function|EAStringC@|rva0089F530,TrimRight,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

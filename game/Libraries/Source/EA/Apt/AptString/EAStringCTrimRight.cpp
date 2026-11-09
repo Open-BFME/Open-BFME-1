@@ -69,7 +69,7 @@ class EAStringC
 	}
 	EAStringC Left(int count) const;
 	EAStringC &rva0089F420(const char *pStrText);
-	EAStringC &rva0089F530(const char *pStrText);
+	EAStringC &TrimRight(const char *pStrText);
 	EAStringC &rva0089F640(const char *pStrText);
 };
 
@@ -87,7 +87,7 @@ typedef char EAStringC_StringDataC_size_must_be_8[
 	(sizeof(EAStringC::StringDataC) == 8) ? 1 : -1];
 typedef char EAStringC_size_must_be_4[(sizeof(EAStringC) == 4) ? 1 : -1];
 
-EAStringC &EAStringC::rva0089F530(const char *pStrText)
+EAStringC &EAStringC::TrimRight(const char *pStrText)
 {
 	const unsigned int uSize = m_pData->m_uSize;
 	const char *p = GetInternalBuffer() + uSize - 1;
@@ -112,5 +112,5 @@ EAStringC &EAStringC::rva0089F530(const char *pStrText)
 EAStringC &EAStringC::rva0089F640(const char *pStrText)
 {
 	rva0089F420(pStrText);
-	return rva0089F530(pStrText);
+	return TrimRight(pStrText);
 }

@@ -38691,3 +38691,4 @@ Gen_f265_b7a8aa_00434ff0,0x00434FF0,"gen-shim scaffold placeholder superseded by
 ?rva0090FBA0ConvertColors@@YAXPAIHPBURva0090FBA0Vector4@@H@Z,0x0090FBA0,renamed to ?rva0090FBA0ConvertColors@@YAXPAIHPBUVector4@@H@Z by tools/name_lane.py: two models agreed
 ?build@Rva006FE3C0CameraRay@@QAEXPBURva006FE3C0ScreenPoint@@PAVVector3@@1@Z,0x006FE3C0,renamed to ?build@Rva006FE3C0CameraRay@@QAEXPBUICoord2D@@PAVVector3@@1@Z by tools/name_lane.py: two models agreed
 ?validateTurretInfo@Rva00769370ModelConditionInfo@@QAEXPAVRva00769260Owner@@@Z,0x00769370,renamed to ?validateTurretInfo@ModelConditionInfo@@QAEXPAVRva00769260Owner@@@Z by tools/name_lane.py: two models agreed
+?rva0089F530@EAStringC@@QAEAAV1@PBD@Z,0x0089F530,renamed to ?TrimRight@EAStringC@@QAEAAV1@PBD@Z by tools/name_lane.py: two models agreed

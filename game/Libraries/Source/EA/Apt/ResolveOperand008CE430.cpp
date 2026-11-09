@@ -12,7 +12,7 @@ public:
  ~BfmeStrVKI() { BfmeHdrVKI *p=m_bfme00; --p->m_bfme00; if(p->m_bfme00==0) reinterpret_cast<void (__cdecl **)(void *)>(g_rva01337A30AllocPair)[1](p); }
  BfmeHdrVKI *m_bfme00;
 };
-class EAStringC { public: EAStringC &rva0089F530(const char *); };
+class EAStringC { public: EAStringC &TrimRight(const char *); };
 class Rva8CCCE0Value {
 public:
  virtual void addRef(); virtual void release();
@@ -39,7 +39,7 @@ void resolveOperand008CE430(void *state,Rva008CE430Context *context) {
  const char *p=*operand;
  Rva8CCCE0Value *value;
  if(*p!='/' && *p!='.') {
-  ((EAStringC *)&name)->rva0089F530("/");
+  ((EAStringC *)&name)->TrimRight("/");
   value=rva8CC570Resolve(context->m_04,0,&name);
  } else {
   value=walk008CE430(*operand,context->m_04);
