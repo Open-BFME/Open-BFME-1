@@ -2558,3 +2558,5 @@ game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeRef,m_refCount,claud
 game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeRef,m_refCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeThingHF,m_template,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeSlotHF,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
