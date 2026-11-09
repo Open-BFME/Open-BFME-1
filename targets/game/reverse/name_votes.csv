@@ -7113,3 +7113,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at10,666de80b6bcb65cb276b838f,claude-sonnet,20261109070611-088bc6,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at48,8d0267f661d5754c9b2b5906,claude-sonnet,20261109070611-088bc6,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at54,28b70fb9d4013ba0c6877e20,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1007.cpp|member||m_bfmeNext,eba2b21e37691a388c99b4be,claude-sonnet,20261109070523-cd1572,2026-11-09
