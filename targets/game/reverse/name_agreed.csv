@@ -1283,3 +1283,4 @@ game/GameEngine/Source/GameLogic/AI/AI_getAdjustedVisionRangeForObject.cpp|membe
 game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b4,m_garrisonPointsInitialized,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b6,m_rallyValid,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_groupEnter.cpp|member||m_bfmeAI,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIGroup_groupEnter.cpp|member||m_bfmeAI,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

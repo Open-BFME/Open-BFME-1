@@ -37,7 +37,7 @@ class BfmeGroupMember
 {
 public:
 	char m_bfmeHead[0x204];
-	BfmeGroupAI *m_bfmeAI;					// +0x204
+	BfmeGroupAI *m_ai;					// +0x204
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -65,7 +65,7 @@ void AIGroup::groupEnter(Object *object, CommandSourceType commandSource)
 			it != snapshot.end();
 			++it)
 	{
-		BfmeGroupAI *ai = (*it)->m_bfmeAI;
+		BfmeGroupAI *ai = (*it)->m_ai;
 		if (ai)
 			ai->m_bfmeCommands.aiEnter(object, commandSource);
 	}
