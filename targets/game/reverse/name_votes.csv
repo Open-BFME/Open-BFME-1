@@ -7134,3 +7134,9 @@ game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModul
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,3f166716460dfbf2432bf525,claude-sonnet,20261109071352-de4823,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,f39b5b11bd8d7ead78088dc1,claude-sonnet,20261109071352-de4823,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1555.cpp|local|bfmeSortVOY|p,09a567b0dd170fbc6b950fbb,claude-sonnet,20261109071352-2fc55a,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFirst,06d98656fec590a92fdff62e,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeSecond,e669fa995ba693fde6d86a2c,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeThird,31cbf7eacf1ebf4759cf5bdb,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFourth,fd7452fcb0ae9111f8425f2f,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|y,5c211159e5a9e84f9215f383,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|x,561d05b768997b316fb11c8a,claude-sonnet,20261109071459-e260c0,2026-11-09

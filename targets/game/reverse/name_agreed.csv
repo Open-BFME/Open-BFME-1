@@ -2280,3 +2280,9 @@ game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBo
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,m_template,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,m_weaponBonusCondition,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFirst,m_left,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeSecond,m_top,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeThird,m_right,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFourth,m_bottom,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|y,scaledY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|x,scaledX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
