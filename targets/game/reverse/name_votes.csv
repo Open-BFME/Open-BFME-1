@@ -6365,3 +6365,5 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00243EA0.cpp|member||field090,438ff0a49dfb4a390939193c,claude-sonnet,20261109023530-6a3ed1,2026-11-09
 game/GameEngine/Source/Common/BfmeConv980.cpp|type||BfmeMgrC980,eea4f80ff4bea86a91d1556f,claude-sonnet,20261109023530-a6609a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv980.cpp|member||m_bfmeMgr,228efef88a842e9d2fc7d658,claude-sonnet,20261109023530-a6609a,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Template,c5cb54841c9ee708e118535d,claude-sonnet,20261109023530-fd2eea,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Drawable,9691d27649ef7027cef5a28b,claude-sonnet,20261109023530-fd2eea,2026-11-09
