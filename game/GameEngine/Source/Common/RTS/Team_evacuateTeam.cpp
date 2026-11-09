@@ -88,15 +88,15 @@ struct BfmeEvacuateObjectView
 	unsigned char m_pad000[0x90];
 	unsigned char m_destroyed90;
 	unsigned char m_pad091[0x16B];
-	void *m_contain1FC;
+	void *m_contain;
 	unsigned char m_pad200[0x144];
-	unsigned char m_effectivelyDead344;
+	unsigned char m_privateStatus;
 
 	Bool isDestroyed() const { return (m_destroyed90 & 1) != 0; }
-	Bool isEffectivelyDead() const { return (m_effectivelyDead344 & 1) != 0; }
+	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
 };
 
-class BfmeEvacuateContain
+class ContainModuleInterface
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
@@ -130,14 +130,14 @@ void Team::evacuateTeam()
 		if (view->isDestroyed() || view->isEffectivelyDead())
 			continue;
 
-		BfmeEvacuateContain *contain = (BfmeEvacuateContain *)view->m_contain1FC;
+		ContainModuleInterface *contain = (ContainModuleInterface *)view->m_contain;
 		if (contain != 0 && contain->getContainCount() > 0)
 			objectsToProcess.push_back(object);
 	}
 
 	for (std::list<Object *>::iterator node = objectsToProcess.begin(); node != objectsToProcess.end(); ++node) {
 		BfmeEvacuateObjectView *view = (BfmeEvacuateObjectView *)*node;
-		BfmeEvacuateContain *contain = (BfmeEvacuateContain *)view->m_contain1FC;
+		ContainModuleInterface *contain = (ContainModuleInterface *)view->m_contain;
 		if (contain != 0)
 			contain->removeAllContained();
 	}
