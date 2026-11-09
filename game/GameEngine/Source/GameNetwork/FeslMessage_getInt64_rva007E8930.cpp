@@ -27,10 +27,10 @@ private:
 
 FeslInt64 Rva007E8810Message::getInt64(const char *key, FeslInt64 defaultValue)
 {
-	char *s = Rva007EBCA0(m_10, key);
-	if (s == 0)
+	char *valueText = Rva007EBCA0(m_10, key);
+	if (valueText == 0)
 		return defaultValue;
 	FeslInt64 v;
-	((Sscanf)ji_009f6fa6)(s, "%I64d", &v);
+	((Sscanf)ji_009f6fa6)(valueText, "%I64d", &v);
 	return v;
 }
