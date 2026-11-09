@@ -1708,3 +1708,8 @@ game/GameEngine/Source/Common/RTS/Player_resetOrStartSpecialPowerReadyFrame.cpp|
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00c,m_radarHidden,claude-sonnet+glm,agreed,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00d,m_radarForceOn,claude-sonnet+glm,agreed,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::createCommandHint|t,messageType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|type||DrawModule00421830,DrawModule,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field2E4,m_secondMaterialPassOpacity,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AD,m_hidden,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,m_hiddenByStealth,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,m_instanceIsIdentity,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

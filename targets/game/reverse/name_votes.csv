@@ -6637,3 +6637,9 @@ game/GameEngine/Source/Common/RTS/Player_resetOrStartSpecialPowerReadyFrame.cpp|
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00c,3fd7c83db8cdbbdcfdca4466,claude-sonnet,20261109043750-fdf6d0,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00d,8c33950b2fb2f95a8ab7b357,claude-sonnet,20261109043750-fdf6d0,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::createCommandHint|t,c2e61ec8b198acff6539cf87,claude-sonnet,20261109043750-fdf6d0,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|type||DrawModule00421830,dbc59bb6f314bab38025ee30,claude-sonnet,20261109043750-8e728e,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field2E4,a9d74f2a87294a4d5b790471,claude-sonnet,20261109043750-8e728e,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AD,525564cecc56e0dd4eba938b,claude-sonnet,20261109043750-8e728e,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,3dd52255e78cade868466eea,claude-sonnet,20261109043750-8e728e,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,dfd0135641dbdb60a8ec6393,claude-sonnet,20261109043750-8e728e,2026-11-09
+game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3B0,8f2215cc50a650bb3b29527e,claude-sonnet,20261109043750-8e728e,2026-11-09
