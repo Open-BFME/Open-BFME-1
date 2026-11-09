@@ -75,17 +75,17 @@ private:
 	unsigned int m_value24;
 	unsigned int m_value28;
 	unsigned int m_value2c;
-	float m_value30;
-	unsigned int m_value34;
-	unsigned int m_value38;
-	unsigned int m_value3c;
-	float m_value40;
-	float m_value44;
-	float m_value48;
-	float m_value4c;
-	float m_value50;
-	float m_value54;
-	unsigned char m_flag58;
+	float m_windAngle;
+	unsigned int m_windAngleChange;
+	unsigned int m_windAngleChangeMin;
+	unsigned int m_windAngleChangeMax;
+	float m_windMotionStartAngle;
+	float m_windMotionStartAngleMin;
+	float m_windMotionStartAngleMax;
+	float m_windMotionEndAngle;
+	float m_windMotionEndAngleMin;
+	float m_windMotionEndAngleMax;
+	unsigned char m_windMotionMovingToEndAngle;
 	unsigned char m_padding59[3];
 	unsigned int m_value5c;
 	unsigned int m_value60;
@@ -103,20 +103,20 @@ Rva005FEAD0DefaultModule7::Rva005FEAD0DefaultModule7(
 	m_value24 = *(const unsigned int *)(sourceBytes + 0x10);
 	m_value28 = *(const unsigned int *)(sourceBytes + 0x14);
 	m_value2c = *(const unsigned int *)(sourceBytes + 0x18);
-	m_value34 = *(const unsigned int *)(sourceBytes + 0x20);
-	m_value38 = *(const unsigned int *)(sourceBytes + 0x24);
-	m_value3c = *(const unsigned int *)(sourceBytes + 0x28);
-	m_value44 = *(const float *)(sourceBytes + 0x30);
-	m_value48 = *(const float *)(sourceBytes + 0x34);
-	m_value50 = *(const float *)(sourceBytes + 0x3c);
-	m_value54 = *(const float *)(sourceBytes + 0x40);
-	m_flag58 = *(sourceBytes + 0x44);
-	m_value40 = GetGameClientRandomValueReal(
-		m_value44, m_value48, (char *)file, 0xe1);
-	m_value4c = GetGameClientRandomValueReal(
-		m_value50, m_value54, (char *)file, 0xe2);
-	m_value30 = GetGameClientRandomValueReal(
-		m_value40, m_value4c, (char *)file, 0xe3);
+	m_windAngleChange = *(const unsigned int *)(sourceBytes + 0x20);
+	m_windAngleChangeMin = *(const unsigned int *)(sourceBytes + 0x24);
+	m_windAngleChangeMax = *(const unsigned int *)(sourceBytes + 0x28);
+	m_windMotionStartAngleMin = *(const float *)(sourceBytes + 0x30);
+	m_windMotionStartAngleMax = *(const float *)(sourceBytes + 0x34);
+	m_windMotionEndAngleMin = *(const float *)(sourceBytes + 0x3c);
+	m_windMotionEndAngleMax = *(const float *)(sourceBytes + 0x40);
+	m_windMotionMovingToEndAngle = *(sourceBytes + 0x44);
+	m_windMotionStartAngle = GetGameClientRandomValueReal(
+		m_windMotionStartAngleMin, m_windMotionStartAngleMax, (char *)file, 0xe1);
+	m_windMotionEndAngle = GetGameClientRandomValueReal(
+		m_windMotionEndAngleMin, m_windMotionEndAngleMax, (char *)file, 0xe2);
+	m_windAngle = GetGameClientRandomValueReal(
+		m_windMotionStartAngle, m_windMotionEndAngle, (char *)file, 0xe3);
 	m_value5c = *(const unsigned int *)(sourceBytes + 0x48);
 	m_value60 = *(const unsigned int *)(sourceBytes + 0x4c);
 }

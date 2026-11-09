@@ -2325,3 +2325,14 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value50,m_windMotionEndAngleMin,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value54,m_windMotionEndAngleMax,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_flag58,m_windMotionMovingToEndAngle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value30,m_windAngle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value34,m_windAngleChange,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value38,m_windAngleChangeMin,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value3c,m_windAngleChangeMax,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value40,m_windMotionStartAngle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value44,m_windMotionStartAngleMin,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value48,m_windMotionStartAngleMax,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value4c,m_windMotionEndAngle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value50,m_windMotionEndAngleMin,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value54,m_windMotionEndAngleMax,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_flag58,m_windMotionMovingToEndAngle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
