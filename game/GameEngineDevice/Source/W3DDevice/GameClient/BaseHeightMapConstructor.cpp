@@ -125,16 +125,16 @@ public:
  AsciiString string308C; // +0x308C
  TextureRef006CFAE0 texture3090; // +0x3090
  W3DTreeBuffer* m_treeBuffer; // +0x3094
- W3DShrubBuffer* buffer3098; // +0x3098
+ W3DShrubBuffer* m_shrubBuffer; // +0x3098
  W3DPropBuffer* m_propBuffer; // +0x309C
  W3DBibBuffer* m_bibBuffer; // +0x30A0
- W3DFloorBuffer* buffer30A4; // +0x30A4
- W3DWaypointBuffer* buffer30A8; // +0x30A8
+ W3DFloorBuffer* m_floorBuffer; // +0x30A4
+ W3DWaypointBuffer* m_waypointBuffer; // +0x30A8
  W3DRoadBuffer* m_roadBuffer; // +0x30AC
- W3DBridgeBuffer* buffer30B0; // +0x30B0
+ W3DBridgeBuffer* m_bridgeBuffer; // +0x30B0
  Rva006DED60RoadBuffer* buffer30B4; // +0x30B4
  W3DShroud* m_shroud; // +0x30B8
- TaintBuffer* buffer30BC; // +0x30BC
+ TaintBuffer* m_taintBuffer; // +0x30BC
  void* field30C0; // +0x30C0
  int field30C4; // +0x30C4
  int field30C8; // +0x30C8
@@ -165,19 +165,19 @@ BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass() {
  TheTerrainRenderObject=this;
  m_treeBuffer=0;
  m_treeBuffer=new W3DTreeBuffer(*(bool*)((char*)TheWritableGlobalData+0xDCD));
- buffer3098=0;
- buffer3098=new W3DShrubBuffer(*(unsigned char*)((char*)TheWritableGlobalData+0xDCD));
+ m_shrubBuffer=0;
+ m_shrubBuffer=new W3DShrubBuffer(*(unsigned char*)((char*)TheWritableGlobalData+0xDCD));
  m_propBuffer=0;
  m_propBuffer=new W3DPropBuffer;
  m_bibBuffer=0;
  m_bibBuffer=new W3DBibBuffer;
  m_curImpassableSlope=89.9f;
  field2FD4=70.0f;
- buffer30B0=0;
- buffer30B0=new W3DBridgeBuffer;
- buffer30A4=0;
- buffer30A4=new W3DFloorBuffer;
- buffer30A8=new W3DWaypointBuffer;
+ m_bridgeBuffer=0;
+ m_bridgeBuffer=new W3DBridgeBuffer;
+ m_floorBuffer=0;
+ m_floorBuffer=new W3DFloorBuffer;
+ m_waypointBuffer=new W3DWaypointBuffer;
  m_roadBuffer=0;
  m_roadBuffer=new W3DRoadBuffer;
  buffer30B4=0;
@@ -191,8 +191,8 @@ BaseHeightMapRenderObjClass::BaseHeightMapRenderObjClass() {
  field2FDC=0;
  field2FE0=0;
  m_shroud=new W3DShroud;
- if(*(bool*)((char*)TheWritableGlobalData+0xCF5)) buffer30BC=new TaintBuffer;
- else buffer30BC=0;
+ if(*(bool*)((char*)TheWritableGlobalData+0xCF5)) m_taintBuffer=new TaintBuffer;
+ else m_taintBuffer=0;
  cleanup0134058C=this;
  string3084.StringBase<char>::set("TSCloudMed.tga",14);
  string3080.StringBase<char>::set("TSNoiseUrb.tga",14);
