@@ -6842,3 +6842,4 @@ game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeMgrF62,b79f262dd96d54bea
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeFilterC9E,e9954d5a759e1852aa6c8754,claude-sonnet,20261109055652-7af808,2026-11-09
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubInnerD77,c8de709150231be03cac24cb,claude-sonnet,20261109055652-7af808,2026-11-09
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubD77,65086061eeeaf841974a0b0a,claude-sonnet,20261109055652-7af808,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateUpdate.cpp|member||m_bfmeFrameFV,2afc12df8c52ab731af6e055,claude-sonnet,20261109055858-f007a5,2026-11-09
