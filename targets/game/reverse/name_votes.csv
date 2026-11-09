@@ -6644,3 +6644,4 @@ game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,3dd
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,dfd0135641dbdb60a8ec6393,claude-sonnet,20261109043750-8e728e,2026-11-09
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3B0,8f2215cc50a650bb3b29527e,claude-sonnet,20261109043750-8e728e,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdateCtorModuleFactory.cpp|member||m_f14,f6c359bfccece176001b2f52,claude-sonnet,20261109044338-352a91,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00734180.cpp|function|W3DTreeBuffer@|rva00734180,be27ad1db329a9a8123f10f3,claude-sonnet,20261109044338-75bc8c,2026-11-09

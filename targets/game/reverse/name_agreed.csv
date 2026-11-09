@@ -1722,3 +1722,4 @@ game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,m_i
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00c,m_radarHidden,claude-sonnet+glm,applied,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00d,m_radarForceOn,claude-sonnet+glm,applied,2026-11-09
 game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::createCommandHint|t,messageType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00734180.cpp|function|W3DTreeBuffer@|rva00734180,cull,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
