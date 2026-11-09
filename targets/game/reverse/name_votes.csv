@@ -7439,3 +7439,8 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,47f097c5b36a1da019e0b8b3,claude-sonnet,20261109083454-90535e,2026-11-09
 game/GameEngine/Source/Common/Rva00367E00Count.cpp|local|Rva00367E00::count|n,49301cb32a561209e5362c02,claude-sonnet,20261109083453-e2743c,2026-11-09
 game/GameEngine/Source/Common/Thing/ThingTemplateConstructor.cpp|member||m_byte0486,3cb4f8e7ba89ee3ef825d670,claude-sonnet,20261109083453-a4b9f2,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva2c,2b19abde5e4864ea7cbc5f2a,claude-sonnet,20261109084249-896554,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva04,15b02e99010323b76f3708a5,claude-sonnet,20261109084249-896554,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva38,27ec41e9ee096590d298b650,claude-sonnet,20261109084249-896554,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva204,56fa5e8cef4a10e00019d1ba,claude-sonnet,20261109084249-896554,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|local|ActionManager::canDoSpecialPowerAtObject|m,6e6b2e6f399d39b2a705d226,claude-sonnet,20261109084249-896554,2026-11-09
