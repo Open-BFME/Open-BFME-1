@@ -135,7 +135,7 @@ public:
 struct BfmeXC980
 {
 	char m_bfmePad[0x1fc];
-	BfmeMgrC980 *m_bfmeMgr;
+	BfmeMgrC980 *m_contain;
 };
 
 struct BfmeArgC980
@@ -156,7 +156,7 @@ void __stdcall bfmeGo980C(BfmeArgC980 *a, int b)
 	if (!x)
 		return;
 
-	BfmeMgrC980 *m = x->m_bfmeMgr;
+	BfmeMgrC980 *m = x->m_contain;
 
 	if (!m)
 		return;
