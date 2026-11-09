@@ -6492,3 +6492,6 @@ game/GameEngine/Source/GameLogic/Object/Damage/EvacuateDamageModuleDataConstruct
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_statusBits98,74fef498c0d43870037a6051,claude-sonnet,20261109033345-3c98cb,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_weaponOffset78,2ca52ff21aa64d49356c5e70,claude-sonnet,20261109033345-3c98cb,2026-11-09
 game/GameEngine/Source/GameClient/GlobalLanguage_onGameEngineExit.cpp|type||BfmeFindData,39333b5de63179eb97bfd207,claude-sonnet,20261109033649-386ed7,2026-11-09
+game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_54,93e221658577637c1a6ae4c6,claude-sonnet,20261109033748-b6fed3,2026-11-09
+game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_58,471807a7c0c91bcf493e226c,claude-sonnet,20261109033748-b6fed3,2026-11-09
+game/GameEngine/Source/Common/Rva0040B300Argb.cpp|member||m_5C,b19e29360a39cb2ee599a807,claude-sonnet,20261109033748-b6fed3,2026-11-09
