@@ -78,10 +78,10 @@ class BfmeThingTFD
 public:
 	void bfmeGoTFD();
 	char m_bfmePad[0xa0];
-	CriticalSectionClass m_bfmeCritical;
+	CriticalSectionClass m_criticalSection;
 };
 
 void BfmeThingTFD::bfmeGoTFD()
 {
-	CriticalSectionClass::LockClass h( m_bfmeCritical );
+	CriticalSectionClass::LockClass h( m_criticalSection );
 }
