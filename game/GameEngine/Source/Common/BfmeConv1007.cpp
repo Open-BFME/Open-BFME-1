@@ -77,7 +77,7 @@ struct BfmeB1007Entry
 
 struct BfmeB1007ListNode
 {
-	BfmeB1007ListNode *m_bfmeNext;
+	BfmeB1007ListNode *m_next;
 	BfmeB1007ListNode *m_bfmePrevious;
 	BfmeB1007Entry *m_bfmeEntry;
 };
@@ -109,8 +109,8 @@ char BfmeB1007::bfmeGo1007B(void *a)
 
 char BfmeB1007::bfmeSend1007( int v, void *a )
 {
-	for( BfmeB1007ListNode *node = m_bfmeFirstList->m_bfmeNext;
-		node != m_bfmeFirstList; node = node->m_bfmeNext )
+	for( BfmeB1007ListNode *node = m_bfmeFirstList->m_next;
+		node != m_bfmeFirstList; node = node->m_next )
 	{
 		if( ( (BattlePlanUpdate *)node->m_bfmeEntry->m_bfmePayload )
 			->m_bfmeFlags->m_bfmeFlags & 0x10 )
@@ -129,8 +129,8 @@ char BfmeB1007::bfmeSend1007( int v, void *a )
 		}
 	}
 
-	for( BfmeB1007ListNode *node = m_bfmeSecondList->m_bfmeNext;
-		node != m_bfmeSecondList; node = node->m_bfmeNext )
+	for( BfmeB1007ListNode *node = m_bfmeSecondList->m_next;
+		node != m_bfmeSecondList; node = node->m_next )
 	{
 		if( ( (BattlePlanUpdate *)node->m_bfmeEntry->m_bfmePayload )
 			->m_bfmeFlags->m_bfmeFlags & 0x10 )
