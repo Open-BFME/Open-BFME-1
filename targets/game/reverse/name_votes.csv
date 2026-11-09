@@ -6302,3 +6302,6 @@ game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|lo
 game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|local|Weapon::isGoalPosWithinAttackRange|t,a5093cd6a11c6440b9512b72,claude-sonnet,20261109020416-6097ed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1253.cpp|type||BfmeVec1253,7b02f2ad837e66fcc7b059c4,claude-sonnet,20261109020416-2fa144,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1253.cpp|param|BfmeA1253::bfmeDraw1253|p,272a6e74eb7288f789dd2334,claude-sonnet,20261109020416-2fa144,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeXUC,a3c972da5a10989a1026454d,claude-sonnet,20261109021901-bcca7e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeYUC,effca787e789295000170391,claude-sonnet,20261109021901-bcca7e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeZUC,6b40806f98bef6c5161e5daf,claude-sonnet,20261109021901-bcca7e,2026-11-09
