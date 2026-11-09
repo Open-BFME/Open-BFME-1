@@ -62,7 +62,7 @@ struct Rva00769370AsciiView
 	}
 };
 
-struct Rva00769370TurretInfo
+struct TurretInfo
 {
 	unsigned int m_angleNameKey;
 	unsigned int m_pitchNameKey;
@@ -72,19 +72,19 @@ struct Rva00769370TurretInfo
 	int m_pitchBone;
 };
 
-class Rva00769370ModelConditionInfo
+class ModelConditionInfo
 {
 public:
 	void validateTurretInfo(Rva00769260Owner *owner);
 
 private:
 	char m_pad00[0xf0];
-	Rva00769370TurretInfo m_turrets[2];
+	TurretInfo m_turrets[2];
 	char m_pad120[4];
 	unsigned char m_validStuff;
 };
 
-void Rva00769370ModelConditionInfo::validateTurretInfo(Rva00769260Owner *owner)
+void ModelConditionInfo::validateTurretInfo(Rva00769260Owner *owner)
 {
 	if (m_validStuff != 0)
 		return;
@@ -94,7 +94,7 @@ void Rva00769370ModelConditionInfo::validateTurretInfo(Rva00769260Owner *owner)
 
 	for (int turretSlot = 0; turretSlot < 2; ++turretSlot)
 	{
-		Rva00769370TurretInfo &turret = m_turrets[turretSlot];
+		TurretInfo &turret = m_turrets[turretSlot];
 		bool canLookup =
 			(TheGameLogic != 0 &&
 				((Rva0075B660Logic *)TheGameLogic)->m_flag) ||
