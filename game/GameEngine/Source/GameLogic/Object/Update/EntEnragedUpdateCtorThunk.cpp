@@ -37,11 +37,11 @@ class UpdateModule : public PB_DeepBase, public BehaviorModuleInterface,
 {
 public:
 	UpdateModule(Thing *thing, const ModuleData *moduleData)
-		: PB_DeepBase(thing, moduleData), m_field14(0),
+		: PB_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0),
 		  m_field18(-1), m_field1C(-1) {}
 
 private:
-	unsigned int m_field14;
+	unsigned int m_nextCallFrameAndPhase;
 	int m_field18;
 	int m_field1C;
 };
