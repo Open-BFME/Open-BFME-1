@@ -7086,3 +7086,4 @@ game/GameEngine/Source/Common/BfmeConv1112.cpp|member||m_bfmec8,d6c75c24bd162985
 game/GameEngine/Source/Common/BfmeConv1112.cpp|member||m_bfme144,94ca81b628dc284d71eb11ae,claude-sonnet,20261109064610-479711,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1112.cpp|member||m_bfme150,7c8d0a292ae754c4d95855ed,claude-sonnet,20261109064610-479711,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1112.cpp|function|BfmeV1112@|bfmeGo1112A,484c7d5240a1573b9fd29857,claude-sonnet,20261109064610-479711,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Collide/AODCrushCollideModuleDataConstructor.cpp|type||BfmeCollideModuleDataBase,122177f776815a1cee3509bb,claude-sonnet,20261109065709-60de4f,2026-11-09
