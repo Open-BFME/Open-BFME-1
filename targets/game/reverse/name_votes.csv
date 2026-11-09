@@ -7420,3 +7420,4 @@ game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0Conf
 game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0PathView,87dfe1abf6d4b4b7177a568c,claude-sonnet,20261109082533-628b59,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|member||m_field3c,e06f66c4a734af7af4477d0b,claude-sonnet,20261109082533-628b59,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1240.cpp|member||m_bfme00,3088f2dbe64ae8cce506208f,claude-sonnet,20261109082606-1e2cad,2026-11-09
+game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchSaveOptions.cpp|function|BfmeAptScreenOnlineQuickMatch@|rva005585B0SaveOptions,e33aca24df3990e6ccc07476,claude-sonnet,20261109082606-b28436,2026-11-09
