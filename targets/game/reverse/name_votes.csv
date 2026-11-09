@@ -6588,3 +6588,4 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field00A0,aa27494dd6f861412b5cf3a3,claude-sonnet,20261109041720-710cce,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/CylinderEmissionCallback.cpp|type||Rva005F93F0Coord3D,66e14ab219ff0d29d3915bb2,claude-sonnet,20261109042033-fe5a48,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/CylinderEmissionCallback.cpp|type||Rva005F93F0Input,ace6c1d9066840f0ecd2cdbc,claude-sonnet,20261109042033-fe5a48,2026-11-09
+game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CA3A0.cpp|function|AptActionInterpreter@|_FunctionRva008CA3A0,e7c24c1507bc5bc406a8cb6e,claude-sonnet,20261109042153-bcd888,2026-11-09
