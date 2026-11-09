@@ -7392,3 +7392,4 @@ game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field10,
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field11,38fc4f3e6e4fba37e8657607,claude-sonnet,20261109081642-3d4a86,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field14,356fb8864d77f27c10c71683,claude-sonnet,20261109081642-3d4a86,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field18,e493c7343d7c0fa5586c1e8b,claude-sonnet,20261109081642-3d4a86,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva003F8820Pathfinder.cpp|member||m_at20,b2e9822e93afa7012618737c,claude-sonnet,20261109082014-7b61de,2026-11-09
