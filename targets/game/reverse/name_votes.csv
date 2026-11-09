@@ -7523,3 +7523,10 @@ game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|type||Rva00C73744S
 game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|member||m_at034,ef89188cd859d02e29f7000b,claude-sonnet,20261109092245-802aaa,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeGetModelVertices.cpp|param|Rva006D7EA0TransformVector|A,31c86702b997716fb98950ea,claude-sonnet,20261109092245-ddfe9d,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeGetModelVertices.cpp|param|Rva006D7EA0RotateVector|A,ef060c04d267ebb7e7515003,claude-sonnet,20261109092245-ddfe9d,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|type||BfmeAERI,f79c6e78b198c4b31af80cda,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeBERI,544f00490ca25657e87b11b7,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeAERI,76e5e21976a36afea2171144,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeNextERI,4273256bc333f71e5b676dfc,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n,508b1fceedd1908b3d4d5d82,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,e346e4b781b5e8c9df8adab9,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|s_bfmeKeyERI,51e965f14a4c5e9d021896a1,claude-sonnet,20261109092244-715660,2026-11-09
