@@ -6992,3 +6992,9 @@ game/GameEngine/Source/GameClient/GUI/MainMenuMediumScaleUpTransition_draw.cpp|t
 game/GameEngine/Source/GameLogic/AI/PathfindZoneFlatten.cpp|function|PathfindZoneManager@|bfmeFlattenZones,b453855367db953bea98e30a,claude-sonnet,20261109063825-eeaf2a,2026-11-09
 game/Libraries/Source/Apt/Rva8CD520ConfigureState.cpp|function||rva8CD520ConfigureState,92122261674f6fd5fef8a59b,claude-sonnet,20261109063620-816289,2026-11-09
 game/GameEngine/Source/Common/Rva0018C480Xfer.cpp|type||Rva0018C480Xfer,cd974a83044801e4c087a865,claude-sonnet,20261109063620-e2f27f,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|type||Body00200420,bac05dadc3e40035569ee235,claude-sonnet,20261109063619-818e9c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|type||AI00200420,0d7cb3b33924db0ff076f76f,claude-sonnet,20261109063619-818e9c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||conditions250,817d148a13b8f449f5ee3d80,claude-sonnet,20261109063619-818e9c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||body200,1b3153ee8b17f33314ef9636,claude-sonnet,20261109063619-818e9c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||ai204,676895b3a50ae333afa96499,claude-sonnet,20261109063619-818e9c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||previous14,e04d5f6720a2bda8e1297c7e,claude-sonnet,20261109063619-818e9c,2026-11-09
