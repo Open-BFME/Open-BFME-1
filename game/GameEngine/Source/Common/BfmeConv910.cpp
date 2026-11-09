@@ -21,7 +21,7 @@ class BfmeSubVBW
 {
 public:
 	void bfmeDtorVBW();
-	int m_bfmeRef;
+	int m_refCount;
 };
 
 class BfmeThingVBW
@@ -37,7 +37,7 @@ void BfmeThingVBW::bfmeGoVB()
 	BfmeSubVBW *p = m_bfmeP;
 	if (!p)
 		return;
-	if (--p->m_bfmeRef != 0)
+	if (--p->m_refCount != 0)
 		return;
 	BfmeSubVBW *s = m_bfmeP;
 	if (s) {
@@ -58,7 +58,7 @@ class BfmeNodeVCW
 {
 public:
 	int m_bfmePad;
-	BfmeNodeVCW *m_bfmeNext;
+	BfmeNodeVCW *m_next;
 };
 
 class BfmeThingVCW
@@ -72,7 +72,7 @@ void BfmeThingVCW::bfmeGoVC()
 {
 	BfmeNodeVCW *n = m_bfmeHead;
 	if (n) {
-		BfmeNodeVCW *next = n->m_bfmeNext;
+		BfmeNodeVCW *next = n->m_next;
 		((Gen_00893990 *)n)->bfmeCleanup();
 		bfmeFreeVCW(n);
 		m_bfmeHead = next;

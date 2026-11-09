@@ -2556,3 +2556,5 @@ game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchSaveOptions.cpp|function|B
 game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchSaveOptions.cpp|function|BfmeAptScreenOnlineQuickMatch@|rva005585B0SaveOptions,saveOptions,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeRef,m_refCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeRef,m_refCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
