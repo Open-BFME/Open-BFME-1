@@ -7,15 +7,15 @@ struct Rva009A2C30Table {
 	Rva009A2C30Node* m_cur;
 	void releaseNode(Rva009A2C30Node* n);
 };
-void Rva009A2C30Table::releaseNode(Rva009A2C30Node* n)
+void Rva009A2C30Table::releaseNode(Rva009A2C30Node* node)
 {
 	Rva009A2C30Node* cur = m_cur;
-	if (cur == n)
+	if (cur == node)
 		m_cur = cur->m_next;
-	if (n->m_next)
-		n->m_next->m_prevLink = n->m_prevLink;
-	*n->m_prevLink = n->m_next;
-	n->m_prevLink = 0;
-	n->m_next = m_free;
-	m_free = n;
+	if (node->m_next)
+		node->m_next->m_prevLink = node->m_prevLink;
+	*node->m_prevLink = node->m_next;
+	node->m_prevLink = 0;
+	node->m_next = m_free;
+	m_free = node;
 }
