@@ -7782,3 +7782,4 @@ game/GameEngine/Source/Common/Rva003B9100Contains.cpp|local|compare|n,de4ad3a2e8
 game/GameEngine/Source/Common/Rva003B9100Contains.cpp|local|compare|n,de4ad3a2e8c12362e28d8168,claude-sonnet,20261109112258-2d3595,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1703.cpp|member||m_bfmeSubFU,55846c52cf605c0b5311afcc,claude-sonnet,20261109112258-dd8171,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/CommandSetUpgradeUpgradeImplementation.cpp|member||m_bfmeLabel,5dd9326e102e3ba69ac1c3ff,claude-sonnet,20261109112426-29d8e3,2026-11-09
+game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_98,3e93807c04685a374aee21cd,claude-sonnet,20261109112457-251e3c,2026-11-09
