@@ -1241,3 +1241,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|y0,startY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|x1,endX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawImage.cpp|param|W3DDisplay::drawImage|y1,endY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DStatusCircleCtorThunk.cpp|type||BfmeCircleShader,ShaderClass,claude-sonnet+gpt-6-astra,applied,2026-11-09

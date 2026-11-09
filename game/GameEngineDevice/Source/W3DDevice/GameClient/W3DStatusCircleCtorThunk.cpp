@@ -86,9 +86,9 @@ public:
 };
 
 
-class BfmeCircleShader {
+class ShaderClass {
 public:
- BfmeCircleShader() : bits(0x0010441b) {}
+ ShaderClass() : bits(0x0010441b) {}
  unsigned int bits;
 };
 class W3DStatusCircle : public RenderObjClass {
@@ -100,7 +100,7 @@ public:
  float fieldD0;
  float fieldD4;
  void *indexBuffer;
- BfmeCircleShader shader;
+ ShaderClass shader;
  void *material;
  void *circleBuffer;
  void *screenBuffer;
