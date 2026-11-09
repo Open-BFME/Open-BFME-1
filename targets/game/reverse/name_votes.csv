@@ -6681,3 +6681,8 @@ game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|type||BfmePairCW,208116623
 game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeSlots,b620d6e8293cce529796dc85,glm,20261109043301-88f8e1,2026-11-09
 game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeOver,e0a61be67944586b96a863e2,glm,20261109043301-88f8e1,2026-11-09
 game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeQuiet,c309757d2733119161988a0f,glm,20261109043301-88f8e1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_210,1f7330a0992fd9151dcf08d8,glm,20261109043520-73a406,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_214,f7a0da3bb0649f7ad9a43803,glm,20261109043520-73a406,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_218,fb2e501f9f7cf0d96d970b82,glm,20261109043520-73a406,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_21c,d19e1dbec679f73168917dc8,glm,20261109043520-73a406,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_220,c58835172d739575fb7e1f53,glm,20261109043520-73a406,2026-11-09
