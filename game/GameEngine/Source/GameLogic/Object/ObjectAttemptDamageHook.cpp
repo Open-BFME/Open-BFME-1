@@ -51,14 +51,14 @@ class DamageInfo
 {
 public:
 	unsigned char m_pad00[8];
-	int m_sourceID008;
+	int m_sourceID;
 	unsigned char m_pad0C[0x1c];
 	unsigned int m_word028;
 	unsigned char m_pad2C[4];
-	Coord3D m_direction030;
-	float m_amount03C;
-	float m_amount040;
-	float m_amount044;
+	Coord3D m_shockWaveVector;
+	float m_shockWaveAmount;
+	float m_shockWaveRadius;
+	float m_shockWaveTaperOff;
 	float m_amount048;
 };
 
@@ -226,7 +226,7 @@ void ObjectAttemptDamageHook::apply(DamageInfo *damageInfo)
 
 	Drawable *draw = getDrawable();
 
-	if (damageInfo->m_amount03C > 0.0f && damageInfo->m_amount040 > 0.0f)
+	if (damageInfo->m_shockWaveAmount > 0.0f && damageInfo->m_shockWaveRadius > 0.0f)
 	{
 		PhysicsBehavior *physics = m_physics;
 		if (physics && !physics->m_flag5C)
@@ -251,14 +251,14 @@ void ObjectAttemptDamageHook::apply(DamageInfo *damageInfo)
 				if (bonus >= 1.0f)
 					return;
 
-				const Coord3D *direction = &damageInfo->m_direction030;
-				float ratio = direction->length() / damageInfo->m_amount040;
-				float strength = 1.0f - (1.0f - damageInfo->m_amount044) * minOf(ratio, 1.0f);
+				const Coord3D *direction = &damageInfo->m_shockWaveVector;
+				float ratio = direction->length() / damageInfo->m_shockWaveRadius;
+				float strength = 1.0f - (1.0f - damageInfo->m_shockWaveTaperOff) * minOf(ratio, 1.0f);
 				float random = GetGameLogicRandomValueReal(0.85f, 1.15f,
 					"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Object.cpp", 3673);
 				Coord3D force = *direction;
 				force.normalize();
-				force.scale(random * damageInfo->m_amount03C * strength);
+				force.scale(random * damageInfo->m_shockWaveAmount * strength);
 				random = GetGameLogicRandomValueReal(0.85f, 1.15f,
 					"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Object.cpp", 3682);
 				force.z = force.length() * damageInfo->m_amount048 * random;
@@ -271,7 +271,7 @@ void ObjectAttemptDamageHook::apply(DamageInfo *damageInfo)
 
 				if (m_ai && m_ai->getAIStateType() == AI_STATE_00001CDE30_2D)
 				{
-					int sourceID = m_body->getLastDamageInfo() ? m_body->getLastDamageInfo()->m_sourceID008 : 0;
+					int sourceID = m_body->getLastDamageInfo() ? m_body->getLastDamageInfo()->m_sourceID : 0;
 					Object *source = TheGameLogic->findObjectByID(sourceID);
 					if (source && (m_privateStatus & 1) == 0)
 						((ObjectAttemptDamageHook *)source)->touch001C9490(this, true);
