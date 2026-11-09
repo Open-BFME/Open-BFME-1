@@ -6820,3 +6820,5 @@ game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|param|walk3|d,af7dacd
 game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|walk3|f,057bd707e88496aec558f1d6,claude-sonnet,20261109054845-8278c5,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cachedRandom|d,782f4946a67428bcf2556fe3,claude-sonnet,20261109054845-8278c5,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cachedRandom|f,1ea528721148e4c84eeb1795,claude-sonnet,20261109054845-8278c5,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,1a38da949f60a5a27ce1845d,claude-sonnet,20261109054720-e2189c,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,b5ed1bc04ed2b4dac2da1e05,claude-sonnet,20261109054720-e2189c,2026-11-09
