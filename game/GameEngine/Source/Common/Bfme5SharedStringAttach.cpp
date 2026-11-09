@@ -42,12 +42,12 @@ public:
 	int m_bfme00;
 	int m_bfme04;
 	Rva0089E1E0 m_bfmeStr;
-	Bfme5AttachNodeA *m_bfmeNext;
+	Bfme5AttachNodeA *m_next;
 };
 
 void Bfme5AttachNodeA::bfmeAttach(void)
 {
-	m_bfmeNext = (Bfme5AttachNodeA *)g_rva01338478NodeHead;
+	m_next = (Bfme5AttachNodeA *)g_rva01338478NodeHead;
 	g_rva01338478NodeHead = (Rva008C3B60Node *)this;
 
 	if (m_bfmeStr.cmp(0x21)) {
@@ -69,12 +69,12 @@ public:
 	int m_bfme00;
 	int m_bfme04;
 	Rva0089E1E0 m_bfmeStr;
-	Bfme5AttachNodeB *m_bfmeNext;
+	Bfme5AttachNodeB *m_next;
 };
 
 void Bfme5AttachNodeB::bfmeAttach(void)
 {
-	m_bfmeNext = (Bfme5AttachNodeB *)g_rva01338478NodeHead;
+	m_next = (Bfme5AttachNodeB *)g_rva01338478NodeHead;
 	g_rva01338478NodeHead = (Rva008C3B60Node *)this;
 
 	if (m_bfmeStr.cmp(0x21)) {
