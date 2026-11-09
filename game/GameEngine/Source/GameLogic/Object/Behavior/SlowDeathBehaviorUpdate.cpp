@@ -81,7 +81,7 @@ class Terrain208A50 { public:
 class TerrainLogic;
 extern TerrainLogic *TheTerrainLogic;
 struct SlowDeathData208A50 {
- char pad00[0x34]; float sinkRate34; char pad38[0x128]; _STL::vector<AsciiString> names160;
+ char pad00[0x34]; float m_sinkRate; char pad38[0x128]; _STL::vector<AsciiString> names160;
  char shadow16C[0x30]; int delay19C; unsigned sentinel1A0; unsigned char mask1A4; char pad1A5; bool flag1A6;
 };
 enum UpdateSleepTime { UPDATE_SLEEP_NONE=1,UPDATE_SLEEP_FOREVER=0x3fffffff };
@@ -134,11 +134,11 @@ UpdateSleepTime SlowDeathBehavior::update() {
  }
  Drawable* drawable=obj->drawable28();
  if(drawable && now>=frame3C && d->sentinel1A0!=0xfacade00 && !flag38) {flag38=true;((BfmeInit962*)drawable)->bfmeInit962(d->delay19C);}
- if(now>=m_sinkFrame && d->sinkRate34>0.0f) {
+ if(now>=m_sinkFrame && d->m_sinkRate>0.0f) {
   if(!(obj->status1A4&8) && !(unsigned char)((BfmeOwnerRW*)obj)->bfmeCheckRW()) obj->setDisabled(DisabledHeld208A50);
   obj->setStatusBit(55,true);
   Position208A50 pos; pos.x=obj->position38.x; pos.y=obj->position38.y; pos.z=obj->position38.z;
-  pos.z-=d->sinkRate34/m_acceleratedTimeScale;
+  pos.z-=d->m_sinkRate/m_acceleratedTimeScale;
   if(((Terrain208A50*)TheTerrainLogic)->height1C(pos.x,pos.y,obj->getLayer(),0,true)<pos.z) pos.z-=5.7f;
   obj->setPosition((const Coord3D*)&pos);
   if(drawable && d->flag1A6 && !drawable->flagE4) {
