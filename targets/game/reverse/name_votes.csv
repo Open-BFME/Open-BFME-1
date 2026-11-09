@@ -7340,3 +7340,4 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|param|bfmeConcat#3|s,ef1e326d50d7dc875f58347c,claude-sonnet,20261109075959-05a6b1,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemGetFileList.cpp|local|Win32LocalFileSystem::getFileListInDirectory|tempsearchstr,bf392179bd213b96816ceb95,claude-sonnet,20261109075959-05a6b1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp|local|Object::canCrushOrSquish|d,e389216b27720e6348e40e50,claude-sonnet,20261109080000-3808ef,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva009A2C30ReleaseNode.cpp|param|Rva009A2C30Table::releaseNode|n,33f3f0127a95bf3599b0d4c1,claude-sonnet,20261109075745-d09040,2026-11-09
