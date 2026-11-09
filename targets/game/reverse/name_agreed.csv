@@ -1382,3 +1382,4 @@ game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|r,red,cl
 game/GameEngine/Source/GameClient/GUI/WindowManager_bfmeRva0046E170.cpp|member||m_at198,m_focusStack,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00243EA0.cpp|type||AI00243EA0,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberGoalRefresh00243EA0.cpp|type||Pathfinder00243EA0,Pathfinder,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv980.cpp|member||m_bfmeMgr,m_contain,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
