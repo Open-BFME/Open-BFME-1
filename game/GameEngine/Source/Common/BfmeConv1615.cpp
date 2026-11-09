@@ -9,11 +9,26 @@ inline void operator delete(void *block, void *where)
 {
 }
 
+// Retail copies the string member through ILT 0x0001400B (?j_0001400b@@YAXXZ,
+// jumping to 0x00424F50); call the ILT by its row name rather than a pin.
+extern "C" void __identifier("?j_0001400b@@YAXXZ")();
+
 class BfmeStrVTH
 {
 public:
-	BfmeStrVTH(const BfmeStrVTH &other);
-	~BfmeStrVTH();
+	typedef void (BfmeStrVTH::*Rva0001400BCall)(const BfmeStrVTH &);
+	union Rva0001400BCallAddress
+	{
+		void *raw;
+		Rva0001400BCall member;
+	};
+
+	__forceinline void copyFrom(const BfmeStrVTH &other)
+	{
+		Rva0001400BCallAddress call;
+		call.raw = (void *)&__identifier("?j_0001400b@@YAXXZ");
+		(this->*call.member)(other);
+	}
 	char *m_bfme00;
 };
 
@@ -21,9 +36,9 @@ struct BfmeEntVTH
 {
 	__forceinline BfmeEntVTH(const BfmeEntVTH &other)
 		: m_bfme00(other.m_bfme00), m_bfme04(other.m_bfme04),
-		  m_bfme08(other.m_bfme08), m_bfme0c(other.m_bfme0c),
-		  m_bfme10(other.m_bfme10)
+		  m_bfme08(other.m_bfme08), m_bfme0c(other.m_bfme0c)
 	{
+		m_bfme10.copyFrom(other.m_bfme10);
 	}
 
 	int m_bfme00;
