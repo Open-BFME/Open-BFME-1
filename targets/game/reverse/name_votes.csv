@@ -6436,3 +6436,6 @@ game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChun
 game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::findMapping|m,5ceda60ab0cc32fc4818120e,claude-sonnet,20261109030604-8b75bb,2026-11-09
 game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::read|m,cd7fd3c72696bb01e3457037,claude-sonnet,20261109030604-8b75bb,2026-11-09
 game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChunkTableOfContents::write|m,5d0a706ec6615ab6352b0739,claude-sonnet,20261109030604-8b75bb,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_byte4,b1e36d64fffef30745e7e845,claude-sonnet,20261109030737-b5502e,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_dword8,be7c5ad04088c238d499a984,claude-sonnet,20261109030737-b5502e,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_string10,c7a780b13a82173e22aea9dc,claude-sonnet,20261109030737-b5502e,2026-11-09

@@ -1466,3 +1466,6 @@ game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::re
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::setValue|p,pair,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::release|p,pair,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/U2FixedSlotSearches.cpp: game\GameEngine\Source\Common\U2FixedSlotSearches.cpp(93) : error C2065: 'p' : undeclared ident,2026-11-09
 game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::setValue|p,pair,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/U2FixedSlotSearches.cpp: game\GameEngine\Source\Common\U2FixedSlotSearches.cpp(93) : error C2065: 'p' : undeclared ident,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_byte4,m_isOneShot,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_dword8,m_shader,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_string10,m_particleTypeName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
