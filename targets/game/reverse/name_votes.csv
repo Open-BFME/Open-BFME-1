@@ -6454,3 +6454,6 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cp
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|ScriptConditions::evaluateScienceAcquired|r,114e8be1b5bd623b54b2faa4,claude-sonnet,20261109031200-ffa026,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091B|r,cc39aed842a4dffd66e41197,claude-sonnet,20261109031200-ffa026,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091C|r,c6bf1c54a04a546028d7034c,claude-sonnet,20261109031200-ffa026,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setGameList|w,e104c814bbc00009b277d4f6,claude-sonnet,20261109031243-2dba3b,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setChatWindow|w,509650e752042341f66fc085,claude-sonnet,20261109031243-2dba3b,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setPlayerList|w,2c87c47d151bb35190e30df7,claude-sonnet,20261109031243-2dba3b,2026-11-09
