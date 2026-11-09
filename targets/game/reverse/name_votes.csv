@@ -6763,3 +6763,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|para
 game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|type||DamageSource00373B30,63660f2b6b7ff618ad7a1e04,claude-sonnet,20261109052642-005827,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|member||field0c,d5bc23bb3fb1d69e7b6433c5,claude-sonnet,20261109052642-005827,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|local|Rva00373B30Receiver::update|t,5627214ce2c1f107dcc7da16,claude-sonnet,20261109052642-005827,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyOne.cpp|type||Gen_0013CE90,5f53ca94f469e29b7f4c507f,claude-sonnet,20261109052642-31d781,2026-11-09
+game/GameEngine/Source/Common/Bfme5EightyOne.cpp|member||m_bfmeRefs,ac284bd868e0275fd845976f,claude-sonnet,20261109052642-31d781,2026-11-09
