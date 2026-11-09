@@ -6484,3 +6484,5 @@ game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBb|q,02d78abb5c4d44e
 game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|o,f6a1aac3e1eea2ca20685960,claude-sonnet,20261109032023-7094ae,2026-11-09
 game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|p,92ffe2b63e23d3c178135ebb,claude-sonnet,20261109032023-7094ae,2026-11-09
 game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|q,e840fc06c3b39baec71176e5,claude-sonnet,20261109032023-7094ae,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d084,6cdc6c24a7b13bab4b75afd4,claude-sonnet,20261109032023-cfdab6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d094,3574ee7e7be6bef5f2905eb8,claude-sonnet,20261109032023-cfdab6,2026-11-09
