@@ -1980,3 +1980,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShortVecWNCtor.cpp|local|B
 game/GameEngine/Source/Common/BfmeConv2211.cpp|type||Coord3D007AE900,Coord3D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShortVecWNCtor.cpp|local|BfmeShortVecWN::BfmeShortVecWN|p,start,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2211.cpp|type||Coord3D007AE900,Coord3D,claude-sonnet+gpt-6.1-sol,blocked: hook: game/GameEngine/Source/Common/BfmeConv2211.cpp: declares its own `Coord3D`; include game/Libraries/Include/Lib/Coord3D.h instead (or `// class-g,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeMgrF62,GameLogic,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubInnerD77,Overridable,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubD77,ThingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

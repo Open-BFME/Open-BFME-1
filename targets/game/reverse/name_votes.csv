@@ -6838,3 +6838,7 @@ game/GameEngine/Source/Common/BfmeConv2211.cpp|type||Coord3D007AE900,0d80d781398
 game/GameEngine/Source/Common/BfmeConv2211.cpp|local|Rva007AE900Body|h,18eca0009269d39078ffa5b2,claude-sonnet,20261109054500-f8448b,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|a,9d7b7c21750f28f3d29655c8,claude-sonnet,20261109054553-80a3f0,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|b,8dbfd35f998cc58895369b4f,claude-sonnet,20261109054553-80a3f0,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeMgrF62,b79f262dd96d54bea1ca9ede,claude-sonnet,20261109055652-7af808,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeFilterC9E,e9954d5a759e1852aa6c8754,claude-sonnet,20261109055652-7af808,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubInnerD77,c8de709150231be03cac24cb,claude-sonnet,20261109055652-7af808,2026-11-09
+game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubD77,65086061eeeaf841974a0b0a,claude-sonnet,20261109055652-7af808,2026-11-09
