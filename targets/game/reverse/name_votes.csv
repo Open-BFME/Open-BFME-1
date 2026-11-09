@@ -6371,3 +6371,5 @@ game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeMode,09f0456155a3673
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,1ca1bda91dfe972369b4cbe2,claude-sonnet,20261109024225-ff2729,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,e25535e06fa878c96490aa40,claude-sonnet,20261109024225-ff2729,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,263cadf80a2cce937bd9b4ec,claude-sonnet,20261109024225-ff2729,2026-11-09
+game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeNext,61675b7b57165ee823a6d54b,claude-sonnet,20261109024100-45f265,2026-11-09
+game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeField,96d1445260561a00b3d65793,claude-sonnet,20261109024100-45f265,2026-11-09

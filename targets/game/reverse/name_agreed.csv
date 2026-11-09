@@ -1398,3 +1398,5 @@ game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,m
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfmeCount,m_count,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme04,m_host,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva00801670FeslMeasure.cpp|member||m_bfme10,m_buffer,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeNext,m_left,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5ChainDisposals.cpp|member||m_bfmeField,m_right,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
