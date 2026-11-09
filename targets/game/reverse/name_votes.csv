@@ -7255,3 +7255,12 @@ game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeHead,
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,ac61add5bc574c5c4c342170,claude-sonnet,20261109073723-c8c86e,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCtorModuleFactory.cpp|member||m_f14,763e567ebffed5f226c77d1b,claude-sonnet,20261109074056-228871,2026-11-09
 game/GameEngine/Source/GameLogic/System/TimingLog003851E0.cpp|local|TimingLog003851E0::start|n,9371f0724080939697213a14,claude-sonnet,20261109073920-ec39ad,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|h,aba3ae2cade6d54968058889,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|t,6d81ff3ee161ecfd406b5ba4,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|h,8ecf23831fff5cd880e3ce65,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|w,8e55416ffac2b95626395f18,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|t,06bbc4e20173dbf0bb926580,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,5b02d2ce723df9bc8ec1f007,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,15a5647612898909a90f2106,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,cfbb25999817b7c48ad44941,claude-sonnet,20261109074116-c6295e,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,4772252ca9a9b2f78037f625,claude-sonnet,20261109074116-c6295e,2026-11-09
