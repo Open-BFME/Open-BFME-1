@@ -29,7 +29,7 @@ class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
     UpdateModule(Thing *thing, const ModuleData *moduleData)
-        : PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1C(-1) {}
+        : PB_DeepBase(thing, moduleData), m_f14(0), m_indexInLogic(-1), m_f1C(-1) {}
 
 protected:
     void setWakeFrame(Object *, UpdateSleepTime);
@@ -37,7 +37,7 @@ protected:
 
 private:
     unsigned int m_f14;
-    int m_f18;
+    int m_indexInLogic;
     int m_f1C;
 };
 
