@@ -2466,3 +2466,7 @@ game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme68,m_textureReducti
 game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme70,m_enableBehindBuildingMarkers,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme8c,m_showSoftWaterEdge,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfmeb8c,m_maxParticleCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|s,sinHalfAngle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|c,cosHalfAngle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|param|Axis_To_Quat|a,axis,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Axis_To_Quat|tmp,normalizedAxis,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
