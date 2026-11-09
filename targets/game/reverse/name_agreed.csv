@@ -2143,6 +2143,7 @@ game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,AsciiString,claud
 game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeEntryBV,NetCommandMsg,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeNodeBV,NetCommandRef,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeOwnBV,NetCommandList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeKindBV,m_playerID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeIdBV,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeTagBV,m_commandType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeEntryBV,m_msg,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
@@ -2212,3 +2213,4 @@ game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeTime,m_frame,cla
 game/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp|member||m_field3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084D860CpInfo,CPINFO,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084D860CpInfo,CPINFO,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|function|BfmeOwnBV@|bfmeFindBV,findMessage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

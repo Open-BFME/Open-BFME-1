@@ -7071,3 +7071,13 @@ game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D820,727df772f77d523a387450a9,claude-sonnet,20261109064955-037e6d,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D860IsSingleByte,5e97674ce25b4d4c36361413,claude-sonnet,20261109064955-037e6d,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva00150700PathReset.cpp|local|Rva00150700Owner::reset|p,8fa56000481fb8adf64dd637,claude-sonnet,20261109065037-0a196c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeEntryBV,79f4522bc559ade9a480c813,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeNodeBV,b1b49ec7d9d0b1b435ef7969,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeOwnBV,c16d39849516280c16cf4b1d,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeKindBV,19855e2fc5816e05f8030be6,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeIdBV,6e8e7538baea18965ccae4c2,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeTagBV,02782d4ddb18d077b1255e96,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeEntryBV,f4b282e67a2b1519a8980d54,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeNextBV,0d92b35c6a34880376caedf8,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeListBV,0aefd9bb959fe680dc4929d4,claude-sonnet,20261109064610-20fe33,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|function|BfmeOwnBV@|bfmeFindBV,2aa0a3ccaca7af11f77001c2,claude-sonnet,20261109064610-20fe33,2026-11-09
