@@ -7635,3 +7635,5 @@ game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp|local|Rva008F7EC0::method|p,8
 game/GameEngine/Source/Common/Bfme/Rva006DF050EraseTen.cpp|local|Rva006DF050::eraseKey|n,3e40608740d5bfc07ba0fea6,claude-sonnet,20261109100319-480332,2026-11-09
 game/GameEngine/Source/GameNetwork/FeslMessage_getInt64_rva007E8930.cpp|member||m_10,44f8d062c40885b2ff6bbc07,claude-sonnet,20261109100638-3e3bb0,2026-11-09
 game/GameEngine/Source/GameNetwork/FeslMessage_getInt64_rva007E8930.cpp|local|Rva007E8810Message::getInt64|s,b2abc7a0a50c4dd1b87922e9,claude-sonnet,20261109100638-3e3bb0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_70,276669054a4479001300bcb8,claude-sonnet,20261109100836-8c7c78,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_74,fafebcf4e4aeed3de787f973,claude-sonnet,20261109100836-8c7c78,2026-11-09
