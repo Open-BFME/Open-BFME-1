@@ -3942,3 +3942,35 @@ as "An accessor the front end can inline is not a cast" above.
 
 Source: game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadar_renderObjectList.cpp.
 Handoff: targets/game/reverse/attempt_support/20261107-006c43f0-kindof-bitflags-reload-order.md.
+
+## Raw-pointer begin()/end() through a range temporary re-read the base at the back-edge (2026-11-09)
+
+Retail 0x00892FD0 (71 B, Apt entry scan) loads the entry base once before the guard, forms
+the end with `mov edx,eax / add edx,esi` (count*8 kept in ESI), and re-reads `[ecx+8]` at
+the loop back-edge. No store or call is in the loop.
+
+Measured, VC7.1 `/O2 /DNDEBUG /DWIN32 /MD /EHsc`:
+
+| Source | Result |
+|---|---|
+| `for (E *p = m_entries; p != m_entries + m_count; ++p)`, a one-word iterator class, or `end()` spelled inline | 54 B: the whole end is hoisted, `lea edx,[eax+edx*8]`, no reload |
+| `volatile` base member | 71 B, reload present, but the guard end is `lea edx,[esi+eax]` (21 diffs) |
+| loop variable is a multi-word iterator object (`cur,first,last` or `cur,last`), `end()` builds one per pass | 71 B, right shape, EAX/EDX exchanged (11 diffs): the end temporary takes EAX, the cursor EDX |
+| same, `end()` as `begin() + size` | 71 B, cursor in EAX but count*8 in EDX and the end in ESI (14 diffs) |
+| dead `bool` range checks with `&&` inside `operator!=` / `operator*` | back to 54 B (hoisted) |
+| **`E *begin() { return range().begin(); }`, `E *end() { return range().end(); }`, `Range range() { return Range(m_entries, m_entries + m_count); }`, loop variable a raw `E *`** | **71 B exact** |
+
+Minimal transformation: keep the cursor a plain pointer and make `begin()`/`end()` read
+their pointer out of a two-pointer range temporary rebuilt on each call. Observed effect:
+the per-pass aggregate keeps the end from being hoisted as one expression (only count*8
+survives as a CSE from the guard), and the plain cursor takes EAX ahead of the block-local
+end temporary. A third field in the range, or reading `range().first`/`.last` from the loop
+directly without the pointer-returning accessors, gives the exchanged 11-diff form.
+Hypothesis, not measured: the multi-word aggregate is scalar-replaced after the pass that
+hoists invariant expressions.
+
+Likely the same family (not yet tested): 0x00896390, 0x00895790, 0x008941A0, which show
+the same "base re-read at the back-edge, count*8 kept from the guard" tail.
+
+Source: game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp. Donor lead: Open-BFME-2
+67a8a17e42 `Bfme5ThirtyFour.cpp` `PlaybackRange`.
