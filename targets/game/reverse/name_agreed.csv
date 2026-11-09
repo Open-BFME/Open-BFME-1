@@ -2202,3 +2202,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFli
 game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferFillTaintSurface.cpp|local|TaintBuffer::fillTaintSurface|g,globalData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp|local|BezierProjectileBehavior::calcFlightPath|d,moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferFillTaintSurface.cpp|local|TaintBuffer::fillTaintSurface|g,globalData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmePrev,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeTime,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
