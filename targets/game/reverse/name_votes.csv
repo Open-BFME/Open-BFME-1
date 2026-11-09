@@ -6188,3 +6188,6 @@ game/GameEngine/Source/Common/BfmeConv1974.cpp|param|BfmeHostESF::bfmeTestESF|a,
 game/GameEngine/Source/Common/BfmeConv1974.cpp|param|BfmeHostESF::bfmeTestESF|b,2b629572409fa516a61b4136,claude-sonnet,20261109011213-db922f,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1974.cpp|local|BfmeHostESF::bfmeTestESF|c,3977b211ff3dac6123ad8742,claude-sonnet,20261109011213-db922f,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1974.cpp|param|bfmeKindOkESF|c,8f448c694105d2e98cc88ac2,claude-sonnet,20261109011213-db922f,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|type||BfmeZ1034,e814de96567b44bbeaaba7c3,claude-sonnet,20261109011213-c32403,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|member||m_bfmeZ,bbd9abd4ebbd660951148af7,claude-sonnet,20261109011213-c32403,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|local|LocomotorSetUpgrade::upgradeImplementation|z,aeb03f64eba5ac0c88b28566,claude-sonnet,20261109011213-c32403,2026-11-09
