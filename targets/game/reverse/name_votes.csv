@@ -6608,3 +6608,5 @@ game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Wander
 game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,ae70815019e7e35dca7f9b02,claude-sonnet,20261109042123-62ffff,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/PassiveAreaEffectCollect00202490.cpp|member||radius08,c25f66f0fe00cf92dabcba34,claude-sonnet,20261109042123-eb7d44,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadarBlendBlip2x2.cpp|function||rva006C2DD0,b552ca82198d930015708886,claude-sonnet,20261109042712-3c459a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeArray,d7da8d9d129486ee279aae30,claude-sonnet,20261109042712-74b38f,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeCount,c35e41643e7a6bd2124e12f7,claude-sonnet,20261109042712-74b38f,2026-11-09
