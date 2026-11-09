@@ -49,7 +49,7 @@ public:
 
 private:
 	char m_bfmeFields[4];
-	BfmeConditionChoiceOwner *m_bfmeOwner;
+	BfmeConditionChoiceOwner *m_moduleData;
 	Object *m_bfmeObject;
 	char m_bfme0C[0x14];
 	unsigned char m_bfmeActive;
@@ -60,7 +60,7 @@ private:
 void Gen_0028D8F0::bfmeSelectCondition(void)
 {
 	Object *object = m_bfmeObject;
-	BfmeConditionChoiceOwner *owner = m_bfmeOwner;
+	BfmeConditionChoiceOwner *owner = m_moduleData;
 	int count = owner->m_bfmeEnd - owner->m_bfmeBegin;
 	if (count < 1)
 		return;
