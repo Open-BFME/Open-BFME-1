@@ -91193,3 +91193,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_F?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEXXZ,0x0001421D,pin
 ??1?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@XZ,0x00005277,pin
 ?d_0058b610@@YAXXZ,0x0058B610,Address-only compatibility for withdrawn dump; native rva0058B610 body (game/GameEngine/Source/Common/Rva0058D770Rank.cpp); game/gen_asm/d_0058b1f0.asm and d_00593a30.asm still call this name
+??_C@_0L@ICECBAIB@FrameDelay?$AA@,0x010F97A4,WindowTransition field-table token read from retail .rdata (referenced by the field table at 0x010F97D0)
+??_C@_0L@CACIDCOI@Transition?$AA@,0x010F97B4,WindowTransition field-table token read from retail .rdata (referenced by the field table at 0x010F97D0)
+??_C@_07NFDCAMIK@WinName?$AA@,0x010F97C4,WindowTransition field-table token read from retail .rdata (referenced by the field table at 0x010F97D0)

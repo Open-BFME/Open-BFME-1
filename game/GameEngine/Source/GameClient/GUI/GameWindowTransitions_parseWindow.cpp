@@ -54,7 +54,17 @@ private:
 	_STL::list<TransitionWindow *> m_transitionWindowList;
 };
 
-extern const unsigned char Rva0048BD60FieldTable[];
+// Retail 0x010F97D0 (64 bytes): the WinName/Transition/FrameDelay field table.
+// Transition is parsed by ILT 0x0001A8FC (-> 0x0048BD00).
+void j_0001a8fc();
+extern "C" void __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
+extern const FieldParse Rva0048BD60FieldParseTable[] =
+{
+	{ "WinName", INI::parseAsciiString, 0, 0 },
+	{ "Transition", (INIFieldParseProc)j_0001a8fc, 0, 0 },
+	{ "FrameDelay", __identifier("?parseInt@INI@@SAXPAV1@PAX1PBX@Z"), 0, 4 },
+	{ 0, 0, 0, 0 }
+};
 
 class GameWindowTransitionsHandler
 {
@@ -68,6 +78,6 @@ void GameWindowTransitionsHandler::parseWindow( INI *ini, void *instance,
 	void *store, const void *userData )
 {
 	TransitionWindow *transWin = new TransitionWindow;
-	ini->initFromINI( transWin, (const FieldParse *)Rva0048BD60FieldTable );
+	ini->initFromINI( transWin, Rva0048BD60FieldParseTable );
 	((TransitionGroup *)instance)->addWindow( transWin );
 }
