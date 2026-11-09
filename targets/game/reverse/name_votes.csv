@@ -7792,3 +7792,4 @@ game/GameEngine/Source/GameNetwork/ServiceHubImpl_ctor.cpp|member||m_04,c1f31c23
 game/GameEngine/Source/Common/Rva00199180Destructor.cpp|local|Rva00199180Owner::~Rva00199180Owner|n,11799b2ef77a1b9e180f25a3,claude-sonnet,20261109113111-9ffc20,2026-11-09
 game/GameEngine/Source/Common/Rva00199180Destructor.cpp|local|Rva00199180Owner::~Rva00199180Owner|p,ba4472b97c17d1d43f716383,claude-sonnet,20261109113111-9ffc20,2026-11-09
 game/GameEngine/Source/Common/Rva00199180Destructor.cpp|local|Rva00199180Owner::~Rva00199180Owner|e,802eccd8e1fcc4db4093334b,claude-sonnet,20261109113111-9ffc20,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008CB2F0DecodeInteger.cpp|function||rva008CB2F0DecodeInteger,641f1fef7bd727fb95d59f48,claude-sonnet,20261109113201-ab21dd,2026-11-09
