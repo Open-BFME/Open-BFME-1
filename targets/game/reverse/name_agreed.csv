@@ -1321,3 +1321,6 @@ game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field38,m_useCloudMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field45,m_bilinearTerrainTex,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field46,m_trilinearTerrainTex,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field38,m_useCloudMap,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field45,m_bilinearTerrainTex,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field46,m_trilinearTerrainTex,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

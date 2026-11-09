@@ -66,11 +66,11 @@ struct Rva006C9270GlobalData
 	unsigned char m_pad20[0x08];
 	unsigned char m_field28;
 	unsigned char m_pad29[0x0f];
-	unsigned char m_field38;
+	unsigned char m_useCloudMap;
 	unsigned char m_pad39[0x0b];
 	unsigned char m_field44;
-	unsigned char m_field45;
-	unsigned char m_field46;
+	unsigned char m_bilinearTerrainTex;
+	unsigned char m_trilinearTerrainTex;
 	unsigned char m_field47;
 	unsigned char m_pad48[0x10];
 	unsigned char m_field58;
@@ -319,17 +319,17 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field47 = lodInfo->byte_6;
 		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field28 = !lodInfo->byte_7;
 		m_field170c = lodInfo->dword_24;
-		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field38 = lodInfo->m_useLightMap;
+		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_useCloudMap = lodInfo->m_useLightMap;
 		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field44 = lodInfo->m_useLightMap;
 		if (lodInfo->m_useLightMap)
 		{
-			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field45 = 1;
-			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field46 = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_bilinearTerrainTex = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_trilinearTerrainTex = 1;
 		}
 		else
 		{
-			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field45 = 1;
-			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field46 = 0;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_bilinearTerrainTex = 1;
+			((Rva006C9270GlobalData *)TheWritableGlobalData)->m_trilinearTerrainTex = 0;
 		}
 		((Rva006C9270GlobalData *)TheWritableGlobalData)->m_field8c = lodInfo->m_showSoftWaterEdge;
 
