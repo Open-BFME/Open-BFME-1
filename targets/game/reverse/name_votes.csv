@@ -7056,3 +7056,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|member
 game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|Rva001DCBB0Filter|p,d2c3f611464a6362112ed9ae,claude-sonnet,20261109064609-631ec2,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|PartitionFilterPlayerAffiliation|p,82e717cfe0b4c82b3c096522,claude-sonnet,20261109064609-631ec2,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AutoPickUpUpdateUpdate.cpp|param|Rva00265150RJFilter|p,7f9c414ba10b5a60205bc3e3,claude-sonnet,20261109064609-631ec2,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WallUpgradeUpdateCtorThunk.cpp|member||m_f14,74b93bf7b6ef344697f5e92b,claude-sonnet,20261109064956-f466cf,2026-11-09
