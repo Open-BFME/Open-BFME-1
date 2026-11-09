@@ -17,7 +17,7 @@ public:
 	int m_bfmeSize;
 };
 
-extern BfmeList1016 g_bfmeList1016;
+BfmeList1016 g_bfmeList1016;
 
 void bfmeGo1016T(void)
 {
