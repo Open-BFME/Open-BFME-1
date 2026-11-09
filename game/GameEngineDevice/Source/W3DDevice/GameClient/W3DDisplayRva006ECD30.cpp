@@ -144,8 +144,8 @@ private:
 };
 
 // RVA 0x006ECD30, 384 bytes. Slot 54 of W3DDisplay; method identity unknown.
-void W3DDisplay::rva006ECD30(Image *image, Real x0, Real y0,
-	Real x1, Real y1, Int color)
+void W3DDisplay::rva006ECD30(Image *image, Real startX, Real startY,
+	Real endX, Real endY, Int color)
 {
 	Render2DClass *render;
 	Real textureScale = g_bfmeDefaultBU /
@@ -178,6 +178,6 @@ void W3DDisplay::rva006ECD30(Image *image, Real x0, Real y0,
 	Real opacity = image->m_20;
 	Int c0 = (color & 0x00ffffff) | ((Int)(opacity * (Real)(UnsignedInt)((color >> 24) & 0xff)) << 24);
 	Int c1 = (color & 0x00ffffff) | ((Int)(opacity * (Real)(UnsignedInt)((color >> 24) & 0xff)) << 24);
-	RectClass screen(x0, y0, x1, y1);
+	RectClass screen(startX, startY, endX, endY);
 	m_render2D->Add_Quad(screen, uv, c0, c0, c1, c1);
 }
