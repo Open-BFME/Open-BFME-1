@@ -83,7 +83,6 @@ public:
 };
 
 // AsciiString::TheEmptyString; the WWLib string model has no static member for it.
-extern const AsciiString Rva01336E50EmptyString;
 
 class BfmeAptScreenQuickMatchMenu {
 public:
@@ -160,7 +159,7 @@ void BfmeAptScreenQuickMatchMenu::saveQuickMatchOptions()
 
     pref.write();
   } else {
-    pref.setLastLadder(Rva01336E50EmptyString, 0);
+    pref.setLastLadder(AsciiString::TheEmptyString, 0);
     GadgetComboBoxGetSelectedPos(m_numPlayers, &selected);
     if (selected < 0)
       selected = 0;

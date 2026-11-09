@@ -41,7 +41,6 @@ typedef int ObjectID;
 
 enum { LOGICFRAMES_PER_SECOND = 5 };
 
-extern const AsciiString Rva01336E50EmptyString;
 
 template <class OBJCLASS> class DLINK_ITERATOR
 {
@@ -194,7 +193,7 @@ public:
 	const AsciiString &getName(void) const
 	{
 		if (!m_proto)
-			return Rva01336E50EmptyString;
+			return AsciiString::TheEmptyString;
 		return m_proto->m_name;
 	}
 	Bool isIdle(void) const { return ((const Rva000EDB30Team *)this)->isIdle(); }

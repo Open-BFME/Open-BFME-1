@@ -140,7 +140,6 @@ extern AudioManager *TheAudio;
 
 // AsciiString::TheEmptyString (0x01336E50); ascii_string.h does not declare the
 // static member, so the existing namespace-scope pin spelling is used.
-extern const AsciiString Rva01336E50EmptyString;
 
 // ZH file statics of WOLBuddyOverlay.cpp (retail 0x012F4240 / 0x012F4244).
 extern Bool lastNotificationWasStatus;
@@ -176,6 +175,6 @@ void Rva004ECD10BuddyMessageNotify(BuddyMessage message)
 
 		lastNotificationWasStatus = false;
 		numOnlineInNotification = 0;
-		Rva004EBA70NotificationDispatch(Rva01336E50EmptyString, notification);
+		Rva004EBA70NotificationDispatch(AsciiString::TheEmptyString, notification);
 	}
 }

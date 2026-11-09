@@ -43,7 +43,6 @@ typedef float Real;
 #define NULL 0
 #define FALSE 0
 
-extern const AsciiString Rva01336E50EmptyString;
 
 #include "../command_source_type.h"
 enum { MAX_UNIT_TYPES = 7 };
@@ -161,7 +160,7 @@ public:
 	const AsciiString &getName(void) const
 	{
 		if (!m_proto)
-			return Rva01336E50EmptyString;
+			return AsciiString::TheEmptyString;
 		return m_proto->getName();
 	}
 	Object *getFirstItemIn_TeamMemberList(void) const { return m_dlinkhead_TeamMemberList; }

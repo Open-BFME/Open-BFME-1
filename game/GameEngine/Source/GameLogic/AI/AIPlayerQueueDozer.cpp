@@ -36,7 +36,6 @@ typedef unsigned int UnsignedInt;
 
 enum KindOfType { KINDOF_DOZER = 14 };
 
-extern const AsciiString Rva01336E50EmptyString;
 
 // StringBase<char>'s buffer header: refcount, length, capacity, data.
 struct BfmeAsciiHeader
@@ -168,7 +167,7 @@ public:
 	const AsciiString &getName(void) const
 	{
 		if (!m_proto)
-			return Rva01336E50EmptyString;
+			return AsciiString::TheEmptyString;
 		return m_proto->getName();
 	}
 private:

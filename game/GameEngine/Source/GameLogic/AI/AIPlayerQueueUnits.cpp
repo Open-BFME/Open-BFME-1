@@ -42,7 +42,6 @@ typedef int ObjectID;
 #define NULL 0
 #define INVALID_ID 0
 
-extern const AsciiString Rva01336E50EmptyString;
 
 #include "../command_source_type.h"
 
@@ -140,7 +139,7 @@ public:
 	const AsciiString &getName(void) const
 	{
 		if (!m_proto)
-			return Rva01336E50EmptyString;
+			return AsciiString::TheEmptyString;
 		return m_proto->getName();
 	}
 	void setActive(void) { if (!m_active) { m_created = true; m_active = true; } }

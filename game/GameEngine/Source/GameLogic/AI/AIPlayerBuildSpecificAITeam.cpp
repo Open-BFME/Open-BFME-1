@@ -43,7 +43,6 @@ typedef unsigned int UnsignedInt;
 #define NULL 0
 #define FALSE 0
 
-extern const AsciiString Rva01336E50EmptyString;
 
 enum { MAX_UNIT_TYPES = 7 };
 enum { TEAM_SINGLETON = 0x01 };
@@ -131,7 +130,7 @@ public:
 	const AsciiString &getName(void) const
 	{
 		if (!m_proto)
-			return Rva01336E50EmptyString;
+			return AsciiString::TheEmptyString;
 		return m_proto->m_name;
 	}
 	Bool hasAnyObjects(Bool ignoreBuildings = false) const;
