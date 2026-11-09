@@ -7253,3 +7253,4 @@ game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|local|Thing::getTemplate|
 game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|param|Thing::isKindOf|t,95fdefeaa146990b750cdeef,claude-sonnet,20261109073927-62de32,2026-11-09
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeHead,4b2414ccd3f67bcfa18d186e,claude-sonnet,20261109073723-c8c86e,2026-11-09
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,ac61add5bc574c5c4c342170,claude-sonnet,20261109073723-c8c86e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCtorModuleFactory.cpp|member||m_f14,763e567ebffed5f226c77d1b,claude-sonnet,20261109074056-228871,2026-11-09
