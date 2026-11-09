@@ -6396,3 +6396,5 @@ game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme
 game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|param|Weapon::Weapon|t,544550661be7d749817db48c,claude-sonnet,20261109024100-47fb42,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerDoesViolateLimit.cpp|member||event04,10d8b304a725dd5811a20ac2,claude-sonnet,20261109024640-e1c6fb,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerDoesViolateLimit.cpp|member||m_requests4C,f511a507ace15a6e92f737fe,claude-sonnet,20261109024640-e1c6fb,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag38,62ad43bb506a98dc30020b72,claude-sonnet,20261109024825-529ec3,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag44,7428033154b53b749d288a4c,claude-sonnet,20261109024825-529ec3,2026-11-09

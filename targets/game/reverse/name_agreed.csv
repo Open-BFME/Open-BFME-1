@@ -1426,3 +1426,5 @@ game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme
 game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme38IA,m_curBarrel,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme3cIA,m_numShotsForCurBarrel,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4cIA,m_pitchLimited,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag38,m_useCloudMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer_drawRoads.cpp|member||m_flag44,m_useLightMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
