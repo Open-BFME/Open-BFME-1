@@ -7348,3 +7348,6 @@ game/GameEngine/Source/Common/BfmeConv1929.cpp|member||m_bfmeItemCU,0233e53c7da4
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|s,5b7f172ab2c4f9c24eca10ab,claude-sonnet,20261109080450-cebb21,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|c,a58c06189de1ea3fc26da634,claude-sonnet,20261109080450-cebb21,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Rva00589040Draw.cpp|type||Rva00589040Vec2,1377727e66f1ba606596d6f1,claude-sonnet,20261109075732-54226c,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeRetailVertexBuffer,830ae9fc61442fb42db0e4a2,claude-sonnet,20261109075732-30f32d,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeWaterSetting,9e519aeb0f7a20c9ad16c3b6,claude-sonnet,20261109075732-30f32d,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjGenerateVertexBuffer.cpp|type||BfmeSeaPatchVertex,a763b219226223896c3aaf7e,claude-sonnet,20261109075732-30f32d,2026-11-09
