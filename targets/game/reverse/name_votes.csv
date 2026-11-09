@@ -7416,3 +7416,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransf
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransform007629F0.cpp|member||data04,d8df1b547adb3c30c953cff3,claude-sonnet,20261109082533-c62001,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/AttachmentTransform007629F0.cpp|member||drawable08,7a68ebd9aec9e5ae411f5d9d,claude-sonnet,20261109082533-c62001,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1430.cpp|member||m_bfme00,7fc614155129c66668c2d393,claude-sonnet,20261109082533-17173b,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0ConfigView,9e8c672be26c0d0c1f8087ce,claude-sonnet,20261109082533-628b59,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0PathView,87dfe1abf6d4b4b7177a568c,claude-sonnet,20261109082533-628b59,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|member||m_field3c,e06f66c4a734af7af4477d0b,claude-sonnet,20261109082533-628b59,2026-11-09
