@@ -7401,3 +7401,8 @@ game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva00592
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva0058D1E0FunctorSingleWrapper|b,0b58caf812b6f4bb47a57dac,claude-sonnet,20261109082417-63e859,2026-11-09
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|AptMapPreviewFunctorHolder|b,9743ae2a9a4046edc7a4b0e2,claude-sonnet,20261109082417-63e859,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorConstructor.cpp|member||m_field3c,183f8eac923abf394cc3222b,claude-sonnet,20261109082506-36e2f1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|type||Rva002D8D90Data,09b6fef2a6135a631b81ef27,claude-sonnet,20261109082417-47fd2d,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|type||Rva002D8D90Owner,f7b8f35420cab4b6be8e3755,claude-sonnet,20261109082417-47fd2d,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field0088,6b9927ae56c1741cc1100837,claude-sonnet,20261109082417-47fd2d,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field00a0,d76a12915e487c88f2dc5b0d,claude-sonnet,20261109082417-47fd2d,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/Rva002D8D90.cpp|member||field10,ff6dff4c4f7d5bb6b73265b3,claude-sonnet,20261109082417-47fd2d,2026-11-09
