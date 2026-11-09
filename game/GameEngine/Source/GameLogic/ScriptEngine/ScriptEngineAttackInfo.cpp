@@ -85,7 +85,7 @@ class AttackPriorityInfo
 public:
 	void setPriority(const ThingTemplate *thing, Int priority);
 	AsciiString getName(void) const { return m_name; }
-	void friend_setName(const AsciiString &n) { m_name.set(n); }
+	void friend_setName(const AsciiString &name) { m_name.set(name); }
 
 	void *m_unreconstructed_00;
 	AsciiString m_name;
