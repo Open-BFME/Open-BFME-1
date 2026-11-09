@@ -7400,3 +7400,4 @@ game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|member||at28,d
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva00592640Binding|p,a7ebf97b68d2b89fedd61ac3,claude-sonnet,20261109082417-63e859,2026-11-09
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva0058D1E0FunctorSingleWrapper|b,0b58caf812b6f4bb47a57dac,claude-sonnet,20261109082417-63e859,2026-11-09
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|AptMapPreviewFunctorHolder|b,9743ae2a9a4046edc7a4b0e2,claude-sonnet,20261109082417-63e859,2026-11-09
+game/GameEngine/Source/GameLogic/Object/LocomotorConstructor.cpp|member||m_field3c,183f8eac923abf394cc3222b,claude-sonnet,20261109082506-36e2f1,2026-11-09
