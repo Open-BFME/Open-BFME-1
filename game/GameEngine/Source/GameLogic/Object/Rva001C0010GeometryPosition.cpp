@@ -54,7 +54,7 @@ private:
 	float m_transform[ 12 ];
 	Coord3D m_position;
 	char m_unmodelled44[ 0xac - 0x44 ];
-	Rva0087DC00 m_rva001C0010_ac;
+	Rva0087DC00 m_geometryInfo;
 
 };
 
@@ -87,5 +87,5 @@ static __forceinline void geometryPosition001C0010(Rva0087DC00 *source, const Co
 
 void Rva00027BC9Object::getPosition(Coord3D *out)
 {
-	geometryPosition001C0010(&m_rva001C0010_ac, &m_position, m_transform, out);
+	geometryPosition001C0010(&m_geometryInfo, &m_position, m_transform, out);
 }
