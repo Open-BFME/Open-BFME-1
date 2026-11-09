@@ -61,14 +61,14 @@ class Particle {
 public:
     bool isInvisible();
     unsigned char m_before001C[0x1C];
-    Vector3 m_field001C;
+    Vector3 m_pos;
     unsigned char m_before003C[0x14];
-    Particle *m_field003C;
+    Particle *m_systemNext;
 };
 class ParticleSystem {
 public:
     unsigned char m_before0008[8];
-    int m_field0008;
+    int m_shaderType;
     int m_field000C;
     AsciiString m_field0010;
     unsigned char m_before007C[0x68];
@@ -117,16 +117,16 @@ int Rva005F31A0::method(RenderInfoClass &info, const AABoxClass *box, int *outpu
     const float extentX = box->Extent.X;
     const float extentY = box->Extent.Y;
     const float extentZ = box->Extent.Z;
-    for (Particle *particle = m_field0004->m_field00A0; particle; particle = particle->m_field003C) {
+    for (Particle *particle = m_field0004->m_field00A0; particle; particle = particle->m_systemNext) {
         if (particle->isInvisible()) continue;
         float size = reinterpret_cast<Rva005C30A0Owner *>(particle)->Rva005C30A0();
-        if (WWMath::Fabs(particle->m_field001C.X - centerX) > extentX + size) continue;
-        if (WWMath::Fabs(particle->m_field001C.Y - centerY) > extentY + size) continue;
-        if (WWMath::Fabs(particle->m_field001C.Z - centerZ) > extentZ + size) continue;
+        if (WWMath::Fabs(particle->m_pos.X - centerX) > extentX + size) continue;
+        if (WWMath::Fabs(particle->m_pos.Y - centerY) > extentY + size) continue;
+        if (WWMath::Fabs(particle->m_pos.Z - centerZ) > extentZ + size) continue;
         *output += m_field0004->m_field007C == 11 && m_field0004->m_field0080;
-        positions[count].X = particle->m_field001C.X;
-        positions[count].Y = particle->m_field001C.Y;
-        positions[count].Z = particle->m_field001C.Z;
+        positions[count].X = particle->m_pos.X;
+        positions[count].Y = particle->m_pos.Y;
+        positions[count].Z = particle->m_pos.Z;
         sizes[count] = size;
         const Vector3 *color = reinterpret_cast<const Vector3 *>(reinterpret_cast<Rva005C3180 *>(particle)->dispatch());
         if (color) {
@@ -147,7 +147,7 @@ int Rva005F31A0::method(RenderInfoClass &info, const AABoxClass *box, int *outpu
         if (TheBfmeSecondManager) {
             TheBfmeSecondManager->Set_Texture(reinterpret_cast<TextureClass *>(&texture));
             TheBfmeSecondManager->Set_Flag(PointGroupClass::TRANSFORM, true);
-            switch (m_field0004->m_field0008) {
+            switch (m_field0004->m_shaderType) {
                 case 1: TheBfmeSecondManager->Set_Shader(ShaderClass::_PresetAdditiveSpriteShader); break;
                 case 2: TheBfmeSecondManager->Set_Shader(g_Va012D6E30); break;
                 case 3: TheBfmeSecondManager->Set_Shader(ShaderClass::_PresetAlphaSpriteShader); break;
