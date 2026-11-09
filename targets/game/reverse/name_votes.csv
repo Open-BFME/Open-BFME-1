@@ -6913,3 +6913,5 @@ game/GameEngine/Source/Common/BfmeConv996.cpp|type||BfmeX996,da50a69198ea3ec6ecb
 game/GameEngine/Source/GameLogic/Object/Behavior/NearestPosition00206960.cpp|type||Position00206960,2fd6ea542ffd7a643daee513,claude-sonnet,20261109061821-8e282a,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIRva00442FD0.cpp|member||m_field_12b1,0a086f151f0a50d1f7b582b9,claude-sonnet,20261109061452-f6b204,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorCopyAssignment.cpp|type||BfmeLocomotorCoord3D,bd3be8f6433892766f0d4f87,claude-sonnet,20261109061452-8770f2,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1173.cpp|member||m_bfme40,a9c050cf073507055cea3a2e,claude-sonnet,20261109061414-a56c40,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1173.cpp|member||m_bfme44,c0fc33fda4a8042f6e74ff49,claude-sonnet,20261109061414-a56c40,2026-11-09
