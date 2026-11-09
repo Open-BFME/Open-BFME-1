@@ -41,8 +41,8 @@ public:
 	} m_flags;
 	int m_bfme08;
 	char m_padding0c[0x54 - 0x0c];
-	BfmeNestedBE *m_bfme54;
-	BfmeNestedBE *m_bfme58;
+	BfmeNestedBE *m_prev;
+	BfmeNestedBE *m_next;
 	char m_padding5c[0x64 - 0x5c];
 };
 
@@ -60,12 +60,12 @@ BfmeNestedBE *BfmeQuery1279::bfmeInsert1279(int value, BfmeNestedBE *node)
 	void *other;
 	bfmeQuery1279((void *)value, 0, &previousValue, &other);
 	BfmeNestedBE *previous = (BfmeNestedBE *)previousValue;
-	node->m_bfme58 = previous->m_bfme58;
-	node->m_bfme54 = previous;
+	node->m_next = previous->m_next;
+	node->m_prev = previous;
 	node->bfmeLinked1284();
-	if (node->m_bfme58)
-		node->m_bfme58->m_bfme54 = node;
-	node->m_bfme54->m_bfme58 = node;
+	if (node->m_next)
+		node->m_next->m_prev = node;
+	node->m_prev->m_next = node;
 	node->m_bfme08 = value;
 	return node;
 }
@@ -93,7 +93,7 @@ BfmeNestedBE *Rva008930C0AptLookup(int value)
 				{
 					if (node->m_bfme08 == value)
 						return node;
-					node = node->m_bfme58;
+					node = node->m_next;
 				} while (node);
 			}
 

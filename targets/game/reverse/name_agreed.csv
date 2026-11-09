@@ -1960,3 +1960,5 @@ game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cach
 game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cachedRandom|f,finalSetting,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp: game\GameEngine\Source\Common\BfmeConv1137CachedRandom.cpp(71) : error C2065: 'f' : undecl,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
