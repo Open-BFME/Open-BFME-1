@@ -1231,3 +1231,4 @@ game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Position0
 game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Key001ABC90,StaticNameKey,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp: DIR32 addresses: FAIL 6 reference(s) to a name dir32_addresses.csv does not record a,2026-11-09
 game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Properties001ABC90,Dict,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp: DIR32 addresses: FAIL 6 reference(s) to a name dir32_addresses.csv does not record a,2026-11-09
 game/GameEngine/Source/Common/MapObject.cpp|local|Rva00088B70ReadMapObject|tmplate,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/MapObject.cpp|local|Rva00088B70ReadMapObject|tmplate,thingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

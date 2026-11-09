@@ -140,13 +140,13 @@ Rva0041230aMapObject *Rva00088B70ReadMapObject(DataChunkInput &file, DataChunkIn
 	}
 
 	const AsciiString &nameRef = *reinterpret_cast<const AsciiString *>(&name);
-	const ThingTemplate *tmplate = NULL;
+	const ThingTemplate *thingTemplate = NULL;
 	if (reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->acceptsThingTemplateName(nameRef))
-		tmplate = reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->findTemplate(nameRef);
+		thingTemplate = reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->findTemplate(nameRef);
 
 	Rva0041230aMapObject *pThisOne;
 
-	pThisOne = new Rva0041230aMapObject(Vector3(loc.x, loc.y, loc.z), nameRef, angle, flags, &d, tmplate);
+	pThisOne = new Rva0041230aMapObject(Vector3(loc.x, loc.y, loc.z), nameRef, angle, flags, &d, thingTemplate);
 
 	if (pThisOne->getProperties()->getType(TheKey_waypointID) == Dict::DICT_INT)
 		pThisOne->setIsWaypoint();
