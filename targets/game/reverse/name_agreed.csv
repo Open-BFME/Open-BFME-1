@@ -1911,3 +1911,6 @@ game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::re
 game/GameEngine/Source/Common/BfmeConv1280.cpp|member||m_bfme00,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1280.cpp|member||m_bfme00,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/Apt/Rva008BE2C0NodeWalk.cpp|member||length02,m_length,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|decrementDataLeft|c,chunk,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/System/DataChunkInput.cpp: game\GameEngine\Source\Common\System\DataChunkInput.cpp(281) : error C2065: 'c' : undeclared ,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|closeDataChunk|c,chunk,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/System/DataChunkInput.cpp: game\GameEngine\Source\Common\System\DataChunkInput.cpp(281) : error C2065: 'c' : undeclared ,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::readArrayOfBytes|c,chunk,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/System/DataChunkInput.cpp: game\GameEngine\Source\Common\System\DataChunkInput.cpp(281) : error C2065: 'c' : undeclared ,2026-11-09
