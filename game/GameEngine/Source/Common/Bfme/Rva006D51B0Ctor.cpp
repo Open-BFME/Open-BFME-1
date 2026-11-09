@@ -98,7 +98,7 @@ public:
 	void Release_Ref(void);
 
 	Rva0090C2F0Inner *m_bfme14;
-	StringClass m_bfmeName;
+	StringClass m_name;
 	Gen_00920A20 m_bfmeData;
 	int m_bfme30;
 	unsigned m_bfme34;
@@ -110,7 +110,7 @@ Rva006D51B0TextureBase::Rva006D51B0TextureBase(unsigned width, unsigned height,
 	unsigned mip, unsigned pool, unsigned renderTarget, unsigned reducible)
 	: GenBase009EB7D0(),
 	  m_bfme14(0),
-	  m_bfmeName(0, false),
+	  m_name(0, false),
 	  m_bfmeData(0),
 	  m_bfme30(0),
 	  m_bfme34(mip),
