@@ -80,10 +80,15 @@ public:
 	UnsignedByte m_flagE8;
 };
 
+// Retail calls ILT 0x0003FA30, which the ledger defines as ?j_0003fa30@@YAXXZ.
+extern void j_0003fa30();
+typedef void (Rva0026E380Owner::*Rva0026E380HelperCall)();
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 void Rva0026E380Owner::update()
 {
 	m_flagE8 = 1;
-	rva0026E380OwnerHelper();
+	(this->*iltMemberCall<Rva0026E380HelperCall>(j_0003fa30))();
 	Object *owner = m_owner;
 	Object *target = TheGameLogic->findObjectByID(m_targetID);
 	if (target == 0 || (*(UnsignedByte *)((char *)target + 0x344) & 1) != 0)
