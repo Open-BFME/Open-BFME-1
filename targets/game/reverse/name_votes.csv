@@ -7004,3 +7004,5 @@ game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeTopAAS,54790917551e
 game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeRightAAS,c868b2ab2d88e0e46298b2a1,claude-sonnet,20261109062828-f43ee9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeBottomAAS,e1efa197d12a04f9bd4606f7,claude-sonnet,20261109062828-f43ee9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2122.cpp|local|BfmeHostAAS::bfmeProbeAAS|r,0857d3af8326603defa53dfb,claude-sonnet,20261109062828-f43ee9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1383.cpp|param|BfmeThingVJE::bfmeGoVJE|m,f7143c3cc02f1cd35fd94198,claude-sonnet,20261109062828-8109c0,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1383.cpp|local|BfmeThingVJE::bfmeGoVJE|g,072f6508fa6b53f5ab140a81,claude-sonnet,20261109062828-8109c0,2026-11-09

@@ -2126,3 +2126,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|memb
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|type||AI00200420,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||body200,m_body,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||ai204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1383.cpp|param|BfmeThingVJE::bfmeGoVJE|m,message,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
