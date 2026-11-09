@@ -12,7 +12,7 @@ class BfmeNodeVMU
 {
 public:
 	int m_bfme00;
-	BfmeNodeVMU *m_bfme04;
+	BfmeNodeVMU *m_next;
 };
 
 extern void(__cdecl *g_bfmeFreeDWF)(void *p);
@@ -35,7 +35,7 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 	{
 		if (p != 0)
 		{
-			n = p->m_bfme04;
+			n = p->m_next;
 			reinterpret_cast<Gen_00893990 *>(p)->bfmeCleanup();
 			g_bfmeFreeDWF(p);
 			m_bfme00 = n;
@@ -45,14 +45,14 @@ void BfmeListVMU::bfmeEraseVMU(BfmeNodeVMU **it)
 	q = m_bfme00;
 	while (q != 0)
 	{
-		if (q->m_bfme04 == t)
+		if (q->m_next == t)
 			break;
-		q = q->m_bfme04;
+		q = q->m_next;
 	}
-	n = q->m_bfme04;
+	n = q->m_next;
 	if (n != 0)
 	{
-		q->m_bfme04 = n->m_bfme04;
+		q->m_next = n->m_next;
 		reinterpret_cast<Gen_00893990 *>(n)->bfmeCleanup();
 		g_bfmeFreeDWF(n);
 	}

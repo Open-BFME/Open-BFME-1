@@ -2691,3 +2691,4 @@ game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|local|getTemplate
 game/GameEngine/Source/Common/R2GlobalOptionFlagSetters.cpp|function||Rva00061470,parseVerifyClientCRC,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/R2GlobalOptionFlagSetters.cpp|function||Rva00061470,parseVerifyClientCRC,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00061470 ?parseVerifyClientCRC@@YAHXZ | outside every window of the target's slots 32418:20180-20187 | PRE-COMMIT FAILED: retail's t,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1474.cpp|member||m_bfme04,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1474.cpp|member||m_bfme04,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
