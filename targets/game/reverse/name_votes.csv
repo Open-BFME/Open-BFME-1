@@ -6811,3 +6811,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.
 game/GameEngine/Source/GameLogic/Map/SidesListClearSideStorage.cpp|type||Rva0019BE80SideInfo,d24227e1b0ca16e643326068,claude-sonnet,20261109054306-cac93b,2026-11-09
 game/GameEngine/Source/Common/Bfme5RefNodes.cpp|member||m_bfmeRefCount,6af49594e7d0a0c0d842f97c,claude-sonnet,20261109054306-df1965,2026-11-09
 game/GameEngine/Source/Common/Bfme5RefNodes.cpp|local|SimpleObjectIterator::insert|n,a3edc5174735c798419d5d7c,claude-sonnet,20261109054306-df1965,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawDebugStats006e8c20.cpp|type||BfmeDrawString006e8c20,93cf66bfc7275a6c140d2c08,claude-sonnet,20261109054710-4814e7,2026-11-09
