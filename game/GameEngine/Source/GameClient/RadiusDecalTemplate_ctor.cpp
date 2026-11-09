@@ -30,10 +30,10 @@ private:
 	float m_opacityThrobTime;				// +0x14
 	unsigned int m_color;					// +0x18
 	bool m_onlyVisibleToOwningPlayer;		// +0x1C
-	unsigned int m_unmodelled_20;			// +0x20
-	unsigned int m_unmodelled_24;			// +0x24
-	unsigned int m_unmodelled_28;			// +0x28
-	unsigned int m_unmodelled_2C;			// +0x2C
+	unsigned int m_minRadius;			// +0x20
+	unsigned int m_maxRadius;			// +0x24
+	unsigned int m_maxSelectedUnits;			// +0x28
+	unsigned int m_rotationsPerMinute;			// +0x2C
 };
 
 // ??0RadiusDecalTemplate@@QAE@XZ
@@ -46,9 +46,9 @@ RadiusDecalTemplate::RadiusDecalTemplate()
 		m_opacityThrobTime( 1000.0f ),
 		m_color( 0 ),
 		m_onlyVisibleToOwningPlayer( true ),
-		m_unmodelled_20( 0 ),
-		m_unmodelled_24( 0 ),
-		m_unmodelled_28( 0 ),
-		m_unmodelled_2C( 0 )
+		m_minRadius( 0 ),
+		m_maxRadius( 0 ),
+		m_maxSelectedUnits( 0 ),
+		m_rotationsPerMinute( 0 )
 {
 }
