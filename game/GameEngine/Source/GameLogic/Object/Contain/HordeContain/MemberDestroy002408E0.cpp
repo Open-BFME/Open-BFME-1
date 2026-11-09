@@ -87,7 +87,7 @@ class GameLogic
 public:
     void destroyObject(Object *object);
     char pad00[0x3c];
-    unsigned int frame3C;
+    unsigned int m_frame;
 };
 extern GameLogic *TheGameLogic;
 class Rva00413FF0GuardedVCall { public: void forward(int value); };
@@ -178,7 +178,7 @@ void Rva002408E0View::destroyMember(Object *member)
         TheEva->setShouldPlay((EvaMessage)data->message2E4, 0);
         TheGameLogic->destroyObject(*(Object **)((char *)this - 0xdc));
     }
-    frame110 = TheGameLogic->frame3C;
+    frame110 = TheGameLogic->m_frame;
     if (((Rva002408E0GlobalData *)TheWritableGlobalData)->flagA76)
     {
         Drawable *drawable = (*(Object **)((char *)this - 0xdc))->getDrawable();
