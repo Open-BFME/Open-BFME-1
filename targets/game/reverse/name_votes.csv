@@ -6885,3 +6885,4 @@ game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_08,5ba2fc745882e5c98
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_0C,c3593e61575f22ce5417b979,claude-sonnet,20261109060232-7297d9,2026-11-09
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_10,cf1292a2ff605dce01210ea6,claude-sonnet,20261109060232-7297d9,2026-11-09
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_14,c97af83ca71ad6d45d475b3f,claude-sonnet,20261109060232-7297d9,2026-11-09
+game/GameEngine/Source/Common/Rva00575900Sort.cpp|local|Rva00575900|n,c1ca36381a11613315d16d78,claude-sonnet,20261109060232-c47efb,2026-11-09
