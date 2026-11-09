@@ -6567,3 +6567,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member|
 game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field214,d12f82f0c52c48270ea3555b,claude-sonnet,20261109041240-0b88c7,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field3c,9a69e2d454dd0d73c9ba683c,claude-sonnet,20261109041240-0b88c7,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva00552C40.cpp|member||field98,3a5ea5412167f666b5e9b890,claude-sonnet,20261109041541-32ce29,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|member||slot_14,a92c6ecb8687263689985727,claude-sonnet,20261109041541-2e35f4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|param|rva001D6810Call|a,b971c2d2121fd9294d067568,claude-sonnet,20261109041541-2e35f4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|param|rva001D6810Call|b,56a849978f2868a7c80ff648,claude-sonnet,20261109041541-2e35f4,2026-11-09
