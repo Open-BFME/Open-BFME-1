@@ -68,22 +68,22 @@ private:
 	WinDrawData m_hiliteDrawData[9];
 };
 
-inline const Image *GadgetProgressBarGetEnabledImageLeft(GameWindow *g) { return g->winGetEnabledImage(0); }
-inline const Image *GadgetProgressBarGetEnabledImageRight(GameWindow *g) { return g->winGetEnabledImage(1); }
-inline const Image *GadgetProgressBarGetEnabledImageCenter(GameWindow *g) { return g->winGetEnabledImage(2); }
-inline const Image *GadgetProgressBarGetEnabledBarImageRight(GameWindow *g) { return g->winGetEnabledImage(5); }
-inline const Image *GadgetProgressBarGetEnabledBarImageCenter(GameWindow *g) { return g->winGetEnabledImage(6); }
+inline const Image *GadgetProgressBarGetEnabledImageLeft(GameWindow *window) { return window->winGetEnabledImage(0); }
+inline const Image *GadgetProgressBarGetEnabledImageRight(GameWindow *window) { return window->winGetEnabledImage(1); }
+inline const Image *GadgetProgressBarGetEnabledImageCenter(GameWindow *window) { return window->winGetEnabledImage(2); }
+inline const Image *GadgetProgressBarGetEnabledBarImageRight(GameWindow *window) { return window->winGetEnabledImage(5); }
+inline const Image *GadgetProgressBarGetEnabledBarImageCenter(GameWindow *window) { return window->winGetEnabledImage(6); }
 
-inline const Image *GadgetProgressBarGetDisabledImageLeft(GameWindow *g) { return g->winGetDisabledImage(0); }
-inline const Image *GadgetProgressBarGetDisabledImageRight(GameWindow *g) { return g->winGetDisabledImage(1); }
-inline const Image *GadgetProgressBarGetDisabledImageCenter(GameWindow *g) { return g->winGetDisabledImage(2); }
-inline const Image *GadgetProgressBarGetDisabledBarImageRight(GameWindow *g) { return g->winGetDisabledImage(5); }
-inline const Image *GadgetProgressBarGetDisabledBarImageCenter(GameWindow *g) { return g->winGetDisabledImage(6); }
+inline const Image *GadgetProgressBarGetDisabledImageLeft(GameWindow *window) { return window->winGetDisabledImage(0); }
+inline const Image *GadgetProgressBarGetDisabledImageRight(GameWindow *window) { return window->winGetDisabledImage(1); }
+inline const Image *GadgetProgressBarGetDisabledImageCenter(GameWindow *window) { return window->winGetDisabledImage(2); }
+inline const Image *GadgetProgressBarGetDisabledBarImageRight(GameWindow *window) { return window->winGetDisabledImage(5); }
+inline const Image *GadgetProgressBarGetDisabledBarImageCenter(GameWindow *window) { return window->winGetDisabledImage(6); }
 
-inline const Image *GadgetProgressBarGetHiliteImageLeft(GameWindow *g) { return g->winGetHiliteImage(0); }
-inline const Image *GadgetProgressBarGetHiliteImageRight(GameWindow *g) { return g->winGetHiliteImage(1); }
-inline const Image *GadgetProgressBarGetHiliteImageCenter(GameWindow *g) { return g->winGetHiliteImage(2); }
-inline const Image *GadgetProgressBarGetHiliteBarImageRight(GameWindow *g) { return g->winGetHiliteImage(5); }
+inline const Image *GadgetProgressBarGetHiliteImageLeft(GameWindow *window) { return window->winGetHiliteImage(0); }
+inline const Image *GadgetProgressBarGetHiliteImageRight(GameWindow *window) { return window->winGetHiliteImage(1); }
+inline const Image *GadgetProgressBarGetHiliteImageCenter(GameWindow *window) { return window->winGetHiliteImage(2); }
+inline const Image *GadgetProgressBarGetHiliteBarImageRight(GameWindow *window) { return window->winGetHiliteImage(5); }
 inline const Image *GadgetProgressBarGetHiliteBarImageCenter(GameWindow *g) { return g->winGetHiliteImage(6); }
 
 #define BFME_DISPLAY_SLOT(n) virtual void bfmeDisplaySlot##n(void);
