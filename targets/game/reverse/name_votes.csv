@@ -6463,3 +6463,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehaviorCtorThunk.cpp
 game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmeNextXY,97eb809c2961103ddedea485,claude-sonnet,20261109031911-9269e9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmePrevXY,989774339e7599e09e63f2ff,claude-sonnet,20261109031911-9269e9,2026-11-09
 game/GameEngine/Source/Common/S4AdjustHeapElem12Pod.cpp|member||m_bfmeName,940c00759c6f571b526bc271,claude-sonnet,20261109031911-d4b725,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|param|_Construct|p,b07d5d03dc4d7154e0a3a25c,claude-sonnet,20261109031911-e6458a,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|local|_M_create_node|tmp,9c5429e2966b981349b6cdfd,claude-sonnet,20261109031911-e6458a,2026-11-09
