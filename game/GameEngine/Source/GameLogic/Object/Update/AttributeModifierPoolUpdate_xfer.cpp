@@ -70,6 +70,11 @@ protected:
 	int m_f1c;
 };
 
+class UpdateModuleXferRoute
+{
+};
+extern void j_000044c1();
+
 struct AttributeModifierEntry
 {
 	Int m_index;
@@ -182,5 +187,8 @@ void AttributeModifierPoolUpdate::xfer(Xfer *xfer)
 		}
 	}
 
-	UpdateModule::xfer(xfer);
+	// Retail tail-calls ILT 0x000044C1 (?j_000044c1@@YAXXZ), not a named body.
+	typedef void (UpdateModuleXferRoute::*XferFn)(Xfer *);
+	union { void (*fn)(); XferFn call; } u = { j_000044c1 };
+	(((UpdateModuleXferRoute *)this)->*u.call)(xfer);
 }
