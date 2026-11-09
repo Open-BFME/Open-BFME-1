@@ -2753,3 +2753,4 @@ game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member|
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member||m_e1c,m_swoopStandoffHeight,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member||m_e20,m_swoopTerminalVelocity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme/Rva006DF050EraseTen.cpp|local|Rva006DF050::eraseKey|n,count,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme/Rva006DF050EraseTen.cpp|local|Rva006DF050::eraseKey|n,count,claude-sonnet+gpt-6-astra,applied,2026-11-09

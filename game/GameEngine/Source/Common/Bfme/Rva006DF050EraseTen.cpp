@@ -39,12 +39,12 @@ void Rva006DF050::eraseKey(int key)
 	{
 		route.raw = j_0002f0ea;
 		Rva006DF050Slot *slot = m_slots;
-		int n = 10;
+		int count = 10;
 		do
 		{
 			(slot->*route.member)(key);
 			++slot;
-			--n;
-		} while (n);
+			--count;
+		} while (count);
 	}
 }
