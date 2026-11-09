@@ -64,10 +64,10 @@ extern void j_0000b60e();
 int GetGameClientRandomValue(int,int,char*,int);
 class Rva006A8210Owner { public: void dispatch(int,int); };
 class Gen_006AC5D0 { public: void bfmePush(void*); };
-struct Info006AE2C0 { char pad0[0x3c]; unsigned flags_3c; char pad40[0x7c-0x40]; float float_7c,float_80; int type_84; char pad88[4]; void *begin_8c,*end_90; };
-struct Event006AE2C0 { char pad0[8]; Info006AE2C0 *info; char padc[0x28-0xc]; int index_28; char pad2c[0x64-0x2c]; int index_64; int int_68; };
+struct AudioEventInfo { char pad0[0x3c]; unsigned m_control; char pad40[0x7c-0x40]; float float_7c,float_80; int type_84; char pad88[4]; void *begin_8c,*end_90; };
+struct AudioEventRTS { char pad0[8]; AudioEventInfo *info; char padc[0x28-0xc]; int index_28; char pad2c[0x64-0x2c]; int index_64; int int_68; };
 class PlayingAudio { public:
-    virtual ~PlayingAudio(); long count_4; void *handle_8; char padc[8]; Event006AE2C0 *event_14; char pad18[0x39-0x18]; bool byte_39,byte_3a,byte_3b,byte_3c;
+    virtual ~PlayingAudio(); long count_4; void *handle_8; char padc[8]; AudioEventRTS *event_14; char pad18[0x39-0x18]; bool byte_39,byte_3a,byte_3b,byte_3c;
     bool paused() const { return byte_39 || byte_3a || byte_3b || byte_3c; }
 };
 class Ref006AE2C0 { public:
@@ -90,17 +90,17 @@ class MilesLock006AE2C0 { bool locked; public:
     MilesLock006AE2C0() { AIL_lock_mutex(); locked=true; }
     ~MilesLock006AE2C0() { if(locked) AIL_unlock_mutex(); }
 };
-class StartAudioStream006AE2C0 { public:
+class MilesAudioManager { public:
     void start(const Ref006AE2C0&,float);
     char pad0[0x604]; int index_604; char pad608[0x633-0x608]; bool byte_633;
     char pad634[0x9d0-0x634]; _STL::list<Ref006AE2C0> list_9d0;
     char pad9d4[0xac4-0x9d4]; int indices_ac4[3]; Ref006AE2C0 refs_ad0[3];
     char padadc[0xb30-0xadc]; Table006AE2C0 table_b30;
 };
-void StartAudioStream006AE2C0::start(const Ref006AE2C0 &ref,float fraction) {
-    Event006AE2C0 *&event=ref.ptr->event_14;
+void MilesAudioManager::start(const Ref006AE2C0 &ref,float fraction) {
+    AudioEventRTS *&event=ref.ptr->event_14;
     void *stream=ref.ptr->handle_8;
-    Info006AE2C0 *&info=event->info;
+    AudioEventInfo *&info=event->info;
     {
         MilesLock006AE2C0 lock;
         BfmeHashValue entry={(unsigned)stream,ref.ptr};
@@ -116,7 +116,7 @@ void StartAudioStream006AE2C0::start(const Ref006AE2C0 &ref,float fraction) {
         position=(int)(length*fraction);
         if(length-position<6000) { position=length-6000; if(position<0) position=0; }
         AIL_set_stream_ms_position(stream,position);
-    } else if(info->flags_3c&4) {
+    } else if(info->m_control&4) {
         int length=-1; AIL_stream_ms_position(stream,&length,0);
         position=GetGameClientRandomValue(0,length-1,"F:\\bfme\\Code\\gameenginedevice\\Source\\MilesAudioDevice\\MilesAudioManager.cpp",0x2a50);
         AIL_set_stream_ms_position(stream,position);
