@@ -14,10 +14,19 @@ public:
 	void deleteInstance(int destroy);
 };
 
+// Retail calls ILT 0x00002338, which the ledger defines as ?j_00002338@@YAXXZ.
+extern void j_00002338();
+
 class ScriptGroupPoolObject
 {
 public:
-	void deleteInstance(int destroy);
+	void deleteInstance(int destroy)
+	{
+		typedef void (ScriptGroupPoolObject::*DeleteCall)(int);
+		union { void (*plain)(); DeleteCall member; } call;
+		call.plain = j_00002338;
+		(this->*call.member)(destroy);
+	}
 };
 
 template <class T>
