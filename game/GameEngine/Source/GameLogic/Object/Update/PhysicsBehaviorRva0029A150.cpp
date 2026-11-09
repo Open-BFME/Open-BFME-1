@@ -21,9 +21,9 @@ class TerrainLogic;
 extern TerrainLogic* TheTerrainLogic;
 struct Config0029A150 { char pad00[8]; float at08,at0c,at10,at14; char pad18[0x14]; float at2c,at30,at34,at38,at3c; bool at40,at41,at42; char pad43; float at44,at48; };
 inline const float& maximum0029A150(const float& a,const float& b) { return a>b?a:b; }
-class PhysicsBehavior { public: unsigned char rva0029A150(int recalculate,float height); char pad00[4]; Config0029A150* at04; char pad08[0x18]; _STL::vector<Coord3D> at20; Coord3D at2c,at38; float at44,at48; int at4c,at50,at54; };
+class PhysicsBehavior { public: unsigned char rva0029A150(int recalculate,float height); char pad00[4]; Config0029A150* m_moduleData; char pad08[0x18]; _STL::vector<Coord3D> at20; Coord3D at2c,at38; float at44,at48; int at4c,at50,at54; };
 unsigned char PhysicsBehavior::rva0029A150(int recalculate,float height) {
- Config0029A150* data=at04;
+ Config0029A150* data=m_moduleData;
  if(height<0.5f) height=0.5f;
  float first=at54==0?data->at10:data->at34;
  float second=at54==0?data->at14:data->at38;
