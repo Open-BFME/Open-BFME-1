@@ -7491,3 +7491,4 @@ game/GameEngine/Source/Common/BfmeRing008A0890.cpp|param|BfmeRing008A0890::inser
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|s,9df6d7b9ac32377e09d47ed1,claude-sonnet,20261109090236-842f00,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|c,7743cc2b3f118a3328837e58,claude-sonnet,20261109090236-842f00,2026-11-09
 game/GameEngine/Source/GameLogic/System/VersionedRecord37A610.cpp|local|VersionedRecord37A610::transfer|v,6d51d71a8f202a517c40f1e5,claude-sonnet,20261109090746-7399c6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Geometry00786B70.cpp|member||m_at00,eb1dc2ec4e1582a2c69c2ee9,claude-sonnet,20261109090746-97ad76,2026-11-09
