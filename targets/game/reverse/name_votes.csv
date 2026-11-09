@@ -6689,3 +6689,5 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerMod
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_10,f54b1d6f35e00778c913acf0,glm,20261109043719-57bf3a,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_14,6e6106fc1928c3f256c74755,glm,20261109043719-57bf3a,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_18,7105561bd0831ecf6e9272f0,glm,20261109043719-57bf3a,2026-11-09
+game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|function|Rva56E070StateOwner@|rva0056D070,be9bf0c52b1217ab2a1ac1e0,glm,20261109043848-74d9d3,2026-11-09
+game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|param|UnicodeString::UnicodeString#2|s,c22475c6f3cb025e6e745a28,glm,20261109043848-74d9d3,2026-11-09
