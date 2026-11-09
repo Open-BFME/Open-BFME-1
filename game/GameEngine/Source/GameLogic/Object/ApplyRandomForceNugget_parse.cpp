@@ -43,7 +43,21 @@ public:
 	void addObjectCreationNugget(ObjectCreationNugget *);
 };
 
-extern int R2Data0109F0F4;
+void j_000213dc();
+void j_000351e8();
+void j_0004a944();
+void j_00021d05();
+void j_00029cda();
+
+// Retail VA0109F0F4: five existing ILT entries (vtable_lookup.py), the vftable installed by
+// this body and by the zeroing constructor at 0x001D5F00.
+void *g_NuggetVftableD8800[5] = {
+	reinterpret_cast<void *>(&j_000213dc),
+	reinterpret_cast<void *>(&j_000351e8),
+	reinterpret_cast<void *>(&j_0004a944),
+	reinterpret_cast<void *>(&j_00021d05),
+	reinterpret_cast<void *>(&j_00029cda),
+};
 
 class ApplyRandomForceNugget
 {
@@ -59,7 +73,7 @@ struct Rva001D8800Nugget
 		m_maxMag = 0;
 		m_minPitch = 0;
 		m_maxPitch = 0;
-		m_vtable = &R2Data0109F0F4;
+		m_vtable = g_NuggetVftableD8800;
 	}
 
 	void *m_vtable;

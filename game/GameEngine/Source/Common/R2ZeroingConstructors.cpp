@@ -47,7 +47,7 @@ extern int R2Data01126B2C;
 extern int R2Data011289D4;
 extern int R2Data01128A2C;
 extern int R2Data0109608C;
-extern int R2Data0109F0F4;
+extern "C" int __identifier("?g_NuggetVftableD8800@@3PAPAXA")[];
 extern int R2Data010EC784;
 extern int R2Data010F0540;
 extern int R2Data010F0FA0;
@@ -474,7 +474,7 @@ public:
 };
 Rva001D5F00::Rva001D5F00()
 {
-	m_at00 = &R2Data0109F0F4;
+	m_at00 = __identifier("?g_NuggetVftableD8800@@3PAPAXA");
 	m_at04 = 0;
 	m_at08 = 0;
 	m_at0C = 0;
