@@ -7814,3 +7814,7 @@ game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|a,146b7c650b31a8
 game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|b,94e2a8324e81f2b2738ba79a,claude-sonnet,20261109113925-e90e5c,2026-11-09
 game/GameEngine/Source/Common/Rva008A0FF0ValueStackReleaseAll.cpp|local|Rva008A0FF0ValueStack::releaseAll|n,4ffc1513e3396f4e2eeebc8e,claude-sonnet,20261109113928-fd15c2,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1030.cpp|member||m_bfmeH,4990090a5691e52f15768316,claude-sonnet,20261109113926-87c10b,2026-11-09
+game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|param|Rva0005DC70CompareWideLengths|s1,9c5b1a9556d760d5d1aa9a5f,claude-sonnet,20261109113926-8e0ddb,2026-11-09
+game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|param|Rva0005DC70CompareWideLengths|s2,fe33162fba0cb4fd8a6cf08a,claude-sonnet,20261109113926-8e0ddb,2026-11-09
+game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|local|Rva0005DC70CompareWideLengths|q,87d1a6c68d6da1b72454544e,claude-sonnet,20261109113926-8e0ddb,2026-11-09
+game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|local|Rva0005DC70CompareWideLengths|p,8b9a39f33c4e51a9825d30fa,claude-sonnet,20261109113926-8e0ddb,2026-11-09
