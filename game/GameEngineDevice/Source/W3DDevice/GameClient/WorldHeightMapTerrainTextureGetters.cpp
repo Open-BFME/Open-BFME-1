@@ -42,7 +42,7 @@ public:
 	TextureBaseClass *m_p;
 };
 
-inline TerrainTextureRef::TerrainTextureRef(TextureBaseClass *p) : m_p(p)
+inline TerrainTextureRef::TerrainTextureRef(TextureBaseClass *texture) : m_p(texture)
 {
 	if (m_p)
 		++m_p->m_numRefs;
