@@ -7786,3 +7786,5 @@ game/GameEngine/Source/Common/BfmeThingTBARva007243A0.cpp|member||m_98,3e93807c0
 game/GameEngine/Source/Common/BfmeConv2024.cpp|member||m_bfmeFrameTN,7ea03631054351a0e50ee005,claude-sonnet,20261109112258-1c6234,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2024.cpp|function|BfmeThingTN@|bfmeSetTransformTN,7236ce714e51a5a048a80cf7,claude-sonnet,20261109112258-1c6234,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2024.cpp|param|BfmeThingTN::bfmeSetTransformTN|m,60ab64b25197ec8bbd9bcb70,claude-sonnet,20261109112258-1c6234,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|a,902b61d2b2b44b14cdbc7339,claude-sonnet,20261109112536-cee18b,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|b,299c2e5ff5d04bc667e62e0b,claude-sonnet,20261109112536-cee18b,2026-11-09
