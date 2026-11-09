@@ -92,7 +92,7 @@ private:
 	UnicodeString *m_capacity;
 };
 
-class Rva0019BE80SideInfo
+class SidesInfo
 {
 public:
 	__forceinline void clear()
@@ -121,9 +121,9 @@ private:
 	void clearSideStorageAt0019B4C0();
 	unsigned char m_prefix[0x28];
 	int m_numSides;
-	Rva0019BE80SideInfo m_sides[32];
+	SidesInfo m_sides[32];
 	int m_numSkirmishSides;
-	Rva0019BE80SideInfo m_skirmishSides[32];
+	SidesInfo m_skirmishSides[32];
 };
 
 void Rva0019BE80SidesList::clearSideStorageAt0019B4C0()
