@@ -2398,3 +2398,13 @@ game/GameEngine/Source/GameLogic/Object/Update/StealthCleanup00299250.cpp|member
 game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|x1,endX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y1,endY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/StealthCleanup00299250.cpp|member||at3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|member||m_bfmePrev,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|h,head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|t,tail,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|h,head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|t,tail,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,tail,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,tail,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

@@ -7229,3 +7229,13 @@ game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|
 game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y1,9c09122b05676a5c1c94b5a6,claude-sonnet,20261109073650-05ed0e,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1409.cpp|function|BfmeBlockVKS@|bfmeNotVKS,539fca37ce7e22d9753b9e97,claude-sonnet,20261109073650-a1fc80,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/StealthCleanup00299250.cpp|member||at3c,e59509323901fe5efd8fec38,claude-sonnet,20261109073650-eefe37,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|member||m_bfmeNext,8ec49d64e04417f489189a54,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|member||m_bfmePrev,44a8ed2fafe0006b39d68622,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|h,aba3ae2cade6d54968058889,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeA1047::bfmeGo1047A|t,6d81ff3ee161ecfd406b5ba4,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|h,8ecf23831fff5cd880e3ce65,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeB1047::bfmeGo1047B|t,06bbc4e20173dbf0bb926580,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,5b02d2ce723df9bc8ec1f007,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,15a5647612898909a90f2106,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,cfbb25999817b7c48ad44941,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,4772252ca9a9b2f78037f625,claude-sonnet,20261109073649-0d4793,2026-11-09
