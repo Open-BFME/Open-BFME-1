@@ -1615,3 +1615,9 @@ game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_elements28,m_elements
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_node00,m_node,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_count818,m_entryCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_entries81c,m_entries,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_transform0c,m_transform,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_count24,m_elementCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_elements28,m_elements,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_node00,m_node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_count818,m_entryCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_entries81c,m_entries,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

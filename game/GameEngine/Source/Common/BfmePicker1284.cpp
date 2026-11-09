@@ -51,7 +51,7 @@ struct BfmePickElement1284
 	char m_padding01[3];
 	BfmePickObject1284 *m_object04;
 	char m_padding08[4];
-	BfmeM1208 m_transform0c;
+	BfmeM1208 m_transform;
 	char m_padding24[0x44 - 0x24];
 };
 
@@ -62,8 +62,8 @@ struct BfmeMesh1290
 	char m_padding18[4];
 	BfmeVector2_1290 *m_vertices;
 	short *m_indices;
-	int m_count24;
-	BfmePickElement1284 *m_elements28;
+	int m_elementCount;
+	BfmePickElement1284 *m_elements;
 };
 
 
@@ -89,15 +89,15 @@ struct BfmePickNode1284
 
 struct BfmePickEntry1284
 {
-	BfmePickNode1284 *m_node00;
+	BfmePickNode1284 *m_node;
 	BfmeM1208 m_transform04;
 };
 
 struct BfmePickWorld1284
 {
 	char m_padding000[0x818];
-	int m_count818;
-	BfmePickEntry1284 *m_entries81c;
+	int m_entryCount;
+	BfmePickEntry1284 *m_entries;
 };
 
 BfmePickWorld1284 *g_bfmeHolderBU = 0;
@@ -113,24 +113,24 @@ public:
 BfmePickNode1284 *BfmePicker1284::bfmePick1284(int pointX, int pointY)
 {
 	int visited = 0;
-	for (int entryIndex = g_bfmeHolderBU->m_count818 - 1; entryIndex >= 0; --entryIndex) {
-		BfmePickNode1284 *node = g_bfmeHolderBU->m_entries81c[entryIndex].m_node00;
+	for (int entryIndex = g_bfmeHolderBU->m_entryCount - 1; entryIndex >= 0; --entryIndex) {
+		BfmePickNode1284 *node = g_bfmeHolderBU->m_entries[entryIndex].m_node;
 		if (((unsigned char)(~(node->m_flags04 >> 15)) & 1) != 0)
 			continue;
 
 		BfmeMesh1290 *mesh = &node->m_info50->m_descriptor0c->m_mesh08;
-		for (int elementIndex = 0; elementIndex < mesh->m_count24; ++elementIndex) {
-			if ((mesh->m_elements28[elementIndex].m_flags & 8) == 0)
+		for (int elementIndex = 0; elementIndex < mesh->m_elementCount; ++elementIndex) {
+			if ((mesh->m_elements[elementIndex].m_flags & 8) == 0)
 				continue;
 
-			BfmeM1208 transform = mesh->m_elements28[elementIndex].m_transform0c;
-			bfmeMul1208(&g_bfmeHolderBU->m_entries81c[entryIndex].m_transform04,
+			BfmeM1208 transform = mesh->m_elements[elementIndex].m_transform;
+			bfmeMul1208(&g_bfmeHolderBU->m_entries[entryIndex].m_transform04,
 				&transform, &transform);
-			BfmePickObject1284 *object = mesh->m_elements28[elementIndex].m_object04;
+			BfmePickObject1284 *object = mesh->m_elements[elementIndex].m_object04;
 			if (object->m_type == 1) {
 				if (bfmeMeshHitTest1290(mesh, (const BfmeTransform2_1290 *)&transform,
 					pointX, pointY))
-					return g_bfmeHolderBU->m_entries81c[entryIndex].m_node00;
+					return g_bfmeHolderBU->m_entries[entryIndex].m_node;
 			} else if (object->m_type == 2) {
 				float xA = object->m_xA08;
 				float xB = object->m_xB10;
@@ -140,10 +140,10 @@ BfmePickNode1284 *BfmePicker1284::bfmePick1284(int pointX, int pointY)
 					(float)pointX < transform.m10 * yB + transform.m00 * xB + transform.tx &&
 					(float)pointY > transform.m11 * yA + transform.m01 * xA + transform.ty &&
 					(float)pointY < transform.m11 * yB + transform.m01 * xB + transform.ty)
-					return g_bfmeHolderBU->m_entries81c[entryIndex].m_node00;
+					return g_bfmeHolderBU->m_entries[entryIndex].m_node;
 			}
 		}
-		if (++visited == g_bfmeHolderBU->m_count818)
+		if (++visited == g_bfmeHolderBU->m_entryCount)
 			return 0;
 	}
 	return 0;
