@@ -26,7 +26,7 @@ class BfmeAERI
 {
 public:
 	unsigned char m_bfmeHeadERI[4];
-	Overridable *m_bfmeBERI;
+	Overridable *m_nextOverride;
 };
 
 // ILT 0x00040DC2 reaches StealthUpdate::markAsDetected at 0x002AD380.
@@ -40,13 +40,13 @@ class BfmeThingERI
 {
 public:
 	unsigned char m_bfmeHeadERI[4];
-	BfmeAERI *m_bfmeAERI;
+	BfmeAERI *m_template;
 };
 
 class BfmeNodeERI
 {
 public:
-	BfmeNodeERI *m_bfmeNextERI;
+	BfmeNodeERI *m_next;
 	unsigned char m_bfmeMidERI[4];
 	BfmeThingERI *m_bfmeThingERI;
 };
@@ -65,22 +65,22 @@ public:
 
 void BfmeHostERI::bfmeSweepERI()
 {
-	BfmeNodeERI *n = m_bfmeListERI->m_bfmeNextERI;
+	BfmeNodeERI *node = m_bfmeListERI->m_next;
 
-	while (n != m_bfmeListERI)
+	while (node != m_bfmeListERI)
 	{
-		BfmeThingERI *thing = n->m_bfmeThingERI;
+		BfmeThingERI *thing = node->m_bfmeThingERI;
 
-		n = n->m_bfmeNextERI;
-		BfmeAERI *a = thing->m_bfmeAERI;
+		node = node->m_next;
+		BfmeAERI *a = thing->m_template;
 		BfmeStateERI *st = (BfmeStateERI *)a;
 
 		if (a != 0)
 		{
-			Overridable *b = a->m_bfmeBERI;
+			Overridable *m_nextOverride = a->m_nextOverride;
 
-			if (b != 0)
-				st = (BfmeStateERI *)b->getFinalOverride();
+			if (m_nextOverride != 0)
+				st = (BfmeStateERI *)m_nextOverride->getFinalOverride();
 		}
 
 		if ((st->m_bfmeFlagsERI & 2) == 0)

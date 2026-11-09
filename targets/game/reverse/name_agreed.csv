@@ -2641,3 +2641,8 @@ game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeAERI,m_template,cla
 game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeNextERI,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n,node,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,m_nextOverride,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeBERI,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeAERI,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeNextERI,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n,node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,m_nextOverride,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
