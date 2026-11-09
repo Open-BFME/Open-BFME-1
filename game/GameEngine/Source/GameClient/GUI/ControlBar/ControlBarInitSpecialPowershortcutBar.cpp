@@ -34,15 +34,15 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 // forwards both to out-of-line StringBase<char> bodies. Read the Header
 // pointer at +0 (ref count +0, length +4, text +8) in line, as retail does.
 
-static inline const char *inlineStr(const AsciiString &s)
+static inline const char *inlineStr(const AsciiString &str)
 {
-	const char *text = *reinterpret_cast<const char *const *>(&s);
+	const char *text = *reinterpret_cast<const char *const *>(&str);
 	return text ? text + 8 : "";
 }
 
-static inline Bool inlineIsEmpty(const AsciiString &s)
+static inline Bool inlineIsEmpty(const AsciiString &str)
 {
-	const char *text = *reinterpret_cast<const char *const *>(&s);
+	const char *text = *reinterpret_cast<const char *const *>(&str);
 	return text == 0 || *reinterpret_cast<const unsigned short *>(text + 4) == 0;
 }
 
