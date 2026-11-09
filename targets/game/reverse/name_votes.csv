@@ -6623,3 +6623,6 @@ game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeNam
 game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeLevels,8cff0944a27cca279b526afc,claude-sonnet,20261109043121-7ffa72,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeX,b4fcbd2c5408dbdf685d2b23,claude-sonnet,20261109043121-b65371,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeY,0a3d1b4d255f12b12cc7deb6,claude-sonnet,20261109043121-b65371,2026-11-09
+game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled00c,66acdd2f2f053f3d64c2d273,claude-sonnet,20261109043119-2eddad,2026-11-09
+game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled10,f16584036359b80575db439b,claude-sonnet,20261109043119-2eddad,2026-11-09
+game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled14,7ac6ef72b4ed3456e5c2b868,claude-sonnet,20261109043119-2eddad,2026-11-09
