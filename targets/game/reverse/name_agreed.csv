@@ -1674,3 +1674,5 @@ game/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp|type||Rva0
 game/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp|type||Rva001E9E60ContainView,ContainModuleInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeId,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeId,m_id,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainMemberNameMatches.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

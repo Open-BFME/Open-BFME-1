@@ -36,14 +36,14 @@ class Object
 {
 public:
 	char m_bfmeHead[ 0x74 ];
-	void *m_bfmeId;										///< retail this+0x74
+	void *m_id;										///< retail this+0x74
 };
 
 class BfmeHordeRosterEntry
 {
 public:
 	void *m_bfmeKey;									///< retail this+0x00
-	AsciiString m_bfmeName;								///< retail this+0x04
+	AsciiString m_name;								///< retail this+0x04
 	char m_bfmeTail[ 8 ];
 };
 
@@ -86,7 +86,7 @@ private:
 // ?bfmeMemberNameMatches@BfmeHordeContainRoster@@QAE_NPAVObject@@ABVAsciiString@@@Z
 Bool BfmeHordeContainRoster::bfmeMemberNameMatches( Object *member, const AsciiString &name )
 {
-	void *key = member->m_bfmeId;
+	void *key = member->m_id;
 	void *slotKey = m_bfmeSlots[ (unsigned int)*m_bfmeIndices.bfmeTwoDSU( &key ) ].m_bfmeKey;
 
 	BfmeHordeRosterOwner *owner = m_bfmeOwner;
@@ -97,7 +97,7 @@ Bool BfmeHordeContainRoster::bfmeMemberNameMatches( Object *member, const AsciiS
 
 		if ( slotKey == entry->m_bfmeKey )
 		{
-			if ( entry->m_bfmeName.compare( name ) == 0 )
+			if ( entry->m_name.compare( name ) == 0 )
 				return true;
 
 			break;
