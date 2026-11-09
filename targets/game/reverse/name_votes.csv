@@ -7106,3 +7106,10 @@ game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||BfmeBaseE,d51e95215
 game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||Gen_000F8A40,1095440ce2ac835868a35842,claude-sonnet,20261109070507-9caec0,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|member||m_bfmeFirst,91f7eb9d4962b9f6bea013fa,claude-sonnet,20261109070507-9caec0,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1269.cpp|type||BfmeVec1269,d3a9e9e2ae2374fc950351fb,claude-sonnet,20261109070507-e33298,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at00,9e2d6b09ee02017594eea8c4,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at04,12204852386a870471f045a9,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at08,d850e5b587d0299338f62cdb,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at0c,52e45fd90ae0d0d4e2093096,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at10,666de80b6bcb65cb276b838f,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at48,8d0267f661d5754c9b2b5906,claude-sonnet,20261109070611-088bc6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/AptDisplayStringAllocation_ctor.cpp|member||m_at54,28b70fb9d4013ba0c6877e20,claude-sonnet,20261109070611-088bc6,2026-11-09
