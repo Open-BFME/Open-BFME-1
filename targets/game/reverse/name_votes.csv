@@ -6590,3 +6590,13 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/CylinderEmissionCallba
 game/GameEngine/Source/GameClient/System/FXParticleSystem/CylinderEmissionCallback.cpp|type||Rva005F93F0Input,ace6c1d9066840f0ecd2cdbc,claude-sonnet,20261109042033-fe5a48,2026-11-09
 game/Libraries/Source/EA/Apt/AptActionInterpreterRva008CA3A0.cpp|function|AptActionInterpreter@|_FunctionRva008CA3A0,e7c24c1507bc5bc406a8cb6e,claude-sonnet,20261109042153-bcd888,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021AD10Find.cpp|local|Gen_0021AD10::bfmeFind|n,6b3b72330b80ede63bb3c401,claude-sonnet,20261109041541-573550,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_64,fa9cc50576fd97a5038c011a,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_114,b36ae7c79849fba6a18f4755,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_118,391143e260343f48f615b3b1,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_11c,584d11f2ba0d4463698a586e,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_120,12be9d54102611d4fe8955fc,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_124,3ffaa6cd7cf13a1a2a76ec92,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_15c,106da73c4cfe3e558930f3a9,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_160,a31ee9fe3fc24de959b4339a,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_164,c98202c2d50b5f6022e49895,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_168,19e0676d0b97f897999df1bc,claude-sonnet,20261109041742-27a88b,2026-11-09
