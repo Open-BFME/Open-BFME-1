@@ -7471,3 +7471,7 @@ game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appen
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendWideCharArgument|a,e106f712640d4f0304b6d733,claude-sonnet,20261109085718-18720c,2026-11-09
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|isType|f,c88efad9cf7eca4456d21b23,claude-sonnet,20261109085836-02baaa,2026-11-09
 game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|type||BfmeHostABD,87948ade9edfbe6c7a493418,claude-sonnet,20261109090132-5cee18,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeValVNJ,4809580363dd833491a23fdb,claude-sonnet,20261109090132-0faffb,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeThingVNJ,8e5f0f8007bef7fc7fb020d9,claude-sonnet,20261109090132-0faffb,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1515.cpp|function|BfmeThingVNJ@|bfmeGetVNJ,1b5c0fdffd30c690e508ff04,claude-sonnet,20261109090132-0faffb,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1515.cpp|local|BfmeThingVNJ::bfmeGetVNJ|p,b8ac6bf06a7ea61767009bc9,claude-sonnet,20261109090132-0faffb,2026-11-09
