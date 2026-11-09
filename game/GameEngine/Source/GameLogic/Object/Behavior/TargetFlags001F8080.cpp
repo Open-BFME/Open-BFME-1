@@ -24,7 +24,7 @@ enum KindOfType { KIND_001F8080 = 0x6c };
 class Thing { public: bool isKindOf(KindOfType) const; };
 class Object { public:
 char pad000[0x38]; Coord3DBase position; char pad044[0x110-0x44]; Condition001F8080 flags;
-char pad138[0x204-0x138]; AIUpdateInterface *field204; char pad208[0x214-0x208]; Object *field214;
+char pad138[0x204-0x138]; AIUpdateInterface *m_ai; char pad208[0x214-0x208]; Object *m_containedBy;
 char pad218[0x344-0x218]; unsigned char m_privateStatus;
 void notifyModelConditionChanged();
 __forceinline const BFMEWeaponSetFlags &weaponFlags() const { return ((const BFMEWeaponSetOwner *)this)->getWeaponSetFlags(); }
@@ -33,7 +33,7 @@ __forceinline const BFMEWeaponSetFlags &weaponFlags() const { return ((const BFM
 static __forceinline void setFlag(Object *o) { if(!o->flags.test(150)) {o->flags.set(150);o->notifyModelConditionChanged();} }
 static __forceinline void clearFlag(Object *o) { if(o->flags.test(150)) {o->flags.reset(150);o->notifyModelConditionChanged();} }
 class AI { public: Object *findEnemyNear(Object *,float,int,int,int); }; extern AI *TheAI;
-class GameLogic { public: char pad00[0x3c]; unsigned int field3c; }; extern GameLogic *TheGameLogic;
+class GameLogic { public: char pad00[0x3c]; unsigned int m_frame; }; extern GameLogic *TheGameLogic;
 struct Data001F8080 { char pad00[8]; float field08; bool field0c; char pad0d[3]; unsigned int field10; bool field14,field15; };
 class TargetFlags001F8080 { public:
 char pad00[0x10]; bool field10; unsigned int field14;
@@ -54,10 +54,10 @@ int TargetFlags001F8080::update()
 {
  Data001F8080 *data=*(Data001F8080 **)((char *)this-0xc);
  Object *object=*(Object **)((char *)this-8);
- AIUpdateInterface *ai=object->field204;
+ AIUpdateInterface *ai=object->m_ai;
  if(!ai) return 0x3fffffff; if(object->m_privateStatus&1) return 0x3fffffff;
  if(object->weaponFlags().word&0x100) return 5;
- Object *container=object->field214;
+ Object *container=object->m_containedBy;
  if(container && !((Thing *)container)->isKindOf(KIND_001F8080)) return 5;
  if(data->field14 && container && ((Thing *)container)->isKindOf(KIND_001F8080)) {
   if(container->weaponFlags().word&0x80) {
@@ -84,7 +84,7 @@ int TargetFlags001F8080::update()
  if(data->field0c && ((BFMESelectionStatusBits *)object)->test(0xcb)) {
   enable001F8080(object); return 5;
  }
- unsigned int now=TheGameLogic->field3c;
+ unsigned int now=TheGameLogic->m_frame;
  int delay=data->field10-now+field14;
  if(delay>0) return delay;
  field14=now;
