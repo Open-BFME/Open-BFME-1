@@ -2634,3 +2634,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,m_right,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|a,leftMatrix,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|b,rightMatrix,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|a,leftMatrix,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/BfmeCombine1236.cpp: game\GameEngine\Source\Common\BfmeCombine1236.cpp(28) : error C2065: 'b' : undeclared identifier,2026-11-09
+game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|b,rightMatrix,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/BfmeCombine1236.cpp: game\GameEngine\Source\Common\BfmeCombine1236.cpp(28) : error C2065: 'b' : undeclared identifier,2026-11-09
