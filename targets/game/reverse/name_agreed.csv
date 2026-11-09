@@ -2804,3 +2804,5 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39e,m_newOccupantsAreNewMembers,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp|member||m_bfmeMembers,m_memberList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp|member||m_bfmeMembers,m_memberList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_member08,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_word0c,m_nameKey,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
