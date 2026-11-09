@@ -13,15 +13,15 @@ class Rva006FD990CameraCorners {
 public:
 	void build(Vector3 *output);
 	char pad000[0x70];
-	CameraClass *camera70;
+	CameraClass *m_camera;
 };
 
 void Rva006FD990CameraCorners::build(Vector3 *output)
 {
-	CameraClass *camera = camera70;
+	CameraClass *camera = m_camera;
 	Vector2 minimum, maximum;
-	camera70->Get_View_Plane(minimum, maximum);
-	Matrix3D transform(camera70->Get_Transform());
+	m_camera->Get_View_Plane(minimum, maximum);
+	Matrix3D transform(m_camera->Get_Transform());
 	Vector2 dimensions = maximum - minimum;
 	double width = dimensions.X;
 	double height = dimensions.Y;
@@ -41,9 +41,9 @@ void Rva006FD990CameraCorners::build(Vector3 *output)
 		Vector3 direction;
 		Matrix3D::Rotate_Vector(transform, local, &direction);
 		direction.Normalize();
-		Vector3 end = direction + camera70->Get_Position();
-		float groundX = Vector3::Find_X_At_Z(0.0f, camera70->Get_Position(), end);
-		float groundY = Vector3::Find_Y_At_Z(0.0f, camera70->Get_Position(), end);
+		Vector3 end = direction + m_camera->Get_Position();
+		float groundX = Vector3::Find_X_At_Z(0.0f, m_camera->Get_Position(), end);
+		float groundY = Vector3::Find_Y_At_Z(0.0f, m_camera->Get_Position(), end);
 		output[i].X = groundX;
 		output[i].Y = groundY;
 		output[i].Z = 0.0f;
