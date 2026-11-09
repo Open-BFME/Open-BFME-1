@@ -2513,3 +2513,10 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F8
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||muzzleFlashBone08,m_muzzleFlashBone,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||barrels7C,m_weaponBarrelInfoVec,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||active120,m_hasRecoilBonesOrMuzzleFlashes,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilRender0075F810,RenderObjClass,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||BarrelRecord0075F810,WeaponBarrelInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|type||RecoilEntry0075F810,WeaponRecoilInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||recoilBone00,m_recoilBone,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||muzzleFlashBone08,m_muzzleFlashBone,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||barrels7C,m_weaponBarrelInfoVec,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/RecoilDraw0075F810.cpp|member||active120,m_hasRecoilBonesOrMuzzleFlashes,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
