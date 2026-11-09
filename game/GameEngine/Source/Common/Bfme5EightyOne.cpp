@@ -27,7 +27,7 @@ void Gen_0013CE90::bfmeFetch(int *a, int *b, int *c, int *d, int *e) const
 class BfmeThingGF
 {
 public:
-	unsigned short m_bfmeRefs;
+	unsigned short m_refCount;
 };
 
 class BfmeRecGF
@@ -55,5 +55,5 @@ void bfmeCopyRec(BfmeRecGF *dst, BfmeRecGF *src)
 	BfmeThingGF *thing = src->m_bfmeThing;
 	dst->m_bfmeThing = thing;
 	if (thing != 0)
-		++thing->m_bfmeRefs;
+		++thing->m_refCount;
 }
