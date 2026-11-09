@@ -7248,3 +7248,6 @@ game/GameEngine/Source/Common/BfmeConv1380.cpp|param|bfmeGoVIX|m,935ac6a70bb325a
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,0a04d60c23eda69bbf1228fa,claude-sonnet,20261109073927-f20612,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,c0f892c4544705affc6b12b7,claude-sonnet,20261109073927-f20612,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_apply.cpp|local|SpecialAbilityUpdate::rva002A7E90|tmpl,d36035627934ac43dcd5ab93,claude-sonnet,20261109073927-7f6c4a,2026-11-09
+game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|param|isKindOf|t,38276d0006c3738617d8aa30,claude-sonnet,20261109073927-62de32,2026-11-09
+game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|local|Thing::getTemplate|tmpl,4d584f70ed3e8b1431a0fa79,claude-sonnet,20261109073927-62de32,2026-11-09
+game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|param|Thing::isKindOf|t,95fdefeaa146990b750cdeef,claude-sonnet,20261109073927-62de32,2026-11-09
