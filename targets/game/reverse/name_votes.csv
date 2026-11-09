@@ -7190,3 +7190,9 @@ game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathC
 game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,07b52de40ac8fbdcfd04c504,claude-sonnet,20261109072619-c92968,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1323.cpp|function|BfmeThingTTE@|bfmeGoTTE,d26c8c30a66ed8390d5b3f6f,claude-sonnet,20261109072619-c92968,2026-11-09
 game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathCL,fee50cd098d403b4e603fe18,claude-sonnet,20261109072818-ea9f6e,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeColour,839d6fe2a9d3576023888444,claude-sonnet,20261109072818-ab21a7,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeParent,018a6bde060b4e08587ee0e3,claude-sonnet,20261109072818-ab21a7,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeLeft,3cead57de30974dd27e74d0b,claude-sonnet,20261109072818-ab21a7,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeRight,622633d17e4219301b761268,claude-sonnet,20261109072818-ab21a7,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeNode,8b74424843a25a3882636933,claude-sonnet,20261109072818-ab21a7,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeCount,b3960f1c5e75b1143fbcac04,claude-sonnet,20261109072818-ab21a7,2026-11-09

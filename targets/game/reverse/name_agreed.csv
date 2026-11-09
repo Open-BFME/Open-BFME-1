@@ -2348,3 +2348,9 @@ game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathC
 game/GameEngine/Source/Common/Rva001F9C60UpdateModuleRun.cpp|member||m_bfmePathCL,m_pathfinder,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,m_file,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1323.cpp|member||m_bfmeName,m_file,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeColour,m_color,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeParent,m_parent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeLeft,m_left,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeRight,m_right,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeNode,m_header,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeTreeSingletonYM.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
