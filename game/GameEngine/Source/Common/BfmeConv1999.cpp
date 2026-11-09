@@ -39,9 +39,9 @@ public:
 	void bfmeAdvanceEVI(BfmeArgEVI *arg);
 
 	int m_bfmeHeadEVI;
-	int m_bfmeValueEVI;
-	int m_bfmeLimitEVI;
-	BfmeSinkEVI *m_bfmeSinkEVI;
+	int m_energyProduction;
+	int m_energyConsumption;
+	BfmeSinkEVI *m_owner;
 };
 
 void BfmeHostEVI::bfmeAdvanceEVI(BfmeArgEVI *arg)
@@ -54,8 +54,8 @@ void BfmeHostEVI::bfmeAdvanceEVI(BfmeArgEVI *arg)
 	if (thing != 0 && thing->m_bfmeSubEVI != 0)
 		thing = (BfmeThingEVI *)(const void *)((const Overridable *)thing->m_bfmeSubEVI)->getFinalOverride();
 
-	m_bfmeValueEVI = m_bfmeValueEVI - thing->m_bfmeDeltaEVI;
+	m_energyProduction = m_energyProduction - thing->m_bfmeDeltaEVI;
 
-	if (m_bfmeSinkEVI != 0)
-		((Player *)m_bfmeSinkEVI)->onPowerBrownOutChange(m_bfmeValueEVI < m_bfmeLimitEVI);
+	if (m_owner != 0)
+		((Player *)m_owner)->onPowerBrownOutChange(m_energyProduction < m_energyConsumption);
 }

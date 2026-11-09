@@ -1274,3 +1274,6 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceSt
 game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeValueEVI,m_energyProduction,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeLimitEVI,m_energyConsumption,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeSinkEVI,m_owner,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeValueEVI,m_energyProduction,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeLimitEVI,m_energyConsumption,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1999.cpp|member||m_bfmeSinkEVI,m_owner,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
