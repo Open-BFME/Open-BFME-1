@@ -25,8 +25,8 @@ struct BfmePayload3 { int m_bfmeWords[3]; };
 
 struct BfmeLinkNode3
 {
-	BfmeLinkNode3 *m_bfmeNext;				// +0x00
-	BfmeLinkNode3 *m_bfmePrev;				// +0x04
+	BfmeLinkNode3 *m_next;				// +0x00
+	BfmeLinkNode3 *m_prev;				// +0x04
 	BfmePayload3 m_bfmeValue;				// +0x08
 };
 
@@ -36,8 +36,8 @@ struct BfmePayload1 { int m_bfmeWords[1]; };
 
 struct BfmeLinkNode1
 {
-	BfmeLinkNode1 *m_bfmeNext;				// +0x00
-	BfmeLinkNode1 *m_bfmePrev;				// +0x04
+	BfmeLinkNode1 *m_next;				// +0x00
+	BfmeLinkNode1 *m_prev;				// +0x04
 	BfmePayload1 m_bfmeValue;				// +0x08
 };
 
@@ -47,8 +47,8 @@ struct BfmePayload4 { int m_bfmeWords[4]; };
 
 struct BfmeLinkNode4
 {
-	BfmeLinkNode4 *m_bfmeNext;				// +0x00
-	BfmeLinkNode4 *m_bfmePrev;				// +0x04
+	BfmeLinkNode4 *m_next;				// +0x00
+	BfmeLinkNode4 *m_prev;				// +0x04
 	BfmePayload4 m_bfmeValue;				// +0x08
 };
 
@@ -58,8 +58,8 @@ struct BfmePayload5 { int m_bfmeWords[5]; };
 
 struct BfmeLinkNode5
 {
-	BfmeLinkNode5 *m_bfmeNext;				// +0x00
-	BfmeLinkNode5 *m_bfmePrev;				// +0x04
+	BfmeLinkNode5 *m_next;				// +0x00
+	BfmeLinkNode5 *m_prev;				// +0x04
 	BfmePayload5 m_bfmeValue;				// +0x08
 };
 
@@ -128,11 +128,11 @@ void Gen_000BF340::bfmeAppend(void *item)
 
 	bfmeConstructA(&node->m_bfmeValue, item);
 
-	BfmeLinkNode3 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode3 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }
 
 // ?bfmeAppend@Gen_001ADB10@@QAEXPAX@Z
@@ -143,11 +143,11 @@ void Gen_001ADB10::bfmeAppend(void *item)
 
 	bfmeConstructB(&node->m_bfmeValue, item);
 
-	BfmeLinkNode1 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode1 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }
 
 // ?bfmeAppend@Gen_0034DD50@@QAEXPAX@Z
@@ -158,11 +158,11 @@ void Gen_0034DD50::bfmeAppend(void *item)
 
 	bfmeConstructC(&node->m_bfmeValue, item);
 
-	BfmeLinkNode1 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode1 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }
 
 // ?bfmeAppend@Gen_0034E210@@QAEXPAX@Z
@@ -173,11 +173,11 @@ void Gen_0034E210::bfmeAppend(void *item)
 
 	bfmeConstructC(&node->m_bfmeValue, item);
 
-	BfmeLinkNode1 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode1 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }
 
 // ?bfmeAppend@Gen_0034E2A0@@QAEXPAX@Z
@@ -188,11 +188,11 @@ void Gen_0034E2A0::bfmeAppend(void *item)
 
 	bfmeConstructD(&node->m_bfmeValue, item);
 
-	BfmeLinkNode4 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode4 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }
 
 // ?bfmeAppend@Gen_0076D1D0@@QAEXPAX@Z
@@ -203,9 +203,9 @@ void Gen_0076D1D0::bfmeAppend(void *item)
 
 	bfmeConstructE(&node->m_bfmeValue, item);
 
-	BfmeLinkNode5 *previous = head->m_bfmePrev;
-	node->m_bfmeNext = head;
-	node->m_bfmePrev = previous;
-	previous->m_bfmeNext = node;
-	head->m_bfmePrev = node;
+	BfmeLinkNode5 *previous = head->m_prev;
+	node->m_next = head;
+	node->m_prev = previous;
+	previous->m_next = node;
+	head->m_prev = node;
 }

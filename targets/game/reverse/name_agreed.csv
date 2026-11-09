@@ -1210,3 +1210,5 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|membe
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_74,m_maxHealthChangeType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
