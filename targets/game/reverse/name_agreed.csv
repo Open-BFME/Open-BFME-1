@@ -1446,3 +1446,7 @@ game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeColour,m_color,c
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeParent,m_parent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeLeft,m_left,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRight,m_right,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeColour,m_color,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeParent,m_parent,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeLeft,m_left,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5NodeMakers.cpp|member||m_bfmeRight,m_right,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

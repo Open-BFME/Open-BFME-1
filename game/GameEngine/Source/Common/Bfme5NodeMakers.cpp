@@ -69,11 +69,11 @@ Bfme5RefHolderB::Bfme5RefHolderB(int unused)
 
 struct Bfme5RbNode
 {
-	char m_bfmeColour;
+	char m_color;
 	char m_bfmePad[3];
-	Bfme5RbNode *m_bfmeParent;
-	Bfme5RbNode *m_bfmeLeft;
-	Bfme5RbNode *m_bfmeRight;
+	Bfme5RbNode *m_parent;
+	Bfme5RbNode *m_left;
+	Bfme5RbNode *m_right;
 	int m_bfmeValue;
 };
 
@@ -85,9 +85,9 @@ Bfme5RbNode * __stdcall bfme5CloneRbNodeA(const Bfme5RbNode *src)
 	if (p)
 		*p = src->m_bfmeValue;
 
-	n->m_bfmeColour = src->m_bfmeColour;
-	n->m_bfmeLeft = 0;
-	n->m_bfmeRight = 0;
+	n->m_color = src->m_color;
+	n->m_left = 0;
+	n->m_right = 0;
 	return n;
 }
 
@@ -99,9 +99,9 @@ Bfme5RbNode * __stdcall bfme5CloneRbNodeB(const Bfme5RbNode *src)
 	if (p)
 		*p = src->m_bfmeValue;
 
-	n->m_bfmeColour = src->m_bfmeColour;
-	n->m_bfmeLeft = 0;
-	n->m_bfmeRight = 0;
+	n->m_color = src->m_color;
+	n->m_left = 0;
+	n->m_right = 0;
 	return n;
 }
 
@@ -109,10 +109,10 @@ namespace _STL {
 
 struct _Rb_tree_node_base
 {
-	int m_bfmeColour;
-	_Rb_tree_node_base *m_bfmeParent;
-	_Rb_tree_node_base *m_bfmeLeft;
-	_Rb_tree_node_base *m_bfmeRight;
+	int m_color;
+	_Rb_tree_node_base *m_parent;
+	_Rb_tree_node_base *m_left;
+	_Rb_tree_node_base *m_right;
 	int m_bfmeValue;
 };
 
