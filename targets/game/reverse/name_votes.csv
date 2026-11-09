@@ -7819,3 +7819,4 @@ game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|param|Rva0005DC7
 game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|local|Rva0005DC70CompareWideLengths|q,87d1a6c68d6da1b72454544e,claude-sonnet,20261109113926-8e0ddb,2026-11-09
 game/GameEngine/Source/Common/Rva0005DC70CompareWideLengths.cpp|local|Rva0005DC70CompareWideLengths|p,8b9a39f33c4e51a9825d30fa,claude-sonnet,20261109113926-8e0ddb,2026-11-09
 game/GameEngine/Source/Common/S3CachedThresholdTest.cpp|member||m_bfmeFlags,b24635d29f0c26b03b46fedf,claude-sonnet,20261109113926-b6d277,2026-11-09
+game/GameEngine/Source/Common/BfmeResourceMultiplierZC.cpp|member||m_bfmeWideZC,b0fe9096610b222ed87a63ba,claude-sonnet,20261109114231-9a80c1,2026-11-09
