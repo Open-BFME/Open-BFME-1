@@ -48,12 +48,12 @@ struct Rva008A1110Value : Rva00899560Value {
 class Rva008D2A10;
 extern Rva008D2A10 *g_rva008D2A10;
 static __forceinline Rva008A1110Value *pooledInteger(int value) {
-    Rva008A1110Value *v = (Rva008A1110Value *)g_rva008D2A10;
-    if (v) {
-        g_rva008D2A10 = (Rva008D2A10 *)v->m_next;
-        g_rva01337810GcRoots->addPooled(v);
-        v->m_value = value;
-        return v;
+    Rva008A1110Value *integerValue = (Rva008A1110Value *)g_rva008D2A10;
+    if (integerValue) {
+        g_rva008D2A10 = (Rva008D2A10 *)integerValue->m_next;
+        g_rva01337810GcRoots->addPooled(integerValue);
+        integerValue->m_value = value;
+        return integerValue;
     }
     return new Rva008A1110Value(value);
 }
