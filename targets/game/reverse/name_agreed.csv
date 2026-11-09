@@ -1291,3 +1291,5 @@ game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|ty
 game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_0c,m_pathfinder,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_14,m_aiData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1253.cpp|type||BfmeVec1253,Coord3D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1253.cpp|param|BfmeA1253::bfmeDraw1253|p,pos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
