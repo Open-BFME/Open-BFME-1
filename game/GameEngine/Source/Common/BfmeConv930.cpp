@@ -90,9 +90,9 @@ public:
 void StreakRendererClass::bfmeGo930D()
 {
 	operator delete[](m_vertexBuffer);
-	TextureBaseClass *s = m_bfmeP;
-	if (s)
-		s->Release_Ref();
+	TextureBaseClass *texture = m_bfmeP;
+	if (texture)
+		texture->Release_Ref();
 }
 
 void bfmeGo930G(void *a, int n);
