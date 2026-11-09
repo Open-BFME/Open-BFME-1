@@ -2576,3 +2576,4 @@ game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,end,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeThingHF,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeSlotHF,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseStep002A3B40.cpp|param|phase|p,phaseType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

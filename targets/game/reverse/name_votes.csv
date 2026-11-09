@@ -7448,3 +7448,4 @@ game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|m
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62b,854fcc7c2d027f057d2f7d85,claude-sonnet,20261109084347-29fb1c,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62c,050f780c96c652e0bd1ba7d5,claude-sonnet,20261109084347-29fb1c,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62d,77f9d6975bacac5eb5d3065c,claude-sonnet,20261109084347-29fb1c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/RubbleRiseStep002A3B40.cpp|param|phase|p,91ae6c345f69259af5a373bc,claude-sonnet,20261109084249-492edc,2026-11-09
