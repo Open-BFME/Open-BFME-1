@@ -7221,3 +7221,5 @@ game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProdu
 game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_14,3aa3d7eea35bf7058e48081b,claude-sonnet,20261109073722-322d96,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_18,8d78bfce649ca53629a3db96,claude-sonnet,20261109073722-322d96,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_1c,ba6f849f0981ef59caa65ef2,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_08,9843979801068296d4f0e5d8,claude-sonnet,20261109073651-20714c,2026-11-09
+game/GameEngine/Source/GameLogic/AI/ExamineCellsStructCellCallback.cpp|member||m_0c,2fee95384e6de415f883b578,claude-sonnet,20261109073651-20714c,2026-11-09
