@@ -7691,3 +7691,4 @@ game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipSepsW|c,d1
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipSepsW|s,66d1c395cd7a9e579f0bd4b4,claude-sonnet,20261109102711-ea80a0,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|c,297a27e11f40e1b1e2d06d27,claude-sonnet,20261109102711-ea80a0,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|s,b8580888ebaae1de96ecc205,claude-sonnet,20261109102711-ea80a0,2026-11-09
+game/GameEngine/Source/Common/Rva002DCAE0WeaponRecord.cpp|type||Rva002DCAE0Module,461459dc40db04c3bbe83cfd,claude-sonnet,20261109102711-c2e586,2026-11-09
