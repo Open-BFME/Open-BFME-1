@@ -6367,3 +6367,4 @@ game/GameEngine/Source/Common/BfmeConv980.cpp|type||BfmeMgrC980,eea4f80ff4bea86a
 game/GameEngine/Source/Common/BfmeConv980.cpp|member||m_bfmeMgr,228efef88a842e9d2fc7d658,claude-sonnet,20261109023530-a6609a,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Template,c5cb54841c9ee708e118535d,claude-sonnet,20261109023530-fd2eea,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00764290UpdateSubObjects.cpp|type||Rva00764290Drawable,9691d27649ef7027cef5a28b,claude-sonnet,20261109023530-fd2eea,2026-11-09
+game/GameEngine/Source/Common/BfmeConv979.cpp|member||m_bfmeMode,09f0456155a36736ca6e83be,claude-sonnet,20261109023530-500c5c,2026-11-09
