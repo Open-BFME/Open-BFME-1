@@ -35,6 +35,8 @@ struct Rva00C6B390Init
 
 struct Rva00C6B3D0Init
 {
+	// The shared cell is the 12-byte tree, not an empty-class placeholder.
+	unsigned char storage[12];
 	Rva00C6B3D0Init()
 	{
 		typedef void *(Rva00C6B3D0Init::*Member)();
@@ -146,8 +148,8 @@ struct Rva00C6B900Init
 // Retire ?g_rva012F1050@@3URva00C6B390Init@@A
 extern "C" { Rva00C6B390Init __identifier("?TheBfmeObject_00C6FF00@@3VGen_00C6FF00Target@@A"); }
 // 0x012F10DC is recorded (DIR32) as ?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A,
-// the name its consumers bind; define the storage under that symbol.
-extern "C" { Rva00C6B3D0Init __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A"); }
+// Both definitions are select-any 12-byte cells; this one retains the initializer.
+extern "C" { __declspec(selectany) Rva00C6B3D0Init __identifier("?TheBfmeObject_00C6FF10@@3VGen_00C6FF10Target@@A"); }
 // 0x012F10F4 is recorded (DIR32) as ?TheBfmeObject_00C6FF30@@3VGen_00C6FF30Target@@A,
 // the name its consumers bind; define the storage under that symbol.
 // Retire ?g_rva012F10F4@@3URva00C6B3F0Init@@A

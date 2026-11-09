@@ -11,4 +11,5 @@ public:
 	unsigned char m_storage[12];
 };
 
-Gen_00C6FF10Target TheBfmeObject_00C6FF10;
+// The initializer TU provides the same 12-byte select-any cell.
+__declspec(selectany) Gen_00C6FF10Target TheBfmeObject_00C6FF10;
