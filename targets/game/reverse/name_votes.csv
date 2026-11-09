@@ -6293,3 +6293,10 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat|s,f4e8c45694023f2fac62a1df,claude-sonnet,20261109020416-a568c4,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|param|bfmeConcat#2|s,f6778076e171ef50a93f7c33,claude-sonnet,20261109020416-a568c4,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystemOpenFileWide.cpp|local|bfmeFind|p,f75f8a19967ef0c8206d0d32,claude-sonnet,20261109020416-a568c4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|type||Rva001E6930AIUpdate,5817aab0ba2751ea38273109,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|type||Rva001E6930WeaponTemplate,21b441596ee9c5a6b843d5ed,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_204,724140ba1a9c3f89a8f0e3b4,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_0c,4dbfa8c109a266d3e7d2313b,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|member||m_14,8a75a1148d9532e751989526,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|local|Weapon::isGoalPosWithinAttackRange|s,35ce3f9d9a31de8193de8000,claude-sonnet,20261109020416-6097ed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_isGoalPosWithinAttackRange.cpp|local|Weapon::isGoalPosWithinAttackRange|t,a5093cd6a11c6440b9512b72,claude-sonnet,20261109020416-6097ed,2026-11-09
