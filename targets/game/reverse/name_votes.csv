@@ -6227,3 +6227,4 @@ game/GameEngine/Source/GameLogic/AI/Rva00170BD0AIGuardState_onExit.cpp|type||Rva
 game/GameEngine/Source/GameLogic/AI/Rva00170BD0AIGuardState_onExit.cpp|type||Rva00170BD0AIGuardState,b39171776b556eb99042686d,claude-sonnet,20261109011814-f3361e,2026-11-09
 game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva00087A80View,8df2ebdd23d23aa90e57d8cc,claude-sonnet,20261109011814-7910b3,2026-11-09
 game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva001CCFC0TemplateView,afb88b946bc3686f9e0832f3,claude-sonnet,20261109011814-7910b3,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Small03hHashBucket.cpp|local|Rva00927730Box::bucket|h,ecfd6b9528e2547cef540c06,claude-sonnet,20261109011814-8cbe1e,2026-11-09
