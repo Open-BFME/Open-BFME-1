@@ -6,19 +6,18 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-class OCLSpecialPowerModuleData
+// The overflow call reaches retail's two-int vector _M_insert_overflow at
+// 0x009F36F0, the same body 0x009F3C00 calls; its pinned spelling is the
+// IntPairRecord009F39F0 instance, not the OCL Upgrades one.
+struct IntPairRecord009F39F0
 {
-public:
-	struct Upgrades
-	{
-		int m_bfmeFirst;
-		int m_bfmeSecond;
-	};
+	int m_bfmeFirst;
+	int m_bfmeSecond;
 };
 
 struct Rva009F3C70Payload
 {
-	_STL::vector<OCLSpecialPowerModuleData::Upgrades> m_upgrades;
+	_STL::vector<IntPairRecord009F39F0> m_upgrades;
 	void *m_cursor;
 	int m_refCount;
 };
