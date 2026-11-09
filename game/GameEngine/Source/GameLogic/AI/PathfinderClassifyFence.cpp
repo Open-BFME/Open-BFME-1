@@ -8,8 +8,8 @@ typedef bool Bool;
 
 extern "C" float __cdecl cosf(float);
 extern "C" float __cdecl sinf(float);
-extern "C" __declspec(dllimport) double BfmeFloorER(double x);
-extern "C" __declspec(dllimport) double bfmeMathVE(double x);
+extern "C" __declspec(dllimport) double floor(double x);
+extern "C" __declspec(dllimport) double ceil(double x);
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
@@ -84,7 +84,7 @@ private:
 
 static int RealToIntFloor(float v)
 {
-	float t = (float)BfmeFloorER((double)v);
+	float t = (float)floor((double)v);
 	int i;
 	__asm fld t
 	__asm fistp i
@@ -93,7 +93,7 @@ static int RealToIntFloor(float v)
 
 static int RealToIntCeil(float v)
 {
-	float t = (float)bfmeMathVE((double)v);
+	float t = (float)ceil((double)v);
 	int i;
 	__asm fld t
 	__asm fistp i
