@@ -54,7 +54,7 @@ static char *Rva007E8D30Name( char *empty, char *dest, const char *src )
 static int Rva007E8D30( const char *name, const char *value, char *record, int size )
 {
 	char *item;
-	char *p;
+	char *dest;
 	const unsigned char *pScan;
 	const unsigned char *pSrc;
 	unsigned int iLeft;
@@ -69,12 +69,12 @@ static int Rva007E8D30( const char *name, const char *value, char *record, int s
 		return 0;
 	}
 
-	p = Rva007E8D30Name( record, item, name );
+	dest = Rva007E8D30Name( record, item, name );
 
 	// Retail starts the unsigned budget at 4 (add esi,4): sizeof the item
 	// POINTER, so it wraps and never limits the 0x32200-byte block.
 	iLeft = sizeof( item );
-	iLeft -= p - item;
+	iLeft -= dest - item;
 
 	for( pScan = pSrc; *pScan != 0 && *pScan != ' '; pScan++ )
 	{
@@ -82,8 +82,8 @@ static int Rva007E8D30( const char *name, const char *value, char *record, int s
 
 	if( *pScan == ' ' )
 	{
-		*p = '"';
-		p++;
+		*dest = '"';
+		dest++;
 		iLeft--;
 	}
 
@@ -94,28 +94,28 @@ static int Rva007E8D30( const char *name, const char *value, char *record, int s
 		{
 			if( iLeft >= 3 )
 			{
-				*p = '%';
-				p++;
-				*p = (
+				*dest = '%';
+				dest++;
+				*dest = (
 					"0000000000000000111111111111111122222222222222223333333333333333"
 					"4444444444444444555555555555555566666666666666667777777777777777"
 					"88888888888888889999999999999999aaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb"
 					"ccccccccccccccccddddddddddddddddeeeeeeeeeeeeeeeeffffffffffffffff" )[ *pSrc ];
-				p++;
-				*p = (
+				dest++;
+				*dest = (
 					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
 					"0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef" )[ *pSrc ];
-				p++;
+				dest++;
 			}
 
 			iLeft -= 3;
 		}
 		else
 		{
-			*p = *pSrc;
-			p++;
+			*dest = *pSrc;
+			dest++;
 			iLeft--;
 		}
 	}
@@ -127,11 +127,11 @@ static int Rva007E8D30( const char *name, const char *value, char *record, int s
 
 	if( *pScan == ' ' )
 	{
-		*p = '"';
-		p++;
+		*dest = '"';
+		dest++;
 	}
 
-	*p = 0;
+	*dest = 0;
 
 	iResult = Rva007E8B00( ( unsigned char * )record, size, item );
 	( ( Rva007EFFC0Allocator * )bfmeGo929C() )->release( item, 0 );
@@ -147,14 +147,14 @@ public:
 
 private:
 	char m_pad[0x10];
-	char *m_10;
-	int m_14;
+	char *m_buffer;
+	int m_bufferSize;
 	char m_pad18[0x0c];
-	int m_24;
+	int m_error;
 };
 
 void Rva007E8810Message::rva007E8EF0( const char *key, const char *value )
 {
-	if( Rva007E8D30( key, value, m_10, m_14 ) < 0 )
-		m_24 = -100;
+	if( Rva007E8D30( key, value, m_buffer, m_bufferSize ) < 0 )
+		m_error = -100;
 }
