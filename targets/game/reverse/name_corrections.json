@@ -22120,5 +22120,15 @@
   "after_sha256": "3f2efe8ac43db47bab0e10e94f89ce9b53ae1b06ec6faa3e37b2eaa33a05b1bb",
   "evidence": "targets/game/reverse/identity_evidence/009f7eec-import-stub.md",
   "reason": "_XcptFilter is the import library's own call stub for this import; the TU's definition of the same name collides with it (LNK2005), so the ledger row at 0x009F7EEC keeps its bytes under an address-owned name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/RTS/Rva000D95C0PlayerInitialUpgrades.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/Rva000D95C0PlayerInitialUpgrades.cpp",
+  "old_name": "AttributeModifierAuraUpdateModuleDataMemberB",
+  "new_name": "BfmeLegendStringVec",
+  "before_sha256": "d3e106e873d93a6361f37b0860230d72b04787a01824bcafe2543a8399128a51",
+  "after_sha256": "2773857a7cc1d21c952c12f286f2204df180d867ace9f4a4bca531d085c30c31",
+  "evidence": "targets/game/reverse/identity_evidence/000d95c0-initial-upgrades-vector-name.md",
+  "reason": "The unwind funclet of 0x000D95C0 reaches the matched vector<AsciiString> destructor row 0x000658A0 through ILT 0x00026AB2, so the local is a string vector, not an AttributeModifierAura module-data member; the stand-in name had no defined destructor."
  }
 ]

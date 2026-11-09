@@ -15,17 +15,6 @@ struct BfmeLegendStringVec
 	AsciiString *m_endOfStorage;
 };
 
-class AttributeModifierAuraUpdateModuleDataMemberB : public BfmeLegendStringVec
-{
-public:
-	AttributeModifierAuraUpdateModuleDataMemberB(
-		const AttributeModifierAuraUpdateModuleDataMemberB &other) :
-		BfmeLegendStringVec(other)
-	{
-	}
-	~AttributeModifierAuraUpdateModuleDataMemberB();
-};
-
 class UpgradeTemplate;
 class Upgrade;
 
@@ -33,7 +22,7 @@ class PlayerTemplate
 {
 public:
 	char m_prefix[0xe8];
-	AttributeModifierAuraUpdateModuleDataMemberB m_initialUpgrades;
+	BfmeLegendStringVec m_initialUpgrades;
 };
 
 class UpgradeCenter
@@ -72,7 +61,7 @@ void Rva000D95C0Player::applyInitialUpgrades()
 {
 	if (m_playerTemplate != 0)
 	{
-		AttributeModifierAuraUpdateModuleDataMemberB upgrades(
+		BfmeLegendStringVec upgrades(
 			m_playerTemplate->m_initialUpgrades);
 		int count = upgrades.m_finish - upgrades.m_start;
 		int index = 0;
