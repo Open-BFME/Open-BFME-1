@@ -7714,3 +7714,4 @@ game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|param|BfmeHandleYF|o,2
 game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|local|BfmeHostYF::bfmeUpdateYF_00585CF0|n,9087440925a9146a1ffa1303,claude-sonnet,20261109103442-8a8be8,2026-11-09
 game/GameEngine/Source/Common/Rva006E6A80.cpp|member||ff0,728f2c892b9bd8234b815132,claude-sonnet,20261109103443-74daa0,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfinderIterateCellsAlongLineRva003D7440.cpp|function|Rva003D7440Pathfinder@|iterateCellsAlongLine003D7440,5d2524a2d528d00e5e2883d5,claude-sonnet,20261109103444-7c397a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1517.cpp|function|BfmeThingVNQ@|bfmeTotalVNQ,51e2af3de6b5859a489b3320,claude-sonnet,20261109103444-facc5a,2026-11-09
