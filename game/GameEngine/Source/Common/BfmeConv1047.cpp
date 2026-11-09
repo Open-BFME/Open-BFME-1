@@ -13,8 +13,8 @@ struct BfmeValI1047
 
 struct BfmeNodeI1047
 {
-	BfmeNodeI1047 *m_bfmeNext;
-	BfmeNodeI1047 *m_bfmePrev;
+	BfmeNodeI1047 *m_next;
+	BfmeNodeI1047 *m_prev;
 	BfmeValI1047 m_bfmeV;
 };
 
@@ -29,17 +29,17 @@ public:
 
 void BfmeA1047::bfmeGo1047A(int i, int v)
 {
-	BfmeNodeI1047 *h = m_bfmeHeads[i];
+	BfmeNodeI1047 *head = m_bfmeHeads[i];
 	BfmeNodeI1047 *n = (BfmeNodeI1047 *)bfmeAlloc1047(0xc);
 
 	new (&n->m_bfmeV) BfmeValI1047(v);
 
-	BfmeNodeI1047 *t = h->m_bfmePrev;
+	BfmeNodeI1047 *tail = head->m_prev;
 
-	n->m_bfmeNext = h;
-	n->m_bfmePrev = t;
-	t->m_bfmeNext = n;
-	h->m_bfmePrev = n;
+	n->m_next = head;
+	n->m_prev = tail;
+	tail->m_next = n;
+	head->m_prev = n;
 }
 
 struct BfmeValW1047
@@ -51,8 +51,8 @@ struct BfmeValW1047
 
 struct BfmeNodeW1047
 {
-	BfmeNodeW1047 *m_bfmeNext;
-	BfmeNodeW1047 *m_bfmePrev;
+	BfmeNodeW1047 *m_next;
+	BfmeNodeW1047 *m_prev;
 	BfmeValW1047 m_bfmeV;
 };
 
@@ -73,18 +73,18 @@ public:
 
 void BfmeB1047::bfmeGo1047B(BfmeQ1047 *q)
 {
-	BfmeNodeW1047 *h = m_bfmeHead;
+	BfmeNodeW1047 *head = m_bfmeHead;
 	unsigned short w = q->m_bfmeId;
 	BfmeNodeW1047 *n = (BfmeNodeW1047 *)bfmeAlloc1047(0xc);
 
 	new (&n->m_bfmeV) BfmeValW1047(w);
 
-	BfmeNodeW1047 *t = h->m_bfmePrev;
+	BfmeNodeW1047 *tail = head->m_prev;
 
-	n->m_bfmeNext = h;
-	n->m_bfmePrev = t;
-	t->m_bfmeNext = n;
-	h->m_bfmePrev = n;
+	n->m_next = head;
+	n->m_prev = tail;
+	tail->m_next = n;
+	head->m_prev = n;
 }
 
 struct BfmeValS1047
@@ -94,8 +94,8 @@ struct BfmeValS1047
 
 struct BfmeNodeS1047
 {
-	BfmeNodeS1047 *m_bfmeNext;
-	BfmeNodeS1047 *m_bfmePrev;
+	BfmeNodeS1047 *m_next;
+	BfmeNodeS1047 *m_prev;
 	BfmeValS1047 m_bfmeV;
 };
 
@@ -115,37 +115,37 @@ public:
 
 void BfmeD1047::bfmeGo1047D(int a)
 {
-	BfmeNodeS1047 *h = m_bfmeHeadA;
+	BfmeNodeS1047 *head = m_bfmeHeadA;
 	BfmeNodeS1047 *n = (BfmeNodeS1047 *)bfmeAlloc1047(0xc);
 
 	bfmeInitVal1047(&n->m_bfmeV, a);
 
-	BfmeNodeS1047 *t = h->m_bfmePrev;
+	BfmeNodeS1047 *tail = head->m_prev;
 
-	n->m_bfmeNext = h;
-	n->m_bfmePrev = t;
-	t->m_bfmeNext = n;
-	h->m_bfmePrev = n;
+	n->m_next = head;
+	n->m_prev = tail;
+	tail->m_next = n;
+	head->m_prev = n;
 }
 
 void BfmeD1047::bfmeGo1047E(int a)
 {
-	BfmeNodeS1047 *h = m_bfmeHeadB;
+	BfmeNodeS1047 *head = m_bfmeHeadB;
 	BfmeNodeS1047 *n = (BfmeNodeS1047 *)bfmeAlloc1047(0xc);
 
 	bfmeInitVal1047(&n->m_bfmeV, a);
 
-	BfmeNodeS1047 *t = h->m_bfmePrev;
+	BfmeNodeS1047 *tail = head->m_prev;
 
-	n->m_bfmeNext = h;
-	n->m_bfmePrev = t;
-	t->m_bfmeNext = n;
-	h->m_bfmePrev = n;
+	n->m_next = head;
+	n->m_prev = tail;
+	tail->m_next = n;
+	head->m_prev = n;
 }
 
 struct BfmeSNode1047
 {
-	BfmeSNode1047 *volatile m_bfmeNext;
+	BfmeSNode1047 *volatile m_next;
 	BfmeValI1047 m_bfmeV;
 };
 
@@ -163,8 +163,8 @@ void BfmeF1047::bfmeGo1047F(int *p)
 
 	new (&n->m_bfmeV) BfmeValI1047(*p);
 
-	n->m_bfmeNext = 0;
-	n->m_bfmeNext = m_bfmeHead;
+	n->m_next = 0;
+	n->m_next = m_bfmeHead;
 	m_bfmeHead = n;
 }
 
