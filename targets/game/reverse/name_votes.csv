@@ -7656,3 +7656,15 @@ game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|n1,
 game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|p,dd7d4853a7c5522e84d0cfea,claude-sonnet,20261109101845-fc2d1d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1196.cpp|type||BfmeDelta1196,6476d286321ffc0d3caf8e06,claude-sonnet,20261109101322-fec1c3,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate.cpp|member||m_bfmeOwner,73d9807420166f59557aa467,claude-sonnet,20261109101323-af9844,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_arrByte1,49639b76d2c528c733e1df60,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_arrByte2,311a0ac24242c8bd30c797de,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_380,f75db7d6186d7fcd88fac179,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_384,9bb89ebadd49a96d3097e14a,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_388,0ce7208b8919581d27bb2abf,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_38c,b047e0eb99d6d63863671ab8,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_390,0b046b68a7cdf8c1ffb2e488,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_394,702b642225d083a51f1ad30b,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_398,4a3a7e6e62c7522d76a92ae5,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39c,c11e18cdbe90346aeaabed93,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39d,4715e641b9cfc4b114dca397,claude-sonnet,20261109102202-d59c53,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39e,5efa3e08f57b41e2c89ba764,claude-sonnet,20261109102202-d59c53,2026-11-09
