@@ -2026,3 +2026,7 @@ game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|type||Rva000ED2D0,DamageInfoIn
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_04,m_sourceID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_08,m_sourcePlayerMask,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_0C,m_damageType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|type||Rva000ED2D0,DamageInfoInput,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_04,m_sourceID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_08,m_sourcePlayerMask,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp|member||m_0C,m_damageType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

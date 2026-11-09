@@ -4173,7 +4173,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??0Rva000E6090@@QAE@XZ,,0x000E6090,113,game/GameEngine/Source/GameClient/GUI/Shell/Rva000E6090Ctor.cpp,matched,byte-twin of ShellMenuScheme ctor 0x00580F20; leading member stores the 0x01084C40 handler table
 ??0Rva000E9280@@QAE@XZ,,0x000E9280,23,game/GameEngine/Source/Common/R2SmallMemberOps.cpp,matched,mnemonic-family split; identity not recovered
 ??0Rva000EC1E0@@QAE@XZ,,0x000EC1E0,20,game/GameEngine/Source/Common/R2ZeroingConstructors.cpp,matched,zeroing constructor; identity not recovered
-??0Rva000ED2D0@@QAE@XZ,,0x000ED2D0,79,game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp,matched,Open-BFME5: Rva000ED2D0 ctor
+??0DamageInfoInput@@QAE@XZ,,0x000ED2D0,79,game/GameEngine/Source/Common/Rva000ED2D0Ctor.cpp,matched,Open-BFME5: Rva000ED2D0 ctor
 ??0Rva000ED460@@QAE@XZ,,0x000ED460,26,game/GameEngine/Source/Common/R3ScalarFieldConstructors.cpp,matched,family=mn-0x000CBAF0;shape=scalar-field-ctor
 ??0Rva000F9FF0@@QAE@ABV0@@Z,,0x000F9FF0,181,game/GameEngine/Source/Common/Rva000F9FF0Copy.cpp,matched,
 ??0Rva000FA610@@QAE@PBEH@Z,,0x000FA4A0,163,game/GameEngine/Source/GameClient/GUI/ControlBar/Rva000FA610GetPortrait.cpp,matched,address-derived source constructor; adjacent Rva000FA610 default constructor and getPortrait establish the destination layout; retail copies source offsets 0x20 0x3bc and 0x47a

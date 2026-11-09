@@ -5,12 +5,12 @@
 // under its real name, so no linker alias directive is needed.
 extern "C" const void *__identifier("??_7DamageInfoInput@@6B@")[];
 
-class Rva000ED2D0
+class DamageInfoInput
 {
 	void *m_00;
-	int m_04;
-	unsigned short m_08;
-	int m_0C;
+	int m_sourceID;
+	unsigned short m_sourcePlayerMask;
+	int m_damageType;
 	int m_10;
 	int m_14;
 	int m_18;
@@ -28,15 +28,15 @@ class Rva000ED2D0
 	int m_44;
 
 public:
-	Rva000ED2D0();
+	DamageInfoInput();
 };
 
-Rva000ED2D0::Rva000ED2D0()
+DamageInfoInput::DamageInfoInput()
 {
 	m_00 = (void *)__identifier("??_7DamageInfoInput@@6B@");
-	m_04 = 0;
-	m_08 = 0;
-	m_0C = 0x16;
+	m_sourceID = 0;
+	m_sourcePlayerMask = 0;
+	m_damageType = 0x16;
 	m_10 = 0x0F;
 	m_14 = 0;
 	m_18 = 0;
