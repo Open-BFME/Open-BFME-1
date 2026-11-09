@@ -7570,3 +7570,4 @@ game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at120,c8e52c5
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at128,d926cb1305197b3b498b8fba,claude-sonnet,20261109093709-dfabdf,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at16c,c34596da99bed44163dddd32,claude-sonnet,20261109093709-dfabdf,2026-11-09
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at1ac,9e0af13ce96a4f2dd858d016,claude-sonnet,20261109093709-dfabdf,2026-11-09
+game/GameEngine/Source/GameClient/GUI/OnlineLoginApplyGadgets0054FB10.cpp|local|BfmeAptScreenOnlineLogin::applyLoginGadgets0054FB10|old9d,267669c67ea3a1d7c133bf62,claude-sonnet,20261109093801-d958a2,2026-11-09
