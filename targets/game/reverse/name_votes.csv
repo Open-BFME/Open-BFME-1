@@ -7205,3 +7205,7 @@ game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_updateInternal.cpp|
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|x,404caa29b6387da629b4a193,claude-sonnet,20261109072929-7a114a,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,95111af3bbba7003a7daa702,claude-sonnet,20261109072929-7a114a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1340.cpp|type||BfmeChunkUQB,1cd8af85dc1546ef3288095c,claude-sonnet,20261109072929-90d1a4,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|type||Template0026DA00,799294c08a388e71ee1a572c,claude-sonnet,20261109073401-2867b6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|member||field38,31a11f3c1f37303cd6472357,claude-sonnet,20261109073401-2867b6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|member||field1EC,1134e143edb8521bb5a1aedb,claude-sonnet,20261109073401-2867b6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|member||field3C,7d126724a3347e3ee9a5546b,claude-sonnet,20261109073401-2867b6,2026-11-09

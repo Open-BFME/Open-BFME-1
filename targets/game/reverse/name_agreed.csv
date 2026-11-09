@@ -2368,3 +2368,5 @@ game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adju
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,cellY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|x,cellX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,cellY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|member||field1EC,m_firingTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_triggerAbilityEffect.cpp|member||field3C,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
