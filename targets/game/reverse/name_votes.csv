@@ -6381,3 +6381,16 @@ game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeIndexAH,7b0b50e7a05
 game/GameEngine/Source/Common/BfmeConv1895.cpp|member||m_bfmeListsAH,56618daeb41bc19d42217303,claude-sonnet,20261109024100-29b9a6,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1895.cpp|function|BfmeOwnerAH@|bfmeClearAH,151712ade335284eeb6e9933,claude-sonnet,20261109024100-29b9a6,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1895.cpp|local|BfmeOwnerAH::bfmeClearAH|p,7e04f437ad166334f9fac78a,claude-sonnet,20261109024100-29b9a6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|type||BfmeSrcIA,629e2f357622448b0ad04918,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme78IA,0bec7f43a92d058639e94427,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme7cIA,b4188621e4bcbe2928f605da,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4d0IA,35382b48ee137b97ee1c5a22,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme04IA,e656a7e32461ff36fe95dfaf,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme30IA,14cde10c1691b69608677ca8,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme10IA,fbccba08063a4b90205d5df9,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme14IA,8d4e1f807c569ed617710a2c,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme34IA,fcad639e50ca5973cabe9e06,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme38IA,6e691793a6852f9d50c19637,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme3cIA,2f8879597f7fd5a83a76e94f,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|member||m_bfme4cIA,7a2e755d7d1f10aaa66cfbe4,claude-sonnet,20261109024100-47fb42,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponCopyConstructor.cpp|param|Weapon::Weapon|t,544550661be7d749817db48c,claude-sonnet,20261109024100-47fb42,2026-11-09
