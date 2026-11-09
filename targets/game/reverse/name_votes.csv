@@ -6740,3 +6740,4 @@ game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateRva00299080.c
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown50,b98df6832fc043b9903b6d60,claude-sonnet,20261109051048-056c2e,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown54,8af933c6481fd607e2f81bef,claude-sonnet,20261109051048-056c2e,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown58,c416cb381edbadc44b906caa,claude-sonnet,20261109051048-056c2e,2026-11-09
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|member||m_bfmeWords,365858557f64075258eb6292,claude-sonnet,20261109050900-733c2e,2026-11-09

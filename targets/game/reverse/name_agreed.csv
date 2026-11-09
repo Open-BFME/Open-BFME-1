@@ -1848,3 +1848,4 @@ game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown58,m_year,c
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown50,m_day,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown54,m_month,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown58,m_year,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5SixtyFive.cpp|member||m_bfmeWords,m_upgradesCompleted,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
