@@ -6999,3 +6999,8 @@ game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|memb
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||ai204,676895b3a50ae333afa96499,claude-sonnet,20261109063619-818e9c,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ReactionUpdate00200420.cpp|member||previous14,e04d5f6720a2bda8e1297c7e,claude-sonnet,20261109063619-818e9c,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,51fadc82e27ced3296edffec,claude-sonnet,20261109063619-eed07f,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeLeftAAS,249b34e466f2715c34d50039,claude-sonnet,20261109062828-f43ee9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeTopAAS,54790917551ea044bedb5131,claude-sonnet,20261109062828-f43ee9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeRightAAS,c868b2ab2d88e0e46298b2a1,claude-sonnet,20261109062828-f43ee9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2122.cpp|member||m_bfmeBottomAAS,e1efa197d12a04f9bd4606f7,claude-sonnet,20261109062828-f43ee9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2122.cpp|local|BfmeHostAAS::bfmeProbeAAS|r,0857d3af8326603defa53dfb,claude-sonnet,20261109062828-f43ee9,2026-11-09
