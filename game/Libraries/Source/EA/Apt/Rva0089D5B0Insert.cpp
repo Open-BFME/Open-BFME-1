@@ -55,12 +55,16 @@ class BfmeHeldC6E0;
 class AptNativeHash { public: void SetAt(int, BfmeHeldC680 *); };
 class BfmeStoreC6E0 { public: void bfmePutC6E0(int, BfmeHeldC6E0 *); };
 struct Rva0089D5B0Entry { Rva8D0D80String key; void *value; };
+// Retail's resize body at 0x0089D180 is defined by the ledger as ?d_0089d180@@YAXXZ.
+extern void d_0089d180();
+class Rva8D0D80Table;
+typedef void (Rva8D0D80Table::*Rva0089D180Call)();
+template<class T> T dumpMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 class Rva8D0D80Table
 {
 public:
     int count;
     Rva0089D5B0Entry *entries;
-    void rva0089D180();
     void rva0089D5B0(const Rva8D0D80String &key, Rva8D0D80Value *value);
     void add(Rva8D0D80String *key, Rva8D0D80Value *value);
     __forceinline void hashSet(const Rva8D0D80String &key, Rva8D0D80Value *value)
@@ -148,7 +152,7 @@ public:
             }
             if (empty == -1)
             {
-                rva0089D180();
+                (this->*dumpMemberCall<Rva0089D180Call>(d_0089d180))();
                 rva0089D5B0(key, value);
                 return;
             }
@@ -249,7 +253,7 @@ void Rva8D0D80Table::rva0089D5B0(const Rva8D0D80String &key, Rva8D0D80Value *val
             ((BfmeStoreC6E0 *)this)->bfmePutC6E0(empty, (BfmeHeldC6E0 *)value);
             return;
         }
-        rva0089D180();
+        (this->*dumpMemberCall<Rva0089D180Call>(d_0089d180))();
     }
 }
 
