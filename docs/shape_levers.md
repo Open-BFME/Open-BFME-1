@@ -3986,7 +3986,18 @@ same range temporary plus three further measured steps:
   Reading the count through a by-value `size()` also puts the pointer in ESI but turns the
   shift into `mov eax,[ecx] / lea edi,[eax*4]` (215 B).
 
-Still untested: 0x00895790 and 0x008941A0, which show the same back-edge tail.
+Third body, 0x00895790 (287 B, update-or-append on the 0x00892FD0 table), is exact with the
+same range temporary and the loop directly in the member. Its own measured steps:
+
+- Counted-string equality inlined as `length() == o.length() && ...` compares the two
+  `unsigned short` lengths 16-bit (`mov cx,[esi+2] / cmp cx,word [esp+0x10]`, 296 B) even with
+  an `int length()` accessor. Passing both lengths as `int` parameters of a static inline
+  helper, `equal(a, length(), b, o.length())`, keeps retail's `movzx` and 32-bit compare.
+- `if (--m_data->m_refCount == 0) release(m_data);` reloads the data pointer between
+  `dec word [eax]` and `cmp word [eax],0` (4 B long). A local, `Data *d = m_data;
+  if (--d->m_refCount == 0) release(d);`, is exact.
+
+Still untested: 0x008941A0, which shows the same back-edge tail.
 
 Sources: game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp,
 game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp. Donor lead: Open-BFME-2

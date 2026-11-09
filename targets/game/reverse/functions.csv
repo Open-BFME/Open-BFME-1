@@ -38151,7 +38151,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00891fa0@@YAXXZ,,0x00891FA0,81,game/GameEngine/Source/Common/Rva00891FA0Diagnostics.cpp,matched,address-derived diagnostics callback sequence exact
 ?d_008941a0@@YAXXZ,,0x008941A0,429,game/gen_asm/d_0088a430.asm,matched,gen-dump;ghidra=FUN_00c941a0
 ?d_00894380@@YAXXZ,,0x00894380,728,game/gen_asm/d_0084de40.asm,matched,gen-dump;switch-carved start=int3-aligned end=switch-table+int3 refs=0
-?d_00895790@@YAXXZ,,0x00895790,287,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c95790
 ?d_008961e0@@YAXXZ,,0x008961E0,316,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c961e0
 ?d_008965b0@@YAXXZ,,0x008965B0,352,game/gen_asm/d_00894a90.asm,matched,gen-dump;ghidra=FUN_00c965b0
 ?d_00896710@@YAXXZ,,0x00896710,871,game/gen_asm/d_00882630.asm,matched,gen-dump;carved start=ghidra-start end=ret+int3 callers=0;ghidra=FUN_00c96710
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?reset@ImageCollection@@UAEXXZ,,0x005D2CD0,1,game/GameEngine/Source/GameClient/System/Image.cpp,matched,empty slot 4 of ImageCollection vtable 0x01110104; header-inline reset;model=claude-sonnet-5-5;host=chalco.vps
 ?Rva00892FD0@Gen_uw_00893e70@@QAE_NHH@Z,,0x00892FD0,71,game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp,matched,table scan: every entry +4 key is one of two arguments; raw-pointer begin/end taken from a two-pointer range temporary reproduce the back-edge base re-read; address-derived names; donor lead Open-BFME-2 67a8a17e42 PlaybackRange;model=claude-fable-5;host=Desktop
 ?rva00896390@BfmeTracker4310@@QAEXVBfmeRefHolder@@@Z,,0x00896390,214,game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp,matched,add a counted handle to the tracker vector at +4 unless already present; by-value handle released on both paths; range-temporary begin/end and get() accessors; address-derived name; caller 0x00896470 in the same unit;model=claude-fable-5;host=Desktop
+?rva00895790@Gen_uw_00893e70@@QAEXABVBfmeStrVKI@@HHH@Z,,0x00895790,287,game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp,matched,update-or-append on the 8-byte entry table: replace the +4 value of the entry whose counted string equals the key when it equals expected else append key and fallback; range-temporary begin/end; address-derived name;model=claude-fable-5;host=Desktop

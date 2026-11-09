@@ -91198,3 +91198,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0L@CACIDCOI@Transition?$AA@,0x010F97B4,WindowTransition field-table token read from retail .rdata (referenced by the field table at 0x010F97D0)
 ??_C@_07NFDCAMIK@WinName?$AA@,0x010F97C4,WindowTransition field-table token read from retail .rdata (referenced by the field table at 0x010F97D0)
 ?d_00896390@@YAXXZ,0x00896390,legacy address-only alias of ?rva00896390@BfmeTracker4310@@QAEXVBfmeRefHolder@@@Z; game/gen_asm/d_00894a90.asm (0x00896AF0) still calls this name after the dump conversion
+?d_00895790@@YAXXZ,0x00895790,legacy address-only alias of ?rva00895790@Gen_uw_00893e70@@QAEXABVBfmeStrVKI@@HHH@Z; Rva00896470RefHolderSubmit.cpp and Rva008958B0Forward.cpp still bind this name after the dump conversion
