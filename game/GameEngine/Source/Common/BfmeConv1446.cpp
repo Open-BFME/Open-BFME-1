@@ -1,6 +1,7 @@
 // cl: /Od
 
-void bfmeImplVMY(int a, int b, int c);
+// Retail calls ILT 0x00018179, which the ledger defines as ?j_00018179@@YAXXZ.
+extern void j_00018179();
 void bfmeFwdVMY(int a, int b, int c);
 
 void bfmeFwdVMY(int a, int b, int c)
@@ -27,7 +28,7 @@ void bfmeFwdVMY(int a, int b, int c)
 		push ecx
 		mov edx, dword ptr a
 		push edx
-		call bfmeImplVMY
+		call j_00018179
 		add esp, 0x0C
 	}
 }

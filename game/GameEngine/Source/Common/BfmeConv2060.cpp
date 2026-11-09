@@ -10,7 +10,9 @@ public:
 class TimedOperationNode;
 extern TimedOperationNode *g_timedOperationHead;
 
-void __stdcall bfmeUnlinkCK(BfmeEntryCK *entry);
+// Retail calls ILT 0x00035553, which the ledger defines as ?j_00035553@@YAXXZ.
+extern void j_00035553();
+typedef void (__stdcall *BfmeUnlinkCKCall)(BfmeEntryCK *entry);
 
 static __forceinline BfmeEntryCK *bfmeFindCK(void *key)
 {
@@ -37,7 +39,7 @@ bool __cdecl bfmeRemoveCK(void *key)
 		if (entry == head)
 			g_timedOperationHead = (TimedOperationNode *)entry->m_bfmeNext;
 		else
-			bfmeUnlinkCK(entry);
+			((BfmeUnlinkCKCall)j_00035553)(entry);
 	}
 
 	return entry != 0;

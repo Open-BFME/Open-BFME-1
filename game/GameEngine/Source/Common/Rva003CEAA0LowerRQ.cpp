@@ -7,12 +7,14 @@ struct BfmeCmpRQ
     char m_bfmeRawRQ;
 };
 
-extern void ** __cdecl bfmeLowerRQ(void **begin, void **end, void **key,
-                                   BfmeCmpRQ compare, int spare);
+// Retail calls ILT 0x00016B21, which the ledger defines as ?j_00016b21@@YAXXZ.
+extern void j_00016b21();
+typedef void ** (__cdecl *BfmeLowerRQCall)(void **begin, void **end, void **key,
+                                           BfmeCmpRQ compare, int spare);
 
 void ** __cdecl Rva003CEAA0LowerRQ(void **begin, void **end, void **key)
 {
     BfmeCmpRQ compare;
     compare.m_bfmeRawRQ = 0;
-    return bfmeLowerRQ(begin, end, key, compare, 0);
+    return ((BfmeLowerRQCall)j_00016b21)(begin, end, key, compare, 0);
 }
