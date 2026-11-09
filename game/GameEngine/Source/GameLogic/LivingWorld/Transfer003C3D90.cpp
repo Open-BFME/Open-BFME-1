@@ -94,12 +94,12 @@ void Transfer003C3D90::transfer(Xfer *xfer) {
     int second=m_38.size();
     *xfer==second;
     for(int j=0;j<second;++j) {
-        Record003C3D90 *r=m_38[j];
-        *xfer==*(Coord2D*)r;
-        *xfer==r->m_08;
-        *xfer==*(AsciiString*)r->m_0C;
-        *xfer==*(AsciiString*)r->m_10;
-        *xfer==r->m_14;
+        Record003C3D90 *record=m_38[j];
+        *xfer==*(Coord2D*)record;
+        *xfer==record->m_08;
+        *xfer==*(AsciiString*)record->m_0C;
+        *xfer==*(AsciiString*)record->m_10;
+        *xfer==record->m_14;
     }
     vector003C3480(xfer,m_50);
     vector003C3480(xfer,m_5C);
