@@ -54,11 +54,11 @@ class Rva00605180HeaderHandle
 public:
 	~Rva00605180HeaderHandle()
 	{
-		if (m_bfmeHeader)
-			_STL::nodePoolDeallocate(m_bfmeHeader, 0x70);
+		if (m_header)
+			_STL::nodePoolDeallocate(m_header, 0x70);
 	}
 
-	Rva00605E60TreeHeader *m_bfmeHeader;				// +0x00
+	Rva00605E60TreeHeader *m_header;				// +0x00
 };
 
 struct Rva00605820Node;
@@ -75,22 +75,22 @@ public:
 
 private:
 	Rva00605180HeaderHandle m_bfmeHandle;				// +0x00
-	Int m_bfmeCount;					// +0x04
+	Int m_numNodes;					// +0x04
 };
 
 // ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ
 AnimationSoundClientBehaviorModuleDataMember::~AnimationSoundClientBehaviorModuleDataMember()
 {
-	if (m_bfmeCount)
+	if (m_numNodes)
 	{
 		reinterpret_cast<Rva00605820Tree *>(this)->eraseSubtree(
 			reinterpret_cast<Rva00605820Node *>(
-				m_bfmeHandle.m_bfmeHeader->m_parent));
+				m_bfmeHandle.m_header->m_parent));
 
-		m_bfmeHandle.m_bfmeHeader->m_left = m_bfmeHandle.m_bfmeHeader;
-		m_bfmeHandle.m_bfmeHeader->m_parent = 0;
-		m_bfmeHandle.m_bfmeHeader->m_right = m_bfmeHandle.m_bfmeHeader;
+		m_bfmeHandle.m_header->m_left = m_bfmeHandle.m_header;
+		m_bfmeHandle.m_header->m_parent = 0;
+		m_bfmeHandle.m_header->m_right = m_bfmeHandle.m_header;
 
-		m_bfmeCount = 0;
+		m_numNodes = 0;
 	}
 }
