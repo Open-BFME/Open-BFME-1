@@ -56,7 +56,7 @@ class BfmeMsgESK
 {
 public:
 	unsigned char m_bfmeHeadESK[8];
-	int m_bfmeIdESK;
+	int m_objectID;
 };
 
 // Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
@@ -78,7 +78,7 @@ public:
 
 char BfmeHostESK::bfmeAllowESK(BfmeMsgESK *msg, BfmeThingESK *thing)
 {
-	BfmeObjESK *obj = (BfmeObjESK *)TheGameLogic->findObjectByID(msg->m_bfmeIdESK);
+	BfmeObjESK *obj = (BfmeObjESK *)TheGameLogic->findObjectByID(msg->m_objectID);
 
 	if (obj == 0 || thing == 0 ||
 		!reinterpret_cast<Rva002DF120 *>(this)->test(msg, thing))
