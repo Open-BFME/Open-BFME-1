@@ -6956,3 +6956,10 @@ game/GameEngine/Source/Common/SmallGaps/Rva009F2FA0PopSqrt.cpp|local|Rva009F2FA0
 game/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp|member||m_bfme00YY,c75e5eeb75b407e7165cafb1,claude-sonnet,20261109062733-246327,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateModuleDataCtor.cpp|type||Gen_t_0029e190_p8cd,3c20ea5eda09197f7f6ffd3b,claude-sonnet,20261109062912-f8f33f,2026-11-09
 game/GameEngine/Source/GameClient/DrawableNotify00419F00.cpp|local|Drawable::notify00419F00|d,9ae2705fa229d1051848cbd9,claude-sonnet,20261109062918-7afc0a,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_f9c,32744ecfd811722618e164f7,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb0,e1a98d3496556e42bb549476,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb4,8eb629a526420a4f0c56206c,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_fb8,fad51f9f2ab4c42684f3f6e5,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|member||m_c4,56d31c2a74001051439b19c3,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|t,5bbf34b6f0e378b281abfa88,claude-sonnet,20261109062459-1802b3,2026-11-09
+game/GameEngine/Source/Common/Rva006996F0EnvelopeUpdate.cpp|local|Rva006996F0Owner::update|v,29152991b782e106168bbad2,claude-sonnet,20261109062459-1802b3,2026-11-09
