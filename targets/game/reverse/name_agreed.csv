@@ -2482,3 +2482,5 @@ game/GameEngine/Source/Common/SmallGaps/Rva009A2C30ReleaseNode.cpp|param|Rva009A
 game/GameEngine/Source/Common/SmallGaps/Rva009A2C30ReleaseNode.cpp|param|Rva009A2C30Table::releaseNode|n,node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|s,sinTheta,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|c,cosTheta,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|s,sinTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|c,cosTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
