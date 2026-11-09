@@ -2094,3 +2094,6 @@ game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|type||BfmeStateRC,A
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeKindRC,m_appearance,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeHolderRC,m_curLocomotor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeStateRC,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171610State,AIExitState,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva001716D0State,AIGuardState,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171820State,AIHuntState,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

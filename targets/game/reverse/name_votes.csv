@@ -6975,3 +6975,7 @@ game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|function|BfmeOwnerR
 game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|type||Rva002324A0Info,52116cf8098f305f7ab0b27e,claude-sonnet,20261109062459-72d82d,2026-11-09
 game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_radius1CC,3920bcbb8bad40c36768292f,claude-sonnet,20261109062459-72d82d,2026-11-09
 game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_info204,d37d88d270d43097a8861b89,claude-sonnet,20261109062459-72d82d,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171610State,b16e9e023c5245861bf66748,claude-sonnet,20261109063022-d3cba0,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva001716D0State,9f836c5b810fac72e10e605e,claude-sonnet,20261109063022-d3cba0,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva00171820State,f5b9f142f072dd2a58502ea4,claude-sonnet,20261109063022-d3cba0,2026-11-09
+game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp|type||Rva0018AD60State,ff791e7e68e5e7a045d47a98,claude-sonnet,20261109063022-d3cba0,2026-11-09
