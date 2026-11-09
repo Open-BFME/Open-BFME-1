@@ -1580,3 +1580,13 @@ game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|membe
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeMap,m_map,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cpp|function||Rva003B88F0ParseAnimObjectUpdate,parseAnimObjectUpdate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeRefCount,m_refCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_state1240,m_state,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_minX1244,m_minX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_minY1248,m_minY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_maxX124c,m_maxX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_maxY1250,m_maxY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_offsetX1254,m_offsetX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_offsetY1258,m_offsetY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionX1274,m_xPos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionY1278,m_yPos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeApplyPosition1291,applyPosition,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

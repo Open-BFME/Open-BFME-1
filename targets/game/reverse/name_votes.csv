@@ -6532,3 +6532,16 @@ game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cp
 game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeRefCount,49c8e142cf7ed9e71167a84f,claude-sonnet,20261109035219-4c76ea,2026-11-09
 game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeValue,ae20563e1e9eb722a07f6986,claude-sonnet,20261109035219-4c76ea,2026-11-09
 game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeData,d1d4b24b9108de9570441979,claude-sonnet,20261109035219-4c76ea,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_count1238,f6fdebe590214e2c1d09e9ba,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_entries123c,7c105d7a4fdfc68cb35d401e,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_state1240,13b02ecbfa30d6ecd0c93fce,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_minX1244,9a860dfe898ef825b639998e,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_minY1248,aa006358db8ab6b717d9939a,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_maxX124c,117b4507bf5039cb50841995,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_maxY1250,a84df601e9bd4981f052325a,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_offsetX1254,981382559b9367e98e1b86cb,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_offsetY1258,d58fcf6442b98789d8e69214,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionX1274,4cf2037e724d056e485c1c5c,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionY1278,6078df1c442c0284186ecdf0,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeApplyPosition1291,5ba3958dc54b8648ea9a43b8,claude-sonnet,20261109035219-3e47ce,2026-11-09
+game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeFlushSlots1289,0ad7cc80097b457ce4e1e82a,claude-sonnet,20261109035219-3e47ce,2026-11-09
