@@ -25,7 +25,7 @@
 // are the field offset, and each relocated immediate is spelled as the address
 // of an extern named for that address.  build.py copies those four bytes from
 // retail, so they are not evidence and say nothing about what lives there.
-// Gen010E855C is also referenced from R3ScalarFieldConstructors.cpp: the same
+// The 0x010E855C table is also referenced from R3ScalarFieldConstructors.cpp: the same
 // address, so the same extern, which is what verify_dir32_consistency wants.
 //
 // NOT DECIDED BY THE BYTES: whether 0x3F800000 is 1.0f or an integer, whether
@@ -37,7 +37,7 @@ extern "C" char *__identifier("??_7Squad@@6B@");
 extern int Gen01096964;
 extern int Gen010A31A0;
 extern int Gen010C74D4;
-extern int Gen010E855C;
+extern "C" int __identifier("?g_ScriptNodeVftable@@3PAPAXA")[];
 extern int Gen010F95E8;
 extern int Gen010A57B0;
 extern int Gen010EBDD0;
@@ -198,7 +198,7 @@ Rva00354B30::Rva00354B30()
 	m_00 = 0;
 	m_08 = 0;
 	m_0C = 0;
-	m_vtable = &Gen010E855C;
+	m_vtable = __identifier("?g_ScriptNodeVftable@@3PAPAXA");
 	m_10 = 1;
 	m_11 = 0;
 	m_12 = 0;

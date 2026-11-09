@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0
 
-extern int Gen010E855C;
+extern "C" int __identifier("?g_ScriptNodeVftable@@3PAPAXA")[];
 
 class Rva003525E0Pair
 {
@@ -38,7 +38,7 @@ public:
 Rva00354BC0::Rva00354BC0(const Rva003529B0 *other)
 	: m_08(*(other ? &other->m_04 : 0))
 {
-	m_vptr = &Gen010E855C;
+	m_vptr = __identifier("?g_ScriptNodeVftable@@3PAPAXA");
 	m_10 = other->m_0C;
 	m_11 = other->m_0D;
 	m_12 = 0;

@@ -41,7 +41,7 @@
 
 extern int Gen01083D34;
 extern int Gen01085DE8;
-extern int Gen010E855C;
+extern "C" int __identifier("?g_ScriptNodeVftable@@3PAPAXA")[];
 extern int Gen01116D68;
 extern int Gen01136DDC;
 extern int Gen01136DE8;
@@ -166,7 +166,7 @@ Rva00352900::Rva00352900()
 {
 	m_04 = 0;
 	m_08 = 0;
-	m_00 = &Gen010E855C;
+	m_00 = __identifier("?g_ScriptNodeVftable@@3PAPAXA");
 	m_0C = 1;
 	m_0D = 0;
 	m_0E = 0;
