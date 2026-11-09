@@ -7501,3 +7501,4 @@ game/GameEngine/Source/Common/BfmeConv814.cpp|type||BfmeOtherEIB,8f5aece79daff10
 game/GameEngine/Source/Common/BfmeConv814.cpp|member||m_bfmeP,281d84a76775ab13682214b8,claude-sonnet,20261109090631-c187d3,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/Rva009F40A0DistanceSquared.cpp|function||Rva009F40A0DistanceSquared,6c35f13b1fa4353f7789872c,claude-sonnet,20261109090232-d36991,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen0075FB90RecoilVectorRelease.cpp|type||Gen0075FB90Result,4fe6a0be429f5e81a212396f,claude-sonnet,20261109091600-7a621b,2026-11-09
+game/GameEngine/Source/Common/Rva000D4360Owner.cpp|type||Rva000D4360Template,4f41ecd06d3d02b887d1286a,claude-sonnet,20261109091600-dd3bd6,2026-11-09
