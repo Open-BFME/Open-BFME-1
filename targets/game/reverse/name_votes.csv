@@ -6243,3 +6243,6 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeIm
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Other,fc15f1d98a4d59a2096a4fd5,claude-sonnet,20261109012304-71394a,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_1c,a6035b01471c1133c9878278,claude-sonnet,20261109012304-71394a,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_70,b4ba606cdeb8c8ab91b83d77,claude-sonnet,20261109012304-71394a,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Position001ABC90,35999b90313afa396a305bbf,claude-sonnet,20261109012304-b83e96,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Key001ABC90,9141deddd65dc969d8e3dcc7,claude-sonnet,20261109012304-b83e96,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Properties001ABC90,dfea2062b6639ba962872ee8,claude-sonnet,20261109012304-b83e96,2026-11-09

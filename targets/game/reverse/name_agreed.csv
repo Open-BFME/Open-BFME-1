@@ -1219,3 +1219,6 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeIm
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Other,ExperienceScalarUpgradeModuleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_1c,m_experienceScalar,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_70,m_addXPScalar,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Position001ABC90,Coord3D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Key001ABC90,StaticNameKey,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Map/TerrainLogicAddWaypoint.cpp|type||Properties001ABC90,Dict,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
