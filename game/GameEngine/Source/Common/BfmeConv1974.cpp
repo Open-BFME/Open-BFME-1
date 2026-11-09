@@ -36,7 +36,7 @@ public:
 	char bfmeTestESF(BfmeAESF *a, BfmeBESF *b);
 };
 
-char BfmeHostESF::bfmeTestESF(BfmeAESF *a, BfmeBESF *b)
+char BfmeHostESF::bfmeTestESF(BfmeAESF *a, BfmeBESF *layer)
 {
 	BfmePairESF pair;
 
@@ -45,18 +45,18 @@ char BfmeHostESF::bfmeTestESF(BfmeAESF *a, BfmeBESF *b)
 	if (pathfinder->worldToCell((const Coord3D *)a, (ICoord2D *)&pair))
 		return 1;
 
-	BfmeCESF *c = (BfmeCESF *)pathfinder->getCell((PathfindLayerEnum)(int)b,
+	BfmeCESF *cell = (BfmeCESF *)pathfinder->getCell((PathfindLayerEnum)(int)layer,
 		pair.m_bfmeAESF, pair.m_bfmeBESF);
 
-	if (c == 0)
+	if (cell == 0)
 		return 1;
 
-	return (char)bfmeKindOkESF(c);
+	return (char)bfmeKindOkESF(cell);
 }
 
-__forceinline int bfmeKindOkESF(BfmeCESF *c)
+__forceinline int bfmeKindOkESF(BfmeCESF *cell)
 {
-	int kind = c->m_bfmeKindESF & 7;
+	int kind = cell->m_bfmeKindESF & 7;
 
 	if (kind == 5 || kind == 1 || kind == 2)
 		return 0;

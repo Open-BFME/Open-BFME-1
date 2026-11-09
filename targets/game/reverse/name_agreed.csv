@@ -1150,3 +1150,6 @@ game/GameEngine/Source/Common/BfmeConv1974.cpp|param|bfmeKindOkESF|c,cell,claude
 game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|type||BfmeZ1034,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|member||m_bfmeZ,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/LocomotorSetUpgradeUpgradeImplementation.cpp|local|LocomotorSetUpgrade::upgradeImplementation|z,ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|param|BfmeHostESF::bfmeTestESF|b,layer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|local|BfmeHostESF::bfmeTestESF|c,cell,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1974.cpp|param|bfmeKindOkESF|c,cell,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
