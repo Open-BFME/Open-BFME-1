@@ -117,7 +117,7 @@ class AI
 {
 public:
 	unsigned char m_bfmeHeadCL[0xc];
-	Pathfinder *m_bfmePathCL;
+	Pathfinder *m_pathfinder;
 };
 
 extern AI *TheAI;
@@ -147,8 +147,8 @@ void Rva001F9C60UpdateModule::run(void)
 		if (moduleData->m_moduleName.getLength() > 0)
 		{
 			((Rva00414230GuardedVCall *)drawable)->forward((int)moduleData->m_moduleName.str());
-			TheAI->m_bfmePathCL->removeObjectFromPathfindMap(obj);
-			TheAI->m_bfmePathCL->addObjectToPathfindMap(obj);
+			TheAI->m_pathfinder->removeObjectFromPathfindMap(obj);
+			TheAI->m_pathfinder->addObjectToPathfindMap(obj);
 
 		}
 	}
