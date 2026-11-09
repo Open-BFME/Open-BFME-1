@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 //
 // Open-BFME: protected scalar-deleting destructor for W3DShroudMaterialPassClass.
 // Vtable 0x00D209C8 slots name this class (?Install_Materials@W3DShroudMaterialPassClass@@UBEXXZ); its slot zero routes
@@ -10,10 +10,26 @@
 // with no vtable re-seat, so the class declares no destructor of its own and
 // derives from MaterialPassClass, whose virtual destructor is matched in
 // MaterialPassClassDestructor.cpp.
-class MaterialPassClass
+// Retail's ??_7MaterialPassClass (0x0113C884) has four slots: Delete_This,
+// the deleting destructor, Install_Materials and UnInstall_Materials. A
+// one-slot private view emitted a different COMDAT ahead of the canonical
+// one in MaterialPassClassDestructor.cpp, so declare the same virtuals.
+#include "refcount.h"
+
+class MaterialPassClass : public RefCountClass
 {
 public:
+	MaterialPassClass();
 	virtual ~MaterialPassClass();
+	virtual void Install_Materials(void) const;
+	virtual void UnInstall_Materials(void) const { }
+
+private:
+	void *Stages[8];
+	int Shader;
+	RefCountClass *Material;
+	bool EnableOnTranslucentMeshes;
+	int CullVolume;
 };
 
 class W3DShroudMaterialPassClass : public MaterialPassClass
