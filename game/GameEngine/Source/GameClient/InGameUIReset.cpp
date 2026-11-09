@@ -173,7 +173,7 @@ public:
 	unsigned char m_snapshotBase[0x8]; // +0x4 (Snapshot base in the full class)
 	bool m_superweaponHiddenByScript; // +0xc
 	bool m_inputEnabled; // +0xd
-	bool m_field_00e; // +0xe
+	bool m_scriptInputEnabled; // +0xe
 	unsigned char m_unreconstructed_00f[0x1];
 	_STL::list<WindowLayout *> m_windowLayouts; // +0x10
 	unsigned char m_unreconstructed_014[0xc];
@@ -200,11 +200,11 @@ public:
 	bool m_isScrolling; // +0x820
 	bool m_isSelecting; // +0x821
 	unsigned char m_unreconstructed_822[0x16];
-	bool m_field_838; // +0x838
+	bool m_isQuitMenuVisible; // +0x838
 	unsigned char m_unreconstructed_839[0xa77];
-	bool m_field_12b0; // +0x12b0
-	bool m_field_12b1; // +0x12b1
-	bool m_field_12b2; // +0x12b2
+	bool m_waypointMode; // +0x12b0
+	bool m_forceAttackMode; // +0x12b1
+	bool m_forceMoveToMode; // +0x12b2
 	bool m_field_12b3; // +0x12b3
 	unsigned char m_unreconstructed_12b4[0xa];
 	bool m_field_12be; // +0x12be
@@ -221,16 +221,16 @@ typedef char CheckHints[(offsetof(InGameUI, m_moveHint) == 0x38) ? 1 : -1];
 typedef char CheckMaps[(offsetof(InGameUI, m_superweapons) == 0x5cc) ? 1 : -1];
 typedef char CheckTimers[(offsetof(InGameUI, m_namedTimers) == 0x77c) ? 1 : -1];
 typedef char CheckTooltips[(offsetof(InGameUI, m_tooltipsDisabledUntil) == 0x814) ? 1 : -1];
-typedef char Check838[(offsetof(InGameUI, m_field_838) == 0x838) ? 1 : -1];
-typedef char Check12b0[(offsetof(InGameUI, m_field_12b0) == 0x12b0) ? 1 : -1];
+typedef char Check838[(offsetof(InGameUI, m_isQuitMenuVisible) == 0x838) ? 1 : -1];
+typedef char Check12b0[(offsetof(InGameUI, m_waypointMode) == 0x12b0) ? 1 : -1];
 typedef char Check12be[(offsetof(InGameUI, m_field_12be) == 0x12be) ? 1 : -1];
 typedef char Check1318[(offsetof(InGameUI, m_field_1318) == 0x1318) ? 1 : -1];
 
 void InGameUI::reset()
 {
-	m_field_838 = false;
+	m_isQuitMenuVisible = false;
 	m_inputEnabled = true;
-	m_field_00e = true;
+	m_scriptInputEnabled = true;
 
 	TheControlBar->reset();
 	reinterpret_cast<Glo012F4B78Type *>(g_bfmeSubsystem012F4B78)->reset();
@@ -301,9 +301,9 @@ void InGameUI::reset()
 		m_moveHint[i].field_10 = true;
 	}
 
-	m_field_12b0 = false;
-	m_field_12b1 = false;
-	m_field_12b2 = false;
+	m_waypointMode = false;
+	m_forceAttackMode = false;
+	m_forceMoveToMode = false;
 	m_field_12b3 = false;
 	m_field_12be = false;
 

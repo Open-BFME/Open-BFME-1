@@ -1803,3 +1803,8 @@ game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_838,m_isQuit
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b0,m_waypointMode,glm+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,m_forceAttackMode,glm+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,m_forceMoveToMode,glm+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_00e,m_scriptInputEnabled,glm+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_838,m_isQuitMenuVisible,glm+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b0,m_waypointMode,glm+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,m_forceAttackMode,glm+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,m_forceMoveToMode,glm+gpt-6-astra,applied,2026-11-09
