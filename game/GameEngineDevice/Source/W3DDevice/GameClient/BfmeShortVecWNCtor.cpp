@@ -32,9 +32,9 @@ BfmeShortVecWN::BfmeShortVecWN(unsigned n)
 {
 	unsigned count = n;
 	reinterpret_cast<_STL::_Vector_base<Gen_t_0074cbe0_p2pod, _STL::allocator<Gen_t_0074cbe0_p2pod> > *>(this)->_STL::_Vector_base<Gen_t_0074cbe0_p2pod, _STL::allocator<Gen_t_0074cbe0_p2pod> >::_Vector_base(count, *reinterpret_cast<const _STL::allocator<Gen_t_0074cbe0_p2pod> *>(&n));
-	unsigned short *p = m_start;
+	unsigned short *start = m_start;
 	if (count > 0)
-		m_finish = bfmeUninitializedFillN(p, count, unsigned short());
+		m_finish = bfmeUninitializedFillN(start, count, unsigned short());
 	else
-		m_finish = p;
+		m_finish = start;
 }
