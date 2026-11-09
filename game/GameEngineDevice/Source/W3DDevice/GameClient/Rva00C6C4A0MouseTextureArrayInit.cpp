@@ -23,7 +23,7 @@ BfmeHandleCX __identifier("?g_w3dMouseCursorTextures@@3PAY0BF@PAVTextureClass@@A
 }
 // The recorded C++ spelling of the same datum (sizeof 4200), for its other users.
 extern TextureClass *g_w3dMouseCursorTextures[50][21];
-BfmeHandleCX::BfmeHandleCX()
+inline BfmeHandleCX::BfmeHandleCX()
 {
     rva00000000 = 0;
 }
