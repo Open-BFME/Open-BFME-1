@@ -6823,3 +6823,4 @@ game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cach
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme54,1a38da949f60a5a27ce1845d,claude-sonnet,20261109054720-e2189c,2026-11-09
 game/Libraries/Source/EA/Apt/Rva008930C0AptLookup.cpp|member||m_bfme58,b5ed1bc04ed2b4dac2da1e05,claude-sonnet,20261109054720-e2189c,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva008063B0AddSlot.cpp|local|Rva008063B0Owner::addSlot|s,f7bb518ec18532742abaa4d5,claude-sonnet,20261109055044-69376e,2026-11-09
+game/GameEngine/Source/Common/WideBuildFieldParseMore.cpp|type||Gen00022584,ae3448dd5ded6dbf305bc775,claude-sonnet,20261109055352-33d064,2026-11-09
