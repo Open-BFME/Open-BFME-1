@@ -155,18 +155,18 @@ __declspec(noinline) static void getPlayerInfo(PeerThreadClass *thread,
 extern void j_00042069();
 extern void j_00044733();
 
-__forceinline void constructPeerResponse(PeerResponse *p)
+__forceinline void constructPeerResponse(PeerResponse *response)
 {
 	typedef PeerResponse *(PeerResponse::*Ctor)();
 	union { void (*fn)(); Ctor call; } u = { j_00042069 };
-	(p->*u.call)();
+	(response->*u.call)();
 }
 
-__forceinline void destroyPeerResponse(PeerResponse *p)
+__forceinline void destroyPeerResponse(PeerResponse *response)
 {
 	typedef void (PeerResponse::*Dtor)();
 	union { void (*fn)(); Dtor call; } u = { j_00044733 };
-	(p->*u.call)();
+	(response->*u.call)();
 }
 
 // Raw, 4-aligned storage for the 0x330-byte response.  Its ctor/dtor route to

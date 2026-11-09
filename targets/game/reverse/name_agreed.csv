@@ -2920,3 +2920,5 @@ game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeDeadline,m_deadlin
 game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeDeadline,m_deadline,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|constructPeerResponse|p,response,claude-sonnet+gpt-6-astra+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,response,claude-sonnet+gpt-6-astra+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|constructPeerResponse|p,response,claude-sonnet+gpt-6-astra+gpt-6-sol+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThreadPlayerInfoCallback.cpp|param|destroyPeerResponse|p,response,claude-sonnet+gpt-6-astra+gpt-6-sol+gpt-6.1-sol,applied,2026-11-09
