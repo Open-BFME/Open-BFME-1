@@ -7133,3 +7133,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModul
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp|member||m_field78,577c16c0efd86326e96acf66,claude-sonnet,20261109071049-1ea604,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,3f166716460dfbf2432bf525,claude-sonnet,20261109071352-de4823,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,f39b5b11bd8d7ead78088dc1,claude-sonnet,20261109071352-de4823,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1555.cpp|local|bfmeSortVOY|p,09a567b0dd170fbc6b950fbb,claude-sonnet,20261109071352-2fc55a,2026-11-09
