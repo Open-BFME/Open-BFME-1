@@ -2574,3 +2574,5 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,m_scrollSpeedSlider,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|a,start,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Line0078B040.cpp|param|emitLine0078B040|b,end,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeThingHF,m_template,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/RepairSpecialPowerDoSpecialPower.cpp|member||m_bfmeSlotHF,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

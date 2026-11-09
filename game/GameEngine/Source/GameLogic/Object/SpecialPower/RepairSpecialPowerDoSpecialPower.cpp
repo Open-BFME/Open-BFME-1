@@ -74,9 +74,9 @@ class BfmeUnitHF
 {
 public:
 	int m_bfmeSpareHF;
-	BfmeThingHF *m_bfmeThingHF;
+	BfmeThingHF *m_template;
 	unsigned char m_bfmeGapHF[0x1fc];
-	BfmeSlotHF *m_bfmeSlotHF;
+	BfmeSlotHF *m_ai;
 };
 
 // Retail's GameLogic singleton at 0x012F0898; the one canonical spelling.
@@ -104,7 +104,7 @@ void RepairSpecialPower::doSpecialPowerAtObject(Object *obj, UnsignedInt)
 {
 	BfmeActorHF *actor = (BfmeActorHF *)obj;
 	BfmeUnitHF *unit = *(BfmeUnitHF **)((char *)this - 8);
-	BfmeThingHF *thing = unit->m_bfmeThingHF;
+	BfmeThingHF *thing = unit->m_template;
 
 	if (thing && thing->m_bfmeInnerHF)
 		thing = (BfmeThingHF *)thing->m_bfmeInnerHF->getFinalOverride();
@@ -113,7 +113,7 @@ void RepairSpecialPower::doSpecialPowerAtObject(Object *obj, UnsignedInt)
 	{
 		if (actor && ((const Thing *)actor)->isKindOf((KindOfType)7))
 		{
-			BfmeSlotHF *slot = unit->m_bfmeSlotHF;
+			BfmeSlotHF *slot = unit->m_ai;
 
 			if (slot)
 				slot->m_bfmeListHF.aiRepair(
