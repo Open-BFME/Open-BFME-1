@@ -1823,3 +1823,10 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|membe
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f06c,m_displayedOCLTimerSeconds,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f26c,m_buildUpClockColor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,m_commandBarBorderColor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f05c,m_currentSelectedDrawable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f060,m_currContext,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f064,m_rallyPointDrawableID,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f068,m_displayedConstructPercent,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f06c,m_displayedOCLTimerSeconds,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f26c,m_buildUpClockColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,m_commandBarBorderColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

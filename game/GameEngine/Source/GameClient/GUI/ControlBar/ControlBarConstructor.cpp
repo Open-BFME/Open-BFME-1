@@ -89,9 +89,9 @@ private:
     char pad025[0x28 - 0x25];
     void *f028, *f02c, *f030;
     int a034[10];
-    int f05c, f060, f064;
-    float f068;
-    int f06c, f070, f074, f078;
+    int m_currentSelectedDrawable, m_currContext, m_rallyPointDrawableID;
+    float m_displayedConstructPercent;
+    int m_displayedOCLTimerSeconds, f070, f074, f078;
     char pad07c[0x90 - 0x7c];
     int f090, f094, f098;
     int a09c[12];
@@ -106,13 +106,13 @@ private:
     unsigned char f240;
     char pad241[0x244 - 0x241];
     void *f244, *f248, *f24c, *f250, *f254, *f258, *f25c, *f260, *f264, *f268;
-    UnsignedInt f26c;
+    UnsignedInt m_buildUpClockColor;
     unsigned char f270;
     char pad271[0x274 - 0x271];
     void *f274, *f278;
     unsigned char f27c;
     char pad27d[0x280 - 0x27d];
-    UnsignedInt f280, f284, f288, f28c, f290, f294;
+    UnsignedInt f280, f284, f288, f28c, f290, m_commandBarBorderColor;
     int f298, f29c;
     int f2a0, f2a4, f2a8, f2ac, f2b0, f2b4;
     char pad2b8[0x2bc - 0x2b8];
@@ -148,15 +148,15 @@ ControlBar::ControlBar(void)
     int i;
     for (i = 0; i < 20; ++i)
         a1f0[i] = 0;
-    f060 = 0;
+    m_currContext = 0;
     f01c = 0;
     f018 = 0;
     f2c8 = 0;
     f29c = 0;
     f298 = 0;
     f024 = 0;
-    f26c = GameMakeColor(0, 0, 0, 100);
-    f294 = GameMakeColor(0, 0, 0, 100);
+    m_buildUpClockColor = GameMakeColor(0, 0, 0, 100);
+    m_commandBarBorderColor = GameMakeColor(0, 0, 0, 100);
     for (i = 0; i < 10; ++i)
         a034[i] = 0;
     for (i = 0; i < 20; ++i) {
@@ -177,11 +177,11 @@ ControlBar::ControlBar(void)
     f078 = 0;
     f090 = 0;
     f094 = 0;
-    f05c = 0;
-    f060 = 0;
-    f064 = 0;
-    f068 = -1.0f;
-    f06c = 0;
+    m_currentSelectedDrawable = 0;
+    m_currContext = 0;
+    m_rallyPointDrawableID = 0;
+    m_displayedConstructPercent = -1.0f;
+    m_displayedOCLTimerSeconds = 0;
     resetContainData();
     f070 = 0;
     f008 = 0;
