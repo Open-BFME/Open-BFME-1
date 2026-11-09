@@ -7239,3 +7239,6 @@ game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|h,5b
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047D|t,15a5647612898909a90f2106,claude-sonnet,20261109073649-0d4793,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|h,cfbb25999817b7c48ad44941,claude-sonnet,20261109073649-0d4793,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1047.cpp|local|BfmeD1047::bfmeGo1047E|t,4772252ca9a9b2f78037f625,claude-sonnet,20261109073649-0d4793,2026-11-09
+game/GameEngine/Source/Common/BfmeScoreEntryMedian.cpp|param|Rva00570AC0|a,305c2ac5d7889b2bcb1120d8,claude-sonnet,20261109073649-5b84b9,2026-11-09
+game/GameEngine/Source/Common/BfmeScoreEntryMedian.cpp|param|Rva00570AC0|b,b726adc76f674db39f3acbbe,claude-sonnet,20261109073649-5b84b9,2026-11-09
+game/GameEngine/Source/Common/BfmeScoreEntryMedian.cpp|param|Rva00570AC0|c,11d19a02536466b27efa0e43,claude-sonnet,20261109073649-5b84b9,2026-11-09
