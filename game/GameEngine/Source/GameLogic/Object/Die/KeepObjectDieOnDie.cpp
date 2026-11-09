@@ -16,11 +16,7 @@ public:
 	Player *getControllingPlayer() const;
 };
 
-class PlayerShim
-{
-public:
-	bool unidentified_00012eea() const;
-};
+class PlayerShim {};
 
 class GameLogic
 {
@@ -28,17 +24,19 @@ public:
 	void destroyObject( Object *object );
 };
 
-class BfmeItemRY
-{
-public:
-	void bfmeDoRY( void *one, void *two );
-};
+class BfmeItemRY {};
+class BfmeGateAMB {};
 
-class BfmeGateAMB
-{
-public:
-	bool bfmeAskAMB( void *object, BfmeKeyAMB *key );
-};
+// Retail reaches each of these through its ILT thunk, which the ledger defines
+// as ?j_XXXXXXXX@@YAXXZ (tools/callees.py 0x00255990: 0x12eea, 0x2852e,
+// 0x357d8); call them by those names.
+extern void j_00012eea();
+extern void j_0002852e();
+extern void j_000357d8();
+typedef bool (PlayerShim::*PlayerShimByteCall)() const;
+typedef void (BfmeItemRY::*BfmeItemRYCall)( void *one, void *two );
+typedef bool (BfmeGateAMB::*BfmeGateAMBCall)( void *object, BfmeKeyAMB *key );
+template<class T> T iltMemberCall( void (*p)() ) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 
 extern GameLogic *TheGameLogic;
 
@@ -56,16 +54,16 @@ void KeepObjectDie::onDie( const DamageInfo *damageInfo )
 	if( object != 0 )
 	{
 		Player *player = object->getControllingPlayer();
-		if( player != 0 && ((PlayerShim *)player)->unidentified_00012eea() )
+		if( player != 0 && (((PlayerShim *)player)->*iltMemberCall<PlayerShimByteCall>( j_00012eea ))() )
 		{
 			TheGameLogic->destroyObject( object );
 			return;
 		}
 	}
 
-	((BfmeItemRY *)*(Object **)( (char *)this - 8 ))->bfmeDoRY(
+	(((BfmeItemRY *)*(Object **)( (char *)this - 8 ))->*iltMemberCall<BfmeItemRYCall>( j_0002852e ))(
 		(void *)0x12e, (void *)0x19 );
 	BfmeGateAMB *gate = *(BfmeGateAMB **)( (char *)this - 0xc );
-	((BfmeGateAMB *)( (char *)gate + 8 ))->bfmeAskAMB(
+	(((BfmeGateAMB *)( (char *)gate + 8 ))->*iltMemberCall<BfmeGateAMBCall>( j_000357d8 ))(
 		*(Object **)( (char *)this - 8 ), (BfmeKeyAMB *)damageInfo );
 }
