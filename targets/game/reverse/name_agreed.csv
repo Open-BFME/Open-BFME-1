@@ -1652,3 +1652,7 @@ game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_114,m_tintSt
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_118,m_prevTintStatus,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_160,m_flashCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_164,m_flashColor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_114,m_tintStatus,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_118,m_prevTintStatus,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_160,m_flashCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_164,m_flashColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

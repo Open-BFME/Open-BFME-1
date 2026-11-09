@@ -354,8 +354,8 @@ private:
 	Drawable *m_prevDrawable;
 	RefHolder00418DA0 m_10c;
 	UnsignedInt m_status;
-	UnsignedInt m_114;
-	UnsignedInt m_118;
+	UnsignedInt m_tintStatus;
+	UnsignedInt m_prevTintStatus;
 	UnsignedInt m_11c;
 	UnsignedInt m_120;
 	UnsignedInt m_124;
@@ -374,8 +374,8 @@ private:
 	Audio00418DA0 *m_14c;
 	Module **m_modules[3];
 	UnsignedInt m_15c;
-	UnsignedInt m_160;
-	UnsignedInt m_164;
+	UnsignedInt m_flashCount;
+	UnsignedInt m_flashColor;
 	Matrix3D m_168;
 	Matrix3D m_198;
 	Matrix3D m_1c8;
@@ -435,11 +435,11 @@ Drawable::Drawable(const ThingTemplate *thingTemplate, DrawableStatus statusBits
 	  m_f0(0), m_f4(1.0f), m_f8(0.03f),
 	  m_object(0), m_id(0), m_nextDrawable(0), m_prevDrawable(0),
 	  m_status(statusBits),
-	  m_114(0), m_118(0), m_11c(0), m_120(0), m_124(0), m_128(0), m_12c(0), m_130(0), m_134(0),
+	  m_tintStatus(0), m_prevTintStatus(0), m_11c(0), m_120(0), m_124(0), m_128(0), m_12c(0), m_130(0), m_134(0),
 	  m_locoInfo(0), m_13c(0),
 	  m_140(true), m_141(true), m_142(true), m_143(true),
 	  m_ambientSound(0), m_148(0), m_14c(0),
-	  m_15c(0), m_160(0), m_164(0),
+	  m_15c(0), m_flashCount(0), m_flashColor(0),
 	  m_1fc(-1),
 	  
 	  m_2c8(-1.0f), m_2cc(0), m_captionDisplayString(0),
