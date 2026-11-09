@@ -6813,3 +6813,5 @@ game/GameEngine/Source/Common/Bfme5RefNodes.cpp|member||m_bfmeRefCount,6af49594e
 game/GameEngine/Source/Common/Bfme5RefNodes.cpp|local|SimpleObjectIterator::insert|n,a3edc5174735c798419d5d7c,claude-sonnet,20261109054306-df1965,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawDebugStats006e8c20.cpp|type||BfmeDrawString006e8c20,93cf66bfc7275a6c140d2c08,claude-sonnet,20261109054710-4814e7,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdate_update.cpp|param|UnicodeString#2|s,81d8dbb7cca76d2cb6946b47,claude-sonnet,20261109054355-b4f48c,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|local|UpdateRemoteIPList|n1,4c713a42e55750bdf2e0231f,claude-sonnet,20261109054355-f66f4a,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|local|UpdateRemoteIPList|temp,5efebf713693640a6b862ce6,claude-sonnet,20261109054355-f66f4a,2026-11-09
