@@ -7641,3 +7641,4 @@ game/GameEngine/Source/Common/BfmeConv2036.cpp|local|BfmeHostEM::bfmeSmoothEM|p,
 game/GameEngine/Source/Common/BfmeConv2036.cpp|local|BfmeHostEM::bfmeSmoothEM|q,959b371acec9f2637d86a765,claude-sonnet,20261109101120-848ae3,2026-11-09
 game/GameEngine/Source/Common/BfmeConv572.cpp|type||BfmeThingCCA,66fd4b0eb67e79dd3189d7f2,claude-sonnet,20261109101324-94361d,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007409A0Assign.cpp|member||m_unmodelled_004,63803c1b478dd23b91de858e,claude-sonnet,20261109101324-a4351a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv570.cpp|member||m_bfmeCur,99ae3b3961d8d1ea22cda1db,claude-sonnet,20261109101323-bc911f,2026-11-09

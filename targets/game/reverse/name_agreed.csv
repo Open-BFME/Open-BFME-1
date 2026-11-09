@@ -2762,3 +2762,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModule
 game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_74,m_obeyRechargeOnTrigger,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007409A0Assign.cpp|member||m_unmodelled_004,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva007409A0Assign.cpp|member||m_unmodelled_004,m_id,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv570.cpp|member||m_bfmeCur,m_textureReductionFactor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
