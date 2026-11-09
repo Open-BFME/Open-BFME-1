@@ -8,14 +8,14 @@
 
 struct BfmeNode913D
 {
-	BfmeNode913D *m_bfmeNext;
+	BfmeNode913D *m_next;
 	int m_bfmePad;
 	void *m_bfmeKey;
 };
 
 struct BfmeNodeDI
 {
-	BfmeNodeDI *m_bfmeNext;
+	BfmeNodeDI *m_next;
 	int m_bfmeGap;
 	void *m_bfmeKey;
 };
@@ -116,8 +116,8 @@ public:
 char BfmeThing913D::bfmeGo913D(void *k)
 {
 	BfmeList913D *l = bfmeGet913D()->m_bfmeList;
-	for (BfmeNode913D *n = l->m_bfmeHead; n != (BfmeNode913D *)l; n = n->m_bfmeNext)
-		if (n->m_bfmeKey == k)
+	for (BfmeNode913D *node = l->m_bfmeHead; node != (BfmeNode913D *)l; node = node->m_next)
+		if (node->m_bfmeKey == k)
 			return 1;
 	return ((Gen_002227A0 *)this)->bfmeContains(k);
 }
