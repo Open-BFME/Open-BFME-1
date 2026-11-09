@@ -2235,3 +2235,6 @@ game/GameEngine/Source/Common/BfmeConv1760.cpp|function|BfmeOwnBV@|bfmeFindBV,fi
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at110,m_modelConditionFlags,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at03c,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at110,m_modelConditionFlags,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh0023FA80.cpp|member||at03c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

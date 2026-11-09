@@ -37,9 +37,9 @@ public:
     unsigned char pad000[0x38];
     Coord3D at038;
     unsigned char pad044[0x110-0x44];
-    Refresh0023FA80Flags at110;
+    Refresh0023FA80Flags m_modelConditionFlags;
     unsigned char pad138[0x204-0x138];
-    Refresh0023FA80AI *at204;
+    Refresh0023FA80AI *m_ai;
     ROUTE0(int, layer, j_0003a391)
     __forceinline void setLayer(int value) {
         typedef void (Refresh0023FA80Route::*Call)(int);
@@ -53,7 +53,7 @@ struct Refresh0023FA80GlobalAI {
     unsigned char pad000[12]; Refresh0023FA80Pathfinder *at00c;
     Refresh0023FA80Pathfinder *pathfinder() const { return at00c; }
 };
-struct Refresh0023FA80GameLogic { unsigned char pad000[0x3c]; unsigned int at03c; };
+struct Refresh0023FA80GameLogic { unsigned char pad000[0x3c]; unsigned int m_frame; };
 // 0x012EF214 is retail's TheAI singleton (`AI *TheAI`, mangled
 // ?TheAI@@3PAVAI@@A), defined in GameLogic/AI/ai.cpp. Refresh0023FA80GlobalAI
 // stays as this TU's offset view of it.
@@ -83,7 +83,7 @@ public:
     ROUTE0(void, periodic, j_00025f77)
     __forceinline void scheduleNullable(Refresh0023FA80AI *ai, Refresh0023FA80Object *obj) { if (ai && obj) schedule(ai,obj); }
     __forceinline void guardedSchedule() {
-        scheduleNullable(at008 ? at008->at204 : 0,at008);
+        scheduleNullable(at008 ? at008->m_ai : 0,at008);
     }
     __forceinline void schedule(Refresh0023FA80AI *ai, Refresh0023FA80Object *obj) {
         typedef void (Refresh0023FA80Route::*Call)(Refresh0023FA80AI *, Refresh0023FA80Object *);
@@ -130,7 +130,7 @@ int FormationRefresh0023FA80::run() {
         primary()->guardedSchedule();
         return 10;
     }
-    Refresh0023FA80Flags flags = owner()->at110;
+    Refresh0023FA80Flags flags = owner()->m_modelConditionFlags;
     bool changed = false;
     if (at0dc.differs(flags)) {
         changed = true;
@@ -138,7 +138,7 @@ int FormationRefresh0023FA80::run() {
     }
     int result = update0022D660();
     Refresh0023FA80Object *obj = owner();
-    Refresh0023FA80AI *ai = obj->at204;
+    Refresh0023FA80AI *ai = obj->m_ai;
     if (!ai) return result;
     if (changed) primary()->changed();
     if (ai->blocked()) {
@@ -160,7 +160,7 @@ int FormationRefresh0023FA80::run() {
         }
     }
     primary()->schedule(ai,obj);
-    if (localTheGameLogic()->at03c % 5 == 0 && primary()->slot070()) return 1;
+    if (localTheGameLogic()->m_frame % 5 == 0 && primary()->slot070()) return 1;
     if (at0d8 || at134.at004 || at144) {
         at0d8=false;
         if (at144 && !at140) {
@@ -180,6 +180,6 @@ int FormationRefresh0023FA80::run() {
         }
         if (at0d8 || at134.at004) return 1;
     }
-    if (localTheGameLogic()->at03c % 5 == 0) primary()->periodic();
+    if (localTheGameLogic()->m_frame % 5 == 0) primary()->periodic();
     return result;
 }
