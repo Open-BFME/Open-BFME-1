@@ -7551,3 +7551,6 @@ game/GameEngine/Source/Common/BfmeConv2039.cpp|member||m_bfmeCountER,fb77f24fd62
 game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp|type||Rva003C8300Pair,046fcba349d382abac592dd2,claude-sonnet,20261109093142-7c7804,2026-11-09
 game/GameEngine/Source/Common/FCurve.cpp|type||Rva00069DF0Element,6febc7509c6243bee816de93,claude-sonnet,20261109093243-f569a4,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240DefaultConstructor.cpp|member||m_vector70,a0b3d126839775cbae1ec042,claude-sonnet,20261109093243-e7221e,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBuffer_init.cpp|member||m_04,62c26ebbf22f4674863fbcdf,claude-sonnet,20261109093243-2bf2b4,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBuffer_init.cpp|member||m_08,aad86e75e5603dae077b0d0f,claude-sonnet,20261109093243-2bf2b4,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBuffer_init.cpp|member||m_0c,fd890db59a7637a00e75dc86,claude-sonnet,20261109093243-2bf2b4,2026-11-09
