@@ -1949,3 +1949,4 @@ game/GameEngine/Source/Common/Bfme5RefNodes.cpp|member||m_bfmeRefCount,m_refCoun
 game/GameEngine/Source/Common/Bfme5RefNodes.cpp|member||m_bfmeRefCount,m_refCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Map/SidesListClearSideStorage.cpp|type||Rva0019BE80SideInfo,SidesInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdate_update.cpp|param|UnicodeString#2|s,stringSrc,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdate_update.cpp|param|UnicodeString#2|s,stringSrc,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

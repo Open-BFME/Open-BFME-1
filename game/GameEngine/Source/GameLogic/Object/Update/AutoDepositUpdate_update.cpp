@@ -7,7 +7,7 @@
 class UnicodeString : private StringBase<unsigned short> {
 public:
  UnicodeString() : StringBase<unsigned short>() {}
- UnicodeString(const UnicodeString &s) : StringBase<unsigned short>(s) {}
+ UnicodeString(const UnicodeString &stringSrc) : StringBase<unsigned short>(stringSrc) {}
  ~UnicodeString() {}
  void __cdecl format(UnicodeString, ...);
 };
