@@ -7469,3 +7469,4 @@ game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appen
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendPixelRegionArgument|a,e658b7008c105c66fd3d9341,claude-sonnet,20261109085718-18720c,2026-11-09
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendTimestampArgument|a,1be6390bfba0422c280143ce,claude-sonnet,20261109085718-18720c,2026-11-09
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendWideCharArgument|a,e106f712640d4f0304b6d733,claude-sonnet,20261109085718-18720c,2026-11-09
+game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|isType|f,c88efad9cf7eca4456d21b23,claude-sonnet,20261109085836-02baaa,2026-11-09
