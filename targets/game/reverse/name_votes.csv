@@ -6286,3 +6286,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||
 game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b4,3da3636eb789bbca779a3e68,claude-sonnet,20261109020416-87a1a0,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b5,8ccec57ba6737d77830fc0d8,claude-sonnet,20261109020416-87a1a0,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainCtor.cpp|member||m_unmodelled_9b6,50712a943392eda138af7602,claude-sonnet,20261109020416-87a1a0,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIGroup_groupEnter.cpp|member||m_bfmeAI,28e73a1c2638046d86edbc8f,claude-sonnet,20261109020416-3c2b36,2026-11-09
