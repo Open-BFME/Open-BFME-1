@@ -6737,3 +6737,6 @@ game/GameEngine/Source/Common/BfmeConv1242.cpp|param|bfmeInsert1242|a,fa8320d7fa
 game/GameEngine/Source/Common/BfmeConv1242.cpp|local|bfmeInsert1242|e,334aea29445c7e2e510197e3,claude-sonnet,20261109050736-c96848,2026-11-09
 game/GameEngine/Source/Common/BfmeA1049_timedUpdate.cpp|member||m_bfmeTime,a72bc5db9c26fda3e2fba035,claude-sonnet,20261109050718-68cb84,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateRva00299080.cpp|local|OneRingPenaltyUpdate::rva00299080|d,888a3800cd6dce09da51000d,claude-sonnet,20261109050812-2eca24,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown50,b98df6832fc043b9903b6d60,claude-sonnet,20261109051048-056c2e,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown54,8af933c6481fd607e2f81bef,claude-sonnet,20261109051048-056c2e,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008B6C70AptPack.cpp|member||m_unknown58,c416cb381edbadc44b906caa,claude-sonnet,20261109051048-056c2e,2026-11-09
