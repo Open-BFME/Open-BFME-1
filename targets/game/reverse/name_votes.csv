@@ -6160,3 +6160,4 @@ game/GameEngine/Source/Common/Rva0013ABC0TableEquals.cpp|local|Rva0013ABC0Table:
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE3C0CameraRay.cpp|type||Rva006FE3C0ScreenPoint,e2d0ca5744c26a1b3a97e112,claude-sonnet,20261109005732-07e686,2026-11-09
 game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022B3B0,9d1cb693baed5f82d75eb42e,claude-sonnet,20261109005732-eefb5c,2026-11-09
 game/GameEngine/Source/Common/Rva0022A450Parse.cpp|type||Rva0022A450,6f38e48cb4bfbd4561916bc7,claude-sonnet,20261109005732-eefb5c,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsGarrisonedUnits.cpp|type||Rva003252A0Contain,34243fae4c9b1094a7a4f38f,claude-sonnet,20261109010152-87dca5,2026-11-09
