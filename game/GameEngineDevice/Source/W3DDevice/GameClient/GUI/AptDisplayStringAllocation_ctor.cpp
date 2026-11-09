@@ -72,17 +72,17 @@ extern float Rva012BB86CScaleX,Rva012BB870ScaleY;
 class Rva00788290Base { public: virtual ~Rva00788290Base() {} };
 class Rva00788290Object {
 public:
- const char *m_at00;
- float m_at04,m_at08,m_at0c,m_at10;
+ const char *m_fontName;
+ float m_at04,m_at08,m_right,m_bottom;
  int m_at14,m_at18;
  int m_state1c;
  float m_value20;
  int m_at24,m_at28,m_at2c;
  char m_pad30[0x10];
  float m_value40,m_value44;
- float m_at48;
+ float m_fontSize;
  int m_at4c,m_at50;
- const char *m_at54;
+ const char *m_text;
  unsigned m_flags58;
  void *m_source5c;
 };
@@ -108,9 +108,9 @@ Rva00788290Allocation::Rva00788290Allocation(Rva00788290Object *source):
  m_displayString=TheDisplayStringManager->newDisplayString();
  float x=source->m_at04;
  float y=source->m_at08;
- float fontSize=source->m_at48;
- float right=source->m_at0c;
- float bottom=source->m_at10;
+ float fontSize=source->m_fontSize;
+ float right=source->m_right;
+ float bottom=source->m_bottom;
  if(m_at2c) {
   fontSize *= Rva012BB86CScaleX < Rva012BB870ScaleY ? Rva012BB86CScaleX : Rva012BB870ScaleY;
   x*=Rva012BB86CScaleX;
@@ -120,9 +120,9 @@ Rva00788290Allocation::Rva00788290Allocation(Rva00788290Object *source):
  }
  setRect00787710(x,y,right,bottom);
  GameFont *font;
- { AsciiString fontName(source->m_at00); font=TheFontLibrary->getFont(&fontName,fontSize,0); }
+ { AsciiString fontName(source->m_fontName); font=TheFontLibrary->getFont(&fontName,fontSize,0); }
  m_displayString->setFont(font);
- AsciiString text(source->m_at54);
+ AsciiString text(source->m_text);
  for(int i=0;i<text.getLength();++i) {
   if(text.getCharAt(i)=='&' && !_strcmpi(text.str()+i+1,"dropShadow")) {
    text=AsciiString(text.str(),i);
