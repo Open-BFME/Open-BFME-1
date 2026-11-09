@@ -7419,3 +7419,4 @@ game/GameEngine/Source/Common/BfmeConv1430.cpp|member||m_bfme00,7fc614155129c666
 game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0ConfigView,9e8c672be26c0d0c1f8087ce,claude-sonnet,20261109082533-628b59,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|type||Rva00173FB0PathView,87dfe1abf6d4b4b7177a568c,claude-sonnet,20261109082533-628b59,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIFearState_update.cpp|member||m_field3c,e06f66c4a734af7af4477d0b,claude-sonnet,20261109082533-628b59,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1240.cpp|member||m_bfme00,3088f2dbe64ae8cce506208f,claude-sonnet,20261109082606-1e2cad,2026-11-09
