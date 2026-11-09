@@ -6731,3 +6731,7 @@ game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field0,3fe05f
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field4,b6ea96930d865261a314b66c,claude-sonnet,20261109050726-11f0ec,2026-11-09
 game/GameEngine/Source/GameClient/EvaMessageInfoCopy.cpp|member||m_field8,63a9f09acb0ea6ab3409be4e,claude-sonnet,20261109050726-11f0ec,2026-11-09
 game/GameEngine/Source/Common/Rva005C36C0Forward.cpp|type||Rva005C36C0Vec3,20cb10bc168dd2fdb1d649ec,claude-sonnet,20261109050736-116f77,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|member||m_bfme20,2d95e95b6a569318cd9a92df,claude-sonnet,20261109050736-c96848,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|member||m_bfme28,790cdad18e10ab68ad4cbd0e,claude-sonnet,20261109050736-c96848,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|param|bfmeInsert1242|a,fa8320d7fa96180963055a24,claude-sonnet,20261109050736-c96848,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|local|bfmeInsert1242|e,334aea29445c7e2e510197e3,claude-sonnet,20261109050736-c96848,2026-11-09

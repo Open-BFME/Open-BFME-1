@@ -1832,3 +1832,7 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|membe
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarConstructor.cpp|member||f294,m_commandBarBorderColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Rva003BD700Ctor.cpp|type||Rva003BD700String,UnicodeString,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva003BD700Ctor.cpp|type||Rva003BD700String,UnicodeString,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|member||m_bfme20,m_elements,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|member||m_bfme28,m_length,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|param|bfmeInsert1242|a,array,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1242.cpp|local|bfmeInsert1242|e,element,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
