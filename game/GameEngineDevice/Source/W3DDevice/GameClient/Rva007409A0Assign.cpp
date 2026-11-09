@@ -33,7 +33,7 @@ public:
 	AsciiString getName(void) const;					// ILT 0x0001026C -> 0x000EE6D0
 
 	unsigned char m_unmodelled_000[0x04];
-	unsigned m_unmodelled_004;							// +0x04
+	unsigned m_id;							// +0x04
 	unsigned char m_unmodelled_008[0x04];				// +0x08 name
 	Coord3D m_location;									// +0x0C
 };
@@ -77,6 +77,6 @@ Rva007409A0 *Rva007409A0::rva00740A40(const Waypoint *waypoint)
 {
 	m_name = waypoint->getName();
 	m_pod = waypoint->m_location;
-	m_10 = waypoint->m_unmodelled_004;
+	m_10 = waypoint->m_id;
 	return this;
 }
