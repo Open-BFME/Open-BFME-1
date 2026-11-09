@@ -2903,3 +2903,4 @@ game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE5,m_isRecru
 game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE4,m_isRecruitablitySet,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/RTS/TeamConstructor.cpp|member||m_wordE5,m_isRecruitable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,sort,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,sort,claude-sonnet+gpt-6-astra,applied,2026-11-09

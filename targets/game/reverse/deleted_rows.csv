@@ -38712,3 +38712,4 @@ Gen_f265_b7a8aa_00434ff0,0x00434FF0,"gen-shim scaffold placeholder superseded by
 ?bfmeGo997C@BfmeA997@@QAEXHH@Z,0x00414380,renamed to ?bfmeGo997C@Drawable@@QAEXHH@Z by tools/name_lane.py: two models agreed
 ?bfmeTotalVNQ@BfmeThingVNQ@@QAEHXZ,0x0092F140,renamed to ?Compute_Ram_Size@BfmeThingVNQ@@QAEHXZ by tools/name_lane.py: two models agreed
 __XcptFilter,0x009F7EEC,claim superseded by the gate-required claim for ?Rva009F7EEC_XcptFilter@@YAHKPAX@Z at 0x009F7EEC/6B from game/GameEngine/Source/Common/XcptFilterImportThunk.cpp. The prior claim at 0x009F7EEC/6B from game/GameEngine/Source/Common/XcptFilterImportThunk.cpp was retired.
+?Rva00533760@@YAXPAURva00533760Elem@@0@Z,0x00533760,renamed to ?sort@@YAXPAURva00533760Elem@@0@Z by tools/name_lane.py: two models agreed

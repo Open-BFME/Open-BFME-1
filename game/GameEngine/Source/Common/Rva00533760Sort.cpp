@@ -11,7 +11,7 @@ struct Rva00533760Elem
 void j_00038d8e(void);
 void j_00031598(void);
 
-void Rva00533760(Rva00533760Elem *first, Rva00533760Elem *last)
+void sort(Rva00533760Elem *first, Rva00533760Elem *last)
 {
 	if (first != last)
 	{
