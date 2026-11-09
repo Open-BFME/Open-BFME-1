@@ -7488,3 +7488,5 @@ game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeS
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|x,13b8b9a786497dddfa33715d,claude-sonnet,20261109090134-c4c7f2,2026-11-09
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|y,fd64b48f6208b2bcac2d09c9,claude-sonnet,20261109090134-c4c7f2,2026-11-09
 game/GameEngine/Source/Common/BfmeRing008A0890.cpp|param|BfmeRing008A0890::insert|arg2,6072766ba8ebd5542f5ea670,claude-sonnet,20261109090134-c2a91e,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|s,9df6d7b9ac32377e09d47ed1,claude-sonnet,20261109090236-842f00,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|c,7743cc2b3f118a3328837e58,claude-sonnet,20261109090236-842f00,2026-11-09
