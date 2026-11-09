@@ -6677,3 +6677,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE200Scroll.cpp|local|Rv
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeLighting_006F7DA0.cpp|type||Rva006F7DA0TreeBuffer,933b79107e09f1877bf078fa,claude-sonnet,20261109045404-8e1f0e,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1370.cpp|member||m_bfmeRefs,6174bcef923bf3273fef08eb,claude-sonnet,20261109045450-daa318,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002BCB60GoalRouting.cpp|member||m_goalPosition47c,1c19327bb23c77a5f941ecd4,claude-sonnet,20261109045405-1acb80,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|type||BfmePairCW,20811662372d8b889467eeee,glm,20261109043301-88f8e1,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeSlots,b620d6e8293cce529796dc85,glm,20261109043301-88f8e1,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeOver,e0a61be67944586b96a863e2,glm,20261109043301-88f8e1,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|member||m_bfmeQuiet,c309757d2733119161988a0f,glm,20261109043301-88f8e1,2026-11-09
