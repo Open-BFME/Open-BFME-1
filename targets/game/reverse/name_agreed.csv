@@ -1435,3 +1435,6 @@ game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member
 game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_listA4,m_releaseList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/EmotionTrackerUpdateNearbyFilter.cpp|param|Rva010BE170::Rva010BE170|m,module,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/EmotionTrackerUpdateNearbyFilter.cpp|param|Rva010BE170::Rva010BE170|m,module,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_list74,m_updateList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_list8C,m_lightList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_listA4,m_releaseList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

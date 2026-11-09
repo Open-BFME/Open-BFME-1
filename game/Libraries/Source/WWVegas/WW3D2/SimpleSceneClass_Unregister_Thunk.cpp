@@ -74,9 +74,9 @@ public:
 private:
 	unsigned char m_pad[0x58];
 	RefMultiListClass<RenderObjClass> m_list5C;
-	RefMultiListClass<RenderObjClass> m_list74;
-	RefMultiListClass<RenderObjClass> m_list8C;
-	RefMultiListClass<RenderObjClass> m_listA4;
+	RefMultiListClass<RenderObjClass> m_updateList;
+	RefMultiListClass<RenderObjClass> m_lightList;
+	RefMultiListClass<RenderObjClass> m_releaseList;
 	MultiListClass<RenderObjClass> m_listBC;
 	MultiListClass<RenderObjClass> m_listD4;
 };
@@ -86,13 +86,13 @@ void SimpleSceneClass::Unregister(RenderObjClass *obj, SceneClass::RegType for_w
 {
 	switch (for_what) {
 	case 0:
-		m_list74.Remove(obj);
+		m_updateList.Remove(obj);
 		break;
 	case 1:
-		m_list8C.Remove(obj);
+		m_lightList.Remove(obj);
 		break;
 	case 2:
-		m_listA4.Remove(obj);
+		m_releaseList.Remove(obj);
 		break;
 	case 3:
 		m_listBC.Remove(obj);
