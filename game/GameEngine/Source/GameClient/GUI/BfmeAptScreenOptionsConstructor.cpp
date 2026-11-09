@@ -178,7 +178,7 @@ public:
 class BfmeVersionAL
 {
 public:
- UnicodeStringAL bfmeVersionTextAL();
+ UnicodeStringAL getUnicodeVersion();
 };
 class Version;
 extern Version *TheVersion;
@@ -370,7 +370,7 @@ BfmeAptScreenOptions::BfmeAptScreenOptions( void *context )
 				Rva0055F1B0FunctorHolder( FunctorBinding( callback.member, (FunctorTarget *)this ) ) );
 		}
 
-		UnicodeStringAL version = ((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL();
+		UnicodeStringAL version = ((BfmeVersionAL *)TheVersion)->getUnicodeVersion();
 		{
 			AsciiString versionName( "APT:VersionNum" );
 			g_rva012F19E8WindowManager->bfme_setAptText( versionName, UnicodeString( version ) );

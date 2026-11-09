@@ -29,7 +29,7 @@ extern GameTextInterface *TheGameText;
 // Preserve the existing callee's ledger spelling (0x000AED00) and four-byte
 // returned wide-string layout. No new semantic identity is asserted for it.
 class UnicodeStringAL : public UnicodeString {};
-class BfmeVersionAL { public: UnicodeStringAL bfmeVersionTextAL(); };
+class BfmeVersionAL { public: UnicodeStringAL getUnicodeVersion(); };
 class Version { public: UnicodeString getUnicodeBuildTime(); unsigned int getVersionNumber(); };
 extern Version *TheVersion;
 int Rva0009B4B0(int, int);
@@ -122,7 +122,7 @@ void RecorderClass::Rva0009B6C0RecorderStart(int difficulty, int gameMode, int r
     fwprintf(m_file,L"%ws",replayName.str()); fputwc(0,m_file);
     SYSTEMTIME systemTime;
     GetLocalTime(&systemTime); fwrite(&systemTime,sizeof(systemTime),1,m_file);
-    UnicodeStringAL versionString=((BfmeVersionAL*)TheVersion)->bfmeVersionTextAL();
+    UnicodeStringAL versionString=((BfmeVersionAL*)TheVersion)->getUnicodeVersion();
     UnicodeString versionTimeString=TheVersion->getUnicodeBuildTime();
     unsigned int versionNumber=TheVersion->getVersionNumber();
     fwprintf(m_file,L"%ws",versionString.str()); fputwc(0,m_file);

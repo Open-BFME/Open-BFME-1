@@ -358,7 +358,7 @@ Bool Rva00099490RecorderClass::readReplayHeader(ReplayHeader &header)
 }
 
 class UnicodeStringAL : public UnicodeString {};
-class BfmeVersionAL { public: UnicodeStringAL bfmeVersionTextAL(void); };
+class BfmeVersionAL { public: UnicodeStringAL getUnicodeVersion(void); };
 class Version { public: UnicodeString getUnicodeBuildTime(void); UnsignedInt getVersionNumber(void); };
 extern Version *TheVersion;
 class GlobalData { public: char pad[0xBC8]; UnsignedInt m_iniCRC; char pad2[4]; UnsignedInt m_exeCRC; };
@@ -374,7 +374,7 @@ Bool RecorderClass::testVersionPlayback(AsciiString filename)
 	if (!success)
 		return FALSE;
 	Bool versionStringDiff = ((UnicodeString &)header.versionString).compare(
-		((BfmeVersionAL *)TheVersion)->bfmeVersionTextAL()) != 0;
+		((BfmeVersionAL *)TheVersion)->getUnicodeVersion()) != 0;
 	Bool versionTimeStringDiff = ((UnicodeString &)header.versionTimeString).compare(
 		TheVersion->getUnicodeBuildTime()) != 0;
 	Bool versionNumberDiff = header.versionNumber != TheVersion->getVersionNumber();

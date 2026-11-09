@@ -67,18 +67,18 @@ extern GameTextInterface *TheGameText;			// retail 0x012F147C
 class BfmeVersionAL
 {
 public:
-	UnicodeStringAL bfmeVersionTextAL(void);
+	UnicodeStringAL getUnicodeVersion(void);
 
-	int m_bfmeMajorAL;
-	int m_bfmeMinorAL;
+	int m_major;
+	int m_minor;
 };
 
-UnicodeStringAL BfmeVersionAL::bfmeVersionTextAL(void)
+UnicodeStringAL BfmeVersionAL::getUnicodeVersion(void)
 {
 	UnicodeStringAL text;
 
 	((UnicodeString &)text).format((UnicodeString)(((UnicodeStringAL &)reinterpret_cast<BfmeTextAL *>(TheGameText)->bfmeFetchAL("Version:Format2", 0)).bfmeTextAL()),
-			m_bfmeMajorAL, m_bfmeMinorAL);
+			m_major, m_minor);
 
 	return text;
 }

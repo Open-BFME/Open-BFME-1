@@ -338,7 +338,7 @@ class UnicodeStringAL : public UnicodeString
 class BfmeVersionAL
 {
 public:
-	UnicodeStringAL bfmeVersionTextAL();
+	UnicodeStringAL getUnicodeVersion();
 };
 
 class Version : public BfmeVersionAL
@@ -411,7 +411,7 @@ void PopulateReplayFileListbox(GameWindow *listbox)
 				else
 					mapStr = md->m_displayName;
 
-				Bool goodVersion = header.versionString == TheVersion->bfmeVersionTextAL()
+				Bool goodVersion = header.versionString == TheVersion->getUnicodeVersion()
 					&& header.versionNumber == TheVersion->getVersionNumber()
 					&& header.exeCRC == (UnsignedInt)Rva0009B4B0(reinterpret_cast<GlobalData0BC8 *>(TheWritableGlobalData)->m_valueBD0, reinterpret_cast<GlobalData0BC8 *>(TheWritableGlobalData)->m_valueBD0)
 					&& header.iniCRC == reinterpret_cast<GlobalData0BC8 *>(TheWritableGlobalData)->m_crcBC8;
