@@ -74,7 +74,7 @@ private:
 		GameWindow *first;
 		int second;
 	};
-	SpellStorePair m_fields260[ 12 ];
+	SpellStorePair m_spellButtons[ 12 ];
 	int m_fields2C0[ 3 ];
 	int m_spell;
 	char m_field2D0;
@@ -101,7 +101,7 @@ void BfmeAptScreenSpellStore::_bfme_onBttnClose( const char *name )
 		int spell = atoi( name + 5 ) - 1;
 		if( spell >= 0 && spell < 12 && !m_field25A )
 		{
-			GameWindow *button = m_fields260[ spell ].first;
+			GameWindow *button = m_spellButtons[ spell ].first;
 			if( button )
 			{
 				WinInstanceData *instance = button->winGetInstanceData();
