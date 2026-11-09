@@ -2620,7 +2620,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ??0BfmeStateBA@@QAE@PAXDD@Z,,0x0017FA10,83,game/GameEngine/Source/Common/BfmeStateBA.cpp,matched,Open-BFME5 AIFollowWaypointPathState constructor
 ??0BfmeStateBB@@QAE@PAX@Z,,0x0017F7F0,66,game/GameEngine/Source/Common/BfmeStateBB.cpp,matched,Open-BFME5 AIAttackMeleeApproachState constructor
 ??0BfmeStateBC@@QAE@PAXPBD@Z,,0x0017F3F0,54,game/GameEngine/Source/Common/BfmeStateBC.cpp,matched,Open-BFME5 named AI state constructor
-??0BfmeStateGS@@QAE@PAVBfmeArgGS@@@Z,,0x00160D20,177,game/GameEngine/Source/Common/BfmeConv2070.cpp,matched,state constructor seeding fields from the logic script engine and AI globals
+??0AIPlayer@@QAE@PAVPlayer@@@Z,,0x00160D20,177,game/GameEngine/Source/Common/BfmeConv2070.cpp,matched,state constructor seeding fields from the logic script engine and AI globals
 ??0BfmeStreakObject@@QAE@XZ,,0x009566D0,143,game/Libraries/Source/WWVegas/WW3D2/Rva009566D0Constructor.cpp,matched,owner proven by matched W3DStreakDraw caller and its setTexture/setShader/setReal/setVector/setInt/apply methods; complete 143-byte constructor with full130/1 tables and4-state EH
 ??0BfmeTagZB@@QAE@UFunctorBinding@@@Z,,0x0055F220,79,game/GameEngine/Source/Common/FunctorBindWrapperCtors.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0055f220-holder-parameter.md;Unified placeholder with bfmeSendZB parameter; binding and ownership proven by complete caller and helper decodes; evidence targets/game/reverse/identity_evidence/0055f220-holder-parameter.md;model=gpt-6.1-sol;host=fleet
 ??0BfmeThing947A@@QAE@PAXPAUBfmeSrc947@@@Z,,0x005FE010,63,game/GameEngine/Source/Common/BfmeConv947.cpp,matched,

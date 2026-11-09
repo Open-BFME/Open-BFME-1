@@ -4,7 +4,7 @@ extern "C" void * __identifier("??_7AIPlayer@@6B@")[ ];
 struct Rva00367E30Logic
 {
 	unsigned char m_bfmeHeadGS[0x3c];
-	int m_bfmeFrameGS;
+	int m_frame;
 };
 
 class ScriptEngine
@@ -18,14 +18,14 @@ class BfmeAiDataGS
 {
 public:
 	unsigned char m_bfmeHeadGS[8];
-	float m_bfmeRateGS;
+	float m_teamSeconds;
 };
 
 class AI
 {
 public:
 	unsigned char m_bfmeHeadGS[0x14];
-	BfmeAiDataGS *m_bfmeDataGS;
+	BfmeAiDataGS *m_aiData;
 };
 
 // Retail's GameLogic singleton; only GameLogic.cpp defines it.
@@ -34,37 +34,37 @@ extern GameLogic *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern AI *TheAI;
 
-class BfmeArgGS
+class Player
 {
 public:
 	unsigned char m_bfmeHeadGS[0x294];
-	char m_bfmeFlagGS;
+	char m_canBuildUnits;
 };
 
-class BfmeStateGS
+class AIPlayer
 {
 public:
-	BfmeStateGS(BfmeArgGS *a);
+	AIPlayer(Player *a);
 
 	void *volatile m_bfmeVftGS;
 	int m_bfme04GS;
 	int m_bfme08GS;
-	BfmeArgGS *m_bfme0cGS;
-	char m_bfme10GS;
-	char m_bfme11GS;
+	Player *m_bfme0cGS;
+	char m_readyToBuildTeam;
+	char m_readyToBuildStructure;
 	unsigned char m_bfmePad0GS[2];
-	int m_bfme14GS;
-	int m_bfme18GS;
+	int m_teamTimer;
+	int m_structureTimer;
 	volatile int m_bfme1cGS;
 	int m_bfme20GS;
 	int m_bfme24GS;
-	int m_bfme28GS;
-	int m_bfme2cGS;
-	int m_bfme30GS;
+	int m_frameLastBuildingBuilt;
+	int m_difficulty;
+	int m_skillsetSelector;
 	int m_bfme34GS;
 	int m_bfme38GS;
 	int m_bfme3cGS;
-	char m_bfme40GS;
+	char m_baseCenterSet;
 	unsigned char m_bfmePad1GS[3];
 	float m_bfme44GS;
 	int m_bfme48GS;
@@ -83,14 +83,14 @@ public:
 	int m_bfme74GS;
 };
 
-BfmeStateGS::BfmeStateGS(BfmeArgGS *a)
+AIPlayer::AIPlayer(Player *a)
 {
 	m_bfmeVftGS = bfmeVftGS;
 	m_bfme04GS = 0;
 	m_bfme08GS = 0;
 	m_bfme0cGS = a;
-	m_bfme10GS = 0;
-	m_bfme11GS = 0;
+	m_readyToBuildTeam = 0;
+	m_readyToBuildStructure = 0;
 	m_bfme20GS = 0;
 	m_bfme24GS = 0;
 	m_bfme50GS = 0;
@@ -102,12 +102,12 @@ BfmeStateGS::BfmeStateGS(BfmeArgGS *a)
 	m_bfme70GS = 0;
 	m_bfme74GS = 0;
 	m_bfme1cGS = 0xa;
-	m_bfme30GS = -1;
+	m_skillsetSelector = -1;
 	m_bfme44GS = 10.0f;
-	m_bfme14GS = 2;
-	m_bfme18GS = 2;
-	m_bfme28GS = reinterpret_cast<Rva00367E30Logic *>(TheGameLogic)->m_bfmeFrameGS;
-	a->m_bfmeFlagGS = 0;
+	m_teamTimer = 2;
+	m_structureTimer = 2;
+	m_frameLastBuildingBuilt = reinterpret_cast<Rva00367E30Logic *>(TheGameLogic)->m_frame;
+	a->m_canBuildUnits = 0;
 	m_bfme48GS = 0;
 	m_bfme4cGS = 0;
 	m_bfme54GS = 0;
@@ -116,7 +116,7 @@ BfmeStateGS::BfmeStateGS(BfmeArgGS *a)
 	m_bfme34GS = 0;
 	m_bfme38GS = 0;
 	m_bfme3cGS = 0;
-	m_bfme40GS = 0;
-	m_bfme2cGS = TheScriptEngine->m_bfmeValueGS;
-	m_bfme1cGS = (int)TheAI->m_bfmeDataGS->m_bfmeRateGS;
+	m_baseCenterSet = 0;
+	m_difficulty = TheScriptEngine->m_bfmeValueGS;
+	m_bfme1cGS = (int)TheAI->m_aiData->m_teamSeconds;
 }
