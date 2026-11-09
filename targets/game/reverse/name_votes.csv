@@ -6831,3 +6831,6 @@ game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128B|v,753864a6d053c
 game/GameEngine/Source/Common/BfmeConv1128.cpp|local|bfmeGo1128C|v,5706df7b5b63b8f0622a6dc7,claude-sonnet,20261109054355-fa1b27,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/AODHordeContainUpdateFormationMembers.cpp|param|Coord3D::Coord3D#3|o,12f11f453691ee08893b3ebd,claude-sonnet,20261109054355-58035f,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BfmeShortVecWNCtor.cpp|local|BfmeShortVecWN::BfmeShortVecWN|p,9c2b3fc4c7f9ef466a0b6556,claude-sonnet,20261109054355-479b10,2026-11-09
+game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeStart,e84b085c032b175e4e633920,claude-sonnet,20261109054355-b008ef,2026-11-09
+game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeFinish,edc32bfbda9f7faf5005768b,claude-sonnet,20261109054355-b008ef,2026-11-09
+game/GameEngine/Source/Common/Glo012F1028Sub_conquered.cpp|member||m_bfmeHolder,c665cd7b728a921331f985d6,claude-sonnet,20261109054355-b008ef,2026-11-09
