@@ -6529,3 +6529,6 @@ game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|type|
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeBorderSize,004a09e3b54f2bbf969ed8f2,claude-sonnet,20261109040012-fbb91f,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeMap,5274d40bc044a425bf7784d5,claude-sonnet,20261109040012-fbb91f,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cpp|function||Rva003B88F0ParseAnimObjectUpdate,1b2e6f1419537422527d191f,claude-sonnet,20261109035219-96b97b,2026-11-09
+game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeRefCount,49c8e142cf7ed9e71167a84f,claude-sonnet,20261109035219-4c76ea,2026-11-09
+game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeValue,ae20563e1e9eb722a07f6986,claude-sonnet,20261109035219-4c76ea,2026-11-09
+game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeData,d1d4b24b9108de9570441979,claude-sonnet,20261109035219-4c76ea,2026-11-09

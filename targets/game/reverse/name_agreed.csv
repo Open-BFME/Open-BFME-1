@@ -1579,3 +1579,4 @@ game/GameEngine/Source/Common/StateMachineCtorThunk.cpp|member||m_slot20,m_goalO
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeMap,m_map,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DTerrainLogicExtent.cpp|member||m_bfmeMap,m_map,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cpp|function||Rva003B88F0ParseAnimObjectUpdate,parseAnimObjectUpdate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/S3HandleCompareAssign.cpp|member||m_bfmeRefCount,m_refCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
