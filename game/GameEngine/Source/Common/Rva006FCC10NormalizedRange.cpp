@@ -23,13 +23,13 @@ public:
 
 private:
 	char m_unreconstructed_000[0x120];
-	float m_120;
-	float m_124;
+	float m_centerX;
+	float m_centerY;
 	float m_128;
 	float m_12c;
 	float m_130;
 	char m_unreconstructed_134[0x24];
-	float m_158[2551]; // Maximum sampled offset: 49 * 50 + 49 + 51.
+	float m_sample[2551]; // Maximum sampled offset: 49 * 50 + 49 + 51.
 };
 
 int Rva006FCCC0Owner::rva006FCC10(float value, float lower, float upper, float *fraction)
@@ -61,11 +61,11 @@ float Rva006FCCC0Owner::rva006FCCC0(float x, float y, float unused)
 		return zero;
 
 	float fx = zero, fy = zero;
-	int ix = rva006FCC10(x, m_120 - m_12c, m_120 + m_12c, &fx);
-	int iy = rva006FCC10(y, m_124 - m_130, m_124 + m_130, &fy);
+	int ix = rva006FCC10(x, m_centerX - m_12c, m_centerX + m_12c, &fx);
+	int iy = rva006FCC10(y, m_centerY - m_130, m_centerY + m_130, &fy);
 	int index = ix * 50 + iy;
-	float base0 = m_158[index], base1 = m_158[index + 1];
-	float lower = base0 + (m_158[index + 50] - base0) * fx;
-	float upper = base1 + (m_158[index + 51] - base1) * fx;
+	float base0 = m_sample[index], base1 = m_sample[index + 1];
+	float lower = base0 + (m_sample[index + 50] - base0) * fx;
+	float upper = base1 + (m_sample[index + 51] - base1) * fx;
 	return lower + (upper - lower) * fy;
 }

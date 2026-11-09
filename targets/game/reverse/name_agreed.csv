@@ -1640,3 +1640,6 @@ game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,m_sam
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field001C,m_pos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field003C,m_systemNext,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field0008,m_shaderType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_120,m_centerX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_124,m_centerY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,m_sample,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
