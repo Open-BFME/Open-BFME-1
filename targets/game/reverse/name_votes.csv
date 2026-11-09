@@ -7070,3 +7070,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp|m
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084D860CpInfo,9daf9d9c9d43afd33b9600c4,claude-sonnet,20261109064955-037e6d,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D820,727df772f77d523a387450a9,claude-sonnet,20261109064955-037e6d,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D860IsSingleByte,5e97674ce25b4d4c36361413,claude-sonnet,20261109064955-037e6d,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva00150700PathReset.cpp|local|Rva00150700Owner::reset|p,8fa56000481fb8adf64dd637,claude-sonnet,20261109065037-0a196c,2026-11-09
