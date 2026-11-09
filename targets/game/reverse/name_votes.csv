@@ -7767,3 +7767,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE730CameraBounds.cpp|me
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE730CameraBounds.cpp|member||box120,f817ffd993eeb3bc4e7d1a31,claude-sonnet,20261109110229-6be88d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1312.cpp|member||m_bfmeCritical,c6def138fca851eac8fddb2c,claude-sonnet,20261109110229-3afd28,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/TargetEligibility00290990.cpp|local|TargetEligibility00290990::accepts|templ,b0b22d6df914fb31acb6b32f,claude-sonnet,20261109110229-eb4913,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Rva00784090AptItemBounds.cpp|local|Rva00785FD0Item::getRenderRegion|p,5c0e3c57655ebfcc9c9886fb,claude-sonnet,20261109110228-7e0af7,2026-11-09
