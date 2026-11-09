@@ -7595,3 +7595,12 @@ game/GameEngine/Source/Common/BfmeConv1474.cpp|local|BfmeListVMU::bfmeEraseVMU|n
 game/GameEngine/Source/Common/BfmeConv997.cpp|type||BfmeA997,9bfb42e98c252e33056d571a,claude-sonnet,20261109095055-e53a48,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/TemporarilyDefectUpdateCtorThunk.cpp|member||m_f14,2d05737bd7e62a02e68e22a4,claude-sonnet,20261109094839-f098b6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/TemporarilyDefectUpdateCtorThunk.cpp|member||m_f18,00fbc3a8d36c572f2159ad01,claude-sonnet,20261109094839-f098b6,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|type||BfmeRecorderStore,4e17897abeadbc1a29921546,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeFile,653365184b1c3de52844ae82,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeFileName,3a5015e08cab473e807e9d91,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeCurrentFilePosition,ad189df20a8dd5a710700bd4,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeMode,f779b57e0de3fe1abd090ae2,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeGameInfo,c8b0d401efd6cb26d9b4a441,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeOriginalGameMode,baf714d72cbfc8980698ba32,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeNextFrame,4765fca3c1c51958b9bbf1ff,claude-sonnet,20261109094939-016646,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeDoingAnalysis,904cb3f2d081239c7d8965d9,claude-sonnet,20261109094939-016646,2026-11-09

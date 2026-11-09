@@ -2695,3 +2695,12 @@ game/GameEngine/Source/Common/BfmeConv1474.cpp|member||m_bfme04,m_next,claude-so
 game/GameEngine/Source/Common/BfmeConv997.cpp|type||BfmeA997,Drawable,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv997.cpp|type||BfmeA997,Drawable,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/TemporarilyDefectUpdateCtorThunk.cpp|member||m_f18,m_indexInLogic,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|type||BfmeRecorderStore,ReplayGameInfo,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeFile,m_file,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeFileName,m_fileName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeCurrentFilePosition,m_currentFilePosition,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeMode,m_mode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeGameInfo,m_gameInfo,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeOriginalGameMode,m_originalGameMode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeNextFrame,m_nextFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/RecorderClassConstructor.cpp|member||m_bfmeDoingAnalysis,m_doingAnalysis,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
