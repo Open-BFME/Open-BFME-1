@@ -6323,3 +6323,4 @@ game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_fi
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field45,89aca9b8976ce60a2b392d77,claude-sonnet,20261109022708-f9e608,2026-11-09
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field46,69880b359f3e39bec70493f5,claude-sonnet,20261109022708-f9e608,2026-11-09
 game/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp|member||m_field68,ce2111bbf18473114d6abc2f,claude-sonnet,20261109022708-f9e608,2026-11-09
+game/GameEngine/Source/Common/BfmeConv519.cpp|function|BfmeThingBRE@|bfmeGoBRE,c6b502961a13b61f28d7ab33,claude-sonnet,20261109022708-88043c,2026-11-09
