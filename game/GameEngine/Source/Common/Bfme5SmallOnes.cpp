@@ -10,7 +10,7 @@ class BfmeNodeBJ
 {
 public:
 	int m_bfmeHead[4];					// +0x00
-	BfmeNodeBJ *m_bfmeNext;					// +0x10
+	BfmeNodeBJ *m_next;					// +0x10
 };
 
 class Gen_0014A040
@@ -26,7 +26,7 @@ private:
 // ?bfmePush@Gen_0014A040@@QAEXPAVBfmeNodeBJ@@@Z
 void Gen_0014A040::bfmePush(BfmeNodeBJ *node)
 {
-	node->m_bfmeNext = m_bfmeList;
+	node->m_next = m_bfmeList;
 
 	m_bfmeList = node;
 }
