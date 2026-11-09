@@ -25,16 +25,16 @@ struct BfmeNodeIC
 	BfmeNodeIC *m_bfmeNext;
 };
 
-void __stdcall bfmeGoIC(BfmeNodeIC *n, BfmeThingIC *t)
+void __stdcall bfmeGoIC(BfmeNodeIC *node, BfmeThingIC *t)
 {
-	while (n) {
+	while (node) {
 		union CopyCall
 		{
 			void (__cdecl *freeCall)(void);
 			void (BfmeThingIC::*memberCall)(void *, BfmeNodeIC *);
 		} copyCall;
 		copyCall.freeCall = &j_0000ad85;
-		(t->*copyCall.memberCall)(t->m_bfmeVal, n);
-		n = n->m_bfmeNext;
+		(t->*copyCall.memberCall)(t->m_bfmeVal, node);
+		node = node->m_bfmeNext;
 	}
 }
