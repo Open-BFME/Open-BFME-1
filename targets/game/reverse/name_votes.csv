@@ -6694,3 +6694,7 @@ game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|param|UnicodeString
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeResultAS,cfcc5ec467c27f0e4310e7f9,glm,20261109044440-31391a,2026-11-09
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeNameAS,088b0e961c66fd957fa548aa,glm,20261109044440-31391a,2026-11-09
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|function|BfmeResolverAS@|bfmeResolveAS,2e63632d7f2ec1223eab8124,glm,20261109044440-31391a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_254,32ece3cb1e02855ed662f088,glm,20261109044708-d35ea6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_258,5e53bd480244ace524d1aa90,glm,20261109044708-d35ea6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_259,0ac3e1d34fea11f43b93074a,glm,20261109044708-d35ea6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_25c,1d162afb8c5c3f057bc57508,glm,20261109044708-d35ea6,2026-11-09
