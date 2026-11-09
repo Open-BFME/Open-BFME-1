@@ -6877,3 +6877,5 @@ game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|member||m_bfmeModeCA,6ba
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|getIndicatorColor|p,c6b6afb88c1d8ae33781a32f,claude-sonnet,20261109055352-df37f6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|rva001C15F0NightColor|p,341cfef9c47aeb6f85d48f34,claude-sonnet,20261109055352-df37f6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Rva001C15F0.cpp|local|Object::rva001C15F0|r,c0a48d2b69d620e5aca038c1,claude-sonnet,20261109055352-df37f6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|type||Rva002C1480Machine,66bfbcad2c03c0de4cff92ad,claude-sonnet,20261109055352-06c727,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/Rva002C1480PassengerRelease.cpp|member||m_machine30,3a7e2b9f8ea3b77037a04bcc,claude-sonnet,20261109055352-06c727,2026-11-09
