@@ -2610,3 +2610,7 @@ game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeS
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|y,scaleY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|s,sinTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|c,cosTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2062.cpp|member||m_bfmeTailCU,m_tail,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2062.cpp|member||m_bfmeHeadCU,m_head,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2062.cpp|member||m_bfmeNextCU,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2062.cpp|member||m_bfmePrevCU,m_prev,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
