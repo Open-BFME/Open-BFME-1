@@ -24,18 +24,18 @@ private:
     unsigned int Color;
     unsigned int m_f10;
     unsigned int m_f14;
-    unsigned int m_f18;
+    unsigned int m_opacity;
     unsigned int SubdivisionLevel;
-    unsigned int m_f20;
+    unsigned int m_noiseAmplitude;
     unsigned int m_f24;
     unsigned int MergeAbortFactor;
-    unsigned int m_f2C;
-    unsigned int m_f30;
+    unsigned int m_textureTileFactor;
+    unsigned int m_lastUsedSyncTime;
     unsigned int m_f34;
     unsigned int m_f38;
     unsigned int UVOffsetDeltaPerMS;
     unsigned int m_f40;
-    unsigned int m_f44;
+    unsigned int m_bits;
 };
 
 // ??4SegLineRendererClass@@QAEAAV0@ABV0@@Z
@@ -54,16 +54,16 @@ SegLineRendererClass &SegLineRendererClass::operator=(const SegLineRendererClass
     Color = that.Color;
     m_f10 = that.m_f10;
     m_f14 = that.m_f14;
-    m_f18 = that.m_f18;
-    m_f20 = that.m_f20;
+    m_opacity = that.m_opacity;
+    m_noiseAmplitude = that.m_noiseAmplitude;
     m_f24 = that.m_f24;
     MergeAbortFactor = that.MergeAbortFactor;
-    m_f2C = that.m_f2C;
-    m_f30 = that.m_f30;
+    m_textureTileFactor = that.m_textureTileFactor;
+    m_lastUsedSyncTime = that.m_lastUsedSyncTime;
     m_f34 = that.m_f34;
     m_f38 = that.m_f38;
     UVOffsetDeltaPerMS = that.UVOffsetDeltaPerMS;
     m_f40 = that.m_f40;
-    m_f44 = that.m_f44;
+    m_bits = that.m_bits;
     return *this;
 }
