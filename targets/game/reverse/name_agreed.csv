@@ -2450,3 +2450,11 @@ game/GameEngine/Source/Common/Rva00402700Eq.cpp|param|Rva00402700|p,pair,claude-
 game/GameEngine/Source/Common/Rva001B70E0Lookup.cpp|type||BfmeStrERA,AsciiString,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva00402700Eq.cpp|param|Rva00402700|p,pair,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Rva001B70E0Lookup.cpp|type||BfmeStrERA,AsciiString,claude-sonnet+gpt-6.1-sol,blocked: hook: skipped 1: unsizeable type | game/GameEngine/Source/Common/Rva001B70E0Lookup.cpp: declares its own `AsciiString`; include game/Libraries/Source/,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme38,m_useCloudMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme44,m_useLightMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme64,m_useShadowVolumes,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme65,m_useShadowDecals,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme68,m_textureReductionFactor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme70,m_enableBehindBuildingMarkers,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfme8c,m_showSoftWaterEdge,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1148.cpp|member||m_bfmeb8c,m_maxParticleCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
