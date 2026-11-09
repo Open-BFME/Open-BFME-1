@@ -42,15 +42,15 @@ class UpdateModule : public BehaviorModule, public UpdateModuleInterface
 {
 public:
 	UpdateModule(Thing *thing, const ModuleData *data)
-		: BehaviorModule(thing, data), m_value14(0), m_value18(-1), m_value1c(-1) {}
+		: BehaviorModule(thing, data), m_nextCallFrameAndPhase(0), m_indexInLogic(-1), m_value1c(-1) {}
 	virtual ~UpdateModule();
 
 protected:
 	void setWakeFrame(Object *, UpdateSleepTime);
 
 private:
-	unsigned int m_value14;
-	int m_value18;
+	unsigned int m_nextCallFrameAndPhase;
+	int m_indexInLogic;
 	int m_value1c;
 };
 

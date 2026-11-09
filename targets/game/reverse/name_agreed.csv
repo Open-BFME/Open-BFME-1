@@ -1130,3 +1130,5 @@ game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_di
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount03C,m_shockWaveAmount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount040,m_shockWaveRadius,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount044,m_shockWaveTaperOff,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/BroadcastStealthUpdateCtorThunk.cpp|member||m_value18,m_indexInLogic,claude-sonnet+gpt-6-astra,applied,2026-11-09
