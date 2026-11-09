@@ -6698,3 +6698,7 @@ game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdat
 game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_258,5e53bd480244ace524d1aa90,glm,20261109044708-d35ea6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_259,0ac3e1d34fea11f43b93074a,glm,20261109044708-d35ea6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ModelConditionSpecialAbilityUpdateModuleDataCtorThunk.cpp|member||m_25c,1d162afb8c5c3f057bc57508,glm,20261109044708-d35ea6,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|a,6637ab20b028710ec7995828,glm,20261109044903-be5075,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|b,a37abad0d6a40324cf460a5a,glm,20261109044903-be5075,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|y,9541d3da165ca6bfd69ae149,glm,20261109044903-be5075,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|x,578d722fa5d74ddbb81e7e38,glm,20261109044903-be5075,2026-11-09
