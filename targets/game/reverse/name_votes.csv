@@ -6902,3 +6902,4 @@ game/GameEngine/Source/GameLogic/Object/Update/EntEnragedUpdateCtorThunk.cpp|mem
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSpellStoreOnClosed.cpp|member||m_fields260,7cca507f00468788a42ff592,claude-sonnet,20261109060734-dfb402,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|type||Rva00377740Owner,ecd87297c7aa27cf0bac12a8,claude-sonnet,20261109061241-da2cdc,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|function|Rva00377740Interface@|Rva00377740,67051a7cfd6f9c743fb9d4fa,claude-sonnet,20261109061241-da2cdc,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|type||BfmeDataIS,31926923aa3eb83355f5ce25,claude-sonnet,20261109061402-93063e,2026-11-09

@@ -2038,3 +2038,4 @@ game/GameEngine/Source/GameLogic/Object/Update/EntEnragedUpdateCtorThunk.cpp|mem
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSpellStoreOnClosed.cpp|member||m_fields260,m_spellButtons,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSpellStoreOnClosed.cpp|member||m_fields260,m_spellButtons,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/EntEnragedUpdateCtorThunk.cpp|member||m_field14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|type||BfmeDataIS,ObjectCreationUpgradeModuleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
