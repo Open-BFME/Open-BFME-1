@@ -21,7 +21,7 @@ template<int N> class Slots00243EA0 : public Slots00243EA0<N-1> {
 public: virtual void unused(char (*)[N])=0;
 };
 template<> class Slots00243EA0<0> {};
-class AI00243EA0 : public Slots00243EA0<96> {
+class AIUpdateInterface : public Slots00243EA0<96> {
 public:
     virtual bool slot180()=0;
 #define S(N) virtual void unused##N()=0
@@ -40,7 +40,7 @@ public:
     char pad000[0x38]; Coord3D position;
     char pad044[0x74-0x44]; int m_id;
     char pad078[0x90-0x78]; unsigned field090;
-    char pad094[0x204-0x94]; AI00243EA0 *m_ai;
+    char pad094[0x204-0x94]; AIUpdateInterface *m_ai;
     int destinationLayer() const {
         union { void (*entry)(); int (Member00243EA0::*member)() const; } call;
         call.entry=j_0003a391;
@@ -52,14 +52,14 @@ class Command00243EA0 { public: void idle(int source) {
     call.entry=j_00024d70;
     (this->*call.member)(source);
 } };
-class Pathfinder00243EA0 { public:
+class Pathfinder { public:
     void removeGoal(Member00243EA0 *object) {
-        union { void (*entry)(); void (Pathfinder00243EA0::*member)(Member00243EA0 *); } call;
+        union { void (*entry)(); void (Pathfinder::*member)(Member00243EA0 *); } call;
         call.entry=j_00015d02;
         (this->*call.member)(object);
     }
 };
-class AI { public: char pad000[12]; Pathfinder00243EA0 *pathfinder; };
+class AI { public: char pad000[12]; Pathfinder *pathfinder; };
 extern AI *TheAI;
 struct Slot00243EA0 {
     int field000; Coord3D position; bool field010; char pad011[11];
@@ -86,7 +86,7 @@ void MemberGoalRefresh00243EA0::beginMelee(int target)
     for (_STL::list<Member00243EA0 *>::iterator it=members.begin();it!=members.end();++it) {
         Member00243EA0 *member=*it;
         if (!member) continue;
-        AI00243EA0 *ai=member->m_ai;
+        AIUpdateInterface *ai=member->m_ai;
         if (ai && ai->field1D8==4 && ai->field140) continue;
         int memberID=member->m_id;
         _STL::map<int,int>::iterator found=indices.find(memberID);
@@ -98,8 +98,8 @@ void MemberGoalRefresh00243EA0::beginMelee(int target)
             const Coord3D *position=&member->position;
             slot.position=*position;
             slot.field010=true;
-            Pathfinder00243EA0 *pathfinder=TheAI->pathfinder;
-            union { void (*entry)(); void (Pathfinder00243EA0::*member)(Member00243EA0 *,const Coord3D *,int,const char *,int); } update;
+            Pathfinder *pathfinder=TheAI->pathfinder;
+            union { void (*entry)(); void (Pathfinder::*member)(Member00243EA0 *,const Coord3D *,int,const char *,int); } update;
             update.entry=j_000294e2;
             (pathfinder->*update.member)(member,position,member->destinationLayer(),
                 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp",0x1862);
