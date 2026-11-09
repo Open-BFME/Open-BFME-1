@@ -24,6 +24,9 @@ class W3DShadowTexture : public RefCountClass, public HashableClass
 	public:
 
 		W3DShadowTexture( void );
+		// Retail's destructor (0x007AF4E0) lives in W3DShadowTextureDestructor.cpp; declared
+		// only, so this unit emits no non-retail implicit copy.
+		~W3DShadowTexture( void );
 
 		virtual	const char * Get_Key( void )	{ return m_namebuf;	}
 
