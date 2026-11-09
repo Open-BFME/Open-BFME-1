@@ -2270,3 +2270,4 @@ game/GameEngine/Source/Common/Bfme5PushNode.cpp|member||m_bfmeRefs,m_refCount,cl
 game/GameEngine/Source/Common/Bfme5PushNode.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5PushNode.cpp|member||m_bfmeHead,m_head,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5SharedStringAttach.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A8DC0.cpp|function|MilesAudioManager@|rva006A8DC0,killAudioEventImmediately,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
