@@ -6460,3 +6460,5 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|set
 game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo930D|s,a9e48aec32c410fb4eda5a83,claude-sonnet,20261109031243-8e071f,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva009A2BE0HashIterNext.cpp|local|Rva009A2BE0Iter::nextNode|n,5b2ce5a477f9bd0b6dcd3f56,claude-sonnet,20261109031727-60bd0c,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/OverchargeBehaviorCtorThunk.cpp|member||m_f14,e91f9dc9eefb3e01a7454551,claude-sonnet,20261109031912-a06b10,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmeNextXY,97eb809c2961103ddedea485,claude-sonnet,20261109031911-9269e9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2081.cpp|member||m_bfmePrevXY,989774339e7599e09e63f2ff,claude-sonnet,20261109031911-9269e9,2026-11-09
