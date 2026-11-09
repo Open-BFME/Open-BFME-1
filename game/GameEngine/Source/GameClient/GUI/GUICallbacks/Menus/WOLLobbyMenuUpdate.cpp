@@ -584,7 +584,7 @@ template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
 // The real 91-byte comparison remains visible for exception analysis.
 // Its independent emitted body exactly matches 00090570.
 template <>
-__declspec(noinline) int StringBase<char>::compare(const char *str) const {
+inline __declspec(noinline) int StringBase<char>::compare(const char *str) const {
   int strLen = str ? (int)strlen(str) : 0;
   int len = m_data ? m_data->length : 0;
   const char *data = m_data ? m_data->data : "";
