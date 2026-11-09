@@ -2629,3 +2629,6 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContainAnyMemberHeldByAI.cp
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field04,m_parent,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,m_left,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,m_right,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field04,m_parent,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field08,m_left,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cpp|member||m_field0c,m_right,claude-sonnet+gpt-6-astra,applied,2026-11-09

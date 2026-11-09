@@ -98,9 +98,9 @@ extern void j_00047c58(void);
 struct OwnedObjectNode
 {
 	void *m_pad00;
-	OwnedObjectNode *m_field04;
-	OwnedObjectNode * volatile m_field08;
-	OwnedObjectNode *m_field0c;
+	OwnedObjectNode *m_parent;
+	OwnedObjectNode * volatile m_left;
+	OwnedObjectNode *m_right;
 };
 
 struct OwnedObjectTree
@@ -116,11 +116,11 @@ struct OwnedObjectTree
 			union { void *asVoid; EraseCall asMember; } eraseCast;
 			eraseCast.asVoid = (void *)j_00047c58;
 			OwnedObjectNode *header = m_header;
-			(this->*eraseCast.asMember)(header->m_field04);
-			m_header->m_field08 = m_header;
+			(this->*eraseCast.asMember)(header->m_parent);
+			m_header->m_left = m_header;
 			*(volatile Int *)((char *)*(OwnedObjectNode * volatile *)((char *)this) + 4) = 0;
 			OwnedObjectNode *tail = *(OwnedObjectNode * volatile *)((char *)this);
-			tail->m_field0c = tail;
+			tail->m_right = tail;
 			m_size = 0;
 		}
 	}
