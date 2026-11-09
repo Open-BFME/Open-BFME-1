@@ -6866,3 +6866,8 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor
 game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|type||Override2140,c995a555805ea02a59e75172,claude-sonnet,20261109060233-f22342,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|local|Pathfinder::validateEndpoint003E2140|b,19b328cb910eaf7286a62e3f,claude-sonnet,20261109060233-f22342,2026-11-09
 game/GameEngine/Source/GameLogic/AI/PathfindGetRadiusAndCenterE30.cpp|local|Pathfinder::validateEndpoint003E2140|a,b1a0adfb186e97d6d6237059,claude-sonnet,20261109060233-f22342,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f18,c76988c1da8c6cfdb0a68a26,claude-sonnet,20261109060234-c333e5,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f20,f850d374982e542ad1c9cf45,claude-sonnet,20261109060234-c333e5,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f2C,5275b99095de6fd91f9c0662,claude-sonnet,20261109060234-c333e5,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f30,7e5a938ba5f1f7b9f5d8ac03,claude-sonnet,20261109060234-c333e5,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f44,0ee9e1229c55dc1dae43cedb,claude-sonnet,20261109060234-c333e5,2026-11-09

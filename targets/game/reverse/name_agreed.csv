@@ -2008,3 +2008,8 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva005717D0FunctorWrapper|b,binding,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva00571780FunctorWrapper|b,binding,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp: game\GameEngine\Source\GameClient\GUI\GUICallbacks\Apt\AptScoreS,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva005717D0FunctorWrapper|b,binding,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp: game\GameEngine\Source\GameClient\GUI\GUICallbacks\Apt\AptScoreS,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f18,m_opacity,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f20,m_noiseAmplitude,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f2C,m_textureTileFactor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f30,m_lastUsedSyncTime,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/SegLineRendererClassAssignThunk.cpp|member||m_f44,m_bits,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
