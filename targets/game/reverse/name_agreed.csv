@@ -1215,3 +1215,7 @@ game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,m_prev,cla
 game/GameEngine/Source/GameLogic/Object/Rva001C0010GeometryPosition.cpp|member||m_rva001C0010_ac,m_geometryInfo,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Rva001C0010GeometryPosition.cpp|member||m_rva001C0010_ac,m_geometryInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|member||m_rva16c,m_frameObjectsChangedTriggerAreas,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Obj,ExperienceTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Other,ExperienceScalarUpgradeModuleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_1c,m_experienceScalar,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_70,m_addXPScalar,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

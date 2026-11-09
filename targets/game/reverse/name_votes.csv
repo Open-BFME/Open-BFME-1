@@ -6239,3 +6239,7 @@ game/GameEngine/Source/GameNetwork/Rva007FF250Base64Decode.cpp|function||rva007F
 game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|type||Rva001D4010Template,cfae234ebc0d32568202a284,claude-sonnet,20261109012304-94f946,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|type||Rva001D4010Geometry,aae231586a9618b655726c1b,claude-sonnet,20261109012304-94f946,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp|member||m_rva16c,953cec7bfa284b5dd4d543f2,claude-sonnet,20261109012304-94f946,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Obj,599512bb8ba68451533dceb4,claude-sonnet,20261109012304-71394a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|type||Rva002D5100Other,fc15f1d98a4d59a2096a4fd5,claude-sonnet,20261109012304-71394a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_1c,a6035b01471c1133c9878278,claude-sonnet,20261109012304-71394a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/ExperienceScalarUpgradeUpgradeImplementation.cpp|member||m_70,b4ba606cdeb8c8ab91b83d77,claude-sonnet,20261109012304-71394a,2026-11-09
