@@ -78,7 +78,7 @@ public:
 	UnsignedInt m_flags11c;
 	UnsignedInt m_flags120;
 	char m_beforeAI204[0xe0];
-	Rva002BCB60Owner *m_ai204;
+	Rva002BCB60Owner *m_ai;
 	char m_beforeFlags344[0x13c];
 	unsigned char m_privateStatus;
 };
@@ -145,7 +145,7 @@ public:
 	virtual StateReturnType update();
 
 	char m_beforeMachine1c[0x18];
-	StateMachine *m_machine1c;
+	StateMachine *m_machine;
 	char m_beforeCounter28[8];
 	int m_counter28;
 };
@@ -155,7 +155,7 @@ extern const float g_rva01075350;
 
 StateReturnType AIGiantBirdFollowThruState::update()
 {
-	Object *object = m_machine1c->m_owner;
+	Object *object = m_machine->m_owner;
 	if ((object->m_privateStatus & 1) != 0)
 		return STATE_FAILURE;
 
@@ -169,7 +169,7 @@ StateReturnType AIGiantBirdFollowThruState::update()
 	if (m_counter28 > 40)
 		return STATE_FAILURE;
 
-	Rva002BCB60Owner *ai = object->m_ai204;
+	Rva002BCB60Owner *ai = object->m_ai;
 	if (ai == 0)
 		return STATE_FAILURE;
 
@@ -196,7 +196,7 @@ StateReturnType AIGiantBirdFollowThruState::update()
 		return STATE_FAILURE;
 
 	Object *otherTarget = TheGameLogic->findObjectByID(ai->m_targetID48c);
-	StateMachine *machine = m_machine1c;
+	StateMachine *machine = m_machine;
 	machine->setGoalObject(0);
 	if (otherTarget == 0 || (otherTarget->m_privateStatus & 1) != 0)
 		return STATE_SUCCESS;

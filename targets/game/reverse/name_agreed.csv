@@ -1518,3 +1518,5 @@ game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeHeight,m_
 game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCells,m_cells,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_ai204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_machine1c,m_machine,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_ai204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_machine1c,m_machine,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
