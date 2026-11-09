@@ -7212,3 +7212,6 @@ game/GameEngine/Source/GameLogic/Object/Update/WeaponFireSpecialAbilityUpdate_tr
 game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|type||Made001E5D60,46c943551a82248df1aa9a1a,claude-sonnet,20261109073723-969e29,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|local|parseAttributeModifierNugget|m,e62909eeffbb112a78f45db4,claude-sonnet,20261109073723-969e29,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|local|parseWeaponOCLNugget|m,9c2f726b299a62a83debaa66,claude-sonnet,20261109073723-969e29,2026-11-09
+game/GameEngine/Source/Common/Rva0040D780Parse.cpp|type||BfmeObjD540,99604d2c77af2440c3d3a8bc,claude-sonnet,20261109073722-2c72c1,2026-11-09
+game/GameEngine/Source/Common/Rva0040D780Parse.cpp|function||bfmeParseD780,071cb78b92eb26c095d343c4,claude-sonnet,20261109073722-2c72c1,2026-11-09
+game/GameEngine/Source/Common/Rva0040D780Parse.cpp|local|bfmeParseD780|s,484424d6ce913476bf83c41f,claude-sonnet,20261109073722-2c72c1,2026-11-09
