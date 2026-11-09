@@ -119,14 +119,14 @@ void INI::parseMultiplayerSettingsDefinition( INI* ini )
 
 void INI::parseMultiplayerColorDefinition( INI* ini )
 {
-	const char *c;
+	const char *token;
 	AsciiString name;
 	MultiplayerColorDefinition *multiplayerColorDefinition;
 
-	c = ini->getNextToken();
+	token = ini->getNextToken();
 	// BFME assigns rather than calling set(c): retail inlines strlen and calls
 	// the two-argument set, which is what operator=(const char *) expands to.
-	name = c;
+	name = token;
 
 	multiplayerColorDefinition = TheMultiplayerSettings->findMultiplayerColorDefinitionByName( name );
 	if( multiplayerColorDefinition == NULL )
