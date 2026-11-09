@@ -6666,3 +6666,9 @@ game/GameEngine/Source/Common/BfmeConv913.cpp|local|BfmeThing913D::bfmeGo913D|n,
 game/GameEngine/Source/Common/Rva005336D0Sort.cpp|function||Rva005336D0,80439eaff8666548ad67d4f5,claude-sonnet,20261109044941-061302,2026-11-09
 game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|function|Gen_00609320@|bfmeDisabled,dac20de3819cddc079d95ed9,claude-sonnet,20261109045405-9cd9fc,2026-11-09
 game/GameEngine/Source/Common/Bfme5TinyTwentyNine.cpp|function|Gen_006990B0@|bfmeReady,69ca206b558ecf864a1ad231,claude-sonnet,20261109045405-9cd9fc,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK|o,10fd1411b9e2c59c73064b79,claude-sonnet,20261109045405-498198,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#2|o,abb0be4fcac0033873f3e39a,claude-sonnet,20261109045405-498198,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#3|o,3c452edb22fb6971242cea7d,claude-sonnet,20261109045405-498198,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#4|o,cce18bd2b60d097b8a34d4d8,claude-sonnet,20261109045405-498198,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#5|o,6e4e6e14fdf01e34a5ba5e64,claude-sonnet,20261109045405-498198,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|BfmeThingCK::bfmeSwapCK|o,ae3aba1abde994a365583b6e,claude-sonnet,20261109045405-498198,2026-11-09

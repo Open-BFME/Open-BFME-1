@@ -1746,3 +1746,9 @@ game/GameEngine/Source/Common/BfmeConv913.cpp|member||m_bfmeNext,m_next,claude-s
 game/GameEngine/Source/Common/BfmeConv913.cpp|local|BfmeThing913D::bfmeGo913D|n,node,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv913.cpp|member||m_bfmeNext,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv913.cpp|local|BfmeThing913D::bfmeGo913D|n,node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#2|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#3|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#4|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|bfmeSwapCK#5|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeThingMemberwiseSwap.cpp|param|BfmeThingCK::bfmeSwapCK|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
