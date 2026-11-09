@@ -5,7 +5,7 @@ struct BfmeKeyZP
 {
 	char m_bfmeFlagZP;
 	unsigned char m_bfmePadZP[3];
-	AsciiString m_bfmeNameZP;
+	AsciiString m_name;
 };
 
 char __stdcall bfmeLessZP(const BfmeKeyZP *a, const BfmeKeyZP *b);
@@ -17,5 +17,5 @@ char __stdcall bfmeLessZP(const BfmeKeyZP *a, const BfmeKeyZP *b)
 	if ((b->m_bfmeFlagZP == 0) ^ (c == 0))
 		return c;
 
-	return a->m_bfmeNameZP.StringBase<char>::compareNoCase(b->m_bfmeNameZP) < 0;
+	return a->m_name.StringBase<char>::compareNoCase(b->m_name) < 0;
 }
