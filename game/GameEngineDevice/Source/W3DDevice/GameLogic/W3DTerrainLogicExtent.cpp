@@ -58,10 +58,10 @@ private:
 class BfmeTerrainRenderObject
 {
 public:
-	BfmeWorldHeightMap *getMap( void ) const { return m_bfmeMap; }
+	BfmeWorldHeightMap *getMap( void ) const { return m_map; }
 private:
 	char m_bfmeHead[0x2ff4];
-	BfmeWorldHeightMap *m_bfmeMap;							// @0x2ff4
+	BfmeWorldHeightMap *m_map;							// @0x2ff4
 };
 
 class BaseHeightMapRenderObjClass;
