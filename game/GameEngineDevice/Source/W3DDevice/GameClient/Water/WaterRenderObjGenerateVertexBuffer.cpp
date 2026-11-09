@@ -86,7 +86,7 @@ struct BfmeWaterSetting
 };
 
 /// The twin's SEA_PATCH_VERTEX: 0x18 bytes, the size retail locks.
-struct BfmeSeaPatchVertex
+struct SEA_PATCH_VERTEX
 {
 	Real x, y, z;
 	DWORD c;
@@ -155,8 +155,8 @@ HRESULT WaterRenderObjClass::generateVertexBuffer(Int sizeX, Int sizeY, Int vert
 		return S_OK;	// only create the buffer, other code will fill it.
 
 	// load results into buffer
-	BfmeSeaPatchVertex *pVertices;
-	if (FAILED(hr = self->m_vertexBufferD3D->Lock(0, self->m_numVertices * sizeof(BfmeSeaPatchVertex),
+	SEA_PATCH_VERTEX *pVertices;
+	if (FAILED(hr = self->m_vertexBufferD3D->Lock(0, self->m_numVertices * sizeof(SEA_PATCH_VERTEX),
 		(void **)&pVertices, 0)))
 		return hr;
 
