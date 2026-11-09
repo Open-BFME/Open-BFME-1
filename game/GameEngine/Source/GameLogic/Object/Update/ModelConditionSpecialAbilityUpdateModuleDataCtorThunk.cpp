@@ -20,19 +20,19 @@ public:
 	virtual ~ModelConditionSpecialAbilityUpdateModuleData();
 
 private:
-	unsigned int m_254;
-	unsigned char m_258;
-	unsigned char m_259;
+	unsigned int m_whichSpecialPower;
+	unsigned char m_generateTerror;
+	unsigned char m_generateUncontrollableFear;
 	unsigned char m_pad25a[2];
-	float m_25c;
+	float m_emotionPulseRadius;
 };
 
 // ??0ModelConditionSpecialAbilityUpdateModuleData@@QAE@XZ
 ModelConditionSpecialAbilityUpdateModuleData::ModelConditionSpecialAbilityUpdateModuleData()
 	: SpecialPowerModuleData()
 {
-	m_258 = 0;
-	m_259 = 0;
-	m_254 = 1;
-	m_25c = 50.0f;
+	m_generateTerror = 0;
+	m_generateUncontrollableFear = 0;
+	m_whichSpecialPower = 1;
+	m_emotionPulseRadius = 50.0f;
 }
