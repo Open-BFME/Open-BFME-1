@@ -6791,3 +6791,4 @@ game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeMode,
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeValue,b1bdd81bef71ba7a29e2c26e,claude-sonnet,20261109052946-818894,2026-11-09
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeFirst,69e87c6afc37e0b40933b24a,claude-sonnet,20261109052946-818894,2026-11-09
 game/GameEngine/Source/Common/Bfme5OptionalAttackForward.cpp|member||m_bfmeSecond,a83dabc05029d4af15675354,claude-sonnet,20261109052946-818894,2026-11-09
+game/GameEngine/Source/Common/BfmeStateAY.cpp|type||BfmeStateAY,6bb348ae70da38fa4b012e38,claude-sonnet,20261109054119-4e5c80,2026-11-09
