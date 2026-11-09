@@ -7573,3 +7573,4 @@ game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at1ac,9e0af13
 game/GameEngine/Source/GameClient/GUI/OnlineLoginApplyGadgets0054FB10.cpp|local|BfmeAptScreenOnlineLogin::applyLoginGadgets0054FB10|old9d,267669c67ea3a1d7c133bf62,claude-sonnet,20261109093801-d958a2,2026-11-09
 game/GameEngine/Source/Common/Rva0035ED70Restore.cpp|member||m_20,da8cbeb68e72506f345c4bee,claude-sonnet,20261109094007-698101,2026-11-09
 game/GameEngine/Source/Common/Rva0035ED70Restore.cpp|member||m_24,497c5e1a2f7661eafdb13cff,claude-sonnet,20261109094007-698101,2026-11-09
+game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|local|getTemplate|t,69d8683040048f4f31f424e6,claude-sonnet,20261109094055-f2acea,2026-11-09
