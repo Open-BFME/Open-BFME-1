@@ -6547,3 +6547,8 @@ game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeFlushSlots1289,0ad7cc80097b457ce4e1e82a,claude-sonnet,20261109035219-3e47ce,2026-11-09
 game/Libraries/Source/Apt/Rva008AE7C0CreateChannels.cpp|local|aptCreateChannels008AE7C0|s,d59096eb09c51b14f8153338,claude-sonnet,20261109035219-ac19c1,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Gen_00943CF0_Second.cpp|member||m_cells18,14fcbf769ac49d7c9b9904cf,claude-sonnet,20261109035219-cb6d4d,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme1ecETB,d94eceb684168283af94d3ee,claude-sonnet,20261109040732-4fff1e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme26cETB,2d3af2784923dd2c504088bb,claude-sonnet,20261109040732-4fff1e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme27cETB,19bf7e346021ea61ac3c061b,claude-sonnet,20261109040732-4fff1e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|function|BfmeHostETB@|bfmeApplyETB,5e2302304253054c26cc5be0,claude-sonnet,20261109040732-4fff1e,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|param|BfmeHostETB::bfmeApplyETB|arg,11ee9db1b2197cb94820a380,claude-sonnet,20261109040732-4fff1e,2026-11-09

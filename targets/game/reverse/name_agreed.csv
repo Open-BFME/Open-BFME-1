@@ -1604,3 +1604,8 @@ game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|member||m_positionY1278,m_yPos,
 game/Libraries/Source/Apt/BfmeFlushSlots1289.cpp|function|BfmeSlotDispatcher1281@|bfmeApplyPosition1291,applyPosition,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/Gen_00943CF0_Second.cpp|member||m_cells18,m_cells,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/Rva003B88F0ParseAnimObjectUpdate.cpp|function||Rva003B88F0ParseAnimObjectUpdate,parseAnimObjectUpdate,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x003B88F0 ?parseAnimObjectUpdate@@YAXPAVINI@@PAX1PBX@Z | outside every window of the target's slots 60485:37798-37802 | PRE-COMMIT FA,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme1ecETB,m_firingTracker,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme26cETB,m_weapons,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|member||m_bfme27cETB,m_curWeapon,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|function|BfmeHostETB@|bfmeApplyETB,fireCurrentWeapon,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/BfmeConv1981.cpp|param|BfmeHostETB::bfmeApplyETB|arg,pos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
