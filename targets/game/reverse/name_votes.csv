@@ -6861,3 +6861,5 @@ game/GameEngine/Source/Common/BfmeConv1010.cpp|type||BfmeA1010,5109fb9adbb7f245f
 game/GameEngine/Source/Common/BfmeConv1010.cpp|type||BfmeHeld1010,fcc041831e058269d7aeb669,claude-sonnet,20261109055538-b91e03,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeNext,bb5ef7bce5a8eb267c4b52b8,claude-sonnet,20261109055538-b91e03,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1010.cpp|member||m_bfmeList,127b0d82993b519f4d14d6a6,claude-sonnet,20261109055538-b91e03,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva00571780FunctorWrapper|b,30222565a7f86cb1160bda70,claude-sonnet,20261109060233-d84713,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptScoreScreenConstructor.cpp|param|Rva005717D0FunctorWrapper|b,f52779fa33ba7148946c0a20,claude-sonnet,20261109060233-d84713,2026-11-09
