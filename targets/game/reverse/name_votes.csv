@@ -7470,3 +7470,4 @@ game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appen
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendTimestampArgument|a,1be6390bfba0422c280143ce,claude-sonnet,20261109085718-18720c,2026-11-09
 game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendWideCharArgument|a,e106f712640d4f0304b6d733,claude-sonnet,20261109085718-18720c,2026-11-09
 game/Libraries/Source/EA/Apt/ConcatArray008B9CC0.cpp|local|isType|f,c88efad9cf7eca4456d21b23,claude-sonnet,20261109085836-02baaa,2026-11-09
+game/GameEngine/Source/Common/BfmeHostABD_bfmeAllocABD.cpp|type||BfmeHostABD,87948ade9edfbe6c7a493418,claude-sonnet,20261109090132-5cee18,2026-11-09
