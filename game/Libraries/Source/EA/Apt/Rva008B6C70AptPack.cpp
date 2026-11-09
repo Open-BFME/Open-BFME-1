@@ -9,13 +9,13 @@ class Rva008B6880 {
 public:
 	int rva008B66B0(int, int, int);
 	unsigned char m_unknown00[0x50];
-	int m_unknown50, m_unknown54, m_unknown58;
+	int m_day, m_month, m_year;
 };
 // RVA 0x008B6C70: weekday of the fields at +0x50..+0x58 as an Apt integer.
 AptInteger *aptWeekday50At008B6C70(void *self, int argc)
 {
 	Rva008B6880 *date = (Rva008B6880 *)self;
-	return AptInteger::Create(date->rva008B66B0(date->m_unknown58, date->m_unknown54, date->m_unknown50));
+	return AptInteger::Create(date->rva008B66B0(date->m_year, date->m_month, date->m_day));
 }
 struct Rva008B6C70Self { char m_pad[0x50]; int m_a; int m_b; int m_c; };
 AptValue* aptThirdHi(Rva008B6C70Self* self, int argc)
