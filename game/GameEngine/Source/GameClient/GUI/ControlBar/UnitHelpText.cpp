@@ -8,7 +8,7 @@ class Rva004B2470Handle;
 class Rva004B2300Base {
 public:
  virtual ~Rva004B2300Base() {}
- virtual Rva004B2470Handle slot04() = 0;
+ virtual Rva004B2470Handle clone() = 0;
  virtual void slot08() = 0;
  virtual void slot0C() = 0;
  virtual void slot10() = 0;
@@ -26,14 +26,14 @@ private:
 class Rva004B2300:public Rva004B2300Base {
 public:
  virtual ~Rva004B2300() {}
- virtual Rva004B2470Handle slot04();
+ virtual Rva004B2470Handle clone();
  virtual void slot08();
  virtual void slot0C();
  virtual void slot10();
  virtual void slot14();
  int m_04;int m_08;
 };
-Rva004B2470Handle Rva004B2300::slot04()
+Rva004B2470Handle Rva004B2300::clone()
 {
  Rva004B2470Handle h(new Rva004B2300(*this));
  return h;
