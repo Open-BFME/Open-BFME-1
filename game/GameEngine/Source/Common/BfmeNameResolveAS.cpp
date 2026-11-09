@@ -49,14 +49,14 @@ public:
 	void bfmeResolveAS(void);
 
 	char m_bfmePadAAS[0x58];
-	void *m_bfmeResultAS;
+	void *m_weaponTemplate;
 	char m_bfmePadBAS[4];
-	AsciiStringAS m_bfmeNameAS;
+	AsciiStringAS m_weaponName;
 };
 
 void BfmeResolverAS::bfmeResolveAS(void)
 {
 	bfmeRefreshAS();
 
-	m_bfmeResultAS = ((BfmeRegistryAS *)TheWeaponStore)->bfmeFindAS(m_bfmeNameAS);
+	m_weaponTemplate = ((BfmeRegistryAS *)TheWeaponStore)->bfmeFindAS(m_weaponName);
 }

@@ -1780,3 +1780,5 @@ game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdate
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_18,m_bonusScienceMultiplier,glm+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeResultAS,m_weaponTemplate,glm+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeNameAS,m_weaponName,glm+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeResultAS,m_weaponTemplate,glm+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeNameAS,m_weaponName,glm+gpt-6.1-sol,applied,2026-11-09
