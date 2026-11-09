@@ -7444,3 +7444,7 @@ game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|mem
 game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva38,27ec41e9ee096590d298b650,claude-sonnet,20261109084249-896554,2026-11-09
 game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|member||rva204,56fa5e8cef4a10e00019d1ba,claude-sonnet,20261109084249-896554,2026-11-09
 game/GameEngine/Source/Common/RTS/ActionManagerCanDoSpecialPowerAtObject.cpp|local|ActionManager::canDoSpecialPowerAtObject|m,6e6b2e6f399d39b2a705d226,claude-sonnet,20261109084249-896554,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62a,acb45645798f938e02ef44d9,claude-sonnet,20261109084347-29fb1c,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62b,854fcc7c2d027f057d2f7d85,claude-sonnet,20261109084347-29fb1c,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62c,050f780c96c652e0bd1ba7d5,claude-sonnet,20261109084347-29fb1c,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp|member||m_62d,77f9d6975bacac5eb5d3065c,claude-sonnet,20261109084347-29fb1c,2026-11-09
