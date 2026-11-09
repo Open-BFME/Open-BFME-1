@@ -16,7 +16,7 @@ struct Rva002324A0Radius
 struct Rva002324A0Info
 {
 	char m_unmodelled00[ 0x1CC ];
-	Rva002324A0Radius *m_radius1CC;
+	Rva002324A0Radius *m_curLocomotor;
 };
 
 struct Rva002324A0Thing
@@ -25,7 +25,7 @@ struct Rva002324A0Thing
 	float m_x38;
 	float m_y3C;
 	char m_unmodelled40[ 0x204 - 0x40 ];
-	Rva002324A0Info *m_info204;
+	Rva002324A0Info *m_ai;
 };
 
 class Rva002324A0Owner
@@ -38,9 +38,9 @@ bool Rva002324A0Owner::test( const Rva002324A0Thing *a, const Rva002324A0Thing *
 {
 	float dx = a->m_x38 - b->m_x38;
 	float dy = a->m_y3C - b->m_y3C;
-	Rva002324A0Info *info = a->m_info204;
+	Rva002324A0Info *info = a->m_ai;
 	if( !info )
 		return false;
-	float r = info->m_radius1CC->m_radius38;
+	float r = info->m_curLocomotor->m_radius38;
 	return dx * dx + dy * dy < r * r;
 }

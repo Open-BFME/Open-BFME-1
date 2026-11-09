@@ -2088,3 +2088,5 @@ game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeHolde
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeStateRC,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_radius1CC,m_curLocomotor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_info204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_radius1CC,m_curLocomotor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_info204,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
