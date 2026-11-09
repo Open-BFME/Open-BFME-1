@@ -7357,3 +7357,8 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDra
 game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|member||field480,6aa1ae63e6d7a5160cabf8c8,claude-sonnet,20261109075733-469bc2,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleDraw005F43B0.cpp|local|LightningDraw005F43B0::draw|p,69f2b448716f3db1994c89da,claude-sonnet,20261109075733-469bc2,2026-11-09
 game/GameEngine/Source/GameNetwork/V2FeslBrowserEvents.cpp|function||Rva007F79F0Callback,f98ae198f7f98a33573c1c61,claude-sonnet,20261109075733-42069f,2026-11-09
+game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_unknownString50,e36db76d06cbe6c58d78de41,claude-sonnet,20261109075733-0b35f0,2026-11-09
+game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_unknownString54,5fdc7f379e2a18be76243ea9,claude-sonnet,20261109075733-0b35f0,2026-11-09
+game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_scalar03ac,3e27a35576cbd1ff89d9f7f7,claude-sonnet,20261109075733-0b35f0,2026-11-09
+game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_byte0486,c9176441705350c016ec50cb,claude-sonnet,20261109075733-0b35f0,2026-11-09
+game/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp|member||m_byte0492,db953725c68ddb8fc4a45fd8,claude-sonnet,20261109075733-0b35f0,2026-11-09
