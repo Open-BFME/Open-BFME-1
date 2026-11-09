@@ -156,13 +156,13 @@ public:
 	virtual ~Inner010EDAA0() {}
 };
 
-class Rva003BD700String;
+class UnicodeString;
 
 // vptr head, wide string at +4, banner object id at +8 (sizeof 12).
 class Rva003BD700
 {
 public:
-	Rva003BD700( const Rva003BD700String &text, int id );
+	Rva003BD700( const UnicodeString &text, int id );
 
 private:
 	Inner010EDAA0 m_head;
@@ -251,7 +251,7 @@ void BannerUI::update()
 	if( (unsigned int)m_currentLocation < m_movieEntries.size() )
 	{
 		TheControlBar->bfmeShowDN( (BfmeMsgDN *)&static_cast<const Rva003BD700 &>( Rva003BD700(
-			*(const Rva003BD700String *)&static_cast<const UnicodeString &>(
+			*(const UnicodeString *)&static_cast<const UnicodeString &>(
 				TheGameText->fetch( "BANNERUI:SummaryTitle", 0 ) ),
 			m_movieEntries.begin()[ m_currentLocation ].m_bannerID ) ) );
 		m_currentLocation = -1;

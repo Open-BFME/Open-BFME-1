@@ -8,7 +8,7 @@
 template <typename T>
 class StringBase
 {
-	friend class Rva003BD700String;
+	friend class UnicodeString;
 
 private:
 	StringBase();
@@ -18,14 +18,14 @@ private:
 	int *m_data;
 };
 
-class Rva003BD700String : private StringBase<unsigned short>
+class UnicodeString : private StringBase<unsigned short>
 {
 public:
-	Rva003BD700String(const Rva003BD700String &other)
+	UnicodeString(const UnicodeString &other)
 		: StringBase<unsigned short>(other)
 	{
 	}
-	~Rva003BD700String() {}
+	~UnicodeString() {}
 };
 
 class __declspec(novtable) Rva003BD700Base
@@ -43,14 +43,14 @@ public:
 class Rva003BD700 : public Rva003BD700Base
 {
 public:
-	Rva003BD700(const Rva003BD700String &s, int n);
+	Rva003BD700(const UnicodeString &s, int n);
 
 private:
-	Rva003BD700String m_at04;
+	UnicodeString m_at04;
 	int m_at08;
 };
 
-Rva003BD700::Rva003BD700(const Rva003BD700String &s, int n)
+Rva003BD700::Rva003BD700(const UnicodeString &s, int n)
 	: m_at04(s)
 	, m_at08(n)
 {

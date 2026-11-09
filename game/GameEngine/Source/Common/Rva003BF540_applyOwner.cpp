@@ -92,7 +92,7 @@ extern GameLogic *TheGameLogic;
 // Rva003BD770's destructor; retail pairs them on one frame slot here, so the
 // temporary is an Rva003BD700 whose destruction routes through the claimed
 // destructor. vptr, wide string at +4, int at +8 (sizeof 12).
-class Rva003BD700String;
+class UnicodeString;
 
 class Rva003BD770
 {
@@ -103,7 +103,7 @@ public:
 class Rva003BD700
 {
 public:
-	Rva003BD700(const Rva003BD700String &s, int n);
+	Rva003BD700(const UnicodeString &s, int n);
 	~Rva003BD700()
 	{
 		((Rva003BD770 *)this)->~Rva003BD770();
@@ -185,5 +185,5 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 		text = TheGameText->fetch(label);
 
 	TheControlBar->bfmeShowDN((BfmeMsgDN *)&static_cast<const Rva003BD700 &>(
-		Rva003BD700(*(const Rva003BD700String *)&text, id)));
+		Rva003BD700(*(const UnicodeString *)&text, id)));
 }
