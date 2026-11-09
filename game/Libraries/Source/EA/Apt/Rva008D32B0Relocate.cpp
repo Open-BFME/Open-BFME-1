@@ -71,7 +71,10 @@ __forceinline Rva008D32B0Value *rva008D32B0Integer(int value) {
     }
     return 0;
 }
-class BfmeTab1024 { public: void bfmeAdd1024(int, int); };
+// 0x0089D890 is the landed ledger row ?add@Rva8D0D80Table@@QAEXPAVRva8D0D80String@@PAVRva8D0D80Value@@@Z.
+class Rva8D0D80String;
+class Rva8D0D80Value;
+class Rva8D0D80Table { public: void add(Rva8D0D80String *, Rva8D0D80Value *); };
 // Retail reaches FUN_00ccbdf0 through the 5-byte ILT thunk at 0x008CC560, so
 // the call target is ?j_008cc560@@YAXXZ; declare that name and call it with the
 // same four stack arguments.
@@ -121,7 +124,7 @@ void Rva008D32B0::relocate(unsigned base, int arg2, void *arg3) {
             case 2: {
                 RVA_RELOCATE(m_rows[i].m_commands[j]->m_04);
                 BfmeStrVKI key((const char *)m_rows[i].m_commands[j]->m_04);
-                ((BfmeTab1024 *)m_state)->bfmeAdd1024((int)&key, (int)rva008D32B0Integer(i));
+                ((Rva8D0D80Table *)m_state)->add((Rva8D0D80String *)&key, (Rva8D0D80Value *)rva008D32B0Integer(i));
                 break;
             }
             }

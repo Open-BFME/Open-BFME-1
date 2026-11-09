@@ -201,11 +201,13 @@ public:
 	void resolve(Rva8CD130Value *value);
 };
 
-class BfmeTab1024
+// 0x0089D890 is the landed ledger row ?add@Rva8D0D80Table@@QAEXPAVRva8D0D80String@@PAVRva8D0D80Value@@@Z.
+class Rva8D0D80String;
+class Rva8D0D80Value;
+class Rva8D0D80Table
 {
 public:
-	// Pinned spelling: ?bfmeAdd1024@BfmeTab1024@@QAEXHH@Z at 0x0089D890.
-	void bfmeAdd1024(int name, int node);
+	void add(Rva8D0D80String *name, Rva8D0D80Value *node);
 };
 
 class BfmeNode1285
@@ -240,7 +242,7 @@ public:
 struct BfmeContainer1024
 {
 	int m_00[4];
-	BfmeTab1024 *m_names;
+	Rva8D0D80Table *m_names;
 	int m_14;
 	int m_depth;
 };
@@ -435,7 +437,7 @@ void BfmeSubmitter1283::create008BE760(int key, void *descriptorArg, int nameArg
 		{
 			node->m_name = *name;
 			if (name->m_data != &g_bfmeDefaultString1284)
-				((BfmeContainer1024 *)parent->m_record)->m_names->bfmeAdd1024((int)name, (int)node);
+				((BfmeContainer1024 *)parent->m_record)->m_names->add((Rva8D0D80String *)name, (Rva8D0D80Value *)node);
 		}
 	}
 
