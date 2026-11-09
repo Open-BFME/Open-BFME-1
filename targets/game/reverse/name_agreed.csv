@@ -2292,3 +2292,12 @@ game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeThird,m_
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFourth,m_bottom,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp: game\GameEngine\Source\Common\Rva00465D50PointConvert.cpp(100) : error C2039: 'scaledX' : i,2026-11-09
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|y,scaledY,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp: game\GameEngine\Source\Common\Rva00465D50PointConvert.cpp(100) : error C2039: 'scaledX' : i,2026-11-09
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|x,scaledX,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp: game\GameEngine\Source\Common\Rva00465D50PointConvert.cpp(100) : error C2039: 'scaledX' : i,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeBegin,m_begin,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeEnd,m_end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeCap,m_capacity,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeName,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeX,m_x,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeY,m_y,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmePosition,m_position,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|t,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|p,slot,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

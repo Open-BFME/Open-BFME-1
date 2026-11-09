@@ -7140,3 +7140,16 @@ game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeThird,31
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|member||m_bfmeFourth,fd7452fcb0ae9111f8425f2f,claude-sonnet,20261109071459-e260c0,2026-11-09
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|y,5c211159e5a9e84f9215f383,claude-sonnet,20261109071459-e260c0,2026-11-09
 game/GameEngine/Source/Common/Rva00465D50PointConvert.cpp|local|Rva00465D50Owner::apply|x,561d05b768997b316fb11c8a,claude-sonnet,20261109071459-e260c0,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeBegin,94eb6528a64430b0d3d58377,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeEnd,3fc73b8db814b4e86ce58ba9,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeCap,4b64b01fa3763caef6730b99,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeKey,4bec53274d830313fb678e7c,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeName,b230691e44504334046c1e26,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeRoster,9340e11b76b09a745f9b50c6,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeX,dc0bf6a6c728eccf56bfac19,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeY,67135c1abeef251ec70101ff,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmePosition,097fb5241e965fb822954476,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|member||m_bfmeOwner,58ef874d939184310395686e,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|function|BfmeHordeContainRoster@|rva0023B9F0,60885da6cb910a5486030c6b,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|t,d6c7504a31eae1063d926e0f,claude-sonnet,20261109071709-d2fae1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|p,b963bf47f890f392287ab8a0,claude-sonnet,20261109071709-d2fae1,2026-11-09
