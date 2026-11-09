@@ -6854,3 +6854,6 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThun
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field34,b74a4aa294a0ca93f9008df5,claude-sonnet,20261109055538-5696b1,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field38,b545d9072e152f825f7ce820,claude-sonnet,20261109055538-5696b1,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field3c,af988d488a9c230cdc6861e1,claude-sonnet,20261109055538-5696b1,2026-11-09
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNext,f2560ffc74b55341cf2518a6,claude-sonnet,20261109055538-ef1d51,2026-11-09
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmePrev,99477610ee12bab2bf51855a,claude-sonnet,20261109055538-ef1d51,2026-11-09
+game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmeNode,60c90db15a1946eee13a1612,claude-sonnet,20261109055538-ef1d51,2026-11-09
