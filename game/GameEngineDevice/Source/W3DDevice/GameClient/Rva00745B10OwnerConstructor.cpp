@@ -43,7 +43,7 @@ private:
 
 // Camera move infos: plain data ending in (or holding) an ease; the owner
 // value-initialises them, which clears them before the ease constructor runs.
-struct Rva00745B10Info1AC
+struct TRotateCameraInfo
 {
 	char m_head[0x14];
 	ParabolicEase ease;
@@ -210,12 +210,12 @@ private:
 	int m_138;
 	char m_gap13c[0x1a4 - 0x13c];
 	ParabolicEase m_1a4;
-	Rva00745B10Info1AC m_1ac;
-	bool m_byte1DC;
+	TRotateCameraInfo m_rcInfo;
+	bool m_doingRotateCamera;
 	Rva00745B10EasedInfo<0x1c> m_1e0;
 	bool m_byte204;
-	Rva00745B10EasedInfo<0x18> m_208;
-	bool m_byte228;
+	Rva00745B10EasedInfo<0x18> m_zcInfo;
+	bool m_doingZoomCamera;
 	Rva00745B10EasedInfo<0x20> m_22c;
 	bool m_byte254;
 	Rva00745B10EasedInfo<0x1c> m_258;
@@ -253,7 +253,7 @@ private:
 
 Rva00745B10Owner::Rva00745B10Owner()
 	: m_104(0), m_108(0), m_10c(15), m_110(9), m_114(false), m_115(false), m_118(0), m_11c(0), m_138(0),
-	  m_1ac(), m_byte1DC(false), m_1e0(), m_byte204(false), m_208(), m_byte228(false), m_22c(), m_byte254(false), m_258(),
+	  m_rcInfo(), m_doingRotateCamera(false), m_1e0(), m_byte204(false), m_zcInfo(), m_doingZoomCamera(false), m_22c(), m_byte254(false), m_258(),
 	  m_byte27C(false), m_flag27D(false),
 	  m_int2354(0),
 	  m_byte23B8(false), m_int23BC(0), m_23c0(false), m_23c4(0), m_23c8(true),
