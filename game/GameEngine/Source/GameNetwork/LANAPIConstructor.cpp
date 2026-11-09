@@ -111,7 +111,7 @@ protected:
 	UnsignedInt m_expiration;
 	UnsignedInt m_actionTimeout;
 	UnsignedInt m_directConnectRemoteIP;
-	UnsignedShort m_bfme_0x34;
+	UnsignedShort m_directConnectRemotePort;
 	UnsignedInt m_lastResendTime;
 	Bool m_isInLANMenu;
 	Bool m_inLobby;
@@ -140,7 +140,7 @@ LANAPI::LANAPI(void)
 	m_expiration = 0;
 	m_actionTimeout = getenv("_EA_RTS_HEADLESS") ? 50000 : 5000;
 	m_directConnectRemoteIP = 0;
-	m_bfme_0x34 = 0;
+	m_directConnectRemotePort = 0;
 	_ReadWriteBarrier();
 	m_lastResendTime = 0;
 	m_isInLANMenu = true;
