@@ -141,9 +141,9 @@ class RubbleRiseUpdate
 	void doPhaseStuff(RubbleRisePhaseType, const Coord3D *);
 
   public:
-	void phase(RubbleRisePhaseType p, const Coord3D *pos)
+	void phase(RubbleRisePhaseType phaseType, const Coord3D *pos)
 	{
-		doPhaseStuff(p, pos);
+		doPhaseStuff(phaseType, pos);
 	}
 };
 extern void j_0000520e();
