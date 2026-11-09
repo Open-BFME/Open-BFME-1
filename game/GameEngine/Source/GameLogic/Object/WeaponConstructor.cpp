@@ -60,10 +60,10 @@ private:
 };
 
 // ??0Weapon@@IAE@PBVWeaponTemplate@@W4WeaponSlotType@@@Z
-Weapon::Weapon(const WeaponTemplate *tmpl, WeaponSlotType wslot)
+Weapon::Weapon(const WeaponTemplate *weaponTemplate, WeaponSlotType wslot)
 {
 	m_tailState = 0;
-	m_template = tmpl;
+	m_template = weaponTemplate;
 	m_unknown08 = 0;
 	m_wslot = wslot;
 	m_status = 1;
@@ -75,10 +75,10 @@ Weapon::Weapon(const WeaponTemplate *tmpl, WeaponSlotType wslot)
 	m_projectileStreamID = 0;
 	m_leechWeaponRangeActive = 0;
 	m_unknown54 = 0;
-	m_pitchLimited = (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(tmpl) + 0x78)) > -3.14159265f || (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(tmpl) + 0x7c)) < 3.14159265f;
+	m_pitchLimited = (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(weaponTemplate) + 0x78)) > -3.14159265f || (*reinterpret_cast<const float *>(reinterpret_cast<const char *>(weaponTemplate) + 0x7c)) < 3.14159265f;
 	m_curBarrel = 0;
 	m_maxShotCount = 0x7fffffff;
-	m_numShotsForCurBarrel = (*reinterpret_cast<const int *>(reinterpret_cast<const char *>(tmpl) + 0x4d0));
+	m_numShotsForCurBarrel = (*reinterpret_cast<const int *>(reinterpret_cast<const char *>(weaponTemplate) + 0x4d0));
 	m_unknown2c = 0;
-	m_suspendFXFrame = TheGameLogic->getFrame() + (*reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(tmpl) + 0x518));
+	m_suspendFXFrame = TheGameLogic->getFrame() + (*reinterpret_cast<const unsigned int *>(reinterpret_cast<const char *>(weaponTemplate) + 0x518));
 }
