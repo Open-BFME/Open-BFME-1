@@ -1302,3 +1302,7 @@ game/GameEngine/Source/Common/BfmeConv1253.cpp|type||BfmeVec1253,Coord3D,claude-
 game/GameEngine/Source/Common/BfmeConv1253.cpp|param|BfmeA1253::bfmeDraw1253|p,pos,claude-sonnet+gpt-6.1-sol,blocked: hook: game/GameEngine/Source/Common/BfmeConv1253.cpp: declares its own `Coord3D`; include game/Libraries/Include/Lib/Coord3D.h instead (or `// class-g,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTree.cpp|type||Rva00736B60Data,W3DTreeDrawModuleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTree.cpp|function|W3DTreeBuffer@|rva00736b60,addTree,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_28,m_parent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_0C,m_startNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_10,m_goalNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_14,m_openList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

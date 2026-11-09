@@ -6307,3 +6307,8 @@ game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeYUC,effca787e789295
 game/GameEngine/Source/Common/BfmeConv1729.cpp|member||m_bfmeZUC,6b40806f98bef6c5161e5daf,claude-sonnet,20261109021901-bcca7e,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTree.cpp|type||Rva00736B60Data,ca4dc8e9c522284a188bd7a8,claude-sonnet,20261109021902-104883,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTree.cpp|function|W3DTreeBuffer@|rva00736b60,0a3288ca9728bb4b4bea298c,claude-sonnet,20261109021902-104883,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_28,38dd051448c294041792911d,claude-sonnet,20261109021902-5d1ee9,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_0C,4972c89457005fdd15dd73ec,claude-sonnet,20261109021902-5d1ee9,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_10,1ef0f2f4ec275f467f486cda,claude-sonnet,20261109021902-5d1ee9,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_14,946bfc83e6a512a0a6f5074a,claude-sonnet,20261109021902-5d1ee9,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|function|BfmeObjHC@|bfmeDoHC,1ac25cf2ad9d5f61650563ce,claude-sonnet,20261109021902-5d1ee9,2026-11-09
