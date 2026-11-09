@@ -1725,3 +1725,4 @@ game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00734180.cpp|function|W3DTreeBuffer@|rva00734180,cull,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00734180.cpp|function|W3DTreeBuffer@|rva00734180,cull,claude-sonnet+gpt-6.1-sol,blocked: hook: functions 0x00734180 ?cull@W3DTreeBuffer@@QAEXPBVCameraClass@@@Z | outside every window of the target's slots 50708:29979-29983 | PRE-COMMIT FAI,2026-11-09
 game/GameEngine/Source/Common/BfmeConv804.cpp|local|bfmeGoECD|o,gameInfo,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv804.cpp|local|bfmeGoECD|o,gameInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

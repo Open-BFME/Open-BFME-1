@@ -13,10 +13,10 @@ extern SkirmishGameInfo *TheSkirmishGameInfo;
 
 bool bfmeGoECD()
 {
-	BfmeObjECC *o = reinterpret_cast<BfmeObjECC *>(TheSkirmishGameInfo);
-	if (!o)
+	BfmeObjECC *gameInfo = reinterpret_cast<BfmeObjECC *>(TheSkirmishGameInfo);
+	if (!gameInfo)
 		return false;
-	return o->bfmeAsk4ECC();
+	return gameInfo->bfmeAsk4ECC();
 }
 
 class BfmeSubECE
