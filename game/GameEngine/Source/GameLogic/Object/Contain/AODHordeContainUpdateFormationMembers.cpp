@@ -45,7 +45,7 @@ extern "C" void __identifier("?bfmeRelativeAngleTo@Thing@@QBEMPBUCoord3D@@@Z")(v
 #pragma intrinsic(memcpy)
 inline Coord3D::Coord3D() {}
 inline Coord3D::Coord3D(float ax,float ay,float az) {x=ax;y=ay;z=az;}
-inline Coord3D::Coord3D(const Coord3D &o) {x=o.x;y=o.y;z=o.z;}
+inline Coord3D::Coord3D(const Coord3D &other) {x=other.x;y=other.y;z=other.z;}
 inline Coord3D::~Coord3D() {}
 inline Coord3D &Coord3D::operator=(const Coord3D &o) {memcpy(this,&o,sizeof(*this));return *this;}
 inline void Coord3D::sub(const Coord3DBase *that) {x-=that->x;y-=that->y;z-=that->z;}
