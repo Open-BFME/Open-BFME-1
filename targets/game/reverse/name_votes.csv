@@ -6910,3 +6910,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImpl
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp|type||Rva002D64D0Target,38da2d7f8cd8a7b12b3f2591,claude-sonnet,20261109061446-0889f9,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp|type||Rva002D64D0Data,07482190ea2dfae0d15c55a3,claude-sonnet,20261109061446-0889f9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv996.cpp|type||BfmeX996,da50a69198ea3ec6ecb3b076,claude-sonnet,20261109061446-c9e08a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/NearestPosition00206960.cpp|type||Position00206960,2fd6ea542ffd7a643daee513,claude-sonnet,20261109061821-8e282a,2026-11-09
