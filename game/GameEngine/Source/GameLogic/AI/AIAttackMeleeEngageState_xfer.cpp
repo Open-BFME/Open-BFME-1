@@ -88,7 +88,7 @@ private:
 	AIAttackFireWeaponState *m_field50;
 	int m_field54;
 	unsigned int m_field58;
-	Coord3DBase m_field5C;
+	Coord3DBase m_prevVictimPos;
 	ICoord2D m_field68;
 	unsigned int m_field70;
 	bool m_field74;
@@ -107,7 +107,7 @@ void AIAttackMeleeEngageState::xfer(Xfer *xfer)
 
 	if (!xfer->IsLightCRC())
 	{
-		*xfer == m_field5C;
+		*xfer == m_prevVictimPos;
 		*xfer == m_field68;
 		*xfer == m_field58;
 		*xfer == m_field75;
