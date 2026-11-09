@@ -1206,3 +1206,5 @@ game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva00087A80Vie
 game/GameEngine/Source/Common/Rva001CCFC0OwnerApplyMask.cpp|type||Rva001CCFC0TemplateView,ThingTemplate,claude-sonnet+gpt-6.1-sol,blocked: hook: [pin-on-other-identity] ?rva00087A80@Overridable@@QBEPBV1@XZ 0x000022BB | walk 0x000022BB -> 0x00087A80: the body already carries ?friend_getFin,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_70,m_addMaxHealth,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_74,m_maxHealthChangeType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_70,m_addMaxHealth,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_74,m_maxHealthChangeType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

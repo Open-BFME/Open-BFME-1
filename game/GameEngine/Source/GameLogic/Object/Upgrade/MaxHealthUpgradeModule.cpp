@@ -80,8 +80,8 @@ public:
 private:
 	int m_pad;
 	char m_sub_space[0x68];
-	unsigned int m_70;
-	unsigned int m_74;
+	unsigned int m_addMaxHealth;
+	unsigned int m_maxHealthChangeType;
 };
 
 class MaxHealthUpgradeModuleDataVtbl
@@ -93,8 +93,8 @@ public:
 private:
 	int m_pad;
 	char m_sub_space[0x68];
-	unsigned int m_70;
-	unsigned int m_74;
+	unsigned int m_addMaxHealth;
+	unsigned int m_maxHealthChangeType;
 };
 
 // ??0MaxHealthUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z
@@ -110,8 +110,8 @@ MaxHealthUpgradeModuleData::MaxHealthUpgradeModuleData()
 	UpgradeModuleDataSub *sub =
 		(UpgradeModuleDataSub *)((char *)this + 8);
 	sub->UpgradeModuleDataSub::UpgradeModuleDataSub();
-	m_70 = 0;
-	m_74 = 0;
+	m_addMaxHealth = 0;
+	m_maxHealthChangeType = 0;
 	MaxHealthUpgradeModuleDataVtbl *v =
 		(MaxHealthUpgradeModuleDataVtbl *)this;
 	v->MaxHealthUpgradeModuleDataVtbl::MaxHealthUpgradeModuleDataVtbl();
