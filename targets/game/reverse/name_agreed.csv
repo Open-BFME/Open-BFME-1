@@ -2001,3 +2001,4 @@ game/GameEngine/Source/Common/Bfme5ClearingDtor.cpp|member||m_bfmePrev,m_prev,cl
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field04,m_windMotion,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field1c,m_windAngleChangeMin,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleInfoCtorThunk.cpp|member||field20,m_windAngleChangeMax,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_startUnpacking.cpp|local|SpecialAbilityUpdate::startUnpacking|d,moduleData,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09

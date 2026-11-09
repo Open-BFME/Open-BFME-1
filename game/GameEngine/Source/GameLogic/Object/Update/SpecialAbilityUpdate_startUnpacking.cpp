@@ -75,20 +75,20 @@ class SpecialAbilityUpdate { public:
 };
 void SpecialAbilityUpdate::startUnpacking() {
  Object* self=object;
- const SpecialAbilityUpdateModuleData* d=data;
+ const SpecialAbilityUpdateModuleData* moduleData=data;
  packingState=2;
- float variation=GetGameLogicRandomValueReal(1.0f-d->m_packUnpackVariationFactor,1.0f+d->m_packUnpackVariationFactor,
+ float variation=GetGameLogicRandomValueReal(1.0f-moduleData->m_packUnpackVariationFactor,1.0f+moduleData->m_packUnpackVariationFactor,
  "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\SpecialAbilityUpdate.cpp",1170);
- animFrames=(unsigned)(d->m_unpackTime*variation);
+ animFrames=(unsigned)(moduleData->m_unpackTime*variation);
  self->clearAndSetModelConditionFlags(BitFlags<320>(BitFlags<320>::kInit,93),BitFlags<320>(BitFlags<320>::kInit,95));
  self->setStatus(BitFlags<86>(BitFlags<86>::kInit,69),true);
- if(d->field208) {
-  if(d->field208==1) self->setCondition(96);
-  else if(d->field208==2) self->setCondition(97);
-  else if(d->field208==3) self->setCondition(98);
+ if(moduleData->field208) {
+  if(moduleData->field208==1) self->setCondition(96);
+  else if(moduleData->field208==2) self->setCondition(97);
+  else if(moduleData->field208==3) self->setCondition(98);
  }
  Object* target=TheGameLogic->findObjectByID(targetID);
- int type=d->m_specialPowerTemplate->getType();
+ int type=moduleData->m_specialPowerTemplate->getType();
  switch(type) {
  case 106:
   if(self->conditions.test(267)) {
