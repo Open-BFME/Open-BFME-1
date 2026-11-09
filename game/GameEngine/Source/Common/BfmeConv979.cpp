@@ -11,7 +11,7 @@ class Player;
 struct BfmeStateA979
 {
 	char m_bfmePad[0x10c];
-	int m_bfmeMode;
+	int m_gameMode;
 };
 
 class WindowManager
@@ -43,7 +43,7 @@ extern Shell *TheShell;
 
 char bfmeGo979A(void)
 {
-	if (!((BfmeStateA979 *)TheGameLogic) || !TheShell || ((BfmeStateA979 *)TheGameLogic)->m_bfmeMode == 4
+	if (!((BfmeStateA979 *)TheGameLogic) || !TheShell || ((BfmeStateA979 *)TheGameLogic)->m_gameMode == 4
 			|| !TheShell->showShellMap(true))
 		return 1;
 
