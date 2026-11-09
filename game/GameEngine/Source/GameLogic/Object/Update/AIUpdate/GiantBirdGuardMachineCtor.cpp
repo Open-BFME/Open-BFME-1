@@ -60,7 +60,7 @@ private:
  unsigned char m_guardFields44[0x34];
 };
 
-extern int g_GiantBirdGuardOuterStateVTable;
+extern "C" int __identifier("?g_GiantBirdGuardVftable@@3PAPAXA")[];
 // The retail tables at 0x002C0470 and 0x002BBCF0 are the vftables of
 // Rva002C0470State (defined in StateSelfNamingCtorsWithFields.cpp) and
 // Rva002BBCF0TailDtor (VptrTailJumpDestructors.cpp).  C++ cannot spell a
@@ -77,7 +77,7 @@ public:
 		: State( (StateMachine *)machine, AsciiString( "GiantBirdNormalFlightState" ) )
 	{
 		m_byte24 = 1;
-		m_vftable = &g_GiantBirdGuardOuterStateVTable;
+		m_vftable = __identifier("?g_GiantBirdGuardVftable@@3PAPAXA");
 		m_int28 = 0;
 		m_int2c = 0;
 		m_int30 = 0;
