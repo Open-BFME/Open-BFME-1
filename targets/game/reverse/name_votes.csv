@@ -6950,3 +6950,5 @@ game/GameEngine/Source/Common/BfmeLimitedEdgeFilters.cpp|local|Rva009AFEC0Filter
 game/GameEngine/Source/GameClient/Rva0040B5A0Init.cpp|member||m_18,6692c3a0f3d06a37ba18bdd3,claude-sonnet,20261109062458-225373,2026-11-09
 game/GameEngine/Source/GameClient/Rva0040B5A0Init.cpp|member||m_40,29d49e1b4daea96aa2b95c5c,claude-sonnet,20261109062458-225373,2026-11-09
 game/GameEngine/Source/GameClient/Rva0040B5A0Init.cpp|member||m_44,f466102d32d3ecacde0d3a1f,claude-sonnet,20261109062458-225373,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|member||m_bfmeUpgradesCompleted,3b803d36f75a3026614cb9ae,claude-sonnet,20261109062554-79cdb8,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|function|BfmeHordeContainOwner@|bfmeReleaseMember,6ca334371e2066dd9f191d69,claude-sonnet,20261109062554-79cdb8,2026-11-09
