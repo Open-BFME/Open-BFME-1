@@ -7475,3 +7475,4 @@ game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeValVNJ,4809580363dd8334
 game/GameEngine/Source/Common/BfmeConv1515.cpp|type||BfmeThingVNJ,8e5f0f8007bef7fc7fb020d9,claude-sonnet,20261109090132-0faffb,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1515.cpp|function|BfmeThingVNJ@|bfmeGetVNJ,1b5c0fdffd30c690e508ff04,claude-sonnet,20261109090132-0faffb,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1515.cpp|local|BfmeThingVNJ::bfmeGetVNJ|p,b8ac6bf06a7ea61767009bc9,claude-sonnet,20261109090132-0faffb,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1980.cpp|type||BfmeStrDataETA,dfc003ddb8149b1e99cd6770,claude-sonnet,20261109090131-0978d2,2026-11-09
