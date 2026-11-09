@@ -35,9 +35,9 @@ bool TargetEligibility00290990::accepts(Object* target) {
   void* container=*(void**)((char*)at1c+0x214);
   if(container && container==*(void**)((char*)target+0x214)) return true;
  }
- const char* templ=*(char**)((char*)target+4);
- if(templ && *(Overridable**)(templ+4)) templ=(const char*)(*(Overridable**)(templ+4))->getFinalOverride();
- if((*(unsigned char*)(templ+0xc8)&0x80)!=0) return false;
+ const char* thingTemplate=*(char**)((char*)target+4);
+ if(thingTemplate && *(Overridable**)(thingTemplate+4)) thingTemplate=(const char*)(*(Overridable**)(thingTemplate+4))->getFinalOverride();
+ if((*(unsigned char*)(thingTemplate+0xc8)&0x80)!=0) return false;
  if(target->isKindOf(K108) || target->isKindOf(K53) || target->isKindOf(K2) || target->isKindOf(K47)) return false;
  if(source->getRelationship(target)!=ENEMY) return false;
  if(*(unsigned char*)((char*)target+0x344)&1) return false;
