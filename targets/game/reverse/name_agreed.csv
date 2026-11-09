@@ -1306,3 +1306,7 @@ game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|me
 game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_0C,m_startNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_10,m_goalNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_14,m_openList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_28,m_parent,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_0C,m_startNode,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_10,m_goalNode,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|member||m_14,m_openList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
