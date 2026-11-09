@@ -2132,3 +2132,6 @@ game/GameEngine/Source/GameLogic/AI/AIRva0014DAB0AreaEnemy.cpp|type||ContainModu
 game/GameEngine/Source/GameLogic/AI/AIRva0014DAB0AreaEnemy.cpp|type||ContainModule0014DAB0,ContainModuleInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|r,relationship,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva001CA9C0.cpp|local|Rva001CA9C0::rva001CA9C0|r,relationship,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0Invoke|x,xfer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0Flags|x,xfer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0C3E0|x,xfer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
