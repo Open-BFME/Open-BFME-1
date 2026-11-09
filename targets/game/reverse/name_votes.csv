@@ -6653,3 +6653,4 @@ game/GameEngine/Source/Common/BfmeConv1137Release.cpp|local|BfmeA1137Release::bf
 game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|member||m_template04,ab9d48313aafb7d1ed681e20,claude-sonnet,20261109044630-0d3fd3,2026-11-09
 game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|function||Rva0046F490DrawBoundsOverlay,02495a1889879ced17277623,claude-sonnet,20261109044630-0d3fd3,2026-11-09
 game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|local|Rva0046F490DrawBoundsOverlay|t,cfa5c3ac8b59f64313fa25ad,claude-sonnet,20261109044630-0d3fd3,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawStrings006e8790.cpp|type||BfmeDrawString006e,eefa0b1afa76b780ba67a019,claude-sonnet,20261109044948-bfd4a7,2026-11-09
