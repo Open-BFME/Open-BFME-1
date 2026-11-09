@@ -7763,3 +7763,5 @@ game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|b
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeConcat#2|s,2aa23c604e165786f00c36bd,claude-sonnet,20261109105549-4b78ed,2026-11-09
 game/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp|param|bfmeFind|s,560932da0c322262d4c50854,claude-sonnet,20261109105549-4b78ed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateApplyTopplingForce.cpp|type||BfmeToppleCollideModuleInterface,76caf6011df9ef0d3b09f479,claude-sonnet,20261109110331-3fce3a,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE730CameraBounds.cpp|member||object84,0c5fbc201424c423b0a78a81,claude-sonnet,20261109110229-6be88d,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FE730CameraBounds.cpp|member||box120,f817ffd993eeb3bc4e7d1a31,claude-sonnet,20261109110229-6be88d,2026-11-09
