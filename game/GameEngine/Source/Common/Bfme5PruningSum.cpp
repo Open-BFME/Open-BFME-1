@@ -24,8 +24,8 @@ namespace _STL
 
 struct BfmeSumNode
 {
-	BfmeSumNode *m_bfmeNext;				// +0x00
-	BfmeSumNode *m_bfmePrev;				// +0x04
+	BfmeSumNode *m_next;				// +0x00
+	BfmeSumNode *m_prev;				// +0x04
 	float m_bfmeValue;					// +0x08
 	int m_bfmeStamp;					// +0x0C
 };
@@ -33,7 +33,7 @@ struct BfmeSumNode
 struct BfmeSumClock
 {
 	char m_bfmePad[0x3C];					// +0x00
-	int m_bfmeTime;						// +0x3C
+	int m_frame;						// +0x3C
 };
 
 struct BfmeSumOwner
@@ -67,20 +67,20 @@ private:
 // ?bfmeSum@Gen_00250F50@@QAEMXZ
 float Gen_00250F50::bfmeSum(void)
 {
-	int threshold = bfmeSumClockHF()->m_bfmeTime - m_bfmeOwner->m_bfmeOffset;
+	int threshold = bfmeSumClockHF()->m_frame - m_bfmeOwner->m_bfmeOffset;
 
-	BfmeSumNode *node = m_bfmeList->m_bfmeNext;
+	BfmeSumNode *node = m_bfmeList->m_next;
 	float total = 0.0f;
 
 	while (node != m_bfmeList)
 	{
 		if (node->m_bfmeStamp <= threshold)
 		{
-			BfmeSumNode *next = node->m_bfmeNext;
-			BfmeSumNode *previous = node->m_bfmePrev;
+			BfmeSumNode *next = node->m_next;
+			BfmeSumNode *previous = node->m_prev;
 
-			previous->m_bfmeNext = next;
-			next->m_bfmePrev = previous;
+			previous->m_next = next;
+			next->m_prev = previous;
 
 			_STL::__node_alloc<true, 0>::_M_deallocate(
 				node, sizeof(BfmeSumNode));
@@ -91,7 +91,7 @@ float Gen_00250F50::bfmeSum(void)
 		{
 			total += node->m_bfmeValue;
 
-			node = node->m_bfmeNext;
+			node = node->m_next;
 		}
 	}
 
