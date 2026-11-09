@@ -229,6 +229,8 @@ static __forceinline void reportDamageSource(BFMEReportDamageSource *source, Obj
 class BfmeObj1004;
 char bfmeGo1004A(BfmeObj1004 *);
 
+extern void j_0003369f();  // retail reaches Object::onDie (0x001CEFC0) through this ILT
+
 class BfmeDelayedLuaEvent
 {
 public:
@@ -485,11 +487,11 @@ void ActiveBody::attemptDamage(DamageInfo *damageInfo)
 					if (obj->getContainedBy()->getContain() && obj->getContainedBy()->getContain()->slot64(0) < 2)
 						contained = false;
 				}
-				obj->onDie(damageInfo);
+				{ typedef void (Object::*OnDieFn)(DamageInfo *); union { void (*fn)(); OnDieFn call; } u = { j_0003369f }; (obj->*u.call)(damageInfo); }
 				if (m_linkedObjectID) {
 					Object *linked = TheGameLogic->findObjectByID(m_linkedObjectID);
 					if (linked) {
-						linked->onDie(damageInfo);
+						{ typedef void (Object::*OnDieFn)(DamageInfo *); union { void (*fn)(); OnDieFn call; } u = { j_0003369f }; (linked->*u.call)(damageInfo); }
 						linked->setEffectivelyDead(true);
 					}
 				}
