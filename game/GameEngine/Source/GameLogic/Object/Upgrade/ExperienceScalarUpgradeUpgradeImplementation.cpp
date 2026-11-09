@@ -4,22 +4,22 @@
 // constructor 0x002D4FD0 stores that table. Evidence:
 // targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
-struct Rva002D5100Obj
+struct ExperienceTracker
 {
 	char m_lead[0x1C];
-	float m_1c;
+	float m_experienceScalar;
 };
 
 struct Rva002D5100Holder
 {
 	char m_lead[0x210];
-	Rva002D5100Obj *m_obj;
+	ExperienceTracker *m_obj;
 };
 
-struct Rva002D5100Other
+struct ExperienceScalarUpgradeModuleData
 {
 	char m_lead[0x70];
-	float m_70;
+	float m_addXPScalar;
 };
 
 class ExperienceScalarUpgrade
@@ -30,10 +30,10 @@ protected:
 
 void ExperienceScalarUpgrade::upgradeImplementation()
 {
-	Rva002D5100Obj *obj = (*(Rva002D5100Holder **)((char *)this - 8))->m_obj;
+	ExperienceTracker *obj = (*(Rva002D5100Holder **)((char *)this - 8))->m_obj;
 	if (obj)
 	{
-		Rva002D5100Other *o = *(Rva002D5100Other **)((char *)this - 0x0C);
-		obj->m_1c += o->m_70;
+		ExperienceScalarUpgradeModuleData *o = *(ExperienceScalarUpgradeModuleData **)((char *)this - 0x0C);
+		obj->m_experienceScalar += o->m_addXPScalar;
 	}
 }
