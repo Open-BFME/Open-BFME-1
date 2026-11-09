@@ -7519,3 +7519,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorInitiateUnpack.cp
 game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|a,695f98f4f6ff283547dae34a,claude-sonnet,20261109092246-e962dd,2026-11-09
 game/GameEngine/Source/Common/BfmeCombine1236.cpp|local|bfmeCombine1236|b,ebcc346a147b3e4a4e762efe,claude-sonnet,20261109092246-e962dd,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapUpdateScorches.cpp|type||BFMEScorchEntry,0f72000c4fef60bc4e9bc390,claude-sonnet,20261109092402-5b4c0a,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|type||Rva00C73744SnapshotBase,472ba339f0c9f30241cdb370,claude-sonnet,20261109092245-802aaa,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfinderConstructor.cpp|member||m_at034,ef89188cd859d02e29f7000b,claude-sonnet,20261109092245-802aaa,2026-11-09
