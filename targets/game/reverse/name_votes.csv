@@ -6458,3 +6458,4 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|set
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setChatWindow|w,509650e752042341f66fc085,claude-sonnet,20261109031243-2dba3b,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setPlayerList|w,2c87c47d151bb35190e30df7,claude-sonnet,20261109031243-2dba3b,2026-11-09
 game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo930D|s,a9e48aec32c410fb4eda5a83,claude-sonnet,20261109031243-8e071f,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva009A2BE0HashIterNext.cpp|local|Rva009A2BE0Iter::nextNode|n,5b2ce5a477f9bd0b6dcd3f56,claude-sonnet,20261109031727-60bd0c,2026-11-09
