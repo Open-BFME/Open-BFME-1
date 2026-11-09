@@ -22130,5 +22130,15 @@
   "after_sha256": "2773857a7cc1d21c952c12f286f2204df180d867ace9f4a4bca531d085c30c31",
   "evidence": "targets/game/reverse/identity_evidence/000d95c0-initial-upgrades-vector-name.md",
   "reason": "The unwind funclet of 0x000D95C0 reaches the matched vector<AsciiString> destructor row 0x000658A0 through ILT 0x00026AB2, so the local is a string vector, not an AttributeModifierAura module-data member; the stand-in name had no defined destructor."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001edca0.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Behavior/AutoAbilityBehaviorUpdate.cpp",
+  "old_name": "ObjectFilter010956B0",
+  "new_name": "BfmeObjEQT",
+  "before_sha256": "848e37ff3c16eecbcbef489ede9b12adf2dc7b1b47019e2d38a2672d91d86341",
+  "after_sha256": "9bc83ec4ef0d0799d9ae05d2474ac29c272663a1d6f23ca8c0e6587ac96fc242",
+  "evidence": "targets/game/reverse/identity_evidence/0x001edca0-autoability-update.md",
+  "reason": "The landed source adopts the name dir32_addresses.csv records for the vtable at VA 0x010956B0 (??_7BfmeObjEQT@@6B@), which the DIR32 gate requires; ObjectFilter010956B0 was an attempt-local address label with no ledger record"
  }
 ]

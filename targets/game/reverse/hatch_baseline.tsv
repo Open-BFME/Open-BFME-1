@@ -2086,7 +2086,6 @@ emit	game/GameEngine/Source/GameLogic/AI/AIPlayer_queueDozerMethodThunk.cpp	*	49
 emit	game/GameEngine/Source/GameLogic/AI/AIStates.cpp	*	1398
 emit	game/GameEngine/Source/GameLogic/Map/SidesList.cpp	*	1810
 emit	game/GameEngine/Source/GameLogic/Map/SidesListAddSideThunk.cpp	*	897
-emit	game/GameEngine/Source/GameLogic/Object/Behavior/AutoAbilityBehaviorModuleDataDestructorThunk.cpp	*	1944
 emit	game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorCtorThunk.cpp	*	661
 emit	game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehavior_ctor_Thunk.cpp	*	395
 emit	game/GameEngine/Source/GameLogic/Object/Behavior/ReplenishUnitsBehaviorDestructorThunk.cpp	*	628

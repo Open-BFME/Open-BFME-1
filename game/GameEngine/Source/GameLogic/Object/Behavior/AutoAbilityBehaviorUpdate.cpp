@@ -1,13 +1,11 @@
-// ?update@AutoAbilityBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.966 date=2026-09-27
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic /Igame/Libraries/Include
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
 #include <vector>
 #include "ascii_string.h"
 
-// Retail 001EDCA0, 1944 bytes, is NOT a ModuleData destructor.
+// AutoAbilityBehavior::update, retail 0x001EDCA0, 1944 bytes. It is not a ModuleData destructor.
 // Incoming ECX is a secondary receiver: Object* at -8; command string at +10.
 // It returns sleep delays 6/50/3fffffff, searches targets, and dispatches commands.
 // No Zero Hour AutoAbility twin exists in the vendored GeneralsMD tree.
@@ -16,18 +14,18 @@
 // UpdateModuleInterface slot zero is update(). ModuleData's real destructor
 // instead routes through 00003C51 to 001ED890. This view uses the update
 // interface receiver, like the landed DelayedLuaEventUpdate.cpp.
-// Remaining mismatch: loop-invariant constants at +27B/+280. Retail keeps
-// EBX=100 and EDI=400; ours keeps EDI=100 and EBX=800. 66 masked bytes.
-// Independently verified visible helpers: player filter ctor 39B at 160CE0;
-// command-target filter ctor 46B at 1ED510; iterator next 25B at C44D0.
-// Do not land without resolving REL32s and checking vtable DIR32 identities.
-// Candidate vtable ObjectFilter010956B0 is address-labelled deliberately:
-// the existing DistLODPrototypeClass claim on this table conflicts with its
-// use as a partition filter and must not be reused as identity evidence.
+// The cooldown delay copies the button's float into a by-value local inside
+// the guard (BFME 2 donor AutoAbilityBehaviorUpdate.cpp at 2bac16a6:
+// `const float &delayRef = ...; float delayScale = delayRef;`). That spelling
+// moves VC7.1's loop-constant registers to retail's EBX=0x100/EDI=0x400.
+// The partition filter whose vtable is at 0x010956B0 keeps the recorded
+// placeholder name BfmeObjEQT. A DistLODPrototypeClass claim on that table
+// conflicts with its use as a partition filter here and is not identity evidence.
+// Handoff: targets/game/reverse/attempt_support/20261107-001edca0-autoability-update.md
 typedef unsigned int UInt;
 class Object;
 class Player;
-struct Coord3D { float x,y,z; };
+#include "Lib/Coord3D.h"
 #include "command_source_type.h"
 enum KindOfType { KINDOF_89 = 89 };
 enum IterOrderType { ITER_FASTEST = 0 };
@@ -120,10 +118,10 @@ public:
     virtual bool allow(Object *);
     Object *m_object;
 };
-class ObjectFilter010956B0 : public PartitionFilter {
+class BfmeObjEQT : public PartitionFilter {
 public:
-    ObjectFilter010956B0(Object *p) : m_object(p) {}
-    virtual ~ObjectFilter010956B0() {}
+    BfmeObjEQT(Object *p) : m_object(p) {}
+    virtual ~BfmeObjEQT() {}
     virtual bool allow(Object *);
     virtual int getPlayerMask();
     Object *m_object;
@@ -143,6 +141,10 @@ public:
 };
 class PartitionFilterValidCommandButtonTarget : public PartitionFilter {
 public:
+    // ??0PartitionFilterValidCommandButtonTarget@@QAE@PAVObject@@PBVCommandButton@@_NW4CommandSourceType@@@Z
+    // Retail 0x001ED510 (46 B), reached through ILT 0x0003A5AD. Zero Hour defines this
+    // constructor in the class; retail emitted it out of line next to the other
+    // AutoAbilityBehavior bodies, and update() only matches with its body visible here.
     __declspec(noinline) PartitionFilterValidCommandButtonTarget(Object *source,
         const CommandButton *button, bool match, CommandSourceType sourceType)
         : m_source(source), m_commandButton(button), m_match(match), m_commandSource(sourceType) {}
@@ -154,13 +156,14 @@ public:
 };
 class PartitionFilterPlayerAffiliation : public PartitionFilter {
 public:
-    __declspec(noinline) PartitionFilterPlayerAffiliation(Player *player, int flags, bool match)
-        : m_player(player), m_match(match), m_flags(flags) {}
+    // Retail 0x00160CE0 through ILT 0x00034BB7 (symbols.csv pin). This is Zero Hour's
+    // signature; ilt_oracle confirms it and contradicts the other eleven tried.
+    PartitionFilterPlayerAffiliation(const Player *player, unsigned int whichAffiliation, bool match);
     virtual bool allow(Object *);
     virtual int getPlayerMask();
-    Player *m_player;
+    const Player *m_player;
     bool m_match;
-    int m_flags;
+    unsigned int m_affiliation;
 };
 struct Rva0025ED50Entry { Object *object; UInt unknown04; };
 struct Rva0025ED50ResultData {
@@ -168,6 +171,7 @@ struct Rva0025ED50ResultData {
     Rva0025ED50Entry *current;
     int references;
 };
+class BfmeThingEOF { public: void *bfmeGoEOF(); };
 struct Rva0025ED50WideResult {
     Rva0025ED50ResultData *value;
     Rva0025ED50WideResult();
@@ -178,10 +182,9 @@ struct Rva0025ED50WideResult {
         object = (value->current++)->object;
         return object;
     }
-    __declspec(noinline) Object *next() {
-        if (value->current == value->entries.end()) return 0;
-        return (value->current++)->object;
-    }
+    // Retail 0x000C44D0 through ILT 0x000374E8; the ledger names that body
+    // BfmeThingEOF::bfmeGoEOF.
+    Object *next() { return (Object *)((BfmeThingEOF *)this)->bfmeGoEOF(); }
 };
 class PartitionManager {
 public:
@@ -219,7 +222,12 @@ UpdateSleepTime AutoAbilityBehavior::update()
     }
     if (((AutoAbilityBehavior *)((char *)this - 0x10))->bfmeCanAutoFire()) {
         int delay = 50;
-        if (button->m_17c > 0.0f) delay = (int)(button->m_17c * 5.0f);
+        const float &delayRef = button->m_17c;
+        if (delayRef > 0.0f)
+        {
+            float delayScale = delayRef;
+            delay = (int)(5.0f * delayScale);
+        }
         if (button->m_175) {
             object->doCommandButton(button, CMD_FROM_AI, false);
             return (UpdateSleepTime)delay;
@@ -235,7 +243,7 @@ UpdateSleepTime AutoAbilityBehavior::update()
                     PartitionFilterValidCommandButtonTarget(object, button, true, CMD_FROM_AI).link(
                         Rva00260180SelfFilter(object).link(
                             Rva0025ED50RootFilter().link(
-                                ObjectFilter010956B0(object).link(&Rva0025ED50ObjectFilter(object)))))), true);
+                                BfmeObjEQT(object).link(&Rva0025ED50ObjectFilter(object)))))), true);
             Object *target;
             while (iterator.next(target)) {
                 if (!(target->hasKind001EDCA0(8) || target->hasKind001EDCA0(10) || target->hasKind001EDCA0(9) || target->hasKind001EDCA0(11))) continue;
