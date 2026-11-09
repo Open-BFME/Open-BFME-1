@@ -6626,3 +6626,4 @@ game/GameEngine/Source/Common/Bfme5ThirtyOne.cpp|member||m_bfmeY,0a3d1b4d255f12b
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled00c,66acdd2f2f053f3d64c2d273,claude-sonnet,20261109043119-2eddad,2026-11-09
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled10,f16584036359b80575db439b,claude-sonnet,20261109043119-2eddad,2026-11-09
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled14,7ac6ef72b4ed3456e5c2b868,claude-sonnet,20261109043119-2eddad,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FD990CameraCorners.cpp|member||camera70,a9d58ccf24f82bc57eae9ff5,claude-sonnet,20261109043119-8f5a88,2026-11-09
