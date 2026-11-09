@@ -116,8 +116,8 @@ struct U4Scan
 bool U4Scan::firstFlagged( int *out, const U4Filter *filter ) const
 {
 	const U4Elem *p = m_elems.begin();
-	const U4Elem *e = m_elems.end();
-	for ( ; p != e; ++p )
+	const U4Elem *end = m_elems.end();
+	for ( ; p != end; ++p )
 	{
 		if ( ((const BitFlags<304> *)filter)->testForAll( *(const BitFlags<304> *)p )
 			&& p->m_flag )
@@ -132,8 +132,8 @@ bool U4Scan::firstFlagged( int *out, const U4Filter *filter ) const
 const U4MapVal *U4Scan::firstMapped( const U4MapKey &key, const U4Filter *filter ) const
 {
 	const U4Elem *p = m_elems.begin();
-	const U4Elem *e = m_elems.end();
-	for ( ; p != e; ++p )
+	const U4Elem *end = m_elems.end();
+	for ( ; p != end; ++p )
 	{
 		if ( ((const BitFlags<304> *)filter)->testForAll( *(const BitFlags<304> *)p ) )
 		{
