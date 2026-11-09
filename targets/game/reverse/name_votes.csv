@@ -6231,3 +6231,5 @@ game/Libraries/Source/WWVegas/WWLib/Small03hHashBucket.cpp|local|Rva00927730Box:
 game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp|member||m_objectID20,7addcc6038db3a98e46cf8e9,claude-sonnet,20261109011814-f7a6e5,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_70,f161fe845c30070f2266031c,claude-sonnet,20261109011814-fe4124,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|member||m_74,9126b9519e0be5dc9a43930e,claude-sonnet,20261109011814-fe4124,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmeNext,0c93ada61a8e265d11dfb4f9,claude-sonnet,20261109012306-394ec1,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,11f6e5eb6d3b531bc54f6d56,claude-sonnet,20261109012306-394ec1,2026-11-09
