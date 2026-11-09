@@ -7712,3 +7712,4 @@ game/Libraries/Source/WWVegas/WWLib/RvaTreeFindGenP12pod009281E0.cpp|param|compa
 game/Libraries/Source/WWVegas/WWLib/RvaTreeFindGenP12pod009281E0.cpp|param|compare_tail|b,a9db2af38408033193d6de09,claude-sonnet,20261109103442-e6c7ba,2026-11-09
 game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|param|BfmeHandleYF|o,25c076f1f9d3c2d9c279145e,claude-sonnet,20261109103442-8a8be8,2026-11-09
 game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|local|BfmeHostYF::bfmeUpdateYF_00585CF0|n,9087440925a9146a1ffa1303,claude-sonnet,20261109103442-8a8be8,2026-11-09
+game/GameEngine/Source/Common/Rva006E6A80.cpp|member||ff0,728f2c892b9bd8234b815132,claude-sonnet,20261109103443-74daa0,2026-11-09
