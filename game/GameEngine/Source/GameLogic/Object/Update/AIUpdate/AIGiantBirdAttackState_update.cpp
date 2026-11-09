@@ -70,7 +70,7 @@ public:
 	unsigned char m_unreconstructed00[0x3f0];
 	unsigned int m_flags3f0;
 	unsigned int m_unreconstructed3f4;
-	Int m_targetID3f8;
+	Int m_targetID;
 };
 
 class Object
@@ -170,7 +170,7 @@ StateReturnType AIGiantBirdAttackState::update()
 		FindObjectByIDCall asMember;
 	} findObjectCast;
 	findObjectCast.asVoid = (void *)j_0001f253;
-	Object *target = (TheBfmeGameLogic->*findObjectCast.asMember)(ai->m_targetID3f8);
+	Object *target = (TheBfmeGameLogic->*findObjectCast.asMember)(ai->m_targetID);
 	if (target == 0 || (target->m_privateStatus & 1) != 0)
 		goto stateSuccess;
 
