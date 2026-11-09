@@ -33,30 +33,30 @@ struct BfmeHordeInner12
 class BfmeHordeInnerVec
 {
 public:
-	UnsignedInt size( void ) const { return (UnsignedInt)( m_bfmeEnd - m_bfmeBegin ); }
+	UnsignedInt size( void ) const { return (UnsignedInt)( m_end - m_begin ); }
 
-	BfmeHordeInner12 *m_bfmeBegin;
-	BfmeHordeInner12 *m_bfmeEnd;
-	BfmeHordeInner12 *m_bfmeCap;
+	BfmeHordeInner12 *m_begin;
+	BfmeHordeInner12 *m_end;
+	BfmeHordeInner12 *m_capacity;
 };
 
 class BfmeHordeRosterEntry
 {
 public:
 	UnsignedInt m_bfmeKey;
-	AsciiString m_bfmeName;
+	AsciiString m_name;
 	BfmeHordeInnerVec m_bfmeInner;
 };
 
 class BfmeHordeRosterVec
 {
 public:
-	UnsignedInt size( void ) const { return (UnsignedInt)( m_bfmeEnd - m_bfmeBegin ); }
-	BfmeHordeRosterEntry *operator[]( UnsignedInt i ) const { return m_bfmeBegin[ i ]; }
+	UnsignedInt size( void ) const { return (UnsignedInt)( m_end - m_begin ); }
+	BfmeHordeRosterEntry *operator[]( UnsignedInt i ) const { return m_begin[ i ]; }
 
-	BfmeHordeRosterEntry **m_bfmeBegin;
-	BfmeHordeRosterEntry **m_bfmeEnd;
-	BfmeHordeRosterEntry **m_bfmeCap;
+	BfmeHordeRosterEntry **m_begin;
+	BfmeHordeRosterEntry **m_end;
+	BfmeHordeRosterEntry **m_capacity;
 };
 
 class BfmeHordeRosterOwner
@@ -68,12 +68,12 @@ public:
 
 struct BfmeHordePosition0023B9F0
 {
-	float m_bfmeX, m_bfmeY;
+	float m_x, m_y;
 
 	BfmeHordePosition0023B9F0 &operator-=( const BfmeHordePosition0023B9F0 &other )
 	{
-		m_bfmeX -= other.m_bfmeX;
-		m_bfmeY -= other.m_bfmeY;
+		m_x -= other.m_x;
+		m_y -= other.m_y;
 		return *this;
 	}
 };
@@ -81,7 +81,7 @@ struct BfmeHordePosition0023B9F0
 struct BfmeHordeSlot
 {
 	UnsignedInt m_bfmeKey;
-	BfmeHordePosition0023B9F0 m_bfmePosition;
+	BfmeHordePosition0023B9F0 m_position;
 	float m_bfmeW;
 };
 
@@ -109,8 +109,8 @@ void BfmeHordeContainRoster::rva0023B9F0( void )
 	Int count = 0;
 	for ( UnsignedInt i = 0; i < roster.size(); ++i )
 	{
-		const ThingTemplate *t = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate( roster[ i ]->m_bfmeName );
-		if ( t && ( t->m_kindof & 0x0800 ) )
+		const ThingTemplate *thingTemplate = reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate( roster[ i ]->m_name );
+		if ( thingTemplate && ( thingTemplate->m_kindof & 0x0800 ) )
 		{
 			total = count;
 			break;
@@ -123,20 +123,20 @@ void BfmeHordeContainRoster::rva0023B9F0( void )
 	Int idx = 0;
 	BfmeHordeSlot *begin = m_bfmeSlotBegin;
 	BfmeHordePosition0023B9F0 center;
-	float &sumX = center.m_bfmeX;
-	float &sumY = center.m_bfmeY;
+	float &sumX = center.m_x;
+	float &sumY = center.m_y;
 	sumX = 0.0f;
 	BfmeHordeSlot *end = m_bfmeSlotEnd;
 	sumY = 0.0f;
 
-	for ( BfmeHordeSlot *p = begin; p != end; ++p )
+	for ( BfmeHordeSlot *slot = begin; slot != end; ++slot )
 	{
-		sumX += p->m_bfmePosition.m_bfmeX;
+		sumX += slot->m_position.m_x;
 		++cnt;
-		sumY += p->m_bfmePosition.m_bfmeY;
+		sumY += slot->m_position.m_y;
 		if ( idx == total )
 		{
-			center = p->m_bfmePosition;
+			center = slot->m_position;
 			cnt = 1;
 			break;
 		}
@@ -151,8 +151,8 @@ void BfmeHordeContainRoster::rva0023B9F0( void )
 	}
 
 	begin = m_bfmeSlotBegin;
-	for ( BfmeHordeSlot *p = begin; p != m_bfmeSlotEnd; ++p )
+	for ( BfmeHordeSlot *slot = begin; slot != m_bfmeSlotEnd; ++slot )
 	{
-		p->m_bfmePosition -= center;
+		slot->m_position -= center;
 	}
 }
