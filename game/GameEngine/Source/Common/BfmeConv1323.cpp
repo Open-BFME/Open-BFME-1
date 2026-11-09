@@ -36,14 +36,14 @@ class BfmeThingTTE
 public:
 	int bfmeGoTTE();
 	char m_bfmePad[0x54];
-	void *m_bfmeName;
+	void *m_file;
 };
 
 int BfmeThingTTE::bfmeGoTTE()
 {
-	int h = getc(m_bfmeName);
+	int h = getc(m_file);
 	if (h != -1) {
-		ungetc(h, m_bfmeName);
+		ungetc(h, m_file);
 		return h;
 	}
 	return -1;
