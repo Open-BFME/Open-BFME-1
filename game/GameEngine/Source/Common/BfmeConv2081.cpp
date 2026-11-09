@@ -28,8 +28,8 @@ public:
 class BfmeNodeXY
 {
 public:
-	BfmeNodeXY *m_bfmeNextXY;
-	BfmeNodeXY *m_bfmePrevXY;
+	BfmeNodeXY *m_next;
+	BfmeNodeXY *m_prev;
 	BfmeThingEC *m_bfmeValXY;
 };
 
@@ -37,7 +37,7 @@ class BfmeChainXY
 {
 public:
 	unsigned char m_bfmeHeadXY[0x14];
-	BfmeChainXY *m_bfmeNextXY;
+	BfmeChainXY *m_next;
 };
 
 class BfmeHostXY
@@ -57,33 +57,33 @@ void BfmeHostXY::bfmeClearXY()
 
 	while (m_bfmeChainXY)
 	{
-		BfmeChainXY *nx = m_bfmeChainXY->m_bfmeNextXY;
+		BfmeChainXY *nx = m_bfmeChainXY->m_next;
 
 		delete m_bfmeChainXY;
 		m_bfmeChainXY = nx;
 	}
 
-	m_bfmeCurXY = m_bfmeListXY->m_bfmeNextXY;
+	m_bfmeCurXY = m_bfmeListXY->m_next;
 
 	while (m_bfmeCurXY != m_bfmeListXY)
 	{
 		if (m_bfmeCurXY->m_bfmeValXY)
 			free((void *)m_bfmeCurXY->m_bfmeValXY->bfmeTakeEC(&n));
 
-		m_bfmeCurXY = m_bfmeCurXY->m_bfmeNextXY;
+		m_bfmeCurXY = m_bfmeCurXY->m_next;
 	}
 
-	BfmeNodeXY *p = m_bfmeListXY->m_bfmeNextXY;
+	BfmeNodeXY *p = m_bfmeListXY->m_next;
 
 	while (p != m_bfmeListXY)
 	{
 		BfmeNodeXY *q = p;
 
-		p = p->m_bfmeNextXY;
+		p = p->m_next;
 		_STL::nodePoolDeallocate(q, 12);
 	}
 
-	m_bfmeListXY->m_bfmeNextXY = m_bfmeListXY;
-	m_bfmeListXY->m_bfmePrevXY = m_bfmeListXY;
+	m_bfmeListXY->m_next = m_bfmeListXY;
+	m_bfmeListXY->m_prev = m_bfmeListXY;
 	m_bfmeChainXY = 0;
 }
