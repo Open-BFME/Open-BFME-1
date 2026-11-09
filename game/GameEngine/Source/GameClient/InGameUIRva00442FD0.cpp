@@ -192,11 +192,11 @@ class InGameUI
 public:
 	Int rva00442fd0(Bool (*callback)(Drawable *draw, void *userData), void *userData);
 	Bool rva0043e260(const ICoord2D *screen);
-	Bool isInForceAttackMode() const { return m_field_12b1; }
+	Bool isInForceAttackMode() const { return m_forceAttackMode; }
 
 private:
 	unsigned char m_unmodelled_00[0x12b1];
-	bool m_field_12b1; // +0x12b1
+	bool m_forceAttackMode; // +0x12b1
 	unsigned char m_unmodelled_12b2[0x1304 - 0x12b2];
 	_STL::list<Payload0044B800_1304> m_list_1304; // +0x1304
 	Int m_field_1308; // +0x1308

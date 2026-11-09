@@ -2049,3 +2049,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplement
 game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp|type||Rva002D64D0Data,MaxHealthUpgradeModuleData,claude-sonnet+gpt-6.1-sol,"blocked: hook: game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp:48: MaxHealthUpgradeModuleData+0x70 says 'm_bias', wit",2026-11-09
 game/GameEngine/Source/GameClient/InGameUIRva00442FD0.cpp|member||m_field_12b1,m_forceAttackMode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorCopyAssignment.cpp|type||BfmeLocomotorCoord3D,Coord3D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIRva00442FD0.cpp|member||m_field_12b1,m_forceAttackMode,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
