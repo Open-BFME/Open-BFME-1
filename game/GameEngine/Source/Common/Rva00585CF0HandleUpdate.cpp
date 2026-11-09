@@ -40,7 +40,7 @@ public:
 
 struct BfmeHandleYF
 {
-	__forceinline BfmeHandleYF(const BfmeHandleYF &o) { m_bfmePtrYF = o.m_bfmePtrYF; }
+	__forceinline BfmeHandleYF(const BfmeHandleYF &other) { m_bfmePtrYF = other.m_bfmePtrYF; }
 
 	BfmeObjYF *m_bfmePtrYF;
 };
