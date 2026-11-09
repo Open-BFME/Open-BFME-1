@@ -37,7 +37,7 @@ public:
 };
 
 // The contain module Object+0x1FC holds; only its slot 64 (+0x100) is used here.
-class Rva001E9E60ContainView
+class ContainModuleInterface
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03();
@@ -62,10 +62,10 @@ public:
 class Object
 {
 public:
-	Rva001E9E60ContainView *getContain() const { return m_contain; }
+	ContainModuleInterface *getContain() const { return m_contain; }
 
 	char m_unreconstructed_00[0x1fc];
-	Rva001E9E60ContainView *m_contain;
+	ContainModuleInterface *m_contain;
 };
 
 class GameLogic
@@ -103,7 +103,7 @@ protected:
 	void rebuildScatterTargets();
 
 private:
-	__forceinline Rva001E9E60ContainView *rva001E9E60Contain() const
+	__forceinline ContainModuleInterface *rva001E9E60Contain() const
 	{
 		Object *obj = TheGameLogic->findObjectByID(m_objectID08);
 		return obj ? obj->getContain() : 0;
@@ -112,7 +112,7 @@ private:
 	{
 		if (getTemplate()->getObjectFilter4e8().isValid())
 		{
-			Rva001E9E60ContainView *contain = rva001E9E60Contain();
+			ContainModuleInterface *contain = rva001E9E60Contain();
 			if (contain)
 				return contain->slot64(&getTemplate()->getObjectFilter4e8());
 		}
