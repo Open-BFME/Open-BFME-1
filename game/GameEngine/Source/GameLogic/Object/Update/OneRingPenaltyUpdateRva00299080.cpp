@@ -149,10 +149,10 @@ private:
 
 void OneRingPenaltyUpdate::rva00299080(void)
 {
-	const Rva00299080ModuleData *d = m_moduleData;
+	const Rva00299080ModuleData *moduleData = m_moduleData;
 	Object *owner = m_object;
 	const ThingTemplate *tmpl =
-		reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(d->m_objectName);
+		reinterpret_cast<BfmeThingFactory *>(TheThingFactory)->findTemplate(moduleData->m_objectName);
 	if (tmpl)
 	{
 		Team *team = ThePlayerList->getNeutralPlayer()
@@ -171,8 +171,8 @@ void OneRingPenaltyUpdate::rva00299080(void)
 			pos.z = owner->getPosition()->z;
 			Real angle = GetGameLogicRandomValueReal(-PI, PI,
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\OneRingPenaltyUpdate.cpp", 219);
-			pos.x += Cos(angle) * d->m_radius;
-			pos.y += Sin(angle) * d->m_radius;
+			pos.x += Cos(angle) * moduleData->m_radius;
+			pos.y += Sin(angle) * moduleData->m_radius;
 			pos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y);
 			((Thing *)spawned)->setPosition(&pos);
 			m_spawnAngle = angle;

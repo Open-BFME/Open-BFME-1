@@ -1841,3 +1841,4 @@ game/GameEngine/Source/Common/BfmeConv1242.cpp|member||m_bfme28,m_length,claude-
 game/GameEngine/Source/Common/BfmeConv1242.cpp|param|bfmeInsert1242|a,array,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1242.cpp|local|bfmeInsert1242|e,element,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateRva00299080.cpp|local|OneRingPenaltyUpdate::rva00299080|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateRva00299080.cpp|local|OneRingPenaltyUpdate::rva00299080|d,moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
