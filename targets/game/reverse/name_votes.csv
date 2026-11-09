@@ -7730,3 +7730,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBarImage
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBarImageDraw00793620.cpp|param|GadgetProgressBarGetHiliteImageCenter|g,a2e0226670d476d99cf4d021,claude-sonnet,20261109103825-9da181,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBarImageDraw00793620.cpp|param|GadgetProgressBarGetHiliteBarImageRight|g,53457e2f18f0f2dbba722ff7,claude-sonnet,20261109103825-9da181,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBarImageDraw00793620.cpp|param|GadgetProgressBarGetHiliteBarImageCenter|g,90d2bcc8fd5b9204b25b784d,claude-sonnet,20261109103825-9da181,2026-11-09
+game/Libraries/Source/EA/Apt/Rva008A7B00KeyboardProperties.cpp|local|pooledInteger|v,751a775d65c10afc71700d64,claude-sonnet,20261109103825-90295f,2026-11-09
