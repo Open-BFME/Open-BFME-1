@@ -1894,3 +1894,7 @@ game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstruct
 game/GameEngine/Source/GameLogic/Object/Update/LifetimeUpdateModuleDataConstructor.cpp|member||m_unmodelled_0C,m_maxFrames,claude-sonnet+gpt-6.1-sol,stale,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_dtor.cpp|type||Rva0074DE60BoundaryPoint,ICoord2D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap_dtor.cpp|type||Rva0074DE60RefCountClass,RefCountClass,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|type||Rva0016D9C0Machine,AITNGuardMachine,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|type||Rva0016D9C0State,AITunnelNetworkGuardState,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|member||m_stateMachine0016D9C0,m_guardMachine,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|local|Rva0016D9C0State::xfer|m_stateMachine0016D9C0,m_guardMachine,claude-sonnet+gpt-6-astra,agreed,2026-11-09
