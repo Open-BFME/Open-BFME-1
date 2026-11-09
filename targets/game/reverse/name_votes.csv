@@ -6808,3 +6808,4 @@ game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueEA8,ce3419419
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.cpp|type||Body001FF5C0,4c9e790fd52e043121c8d991,claude-sonnet,20261109054121-0dbc6d,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.cpp|member||field200,97e412e0082cbe34538a1f09,claude-sonnet,20261109054121-0dbc6d,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCompletion.cpp|member||field204,be977c925a42153903de88e7,claude-sonnet,20261109054121-0dbc6d,2026-11-09
+game/GameEngine/Source/GameLogic/Map/SidesListClearSideStorage.cpp|type||Rva0019BE80SideInfo,d24227e1b0ca16e643326068,claude-sonnet,20261109054306-cac93b,2026-11-09
