@@ -58,18 +58,18 @@ public:
 	WeaponChangeSpecialPowerModuleModuleData();
 
 private:
-	ZeroWord m_210;
-	unsigned int m_214;
-	unsigned int m_218;
-	BFMERetailAsciiString m_21c;
-	BFMERetailAsciiString m_220;
+	ZeroWord m_flagsUsedForToggle;
+	unsigned int m_toggleOnSleepFrames;
+	unsigned int m_toggleOffSleepFrames;
+	BFMERetailAsciiString m_toggleOnAttributeModifier;
+	BFMERetailAsciiString m_toggleOffAttributeModifier;
 };
 
 // ??0WeaponChangeSpecialPowerModuleModuleData@@QAE@XZ
 WeaponChangeSpecialPowerModuleModuleData::WeaponChangeSpecialPowerModuleModuleData()
-	: ModuleDataBase_DefectorSpecialPowerModuleData(), m_210(), m_214(0), m_218(0)
+	: ModuleDataBase_DefectorSpecialPowerModuleData(), m_flagsUsedForToggle(), m_toggleOnSleepFrames(0), m_toggleOffSleepFrames(0)
 {
-	m_210.clear();
-	m_21c.clear();
-	m_220.clear();
+	m_flagsUsedForToggle.clear();
+	m_toggleOnAttributeModifier.clear();
+	m_toggleOffAttributeModifier.clear();
 }
