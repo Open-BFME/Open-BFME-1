@@ -10,13 +10,18 @@
 
 class StateMachine;
 
+// Retail 0x010985B0 is ??_7AIIdleState@@6B@, emitted by the AIIdleState unit
+// that defines the virtual slots. State::stateAnchor has no body here, so a
+// virtual State left that name unresolved; the vptr is stored by name instead.
+extern "C" void *__identifier("??_7AIIdleState@@6B@")[];
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
 {
 public:
 	State( StateMachine *machine, AsciiString name );
 
-	virtual void stateAnchor();
+	void **m_vtable;
 };
 
 // upstream source and layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
@@ -40,9 +45,10 @@ private:
 
 // upstream source: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 AIIdleState::AIIdleState( StateMachine *machine, AIIdleTargetingType shouldLookForTargets ) :
-	State( machine, AsciiString( "AIIdleState" ) ),
-	m_shouldLookForTargets( shouldLookForTargets == LOOK_FOR_TARGETS )
+	State( machine, AsciiString( "AIIdleState" ) )
 {
+	m_vtable = __identifier("??_7AIIdleState@@6B@");
+	m_shouldLookForTargets = shouldLookForTargets == LOOK_FOR_TARGETS;
 	m_inited = false;
 	m_initialSleepOffset = 0xFFFF;
 }
