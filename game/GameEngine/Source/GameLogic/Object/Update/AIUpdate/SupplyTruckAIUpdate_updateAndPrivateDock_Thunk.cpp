@@ -146,6 +146,11 @@ private:
 	ObjectID m_preferredDock;					///< retail this+0x348
 };
 
+// Retail calls ILT 0x00028772, which the ledger defines as ?j_00028772@@YAXXZ.
+extern void j_00028772();
+typedef UpdateSleepTime (AIUpdateInterface::*AIUpdateInterfaceUpdateIlt)(void);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 // ?update@SupplyTruckAIUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime SupplyTruckAIUpdate::update( void )
 {
@@ -155,7 +160,7 @@ UpdateSleepTime SupplyTruckAIUpdate::update( void )
 	UpdateSleepTime mine = IS_STATE_SLEEP(stRet) ? UPDATE_SLEEP(GET_STATE_SLEEP_FRAMES(stRet)) : UPDATE_SLEEP_NONE;
 
 	// extend
-	UpdateSleepTime ret = AIUpdateInterface::update();
+	UpdateSleepTime ret = (this->*iltMemberCall<AIUpdateInterfaceUpdateIlt>(j_00028772))();
 	return (mine < ret) ? mine : ret;
 }
 
