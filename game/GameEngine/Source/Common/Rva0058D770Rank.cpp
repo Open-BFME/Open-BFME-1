@@ -148,6 +148,11 @@ public:
 	bool bfmeAskBUB(void *);
 };
 
+// Retail calls ILT 0x0001E64B, which the ledger defines as ?j_0001e64b@@YAXXZ.
+extern void j_0001e64b();
+typedef bool (BfmeSinkBUB::*BfmeAskBUBCall)(void *);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 struct BfmeThingEGB;
 void *__stdcall bfmeGoEGAb(void *, BfmeThingEGB *);
 
@@ -173,7 +178,7 @@ static __declspec(noinline) bool rva0058B610(Object *object, int *rank, float *f
 	Rva0037F220Iterator nextRaw = TheExperienceLevelSystem->rva0037F220(*(Rva0037F220Iterator *)&node);
 	const Iterator004B25D0 &next = *(Iterator004B25D0 *)&nextRaw;
 	if ((TheExperienceLevelSystem->*check)(next)
-		&& ((BfmeSinkBUB *)TheExperienceLevelSystem)->bfmeAskBUB(object))
+		&& (((BfmeSinkBUB *)TheExperienceLevelSystem)->*iltMemberCall<BfmeAskBUBCall>(j_0001e64b))(object))
 	{
 		int cap;
 		if (!object->m_210->m((int)&cap) || *rank < cap)
