@@ -6972,3 +6972,6 @@ game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeKindR
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeHolderRC,c677a221d2a69f145d5856a9,claude-sonnet,20261109062459-a80962,2026-11-09
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|member||m_bfmeStateRC,6fd0da1d3397c6db3dd8d0b5,claude-sonnet,20261109062459-a80962,2026-11-09
 game/GameEngine/Source/GameClient/BfmeOwnerRCRva0041EFD0.cpp|function|BfmeOwnerRC@|bfmeSendRC,ce4adf23ffa0458cc47250c5,claude-sonnet,20261109062459-a80962,2026-11-09
+game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|type||Rva002324A0Info,52116cf8098f305f7ab0b27e,claude-sonnet,20261109062459-72d82d,2026-11-09
+game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_radius1CC,3920bcbb8bad40c36768292f,claude-sonnet,20261109062459-72d82d,2026-11-09
+game/GameEngine/Source/Common/Rva002324A0RadiusTest.cpp|member||m_info204,d37d88d270d43097a8861b89,claude-sonnet,20261109062459-72d82d,2026-11-09
