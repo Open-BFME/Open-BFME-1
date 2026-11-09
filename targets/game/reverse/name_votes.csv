@@ -6571,3 +6571,5 @@ game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|member||slot
 game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|param|rva001D6810Call|a,b971c2d2121fd9294d067568,claude-sonnet,20261109041541-2e35f4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|param|rva001D6810Call|b,56a849978f2868a7c80ff648,claude-sonnet,20261109041541-2e35f4,2026-11-09
 game/Libraries/Source/Apt/Rva00894FF0EraseAfter.cpp|member||m_at004,111f74c79af2b221b08fa9f2,claude-sonnet,20261109041541-72f4b5,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp|local|Has_Material_Array|d,076fa921cde4d248fcfcb339,claude-sonnet,20261109041856-df65cb,2026-11-09
+game/Libraries/Source/WWVegas/WW3D2/DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp|local|DX8FVFCategoryContainer::Generate_Texture_Categories|tmp,28d8691d079672aaae123f84,claude-sonnet,20261109041856-df65cb,2026-11-09
