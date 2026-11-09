@@ -7710,3 +7710,5 @@ game/GameEngine/Source/Common/INI/INIMultiplayer.cpp|local|MultiplayerSettings::
 game/GameEngine/Source/Common/INI/INIMultiplayer.cpp|local|INI::parseMultiplayerColorDefinition|c,69465a22ad46ea92631e86e2,claude-sonnet,20261109103443-cc8dba,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/RvaTreeFindGenP12pod009281E0.cpp|param|compare_tail|a,c6b29baf8b292ff8f1716ac9,claude-sonnet,20261109103442-e6c7ba,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/RvaTreeFindGenP12pod009281E0.cpp|param|compare_tail|b,a9db2af38408033193d6de09,claude-sonnet,20261109103442-e6c7ba,2026-11-09
+game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|param|BfmeHandleYF|o,25c076f1f9d3c2d9c279145e,claude-sonnet,20261109103442-8a8be8,2026-11-09
+game/GameEngine/Source/Common/Rva00585CF0HandleUpdate.cpp|local|BfmeHostYF::bfmeUpdateYF_00585CF0|n,9087440925a9146a1ffa1303,claude-sonnet,20261109103442-8a8be8,2026-11-09
