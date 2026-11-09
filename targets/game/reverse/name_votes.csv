@@ -7022,3 +7022,11 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0Model
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0Flags|x,4bc2b8ae217a49ce85d55f59,claude-sonnet,20261109064403-727965,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0C3E0|x,7cbb4fd47d3a02f3ee890b1c,claude-sonnet,20261109064403-727965,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,f7489b8c3135606ddd8b8ecb,claude-sonnet,20261109064504-99f3de,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeEntryBV,79f4522bc559ade9a480c813,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeNodeBV,b1b49ec7d9d0b1b435ef7969,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeOwnBV,c16d39849516280c16cf4b1d,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeIdBV,6e8e7538baea18965ccae4c2,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeTagBV,02782d4ddb18d077b1255e96,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeEntryBV,f4b282e67a2b1519a8980d54,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeNextBV,0d92b35c6a34880376caedf8,claude-sonnet,20261109064641-a8e166,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeListBV,0aefd9bb959fe680dc4929d4,claude-sonnet,20261109064641-a8e166,2026-11-09

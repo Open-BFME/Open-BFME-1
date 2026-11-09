@@ -2140,3 +2140,11 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0Model
 game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp|param|rva00776AC0C3E0|x,xfer,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva00776AC0ModelTransfer.cpp: game\GameEngineDevice\Source\W3DDevice\GameClient\Drawab,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,AsciiString,claude-sonnet+gpt-6-astra,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2083.cpp|type||BfmeStrXD,AsciiString,claude-sonnet+gpt-6-astra,blocked: hook: functions 0x002E7FF0 ?median@@YAABVAsciiString@@ABV1@00@Z | outside every window of the target's slots 15828:11368-11375 | PRE-COMMIT FAILED: re,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeEntryBV,NetCommandMsg,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeNodeBV,NetCommandRef,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|type||BfmeOwnBV,NetCommandList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeIdBV,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeTagBV,m_commandType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeEntryBV,m_msg,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeNextBV,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1760.cpp|member||m_bfmeListBV,m_first,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
