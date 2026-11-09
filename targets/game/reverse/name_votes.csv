@@ -7458,3 +7458,14 @@ game/Libraries/Source/subsystem/GameSpyLoginPreferences_addLogin.cpp|local|compa
 game/GameEngine/Source/Common/Rva001C28C0Set.cpp|param|Rva001C28C0::set|o,6b7137c1d687ff9ef7540228,claude-sonnet,20261109085534-d38444,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitSpecialPowershortcutBar.cpp|param|inlineStr|s,7401415fd447ed19c3585477,claude-sonnet,20261109084247-d5a84c,2026-11-09
 game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitSpecialPowershortcutBar.cpp|param|inlineIsEmpty|s,db67a2e4e6c68e247b265f4d,claude-sonnet,20261109084247-d5a84c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendIntegerArgument|a,f464571bc9bfdcc584a11199,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendRealArgument|a,f1b23b8beb71ed004367beae,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendBooleanArgument|a,95d5cf55a51fa9850697f38d,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendObjectIDArgument|a,778b83744223ba621915e6fc,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendDrawableIDArgument|a,7b2a8ce0841a43f11f0aa73b,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendTeamIDArgument|a,f66f4a35495663c9063f4dcf,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendLocationArgument|a,c2d368b98f938b05f0a5ad3a,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendPixelArgument|a,34874cf841759ee46128297f,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendPixelRegionArgument|a,e658b7008c105c66fd3d9341,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendTimestampArgument|a,1be6390bfba0422c280143ce,claude-sonnet,20261109085718-18720c,2026-11-09
+game/GameEngine/Source/Common/System/message_stream.cpp|local|GameMessage::appendWideCharArgument|a,e106f712640d4f0304b6d733,claude-sonnet,20261109085718-18720c,2026-11-09
