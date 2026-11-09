@@ -7347,3 +7347,4 @@ game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate_update.cpp|
 game/GameEngine/Source/Common/BfmeConv1929.cpp|member||m_bfmeItemCU,0233e53c7da46871e16b2483,claude-sonnet,20261109080610-eb37de,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|s,5b7f172ab2c4f9c24eca10ab,claude-sonnet,20261109080450-cebb21,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformX.cpp|local|Rotate_X|c,a58c06189de1ea3fc26da634,claude-sonnet,20261109080450-cebb21,2026-11-09
+game/GameEngine/Source/GameClient/GUI/Rva00589040Draw.cpp|type||Rva00589040Vec2,1377727e66f1ba606596d6f1,claude-sonnet,20261109075732-54226c,2026-11-09
