@@ -196,6 +196,11 @@ public:
 	PathfindZoneManager m_zoneManager;
 };
 
+// Retail calls ILT 0x0000BF28, which the ledger defines as ?j_0000bf28@@YAXXZ.
+extern void j_0000bf28();
+typedef void (Pathfinder::*Pathfinder003FA5B0Call)(Object *, int, int);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+
 #define BFME_FLOOR(x) (fast_float2long_round((Real)BfmeFloorER((double)(x))))
 // ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z
 // The visible body lets NewMap keep cell coordinates in registers.
@@ -263,7 +268,7 @@ void Pathfinder::NewMap(void)
 	classifyMap();
 	// Add existing objects.
 	for (Object *object = TheGameLogic->getFirstObject(); object != 0; object = object->getNextObject()) {
-		updateAt003FA5B0(object, 1, 0);
+		(this->*iltMemberCall<Pathfinder003FA5B0Call>(j_0000bf28))(object, 1, 0);
 	}
 	m_isMapReady = true;
 }
