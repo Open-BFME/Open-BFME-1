@@ -7530,3 +7530,4 @@ game/GameEngine/Source/Common/BfmeConv1953.cpp|member||m_bfmeNextERI,4273256bc33
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|n,508b1fceedd1908b3d4d5d82,claude-sonnet,20261109092244-715660,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|b,e346e4b781b5e8c9df8adab9,claude-sonnet,20261109092244-715660,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1953.cpp|local|BfmeHostERI::bfmeSweepERI|s_bfmeKeyERI,51e965f14a4c5e9d021896a1,claude-sonnet,20261109092244-715660,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFXRubbleNeighbors.cpp|local|TransitionDamageFX::rva002539F0|d,0392be3b4f03e60f8e869d94,claude-sonnet,20261109092244-1014c4,2026-11-09
