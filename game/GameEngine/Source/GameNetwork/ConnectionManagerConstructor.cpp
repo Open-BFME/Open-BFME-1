@@ -74,19 +74,19 @@ public:
 	int m_localSlot;
 	unsigned int m_packetRouterSlot;
 	unsigned int m_packetRouterFallback[8];
-	unsigned int unknown12050;
-	unsigned short unknown12054;
+	unsigned int m_localAddr;
+	unsigned short m_localPort;
 	UnicodeString unknown12058;
 	unsigned int unknown1205c;
 	unsigned int unknown12060[8];
 	unsigned int unknown12080[8];
 	unsigned int unknown120a0[8];
 	unsigned int unknown120c0[8];
-	DisconnectManager *unknown120e0;
-	FrameDataManager *unknown120e4[8];
-	NetCommandList *unknown12104;
-	NetCommandList *unknown12108;
-	NetCommandWrapperList *unknown1210c;
+	DisconnectManager *m_disconnectManager;
+	FrameDataManager *m_frameData[8];
+	NetCommandList *m_pendingCommands;
+	NetCommandList *m_relayedCommands;
+	NetCommandWrapperList *m_netCommandWrapperList;
 	unsigned int unknown12110;
 	bool unknown12114, unknown12115;
 	FileCommandMap unknown12118;
@@ -96,15 +96,15 @@ public:
 
 ConnectionManager::ConnectionManager()
 	: m_transport(), m_localSlot(-1), m_packetRouterSlot(0),
-	  unknown12050(0), unknown12054(0), unknown1205c(0),
-	  unknown120e0(0), unknown12104(0), unknown12108(0), unknown1210c(0),
+	  m_localAddr(0), m_localPort(0), unknown1205c(0),
+	  m_disconnectManager(0), m_pendingCommands(0), m_relayedCommands(0), m_netCommandWrapperList(0),
 	  unknown12110(0), unknown12114(false), unknown12115(true)
 {
 	for (int i = 0; i < 8; ++i)
 	{
 		m_connections[i] = 0;
 		m_packetRouterFallback[i] = -1;
-		unknown120e4[i] = 0;
+		m_frameData[i] = 0;
 		unknown12060[i] = 0;
 		unknown120a0[i] = 0;
 		unknown120c0[i] = 0;
