@@ -2758,3 +2758,5 @@ game/GameEngine/Source/GameNetwork/FeslMessage_getInt64_rva007E8930.cpp|local|Rv
 game/GameEngine/Source/GameNetwork/FeslMessage_getInt64_rva007E8930.cpp|local|Rva007E8810Message::getInt64|s,valueText,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_70,m_specialPower,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_74,m_obeyRechargeOnTrigger,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_70,m_specialPower,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/UnpauseSpecialPowerUpgradeModuleData.cpp|member||m_74,m_obeyRechargeOnTrigger,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
