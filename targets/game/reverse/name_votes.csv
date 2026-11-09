@@ -7696,3 +7696,7 @@ game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|param|walk|d,0ca0
 game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|walk|f,f3710fd49f3e57a8d1542db3,claude-sonnet,20261109102713-462ab6,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|BfmeA1137::copyFromOverride|d,2253489233b50a98996c75b3,claude-sonnet,20261109102713-462ab6,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137CopyFromOverride.cpp|local|BfmeA1137::copyFromOverride|f,af52512e50853ec6d723b4f8,claude-sonnet,20261109102713-462ab6,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipSeps|c,1f73e2904a2ca1c4183edf80,claude-sonnet,20261109102713-11166c,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipSeps|s,257660b94901f7b0db393c88,claude-sonnet,20261109102713-11166c,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|c,1dddea63250a08133d56c842,claude-sonnet,20261109102713-11166c,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|s,0ba075c01a34b0c20560718e,claude-sonnet,20261109102713-11166c,2026-11-09
