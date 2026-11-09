@@ -15,13 +15,20 @@
 // not support. CastleMemberBehaviorModuleData's real two-argument constructor is
 // 0x0036CEA0, eighty-four bytes, converted separately.
 
+// Retail 0x010E97C8 is recorded under both ??_7CastleMemberBehaviorModuleData@@6B@
+// and ??_7MinefieldBehaviorModuleData@@6B@ (dir32_addresses.csv); the Minefield
+// module data class emits the latter with its destructor. A virtual
+// ~CastleMemberBehaviorModuleData here had no body (retail reaches the deleting
+// destructor through 0x0036DBD0), so the store names the emitted vftable instead.
+extern "C" void *__identifier("??_7MinefieldBehaviorModuleData@@6B@")[];
+
 class CastleMemberBehaviorModuleData
 {
 public:
 	CastleMemberBehaviorModuleData();
-	virtual ~CastleMemberBehaviorModuleData();
 
 private:
+	void **m_vtable;
 	unsigned int m_gap4;
 	unsigned int m_08;
 	unsigned int m_0c;
@@ -38,6 +45,7 @@ private:
 // ??0CastleMemberBehaviorModuleData@@QAE@XZ
 CastleMemberBehaviorModuleData::CastleMemberBehaviorModuleData()
 {
+	m_vtable = __identifier("??_7MinefieldBehaviorModuleData@@6B@");
 	unsigned int n = 0xfffffffeu;
 	m_08 = n;
 	m_0c = n;
