@@ -76811,7 +76811,7 @@ name,address,notes
 ?bfmeApplyGR@BfmeThingGR@@QAEXH@Z,0x0090C9E0,pin apply for BfmeConv2069
 ?bfmeApplyPT@Glo012F368CType@@QAEXXZ,0x00027B65,pin
 ?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z,0x0001756C,Open-BFME5 ILT to 0x00365630; callee of LWCM replenish-pair at 0x003B4510
-?bfmeApplyPosition1291@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
+?applyPosition@BfmeSlotDispatcher1281@@QAEXXZ,0x008BB0B0,address-derived coordinate clamp reconstructed from the 0x008BB0B0 retail body
 ?bfmeApplySlot1281@BfmeSlotDispatcher1281@@QAEXPAXH0@Z,0x008BB200,address-derived slot dispatcher callee; argument shape decoded from the 0x008BC360 retail call site
 ?bfmeApplySpecialModelCondition@Object@@QAEXHPBXH@Z,0x0001191E,Open-BFME5 ILT thunk to body 0x001C1FB0; follows Object m_next at +0x214 to the chain tail and forwards three arguments through the SMC helper at +0x1F8; bfme prefix records unrecovered retail spelling
 ?bfmeApplyTP@BfmeInnerTP@@QAEXH@Z,0x00024D70,pin inner apply for BfmeConv2025
