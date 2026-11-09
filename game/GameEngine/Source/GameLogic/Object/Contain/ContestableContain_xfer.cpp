@@ -33,7 +33,7 @@ public:
 	~XferException();
 	char *text; int tag;
 };
-struct Rva0021C080Object { unsigned char pad[0x74]; ObjectID field74; };
+struct Rva0021C080Object { unsigned char pad[0x74]; ObjectID m_id; };
 struct Rva0021C080Entry { Rva0021C080Object *field0; unsigned char count; unsigned char pad[3]; };
 typedef std::pair<ObjectID,ObjectID> Rva0021C080Pair;
 namespace _STL { template<> void _Construct(Rva0021C080Pair*,const Rva0021C080Pair&); }
@@ -65,13 +65,13 @@ void Rva0021C080Contestable::xfer(Xfer *xfer) {
 	if(xfer->IsStoring()) {
 		int count=self->field9bc.size(); *xfer==count;
 		for(std::list<Rva0021C080Object*>::iterator j=self->field9bc.begin();j!=self->field9bc.end();++j) {
-			id=(*j)->field74; Rva0010C3C0((MidVirtualSlot90Receiver*)xfer,&id);
+			id=(*j)->m_id; Rva0010C3C0((MidVirtualSlot90Receiver*)xfer,&id);
 		}
 		count=self->field9c4.size(); *xfer==count;
 		for(std::map<Rva0021C080Object*,Rva0021C080Entry>::iterator j=self->field9c4.begin();j!=self->field9c4.end();++j) {
-			id=j->first->field74; Rva0010C3C0((MidVirtualSlot90Receiver*)xfer,&id);
+			id=j->first->m_id; Rva0010C3C0((MidVirtualSlot90Receiver*)xfer,&id);
 			if(j->second.field0==0) id=INVALID_ID;
-			else id=j->second.field0->field74;
+			else id=j->second.field0->m_id;
 			Rva0010C3C0((MidVirtualSlot90Receiver*)xfer,&id);
 		}
 	} else {

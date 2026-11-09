@@ -2113,3 +2113,4 @@ game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF0JS,m_next,claude-
 game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF4JS,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2078.cpp|local|BfmeListJS::bfmeSetJS|n,newNode,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,m_id,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,m_id,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
