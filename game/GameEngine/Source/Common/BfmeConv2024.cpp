@@ -185,7 +185,7 @@ public:
 struct Rva00367E30Logic
 {
 	unsigned char m_bfmeHeadTN[0x3c];
-	unsigned int m_bfmeFrameTN;
+	unsigned int m_frame;
 };
 
 class GameLogic;
@@ -225,8 +225,8 @@ void BfmeThingTN::bfmeSetTransformTN(const Matrix3DTN *m)
 {
 	((Thing *)this)->rva00132200((const Matrix3D *)m);
 
-	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_bfmeFrameTN);
-	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_bfmeFrameTN);
+	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_frame);
+	((Drawable *)this)->bfmeRecordTransform(theBfmeGameLogic()->m_frame);
 
 	BfmeXTN *x = bfmeGetXTN();
 
