@@ -6922,3 +6922,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cp
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte204,8494af9db703e58687d64bd9,claude-sonnet,20261109061414-2ecd14,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_208,cfd5bdc146c5e45166f3361c,claude-sonnet,20261109061414-2ecd14,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00745B10OwnerConstructor.cpp|member||m_byte228,c02cca82e6ee4d38aa81b1d6,claude-sonnet,20261109061414-2ecd14,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp|type||TeamState00164750,c5669f0f6a4e33a45346d35a,claude-sonnet,20261109061829-78675e,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp|type||Money00164750,9af801d1f4bc25205af9a356,claude-sonnet,20261109061829-78675e,2026-11-09
