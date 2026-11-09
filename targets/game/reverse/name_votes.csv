@@ -6428,3 +6428,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_rva001
 game/GameEngine/Source/GameLogic/Object/Behavior/ShareExperienceBehaviorCtorThunk.cpp|member||m_f14,5bc37b554efbf107f32be0f2,claude-sonnet,20261109030421-be7e54,2026-11-09
 game/GameEngine/Source/GameClient/System/ParticleSystemDebugDisplay.cpp|type||Rva005CA370Particle,310c2bbba178d39e23e9edc8,claude-sonnet,20261109030848-44d753,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva006D23C0ResetGrid.cpp|type||Rva006D23C0Owner,d5051c714b95e369524ec015,claude-sonnet,20261109030604-d43246,2026-11-09
+game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::release|p,34074841121483616f78b0a7,claude-sonnet,20261109030604-f1abe5,2026-11-09
+game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00806400Owner::setValue|p,bccff60ffcb4da4264fec530,claude-sonnet,20261109030604-f1abe5,2026-11-09
+game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00808C80Owner::find|p,084d2541b8b357f9c4c48635,claude-sonnet,20261109030604-f1abe5,2026-11-09
+game/GameEngine/Source/Common/U2FixedSlotSearches.cpp|local|Rva00808E60Owner::find|p,0c01da0fde51158d76de6d72,claude-sonnet,20261109030604-f1abe5,2026-11-09
