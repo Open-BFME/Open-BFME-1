@@ -7424,3 +7424,5 @@ game/GameEngine/Source/GameClient/GUI/OnlineQuickMatchSaveOptions.cpp|function|B
 game/GameEngine/Source/GameClient/GUI/MpGameSetup.cpp|function|MpGameSetup@|bfmeRefresh,e83b07ad487ad5ae86397ee2,claude-sonnet,20261109083007-de40be,2026-11-09
 game/GameEngine/Source/GameClient/System/CampaignManager_setCampaignAndMissionThunk.cpp|param|compare|s,b1da33d6288ab908f33332d5,claude-sonnet,20261109083453-5b18b4,2026-11-09
 game/GameEngine/Source/GameClient/System/CampaignManager_setCampaignAndMissionThunk.cpp|local|compare|n,459015a78fc2a332c8c98c80,claude-sonnet,20261109083453-5b18b4,2026-11-09
+game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeRef,0aeff38739f82228f61eb629,claude-sonnet,20261109083453-d2feae,2026-11-09
+game/GameEngine/Source/Common/BfmeConv910.cpp|member||m_bfmeNext,123b6a7cc2c8f51739c8cd11,claude-sonnet,20261109083453-d2feae,2026-11-09
