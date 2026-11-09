@@ -25,7 +25,7 @@ class BfmeLogicFV
 {
 public:
 	unsigned char m_bfmeHeadFV[0x3c];
-	int m_bfmeFrameFV;
+	int m_frame;
 };
 
 class GameLogic;
@@ -52,7 +52,7 @@ UpdateSleepTime PartTheHeavensUpdate::update()
 	if (*(void **)(base - 0xc) == 0)
 		return UPDATE_SLEEP_FOREVER;
 
-	int delta = ((BfmeLogicFV *)TheGameLogic)->m_bfmeFrameFV - state->m_bfmeStampFV;
+	int delta = ((BfmeLogicFV *)TheGameLogic)->m_frame - state->m_bfmeStampFV;
 
 	if (delta == 0)
 		((DecalCreate00299BB0 *)(base - 0x10))->create();

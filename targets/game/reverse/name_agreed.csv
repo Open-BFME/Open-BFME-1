@@ -1987,3 +1987,4 @@ game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeMgrF62,GameLogic,claude-
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubInnerD77,Overridable,claude-sonnet+gpt-6.1-sol,blocked: hook: pins 0x000022BB ?getFinal@Overridable@@QAEPAXXZ | outside every window of the target's slots 958:1011-1013 | PRE-COMMIT FAILED: retail's thunk t,2026-11-09
 game/GameEngine/Source/Common/BfmeConv817.cpp|type||BfmeSubD77,ThingTemplate,claude-sonnet+gpt-6.1-sol,blocked: hook: pins 0x000022BB ?getFinal@Overridable@@QAEPAXXZ | outside every window of the target's slots 958:1011-1013 | PRE-COMMIT FAILED: retail's thunk t,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateUpdate.cpp|member||m_bfmeFrameFV,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/PartTheHeavensUpdateUpdate.cpp|member||m_bfmeFrameFV,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
