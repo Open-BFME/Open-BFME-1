@@ -6423,3 +6423,4 @@ game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||frame3c,e96d5a
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||delay0c,2fae5e84d9741eca9df8a08a,claude-sonnet,20261109024824-8ea696,2026-11-09
 game/GameEngine/Source/GameLogic/System/EmotionNugget.cpp|member||fx30,02858e6c41c9a7b56e08ff1a,claude-sonnet,20261109024824-8ea696,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_beginSlowDeath.cpp|member||field44,618adaedd070a8b9e3158106,claude-sonnet,20261109030237-971af9,2026-11-09
+game/GameEngine/Source/Common/System/GeometryInfoRva0087E650.cpp|function|GeometryInfo@|rva0087E650,2c6268bfda1c7eabf58e49d5,claude-sonnet,20261109030237-3f4907,2026-11-09
