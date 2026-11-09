@@ -1,12 +1,19 @@
 // ??1InGameUI@@UAE@XZ
-// partial score=0.969 date=2026-10-20
+// partial score=1.0 date=2026-11-07
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/Common/System
+// stlport
+// ??1InGameUI@@UAE@XZ
 // Retail 0x0044AE70, 936 bytes.
 // The primary vtable identifies InGameUI at +0. The Snapshot vtable sits at +8.
 // Retail cleanup sites set the member offsets. Compile-time checks verify each offset.
 // The destructor uses thirty EH states and destroys twenty-eight members in reverse order.
 // Element types match the sizes passed to the retail vector cleanup calls.
-// The destructor declarations stay undefined so MSVC emits calls instead of inlining them.
+// The STLport containers at +0x10, +0x18, +0x1C, +0x77C, +0x1298, +0x12C0, +0x12C4 and
+// +0x1304 are the constructor TU's types (InGameUIConstructor.cpp). Retail's body calls
+// their out-of-line base destructors (_List_base/_Rb_tree) while the unwind funclets call
+// the distinct out-of-line list/map destructors, so the container destructor is inline here.
+// That inline layer is also what gives MSVC retail's EBX zero and EBP movie-string address.
+// The remaining member destructors stay undefined so MSVC emits calls instead of inlining them.
 // Snapshot's defined virtual method makes MSVC emit the secondary vtable store.
 // The members at +0x81C and +0x560 stay plain storage because the body deletes or releases them directly.
 
@@ -14,8 +21,6 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef unsigned char UnsignedByte;
-extern "C" void _ReadWriteBarrier();
-#pragma intrinsic(_ReadWriteBarrier)
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
@@ -35,6 +40,10 @@ struct Rva0044AE70Dtor
 	UnsignedInt m_pad;
 };
 
+
+class WindowLayout;
+class Drawable;
+struct Payload0044B800_1304 { unsigned int first, second; };
 // +0x14 and the twelve more below it: releaseBuffer through a 4-byte
 // `char*`, the BFME StringBase shape (see BFMERetailAsciiString in
 // InGameUI.cpp). `set` has its only call site, at +0x14.
@@ -46,7 +55,6 @@ struct BfmeDtorString
 	void set(const BfmeDtorString &other);
 };
 
-extern BfmeDtorString Rva01336E50EmptyString;
 
 // +0x12F8: the one member whose destructor is a call followed by inline code
 // in the caller. The head pointer is tested and handed to a __stdcall
@@ -206,10 +214,10 @@ public:
 	Bool m_inputEnabled;					// +0x00D
 	unsigned short m_pad00E;					// +0x00E
 
-	Rva0044AE70Dtor m_rva00010;				// +0x010
+	_STL::list<WindowLayout *> m_rva00010;				// +0x010
 	BfmeDtorString m_currentlyPlayingMovie;		// +0x014
-	Rva0044AE70Dtor m_rva00018;				// +0x018
-	Rva0044AE70Dtor m_rva0001C;				// +0x01C
+	_STL::list<Drawable *> m_rva00018;				// +0x018
+	_STL::list<Drawable *> m_rva0001C;				// +0x01C
 	UnsignedInt m_pad020[6];					// +0x020 .. +0x037
 	MoveHint0043AAD0 m_rva00038[25];			// +0x038, 25 * 0x14
 	UnsignedInt m_pad22C[194];				// +0x22C .. +0x533
@@ -226,8 +234,8 @@ public:
 	UnsignedInt m_pad75C[2];					// +0x75C .. +0x763
 	BfmeDtorString m_rva00764;				// +0x764
 	UnsignedInt m_pad768[5];					// +0x768 .. +0x77B
-	Rva0044AE70Dtor m_rva0077C;				// +0x77C
-	UnsignedInt m_pad780[9];					// +0x780 .. +0x7A3
+	_STL::map<AsciiString, void *> m_rva0077C;				// +0x77C
+	UnsignedInt m_pad788[7];					// +0x788 .. +0x7A3
 	BfmeDtorString m_rva007A4;				// +0x7A4
 	UnsignedInt m_pad7A8[3];					// +0x7A8 .. +0x7B3
 	BfmeDtorString m_rva007B4;				// +0x7B4
@@ -258,14 +266,14 @@ public:
 	RadiusDecalTemplate m_rva00894[53];			// +0x894, 53 * 0x30
 	Rva0044AE70Dtor m_rva01284;				// +0x1284
 	UnsignedInt m_pad1288[4];				// +0x1288 .. +0x1297
-	Rva0044AE70Dtor m_rva01298;				// +0x1298
+	_STL::list<void *> m_rva01298;				// +0x1298
 	UnsignedInt m_pad129C[9];				// +0x129C .. +0x12BF
-	Rva0044AE70Dtor m_rva012C0;				// +0x12C0
-	Rva0044AE70Dtor m_rva012C4;				// +0x12C4
+	_STL::list<void *> m_rva012C0;				// +0x12C0
+	_STL::list<void *> m_rva012C4;				// +0x12C4
 	UnsignedInt m_pad12C8[12];				// +0x12C8 .. +0x12F7
 	Rva0044AE70Dtor12F8 m_rva012F8;			// +0x12F8
 	UnsignedInt m_pad12FC[2];				// +0x12FC .. +0x1303
-	Rva0044AE70Dtor m_rva01304;				// +0x1304
+	_STL::list<Payload0044B800_1304> m_rva01304;				// +0x1304
 	UnsignedInt m_pad1308[5];				// +0x1308 .. +0x131B
 	List00442C90 m_rva0131C[32];			// +0x131C, 32 * 0x04
 	DrawableShim *m_idleWorkerWin;			// +0x139C, no destructor
@@ -302,7 +310,7 @@ InGameUI::~InGameUI()
 
 	if (m_currentlyPlayingMovie.m_data != 0 &&
 		*(const unsigned short *)(m_currentlyPlayingMovie.m_data + 4) != 0)
-		m_currentlyPlayingMovie.set(Rva01336E50EmptyString);
+		m_currentlyPlayingMovie.set((const BfmeDtorString &)AsciiString::TheEmptyString);
 
 	stopCameoMovie();
 
