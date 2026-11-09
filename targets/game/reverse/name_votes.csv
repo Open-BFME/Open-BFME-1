@@ -7534,3 +7534,5 @@ game/GameEngine/Source/GameLogic/Object/Damage/TransitionDamageFXRubbleNeighbors
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalRange470,e9eaef0d0c0082498c39cc79,claude-sonnet,20261109092321-24e7e4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalMode478,ea265e35b8ed4525ac72d663,claude-sonnet,20261109092321-24e7e4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/GiantBirdAIUpdate.cpp|member||m_goalPosition47c,c02956899fb2caa6b79b41fa,claude-sonnet,20261109092321-24e7e4,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva001559B0Owner::notifyMembers|n,220d570a420c5503ab8e991b,claude-sonnet,20261109092750-31b312,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva001559B0Owner::notifyMembers|t,ba8ee5ea85214dd07a3538b6,claude-sonnet,20261109092750-31b312,2026-11-09
