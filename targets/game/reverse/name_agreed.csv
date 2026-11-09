@@ -1314,3 +1314,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTre
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00736B60AddTree.cpp|function|W3DTreeBuffer@|rva00736b60,addTree,claude-sonnet+gpt-6.1-sol,blocked: hook: PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above),2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field00,m_peerResponseType,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field04,m_groupRoomName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||adjust4c,m_adjustDestinations,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

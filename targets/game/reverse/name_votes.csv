@@ -6314,3 +6314,5 @@ game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|me
 game/GameEngine/Source/GameLogic/System/LivingWorld/LivingWorldPathFinder.cpp|function|BfmeObjHC@|bfmeDoHC,1ac25cf2ad9d5f61650563ce,claude-sonnet,20261109021902-5d1ee9,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field00,41c655756d1fa1d67a63464b,claude-sonnet,20261109021901-a1bba9,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp|member||field04,ff452bf096f1fec4cc8c8b9b,claude-sonnet,20261109021901-a1bba9,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||m_status98,1ea35bfb849883e4146a081d,claude-sonnet,20261109022018-f9c7e3,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackPursueTargetState_onEnter.cpp|member||adjust4c,b00b3373a9d121371d46e572,claude-sonnet,20261109022018-f9c7e3,2026-11-09
