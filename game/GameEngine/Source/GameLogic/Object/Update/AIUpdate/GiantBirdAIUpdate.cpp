@@ -44,7 +44,7 @@ public:
 	float m_goalRange470;
 	char m_unreconstructed474[4];
 	void *m_goalMode478;
-	Coord3D m_goalPosition47c;
+	Coord3D m_goalPosition;
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -173,9 +173,9 @@ StateReturnType GiantBirdNormalFlightState::update()
 
 	float height = ai->m_goalRange470;
 	Coord3D goal;
-	goal.x = ai->m_goalPosition47c.x;
-	goal.y = ai->m_goalPosition47c.y;
-	goal.z = ai->m_goalPosition47c.z;
+	goal.x = ai->m_goalPosition.x;
+	goal.y = ai->m_goalPosition.y;
+	goal.z = ai->m_goalPosition.z;
 	float dx = object->m_position.x - goal.x;
 	float dy = object->m_position.y - goal.y;
 	float dz = object->m_position.z - goal.z;
