@@ -26,7 +26,7 @@ struct RvaC4390First
 {
 public:
 	char m_bfmeHead[0x204];
-	BfmeObjectAI *m_bfmeAI;
+	BfmeObjectAI *m_ai;
 };
 
 class RvaC4390Second
@@ -55,7 +55,7 @@ public:
 	char m_bfmeHeadA[0xBC];
 	Real m_bfmeVisionBonus;					// +0x00BC
 	char m_bfmeHeadB[0x204 - 0xC0];
-	BfmeObjectAI *m_bfmeAI;					// +0x0204
+	BfmeObjectAI *m_ai;					// +0x0204
 };
 
 class BfmeObjectAI
@@ -110,10 +110,10 @@ int BfmeObjectAI::bfmeStateValue(void)
 			break;
 
 		RvaC4390First *linked = relation->resolve(0);
-		if (!linked || !linked->m_bfmeAI)
+		if (!linked || !linked->m_ai)
 			break;
 
-		current = linked->m_bfmeAI;
+		current = linked->m_ai;
 	} while (current);
 
 	return current->m_bfmeStateValue;
@@ -187,7 +187,7 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
 {
 	Real range = object->getVisionRange();
 
-	BfmeObjectAI *ai = object->m_bfmeAI;
+	BfmeObjectAI *ai = object->m_ai;
 
 	if (!ai)
 		return g_rva01075350;
