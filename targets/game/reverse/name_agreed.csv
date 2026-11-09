@@ -2470,3 +2470,7 @@ game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|s,sin
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|c,cosHalfAngle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|param|Axis_To_Quat|a,axis,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Axis_To_Quat|tmp,normalizedAxis,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|s,sinHalfAngle,claude-sonnet+gpt-6.1-sol,blocked: game/Libraries/Source/WWVegas/WWMath/quat.cpp: game\Libraries\Source\WWVegas\WWMath\quat.cpp(37) : error C2065: 'c' : undeclared identifier,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Quaternion::Quaternion|c,cosHalfAngle,claude-sonnet+gpt-6.1-sol,blocked: game/Libraries/Source/WWVegas/WWMath/quat.cpp: game\Libraries\Source\WWVegas\WWMath\quat.cpp(37) : error C2065: 'c' : undeclared identifier,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|param|Axis_To_Quat|a,axis,claude-sonnet+gpt-6.1-sol,blocked: game/Libraries/Source/WWVegas/WWMath/quat.cpp: game\Libraries\Source\WWVegas\WWMath\quat.cpp(37) : error C2065: 'c' : undeclared identifier,2026-11-09
+game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Axis_To_Quat|tmp,normalizedAxis,claude-sonnet+gpt-6.1-sol,blocked: game/Libraries/Source/WWVegas/WWMath/quat.cpp: game\Libraries\Source\WWVegas\WWMath\quat.cpp(37) : error C2065: 'c' : undeclared identifier,2026-11-09
