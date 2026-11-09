@@ -170,11 +170,11 @@ private:
 	BfmeNode_00161220 *m_list04;
 	BfmeNode_00161220 *m_list08;
 	BfmeContext_00168910 *m_context0C;
-	UnsignedByte m_field10;
-	UnsignedByte m_field11;
+	UnsignedByte m_readyToBuildTeam;
+	UnsignedByte m_readyToBuildStructure;
 	UnsignedByte m_pad12[2];
-	Int m_field14;
-	Int m_field18;
+	Int m_teamTimer;
+	Int m_structureTimer;
 	Int m_field1C;
 	Int m_field20;
 	Int m_field24;
@@ -355,10 +355,10 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 		throw XferException(5, 0);
 	}
 
-	target->xferBool((Bool *)&m_field10);
-	target->xferBool((Bool *)&m_field11);
-	target->xferUnsignedInt((UnsignedInt *)&m_field14);
-	target->xferUnsignedInt((UnsignedInt *)&m_field18);
+	target->xferBool((Bool *)&m_readyToBuildTeam);
+	target->xferBool((Bool *)&m_readyToBuildStructure);
+	target->xferUnsignedInt((UnsignedInt *)&m_teamTimer);
+	target->xferUnsignedInt((UnsignedInt *)&m_structureTimer);
 	target->xferUnsignedInt((UnsignedInt *)&m_field20);
 	target->xferUnsignedInt((UnsignedInt *)&m_field24);
 	target->xferUnsignedInt((UnsignedInt *)&m_field1C);
