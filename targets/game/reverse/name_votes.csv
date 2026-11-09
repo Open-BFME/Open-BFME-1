@@ -6174,3 +6174,10 @@ game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_am
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount040,814ce6ccf56dbe144481bd7b,claude-sonnet,20261109005840-da0554,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptDamageHook.cpp|member||m_amount044,71e63f58ac478b6379a02eef,claude-sonnet,20261109005840-da0554,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva001695B0AdjustBuildList.cpp|type||Rva001695B0,f13810888d903256f698d353,claude-sonnet,20261109005840-115835,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|type||BfmeCZD,5bcc77bcffa2d4b769af3bcb,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|member||m_bfmeBaseZD,5c22e49d4d88fab350d667ce,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|member||m_bfmeFirstZD,1e544edadd55cff171bd64c7,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|member||m_bfmeSecondZD,3ba941eba48e04c1b12a704a,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|param|bfmeDoZD|c,b5e33a8c553871435b963aae,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|local|LevelUpUpgrade::upgradeImplementation|a,1d09a2f1ace289e1d886e267,claude-sonnet,20261109011212-a88420,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/LevelUpUpgradeUpgradeImplementation.cpp|local|LevelUpUpgrade::upgradeImplementation|c,4d9d1c0ee6d970fe1857d477,claude-sonnet,20261109011212-a88420,2026-11-09
