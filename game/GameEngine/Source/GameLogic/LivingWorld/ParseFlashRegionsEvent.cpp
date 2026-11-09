@@ -42,13 +42,13 @@ public:
 class Rva003B7190Record
 {
 public:
-	Rva003B7190Record() : m_04( 0 ), m_flag08( false ), m_0C( 0 ) {}
+	Rva003B7190Record() : m_delayFromActStart( 0 ), m_summaryEvent( false ), m_flashTime( 0 ) {}
 	virtual ~Rva003B7190Record() {}
 
 private:
-	Int m_04;
-	bool m_flag08;
-	Int m_0C;
+	Int m_delayFromActStart;
+	bool m_summaryEvent;
+	Int m_flashTime;
 };
 
 // Retail keeps the field names as separate .rdata strings ahead of the table.
