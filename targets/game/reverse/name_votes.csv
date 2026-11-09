@@ -7734,3 +7734,5 @@ game/Libraries/Source/EA/Apt/Rva008A7B00KeyboardProperties.cpp|local|pooledInteg
 game/GameEngine/Source/Common/Rva006995F0Attenuate.cpp|local|Rva006995F0Owner::attenuate|x,b20f412d65dd5394726c8efd,claude-sonnet,20261109104528-176b6d,2026-11-09
 game/GameEngine/Source/Common/Rva006995F0Attenuate.cpp|local|Rva006995F0Owner::attenuate|y,e3a36c63ea1d1b40aa12aff4,claude-sonnet,20261109104528-176b6d,2026-11-09
 game/GameEngine/Source/Common/Rva006995F0Attenuate.cpp|local|Rva006995F0Owner::attenuate|z,5f308f6157314f909284d7d8,claude-sonnet,20261109104528-176b6d,2026-11-09
+game/GameEngine/Source/GameLogic/Map/FootprintIterator001A1460.cpp|local|FootprintIterator001A1460::FootprintIterator001A1460|c,bf72f45f27b577eb7107b08c,claude-sonnet,20261109104823-b88f35,2026-11-09
+game/GameEngine/Source/GameLogic/Map/FootprintIterator001A1460.cpp|local|FootprintIterator001A1460::FootprintIterator001A1460|s,e448e7065832028b103330c0,claude-sonnet,20261109104823-b88f35,2026-11-09
