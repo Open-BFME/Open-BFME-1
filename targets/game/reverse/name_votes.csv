@@ -6954,3 +6954,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|me
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContainReleaseMember.cpp|function|BfmeHordeContainOwner@|bfmeReleaseMember,6ca334371e2066dd9f191d69,claude-sonnet,20261109062554-79cdb8,2026-11-09
 game/GameEngine/Source/Common/SmallGaps/Rva009F2FA0PopSqrt.cpp|local|Rva009F2FA0Reader::popSqrt|e,a473deca67ba2e6d26c46f97,claude-sonnet,20261109062744-952564,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp|member||m_bfme00YY,c75e5eeb75b407e7165cafb1,claude-sonnet,20261109062733-246327,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateModuleDataCtor.cpp|type||Gen_t_0029e190_p8cd,3c20ea5eda09197f7f6ffd3b,claude-sonnet,20261109062912-f8f33f,2026-11-09
