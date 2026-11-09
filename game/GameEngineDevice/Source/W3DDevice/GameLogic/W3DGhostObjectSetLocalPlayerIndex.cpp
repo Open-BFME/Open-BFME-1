@@ -64,6 +64,13 @@ public:
 
 class W3DGhostObjectManager;
 
+// Retail's restoreParentObject body at 0x006BC7B0 is the ledger row ?bfmeSweepBP@BfmeHostBP.
+class BfmeHostBP
+{
+public:
+	void bfmeSweepBP();
+};
+
 class W3DGhostObject : public GhostObject
 {
 public:
@@ -76,7 +83,6 @@ public:
 
 protected:
 	void removeParentObject();
-	void restoreParentObject();
 
 	void removeFromScene(int playerIndex)
 	{
@@ -136,7 +142,7 @@ void W3DGhostObjectManager::setLocalPlayerIndex(int index)
 		}
 		else if (mod->m_parentSnapshots[m_localPlayer] && mod->m_parentObject)
 		{
-			mod->restoreParentObject();
+			((BfmeHostBP *)mod)->bfmeSweepBP();
 		}
 
 		mod = mod->m_nextSystem;

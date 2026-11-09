@@ -29,6 +29,13 @@ public:
 	void bfmeGoPA(int playerIndex);
 };
 
+// Retail's restoreParentObject body at 0x006BC7B0 is the ledger row ?bfmeSweepBP@BfmeHostBP.
+class BfmeHostBP
+{
+public:
+	void bfmeSweepBP();
+};
+
 class W3DGhostObject
 {
 public:
@@ -40,7 +47,6 @@ protected:
 	char m_padding[0x70];
 	W3DRenderObjectSnapshot *m_parentSnapshots[32];
 
-	void restoreParentObject();
 };
 
 void W3DGhostObject::freeSnapShot(int playerIndex)
@@ -52,7 +58,7 @@ void W3DGhostObject::freeSnapShot(int playerIndex)
 	{
 		((BfmeThingPA *)((char *)this - 4))->bfmeGoPA(playerIndex);
 		if (m_parentObject)
-			((W3DGhostObject *)((char *)this - 4))->restoreParentObject();
+			((BfmeHostBP *)((char *)this - 4))->bfmeSweepBP();
 
 		W3DRenderObjectSnapshot *snap = m_parentSnapshots[playerIndex];
 		while (snap)
