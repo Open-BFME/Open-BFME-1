@@ -7701,3 +7701,5 @@ game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipSeps|s,2576
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|c,1dddea63250a08133d56c842,claude-sonnet,20261109102713-11166c,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|s,0ba075c01a34b0c20560718e,claude-sonnet,20261109102713-11166c,2026-11-09
 game/GameEngine/Source/GameLogic/Object/ObjectAttemptHealingFromSoleBenefactor.cpp|param|isKindOf|t,91148a3068df8803975d8a85,claude-sonnet,20261109102819-586435,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectorTooltip.cpp|local|MapSelectorTooltip|image2,74e983723b0ea21f4ccb8fd3,claude-sonnet,20261109103442-91d6b9,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/MapSelectorTooltip.cpp|local|MapSelectorTooltip|it2,0a4a489908c5f4b469f0dc29,claude-sonnet,20261109103442-91d6b9,2026-11-09
