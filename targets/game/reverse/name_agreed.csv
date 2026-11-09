@@ -1563,3 +1563,6 @@ game/GameEngine/Source/Common/Bfme5IfaceWalk.cpp|member||m_bfmeItems,m_behaviors
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Coord,Coord3D,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Event,AudioEventRTS,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Region,PolygonTrigger,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Coord,Coord3D,claude-sonnet+gpt-6.1-sol,blocked: hook: PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above),2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Event,AudioEventRTS,claude-sonnet+gpt-6.1-sol,blocked: hook: PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above),2026-11-09
+game/GameEngineDevice/Source/MilesAudioDevice/Rva006A1C60.cpp|type||Rva006A1C60Region,PolygonTrigger,claude-sonnet+gpt-6.1-sol,blocked: hook: PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above),2026-11-09
