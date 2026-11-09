@@ -6713,3 +6713,4 @@ game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,5fef4a5
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,989975624799a62b46844ccb,glm,20261109045146-30fbab,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b3,46782bd246833d691c1aee27,glm,20261109045146-30fbab,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12be,fc127a641ace064c12820f66,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|local|BFMEActionManager::canEnterObject|m,0a6f04b11b149fdc5515b6c3,claude-sonnet,20261109045711-66fd4d,2026-11-09
