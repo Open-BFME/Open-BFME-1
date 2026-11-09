@@ -195,7 +195,7 @@ __forceinline Function rva006A59F0Thunk()
 class MilesAudioManager
 {
 public:
-	virtual bool rva006A8DC0(AudioHandle audioEvent);
+	virtual bool killAudioEventImmediately(AudioHandle audioEvent);
 
 
 private:
@@ -211,7 +211,7 @@ private:
 	PlayingAudioDeque m_deques9d4[3][2];
 };
 
-bool MilesAudioManager::rva006A8DC0(AudioHandle audioEvent)
+bool MilesAudioManager::killAudioEventImmediately(AudioHandle audioEvent)
 {
 	MilesAudioScopedMutex guard(m_mutex);
 	bool killed = false;

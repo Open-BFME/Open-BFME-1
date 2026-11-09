@@ -38702,3 +38702,4 @@ Gen_f265_b7a8aa_00434ff0,0x00434FF0,"gen-shim scaffold placeholder superseded by
 ??0Rva000ED2D0@@QAE@XZ,0x000ED2D0,renamed to ??0DamageInfoInput@@QAE@XZ by tools/name_lane.py: two models agreed
 ?slot04@Rva004B2300@@UAE?AVRva004B2470Handle@@XZ,0x004B2470,renamed to ?clone@Rva004B2300@@UAE?AVRva004B2470Handle@@XZ by tools/name_lane.py: two models agreed
 ?bfmeGo1112A@BfmeV1112@@QAEHUBfmeA1112@@UBfmeB1112@@@Z,0x000EA260,renamed to ?getTotalUnitsBuilt@BfmeV1112@@QAEHUBfmeA1112@@UBfmeB1112@@@Z by tools/name_lane.py: two models agreed
+?rva006A8DC0@MilesAudioManager@@UAE_NI@Z,0x006A8DC0,renamed to ?killAudioEventImmediately@MilesAudioManager@@UAE_NI@Z by tools/name_lane.py: two models agreed
