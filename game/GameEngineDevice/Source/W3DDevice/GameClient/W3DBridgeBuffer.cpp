@@ -630,12 +630,8 @@ void W3DBridgeBufferLoadBridgesShim::loadBridgesInVertexAndIndexBuffers(RefRende
 //=============================================================================
 /** Destructor. Releases w3d assets. */
 //=============================================================================
-// byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DBridgeBufferDestructor.cpp
-// ??1W3DBridgeBuffer@@QAE@XZ present-unmatched
-W3DBridgeBuffer::~W3DBridgeBuffer(void)
-{
-	freeBridgeBuffers();
-}
+// The exact retail destructor (0x006D8A80) is emitted by W3DBridgeBufferDestructor.cpp;
+// this unit keeps no second definition so the link selects retail's copy.
 
 // The exact retail constructor is emitted by W3DBridgeBufferCtorThunk.cpp.
 
