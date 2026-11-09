@@ -7700,3 +7700,4 @@ game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipSeps|c,1f73
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipSeps|s,257660b94901f7b0db393c88,claude-sonnet,20261109102713-11166c,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|c,1dddea63250a08133d56c842,claude-sonnet,20261109102713-11166c,2026-11-09
 game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSeps.cpp|local|skipNonSeps|s,0ba075c01a34b0c20560718e,claude-sonnet,20261109102713-11166c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/ObjectAttemptHealingFromSoleBenefactor.cpp|param|isKindOf|t,91148a3068df8803975d8a85,claude-sonnet,20261109102819-586435,2026-11-09
