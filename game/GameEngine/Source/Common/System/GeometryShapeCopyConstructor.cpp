@@ -51,7 +51,7 @@ struct GeometryShape
 	int m_type;
 	float m_height;
 	float m_majorRadius;
-	int m_unmodelled00c;
+	int m_minorRadius;
 	int m_unmodelled10;
 	int m_unmodelled14;
 	float m_offsetZ;
@@ -67,7 +67,7 @@ GeometryShape::GeometryShape(const GeometryShape &other)
 	: m_type(other.m_type),
 	  m_height(other.m_height),
 	  m_majorRadius(other.m_majorRadius),
-	  m_unmodelled00c(other.m_unmodelled00c),
+	  m_minorRadius(other.m_minorRadius),
 	  m_unmodelled10(other.m_unmodelled10),
 	  m_unmodelled14(other.m_unmodelled14),
 	  m_offsetZ(other.m_offsetZ),

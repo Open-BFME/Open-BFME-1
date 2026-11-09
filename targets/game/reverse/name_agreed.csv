@@ -1690,3 +1690,4 @@ game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeNam
 game/GameEngine/Source/GameLogic/System/INILightPointLevel.cpp|member||m_bfmeLevels,m_level,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled00c,m_minorRadius,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FD990CameraCorners.cpp|member||camera70,m_camera,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled00c,m_minorRadius,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
