@@ -7509,3 +7509,4 @@ game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|member||m_source2,932682
 game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPlanes|x,683cdd5f8b8d39269a8a2396,claude-sonnet,20261109091743-0ee0d8,2026-11-09
 game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPlanes|source0,8ff38c57c0421d90f64e0196,claude-sonnet,20261109091743-0ee0d8,2026-11-09
 game/GameEngine/Source/Common/Rva009AA750CopyPlanes.cpp|local|Rva009AA750CopyPlanes|source1,aa54fbc4d5085f8a54faf6f3,claude-sonnet,20261109091743-0ee0d8,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1172.cpp|member||m_bfme2c,5830c1e018c2be1b7bc5582e,claude-sonnet,20261109091836-97af24,2026-11-09
