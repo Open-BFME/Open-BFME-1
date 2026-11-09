@@ -8,16 +8,16 @@ extern void j_0000b0af();
 class Rva006FDCB0CameraProjection {
 public:
  void update();
- char pad000[0x70]; CameraClass* camera70;
+ char pad000[0x70]; CameraClass* m_camera;
  char pad074[0x14]; float field88,field8c;
  char pad090[0x54]; float fielde4, fielde8, fieldec;
 };
-static void transform(void* self,Matrix3D* m,float a,float b) {
+static void transform(void* self,Matrix3D* matrix,float a,float b) {
  struct Thunk { void call(Matrix3D*,float,float); };
  typedef void (Thunk::*Function)(Matrix3D*,float,float);
  union { void (*raw)(); Function member; } f;
  f.raw=j_0000b0af;
- (reinterpret_cast<Thunk*>(self)->*f.member)(m,a,b);
+ (reinterpret_cast<Thunk*>(self)->*f.member)(matrix,a,b);
 }
 void Rva006FDCB0CameraProjection::update() {
  float t=fielde4;
@@ -29,11 +29,11 @@ void Rva006FDCB0CameraProjection::update() {
  float distance=(field8c-start)*((sqrt(u)-uu)*u+uu)+start;
  float tt=t*t;
  Matrix3D m(true);
- if(camera70) {
-  camera70->Set_Clip_Planes(10.0f,distance*1.5f+2000.0f);
-  camera70->Set_View_Plane(0.8726646304130554f,-1.0f);
+ if(m_camera) {
+  m_camera->Set_Clip_Planes(10.0f,distance*1.5f+2000.0f);
+  m_camera->Set_View_Plane(0.8726646304130554f,-1.0f);
   float zero=0.0f;
   transform(this,&m,distance,(zero-end)*((sqrt(t)-tt)*t+tt)+end);
-  camera70->Set_Transform(m);
+  m_camera->Set_Transform(m);
  }
 }
