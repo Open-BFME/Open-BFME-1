@@ -7538,3 +7538,4 @@ game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva00
 game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva001559B0Owner::notifyMembers|t,ba8ee5ea85214dd07a3538b6,claude-sonnet,20261109092750-31b312,2026-11-09
 game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstFlagged|e,6500359ecd9fe92f5dc1aeb4,claude-sonnet,20261109092541-fdfea9,2026-11-09
 game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstMapped|e,62065f317f3c63c1845ef006,claude-sonnet,20261109092541-fdfea9,2026-11-09
+game/GameEngine/Source/Common/BfmeConv901.cpp|local|InGameUI::areSelectedObjectsControllable|l,c34c07a9fa16484116f824fb,claude-sonnet,20261109093140-ab1af2,2026-11-09
