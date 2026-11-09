@@ -6784,3 +6784,5 @@ game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::re
 game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::registerParser|p,116e16068069e51099608463,claude-sonnet,20261109052824-eac412,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1280.cpp|member||m_bfme00,9578fa328193153d465e7522,claude-sonnet,20261109052824-191cc1,2026-11-09
 game/GameEngine/Source/Common/System/GeometryInfoRva0087E370.cpp|type||Rva0087E370,1265ea0cbdd9f36720dbf1ea,claude-sonnet,20261109053956-f637c1,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2009.cpp|member||m_bfmePosEAO,76cf0bdbce1ce9b260198f14,claude-sonnet,20261109052946-756e58,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2009.cpp|function|BfmeLexEAO@|bfmeSkipCommentEAO,ff0bc14b9b867db3398316a6,claude-sonnet,20261109052946-756e58,2026-11-09
