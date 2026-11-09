@@ -47,7 +47,7 @@ private:
 	float m_height468;
 	unsigned char m_unreconstructed46c[0x0c];
 	float m_goalRange478;
-	Coord3D m_goalPosition47c;
+	Coord3D m_goalPosition;
 };
 
 class Rva002BC260GoalOwner
@@ -148,7 +148,7 @@ void Rva002BCB60Owner::route(void *mode, Coord3D *position, int source)
 	if (position != 0)
 		goal = *position;
 	else
-		goal = m_goalPosition47c;
+		goal = m_goalPosition;
 
 	if (state == 1)
 	{
