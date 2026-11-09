@@ -137,12 +137,12 @@ extern EmotionSystem *TheEmotionSystem;			// 0x012F0878
 class GameLogic
 {
 public:
-	void updateObjectsChangedTriggerAreas() { m_rva16c = m_frame; }
+	void updateObjectsChangedTriggerAreas() { m_frameObjectsChangedTriggerAreas = m_frame; }
 	void rva00383440(Object *obj);				// ZH sendObjectDestroyed position
 	char bytes000[0x3c];
 	unsigned m_frame;							// +0x3C (ZH position)
 	char bytes040[0x12c];
-	unsigned m_rva16c;							// +0x16C
+	unsigned m_frameObjectsChangedTriggerAreas;							// +0x16C
 };
 extern GameLogic *TheGameLogic;
 
