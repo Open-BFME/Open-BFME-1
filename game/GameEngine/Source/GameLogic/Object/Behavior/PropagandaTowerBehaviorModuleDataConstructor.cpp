@@ -30,25 +30,25 @@ public:
 	PropagandaTowerBehaviorModuleData();
 
 private:
-	int m_unmodelled_08;
-	int m_unmodelled_0C;
+	int m_scanRadius;
+	int m_scanDelayInFrames;
 	int m_autoHealPercentPerSecond;
 	int m_pulseFX;
 	int m_upgradeRequired;
 	int m_upgradedAutoHealPercentPerSecond;
-	int m_unmodelled_20;
+	int m_upgradedPulseFX;
 	bool m_unmodelled_24;
 	bool m_unmodelled_25;
 };
 
 PropagandaTowerBehaviorModuleData::PropagandaTowerBehaviorModuleData()
-	: m_unmodelled_08( 0 ),
-	  m_unmodelled_0C( 0 ),
+	: m_scanRadius( 0 ),
+	  m_scanDelayInFrames( 0 ),
 	  m_autoHealPercentPerSecond( 0 ),
 	  m_pulseFX( 0 ),
 	  m_upgradeRequired( 0 ),
 	  m_upgradedAutoHealPercentPerSecond( 0 ),
-	  m_unmodelled_20( 0 ),
+	  m_upgradedPulseFX( 0 ),
 	  m_unmodelled_24( false ),
 	  m_unmodelled_25( false )
 {
