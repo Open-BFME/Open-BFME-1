@@ -2688,3 +2688,4 @@ game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at128,m_progr
 game/GameEngine/Source/GameLogic/System/GameLogicReset.cpp|member||at1ac,m_objectTOC,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|local|getTemplate|t,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/System/PathProximity000FE640.cpp|local|getTemplate|t,thingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/R2GlobalOptionFlagSetters.cpp|function||Rva00061470,parseVerifyClientCRC,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

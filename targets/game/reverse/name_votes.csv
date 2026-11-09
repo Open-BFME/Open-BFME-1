@@ -7586,3 +7586,4 @@ game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::narrowRa
 game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::narrowRange|v,d58c2ca7abc89449e5c66fb7,claude-sonnet,20261109095043-af4bde,2026-11-09
 game/GameEngine/Source/Common/T2IndexedArrayAccessors.cpp|local|T2OwnerA::find|p,89dc3ae7273be9c50f26a036,claude-sonnet,20261109095043-ef1ded,2026-11-09
 game/GameEngine/Source/Common/T2IndexedArrayAccessors.cpp|local|T2OwnerC::find|p,b4b662c598eaeb3afcb528f8,claude-sonnet,20261109095043-ef1ded,2026-11-09
+game/GameEngine/Source/Common/R2GlobalOptionFlagSetters.cpp|function||Rva00061470,aaaa2c4149564ba051ae67c4,claude-sonnet,20261109094955-daf03d,2026-11-09
