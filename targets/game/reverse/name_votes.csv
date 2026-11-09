@@ -7174,3 +7174,4 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value50,22184120cfe92adc06b74cef,claude-sonnet,20261109072126-1711c3,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_value54,e0f2ebad9943d318f1a1d290,claude-sonnet,20261109072126-1711c3,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/WindModuleConstructor.cpp|member||m_flag58,a0ccc14de48eb2502035d2a8,claude-sonnet,20261109072126-1711c3,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/StealthDetectorUpdateConstructor.cpp|member||m_f14,77f08a686c8fb4bfff41bd2f,claude-sonnet,20261109071132-18eb8c,2026-11-09
