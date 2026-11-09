@@ -7539,3 +7539,7 @@ game/GameEngine/Source/Common/SmallGaps/Rva001559B0NotifyMembers.cpp|local|Rva00
 game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstFlagged|e,6500359ecd9fe92f5dc1aeb4,claude-sonnet,20261109092541-fdfea9,2026-11-09
 game/GameEngine/Source/Common/U4ElementScanLoops.cpp|local|U4Scan::firstMapped|e,62065f317f3c63c1845ef006,claude-sonnet,20261109092541-fdfea9,2026-11-09
 game/GameEngine/Source/Common/BfmeConv901.cpp|local|InGameUI::areSelectedObjectsControllable|l,c34c07a9fa16484116f824fb,claude-sonnet,20261109093140-ab1af2,2026-11-09
+game/GameEngine/Source/Common/BfmeConv574.cpp|type||BfmeOwnerCCC,8128953c0c8e9f43a4cff326,claude-sonnet,20261109093140-a40a35,2026-11-09
+game/GameEngine/Source/Common/BfmeConv574.cpp|type||BfmeThingCCC,5b34069a8e6637b86920b246,claude-sonnet,20261109093140-a40a35,2026-11-09
+game/GameEngine/Source/Common/BfmeConv574.cpp|member||m_bfmeMid,babe0fd458031537a00b14a6,claude-sonnet,20261109093140-a40a35,2026-11-09
+game/GameEngine/Source/Common/BfmeConv574.cpp|member||m_bfmeOwner,b4530338d97c953ab7475995,claude-sonnet,20261109093140-a40a35,2026-11-09
