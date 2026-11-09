@@ -109,7 +109,7 @@ private:
 	Rva00469D20Map m_fileToWindow;
 	unsigned char m_unreconstructed6C[0xA8 - 0x6C];
 	Rva004666C0 m_aptWindows[12];
-	_STL::vector<Int> m_at198;
+	_STL::vector<Int> m_focusStack;
 	Bool m_needsRefresh;
 };
 
@@ -119,7 +119,7 @@ void WindowManager::bfmeRva0046E170()
 		return;
 	m_needsRefresh = false;
 
-	Int &focus = m_at198.back();
+	Int &focus = m_focusStack.back();
 	if (focus != 12)
 	{
 		if (focus == -1)
