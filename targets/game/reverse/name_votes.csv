@@ -7455,3 +7455,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferCollectDirtyCells.c
 game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferCollectDirtyCells.cpp|local|TaintBuffer::collectDirtyCells|x,c856a61e176b6af1e13878ba,claude-sonnet,20261109084249-279c02,2026-11-09
 game/GameEngine/Source/Common/Bfme/Rva001B46B0NormalizedDeltaZ.cpp|type||Rva001B46B0Vec3,b71ca7474914fde16ddce6da,claude-sonnet,20261109084350-867379,2026-11-09
 game/Libraries/Source/subsystem/GameSpyLoginPreferences_addLogin.cpp|local|compare|n,18e7cbef67fd7c56d7dbebbe,claude-sonnet,20261109085534-c2fb0a,2026-11-09
+game/GameEngine/Source/Common/Rva001C28C0Set.cpp|param|Rva001C28C0::set|o,6b7137c1d687ff9ef7540228,claude-sonnet,20261109085534-d38444,2026-11-09
