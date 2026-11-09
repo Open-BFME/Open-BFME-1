@@ -6686,3 +6686,6 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerMod
 game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_218,fb2e501f9f7cf0d96d970b82,glm,20261109043520-73a406,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_21c,d19e1dbec679f73168917dc8,glm,20261109043520-73a406,2026-11-09
 game/GameEngine/Source/GameLogic/Object/SpecialPower/WeaponChangeSpecialPowerModuleModuleDataCtorThunk.cpp|member||m_220,c58835172d739575fb7e1f53,glm,20261109043520-73a406,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_10,f54b1d6f35e00778c913acf0,glm,20261109043719-57bf3a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_14,6e6106fc1928c3f256c74755,glm,20261109043719-57bf3a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_18,7105561bd0831ecf6e9272f0,glm,20261109043719-57bf3a,2026-11-09
