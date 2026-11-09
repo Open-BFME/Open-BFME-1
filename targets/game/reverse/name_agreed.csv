@@ -2210,3 +2210,4 @@ game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeNext,m_next,clau
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmePrev,m_prev,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeTime,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp|member||m_field3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084D860CpInfo,CPINFO,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

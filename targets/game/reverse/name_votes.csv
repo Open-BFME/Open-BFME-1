@@ -7067,3 +7067,6 @@ game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeNext,e3c5cb401b1
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmePrev,25dae7857a829723d33e5cf8,claude-sonnet,20261109065242-78a308,2026-11-09
 game/GameEngine/Source/Common/Bfme5PruningSum.cpp|member||m_bfmeTime,e218b38dab36f1c7d532d0ab,claude-sonnet,20261109065242-78a308,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/SubObjectsUpgradeCtorThunk.cpp|member||m_field3c,06d299a7795da077ab62ea8a,claude-sonnet,20261109065242-1f205d,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|type||Rva0084D860CpInfo,9daf9d9c9d43afd33b9600c4,claude-sonnet,20261109064955-037e6d,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D820,727df772f77d523a387450a9,claude-sonnet,20261109064955-037e6d,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/Rva0084DBStringAndCodePage.cpp|function||Rva0084D860IsSingleByte,5e97674ce25b4d4c36361413,claude-sonnet,20261109064955-037e6d,2026-11-09
