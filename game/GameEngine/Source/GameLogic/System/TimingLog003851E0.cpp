@@ -147,11 +147,11 @@ void TimingLog003851E0::start()
 	GetLocalTime(&now);
 	GetDateFormatA(0x800, 1, &now, 0, dateBuf, 0x104);
 	{
-		int n = (int)strlen(dateBuf);
-		dateBuf[n] = '-';
-		++n;
-		dateBuf[n] = 0;
-		GetTimeFormatA(0x800, 2, &now, 0, dateBuf + n, 0x104 - n);
+		int length = (int)strlen(dateBuf);
+		dateBuf[length] = '-';
+		++length;
+		dateBuf[length] = 0;
+		GetTimeFormatA(0x800, 2, &now, 0, dateBuf + length, 0x104 - length);
 	}
 
 	if (dateBuf[0])
