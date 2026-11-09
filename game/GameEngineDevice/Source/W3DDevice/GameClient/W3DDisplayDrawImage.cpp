@@ -135,7 +135,7 @@ public:
 };
 
 // ?drawImage@W3DDisplay@@UAEXPAVImage@@MMMMH@Z
-void W3DDisplay::drawImage(Image *image, Real x0, Real y0, Real x1, Real y1, Int color)
+void W3DDisplay::drawImage(Image *image, Real startX, Real startY, Real endX, Real endY, Int color)
 {
 	if (!image->ready)
 		return;
@@ -145,7 +145,7 @@ void W3DDisplay::drawImage(Image *image, Real x0, Real y0, Real x1, Real y1, Int
 		W3DRadarResetSurface source = image->getSurface();
 		W3DRadarResetSurface destination = getBackBufferSurface006e(0);
 		BfmeRect sourceRect = { 0, 0, image->width, image->height };
-		BfmeRect destinationRect = { (long)x0, (long)y0, (long)x1, (long)y1 };
+		BfmeRect destinationRect = { (long)startX, (long)startY, (long)endX, (long)endY };
 
 		if (!IsRectEmpty(&sourceRect) && !IsRectEmpty(&destinationRect))
 			copySurfaceRects006e(source, &sourceRect, destination, &destinationRect, 2);
@@ -153,7 +153,7 @@ void W3DDisplay::drawImage(Image *image, Real x0, Real y0, Real x1, Real y1, Int
 	else
 	{
 		beginImageDraw();
-		drawImageCore(image, x0, y0, x1, y1, color);
+		drawImageCore(image, startX, startY, endX, endY, color);
 		endImageDraw();
 	}
 }
