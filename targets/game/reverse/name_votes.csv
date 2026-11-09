@@ -6445,3 +6445,4 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|g,97bf6bc242fc57ff2aa45ee0,claude-sonnet,20261109030604-e1d840,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|b,4842ac7deaf1d594f18e5ebf,claude-sonnet,20261109030604-e1d840,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|a,4e88dfece0e527a1eb3ee4ca,claude-sonnet,20261109030604-e1d840,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/Rva00245010RecordBuild.cpp|local|FormationBuild00245010::build|r,f0ad3060ad6cff204f6f6081,claude-sonnet,20261109030604-dbf205,2026-11-09
