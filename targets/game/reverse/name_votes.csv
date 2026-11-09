@@ -6907,3 +6907,5 @@ game/GameEngine/Source/GameClient/GUI/ControlBar/UnitHelpText.cpp|function|Rva00
 game/Libraries/Source/debug/debug_io_con.cpp|local|DebugIOCon::Read|h,f16d0f573aa3660af53db7d2,claude-sonnet,20261109061702-75b7d3,2026-11-09
 game/Libraries/Source/debug/debug_io_con.cpp|local|DebugIOCon::Execute|h,3379d624c5d8b1d0ecdc334f,claude-sonnet,20261109061702-75b7d3,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Upgrade/ObjectCreationUpgradeUpgradeImplementation.cpp|member||m_bfmeDataIS,4505bbd40fdfe6c15c69274b,claude-sonnet,20261109061240-f815c3,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp|type||Rva002D64D0Target,38da2d7f8cd8a7b12b3f2591,claude-sonnet,20261109061446-0889f9,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeUpgradeImplementation.cpp|type||Rva002D64D0Data,07482190ea2dfae0d15c55a3,claude-sonnet,20261109061446-0889f9,2026-11-09
