@@ -29,9 +29,40 @@ struct NoFlyZone
 	Real m_radius;						// +0x04
 };
 
-// Out of line in this build: retail reaches the element copy through a cdecl
-// call with both pointers on the stack, not an inlined placement-new.
-namespace _STL { template <> void _Construct(NoFlyZone *p, const NoFlyZone &val); }
+// Retail reaches the element copy through ILT 0x0002713D (?j_0002713d@@YAXXZ,
+// target 0x00148920) with both pointers on the stack. The ILT is the only
+// defined spelling of that call, so the node is built by hand below instead of
+// through list::push_back's _Construct.
+extern void j_0002713d();
+typedef void (*NoFlyZoneConstructFn)(NoFlyZone *p, const NoFlyZone &val);
+
+namespace _STL
+{
+class NoFlyZoneList : public list<NoFlyZone>
+{
+public:
+	_Node *createNodeViaIlt(const NoFlyZone &zone)
+	{
+		_Node *node = this->_M_node.allocate(1);
+		((NoFlyZoneConstructFn)j_0002713d)(&node->_M_data, zone);
+		return node;
+	}
+
+	iterator insertViaIlt(iterator position, const NoFlyZone &zone)
+	{
+		_Node *tmp = createNodeViaIlt(zone);
+		_List_node_base *n = position._M_node;
+		_List_node_base *p = n->_M_prev;
+		tmp->_M_next = n;
+		tmp->_M_prev = p;
+		p->_M_next = tmp;
+		n->_M_prev = tmp;
+		return tmp;
+	}
+
+	void pushBackViaIlt(const NoFlyZone &zone) { insertViaIlt(end(), zone); }
+};
+}
 
 class AerialPathfinder
 {
@@ -40,7 +71,7 @@ public:
 
 private:
 	char m_slice_pad[0x0C];					// retail this+0x00 .. +0x0B, untouched
-	_STL::list<NoFlyZone> m_noFlyZones;			// this+0x0C
+	_STL::NoFlyZoneList m_noFlyZones;			// this+0x0C
 };
 
 void AerialPathfinder::addNoFlyZone(PolygonTrigger *trigger, Real zoneRadius)
@@ -50,6 +81,6 @@ void AerialPathfinder::addNoFlyZone(PolygonTrigger *trigger, Real zoneRadius)
 		NoFlyZone zone;
 		zone.m_trigger = trigger;
 		zone.m_radius = zoneRadius;
-		m_noFlyZones.push_back(zone);
+		m_noFlyZones.pushBackViaIlt(zone);
 	}
 }
