@@ -6234,3 +6234,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/MaxHealthUpgradeModule.cpp|membe
 game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmeNext,0c93ada61a8e265d11dfb4f9,claude-sonnet,20261109012306-394ec1,2026-11-09
 game/GameEngine/Source/Common/Bfme5ListAppends.cpp|member||m_bfmePrev,11f6e5eb6d3b531bc54f6d56,claude-sonnet,20261109012306-394ec1,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Rva001C0010GeometryPosition.cpp|member||m_rva001C0010_ac,d99bc7cdfc8f27fa1bb4f5e5,claude-sonnet,20261109012304-60a209,2026-11-09
+game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp|local|compare|n,e476e4fa25fe76b7175a8cbb,claude-sonnet,20261109012304-be99f6,2026-11-09
