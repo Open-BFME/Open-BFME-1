@@ -11,7 +11,7 @@
 // shape VC7.1 gives an implicit virtual destructor; both ILTs are
 // ilt_oracle CONFIRMED exact.
 
-class SpecialPowerModuleData
+class __declspec(novtable) SpecialPowerModuleData
 {
 public:
 	virtual ~SpecialPowerModuleData();
