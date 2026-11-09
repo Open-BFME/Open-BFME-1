@@ -1815,3 +1815,4 @@ game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeCells,m_cells,
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeWidth,m_width,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeHeight,m_height,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5SeventySeven.cpp|member||m_bfmeCells,m_cells,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/RTS/ActionManagerCanEnterObject.cpp|local|BFMEActionManager::canEnterObject|m,module,claude-sonnet+gpt-6-sol+gpt-6.1-sol,applied,2026-11-09

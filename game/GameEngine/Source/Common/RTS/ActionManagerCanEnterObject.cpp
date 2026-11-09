@@ -428,13 +428,13 @@ Bool BFMEActionManager::canEnterObject(const Object *obj, const Object *objectTo
 	if (obj->isKindOf(KINDOF_INFANTRY) && objectToEnter->isDisabledByType(DISABLED_UNMANNED))
 		return true;
 
-	for (BehaviorModule **m = obj->getBehaviorModules(); *m; ++m)
+	for (BehaviorModule **module = obj->getBehaviorModules(); *module; ++module)
 	{
-		CollideModuleInterface *collide = (*m)->getCollide();
+		CollideModuleInterface *collide = (*module)->getCollide();
 		if (!collide)
 			continue;
 
-		if ((*m)->slot_044())
+		if ((*module)->slot_044())
 			continue;
 
 		if (collide->wouldLikeToCollideWith(objectToEnter))
