@@ -7579,3 +7579,8 @@ game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeSize,45af172dff
 game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeBold,bef9a897c526697b65777cea,claude-sonnet,20261109094932-04d36e,2026-11-09
 game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeColor,5444a2fddfe81cc721a64e98,claude-sonnet,20261109094932-04d36e,2026-11-09
 game/GameEngine/Source/Common/BfmeLayoutCtorWD.cpp|member||m_bfmeItalic,6c4a672f062a1e785d7f82c5,claude-sonnet,20261109094932-04d36e,2026-11-09
+game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::toUpperRange|c,68bfa256b08395cb37818319,claude-sonnet,20261109095043-af4bde,2026-11-09
+game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::toLowerRange|c,138c2af8d3960ebd2962e2b8,claude-sonnet,20261109095043-af4bde,2026-11-09
+game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|param|T2WideCtype::narrow|c,bc87f8b393f79d93a382d741,claude-sonnet,20261109095043-af4bde,2026-11-09
+game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::narrowRange|c,695cb1367411ad0fb44ddc90,claude-sonnet,20261109095043-af4bde,2026-11-09
+game/GameEngine/Source/Common/T2CtypeTableFacets.cpp|local|T2WideCtype::narrowRange|v,d58c2ca7abc89449e5c66fb7,claude-sonnet,20261109095043-af4bde,2026-11-09
