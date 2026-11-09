@@ -7797,3 +7797,6 @@ game/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp|local|Rva000
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp|member||at048,420140b28c63faf8cb54c8ec,claude-sonnet,20261109113109-3d3445,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp|member||at054,31d4cf32b4979c39e089b0ce,claude-sonnet,20261109113109-3d3445,2026-11-09
 game/GameEngine/Source/Common/BfmeConvD820.cpp|member||m_bfmePos,4b4fb89a17003751ce8408d7,claude-sonnet,20261109113337-e84218,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeUseFirst,b9d5856981076f72ee27fe8b,claude-sonnet,20261109113118-f39ac6,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeSlots,c6c86820a382fab61f128946,claude-sonnet,20261109113118-f39ac6,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeDeadline,45ab10ccb2e34fe6589898ed,claude-sonnet,20261109113118-f39ac6,2026-11-09

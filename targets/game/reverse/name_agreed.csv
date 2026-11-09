@@ -2916,3 +2916,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp|member||at048,m_slot,claude-sonnet+gpt-6.1-sol,blocked: hook: game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp -> game/GameEngine/Source/GameLogic/Object/Contain/HordeCon,2026-11-09
 game/GameEngine/Source/Common/BfmeConvD820.cpp|member||m_bfmePos,m_cachedPos,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConvD820.cpp|member||m_bfmePos,m_cachedPos,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Bfme5TinyFive.cpp|member||m_bfmeDeadline,m_deadline,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
