@@ -2311,3 +2311,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRec
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|t,thingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeContainSlotRecenter0023B9F0.cpp|local|BfmeHordeContainRoster::rva0023B9F0|p,slot,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseV,AsciiString,claude-sonnet+gpt-6-astra+gpt-6-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Bfme5ListMemberDtors.cpp|type||BfmeDtorBaseV,AsciiString,claude-sonnet+gpt-6-astra+gpt-6-sol,blocked: hook: - symbols.csv line 4850: exact duplicate row for ??1AsciiString@@QAE@XZ. Fix: drop the duplicate record(s) with tools/ledger_io.py keeping the f,2026-11-09
