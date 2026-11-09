@@ -6486,3 +6486,5 @@ game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|p,92ffe2b63e23d3c
 game/GameEngine/Source/Common/BfmeConv886.cpp|local|bfmeGoEVBc|q,e840fc06c3b39baec71176e5,claude-sonnet,20261109032023-7094ae,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d084,6cdc6c24a7b13bab4b75afd4,claude-sonnet,20261109032023-cfdab6,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponTemplate_CopyAssign.cpp|member||m_d094,3574ee7e7be6bef5f2905eb8,claude-sonnet,20261109032023-cfdab6,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_ai204,675229205505c5181a2ffb15,claude-sonnet,20261109033346-a9f4a7,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AIGiantBirdFollowThruStateUpdate.cpp|member||m_machine1c,ebb361bbde93ca893e45b21c,claude-sonnet,20261109033346-a9f4a7,2026-11-09
