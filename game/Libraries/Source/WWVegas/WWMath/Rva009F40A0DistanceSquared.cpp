@@ -5,7 +5,7 @@ public:
  virtual void slot0();
  virtual const Coord3DBase *position();
 };
-float Rva009F40A0DistanceSquared(const Coord3DBase *a,
+float distanceSquared(const Coord3DBase *a,
  Rva009F40A0PositionProvider *provider)
 {
  const Coord3DBase *b = provider->position();
