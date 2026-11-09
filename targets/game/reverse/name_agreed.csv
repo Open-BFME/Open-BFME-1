@@ -1470,3 +1470,4 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_Parti
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_dword8,m_shader,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_string10,m_particleTypeName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeFindWT.cpp|local|BfmeFindWT::find|n,count,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeFindWT.cpp|local|BfmeFindWT::find|n,count,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

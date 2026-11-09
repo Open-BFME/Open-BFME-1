@@ -23,9 +23,9 @@ private:
 int BfmeFindWT::find(int key)
 {
 	key >>= 2;
-	int n = m_count;
+	int count = m_count;
 	int i = 0;
-	if (n > 0)
+	if (count > 0)
 	{
 		int *p = &m_recs[0].m_lo;
 		do
@@ -43,7 +43,7 @@ int BfmeFindWT::find(int key)
 			++i;
 			p += 10;
 		}
-		while (i < n);
+		while (i < count);
 	}
 	return -1;
 }
