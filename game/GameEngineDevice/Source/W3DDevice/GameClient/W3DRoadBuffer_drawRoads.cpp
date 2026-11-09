@@ -178,9 +178,9 @@ extern ShaderClass g_roadShader012BAD20;
 struct Glo012ED5C8Type
 {
 	char m_pad00[0x38];
-	bool m_flag38;	// cloud texture enabled
+	bool m_useCloudMap;	// cloud texture enabled
 	char m_pad39[0x0b];
-	bool m_flag44;	// noise texture enabled
+	bool m_useLightMap;	// noise texture enabled
 };
 // Native singleton: GlobalData.cpp owns VA012ED5C8.
 class GlobalData;
@@ -383,13 +383,13 @@ void W3DRoadBuffer::drawRoads(CameraClass *camera, const TextureHandle &cloudTex
 			}
 		}
 		st = W3DShaderManager::ST_ROAD_BASE;
-		if (cloudTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_flag38) {
+		if (cloudTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_useCloudMap) {
 			st = W3DShaderManager::ST_ROAD_BASE_NOISE1;
-			if (noiseTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_flag44)
+			if (noiseTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_useLightMap)
 				st = W3DShaderManager::ST_ROAD_BASE_NOISE12;
 		}
 		else
-		if (noiseTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_flag44)
+		if (noiseTexture.m_p && reinterpret_cast<Glo012ED5C8Type *>(TheWritableGlobalData)->m_useLightMap)
 			st = W3DShaderManager::ST_ROAD_BASE_NOISE2;
 
 		devicePasses = 1;
