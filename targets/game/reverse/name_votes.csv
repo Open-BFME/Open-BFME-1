@@ -6467,3 +6467,9 @@ game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|param|_Construct|
 game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertIdentity.cpp|local|_M_create_node|tmp,9c5429e2966b981349b6cdfd,claude-sonnet,20261109031911-e6458a,2026-11-09
 game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||field_0c,8db5ba40a697addf683c7958,claude-sonnet,20261109032344-dd6c69,2026-11-09
 game/GameEngine/Source/Common/Bfme5SmallOnes.cpp|member||m_bfmeNext,020721bcf6806c361bbbafea,claude-sonnet,20261109032522-e6e8c6,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeRegion,abbc4cab4b63b06198568dd9,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCellSize,f9067b55e37e5c60cfc45a09,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCellSizeInv,de9b3765a3cbac9a0baeeda5,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeWidth,5f672635fbf7ab338114f06f,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeHeight,5ef6ee96939334e10836be96,claude-sonnet,20261109032522-b15300,2026-11-09
+game/Libraries/Source/taintmanager/taintmanager_impl.cpp|member||m_bfmeCells,6e0f01bc77c2c8cf522e27dc,claude-sonnet,20261109032522-b15300,2026-11-09
