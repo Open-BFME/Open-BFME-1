@@ -44,24 +44,6 @@ struct VmatRemapStruct
 	void *Dest;
 };
 
-struct TextureRemapStruct
-{
-	TextureClass *Src;
-	TextureClass *Dest;
-
-	TextureRemapStruct(void) : Src(0), Dest(0)
-	{
-	}
-
-	~TextureRemapStruct(void)
-	{
-		if (Dest)
-			Dest->Release_Ref();
-		if (Src)
-			Src->Release_Ref();
-	}
-};
-
 // LastSrcTex / LastDestTex are owning refs. Their implicit dtors (Dest
 // then Src, reverse declaration order) are what emit retail's trailing
 // Release_Ref calls and the EH state 0 / -1 stores around them.
@@ -76,6 +58,17 @@ struct TextureRef
 	}
 };
 
+// Retail's own destructor body lives at 0x0092F190 (matched in
+// Bfme5TwoTexturePtrDtor.cpp); this TU only takes its address for the
+// vector-destructor iterator, so it is declared here, not emitted.
+struct Gen_0092F190
+{
+	TextureRef Src;
+	TextureRef Dest;
+
+	~Gen_0092F190(void);
+};
+
 class MaterialRemapperClass
 {
 public:
@@ -85,7 +78,7 @@ public:
 	MaterialInfoClass *SrcMatInfo;
 	MaterialInfoClass *DestMatInfo;
 	int TextureCount;
-	TextureRemapStruct *TextureRemaps;
+	Gen_0092F190 *TextureRemaps;
 	int VertexMaterialCount;
 	VmatRemapStruct *VertexMaterialRemaps;
 	void *LastSrcVmat;
