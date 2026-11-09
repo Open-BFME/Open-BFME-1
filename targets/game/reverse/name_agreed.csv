@@ -1656,3 +1656,8 @@ game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_114,m_tintSt
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_118,m_prevTintStatus,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_160,m_flashCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_164,m_flashColor,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Template0017AEC0,LocomotorTemplate,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Locomotor0017AEC0,Locomotor,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Update0017AEC0,AIUpdateInterface,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||WanderWaypointEntry0017AEC0,AIWanderState,claude-sonnet+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,m_template,claude-sonnet+gpt-6-astra,agreed,2026-11-09

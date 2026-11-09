@@ -6600,3 +6600,9 @@ game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_15c,106da73c
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_160,a31ee9fe3fc24de959b4339a,claude-sonnet,20261109041742-27a88b,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_164,c98202c2d50b5f6022e49895,claude-sonnet,20261109041742-27a88b,2026-11-09
 game/GameEngine/Source/GameClient/DrawableConstructor.cpp|member||m_168,19e0676d0b97f897999df1bc,claude-sonnet,20261109041742-27a88b,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Template0017AEC0,38c3eb0d627738e5cf24c773,claude-sonnet,20261109042123-62ffff,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Locomotor0017AEC0,e3fa7811611c8445143cd1d1,claude-sonnet,20261109042123-62ffff,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Update0017AEC0,b4aae9a007ab7e9cedbe2c96,claude-sonnet,20261109042123-62ffff,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||Machine0017AEC0,eff6ed452c5d894c3eb28c0f,claude-sonnet,20261109042123-62ffff,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|type||WanderWaypointEntry0017AEC0,321312c80144900160c2c78a,claude-sonnet,20261109042123-62ffff,2026-11-09
+game/GameEngine/Source/GameLogic/AI/WanderWaypointEntry0017AEC0.cpp|member||template004,ae70815019e7e35dca7f9b02,claude-sonnet,20261109042123-62ffff,2026-11-09
