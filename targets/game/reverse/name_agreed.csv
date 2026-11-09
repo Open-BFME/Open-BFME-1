@@ -2608,3 +2608,5 @@ game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeS
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|s,sinAngle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|x,scaleX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|y,scaleY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|s,sinTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp|local|Rotate_Y|c,cosTheta,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/System/ParticleSystemRotateLocalTransformY.cpp: game\GameEngine\Source\GameClient\System\ParticleSystemRotateLocalTr,2026-11-09
