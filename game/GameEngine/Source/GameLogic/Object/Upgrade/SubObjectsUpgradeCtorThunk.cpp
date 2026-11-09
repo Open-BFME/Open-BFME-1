@@ -52,7 +52,7 @@ class GlobalThing
 {
 public:
 	unsigned char m_pad[0x3C];
-	unsigned int m_field3c;
+	unsigned int m_frame;
 };
 
 // Retail 0x012F0898 is EA's game-logic singleton, which carries the ONE
@@ -78,6 +78,6 @@ private:
 SubObjectsUpgrade::SubObjectsUpgrade(Thing *thing, const ModuleData *moduleData)
 	: UpgradeModule(thing, moduleData)
 {
-	m_field1c = ((GlobalThing *)TheGameLogic)->m_field3c;
+	m_field1c = ((GlobalThing *)TheGameLogic)->m_frame;
 	m_byte20 = 0;
 }
