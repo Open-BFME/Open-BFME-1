@@ -229,7 +229,7 @@ private:
 	char m_padding18[0x20 - 0x18];
 	Real m_field20;
 	Real m_field24;
-	Real m_field28;
+	Real m_angle;
 	char m_padding2c[0x6c - 0x2c];
 	Real m_field6c;
 	Real m_field70;
@@ -406,7 +406,7 @@ void W3DView::buildCameraTransform(Matrix3D *transform)
 	if (TheGameClient->m_cameraSlaveGuard || TheGameClient->m_cameraSlaveActive)
 	{
 		NameKeyType key = CameraYawAngleKey.key();
-		MapObject::TheWorldDict.setReal(key, m_field28 * 57.2957763671875f);
+		MapObject::TheWorldDict.setReal(key, m_angle * 57.2957763671875f);
 	}
 
 }
