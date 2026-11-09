@@ -6749,3 +6749,6 @@ game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m
 game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_1c,579b8fdc69b7976e1e6183c2,claude-sonnet,20261109051116-670508,2026-11-09
 game/GameEngine/Source/GameLogic/Object/WeaponEffects/DamageNugget.cpp|member||m_58,a1a6a8f360dcd6cba3f84456,claude-sonnet,20261109051116-670508,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineAttackInfo.cpp|param|friend_setName|n,addc7f1bf53b71398b7b1fe3,claude-sonnet,20261109051116-108836,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field28,c910d4daf7e05e795383458a,claude-sonnet,20261109052642-21afa1,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|member||m_field2c,d58db0dc8125da9b52ee6748,claude-sonnet,20261109052642-21afa1,2026-11-09
+game/GameEngine/Source/GameLogic/AI/PathfindLayerXfer.cpp|local|PathfindLayer::xfer|field28,759bd128706fe594d836ab56,claude-sonnet,20261109052642-21afa1,2026-11-09
