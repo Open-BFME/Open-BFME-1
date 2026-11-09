@@ -36,9 +36,9 @@ class ThingTemplate : public Overridable { public:
     unsigned int fieldD0, fieldD4, fieldD8;
 };
 static __forceinline const ThingTemplate *getTemplate(const Thing *self) {
-    const ThingTemplate *t=self->m_template;
-    if(t && t->m_nextOverride) t=(const ThingTemplate*)t->m_nextOverride->getFinalOverride();
-    return t;
+    const ThingTemplate *thingTemplate=self->m_template;
+    if(thingTemplate && thingTemplate->m_nextOverride) thingTemplate=(const ThingTemplate*)thingTemplate->m_nextOverride->getFinalOverride();
+    return thingTemplate;
 }
 class Rva001CF980Result { public:
     virtual void slot000();
