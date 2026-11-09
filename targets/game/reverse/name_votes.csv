@@ -6402,3 +6402,5 @@ game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member
 game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_list8C,0b4bacf2103eef06a917248d,claude-sonnet,20261109024823-e0dac8,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/SimpleSceneClass_Unregister_Thunk.cpp|member||m_listA4,2584939f65d4ab4a819ff1cf,claude-sonnet,20261109024823-e0dac8,2026-11-09
 game/GameEngine/Source/Common/Rva006FD510MeshMatDescGetTexture.cpp|function|Rva006FD440@|bfmeGet,1ae15b17b44982046f98c078,claude-sonnet,20261109024823-99d33c,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/EmotionTrackerUpdateNearbyFilter.cpp|type||Rva0028F2A0Base,60c4b7cb159982158db2e962,claude-sonnet,20261109024823-a5a059,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/EmotionTrackerUpdateNearbyFilter.cpp|param|Rva010BE170::Rva010BE170|m,12b4ca53d9aaabdf6c9e2ed8,claude-sonnet,20261109024823-a5a059,2026-11-09
