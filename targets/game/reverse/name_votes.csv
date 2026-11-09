@@ -7095,3 +7095,4 @@ game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/FormationRefresh002
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewZoomCameraOneFrame.cpp|param|Lerp|t,e1cc2bb7d099d770764a989f,claude-sonnet,20261109065709-3b859c,2026-11-09
 game/GameEngine/Source/Common/RTS/ActionManager_canResumeConstructionOf_Thunk.cpp|member||m_id74,ff8cac6a23a969e00fe95436,claude-sonnet,20261109065952-0bb6e9,2026-11-09
 game/GameEngine/Source/Common/RTS/ActionManager_canResumeConstructionOf_Thunk.cpp|member||m_status90,63c58f05f6236eeb5f83264c,claude-sonnet,20261109065952-0bb6e9,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/StickyBombUpdateCtorThunk.cpp|member||m_f14,4a9724f16b12e5e9548d774a,claude-sonnet,20261109070050-4cb9ad,2026-11-09
