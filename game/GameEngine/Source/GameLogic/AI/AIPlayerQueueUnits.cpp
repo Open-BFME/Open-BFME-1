@@ -160,6 +160,10 @@ public:
 	Object *tryToRecruit(const ThingTemplate *thing, const Coord3D *teamHome, Real maxDist);
 };
 
+// retail reaches body 0x000F2A00 through this ILT
+extern void j_0001a2b2();
+typedef Object *(Rva000F2A00Team::*Rva000F2A00RecruitFn)(const ThingTemplate *, const Coord3D *, Real);
+
 class AIUpdatePrimary
 {
 public:
@@ -366,9 +370,9 @@ void AIPlayer::queueUnits( void )
 
 				Object *unit;
 				if (hasHome) {
-					unit = ((Rva000F2A00Team *)team->m_team)->tryToRecruit(order->m_thing, &home, TheAI->getAiData()->m_maxRecruitDistance);
+					{ union { void (*fn)(); Rva000F2A00RecruitFn call; } u = { j_0001a2b2 }; unit = (((Rva000F2A00Team *)team->m_team)->*u.call)(order->m_thing, &home, TheAI->getAiData()->m_maxRecruitDistance); }
 				} else {
-					unit = ((Rva000F2A00Team *)team->m_team)->tryToRecruit(order->m_thing, &home, 100000.0f);
+					{ union { void (*fn)(); Rva000F2A00RecruitFn call; } u = { j_0001a2b2 }; unit = (((Rva000F2A00Team *)team->m_team)->*u.call)(order->m_thing, &home, 100000.0f); }
 				}
 				if (unit)
 				{

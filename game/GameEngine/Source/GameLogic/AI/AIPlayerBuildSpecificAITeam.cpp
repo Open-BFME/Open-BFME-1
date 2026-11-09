@@ -86,6 +86,8 @@ public:
 };
 
 extern ThingFactory *TheThingFactory;
+// retail reaches ThingFactory::findTemplate (0x00137E80) through this ILT
+extern void j_00028560();
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 struct TCreateUnitsInfo
@@ -387,13 +389,15 @@ void AIPlayer::buildSpecificAITeam( TeamPrototype *teamProto, Bool priorityBuild
 				return;
 			}
 		}
+		typedef const ThingTemplate *(ThingFactory::*FindTemplateFn)(const AsciiString &);
+		union { void (*fn)(); FindTemplateFn call; } findIlt = { j_00028560 };
 		const TCreateUnitsInfo *unitInfo = &teamProto->getTemplateInfo()->m_unitsInfo[0];
 		WorkOrder *orders = NULL;
 		Int i;
 		// Queue up optional units.
 		for( i=0; i<teamProto->getTemplateInfo()->m_numUnitsInfo; i++ )
 		{
-			const ThingTemplate *thing = TheThingFactory->findTemplate( unitInfo[i].unitThingName );
+			const ThingTemplate *thing = (TheThingFactory->*findIlt.call)( unitInfo[i].unitThingName );
 			if (thing)
 			{
 				int count = unitInfo[i].maxUnits-unitInfo[i].minUnits;
@@ -411,7 +415,7 @@ void AIPlayer::buildSpecificAITeam( TeamPrototype *teamProto, Bool priorityBuild
 		// Queue up required units.
 		for( i=0; i<teamProto->getTemplateInfo()->m_numUnitsInfo; i++ )
 		{
-			const ThingTemplate *thing = TheThingFactory->findTemplate( unitInfo[i].unitThingName );
+			const ThingTemplate *thing = (TheThingFactory->*findIlt.call)( unitInfo[i].unitThingName );
 			if (thing)
 			{
 				int count = unitInfo[i].minUnits;

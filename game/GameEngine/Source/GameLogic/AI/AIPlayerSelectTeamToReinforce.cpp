@@ -189,6 +189,10 @@ public:
 	Object *tryToRecruit(const ThingTemplate *thing, const Coord3D *teamHome, Real maxDist);
 };
 
+// retail reaches body 0x000F2A00 through this ILT
+extern void j_0001a2b2();
+typedef Object *(Rva000F2A00Team::*Rva000F2A00RecruitFn)(const ThingTemplate *, const Coord3D *, Real);
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface
 {
@@ -471,7 +475,7 @@ Bool AIPlayer::selectTeamToReinforce( Int minPriority )
 		{
 			origin = *curTeam->getFirstItemIn_TeamMemberList()->getPosition();
 		}
-		Object *unit = ((Rva000F2A00Team *)curTeam)->tryToRecruit(curThing, &origin, TheAI->getAiData()->m_maxRecruitDistance);
+		Object *unit; { union { void (*fn)(); Rva000F2A00RecruitFn call; } u = { j_0001a2b2 }; unit = (((Rva000F2A00Team *)curTeam)->*u.call)(curThing, &origin, TheAI->getAiData()->m_maxRecruitDistance); }
 		if (unit)
 		{
 			order->m_numCompleted = 1;
