@@ -6220,3 +6220,5 @@ game/GameEngine/Source/Common/BfmeConv2042.cpp|member||m_bfmeAEU,897a93f40fa2b0c
 game/GameEngine/Source/Common/BfmeConv2042.cpp|member||m_bfmeBEU,4df39c9f2dcc06620bb4dce7,claude-sonnet,20261109011214-984db8,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2042.cpp|param|BfmeHostEU::bfmeStepsEU|s,be43f1cdf4a8af46aafd036e,claude-sonnet,20261109011214-984db8,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/OneRingPenaltyUpdateCtorThunk.cpp|member||m_f14,516c5d4af219aae705021380,claude-sonnet,20261109011214-df5c7e,2026-11-09
+game/GameEngine/Source/Common/BfmeThreeHundredTwentyThree.cpp|member||m_bfmeNext,d5e53498c2dd98af47632b43,claude-sonnet,20261109011814-604322,2026-11-09
+game/GameEngine/Source/Common/BfmeThreeHundredTwentyThree.cpp|member||m_bfmePrev,89f6f394610d865c25862343,claude-sonnet,20261109011814-604322,2026-11-09
