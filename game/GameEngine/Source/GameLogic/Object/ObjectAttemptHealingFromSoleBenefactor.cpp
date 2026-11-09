@@ -67,7 +67,7 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf(KindOfType t) const { return m_kindof.test(t); }
+	Bool isKindOf(KindOfType kindOf) const { return m_kindof.test(kindOf); }
 	unsigned char m_unreconstructed008[0xC8 - 0x08];
 	ModelConditionFlags m_kindof;						// +0xC8 KindOf bits, same 320-bit storage
 	unsigned char m_unreconstructed0F0[0x4CA - 0xF0];
