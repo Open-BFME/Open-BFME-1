@@ -2910,3 +2910,5 @@ game/GameEngine/Source/Common/BfmeConv2024.cpp|member||m_bfmeFrameTN,m_frame,cla
 game/GameEngine/Source/Common/BfmeConv2024.cpp|member||m_bfmeFrameTN,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|a,start,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|b,end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|a,start,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewPitchCameraOneFrame.cpp|param|Lerp|b,end,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
