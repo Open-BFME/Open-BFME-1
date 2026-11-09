@@ -6346,3 +6346,7 @@ game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|type||BfmeEvacuateContai
 game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_destroyed90,f314ca227430be065a78761a,claude-sonnet,20261109022705-cfcd69,2026-11-09
 game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_contain1FC,8ad5d6006631923d51c5ef26,claude-sonnet,20261109022705-cfcd69,2026-11-09
 game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_effectivelyDead344,5ff674b261a2b56223ebec3b,claude-sonnet,20261109022705-cfcd69,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590Player,5438bf3b7fa1f2ff43cc7a7b,claude-sonnet,20261109022705-4e3d00,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590Parameter,88c1231e99c94bbbc785c492,claude-sonnet,20261109022705-4e3d00,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|type||Rva002FE590ScriptActions,4f3c95f9658c8a6a37519a1e,claude-sonnet,20261109022705-4e3d00,2026-11-09
+game/GameEngine/Source/GameLogic/ScriptEngine/Rva002FE590CastleBuild.cpp|member||value08,45768a4d1be322c4f3ecdcf8,claude-sonnet,20261109022705-4e3d00,2026-11-09
