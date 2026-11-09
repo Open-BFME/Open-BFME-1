@@ -44,7 +44,7 @@ extern PlayerList* ThePlayerList;
 class AudioManager;
 extern AudioManager* TheAudio;
 template<class T> inline T& at(void* p,int n) { return *(T*)((char*)p+n); }
-struct DamageRecord00373B30 { char field00[12]; unsigned short field0c; char field0e[14]; float field1c; };
+struct DamageRecord00373B30 { char field00[12]; unsigned short m_sourcePlayerMask; char field0e[14]; float field1c; };
 class DamageSource00373B30 {
 public:
  virtual void v00(); virtual void v04(); virtual void v08(); virtual void v0c();
@@ -86,13 +86,13 @@ void Rva00373B30Receiver::update() {
   if(!child) continue;
   DamageSource00373B30* damage=(DamageSource00373B30*)child->m_body;
   if(damage && damage->frame()>=at<unsigned>(this,0xb0) && damage->record() && damage->record()->field1c>0.0f) {
-   Player* player=ThePlayerList->getPlayerFromMask(damage->record()->field0c);
+   Player* player=ThePlayerList->getPlayerFromMask(damage->record()->m_sourcePlayerMask);
    if(player && player->getRelationship(object->getTeam())==0 && ((StringBase<char>*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) { hostile=true; break; }
   }
  }
  DamageSource00373B30* damage=(DamageSource00373B30*)object->m_body;
  if(damage && damage->frame()>=at<unsigned>(this,0xb0) && damage->record() && damage->record()->field1c>0.0f) {
-  Player* player=ThePlayerList->getPlayerFromMask(damage->record()->field0c);
+  Player* player=ThePlayerList->getPlayerFromMask(damage->record()->m_sourcePlayerMask);
   if(player && player->getRelationship(object->getTeam())==0 && ((StringBase<char>*)((char*)player+0x1c))->compare("PlyrCreeps")!=0) hostile=true;
  }
  if(!(object->m_constructionPercent>=99.0f)) {
@@ -103,8 +103,8 @@ void Rva00373B30Receiver::update() {
   reset(false);
   ((HealingDispatch00373B30*)object)->dispatch(9999.0f,object);
   object->m_constructionPercent=100.0f;
-  ThingTemplate* t=(ThingTemplate*)object->getDrawable();
-  if(t) { const AudioEventRTS* sound=t->getSound(13); if(sound) ((Audio00373B30*)TheAudio)->add(sound); }
+  ThingTemplate* drawable=(ThingTemplate*)object->getDrawable();
+  if(drawable) { const AudioEventRTS* sound=drawable->getSound(13); if(sound) ((Audio00373B30*)TheAudio)->add(sound); }
  }
 effects:
  if((unsigned)(at<int*>(this,0xd4)-at<int*>(this,0xd0))>0 && at<unsigned>(TheGameLogic,0x3c)%at<unsigned>(data,0x48)==0) {
