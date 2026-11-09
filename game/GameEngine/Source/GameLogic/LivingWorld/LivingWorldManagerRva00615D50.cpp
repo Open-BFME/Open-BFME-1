@@ -40,6 +40,8 @@ public:
 	int m_category;
 };
 
+extern void j_0001895d();  // retail reaches body 0x006186C0 through this ILT
+
 struct Rva00615D50Object
 {
 	bool rva0004a444(const ICoord2D *point);					///< ILT 0x0004A444
@@ -106,6 +108,8 @@ private:
 
 Rva00615D50Object *Glo012F706CType::lookup(const ICoord2D *position, int category)
 {
+	typedef Coord3D (Rva00615D50Object::*PosFn)();
+	union { void (*fn)(); PosFn call; } ilt = { j_0001895d };
 	float base = 1.0f;
 	if (TheDisplay != 0)
 		base = (float)TheDisplay->getWidth() * 0.0009765625f;
@@ -130,7 +134,7 @@ Rva00615D50Object *Glo012F706CType::lookup(const ICoord2D *position, int categor
 			continue;
 
 		ICoord2D screen;
-		if (!g_bfmeStateDF->s24(object->rva0001895d(), &screen))
+		if (!g_bfmeStateDF->s24((object->*ilt.call)(), &screen))
 			continue;
 
 		float dx = (float)(position->x - screen.x);
@@ -144,7 +148,7 @@ Rva00615D50Object *Glo012F706CType::lookup(const ICoord2D *position, int categor
 			}
 
 			ICoord2D bestScreen;
-			if (!g_bfmeStateDF->s24(best->rva0001895d(), &bestScreen))
+			if (!g_bfmeStateDF->s24((best->*ilt.call)(), &bestScreen))
 				continue;
 
 			float bx = (float)(position->x - bestScreen.x);
