@@ -7271,3 +7271,5 @@ game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,0
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,c0f892c4544705affc6b12b7,claude-sonnet,20261109074137-f7fb4a,2026-11-09
 game/GameEngine/Source/Common/BfmeN1242Put.cpp|param|BfmeN1242::bfmePut1242|e,49cda9fbb9908c18ae2c7e81,claude-sonnet,20261109074422-a16e44,2026-11-09
 game/GameEngine/Source/Common/Rva00402700Eq.cpp|param|Rva00402700|p,9d187bf5a3144ebf0a541392,claude-sonnet,20261109074422-60d70b,2026-11-09
+game/GameEngine/Source/Common/Rva001B70E0Lookup.cpp|type||BfmeStrDataERA,75cabf153b06a99b6bbd48e1,claude-sonnet,20261109074422-086993,2026-11-09
+game/GameEngine/Source/Common/Rva001B70E0Lookup.cpp|type||BfmeStrERA,7685621a501dd9b551c7680a,claude-sonnet,20261109074422-086993,2026-11-09
