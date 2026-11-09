@@ -1,5 +1,7 @@
 // ?rva00514A40@AptInGameChat@@QAEHHPAX0@Z
-// partial score=0.9697 date=2026-10-28
+// partial score=0.9793 date=2026-11-09
+// ?rva00514A40@AptInGameChat@@QAEHHPAX0@Z
+// partial score=0.979 date=2026-11-07 (13 non-reloc diffs; prior bank 19)
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 // Retail 0x00514A40, 628 bytes: slot 2 of the AptInGameChat vtable
 // (0x01105384, through ILT 0x00023BE6), installed by the matched
@@ -11,20 +13,38 @@
 // which 0x4014 does too.  Declarations follow the matched sibling
 // BfmeAptScreenInGameChatRefreshFriendsList.cpp; the member name and the
 // +0x298..+0x2A0 hover fields are unrecorded and keep their addresses.
-
-#include "StringInline.h"
-
-extern "C" void _ReadWriteBarrier( void );
-extern "C" void _WriteBarrier( void );
-#pragma intrinsic( _ReadWriteBarrier, _WriteBarrier )
+// 2026-11-07: the UnicodeString copy constructor is an inline BODY call of
+// the private StringBase<unsigned short> copy constructor (the form of the
+// matched sibling BfmeAptScreenInGameChatSelectedFriends.cpp), not a
+// mem-initializer forwarder: that gives retail's `mov ecx,esp` before the
+// saved-esp store at the setCursorTooltip argument (+0x1F4).
 
 extern const char g_bfmeEmptyUnicode[];
 
-inline const unsigned short *UnicodeString::str( void ) const
+template <typename T> struct StringInlineData { int m_refCount; int m_length; T m_text[1]; };
+template <typename T> class StringBase
 {
-	return m_data ? m_data->m_text : (const unsigned short *)g_bfmeEmptyUnicode;
-}
-
+	friend class UnicodeString;
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other );
+	~StringBase() { releaseBuffer(); }
+	void releaseBuffer();
+	StringInlineData<T> *m_data;
+};
+class UnicodeString : private StringBase<unsigned short>
+{
+public:
+	UnicodeString() : StringBase<unsigned short>() {}
+	UnicodeString( const UnicodeString &other ) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase( other ); }
+	~UnicodeString() {}
+	void __cdecl format( UnicodeString format, ... );
+	const unsigned short *str() const { return m_data ? m_data->m_text : (const unsigned short *)g_bfmeEmptyUnicode; }
+};
+extern "C" void _ReadWriteBarrier( void );
+extern "C" void _WriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier, _WriteBarrier )
 class GameWindow;
 
 int GadgetListBoxGetEntryBasedOnXY( GameWindow *listbox, int x, int y, int &row, int &column );

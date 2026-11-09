@@ -131,3 +131,88 @@ What is left in it:
 | a named `AsciiString fmt` | 395 | 250 |
 
 Only a separate `text` statement keeps the table in EBX.
+
+## 2026-11-07 (second pass): ten more hypotheses, still 68
+
+
+Target symbol: `?rvaUniqueName0035a2a0@@YAXPAVRva0035A220Owner@@AAVAsciiString@@@Z`
+(row `?d_0035a2a0@@YAXXZ`). Toolchain: VC7.1 `/O2` (build default) with
+`/DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`,
+`// stlport`. Scratch: `build/wf/0035a2a0/` (`gen.py`, `combo.py`, `v/`).
+
+## Status
+
+The bank still reproduces: `targets/game/reverse/attempts/0x0035a2a0.cpp`
+(copied as `build/wf/0035a2a0/base.cpp`) compiles to 350/350 B with 68
+non-relocation diffs and shape 0.958/7. No variant tested here beat it.
+
+## Two allocation attractors (this session's main finding)
+
+Every variant compiled to one of two register assignments. Which one it got
+depended on how the loop top was spelled:
+
+| loop top | owner/table | zero | record index | callee-saved for compare | result |
+|---|---|---|---|---|---|
+| retail | EBX | ESI | spilled `[esp+1c]` | EBP = rec*20 | n/a |
+| `text` statement (`++suffix; const char *text = name.str(); format(text, suffix)`) | EBX | ESI | spilled | EBP = thatLen, offset in EAX | 350 B / 68 |
+| arg form (`format("%s %d", name.str(), ++suffix)`) | ESI, spilled to `[esp+18]` around the compare | EDI | EBX | EBP = thatLen | 353 B / 252 |
+
+- Retail's loop top (`mov ecx,name; inc eax; mov [esp+18],eax; push eax; mov eax,[ecx]...`) puts the suffix push in the same basic block as the start of `str()`. That only happens when `name.str()` is evaluated inside the `format` argument list. The arg form reproduces the loop top byte for byte.
+- So retail is almost certainly the arg form, plus some feature that keeps the owner in EBX and the zero in ESI. That feature has not been found.
+- When `str()` runs as a separate statement before the call, the good attractor follows, but the suffix is pushed after the text.
+
+## Ruled out this session (each in both loop forms unless noted)
+
+- **(a) Control flow:**
+  - `for(;;)` with `break`, nested `if` and `continue` forms of the manually inlined lookup
+  - an early return
+  - `for (int suffix = 1;;)`
+  - post-increment, `suffix + 1` with a later `++`, and starting at 1 with `suffix++`
+
+  None changed the attractor.
+- **(b) Lifetime:**
+  - Declaration order of `candidate`, `suffix` and `table`: this changes only the slots (arg 257/258).
+  - `table` declared inside the loop or before the first call (355/287).
+  - Named locals for the released byte, the compare result, a record-name reference, a `done` bool, a `probe` pointer, a result reference, `name.set()`, and an `out` reference for `format`.
+- **(c) Types and layout:** an `unsigned` record index, `vector<void*>` name indexes (the donor's type), `size_t`, an `int` name index with a cast, and a `const int &` record index (352/176 in the bank form, 353/252 in the arg form).
+- **(c, compare spelling):**
+  - 8 single-level and 12 two-level variants in the StringBase `compare(data,len)` style. The tail used if-return, a ternary or `if (result)`, with both min orders and with and without a named `n`. All stay in their attractor, and the `result = ...; if (result == 0) result = len diff` form is worse (356/193).
+  - The header `AsciiString::compare` (`""` fallback) flips even the bank form to the bad attractor (353/253).
+- **(d) Callee visibility:**
+  - A visible static (auto-inline) lookup used at both sites inlines both (411 B).
+  - Anonymous-namespace member: a normal thiscall with `ret 4`, not a private convention.
+  - An extern (stack-convention) helper keeps the same attractor split (arg 355/275, bank 350/118).
+  - Non-`noinline` static helper: identical.
+  - A `getNameTable()` inline accessor and the qualified `StringBase<char>::str()`.
+  - `findNameIndex(const StringBase<char>&)`, the donor's signature.
+  - An inline `rvaMakeName` wrapper around `format`.
+  - Explicit `AsciiString("%s %d")`.
+- **(e) Flags:** `/O2 /Ob1` (Rva00359E40ClearActiveRecords.cpp sibling), `/G5`, `/G6 /Ob1`, `/GX`, `/Ogtyb2` and `/Oi-` are identical. `/Os` and `/Oy-` are far worse. Dropping `_STLP_NO_EXCEPTIONS` or `_STLP_USE_STATIC_LIB`, which the Scripts.cpp sibling does not pass, is identical.
+- **(f) Evaluation order:**
+  - Arg-form spellings `suffix += 1`, `suffix = suffix + 1` and `(++suffix, suffix)` are all 353/252.
+  - Text-first (`text` statement then `++suffix` in the arg list) is 350/70.
+  - `tools/rotation_sweep.py` on the bank: all 7 toggles are inert (68).
+- **Factorial sampling** (`combo.py`): 14 toggles (count local, unsigned index, owner-param lookup, header compare, early return, pointer name, `const&` lookup, released local, `find()` split, suffix first, `for`-break, `void*` indexes, no table local, compare local).
+  - 81 random arg-form samples, plus 40 more with the header compare: all in the bad attractor, with 249-261 diffs.
+  - 61 text-form samples: none below 68.
+
+## Remaining mismatch (bank, 68 bytes)
+
+```
+retail                                    | ours (bank)
+0050 mov ecx,[esp+30]; inc eax; mov [esp+18],eax; push eax; mov eax,[ecx] ... (str after push)
+                                          | 0050 mov edx,[esp+30]; mov eax,[edx]; inc ecx; ...; push ecx; push eax
+0095 mov ecx,[ebx]; mov edx,[ebx+4]       | mov edx,[ebx]; mov ecx,[ebx+4]      (begin/end swapped)
+00a7 mov ecx,[ecx+eax*4]; mov eax,[ebx+c]; lea ebp,[ecx+ecx*4] ... shl ebp,2
+                                          | mov eax,[edx+eax*4]; ...; lea eax,[eax+eax*4]; shl eax,2
+     compare: thisLen EAX, thatLen/result EDX, offset EBP
+                                          | compare: thisLen EDX, thatLen/result EBP, offset EAX
+0120 mov cl,[eax+ebp+c]                   | mov dl,[eax+ecx+c]
+```
+
+## Next steps worth trying
+
+- Find the feature that keeps the owner in EBX while using the arg form. Measured so far: the lookup body, the compare spelling, flags and declaration order cannot flip it.
+- Candidate (untested) hypothesis: the real source has another live value or call in the helper that changes the global (region) weights. Examples are a second use of `owner` after the loop that the compiler folds, or the twin helper and 0x0035A220 compiled in the same TU with this one.
+- Tested late in this session (g26): making 0x0035A220 a visible `static __declspec(noinline)` with its StringBase compare is worse (arg 352/237, bank 352/223). The likely cause is a changed call convention to the lookup. Still untested: the full retail TU order 0x00359FE0, 0x0035A060, 0x0035A220, 0x0035A2A0 with the lookups kept external.
+- The twin 0x0035A060 has the same retail shape, so a fix should apply to both.
