@@ -7796,3 +7796,4 @@ game/Libraries/Source/EA/Apt/Rva008CB2F0DecodeInteger.cpp|function||rva008CB2F0D
 game/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp|local|Rva000C1E50::parseMapCacheDefinition|c,598f71a850311e94d3fae431,claude-sonnet,20261109113252-a59c5d,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp|member||at048,420140b28c63faf8cb54c8ec,claude-sonnet,20261109113109-3d3445,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberIndex00240F10.cpp|member||at054,31d4cf32b4979c39e089b0ce,claude-sonnet,20261109113109-3d3445,2026-11-09
+game/GameEngine/Source/Common/BfmeConvD820.cpp|member||m_bfmePos,4b4fb89a17003751ce8408d7,claude-sonnet,20261109113337-e84218,2026-11-09
