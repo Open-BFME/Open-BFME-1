@@ -1647,3 +1647,4 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field003C,m_systemNext,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultDrawModuleDraw_005F31A0.cpp|member||m_field0008,m_shaderType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Contain/Rva0021AD10Find.cpp|local|Gen_0021AD10::bfmeFind|n,node,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/Rva0021AD10Find.cpp|local|Gen_0021AD10::bfmeFind|n,node,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

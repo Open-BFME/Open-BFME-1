@@ -52,13 +52,13 @@ void *Gen_0021AD10::bfmeFind(void *a)
 	void *found = (this->*findCall.find)(a);
 
 	if (found == 0) {
-		BfmeNodeAD10 *n = (*(BfmeNodeAD10 **)((char *)this + 0x9BC))->m_next;
+		BfmeNodeAD10 *node = (*(BfmeNodeAD10 **)((char *)this + 0x9BC))->m_next;
 
-		if (n != *(BfmeNodeAD10 **)((char *)this + 0x9BC)) {
+		if (node != *(BfmeNodeAD10 **)((char *)this + 0x9BC)) {
 			do {
 				union { void (*plain)(void); void *(Gen_0021AD10::*ask)(void *); } askCall;
 				askCall.plain = j_00036c05;
-				void *chk = (this->*askCall.ask)(n->m_payload);
+				void *chk = (this->*askCall.ask)(node->m_payload);
 
 				if (chk != 0) {
 					BfmeCheckAD10 *c = (BfmeCheckAD10 *)chk;
@@ -68,8 +68,8 @@ void *Gen_0021AD10::bfmeFind(void *a)
 					}
 				}
 
-				n = n->m_next;
-			} while (n != *(BfmeNodeAD10 **)((char *)this + 0x9BC));
+				node = node->m_next;
+			} while (node != *(BfmeNodeAD10 **)((char *)this + 0x9BC));
 		}
 	}
 
