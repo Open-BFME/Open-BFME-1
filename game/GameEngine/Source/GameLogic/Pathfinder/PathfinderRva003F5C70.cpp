@@ -148,7 +148,7 @@ class Rva003F5C70AdjustReceiver
 typedef void (Rva003F5C70AdjustReceiver::*Rva003F5C70AdjustCall)(Int, Int, Bool,
 	Coord3D &, PathfindLayerEnum);
 
-static __forceinline void adjustCoordToCell(Pathfinder *self, Int x, Int y,
+static __forceinline void adjustCoordToCell(Pathfinder *self, Int cellX, Int cellY,
 	Bool center, Coord3D &dest, PathfindLayerEnum layer)
 {
 	union
@@ -158,7 +158,7 @@ static __forceinline void adjustCoordToCell(Pathfinder *self, Int x, Int y,
 	} call;
 	call.raw = j_000411d2;
 	(reinterpret_cast<Rva003F5C70AdjustReceiver *>(self)->*call.member)(
-		x, y, center, dest, layer);
+		cellX, cellY, center, dest, layer);
 }
 
 Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)

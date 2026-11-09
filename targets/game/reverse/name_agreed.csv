@@ -2366,3 +2366,5 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/Rva005FDC70Method.cpp|
 game/GameEngine/Source/Common/BfmeConv1742.cpp|type||BfmeStrAQ,AsciiString,claude-sonnet+gpt-6-astra,blocked: hook: game/GameEngine/Source/Common/BfmeConv1742.cpp: declares its own `AsciiString`; include game/Libraries/Source/WWVegas/WWLib/ascii_string.h inste,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|x,cellX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,cellY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|x,cellX,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Pathfinder/PathfinderRva003F5C70.cpp|param|adjustCoordToCell|y,cellY,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
