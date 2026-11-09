@@ -7098,3 +7098,4 @@ game/GameEngine/Source/Common/RTS/ActionManager_canResumeConstructionOf_Thunk.cp
 game/GameEngine/Source/GameLogic/Object/Update/StickyBombUpdateCtorThunk.cpp|member||m_f14,4a9724f16b12e5e9548d774a,claude-sonnet,20261109070050-4cb9ad,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1494.cpp|local|bfmeGetParamVMZ|p,288d2e56e70dc3eb4125f0a6,claude-sonnet,20261109070331-825aff,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1494.cpp|local|bfmeGetParamVMZ|e,c9fce5705d27f39ecddec319,claude-sonnet,20261109070331-825aff,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1494.cpp|function||bfmeGetParamVMZ,3a26b0ad453283d7a85098f3,claude-sonnet,20261109070431-9ff1df,2026-11-09
