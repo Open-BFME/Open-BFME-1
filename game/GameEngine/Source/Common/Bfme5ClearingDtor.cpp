@@ -15,8 +15,8 @@
 
 struct BfmeClearNodeB
 {
-	BfmeClearNodeB *m_bfmeNext;				// +0x00
-	BfmeClearNodeB *m_bfmePrev;				// +0x04
+	BfmeClearNodeB *m_next;				// +0x00
+	BfmeClearNodeB *m_prev;				// +0x04
 	void *m_bfmeValue;					// +0x08
 };
 
@@ -30,19 +30,19 @@ class BfmeClearListB
 public:
 	void bfmeClear(void)
 	{
-		BfmeClearNodeB *node = m_bfmeNode->m_bfmeNext;
+		BfmeClearNodeB *node = m_bfmeNode->m_next;
 
 		while (node != m_bfmeNode)
 		{
 			BfmeClearNodeB *current = node;
 
-			node = node->m_bfmeNext;
+			node = node->m_next;
 
 			_STL::__node_alloc<true, 0>::deallocate(current, sizeof(BfmeClearNodeB));
 		}
 
-		m_bfmeNode->m_bfmeNext = m_bfmeNode;
-		m_bfmeNode->m_bfmePrev = m_bfmeNode;
+		m_bfmeNode->m_next = m_bfmeNode;
+		m_bfmeNode->m_prev = m_bfmeNode;
 	}
 
 	BfmeClearNodeB *m_bfmeNode;				// +0x00
