@@ -7120,3 +7120,4 @@ game/GameEngine/Source/Common/Bfme5PushNode.cpp|member||m_bfmeHead,7edf700bdb5fc
 game/GameEngine/Source/GameLogic/Object/Update/AttributeModifierPoolUpdateConstructor.cpp|member||m_f14,21444bca668b958968ea8539,claude-sonnet,20261109065920-a29b72,2026-11-09
 game/GameEngine/Source/Common/Bfme5SharedStringAttach.cpp|member||m_bfmeNext,9d7b6404dd6233613d989d85,claude-sonnet,20261109065920-407f26,2026-11-09
 game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A8DC0.cpp|function|MilesAudioManager@|rva006A8DC0,25145fec807280a8bceb5b72,claude-sonnet,20261109065837-95a162,2026-11-09
+game/GameEngine/Source/Common/SmallGaps/Rva008809E0Transform2D.cpp|local|Rva008809E0Transform2D::Rva008809E0Transform2D|c,d8bf5136e267b2bff35cbb7b,claude-sonnet,20261109065837-7fa28d,2026-11-09
