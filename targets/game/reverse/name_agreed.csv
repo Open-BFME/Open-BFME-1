@@ -1339,3 +1339,6 @@ game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e0JK,m_drawOrigi
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e4JK,m_drawOriginY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e8JK,m_drawWidthX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120ecJK,m_drawHeightY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|type||BfmeEvacuateContain,ContainModuleInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_contain1FC,m_contain,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_effectivelyDead344,m_privateStatus,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

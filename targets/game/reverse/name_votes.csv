@@ -6341,3 +6341,8 @@ game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e0JK,5ae14152cdb
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e4JK,3d5ab389cc7d058bd58acca5,claude-sonnet,20261109022705-bfd387,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120e8JK,e084d6abf8a38005a140c2b7,claude-sonnet,20261109022705-bfd387,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2077.cpp|member||m_bfme120ecJK,c9e4673c6179b9d0ce62eec6,claude-sonnet,20261109022705-bfd387,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|type||BfmeEvacuateIterator,0712841304645b04a8abba73,claude-sonnet,20261109022705-cfcd69,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|type||BfmeEvacuateContain,e85cb3ce51537309790162de,claude-sonnet,20261109022705-cfcd69,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_destroyed90,f314ca227430be065a78761a,claude-sonnet,20261109022705-cfcd69,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_contain1FC,8ad5d6006631923d51c5ef26,claude-sonnet,20261109022705-cfcd69,2026-11-09
+game/GameEngine/Source/Common/RTS/Team_evacuateTeam.cpp|member||m_effectivelyDead344,5ff674b261a2b56223ebec3b,claude-sonnet,20261109022705-cfcd69,2026-11-09
