@@ -1798,3 +1798,8 @@ game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodel
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_24,m_maxRadius,glm+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_28,m_maxSelectedUnits,glm+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_2C,m_rotationsPerMinute,glm+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_00e,m_scriptInputEnabled,glm+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_838,m_isQuitMenuVisible,glm+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b0,m_waypointMode,glm+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,m_forceAttackMode,glm+gpt-6-astra,agreed,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,m_forceMoveToMode,glm+gpt-6-astra,agreed,2026-11-09

@@ -6706,3 +6706,10 @@ game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodel
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_24,5f922b0157a64b1c09410749,glm,20261109044958-ffeced,2026-11-09
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_28,20d2e588d1f946d8df2c8140,glm,20261109044958-ffeced,2026-11-09
 game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_2C,297c7644b4c8aaaff8ec88b8,glm,20261109044958-ffeced,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_00e,63e0e919e2ff7edc94adc0db,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_838,b4e0434ffbbedea1f460abba,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b0,ebcca53c5995ddb4afa11110,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b1,5fef4a549d0b28292930e12a,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b2,989975624799a62b46844ccb,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12b3,46782bd246833d691c1aee27,glm,20261109045146-30fbab,2026-11-09
+game/GameEngine/Source/GameClient/InGameUIReset.cpp|member||m_field_12be,fc127a641ace064c12820f66,glm,20261109045146-30fbab,2026-11-09
