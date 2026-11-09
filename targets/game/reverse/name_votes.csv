@@ -6691,3 +6691,6 @@ game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdate
 game/GameEngine/Source/GameLogic/Object/Update/DockUpdate/SupplyCenterDockUpdateModuleDataConstructorThunk.cpp|member||m_18,7105561bd0831ecf6e9272f0,glm,20261109043719-57bf3a,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|function|Rva56E070StateOwner@|rva0056D070,be9bf0c52b1217ab2a1ac1e0,glm,20261109043848-74d9d3,2026-11-09
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateSave.cpp|param|UnicodeString::UnicodeString#2|s,c22475c6f3cb025e6e745a28,glm,20261109043848-74d9d3,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeResultAS,cfcc5ec467c27f0e4310e7f9,glm,20261109044440-31391a,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|member||m_bfmeNameAS,088b0e961c66fd957fa548aa,glm,20261109044440-31391a,2026-11-09
+game/GameEngine/Source/Common/BfmeNameResolveAS.cpp|function|BfmeResolverAS@|bfmeResolveAS,2e63632d7f2ec1223eab8124,glm,20261109044440-31391a,2026-11-09
