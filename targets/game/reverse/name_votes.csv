@@ -7269,3 +7269,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cp
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|bfmeGoVIX|m,935ac6a70bb325af039e8512,claude-sonnet,20261109074137-f7fb4a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeGoVIY|m,0a04d60c23eda69bbf1228fa,claude-sonnet,20261109074137-f7fb4a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,c0f892c4544705affc6b12b7,claude-sonnet,20261109074137-f7fb4a,2026-11-09
+game/GameEngine/Source/Common/BfmeN1242Put.cpp|param|BfmeN1242::bfmePut1242|e,49cda9fbb9908c18ae2c7e81,claude-sonnet,20261109074422-a16e44,2026-11-09
