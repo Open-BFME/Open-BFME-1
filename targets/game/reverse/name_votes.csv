@@ -7215,3 +7215,9 @@ game/GameEngine/Source/GameLogic/Object/WeaponNuggetParse.cpp|local|parseWeaponO
 game/GameEngine/Source/Common/Rva0040D780Parse.cpp|type||BfmeObjD540,99604d2c77af2440c3d3a8bc,claude-sonnet,20261109073722-2c72c1,2026-11-09
 game/GameEngine/Source/Common/Rva0040D780Parse.cpp|function||bfmeParseD780,071cb78b92eb26c095d343c4,claude-sonnet,20261109073722-2c72c1,2026-11-09
 game/GameEngine/Source/Common/Rva0040D780Parse.cpp|local|bfmeParseD780|s,484424d6ce913476bf83c41f,claude-sonnet,20261109073722-2c72c1,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_08,df5f14e911b099d6fe32401e,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_0c,4c38d2b045001b418bd6dd7e,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_10,d086e730af5770c2cecc9849,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_14,3aa3d7eea35bf7058e48081b,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_18,8d78bfce649ca53629a3db96,claude-sonnet,20261109073722-322d96,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/DefaultProductionExitUpdateFriendNewModuleDataThunk.cpp|member||m_1c,ba6f849f0981ef59caa65ef2,claude-sonnet,20261109073722-322d96,2026-11-09
