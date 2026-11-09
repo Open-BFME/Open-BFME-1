@@ -141,27 +141,27 @@ int LightningDraw005F43B0::draw(void *renderInfo,void *unused,int *count)
     unsigned stamps[512];
     bool changed=false;
     unsigned stamp=1;
-    Particle005F43B0 *p=system()->fielda0;
-    if(p && field8e0!=p->field6c) {
-        field8e0=p->field6c;
+    Particle005F43B0 *particle=system()->fielda0;
+    if(particle && field8e0!=particle->field6c) {
+        field8e0=particle->field6c;
         changed=true;
-        stamp=p->field68;
+        stamp=particle->field68;
         if(WWMath::Random_Float()<field40) field8b8=2;
         else field8b8=1;
     }
-    p=system()->fielda0;
-    for(;p;p=p->field3c) {
-        float width=((Rva005C30A0Owner*)p)->Rva005C30A0();
-        if(changed) p->field68=stamp;
+    particle=system()->fielda0;
+    for(;particle;particle=particle->field3c) {
+        float width=((Rva005C30A0Owner*)particle)->Rva005C30A0();
+        if(changed) particle->field68=stamp;
         *count += (system()->field7c==11 && system()->field80) ? 1 : 0;
-        stamps[n]=p->field58;
-        positions[n]=p->field1c;
+        stamps[n]=particle->field58;
+        positions[n]=particle->field1c;
         widths[n]=width;
-        Vector3 *rgb=(Vector3*)((Rva005C3180*)p)->dispatch();
+        Vector3 *rgb=(Vector3*)((Rva005C3180*)particle)->dispatch();
         if(rgb) { colors[n].X=rgb->X; colors[n].Y=rgb->Y; colors[n].Z=rgb->Z; }
         else { colors[n].X=0; colors[n].Y=0; colors[n].Z=0; }
-        colors[n].W=((Rva005C3160Owner*)p)->Rva005C3160();
-        bytes[n]=(unsigned char)(int)(((Rva005C30A0Owner*)p)->Rva005C3120()*40.58451080322265625f);
+        colors[n].W=((Rva005C3160Owner*)particle)->Rva005C3160();
+        bytes[n]=(unsigned char)(int)(((Rva005C30A0Owner*)particle)->Rva005C3120()*40.58451080322265625f);
         if(++n==512) break;
     }
     if(g_rva005F4340Resource && n>=2) {
