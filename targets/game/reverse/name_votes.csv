@@ -6802,3 +6802,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|m
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30A8,601581a33fbbe292c021f377,claude-sonnet,20261109054121-ed932b,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30B0,8880eafaa62002f17eb5a627,claude-sonnet,20261109054121-ed932b,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapConstructor.cpp|member||buffer30BC,3e9fe889830af803286f43e8,claude-sonnet,20261109054121-ed932b,2026-11-09
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueEA0,5a62ecc982691920d065d60a,claude-sonnet,20261109054346-691337,2026-11-09
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueEA4,0c42febf1a4d7fa90e4b1184,claude-sonnet,20261109054346-691337,2026-11-09
+game/GameEngine/Source/Common/RTS/Player_newMap.cpp|member||m_valueEA8,ce3419419d00ca7ce9887b6a,claude-sonnet,20261109054346-691337,2026-11-09
