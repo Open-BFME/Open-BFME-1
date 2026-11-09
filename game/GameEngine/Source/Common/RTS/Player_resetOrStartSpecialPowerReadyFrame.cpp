@@ -17,7 +17,7 @@ struct BfmePlayerReadyTimerFields
 struct BfmeGameLogicFrameSlice
 {
 	unsigned char m_unreconstructed_000[0x3c];
-	UnsignedInt m_bfmeFrame;
+	UnsignedInt m_frame;
 };
 
 class GameLogic;
@@ -27,7 +27,7 @@ void Player::resetOrStartSpecialPowerReadyFrame(const SpecialPowerTemplate *temp
 {
 	BfmePlayerReadyTimerFields *self = (BfmePlayerReadyTimerFields *)this;
 	UnsignedInt lookupID = temp->getID();
-	UnsignedInt now = ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_bfmeFrame;
+	UnsignedInt now = ((BfmeGameLogicFrameSlice *)TheGameLogic)->m_frame;
 
 	SpecialPowerReadyTimerType *timer;
 	std::list<SpecialPowerReadyTimerType>::iterator it;
