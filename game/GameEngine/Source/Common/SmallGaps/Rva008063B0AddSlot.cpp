@@ -15,10 +15,10 @@ struct Rva008063B0Owner {
 };
 void Rva008063B0Owner::addSlot(int a, int b)
 {
-	for (Rva008063B0Slot* s = m_slots; s < m_slots + 8; ++s) {
-		if (s->m_a == 0) {
-			s->m_a = a;
-			s->m_b = b;
+	for (Rva008063B0Slot* slot = m_slots; slot < m_slots + 8; ++slot) {
+		if (slot->m_a == 0) {
+			slot->m_a = a;
+			slot->m_b = b;
 			return;
 		}
 	}
