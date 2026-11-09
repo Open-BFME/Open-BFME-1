@@ -44,10 +44,10 @@ private:
 // ?fillTaintSurface@TaintBuffer@@QAEXEPAVSurfaceClass@@@Z
 void TaintBuffer::fillTaintSurface(unsigned char alpha, SurfaceClass *surface)
 {
-	GlobalData *g = TheWritableGlobalData;
-	if (!g)
+	GlobalData *globalData = TheWritableGlobalData;
+	if (!globalData)
 		return;
-	if (!g->m_taintOn)
+	if (!globalData->m_taintOn)
 		return;
 
 	unsigned int color = alpha;
