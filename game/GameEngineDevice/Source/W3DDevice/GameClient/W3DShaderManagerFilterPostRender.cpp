@@ -37,16 +37,6 @@ protected:
 	static FilterTypes m_currentFilter;
 };
 
-bool W3DShaderManager::filterPostRender(FilterTypes filter, FilterModes mode, Coord2D &scrollDelta, bool &doExtraRender)
-{
-	if (W3DFilters[filter])
-		return W3DFilters[filter]->postRender(mode, scrollDelta, doExtraRender,
-			*((int *)&doExtraRender + 1));
-
-	m_currentFilter = FT_NULL_FILTER;
-	return false;
-}
-
 // ?filterPostRender@W3DShaderManager@@SA_NW4FilterTypes@@W4FilterModes@@AAUCoord2D@@AA_N@Z
 bool W3DShaderManager::filterPostRenderRetail(FilterTypes filter, FilterModes mode, Coord2D &scrollDelta,
 	bool &doExtraRender, int callerStackWord)
