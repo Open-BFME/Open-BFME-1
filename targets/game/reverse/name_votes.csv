@@ -6777,3 +6777,8 @@ game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|type||Rva0016D9C0S
 game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|member||m_stateMachine0016D9C0,182f3faedf6ae598242671c1,claude-sonnet,20261109052646-9c8eaf,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Rva0016D9C0State_xfer.cpp|local|Rva0016D9C0State::xfer|m_stateMachine0016D9C0,27c9c5387d9d087021db095d,claude-sonnet,20261109052646-9c8eaf,2026-11-09
 game/Libraries/Source/Apt/Rva008BE2C0NodeWalk.cpp|member||length02,36fef6aab43d5f50fcd22639,claude-sonnet,20261109052824-9d49c6,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|compare|n,a296aaafd91f05b334be4322,claude-sonnet,20261109052824-eac412,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|decrementDataLeft|c,abed2df7369f521941f28c11,claude-sonnet,20261109052824-eac412,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|closeDataChunk|c,c4177134cea696ea6841c514,claude-sonnet,20261109052824-eac412,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::readArrayOfBytes|c,380baca5f040b2d042e28ccd,claude-sonnet,20261109052824-eac412,2026-11-09
+game/GameEngine/Source/Common/System/DataChunkInput.cpp|local|DataChunkInput::registerParser|p,116e16068069e51099608463,claude-sonnet,20261109052824-eac412,2026-11-09
