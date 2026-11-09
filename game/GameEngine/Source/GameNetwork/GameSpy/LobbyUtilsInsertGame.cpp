@@ -84,12 +84,12 @@ public:
 	}
 };
 
-const unsigned short *UnicodeString::str(void) const
+inline const unsigned short *UnicodeString::str(void) const
 {
 	return m_data ? m_data->m_text : &BFMEEmptyUnicodeString;
 }
 
-const char *AsciiString::str(void) const
+inline const char *AsciiString::str(void) const
 {
 	return m_data ? m_data->m_text : g_bfmeEmptyAscii;
 }

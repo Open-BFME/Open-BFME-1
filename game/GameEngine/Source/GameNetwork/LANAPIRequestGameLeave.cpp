@@ -17,7 +17,7 @@ extern const unsigned short BFMEEmptyUnicodeString;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 extern "C" __declspec(dllimport) unsigned short *__cdecl wcsncpy(unsigned short *, const unsigned short *, unsigned int);
 
-const unsigned short *UnicodeString::str(void) const
+inline const unsigned short *UnicodeString::str(void) const
 {
 	return m_data ? m_data->m_text : (const unsigned short *)((const char *)&BFMEEmptyUnicodeString);
 }
