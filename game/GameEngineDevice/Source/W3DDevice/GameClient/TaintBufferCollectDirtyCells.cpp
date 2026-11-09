@@ -97,15 +97,15 @@ void TaintBuffer::collectDirtyCells()
 	}
 
 	unsigned char *a = m_referenceCellLevels;
-	unsigned char *b = m_cellLevels;
+	unsigned char *cellLevel = m_cellLevels;
 	int cell;
 	int y = 0;
 	cell = 0;
 	for (; y < m_numCellsY; ++y)
 	{
-		for (int x = 0; x < m_numCellsX; ++x, ++a, ++b, ++cell)
+		for (int x = 0; x < m_numCellsX; ++x, ++a, ++cellLevel, ++cell)
 		{
-			if (*a != *b)
+			if (*a != *cellLevel)
 				m_dirty.insert(cell);
 		}
 	}
