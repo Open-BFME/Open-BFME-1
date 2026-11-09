@@ -82,7 +82,7 @@ public:
     unsigned char m_flags98;
 };
 
-class Rva002DCAE0Module;
+class ContainModuleInterface;
 
 class Object
 {
@@ -97,10 +97,10 @@ public:
     unsigned char m_gap44[0x74 - 0x44];
     ObjectID m_id;
     unsigned char m_gap78[0x1fc - 0x78];
-    class Rva002DCAE0Module *m_contain;
+    class ContainModuleInterface *m_contain;
 };
 
-class Rva002DCAE0Module
+class ContainModuleInterface
 {
 public:
     virtual void slot00() = 0;
@@ -291,7 +291,7 @@ void Rva002DCBA0::rva002DCAE0Slot5(void *record, Thing *thing)
         (thingForRecord->m_flags98 & 4) == 0)
         return;
 
-    Rva002DCAE0Module *module = found->m_contain;
+    ContainModuleInterface *module = found->m_contain;
     if (m_flag58 && module != 0 && module->slot33(thingForRecord, 1))
     {
         module->slot34(thingForRecord);
