@@ -6900,3 +6900,5 @@ game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|member||m_bfmeName,1fb8dfb8
 game/GameEngine/Source/Common/Bfme5IniNamedValue.cpp|member||m_bfmeValue,aca365e2bd27617383bdc06c,claude-sonnet,20261109061104-06bcf8,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/EntEnragedUpdateCtorThunk.cpp|member||m_field14,dd0348d536f64b2bbabb7dcf,claude-sonnet,20261109060734-7ee2ec,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenSpellStoreOnClosed.cpp|member||m_fields260,7cca507f00468788a42ff592,claude-sonnet,20261109060734-dfb402,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|type||Rva00377740Owner,ecd87297c7aa27cf0bac12a8,claude-sonnet,20261109061241-da2cdc,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00377740.cpp|function|Rva00377740Interface@|Rva00377740,67051a7cfd6f9c743fb9d4fa,claude-sonnet,20261109061241-da2cdc,2026-11-09
