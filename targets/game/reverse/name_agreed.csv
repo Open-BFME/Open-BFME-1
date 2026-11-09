@@ -2774,3 +2774,5 @@ game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|member||m_10,m_bu
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|member||m_14,m_bufferSize,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|member||m_24,m_error,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/Rva007E8D30FeslSetField.cpp|local|Rva007E8D30|p,dest,claude-sonnet+gpt-6-astra,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|type||Rva00177A90Machine,StateMachine,claude-opus+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|member||m_field3C,m_frame,claude-opus+gpt-6.1-sol,agreed,2026-11-09
