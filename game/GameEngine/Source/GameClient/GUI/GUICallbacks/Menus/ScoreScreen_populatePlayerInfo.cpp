@@ -611,7 +611,7 @@ struct BfmeB1112
 class BfmeV1112
 {
 public:
-	Int bfmeGo1112A(BfmeA1112 validMask, BfmeB1112 invalidMask);
+	Int getTotalUnitsBuilt(BfmeA1112 validMask, BfmeB1112 invalidMask);
 
 private:
 	char m_pad[0x144];
@@ -640,13 +640,13 @@ static __declspec(noinline) void updateMPBattleHonors(Int &honors, PSPlayerStats
 
 	BfmeA1112 validMask(BfmeA1112::kInit, KINDOF_VEHICLE);
 	BfmeB1112 invalidMask(BfmeB1112::kInit, KINDOF_AIRCRAFT);
-	if (s->bfmeGo1112A(validMask, invalidMask) >= 50)
+	if (s->getTotalUnitsBuilt(validMask, invalidMask) >= 50)
 		honors |= 0x80;
 
 	validMask.clear();
 	validMask.set(KINDOF_AIRCRAFT);
 	invalidMask.clear();
-	if (s->bfmeGo1112A(validMask, invalidMask) >= 20)
+	if (s->getTotalUnitsBuilt(validMask, invalidMask) >= 20)
 		honors |= 0x100;
 
 	if (TheGameLogic->getFrame() / 5 / 60 < 5)

@@ -24,7 +24,7 @@ public:
 	char m_bfmePad[0x18];
 };
 
-struct BfmeQ1112
+struct ThingTemplate
 {
 	char m_bfmePad[0xc8];
 	BfmeSub1112 m_bfmec8;
@@ -35,7 +35,7 @@ struct BfmeNode1112
 	char m_bfmePad[8];
 	BfmeNode1112 *m_bfme08;
 	char m_bfmePad1[4];
-	BfmeQ1112 *m_bfme10;
+	ThingTemplate *m_bfme10;
 	int m_bfme14;
 };
 
@@ -61,22 +61,22 @@ public:
 class BfmeV1112
 {
 public:
-	int bfmeGo1112A(BfmeA1112 a, BfmeB1112 b);
+	int getTotalUnitsBuilt(BfmeA1112 a, BfmeB1112 b);
 	int bfmeGo1112B(BfmeA1112 a, BfmeB1112 b);
 	char m_bfmePad[0x144];
-	BfmeNode1112 *m_bfme144;
+	BfmeNode1112 *m_objectsBuilt;
 	char m_bfmePad1[8];
-	BfmeSlot1112 m_bfme150[0x20];
+	BfmeSlot1112 m_objectsDestroyed[0x20];
 };
 
-int BfmeV1112::bfmeGo1112A(BfmeA1112 a, BfmeB1112 b)
+int BfmeV1112::getTotalUnitsBuilt(BfmeA1112 a, BfmeB1112 b)
 {
-	BfmeNode1112 *h = m_bfme144;
+	BfmeNode1112 *h = m_objectsBuilt;
 	BfmeNode1112 *p = h->m_bfme08;
 	int n = 0;
 
 	while (p != h) {
-		BfmeQ1112 *q = p->m_bfme10;
+		ThingTemplate *q = p->m_bfme10;
 		int w = p->m_bfme14;
 
 		if (q && ((const BitFlags<116> *)&q->m_bfmec8)->testSetAndClear(
@@ -84,7 +84,7 @@ int BfmeV1112::bfmeGo1112A(BfmeA1112 a, BfmeB1112 b)
 			n += w;
 		p = (BfmeNode1112 *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)p);
-		h = m_bfme144;
+		h = m_objectsBuilt;
 	}
 	return n;
 }
@@ -92,7 +92,7 @@ int BfmeV1112::bfmeGo1112A(BfmeA1112 a, BfmeB1112 b)
 int BfmeV1112::bfmeGo1112B(BfmeA1112 a, BfmeB1112 b)
 {
 	int n = 0;
-	BfmeSlot1112 *s = m_bfme150;
+	BfmeSlot1112 *s = m_objectsDestroyed;
 	int i = 0x20;
 
 	do {
@@ -100,7 +100,7 @@ int BfmeV1112::bfmeGo1112B(BfmeA1112 a, BfmeB1112 b)
 		BfmeNode1112 *p = h->m_bfme08;
 
 		while (p != h) {
-			BfmeQ1112 *q = p->m_bfme10;
+			ThingTemplate *q = p->m_bfme10;
 			int w = p->m_bfme14;
 
 			if (q && ((const BitFlags<116> *)&q->m_bfmec8)->testSetAndClear(

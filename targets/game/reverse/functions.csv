@@ -30320,7 +30320,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeGo1110A@@YAHPAUBfmeW1110@@@Z,,0x004DA4C0,80,game/GameEngine/Source/Common/BfmeConv1110.cpp,matched,
 ?bfmeGo1110B@BfmeV1110@@QAEXXZ,,0x000EF290,108,game/GameEngine/Source/Common/BfmeConv1110.cpp,matched,
 ?bfmeGo1111A@BfmeW1111@@QAEXXZ,,0x004771E0,101,game/GameEngine/Source/Common/BfmeConv1111.cpp,matched,
-?bfmeGo1112A@BfmeV1112@@QAEHUBfmeA1112@@UBfmeB1112@@@Z,,0x000EA260,88,game/GameEngine/Source/Common/BfmeConv1112.cpp,matched,
+?getTotalUnitsBuilt@BfmeV1112@@QAEHUBfmeA1112@@UBfmeB1112@@@Z,,0x000EA260,88,game/GameEngine/Source/Common/BfmeConv1112.cpp,matched,
 ?bfmeGo1112B@BfmeV1112@@QAEHUBfmeA1112@@UBfmeB1112@@@Z,,0x000EA2D0,110,game/GameEngine/Source/Common/BfmeConv1112.cpp,matched,
 ?bfmeGo1113A@BfmeW1113@@QAEDH@Z,,0x00236C10,115,game/GameEngine/Source/Common/BfmeConv1113.cpp,matched,
 ?bfmeGo1114A@BfmeW1114@@QAEDH@Z,,0x00236B70,119,game/GameEngine/Source/Common/BfmeConv1114.cpp,matched,
