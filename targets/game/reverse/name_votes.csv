@@ -6578,3 +6578,5 @@ game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_124,cb223
 game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_12c,223a4784f4d282b3ed5d2480,claude-sonnet,20261109041720-43e2ff,2026-11-09
 game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_130,440fc9414782b7e812153fbc,claude-sonnet,20261109041720-43e2ff,2026-11-09
 game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,738d9037420a80d049f115b0,claude-sonnet,20261109041720-43e2ff,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberMotion00230BF0.cpp|member||samples610,8f53a0377e08ef1434bf8c13,claude-sonnet,20261109041720-09a004,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberMotion00230BF0.cpp|member||count7F4,03c66e9814aa01e0fe7353ba,claude-sonnet,20261109041720-09a004,2026-11-09
