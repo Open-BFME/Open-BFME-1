@@ -6986,3 +6986,4 @@ game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF0JS,85e6cba237571d
 game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfmeF4JS,943c74d3aad3afe3350b6f41,claude-sonnet,20261109063129-f33f9a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2078.cpp|member||m_bfme10JS,df9485973c5d80947133d201,claude-sonnet,20261109063129-f33f9a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv2078.cpp|local|BfmeListJS::bfmeSetJS|n,692d371e0b593945a9e4850c,claude-sonnet,20261109063129-f33f9a,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Contain/ContestableContain_xfer.cpp|member||field74,51fadc82e27ced3296edffec,claude-sonnet,20261109063319-196d2a,2026-11-09
