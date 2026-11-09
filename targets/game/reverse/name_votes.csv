@@ -6760,3 +6760,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|para
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|y0,15305985d9f6d15f74fe2b7a,claude-sonnet,20261109052642-5b5055,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|x1,dbc9f0c29a9ff8879621d9e8,claude-sonnet,20261109052642-5b5055,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECD30.cpp|param|W3DDisplay::rva006ECD30|y1,71b4378dded0a2bf809ccd50,claude-sonnet,20261109052642-5b5055,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|type||DamageSource00373B30,63660f2b6b7ff618ad7a1e04,claude-sonnet,20261109052642-005827,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|member||field0c,d5bc23bb3fb1d69e7b6433c5,claude-sonnet,20261109052642-005827,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/ConstructionRecovery00373B30.cpp|local|Rva00373B30Receiver::update|t,5627214ce2c1f107dcc7da16,claude-sonnet,20261109052642-005827,2026-11-09
