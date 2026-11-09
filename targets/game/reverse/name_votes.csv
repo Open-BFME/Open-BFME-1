@@ -6646,3 +6646,4 @@ game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3B0,8f2
 game/GameEngine/Source/GameLogic/Object/Update/RespawnUpdateCtorModuleFactory.cpp|member||m_f14,f6c359bfccece176001b2f52,claude-sonnet,20261109044338-352a91,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRva00734180.cpp|function|W3DTreeBuffer@|rva00734180,be27ad1db329a9a8123f10f3,claude-sonnet,20261109044338-75bc8c,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1872.cpp|type||BfmeWinZE,e294e8e3856c8b487b5ef860,claude-sonnet,20261109044337-ed0013,2026-11-09
+game/GameEngine/Source/Common/BfmeConv804.cpp|local|bfmeGoECD|o,6898e24a4b72b19d5a970586,claude-sonnet,20261109044337-3f57be,2026-11-09
