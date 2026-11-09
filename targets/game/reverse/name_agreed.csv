@@ -2532,3 +2532,5 @@ game/GameEngine/Source/GameLogic/Object/WeaponConstructor.cpp|param|Weapon::Weap
 game/GameEngine/Source/GameLogic/Object/WeaponConstructor.cpp|param|Weapon::Weapon|tmpl,weaponTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva00592640Binding|p,owner,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva0058D1E0FunctorSingleWrapper|b,binding,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva00592640Binding|p,owner,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp: game\GameEngine\Source\GameClient\Rva00592640OwnerConstructor.cpp(48) : error C2065,2026-11-09
+game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp|param|Rva0058D1E0FunctorSingleWrapper|b,binding,claude-sonnet+gpt-6.1-sol,blocked: game/GameEngine/Source/GameClient/Rva00592640OwnerConstructor.cpp: game\GameEngine\Source\GameClient\Rva00592640OwnerConstructor.cpp(48) : error C2065,2026-11-09
