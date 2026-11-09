@@ -7654,3 +7654,4 @@ game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|mem
 game/GameEngine/Source/Common/BfmeConv1459.cpp|member||m_bfme10,9ba8286fb65d382b8ea8c4af,claude-sonnet,20261109101845-fc2d1d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|n1,14217ed84e45f9905c7c43ef,claude-sonnet,20261109101845-fc2d1d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|p,dd7d4853a7c5522e84d0cfea,claude-sonnet,20261109101845-fc2d1d,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1196.cpp|type||BfmeDelta1196,6476d286321ffc0d3caf8e06,claude-sonnet,20261109101322-fec1c3,2026-11-09
