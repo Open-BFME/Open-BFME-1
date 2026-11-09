@@ -32,14 +32,14 @@ class GBB_UpdateModule : public GBB_DeepBase, public GBB_Iface1, public GBB_Ifac
 {
 public:
 	GBB_UpdateModule(Thing *thing, const ModuleData *moduleData)
-		: GBB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+		: GBB_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0), m_f18(-1), m_f1c(-1) {}
 
 protected:
 	void setWakeFrame(Object *, UpdateSleepTime);
 	Object *getObject(void) const { return m_object; }
 
 private:
-	unsigned int m_f14;
+	unsigned int m_nextCallFrameAndPhase;
 	int m_f18;
 	int m_f1c;
 };

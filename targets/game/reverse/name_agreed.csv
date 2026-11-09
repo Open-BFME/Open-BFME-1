@@ -2431,3 +2431,4 @@ game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeThreeHundredSeventyOne.cpp|member||m_bfmeCount,m_numNodes,claude-sonnet+gpt-6-astra+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCtorModuleFactory.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorCtorModuleFactory.cpp|member||m_f14,m_nextCallFrameAndPhase,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
