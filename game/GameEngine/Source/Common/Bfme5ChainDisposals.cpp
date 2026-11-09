@@ -37,8 +37,8 @@ private:
 struct BfmeChainNode
 {
 	int m_bfmeHead[2];					// +0x00
-	BfmeChainNode *m_bfmeNext;				// +0x08
-	void *m_bfmeField;					// +0x0C
+	BfmeChainNode *m_left;				// +0x08
+	void *m_right;					// +0x0C
 	BfmeChainValue m_bfmeValue;				// +0x10
 };
 
@@ -54,9 +54,9 @@ void Gen_005876D0::bfmeDisposeChain(BfmeChainNode *node)
 {
 	while (node)
 	{
-		bfmeNotify(node->m_bfmeField);
+		bfmeNotify(node->m_right);
 
-		BfmeChainNode *next = node->m_bfmeNext;
+		BfmeChainNode *next = node->m_left;
 
 		node->m_bfmeValue.~BfmeChainValue();
 
