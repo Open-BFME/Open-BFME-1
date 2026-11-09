@@ -6815,3 +6815,8 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayDrawDebugStats006e8c
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdate_update.cpp|param|UnicodeString#2|s,81d8dbb7cca76d2cb6946b47,claude-sonnet,20261109054355-b4f48c,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|local|UpdateRemoteIPList|n1,4c713a42e55750bdf2e0231f,claude-sonnet,20261109054355-f66f4a,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/NetworkDirectConnectUpdateRemoteIPList.cpp|local|UpdateRemoteIPList|temp,5efebf713693640a6b862ce6,claude-sonnet,20261109054355-f66f4a,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|member||m_flag40,a2b44f0f2695c0175bcabcef,claude-sonnet,20261109054845-8278c5,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|param|walk3|d,af7dacd82746b513ed1e3687,claude-sonnet,20261109054845-8278c5,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|walk3|f,057bd707e88496aec558f1d6,claude-sonnet,20261109054845-8278c5,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cachedRandom|d,782f4946a67428bcf2556fe3,claude-sonnet,20261109054845-8278c5,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1137CachedRandom.cpp|local|BfmeA1137::cachedRandom|f,1ea528721148e4c84eeb1795,claude-sonnet,20261109054845-8278c5,2026-11-09
