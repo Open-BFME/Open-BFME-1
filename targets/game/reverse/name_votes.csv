@@ -7687,3 +7687,7 @@ game/GameEngine/Source/Common/Rva005A01F0AttackNuggetFactory.cpp|local|s4ParseFi
 game/GameEngine/Source/Common/Bfme/Rva006D51B0Ctor.cpp|type||Rva006D51B0Texture,d49ddc91723cbd909fc7ba26,claude-sonnet,20261109102711-5f7059,2026-11-09
 game/GameEngine/Source/Common/Bfme/Rva006D51B0Ctor.cpp|member||m_bfmeName,d9caae356f95cd1fdfbf3193,claude-sonnet,20261109102711-5f7059,2026-11-09
 game/GameEngine/Source/Common/Bfme/Rva006D51B0Ctor.cpp|member||m_bfme34,d87c3caed77344463fdd44b4,claude-sonnet,20261109102711-5f7059,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipSepsW|c,d18e5210c608885d95d6e12d,claude-sonnet,20261109102711-ea80a0,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipSepsW|s,66d1c395cd7a9e579f0bd4b4,claude-sonnet,20261109102711-ea80a0,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|c,297a27e11f40e1b1e2d06d27,claude-sonnet,20261109102711-ea80a0,2026-11-09
+game/Libraries/Source/WWVegas/WWLib/StringBaseSkipSepsW.cpp|local|skipNonSepsW|s,b8580888ebaae1de96ecc205,claude-sonnet,20261109102711-ea80a0,2026-11-09
