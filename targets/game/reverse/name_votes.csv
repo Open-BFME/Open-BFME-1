@@ -7437,3 +7437,4 @@ game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2e8
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2ec,2f5351a08eccb0ad33417107,claude-sonnet,20261109083454-90535e,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f0,ba48b691e8f7b6dc56952cd1,claude-sonnet,20261109083454-90535e,2026-11-09
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsReset.cpp|member||w2f4,47f097c5b36a1da019e0b8b3,claude-sonnet,20261109083454-90535e,2026-11-09
+game/GameEngine/Source/Common/Rva00367E00Count.cpp|local|Rva00367E00::count|n,49301cb32a561209e5362c02,claude-sonnet,20261109083453-e2743c,2026-11-09
