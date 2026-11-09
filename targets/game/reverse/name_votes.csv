@@ -6439,3 +6439,4 @@ game/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp|local|DataChun
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_byte4,b1e36d64fffef30745e7e845,claude-sonnet,20261109030737-b5502e,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_dword8,be7c5ad04088c238d499a984,claude-sonnet,20261109030737-b5502e,2026-11-09
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_string10,c7a780b13a82173e22aea9dc,claude-sonnet,20261109030737-b5502e,2026-11-09
+game/GameEngine/Source/Common/BfmeFindWT.cpp|local|BfmeFindWT::find|n,5f95c8bfe05794a895878303,claude-sonnet,20261109030737-114d94,2026-11-09
