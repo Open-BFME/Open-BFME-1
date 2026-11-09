@@ -1375,3 +1375,4 @@ game/GameEngine/Source/GameLogic/Map/BfmeHostBJXfer.cpp|param|BfmeHostBJ::xfer|x
 game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|b,blue,claude-sonnet+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|g,green,claude-sonnet+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/PackShroudPixel.cpp|local|packShroudPixel|r,red,claude-sonnet+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameClient/GUI/WindowManager_bfmeRva0046E170.cpp|member||m_at198,m_focusStack,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
