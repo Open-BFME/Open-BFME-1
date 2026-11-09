@@ -35,3 +35,20 @@ template class _STL::num_put<char, _STL::ostreambuf_iterator<char, _STL::char_tr
 template class _STL::num_get<char, _STL::istreambuf_iterator<char, _STL::char_traits<char> > >;
 template class _STL::num_put<wchar_t, _STL::ostreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> > >;
 template class _STL::num_get<wchar_t, _STL::istreambuf_iterator<wchar_t, _STL::char_traits<wchar_t> > >;
+
+// BFME1 retail 0x0083A2D0 is a distinct 106-byte wide copy body used by
+// the wrappers at 0x00846B10 and 0x00846C30. Keep its address-specific
+// identity beside the numeric-facet instantiations that already provide
+// the byte-identical canonical template copy at 0x00835EF0.
+typedef _STL::ostreambuf_iterator<wchar_t> WideOutputIterator;
+__declspec(noinline) WideOutputIterator bfmeRva0083A2D0CopyWide(
+    const wchar_t *first, const wchar_t *last, WideOutputIterator result,
+    const _STL::random_access_iterator_tag &, int *)
+{
+    for (int count = last - first; count > 0; --count) {
+        *result = *first;
+        ++first;
+        ++result;
+    }
+    return result;
+}
