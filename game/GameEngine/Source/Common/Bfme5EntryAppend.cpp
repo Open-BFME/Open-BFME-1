@@ -56,14 +56,14 @@ public:
 
 struct BfmeEntryHead
 {
-	BfmeEntryHead *m_bfmeNext;				// +0x00
-	BfmeEntryHead *m_bfmePrev;				// +0x04
+	BfmeEntryHead *m_next;				// +0x00
+	BfmeEntryHead *m_prev;				// +0x04
 };
 
 struct BfmeEntryNode
 {
-	BfmeEntryNode *m_bfmeNext;				// +0x00
-	BfmeEntryNode *m_bfmePrev;				// +0x04
+	BfmeEntryNode *m_next;				// +0x00
+	BfmeEntryNode *m_prev;				// +0x04
 	BfmeEntry *m_bfmeValue;					// +0x08
 };
 
@@ -103,9 +103,9 @@ void Gen_000D5E90::bfmeAdd(void *owner, void *extra)
 
 	new (&node->m_bfmeValue) BfmeEntry *(entry);
 
-	BfmeEntryHead *previous = head->m_bfmePrev;
-	node->m_bfmeNext = (BfmeEntryNode *)head;
-	node->m_bfmePrev = (BfmeEntryNode *)previous;
-	previous->m_bfmeNext = (BfmeEntryHead *)node;
-	head->m_bfmePrev = (BfmeEntryHead *)node;
+	BfmeEntryHead *previous = head->m_prev;
+	node->m_next = (BfmeEntryNode *)head;
+	node->m_prev = (BfmeEntryNode *)previous;
+	previous->m_next = (BfmeEntryHead *)node;
+	head->m_prev = (BfmeEntryHead *)node;
 }
