@@ -7629,3 +7629,6 @@ game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member|
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member||m_e18,84da24f8d9ea16f025fe7a4e,claude-sonnet,20261109100319-f3f8f4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member||m_e1c,2972bff9d10f87f465839417,claude-sonnet,20261109100319-f3f8f4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateConstructor.cpp|member||m_e20,585314d75142ab34c930c76c,claude-sonnet,20261109100319-f3f8f4,2026-11-09
+game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp|member||m_1c,5cb56f94f868d64404df44b5,claude-sonnet,20261109100319-eeb344,2026-11-09
+game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp|member||m_20,98e22178e68b706544e94093,claude-sonnet,20261109100319-eeb344,2026-11-09
+game/GameEngine/Source/Common/Rva008F7EC0Sweep.cpp|local|Rva008F7EC0::method|p,8d955316feb37b94a1ca0618,claude-sonnet,20261109100319-eeb344,2026-11-09
