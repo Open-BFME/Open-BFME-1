@@ -7456,3 +7456,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferCollectDirtyCells.c
 game/GameEngine/Source/Common/Bfme/Rva001B46B0NormalizedDeltaZ.cpp|type||Rva001B46B0Vec3,b71ca7474914fde16ddce6da,claude-sonnet,20261109084350-867379,2026-11-09
 game/Libraries/Source/subsystem/GameSpyLoginPreferences_addLogin.cpp|local|compare|n,18e7cbef67fd7c56d7dbebbe,claude-sonnet,20261109085534-c2fb0a,2026-11-09
 game/GameEngine/Source/Common/Rva001C28C0Set.cpp|param|Rva001C28C0::set|o,6b7137c1d687ff9ef7540228,claude-sonnet,20261109085534-d38444,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitSpecialPowershortcutBar.cpp|param|inlineStr|s,7401415fd447ed19c3585477,claude-sonnet,20261109084247-d5a84c,2026-11-09
+game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitSpecialPowershortcutBar.cpp|param|inlineIsEmpty|s,db67a2e4e6c68e247b265f4d,claude-sonnet,20261109084247-d5a84c,2026-11-09
