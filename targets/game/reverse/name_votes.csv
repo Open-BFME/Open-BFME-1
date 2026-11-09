@@ -7683,3 +7683,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdate
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/AssaultTransportAIUpdateResetSlots.cpp|member||m_39e,5efa3e08f57b41e2c89ba764,claude-sonnet,20261109102338-c95ef3,2026-11-09
 game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_member08,33fc42e8fabe0509c74f8415,claude-sonnet,20261109102713-fc8292,2026-11-09
 game/GameEngine/Source/Common/System/UpgradeTemplateAssignThunk.cpp|member||m_word0c,32fb90a1037c7606265f2553,claude-sonnet,20261109102713-fc8292,2026-11-09
+game/GameEngine/Source/Common/Rva005A01F0AttackNuggetFactory.cpp|local|s4ParseFieldsRva005A01F0|t,e04ac301c8f6479d5808b3fd,claude-sonnet,20261109102754-3b760e,2026-11-09
