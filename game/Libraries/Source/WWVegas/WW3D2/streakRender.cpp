@@ -66,27 +66,9 @@
 
 
 
-// ??4StreakRendererClass@@QAEAAV0@ABV0@@Z present-unmatched
-StreakRendererClass & StreakRendererClass::operator = (const StreakRendererClass & that)
-{
-	if (this != &that) {
-		REF_PTR_SET(Texture,that.Texture);
-		Shader = that.Shader;
-		Width = that.Width;
-		Color = that.Color;
-		Opacity = that.Opacity;
-		SubdivisionLevel = that.SubdivisionLevel;
-		NoiseAmplitude = that.NoiseAmplitude;
-		MergeAbortFactor = that.MergeAbortFactor;
-		// TextureTileFactor = that.TextureTileFactor;
-		// LastUsedSyncTime = that.LastUsedSyncTime;
-		// CurrentUVOffset = that.CurrentUVOffset;
-		// UVOffsetDeltaPerMS = that.UVOffsetDeltaPerMS;
-		Bits = that.Bits;
-		// Don't modify m_vertexBufferSize and m_vertexBuffer.
-	}
-	return *this;
-}
+// StreakRendererClass::operator= is retail's 0x0095C860 body (ledger row
+// ??4Rva0095C860, pinned to ??4StreakRendererClass); declared only so the
+// non-retail inline copy does not shadow it at link time.
 
 // ??1StreakRendererClass@@QAE@XZ present-unmatched
 StreakRendererClass::~StreakRendererClass(void)
