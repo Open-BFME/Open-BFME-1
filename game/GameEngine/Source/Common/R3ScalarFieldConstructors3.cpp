@@ -44,7 +44,6 @@
 // immediates are the addresses of externs named for those addresses, and
 // build.py fills those four bytes from retail, so they carry no evidence.
 
-extern int Gen01128BD0;
 extern int Gen0111E188;
 extern int Gen01128BAC;
 
