@@ -2528,3 +2528,4 @@ game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field10,
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field11,m_readyToBuildStructure,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field14,m_teamTimer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field18,m_structureTimer,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponConstructor.cpp|param|Weapon::Weapon|tmpl,weaponTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

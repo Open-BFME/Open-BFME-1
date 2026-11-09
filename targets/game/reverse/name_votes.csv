@@ -7395,3 +7395,4 @@ game/GameEngine/Source/GameLogic/AI/Gen00168910BfmeAccept.cpp|member||m_field18,
 game/GameEngine/Source/GameLogic/AI/Rva003F8820Pathfinder.cpp|member||m_at20,b2e9822e93afa7012618737c,claude-sonnet,20261109082014-7b61de,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInitBumpMap.cpp|type||SurfaceCOM0079E700,7e4f7e00ffc75972e577417f,claude-sonnet,20261109081642-7c6d50,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjInitBumpMap.cpp|type||TextureCOM0079E700,2af4b7f38e08af6e95903ea9,claude-sonnet,20261109081642-7c6d50,2026-11-09
+game/GameEngine/Source/GameLogic/Object/WeaponConstructor.cpp|param|Weapon::Weapon|tmpl,e7ee95b3bd4228b46f705d54,claude-sonnet,20261109081804-736309,2026-11-09
