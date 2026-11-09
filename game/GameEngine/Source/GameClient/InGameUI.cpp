@@ -2684,7 +2684,7 @@ void InGameUI::message( AsciiString stringManagerLabel, ... )
 	va_list args;
   va_start( args, stringManagerLabel );
 	WideChar buf[ 8192 ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( stringManagerString ), args ) < 0 )
+  if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( stringManagerString ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
 	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
@@ -2706,7 +2706,7 @@ void InGameUI::message( UnicodeString format, ... )
 	va_list args;
   va_start( args, format );
 	WideChar buf[ 8192 ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
+  if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
 	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
@@ -2728,7 +2728,7 @@ void InGameUI::messageColor( const RGBColor *rgbColor, UnicodeString format, ...
 	va_list args;
   va_start( args, format );
 	WideChar buf[ 8192 ];
-  if( _vsnwprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
+  if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )
 			throw ERROR_OUT_OF_MEMORY;
 	bfmeSetMessageText( formattedMessage, buf );
   va_end(args);
