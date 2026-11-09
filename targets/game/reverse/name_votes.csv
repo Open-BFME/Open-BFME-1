@@ -7105,3 +7105,4 @@ game/GameEngine/Source/GameLogic/LivingWorld/DistanceUpdate003C5990.cpp|local|Di
 game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||BfmeBaseE,d51e952159be2edbd91471bc,claude-sonnet,20261109070507-9caec0,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|type||Gen_000F8A40,1095440ce2ac835868a35842,claude-sonnet,20261109070507-9caec0,2026-11-09
 game/GameEngine/Source/Common/Bfme5ThreeMemberDtor.cpp|member||m_bfmeFirst,91f7eb9d4962b9f6bea013fa,claude-sonnet,20261109070507-9caec0,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1269.cpp|type||BfmeVec1269,d3a9e9e2ae2374fc950351fb,claude-sonnet,20261109070507-e33298,2026-11-09
