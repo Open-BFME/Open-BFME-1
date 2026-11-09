@@ -18,7 +18,7 @@ public:
 
 private:
 	int m_bfmeHead[35];					// +0x00
-	unsigned int m_bfmeWords[8];				// +0x8C
+	unsigned int m_upgradesCompleted[8];				// +0x8C
 };
 
 // ?hasUpgradeComplete@Player@@QBE_NPBVUpgradeTemplate@@@Z
@@ -29,7 +29,7 @@ bool Player::hasUpgradeComplete(const UpgradeTemplate *thing) const
 
 	unsigned int index = thing->m_bfmeIndex;
 
-	return (m_bfmeWords[index >> 5] & (1 << (index & 31))) != 0;
+	return (m_upgradesCompleted[index >> 5] & (1 << (index & 31))) != 0;
 }
 
 class Gen_000B2860
