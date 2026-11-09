@@ -6426,3 +6426,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_beginSlowDeat
 game/GameEngine/Source/Common/System/GeometryInfoRva0087E650.cpp|function|GeometryInfo@|rva0087E650,2c6268bfda1c7eabf58e49d5,claude-sonnet,20261109030237-3f4907,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehavior_rva001F1CE0.cpp|function|BezierProjectileBehavior@|rva001F1CE0,f8a30b2305ffc0297e534878,claude-sonnet,20261109030421-7f7410,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/ShareExperienceBehaviorCtorThunk.cpp|member||m_f14,5bc37b554efbf107f32be0f2,claude-sonnet,20261109030421-be7e54,2026-11-09
+game/GameEngine/Source/GameClient/System/ParticleSystemDebugDisplay.cpp|type||Rva005CA370Particle,310c2bbba178d39e23e9edc8,claude-sonnet,20261109030848-44d753,2026-11-09
