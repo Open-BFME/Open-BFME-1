@@ -80,13 +80,13 @@ public:
 	Int set(Int value);
 };
 
-class TeamState00164750
+class Team
 {
 public:
 	char m_prefix00[4];
 	unsigned char *m_templateInfo;
 	char m_prefix08[0x31 - 8];
-	unsigned char m_active31;
+	unsigned char m_active;
 	char m_prefix32[0xe4 - 0x32];
 	unsigned char m_flagE4;
 	Bool m_flagE5;
@@ -104,7 +104,7 @@ public:
 	char m_prefix1a8[0x204 - 0x1a8];
 	unsigned char *m_state204;
 	char m_prefix208[0x23c - 0x208];
-	TeamState00164750 *m_team;
+	Team *m_team;
 
 	const ThingTemplate *getTemplate() const
 	{
@@ -138,7 +138,7 @@ public:
 	char m_prefix00[0x4c];
 	Money00164750 m_money;
 	char m_prefix50[0x230 - 0x50];
-	TeamState00164750 *m_defaultTeam;
+	Team *m_defaultTeam;
 	char m_prefix234[0x684 - 0x234];
 	BuildIndexSetter00164750 m_buildIndexSetter684;
 };
@@ -196,11 +196,11 @@ Bool AIPlayer::rva00164750(TeamPrototype *proto)
 			if (object->getControllingPlayer() != m_player)
 				continue;
 
-			TeamState00164750 *team = object->m_team;
+			Team *team = object->m_team;
 			Bool eligible = false;
 			if (team == m_player->m_defaultTeam)
 				eligible = true;
-			if (!team->m_active31)
+			if (!team->m_active)
 				continue;
 			if (team->m_templateInfo[0x1bc])
 				eligible = true;
