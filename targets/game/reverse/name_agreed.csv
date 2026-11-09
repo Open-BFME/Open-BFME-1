@@ -1270,3 +1270,4 @@ game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unkn
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12104,m_pendingCommands,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12108,m_relayedCommands,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown1210c,m_netCommandWrapperList,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeIndexOf.cpp|member||m_bfmeNextOverride,m_nextOverride,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

@@ -6268,3 +6268,4 @@ game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unkn
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12104,1a269ffe95e7ebc064db2746,claude-sonnet,20261109013714-3026ca,2026-11-09
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12108,c695431bc17180c6ec13c31a,claude-sonnet,20261109013714-3026ca,2026-11-09
 game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown1210c,4182388900bdff8ac42d5c05,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeIndexOf.cpp|member||m_bfmeNextOverride,57a3cf8413f7e99eff7f62ca,claude-sonnet,20261109015121-590c32,2026-11-09
