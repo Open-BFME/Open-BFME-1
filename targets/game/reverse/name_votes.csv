@@ -7305,3 +7305,5 @@ game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Trackball|a,502e4cd51eec29df
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Trackball|p1,b196f271ffdb88bfa0e86da6,claude-sonnet,20261109075732-8f2a26,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Trackball|p2,44b944a4cde0791fc60f0f8b,claude-sonnet,20261109075732-8f2a26,2026-11-09
 game/Libraries/Source/WWVegas/WWMath/quat.cpp|local|Trackball|d,a60c518276919f6b344917af,claude-sonnet,20261109075732-8f2a26,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0018D4F0TurretStateUpdate.cpp|param|frameToSleepTime|frame1,918017bff647eaa65e9a0dd3,claude-sonnet,20261109075732-2aaf65,2026-11-09
+game/GameEngine/Source/GameLogic/AI/Rva0018D4F0TurretStateUpdate.cpp|param|frameToSleepTime|frame2,1d63000cbfda36567a03c552,claude-sonnet,20261109075732-2aaf65,2026-11-09
