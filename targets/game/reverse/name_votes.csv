@@ -7344,3 +7344,4 @@ game/GameEngine/Source/Common/SmallGaps/Rva009A2C30ReleaseNode.cpp|param|Rva009A
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00377D70DataCtor.cpp|type||Rva00377D70Base,de0cf4e2aeee62e9084830ef,claude-sonnet,20261109075745-166a94,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/Rva00377D70DataCtor.cpp|type||Rva00377D70Data,81d5641f39a15e28d0efb508,claude-sonnet,20261109075745-166a94,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/DetachableRiderUpdate_update.cpp|member||m_flag21,955fcb15748c97afa567e298,claude-sonnet,20261109080610-e1c729,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1929.cpp|member||m_bfmeItemCU,0233e53c7da46871e16b2483,claude-sonnet,20261109080610-eb37de,2026-11-09
