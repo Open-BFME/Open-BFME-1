@@ -318,8 +318,8 @@ void SpecialPowerModule::initiateIntentToDoSpecialPower(const Object *targetObj,
 
 	if (valid)
 	{
-		const SpecialPowerTemplate *tmpl = getSpecialPowerModuleData()->m_specialPowerTemplate;
-		AsciiString movie = tmpl->getPalantirMovie();
+		const SpecialPowerTemplate *specialPowerTemplate = getSpecialPowerModuleData()->m_specialPowerTemplate;
+		AsciiString movie = specialPowerTemplate->getPalantirMovie();
 		if (!movie.isEmpty())
 			reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->show00592D60(&movie, 0);
 
