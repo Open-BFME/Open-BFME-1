@@ -13,24 +13,24 @@ struct BfmeG1148
 	char m_bfmePad2[8];
 	char m_bfme28;
 	char m_bfmePad3[0xf];
-	char m_bfme38;
+	char m_useCloudMap;
 	char m_bfmePad4[0xb];
-	char m_bfme44;
+	char m_useLightMap;
 	char m_bfmePad5[2];
 	char m_bfme47;
 	char m_bfmePad6[0x10];
 	char m_bfme58;
 	char m_bfmePad7[0xb];
-	char m_bfme64;
-	char m_bfme65;
+	char m_useShadowVolumes;
+	char m_useShadowDecals;
 	char m_bfmePad8[2];
-	int m_bfme68;
+	int m_textureReductionFactor;
 	char m_bfmePad9[4];
-	char m_bfme70;
+	char m_enableBehindBuildingMarkers;
 	char m_bfmePad10[0x1b];
-	char m_bfme8c;
+	char m_showSoftWaterEdge;
 	char m_bfmePad11[0xaff];
-	int m_bfmeb8c;
+	int m_maxParticleCount;
 };
 
 class BfmeS1148;
@@ -72,17 +72,17 @@ void bfmeGo1148(BfmeS1148 *s)
 	else if (n > 2)
 		n = 2;
 
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme68 = n;
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfmeb8c = ((OptionPreferences *)s)->getParticleCap() * 0x1d + 0x64;
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme64 = ((OptionPreferences *)s)->get3DShadows();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme65 = ((OptionPreferences *)s)->get2DShadows();
+	((BfmeG1148 *)TheWritableGlobalData)->m_textureReductionFactor = n;
+	((BfmeG1148 *)TheWritableGlobalData)->m_maxParticleCount = ((OptionPreferences *)s)->getParticleCap() * 0x1d + 0x64;
+	((BfmeG1148 *)TheWritableGlobalData)->m_useShadowVolumes = ((OptionPreferences *)s)->get3DShadows();
+	((BfmeG1148 *)TheWritableGlobalData)->m_useShadowDecals = ((OptionPreferences *)s)->get2DShadows();
 	((BfmeG1148 *)TheWritableGlobalData)->m_bfme28 = (char)(((OptionPreferences *)s)->getUsePixelShader() == 0);
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme70 = ((OptionPreferences *)s)->getBuildingOcclusionEnabled();
+	((BfmeG1148 *)TheWritableGlobalData)->m_enableBehindBuildingMarkers = ((OptionPreferences *)s)->getBuildingOcclusionEnabled();
 	((BfmeG1148 *)TheWritableGlobalData)->m_bfme58 = ((OptionPreferences *)s)->getDynamicLODEnabled();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme44 = ((OptionPreferences *)s)->getTerrainLighting();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme38 = ((OptionPreferences *)s)->getTerrainLighting();
+	((BfmeG1148 *)TheWritableGlobalData)->m_useLightMap = ((OptionPreferences *)s)->getTerrainLighting();
+	((BfmeG1148 *)TheWritableGlobalData)->m_useCloudMap = ((OptionPreferences *)s)->getTerrainLighting();
 	((BfmeG1148 *)TheWritableGlobalData)->m_bfme47 = ((OptionPreferences *)s)->getAnisotropicTextureFiltering();
-	((BfmeG1148 *)TheWritableGlobalData)->m_bfme8c = ((OptionPreferences *)s)->getSmoothWaterBorder();
+	((BfmeG1148 *)TheWritableGlobalData)->m_showSoftWaterEdge = ((OptionPreferences *)s)->getSmoothWaterBorder();
 	((BfmeG1148 *)TheWritableGlobalData)->m_bfme1c = ((OptionPreferences *)s)->getExtraAnimationsDisabled();
 	BfmeG1148 *g = (BfmeG1148 *)TheWritableGlobalData;
 
