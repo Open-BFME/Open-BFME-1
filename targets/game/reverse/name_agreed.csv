@@ -1494,3 +1494,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cp
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|ScriptConditions::evaluateScienceAcquired|r,player,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091B|r,player,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cpp|local|bfmeGo1091C|r,player,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo930D|s,texture,claude-sonnet+gpt-6-astra+gpt-6.1-sol,agreed,2026-11-09

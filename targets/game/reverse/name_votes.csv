@@ -6457,3 +6457,4 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsScienceAcquired.cp
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setGameList|w,e104c814bbc00009b277d4f6,claude-sonnet,20261109031243-2dba3b,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setChatWindow|w,509650e752042341f66fc085,claude-sonnet,20261109031243-2dba3b,2026-11-09
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLanLobby.cpp|param|setPlayerList|w,2c87c47d151bb35190e30df7,claude-sonnet,20261109031243-2dba3b,2026-11-09
+game/GameEngine/Source/Common/BfmeConv930.cpp|local|StreakRendererClass::bfmeGo930D|s,a9e48aec32c410fb4eda5a83,claude-sonnet,20261109031243-8e071f,2026-11-09
