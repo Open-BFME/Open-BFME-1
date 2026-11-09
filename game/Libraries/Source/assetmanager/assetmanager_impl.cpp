@@ -28,15 +28,22 @@ struct Gen_t_009ee8e0_k4
 bool operator<(const Gen_t_009ee8e0_k4 &, const Gen_t_009ee8e0_k4 &);
 typedef _STL::set<Gen_t_009ee8e0_k4> Q1ReceiverSet;
 
+namespace _STL {
+template<> _Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _Identity<Gen_t_009ee8e0_k4>, less<Gen_t_009ee8e0_k4>, allocator<Gen_t_009ee8e0_k4> >::_Rb_tree(const _Rb_tree &) throw();
+}
+typedef _STL::_Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _STL::_Identity<Gen_t_009ee8e0_k4>, _STL::less<Gen_t_009ee8e0_k4>, _STL::allocator<Gen_t_009ee8e0_k4> > Q1ReceiverTree;
+
 void j_00015d7a();
 
 // ABI view of the canonical 12-byte STL set. The externally compiled copy
 // constructor is 0x009EE8E0. Destruction uses the already-named ILT thunk;
 // no new template identity is asserted for its generated destination row.
-struct Q1ReceiverTreeStorage
+struct Q1ReceiverSetCopy
 {
-	Q1ReceiverTreeStorage(const Q1ReceiverSet &source);
-	~Q1ReceiverTreeStorage()
+	// Retail's copy constructor body is the ledger row 0x009EE8E0 (the
+	// _Rb_tree copy constructor); the set copy constructor inlines to it.
+	__forceinline Q1ReceiverSetCopy(const Q1ReceiverSet &source) { ::new (m_storage) Q1ReceiverTree(*(const Q1ReceiverTree *)&source); }
+	~Q1ReceiverSetCopy()
 	{
 		// MSVC x86 single-inheritance member-pointer ABI: ECX is this and
 		// the verified thunk has no stack arguments. No numeric code address.
@@ -53,7 +60,7 @@ typedef char Q1ReceiverSetSizeCheck[sizeof(Q1ReceiverSet) == 12 ? 1 : -1];
 
 struct Q1ReceiverLocalSet
 {
-	Q1ReceiverTreeStorage m_set;
+	Q1ReceiverSetCopy m_set;
 	int m_zero;
 	bool m_one;
 };

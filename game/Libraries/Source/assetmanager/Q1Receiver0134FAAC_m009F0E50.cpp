@@ -34,10 +34,17 @@ struct Gen_t_009ee8e0_k4
 bool operator<(const Gen_t_009ee8e0_k4 &, const Gen_t_009ee8e0_k4 &);
 typedef _STL::set<Gen_t_009ee8e0_k4> Q1ReceiverSet;
 
-struct Q1ReceiverTreeStorage
+// The copy constructor is the ledger row 0x009EE8E0, the _Rb_tree copy
+// constructor: declare it as an external specialization, never define it here.
+namespace _STL {
+template<> _Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _Identity<Gen_t_009ee8e0_k4>, less<Gen_t_009ee8e0_k4>, allocator<Gen_t_009ee8e0_k4> >::_Rb_tree(const _Rb_tree &) throw();
+}
+typedef _STL::_Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _STL::_Identity<Gen_t_009ee8e0_k4>, _STL::less<Gen_t_009ee8e0_k4>, _STL::allocator<Gen_t_009ee8e0_k4> > Q1ReceiverTree;
+
+struct Q1ReceiverKeySetCopy
 {
-	Q1ReceiverTreeStorage(const Q1ReceiverSet &source);
-	~Q1ReceiverTreeStorage()
+	__forceinline Q1ReceiverKeySetCopy(const Q1ReceiverSet &source) { ::new (m_storage) Q1ReceiverTree(*(const Q1ReceiverTree *)&source); }
+	~Q1ReceiverKeySetCopy()
 	{
 		get().~Q1ReceiverKeySet();
 	}
@@ -47,7 +54,7 @@ struct Q1ReceiverTreeStorage
 
 struct Q1ReceiverLocalSet
 {
-	Q1ReceiverTreeStorage m_set;
+	Q1ReceiverKeySetCopy m_set;
 	int m_zero;
 	bool m_one;
 };
