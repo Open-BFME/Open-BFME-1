@@ -6627,3 +6627,6 @@ game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled10,f16584036359b80575db439b,claude-sonnet,20261109043119-2eddad,2026-11-09
 game/GameEngine/Source/Common/System/GeometryShapeCopyConstructor.cpp|member||m_unmodelled14,7ac6ef72b4ed3456e5c2b868,claude-sonnet,20261109043119-2eddad,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006FD990CameraCorners.cpp|member||camera70,a9d58ccf24f82bc57eae9ff5,claude-sonnet,20261109043119-8f5a88,2026-11-09
+game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeNext,34232223c58b1dbc4edc58bc,claude-sonnet,20261109043013-c223c3,2026-11-09
+game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeBegin,2400d369207ed9fdbe612f25,claude-sonnet,20261109043013-c223c3,2026-11-09
+game/GameEngine/Source/Common/BfmeSecondYUnregister.cpp|member||m_bfmeEnd,7ae8645329349460ae7f3335,claude-sonnet,20261109043013-c223c3,2026-11-09
