@@ -52,7 +52,7 @@ BfmeRingSlot0890 *BfmeRing008A0890::nextSlot(BfmeRingSlot0890 *slot) const
 	return slot;
 }
 
-void BfmeRing008A0890::insert(int arg1, BfmeRingRef0890 *arg2, int arg3)
+void BfmeRing008A0890::insert(int arg1, BfmeRingRef0890 *ref, int arg3)
 {
 	BfmeRing008A0890 *self = this;
 	BfmeRingSlot0890 *slot = self->m_write - 1;
@@ -61,11 +61,11 @@ void BfmeRing008A0890::insert(int arg1, BfmeRingRef0890 *arg2, int arg3)
 	if (slot == self->m_read)
 		return;
 	self->m_write = slot;
-	slot->m_mid28 = *(int *)(arg2->m_mid + 0x28);
+	slot->m_mid28 = *(int *)(ref->m_mid + 0x28);
 	self->m_write->m_zero = 0;
 	self->m_write->m_arg1 = arg1;
-	self->m_write->m_ref = arg2;
-	arg2->addRef();
+	self->m_write->m_ref = ref;
+	ref->addRef();
 	self->m_write->m_arg3 = arg3;
 }
 
