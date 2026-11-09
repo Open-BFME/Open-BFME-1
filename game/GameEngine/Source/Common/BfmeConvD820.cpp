@@ -7,7 +7,7 @@ class Object
 {
 public:
 	char m_bfmePad00[0x38];
-	Coord3D m_bfmePos;
+	Coord3D m_cachedPos;
 	char m_bfmePad44[0x204 - 0x44];
 	void *m_bfmeMod;
 };
@@ -74,9 +74,9 @@ void BfmeTailD820::bfmeTickD820(void)
 		if (found && mod)
 		{
 			Coord3D pos;
-			pos.x = found->m_bfmePos.x;
-			pos.y = found->m_bfmePos.y;
-			pos.z = found->m_bfmePos.z;
+			pos.x = found->m_cachedPos.x;
+			pos.y = found->m_cachedPos.y;
+			pos.z = found->m_cachedPos.z;
 			BfmeHelpD820 *help = *(BfmeHelpD820 **)((char *)mod + 0x1cc);
 			union { void (*raw)(); void (BfmeHelpD820::*member)(Object *, const Coord3D *, int); } go;
 			go.raw = __identifier("?j_00002b49@@YAXXZ");
