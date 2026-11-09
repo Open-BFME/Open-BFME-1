@@ -1634,3 +1634,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member|
 game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field3c,m_frame,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/Libraries/Source/Apt/Rva00894FF0EraseAfter.cpp|member||m_at004,m_next,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/Libraries/Source/Apt/Rva00894FF0EraseAfter.cpp|member||m_at004,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_120,m_centerX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_124,m_centerY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,m_sample,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

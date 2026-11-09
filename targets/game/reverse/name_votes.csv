@@ -6573,3 +6573,8 @@ game/GameEngine/Source/GameLogic/Object/Update/FireSpreadUpdate.cpp|param|rva001
 game/Libraries/Source/Apt/Rva00894FF0EraseAfter.cpp|member||m_at004,111f74c79af2b221b08fa9f2,claude-sonnet,20261109041541-72f4b5,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp|local|Has_Material_Array|d,076fa921cde4d248fcfcb339,claude-sonnet,20261109041856-df65cb,2026-11-09
 game/Libraries/Source/WWVegas/WW3D2/DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp|local|DX8FVFCategoryContainer::Generate_Texture_Categories|tmp,28d8691d079672aaae123f84,claude-sonnet,20261109041856-df65cb,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_120,bb058b508fa8fb8393d358fa,claude-sonnet,20261109041720-43e2ff,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_124,cb223d1dc31a10aec3bbbea7,claude-sonnet,20261109041720-43e2ff,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_12c,223a4784f4d282b3ed5d2480,claude-sonnet,20261109041720-43e2ff,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_130,440fc9414782b7e812153fbc,claude-sonnet,20261109041720-43e2ff,2026-11-09
+game/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp|member||m_158,738d9037420a80d049f115b0,claude-sonnet,20261109041720-43e2ff,2026-11-09
