@@ -7651,3 +7651,6 @@ game/GameEngine/Source/GameNetwork/Rva008030C0FeslPoolInit.cpp|local|Rva00803080
 game/GameEngine/Source/Common/System/GeometryInfoRva0087E190.cpp|member||m_scalar10,924a46811e9bfc48c2cff6a7,claude-sonnet,20261109101630-3fdce7,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|type||Rva00177A90Machine,0fa151fad294e5601f16ae32,claude-opus,20261109101407-1924e3,2026-11-09
 game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp|member||m_field3C,ffbdcf5b535a8ed68bb17067,claude-opus,20261109101407-1924e3,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1459.cpp|member||m_bfme10,9ba8286fb65d382b8ea8c4af,claude-sonnet,20261109101845-fc2d1d,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|n1,14217ed84e45f9905c7c43ef,claude-sonnet,20261109101845-fc2d1d,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1459.cpp|local|BfmeThingVMQ::bfmeGoVMQ|p,dd7d4853a7c5522e84d0cfea,claude-sonnet,20261109101845-fc2d1d,2026-11-09
