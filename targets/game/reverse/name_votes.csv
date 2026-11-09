@@ -6634,3 +6634,6 @@ game/GameEngine/Source/GameNetwork/LANAPIConstructor.cpp|member||m_bfme_0x34,7ef
 game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f14,5b7eaf8a7389a493677962c1,claude-sonnet,20261109043304-3cea9e,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Update/FlammableUpdateConstructorThunk.cpp|member||m_f18,24a51640f1862038c22f1944,claude-sonnet,20261109043304-3cea9e,2026-11-09
 game/GameEngine/Source/Common/RTS/Player_resetOrStartSpecialPowerReadyFrame.cpp|member||m_bfmeFrame,66b9ccfb0dff36ebef304aff,claude-sonnet,20261109043750-855eb0,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00c,3fd7c83db8cdbbdcfdca4466,claude-sonnet,20261109043750-fdf6d0,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00d,8c33950b2fb2f95a8ab7b357,claude-sonnet,20261109043750-fdf6d0,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::createCommandHint|t,c2e61ec8b198acff6539cf87,claude-sonnet,20261109043750-fdf6d0,2026-11-09
