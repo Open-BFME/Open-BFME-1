@@ -7822,3 +7822,6 @@ game/GameEngine/Source/Common/S3CachedThresholdTest.cpp|member||m_bfmeFlags,b246
 game/GameEngine/Source/Common/BfmeResourceMultiplierZC.cpp|member||m_bfmeWideZC,b0fe9096610b222ed87a63ba,claude-sonnet,20261109114231-9a80c1,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1667.cpp|member||m_bfmeHEQA,e802d7ddf9d3e9136af4e3bf,claude-sonnet,20261109114231-d4b9f5,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1667.cpp|local|BfmeThingEQA::bfmeGoEQA|h,8a73dbe0d143dc56e9cf9f95,claude-sonnet,20261109114231-d4b9f5,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2110.cpp|member||m_bfmeNameZP,3ce34f957da197572009a9e5,claude-sonnet,20261109114231-abe6a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|a,146b7c650b31a86ec24244a8,claude-sonnet,20261109114231-abe6a6,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2110.cpp|param|bfmeLessZP|b,94e2a8324e81f2b2738ba79a,claude-sonnet,20261109114231-abe6a6,2026-11-09

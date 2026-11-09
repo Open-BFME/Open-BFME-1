@@ -2926,3 +2926,4 @@ game/GameEngine/Source/Common/BfmeConv1030.cpp|member||m_bfmeH,m_mutex,claude-so
 game/GameEngine/Source/Common/BfmeConv1030.cpp|member||m_bfmeH,m_mutex,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1667.cpp|member||m_bfmeHEQA,m_sample,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1667.cpp|local|BfmeThingEQA::bfmeGoEQA|h,sample,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2110.cpp|member||m_bfmeNameZP,m_name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
