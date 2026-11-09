@@ -6563,3 +6563,6 @@ game/GameEngine/Source/Common/BfmePicker1284.cpp|member||m_entries81c,badc181f44
 game/GameEngine/Source/Common/BfmePicker1284.cpp|function|BfmePicker1284@|bfmeMeshHitTest1290,4183edd509b6561dbf5c72af,claude-sonnet,20261109040732-814b73,2026-11-09
 game/GameEngine/Source/Common/BfmePicker1284.cpp|function|BfmePicker1284@|bfmePick1284,8d52c4ed8f759afeadcc1c52,claude-sonnet,20261109040732-814b73,2026-11-09
 game/GameEngine/Source/GameClient/GameClientRva00431A60Frustum.cpp|function|GameClient@|rva00431A60,792249074a6ad0c67096b2d1,claude-sonnet,20261109040732-86fe1f,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field204,451491d221f5e05833d8101f,claude-sonnet,20261109041240-0b88c7,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field214,d12f82f0c52c48270ea3555b,claude-sonnet,20261109041240-0b88c7,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/TargetFlags001F8080.cpp|member||field3c,9a69e2d454dd0d73c9ba683c,claude-sonnet,20261109041240-0b88c7,2026-11-09
