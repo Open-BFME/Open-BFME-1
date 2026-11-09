@@ -7228,3 +7228,4 @@ game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|
 game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|x1,2febc516bb73ea65cb87c53d,claude-sonnet,20261109073650-05ed0e,2026-11-09
 game/GameEngine/Source/GameClient/GUI/MainMenuSmallScaleDownTransition_draw.cpp|local|MainMenuSmallScaleDownTransition::draw|y1,9c09122b05676a5c1c94b5a6,claude-sonnet,20261109073650-05ed0e,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1409.cpp|function|BfmeBlockVKS@|bfmeNotVKS,539fca37ce7e22d9753b9e97,claude-sonnet,20261109073650-a1fc80,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/StealthCleanup00299250.cpp|member||at3c,e59509323901fe5efd8fec38,claude-sonnet,20261109073650-eefe37,2026-11-09
