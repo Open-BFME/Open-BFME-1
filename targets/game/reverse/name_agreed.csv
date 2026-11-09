@@ -1728,3 +1728,6 @@ game/GameEngine/Source/Common/BfmeConv804.cpp|local|bfmeGoECD|o,gameInfo,claude-
 game/GameEngine/Source/Common/BfmeConv804.cpp|local|bfmeGoECD|o,gameInfo,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137Release.cpp|local|BfmeA1137Release::bfmeReleaseResources|t,texture,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1137Release.cpp|local|BfmeA1137Release::bfmeReleaseResources|t,texture,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|member||m_template04,m_playerTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|function||Rva0046F490DrawBoundsOverlay,drawRadialClockOverlay,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp|local|Rva0046F490DrawBoundsOverlay|t,playerTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
