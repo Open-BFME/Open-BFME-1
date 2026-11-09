@@ -1524,3 +1524,4 @@ game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp|member||m_weaponOffset78,m_weaponOffset,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1970.cpp|member||m_bfmeRefESG,m_refCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1970.cpp|member||m_bfmeRefESG,m_refCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/AI/BfmeHostEZ_bfmeConsiderEZ.cpp|member||m_bfmePathEZ,m_pathfinder,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
