@@ -6441,3 +6441,7 @@ game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_Parti
 game/GameEngine/Source/GameClient/System/FXParticleSystem/FXParticleSystem_ParticleSystemInfo_CopyCtor_Thunk.cpp|member||m_string10,c7a780b13a82173e22aea9dc,claude-sonnet,20261109030737-b5502e,2026-11-09
 game/GameEngine/Source/Common/BfmeFindWT.cpp|local|BfmeFindWT::find|n,5f95c8bfe05794a895878303,claude-sonnet,20261109030737-114d94,2026-11-09
 game/GameEngine/Source/GameLogic/LivingWorld/Transfer003C3D90.cpp|local|Transfer003C3D90::transfer|r,6c0efc5778cc5775560167eb,claude-sonnet,20261109030604-1ca218,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|r,9a1149d27a6e6a72ad259386,claude-sonnet,20261109030604-e1d840,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|g,97bf6bc242fc57ff2aa45ee0,claude-sonnet,20261109030604-e1d840,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|b,4842ac7deaf1d594f18e5ebf,claude-sonnet,20261109030604-e1d840,2026-11-09
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/UpdateNumPlayersOnline.cpp|param|GameMakeColor|a,4e88dfece0e527a1eb3ee4ca,claude-sonnet,20261109030604-e1d840,2026-11-09
