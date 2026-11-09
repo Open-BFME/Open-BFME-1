@@ -12,7 +12,7 @@ public:
 	char m_bfmePad[0x38];
 	char m_cachedPos;
 	char m_bfmePad1[0x1d7];
-	ExperienceTracker *m_bfme210;
+	ExperienceTracker *m_experienceTracker;
 };
 
 class BfmeP1081
@@ -80,7 +80,7 @@ void __stdcall bfmeGo1081A(int a, int b)
 	if (!f)
 		return;
 	g_bfmeJ1081->bfmeAdd1081(f, e, 0, 1);
-	e->m_bfme210->m_bfme24 = 0;
+	e->m_experienceTracker->m_bfme24 = 0;
 }
 
 class BfmeD1081
