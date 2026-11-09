@@ -19,7 +19,7 @@ class Matrix3D;
 class Vector4 { public: Vector4(); float x,y,z,w; };
 struct MatrixRows00206CB0 { Vector4 row[3]; };
 struct Position00206CB0 { float x,y,z; void setNegated(float a,float b,float c) { x=-a;y=-b;z=-c; } };
-struct SiegeDockEntry00206FF0 { int index00,type04; Position00206CB0 position08,direction14; int objectID20; };
+struct SiegeDockEntry00206FF0 { int m_index,m_type; Position00206CB0 m_position,m_direction; int m_objectID; };
 class Object { public: int getMultiLogicalBonePosition(const char*,int,Coord3D*,Matrix3D*,bool,int) const; };
 class SiegeDockingBehavior { public:
  Object* getObject() { return object08; }
@@ -36,23 +36,23 @@ void SiegeDockingBehavior::initializeBones00206CB0() {
  int count=object08->getMultiLogicalBonePosition("SIEGETOWER",10,positions,(Matrix3D*)transforms,true,0);
  for(;index<count;++index) {
   SiegeDockEntry00206FF0* entry=new SiegeDockEntry00206FF0;
-  entry->index00=index;
-  entry->type04=0;
-  entry->position08=*(Position00206CB0*)&positions[index];
+  entry->m_index=index;
+  entry->m_type=0;
+  entry->m_position=*(Position00206CB0*)&positions[index];
   MatrixRows00206CB0* transform=&transforms[index];
-  entry->direction14.setNegated(transform->row[0].x,transform->row[1].x,transform->row[2].x);
-  entry->objectID20=0;
+  entry->m_direction.setNegated(transform->row[0].x,transform->row[1].x,transform->row[2].x);
+  entry->m_objectID=0;
   entries24.push_back(entry);
  }
  count=getObject()->getMultiLogicalBonePosition("SIEGELADDER",10,positions,(Matrix3D*)transforms,true,0);
  for(int i=0;i<count;++i) {
   SiegeDockEntry00206FF0* entry=new SiegeDockEntry00206FF0;
-  entry->index00=index;
-  entry->type04=1;
-  entry->position08=*(Position00206CB0*)&positions[i];
+  entry->m_index=index;
+  entry->m_type=1;
+  entry->m_position=*(Position00206CB0*)&positions[i];
   MatrixRows00206CB0* transform=&transforms[i];
-  entry->direction14.setNegated(transform->row[0].x,transform->row[1].x,transform->row[2].x);
-  entry->objectID20=0;
+  entry->m_direction.setNegated(transform->row[0].x,transform->row[1].x,transform->row[2].x);
+  entry->m_objectID=0;
   entries24.push_back(entry);
   ++index;
  }
