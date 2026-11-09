@@ -7744,3 +7744,9 @@ game/GameEngine/Source/Common/BfmeConv1921.cpp|member||m_bfme24BX,05c49855eea270
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field28,cbb5ce39af4e122e447c4319,claude-sonnet,20261109104720-1509bf,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorTemplateCopyAssignment.cpp|member||m_da0,2a974ba4c86472264a2656df,claude-sonnet,20261109105335-42247f,2026-11-09
 game/Libraries/Source/Apt/BfmeN1235InitEmpty.cpp|function|BfmeN1235@|bfmeInitEmpty1235,347f7855471459ef31e3d05b,claude-sonnet,20261109105550-65e7e8,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||index00,e0ad2016c80a20b1b551b9ce,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||type04,eb3cc5f9aea11f541703587f,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||position08,f0b8808e3f43fcffc48e4174,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||direction14,c0258324e4f01af603d02279,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||objectID20,8fefa054c0073e97ec3363e0,claude-sonnet,20261109105551-0e65f5,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||entries24,c2547502971a2239e22f3250,claude-sonnet,20261109105551-0e65f5,2026-11-09

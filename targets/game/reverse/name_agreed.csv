@@ -2864,3 +2864,8 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/GUI/Gadget/W3DProgressBarImage
 game/Libraries/Source/EA/Apt/Rva008A7B00KeyboardProperties.cpp|local|pooledInteger|v,integerValue,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field28,m_angle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp|member||m_field28,m_angle,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||index00,m_index,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||type04,m_type,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||position08,m_position,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||direction14,m_direction,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingInitialize00206CB0.cpp|member||objectID20,m_objectID,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
