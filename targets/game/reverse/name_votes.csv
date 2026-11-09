@@ -6702,3 +6702,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|b,a37abad0d6a40324cf460a5a,glm,20261109044903-be5075,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|y,9541d3da165ca6bfd69ae149,glm,20261109044903-be5075,2026-11-09
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudCollectDirtyCells.cpp|local|W3DShroud::collectDirtyCells|x,578d722fa5d74ddbb81e7e38,glm,20261109044903-be5075,2026-11-09
+game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_20,761849975c650cca8cb7982c,glm,20261109044958-ffeced,2026-11-09
+game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_24,5f922b0157a64b1c09410749,glm,20261109044958-ffeced,2026-11-09
+game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_28,20d2e588d1f946d8df2c8140,glm,20261109044958-ffeced,2026-11-09
+game/GameEngine/Source/GameClient/RadiusDecalTemplate_ctor.cpp|member||m_unmodelled_2C,297c7644b4c8aaaff8ec88b8,glm,20261109044958-ffeced,2026-11-09
