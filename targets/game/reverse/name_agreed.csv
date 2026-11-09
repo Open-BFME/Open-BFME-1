@@ -2906,3 +2906,4 @@ game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,sort,cla
 game/GameEngine/Source/Common/Rva00533760Sort.cpp|function||Rva00533760,sort,claude-sonnet+gpt-6-astra,applied,2026-11-09
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|type||BfmeCoordA2,ICoord3D,claude-sonnet+gemini,agreed,2026-11-09
 game/GameEngine/Source/Common/Rva0087EA20Copy.cpp|type||BfmeCoordA2,ICoord3D,claude-sonnet+gemini,applied,2026-11-09
+game/GameEngine/Source/Common/BfmeConv2024.cpp|member||m_bfmeFrameTN,m_frame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
