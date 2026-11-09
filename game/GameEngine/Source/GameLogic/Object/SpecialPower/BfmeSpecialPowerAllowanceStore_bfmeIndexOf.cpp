@@ -12,7 +12,7 @@ public:
 	}
 
 	char m_bfmeHeadA[0x04];
-	Overridable *m_bfmeNextOverride;
+	Overridable *m_nextOverride;
 	char m_bfmeHeadB[0x10 - 0x08];
 	void *m_bfmeKey;
 };
@@ -79,7 +79,7 @@ Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmp
 		if ((unsigned)inner <= 0)
 			goto nextGroup;
 		void **innerBegin = group->m_bfmeEntries.begin();
-		next = (const SpecialPowerTemplate *)tmpl->m_bfmeNextOverride;
+		next = (const SpecialPowerTemplate *)tmpl->m_nextOverride;
 
 		do
 		{
@@ -87,9 +87,9 @@ Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmp
 
 			if (next)
 			{
-				if (next->m_bfmeNextOverride)
+				if (next->m_nextOverride)
 					finalTmpl = (const SpecialPowerTemplate *)
-						next->m_bfmeNextOverride->friend_getFinalOverride();
+						next->m_nextOverride->friend_getFinalOverride();
 				else
 					finalTmpl = next;
 			}
