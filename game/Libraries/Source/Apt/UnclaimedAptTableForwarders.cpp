@@ -5,7 +5,7 @@
 //
 // Each forwards its own stack arguments unchanged to a member at +8 of its
 // receiver, tail-jumping to one of two Apt table helpers whose pins already
-// name them: 0x0089D890 (?bfmeAdd1024@BfmeTab1024@@QAEXHH@Z, two stack words)
+// name them: 0x0089D890 (?add@Rva8D0D80Table, two stack words)
 // and 0x0089CEF0 (?bfmeFind1024@BfmeTab1024@@QAEHH@Z, one stack word, value
 // in EAX). Each sits alone in an int3-padded .text gap no ledger row covered,
 // and no call, ILT stub, table slot or dir32 name reaches it.
@@ -16,8 +16,20 @@
 class BfmeTab1024
 {
 public:
-	void bfmeAdd1024(int key, int value);
 	int bfmeFind1024(int key);
+};
+
+// 0x0089D890 is the ledger row ?add@Rva8D0D80Table@@QAEXPAVRva8D0D80String@@PAVRva8D0D80Value@@@Z
+// (landed in Rva0089D5B0Insert.cpp); the add owners reach it by that name.
+class Rva8D0D80String;
+class Rva8D0D80Value;
+class Rva8D0D80Table
+{
+public:
+	void add(Rva8D0D80String *key, Rva8D0D80Value *value);
+private:
+	int m_count;
+	void *m_entries;
 };
 
 class Rva00891A90Owner
@@ -26,12 +38,12 @@ public:
 	void add(int key, int value);
 private:
 	char m_pad[8];
-	BfmeTab1024 m_table;
+	Rva8D0D80Table m_table;
 };
 
 void Rva00891A90Owner::add(int key, int value)
 {
-	m_table.bfmeAdd1024(key, value);
+	m_table.add((Rva8D0D80String *)key, (Rva8D0D80Value *)value);
 }
 
 class Rva00898290Owner
@@ -40,12 +52,12 @@ public:
 	void add(int key, int value);
 private:
 	char m_pad[8];
-	BfmeTab1024 m_table;
+	Rva8D0D80Table m_table;
 };
 
 void Rva00898290Owner::add(int key, int value)
 {
-	m_table.bfmeAdd1024(key, value);
+	m_table.add((Rva8D0D80String *)key, (Rva8D0D80Value *)value);
 }
 
 class Rva008982A0Owner
@@ -82,12 +94,12 @@ public:
 	void add(int key, int value);
 private:
 	char m_pad[8];
-	BfmeTab1024 m_table;
+	Rva8D0D80Table m_table;
 };
 
 void Rva008A3120Owner::add(int key, int value)
 {
-	m_table.bfmeAdd1024(key, value);
+	m_table.add((Rva8D0D80String *)key, (Rva8D0D80Value *)value);
 }
 
 class Rva008B4240Owner
@@ -110,12 +122,12 @@ public:
 	void add(int key, int value);
 private:
 	char m_pad[8];
-	BfmeTab1024 m_table;
+	Rva8D0D80Table m_table;
 };
 
 void Rva008C48F0Owner::add(int key, int value)
 {
-	m_table.bfmeAdd1024(key, value);
+	m_table.add((Rva8D0D80String *)key, (Rva8D0D80Value *)value);
 }
 
 class Rva008C4900Owner
