@@ -7,16 +7,16 @@ class BfmeListCU
 {
 public:
 	unsigned char m_bfmeGapCU[0x98];
-	BfmeLinkCU *m_bfmeTailCU;
-	BfmeLinkCU *m_bfmeHeadCU;
+	BfmeLinkCU *m_tail;
+	BfmeLinkCU *m_head;
 };
 
 class BfmeLinkCU
 {
 public:
 	BfmeListCU *m_bfmeListCU;
-	BfmeLinkCU *m_bfmeNextCU;
-	BfmeLinkCU *m_bfmePrevCU;
+	BfmeLinkCU *m_next;
+	BfmeLinkCU *m_prev;
 };
 
 class BfmeHolderCU
@@ -40,19 +40,19 @@ BfmeHolderCU::BfmeHolderCU(BfmeListCU **pl, void *user)
 
 	if (list != 0)
 	{
-		link->m_bfmeNextCU = list->m_bfmeHeadCU;
-		link->m_bfmePrevCU = 0;
-		list->m_bfmeHeadCU = link;
+		link->m_next = list->m_head;
+		link->m_prev = 0;
+		list->m_head = link;
 
-		if (link->m_bfmeNextCU != 0)
-			link->m_bfmeNextCU->m_bfmePrevCU = link;
+		if (link->m_next != 0)
+			link->m_next->m_prev = link;
 		else
-			link->m_bfmeListCU->m_bfmeTailCU = link;
+			link->m_bfmeListCU->m_tail = link;
 	}
 	else
 	{
-		link->m_bfmePrevCU = 0;
-		link->m_bfmeNextCU = 0;
+		link->m_prev = 0;
+		link->m_next = 0;
 	}
 
 	m_bfmeUserCU = user;
