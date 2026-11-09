@@ -2424,3 +2424,4 @@ game/GameEngine/Source/Common/BfmeConv1380.cpp|param|BfmeThingVIY::bfmeSubVIY|m,
 game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_apply.cpp|local|SpecialAbilityUpdate::rva002A7E90|tmpl,specialPowerTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|local|Thing::getTemplate|tmpl,thingTemplate,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/Common/Thing/Thing_isKindOf.cpp|local|Thing::getTemplate|tmpl,thingTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_apply.cpp|local|SpecialAbilityUpdate::rva002A7E90|tmpl,specialPowerTemplate,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

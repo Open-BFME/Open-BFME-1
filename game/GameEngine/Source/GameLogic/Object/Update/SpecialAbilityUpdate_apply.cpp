@@ -92,10 +92,10 @@ private:
 void SpecialAbilityUpdate::rva002A7E90()
 {
 	const SpecialAbilityUpdateModuleData *md = m_moduleData;
-	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
+	const SpecialPowerTemplate *specialPowerTemplate = md->m_specialPowerTemplate;
 	Object *target = TheGameLogic->findObjectByID( m_targetID );
 
-	switch( tmpl->getSpecialPowerType() )
+	switch( specialPowerTemplate->getSpecialPowerType() )
 	{
 		case SPECIAL_POWER_TYPE_27:
 			if( target && ( target->isKindOf( KINDOF_6 ) || target->isKindOf( KINDOF_62 ) ) )
