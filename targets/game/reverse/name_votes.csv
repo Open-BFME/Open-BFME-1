@@ -7131,3 +7131,5 @@ game/GameEngine/Source/GameLogic/Object/WeaponCopyAssignment.cpp|member||m_reset
 game/GameEngine/Source/Common/BfmeConv829.cpp|member||m_sub210,b9f02fae7bab11e62c959e08,claude-sonnet,20261109071049-269894,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp|member||m_field71,e6b38e0962e5706c8e08fb6d,claude-sonnet,20261109071049-1ea604,2026-11-09
 game/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorModuleDataCtorThunk.cpp|member||m_field78,577c16c0efd86326e96acf66,claude-sonnet,20261109071049-1ea604,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeBonusMask,3f166716460dfbf2432bf525,claude-sonnet,20261109071352-de4823,2026-11-09
+game/GameEngine/Source/GameLogic/Object/Weapon_computeBonus.cpp|member||m_bfmeTemplate,f39b5b11bd8d7ead78088dc1,claude-sonnet,20261109071352-de4823,2026-11-09
