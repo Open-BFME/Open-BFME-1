@@ -1249,3 +1249,10 @@ game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|m
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||body200,m_body,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||ai204,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||height44,m_preferredHeight,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12050,m_localAddr,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12054,m_localPort,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown120e0,m_disconnectManager,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown120e4,m_frameData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12104,m_pendingCommands,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12108,m_relayedCommands,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown1210c,m_netCommandWrapperList,claude-sonnet+gpt-6.1-sol,agreed,2026-11-09

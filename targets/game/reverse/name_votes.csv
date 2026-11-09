@@ -6261,3 +6261,10 @@ game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|m
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||body200,4b99bfdca96b2891913193d2,claude-sonnet,20261109013714-1577c4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||ai204,d33509c806b1630e3870bff4,claude-sonnet,20261109013714-1577c4,2026-11-09
 game/GameEngine/Source/GameLogic/Object/LocomotorVerticalUpdateRva001B80D0.cpp|member||height44,d35cb978cad7c333a6e4abf4,claude-sonnet,20261109013714-1577c4,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12050,e1b3e34608c89adae1799e92,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12054,03b9ac705c028c317ea25fcd,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown120e0,b921f594784bccdfae61bab6,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown120e4,4181a3294a87c6d80d62079d,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12104,1a269ffe95e7ebc064db2746,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown12108,c695431bc17180c6ec13c31a,claude-sonnet,20261109013714-3026ca,2026-11-09
+game/GameEngine/Source/GameNetwork/ConnectionManagerConstructor.cpp|member||unknown1210c,4182388900bdff8ac42d5c05,claude-sonnet,20261109013714-3026ca,2026-11-09
