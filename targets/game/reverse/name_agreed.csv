@@ -1719,3 +1719,6 @@ game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field2E4,m_s
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AD,m_hidden,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AE,m_hiddenByStealth,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
 game/GameEngine/Source/GameClient/DrawTransform00421830.cpp|member||field3AF,m_instanceIsIdentity,claude-sonnet+gpt-6.1-sol,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00c,m_radarHidden,claude-sonnet+glm,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|member||m_field00d,m_radarForceOn,claude-sonnet+glm,applied,2026-11-09
+game/GameEngine/Source/GameClient/InGameUICreateCommandHint.cpp|local|InGameUI::createCommandHint|t,messageType,claude-sonnet+gpt-6.1-sol,applied,2026-11-09

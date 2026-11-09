@@ -45,7 +45,7 @@ class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 // Radar booleans +0xc/+0xd are read here; their names remain unproven.
 class Radar { public:
-char pad000[0xc]; bool m_field00c; bool m_field00d;
+char pad000[0xc]; bool m_radarHidden; bool m_radarForceOn;
 bool isRadarWindow(GameWindow *);
 };
 extern Radar *TheRadar;
@@ -167,12 +167,12 @@ void InGameUI::createCommandHint(const GameMessage *msg)
 {
     if (TheRecorder->getMode() == RECORDER_PLAYBACK) return;
     const Drawable *draw = TheGameClient->findDrawableByID(m_mousedOverDrawableID);
-    int t = msg->m_type;
-    if (draw && (t == 0x99 || t == 0xb2)) {
+    int messageType = msg->m_type;
+    if (draw && (messageType == 0x99 || messageType == 0xb2)) {
         const Object *obj = draw->getObject();
         int localPlayerIndex = ThePlayerList ? ThePlayerList->m_local->m_playerIndex : 0;
         ObjectShroudStatus ss = !obj ? (ObjectShroudStatus)0 : obj->getShroudedStatus(localPlayerIndex);
-        if (ss == OBJECTSHROUD_SHROUDED) t = 0xa5;
+        if (ss == OBJECTSHROUD_SHROUDED) messageType = 0xa5;
     }
     GameWindow *window = 0;
     char underWindow = ((BfmeC977 *)g_rva012F19E8WindowManager)->bfmeGo977C();
@@ -198,7 +198,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
     switch (m_mouseMode) {
     case 0:
         if (underWindow || (srcObj && !srcObj->isLocallyControlled())) { CURSOR(2); return; }
-        switch (t) {
+        switch (messageType) {
         case 0xa5:
             if (!drawSelectable && srcObj && srcObj->isLocallyControlled() && srcObj->isKindOf(KINDOF_STRUCTURE))
                 CURSOR(12);
@@ -206,8 +206,8 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                 CURSOR(13);
             else {
                 Radar *radar = TheRadar;
-                if (radar->isRadarWindow(window) && !radar->m_field00d &&
-                    (radar->m_field00c || !ThePlayerList->m_local->hasRadar()))
+                if (radar->isRadarWindow(window) && !radar->m_radarForceOn &&
+                    (radar->m_radarHidden || !ThePlayerList->m_local->hasRadar()))
                     setMouseCursor((Mouse::MouseCursor)2);
                 else CURSOR(5);
             }
@@ -248,7 +248,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
         break;
     case 1:
         if (underWindow) { CURSOR(2); return; }
-        switch (t) {
+        switch (messageType) {
         case 0xa5: case 0xa6: case 0x431: CURSOR(10); break;
         case 0x99: case 0xb2: CURSOR(11); break;
         }
@@ -262,7 +262,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                 if (m_pendingGUICommand->m_radiusCursor == 0) {
                     setRadiusCursorNone();
                     int index;
-                    switch(t) {
+                    switch(messageType) {
                     case 0x96: index = TheMouse->getCursorIndex(m_pendingGUICommand->m_cursorName); break;
                     default: index = TheMouse->getCursorIndex(m_pendingGUICommand->m_invalidCursorName); break;
                     }
@@ -270,7 +270,7 @@ void InGameUI::createCommandHint(const GameMessage *msg)
                 } else {
                     CURSOR(0);
                     setRadiusCursor(m_pendingGUICommand->m_radiusCursor,m_pendingGUICommand->m_specialPower,
-                                    m_pendingGUICommand->m_weaponSlot,t == 0x96);
+                                    m_pendingGUICommand->m_weaponSlot,messageType == 0x96);
                 }
             } else if (m_pendingGUICommand->m_options & 0x227) {
                 if (m_pendingGUICommand->m_radiusCursor == 0) {
