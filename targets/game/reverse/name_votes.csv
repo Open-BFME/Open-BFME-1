@@ -7487,3 +7487,4 @@ game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeS
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|s,8824c2a742f169a3ee9c16a2,claude-sonnet,20261109090134-c4c7f2,2026-11-09
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|x,13b8b9a786497dddfa33715d,claude-sonnet,20261109090134-c4c7f2,2026-11-09
 game/GameEngine/Source/Common/BfmeSetAxis1289.cpp|local|BfmeSlotState1289::bfmeSetAxis1289|y,fd64b48f6208b2bcac2d09c9,claude-sonnet,20261109090134-c4c7f2,2026-11-09
+game/GameEngine/Source/Common/BfmeRing008A0890.cpp|param|BfmeRing008A0890::insert|arg2,6072766ba8ebd5542f5ea670,claude-sonnet,20261109090134-c2a91e,2026-11-09
