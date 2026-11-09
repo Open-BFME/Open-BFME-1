@@ -643,19 +643,8 @@ Short FirewallHelperClass::getSourcePortAllocationDelta() {
 	strcpy(nameBuf, host.str());
 }
 
-class FirewallHelperDetectionBeginUpdateShim
-{
-public:
-	Bool thunk();
-};
-
-// Retail gives the public symbol a separate five-byte ILT entry, so a TU-local
-// alias keeps that entry claim without replacing the readable member body.
-// ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ
-Bool FirewallHelperDetectionBeginUpdateShim::thunk()
-{
-	return ((FirewallHelperClass *) this)->detectionBeginUpdate();
-}
+// The five-byte ILT entry at 0x000205F4 lives in
+// FirewallHelperDetectionBeginUpdateThunk.cpp (its low RVA must not sort this TU first).
 
 Bool FirewallHelperClass::detectionBeginUpdate() {
 //	UnsignedShort mangler_port = MANGLER_PORT;
