@@ -7589,3 +7589,6 @@ game/GameEngine/Source/Common/T2IndexedArrayAccessors.cpp|local|T2OwnerC::find|p
 game/GameEngine/Source/Common/R2GlobalOptionFlagSetters.cpp|function||Rva00061470,aaaa2c4149564ba051ae67c4,claude-sonnet,20261109094955-daf03d,2026-11-09
 game/GameEngine/Source/Common/BfmeConv884.cpp|local|BfmeThingESCa::bfmeGoESCa|s,36e763dee1a69ae159940148,claude-sonnet,20261109094849-54cfe7,2026-11-09
 game/GameEngine/Source/Common/BfmeConv884.cpp|local|BfmeThingESCb::bfmeGoESCb|s,a837210f1d1cafe9f0dc7b07,claude-sonnet,20261109094849-54cfe7,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1474.cpp|member||m_bfme04,66dce3b6b91f955f394cabf0,claude-sonnet,20261109094838-57681c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1474.cpp|local|BfmeListVMU::bfmeEraseVMU|q,ebd58df5440349592d5b8207,claude-sonnet,20261109094838-57681c,2026-11-09
+game/GameEngine/Source/Common/BfmeConv1474.cpp|local|BfmeListVMU::bfmeEraseVMU|n,433f1e4244c01c7e62b35078,claude-sonnet,20261109094838-57681c,2026-11-09
