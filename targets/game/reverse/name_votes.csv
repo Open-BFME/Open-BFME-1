@@ -6610,3 +6610,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/PassiveAreaEffectCollect0020249
 game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadarBlendBlip2x2.cpp|function||rva006C2DD0,b552ca82198d930015708886,claude-sonnet,20261109042712-3c459a,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeArray,d7da8d9d129486ee279aae30,claude-sonnet,20261109042712-74b38f,2026-11-09
 game/GameEngine/Source/Common/BfmeConv1334.cpp|member||m_bfmeCount,c35e41643e7a6bd2124e12f7,claude-sonnet,20261109042712-74b38f,2026-11-09
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmeNext,02874d17f23b127c09ccb736,claude-sonnet,20261109042712-158609,2026-11-09
+game/GameEngine/Source/Common/Bfme5EntryAppend.cpp|member||m_bfmePrev,ca4f6ea01d203ddd466f5b3d,claude-sonnet,20261109042712-158609,2026-11-09
