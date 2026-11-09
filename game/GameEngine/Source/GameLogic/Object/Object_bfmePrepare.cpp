@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // Open-BFME: Object::bfmePrepare, retail 0x001CC920, 408 bytes.
 // The callers at 0x002875C0 and 0x00287670 both call Object::bfmePrepare(0x3F).

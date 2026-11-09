@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // BFME executeAction arm 0x1B4 (KILL_HORDE_MEMBERS), retail 0x002FD610.
 // The arm passes the unit Parameter object and a Real percentage directly.

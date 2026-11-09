@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // Retail RVA 0x001CF9F0 (725 bytes), named by its ILT pin 0x00047ED8 (caller Rva001DCC20Filter).
 // Stealth visibility test shaped like ZH PartitionFilterStealthedAndUndetected::allow.

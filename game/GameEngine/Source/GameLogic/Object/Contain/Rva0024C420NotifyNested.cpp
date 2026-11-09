@@ -7,7 +7,7 @@
 // out in EDX where retail has EAX: MSVC 7.1 hands out scratch registers
 // round-robin, and only the copied form takes a step for the pushed owner
 // (docs/shape_levers.md, "Scratch registers rotate").
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 #include <list>
 

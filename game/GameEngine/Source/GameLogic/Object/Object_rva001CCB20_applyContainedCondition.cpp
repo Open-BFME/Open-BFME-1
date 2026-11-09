@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // Open-BFME: address-derived Object-layout body, retail 0x001CCB20, 400 bytes.
 // The method identity is not proven; the address token is intentionally kept.

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // Open-BFME: address-derived Object-layout body, retail 0x001CCD20, 528 bytes.
 // Clears one model-condition bit and sets another on every horde member and the owner.
