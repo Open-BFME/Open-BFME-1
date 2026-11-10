@@ -3130,3 +3130,5 @@ game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor
 game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_flag18,m_dieOnMap,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/Rva007E8980Guard.cpp|member||m_10,m_buffer,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/Rva007E8980Guard.cpp|member||m_14,m_bufferSize,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/Rva007E8980Guard.cpp|member||m_10,m_buffer,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/Rva007E8980Guard.cpp|member||m_14,m_bufferSize,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
