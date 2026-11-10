@@ -87,26 +87,26 @@ struct Rva002472D0Config
 {
     unsigned int m_268;
     unsigned int m_26c;
-    unsigned char m_270;
+    unsigned char m_thisFormationIsTheMainFormation;
     unsigned char m_pad271[3];
-    unsigned int m_274;
-    unsigned int m_278;
-    float m_27c;
-    float m_280;
-    float m_284;
-    unsigned int m_288;
+    unsigned int m_backUpMinDelayTime;
+    unsigned int m_backUpMaxDelayTime;
+    float m_backUpMinDistance;
+    float m_backUpMaxDistance;
+    float m_backupPercentage;
+    unsigned int m_cowerRadius;
 
     Rva002472D0Config()
     {
         m_268 = 0;
         m_26c = 0;
-        m_274 = 2;
-        m_278 = 15;
-        m_27c = 3.0f;
-        m_280 = 5.0f;
-        m_284 = 0.5f;
-        m_288 = 0;
-        m_270 = 1;
+        m_backUpMinDelayTime = 2;
+        m_backUpMaxDelayTime = 15;
+        m_backUpMinDistance = 3.0f;
+        m_backUpMaxDistance = 5.0f;
+        m_backupPercentage = 0.5f;
+        m_cowerRadius = 0;
+        m_thisFormationIsTheMainFormation = 1;
     }
 };
 
@@ -128,43 +128,43 @@ struct Rva002472D0Pod298
 
 struct Rva002472D0Tail
 {
-    volatile unsigned char m_2c8;
+    volatile unsigned char m_usePorcupineBody;
     unsigned char m_pad2c9[3];
-    unsigned int m_2cc;
-    volatile unsigned char m_2d0;
+    unsigned int m_forcedLocomotorSet;
+    volatile unsigned char m_machineAllowed;
     unsigned char m_pad2d1[3];
-    volatile unsigned int m_2d4;
-    unsigned char m_2d8;
+    volatile unsigned int m_machineType;
+    unsigned char m_useSlowHordeMovement;
     unsigned char m_pad2d9[3];
-    float m_2dc;
-    float m_2e0;
-    unsigned int m_2e4;
-    unsigned char m_2e8;
+    float m_narrowPassageScale;
+    float m_meleeAttackLeashDistance;
+    unsigned int m_evaEventLastMemberDeath;
+    unsigned char m_rankSplit;
     unsigned char m_pad2e9[3];
-    unsigned int m_2ec;
-    unsigned char m_2f0;
-    unsigned char m_2f1;
-    unsigned char m_2f2;
+    unsigned int m_splitHordeNumber;
+    unsigned char m_notComboFormation;
+    unsigned char m_updateWeaponSetFlagsOnHordeToo;
+    unsigned char m_useMarchingAnims;
     unsigned char m_2f3;
 
     Rva002472D0Tail()
     {
         unsigned int minusOne = 0xffffffff;
-        m_2cc = minusOne;
-        m_2c8 = 0;
+        m_forcedLocomotorSet = minusOne;
+        m_usePorcupineBody = 0;
         _ReadWriteBarrier();
-        m_2d0 = 0;
-        m_2d4 = 0;
+        m_machineAllowed = 0;
+        m_machineType = 0;
         _ReadWriteBarrier();
-        m_2e4 = minusOne;
-        m_2d8 = 1;
-        m_2e8 = 0;
-        m_2ec = 0;
-        m_2f0 = 0;
-        m_2f1 = 0;
-        m_2f2 = 0;
-        m_2dc = 0.4f;
-        m_2e0 = 60.0f;
+        m_evaEventLastMemberDeath = minusOne;
+        m_useSlowHordeMovement = 1;
+        m_rankSplit = 0;
+        m_splitHordeNumber = 0;
+        m_notComboFormation = 0;
+        m_updateWeaponSetFlagsOnHordeToo = 0;
+        m_useMarchingAnims = 0;
+        m_narrowPassageScale = 0.4f;
+        m_meleeAttackLeashDistance = 60.0f;
     }
 };
 typedef char Rva002472D0TailSizeCheck[(sizeof(Rva002472D0Tail) == 0x2c) ? 1 : -1];
