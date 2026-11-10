@@ -66,13 +66,13 @@ struct RetailCoord3D
 
 struct RetailTailWords
 {
-	unsigned int word0;
-	unsigned int word1;
-	unsigned int word2;
-	unsigned int word3;
+	unsigned int m_minDistanceAFormation;
+	unsigned int m_minDistanceBFormation;
+	unsigned int m_maxDistanceFormation;
+	unsigned int m_objectCount;
 
 	RetailTailWords()
-		: word0(0), word1(0), word2(0), word3(0)
+		: m_minDistanceAFormation(0), m_minDistanceBFormation(0), m_maxDistanceFormation(0), m_objectCount(0)
 	{
 	}
 };

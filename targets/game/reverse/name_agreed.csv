@@ -3076,3 +3076,7 @@ game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.c
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word1,m_minDistanceBFormation,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word2,m_maxDistanceFormation,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word3,m_objectCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word0,m_minDistanceAFormation,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word1,m_minDistanceBFormation,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word2,m_maxDistanceFormation,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word3,m_objectCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
