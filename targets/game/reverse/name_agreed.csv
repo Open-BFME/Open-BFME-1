@@ -3016,3 +3016,13 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag40,m_rampageRequiresAflame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown48,m_timeToEjectPassengersOnRampage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag54,m_fadeOnPortals,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown20,m_autoAcquireEnemiesWhenIdle,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag28,m_standGround,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag29,m_canAttackWhileContained,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown2c,m_holdGroundCloseRangeDistance,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown34,m_maxCowerTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown38,m_minCowerTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown3c,m_rampageTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag40,m_rampageRequiresAflame,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown48,m_timeToEjectPassengersOnRampage,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag54,m_fadeOnPortals,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
