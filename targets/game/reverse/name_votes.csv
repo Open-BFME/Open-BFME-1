@@ -7875,3 +7875,5 @@ game/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataC
 game/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataConstructor.cpp|member||m_64,fef59274b076ffb5a0378a03,claude-sonnet,20261110094419-048cbc,2026-11-10
 game/GameEngine/Source/Common/INI/AudioEventInfoCopy.cpp|member||m_word7c,dca953caab018e41cd4eb356,claude-sonnet,20261110094534-c33f6e,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1351.cpp|param|BfmeThingVFC::bfmeGoVFC|c,b32b2cd8ed023a293a2976cc,claude-sonnet,20261110093325-c9b77a,2026-11-10
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot70,a1176cb91b2b14bc78159639,claude-sonnet,20261110093325-794af8,2026-11-10
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot74,a2664df445358902834ac8a1,claude-sonnet,20261110093325-794af8,2026-11-10
