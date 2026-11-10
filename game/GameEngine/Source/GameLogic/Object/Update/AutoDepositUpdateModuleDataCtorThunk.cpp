@@ -52,13 +52,13 @@ public:
 	int m_depositAmount;
 	int m_initialCaptureBonus;
 	int m_14;
-	float m_18;
-	RS_Member m_1c;
+	float m_upgradeBonusPercent;
+	RS_Member m_upgradeMustBePresent;
 };
 
 // ??0AutoDepositUpdateModuleData@@QAE@XZ
 AutoDepositUpdateModuleData::AutoDepositUpdateModuleData()
-	: m_depositFrame( 0 ), m_depositAmount( 0 ), m_initialCaptureBonus( 0 ), m_14( 0 ), m_18( 1.0f )
+	: m_depositFrame( 0 ), m_depositAmount( 0 ), m_initialCaptureBonus( 0 ), m_14( 0 ), m_upgradeBonusPercent( 1.0f )
 {
 }
 
@@ -70,5 +70,5 @@ class __declspec(novtable) AutoDepositUpdateModuleData;
 // ??1AutoDepositUpdateModuleData@@UAE@XZ
 AutoDepositUpdateModuleData::~AutoDepositUpdateModuleData()
 {
-	reinterpret_cast<AttributeHandleStandIn *>(&m_1c)->~AttributeHandleStandIn();
+	reinterpret_cast<AttributeHandleStandIn *>(&m_upgradeMustBePresent)->~AttributeHandleStandIn();
 }
