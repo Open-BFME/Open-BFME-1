@@ -91,7 +91,13 @@ public:
  virtual void slot45();
  virtual void setRawMapHeight(const ICoord2D*,int);
 };
-extern TerrainVisual001AE610 *TheTerrainVisual;
+// The global at 0x012F7014 is EA's TerrainVisual *TheTerrainVisual
+// (?TheTerrainVisual@@3PAVTerrainVisual@@A), defined in
+// game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp. The struct
+// above is this TU's local ABI view of the slot it calls, cast to at the
+// use; the cast is a no-op, so the bytes are unchanged.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 // Native fast_float2long_round from ZH Lib/BaseType.h. Retail uses this
 // rounding-mode-sensitive x87 conversion for the two floor results.
 
@@ -120,22 +126,22 @@ void TerrainLogic::flattenTerrain(Object *object) {
  while(iterator.next(&point)) {
   ICoord2D grid;
   grid.x=(int)point.x;grid.y=(int)point.y;
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x-1.0f);grid.y=(int)point.y;
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x+1.0f);grid.y=(int)point.y;
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)point.x;grid.y=(int)(point.y-1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)point.x;grid.y=(int)(point.y+1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x-1.0f);grid.y=(int)(point.y-1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x+1.0f);grid.y=(int)(point.y+1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x+1.0f);grid.y=(int)(point.y-1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
   grid.x=(int)(point.x-1.0f);grid.y=(int)(point.y+1.0f);
-  TheTerrainVisual->setRawMapHeight(&grid,height);
+  ((TerrainVisual001AE610 *)TheTerrainVisual)->setRawMapHeight(&grid,height);
  }
 }
