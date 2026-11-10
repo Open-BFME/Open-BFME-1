@@ -1,5 +1,6 @@
-// Gate debt ??_7stdio_streambuf_base@_SgI@@6B@: reference recorded _bfmeVftTL.
-extern "C" const char bfmeVftTL[];
+// Retail vftable 0x0112FBDC, emitted by stlport/StdioIstreambufDestructor.cpp; the extern binds
+// the emitted symbol by its defining mangle.
+extern "C" unsigned char __identifier("??_7stdio_streambuf_base@_SgI@@6B@")[];
 // The vftable of _STL::basic_streambuf<char, _STL::char_traits<char> > is
 // named straight from its own mangled name, so the object references retail's
 // defining symbol instead of a stand-in renamed by the linker.
@@ -79,6 +80,6 @@ BfmeThingTL *BfmeThingTL::bfmeInitTL(void *what)
 {
 	bfmeBaseTL(what, 0);
 	m_bfmeWhat = what;
-	m_bfmeVft = (void *)bfmeVftTL;
+	m_bfmeVft = __identifier("??_7stdio_streambuf_base@_SgI@@6B@");
 	return this;
 }

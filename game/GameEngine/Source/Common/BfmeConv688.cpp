@@ -1,4 +1,4 @@
-extern "C" unsigned char bfmeVftDFG[];
+extern "C" unsigned char __identifier("??_7stdio_streambuf_base@_SgI@@6B@")[];
 extern "C" __declspec(dllimport) int __cdecl fflush(void *stream);
 
 class BfmeThingDFG
@@ -14,7 +14,7 @@ public:
 BfmeThingDFG *BfmeThingDFG::bfmeGoDFG()
 {
 	void *p = m_bfmeStream;
-	m_bfmeVft = bfmeVftDFG;
+	m_bfmeVft = __identifier("??_7stdio_streambuf_base@_SgI@@6B@");
 	fflush(p);
 	return bfmeTailDFG();
 }
