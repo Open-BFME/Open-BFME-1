@@ -4060,3 +4060,14 @@ Ignoring the unused incoming tag and passing a separately default-initialized
 relocation positions. The native helper does not inspect tag content; this
 is an empty-tag forwarding observation, not permission to pass uninitialized
 value-bearing objects. Evidence: `targets/game/reverse/attempt_support/20261111-experiencelevel-helper-bindings.md`.
+
+### Constructor emission suppression can require state-map repinning (2026-11-11)
+
+GiantBirdGuardMachineCtor.cpp, pinned MSVC7.1 `/O2 /DNDEBUG /MD /EHsc`,
+stringinline header: `__forceinline` alone retained a wrong64B constructor
+COMDAT. `__declspec(dllimport) __forceinline` removed it with no __imp_
+reference and retained the429B parent, but renumbered four equal cleanup
+actions. Use `eh_state_pins.py --fix`, not byte-only label selection: native
+states1..4 uniquely proved the new labels, and the complete5/5 gate passes.
+Both the parent instructions/relocations and all unwind-action signatures
+remain identical. Evidence: `targets/game/reverse/attempt_support/20261111-giantbird-constructor-eh-repair.md`.

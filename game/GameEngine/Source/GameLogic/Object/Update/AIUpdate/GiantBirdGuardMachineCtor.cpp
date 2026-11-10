@@ -73,7 +73,9 @@ extern "C" int __identifier("??_7Rva002BBCF0TailDtor@@6B@")[];
 class GiantBirdGuardReturnState : public State
 {
 public:
-	GiantBirdGuardReturnState( void *machine )
+	// Keep this construction in the machine body without emitting a competing
+	// standalone constructor. The verified object has no import reference.
+	__declspec(dllimport) __forceinline GiantBirdGuardReturnState( void *machine )
 		: State( (StateMachine *)machine, AsciiString( "GiantBirdNormalFlightState" ) )
 	{
 		m_byte24 = 1;
