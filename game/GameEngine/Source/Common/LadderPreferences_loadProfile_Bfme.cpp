@@ -174,7 +174,7 @@ Bool LadderPreferences::loadProfile(Int profileID)
 
     for (LadderPreferences::iterator it = begin(); it != end(); ++it)
     {
-        LadderPref p;
+        LadderPref ladderPref;
         AsciiString ladName = it->first;
         AsciiString ladData = it->second;
 
@@ -182,21 +182,21 @@ Bool LadderPreferences::loadProfile(Int profileID)
         if (!ptr)
             continue;
 
-        p.port = atoi(ptr + 1);
+        ladderPref.port = atoi(ptr + 1);
         for (Int i = 0; i < strlen(ptr); ++i)
             ladName.removeLastChar();
-        p.address = QuotedPrintableToAsciiString(ladName);
+        ladderPref.address = QuotedPrintableToAsciiString(ladName);
 
         ptr = ladData.reverseFind(':');
         if (!ptr)
             continue;
 
-        p.lastPlayDate = atoi(ptr + 1);
+        ladderPref.lastPlayDate = atoi(ptr + 1);
         for (i = 0; i < strlen(ptr); ++i)
             ladData.removeLastChar();
-        p.name = QuotedPrintableToUnicodeString(ladData);
+        ladderPref.name = QuotedPrintableToUnicodeString(ladData);
 
-        m_ladders[p.lastPlayDate] = p;
+        m_ladders[ladderPref.lastPlayDate] = ladderPref;
     }
 
     return true;
