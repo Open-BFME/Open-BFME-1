@@ -106,7 +106,7 @@ public:
 	volatile float m_destructionAltitude;
 	volatile unsigned int m_destructionDelay;
 	volatile unsigned int m_destructionDelayVariance;
-	volatile unsigned int m_field54;
+	volatile unsigned int m_decayBeginTime;
 	StructureCollapseOCLVector m_fx[4];
 	StructureCollapseFXVector m_ocls[4];
 	Gen_uwm_0000513c m_weapons[4];
@@ -119,10 +119,10 @@ public:
 	unsigned int m_zero150[3];
 	volatile unsigned char m_maskOfLoadedEffects;
 	unsigned char m_pad15d[3];
-	volatile unsigned int m_zero160[3];
+	volatile unsigned int m_riderSubObjects[3];
 	unsigned char m_radius[0x30];
-	volatile unsigned int m_field19c;
-	volatile unsigned int m_field1a0;
+	volatile unsigned int m_fadeTime;
+	volatile unsigned int m_fadeDelay;
 	volatile unsigned char m_flags[3];
 };
 
@@ -152,9 +152,9 @@ SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
 		mov [esi+154h], edx
 		mov [esi+158h], edx
 	}
-	self->m_zero160[0] = 0;
-	self->m_zero160[1] = 0;
-	self->m_zero160[2] = 0;
+	self->m_riderSubObjects[0] = 0;
+	self->m_riderSubObjects[1] = 0;
+	self->m_riderSubObjects[2] = 0;
 	new (self->m_radius) RadiusDecalTemplate;
 	writeSlowFloat(&self->m_sinkRate, 0.0f);
 	self->m_probabilityModifier = 10;
@@ -164,7 +164,7 @@ SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
 	self->m_destructionDelay = 0;
 	self->m_destructionDelayVariance = 0;
 	writeSlowFloat(&self->m_destructionAltitude, -10.0f);
-	self->m_field54 = 0;
+	self->m_decayBeginTime = 0;
 	self->m_flags[0] = 0;
 	writeSlowFloat(&self->m_flingForce, 0.0f);
 	writeSlowFloat(&self->m_flingForceVariance, 0.0f);
@@ -175,6 +175,6 @@ SlowDeathBehaviorModuleData::SlowDeathBehaviorModuleData()
 	self->m_flags[1] = 0;
 	self->m_flags[2] = 0;
 	self->m_maskOfLoadedEffects = 0;
-	self->m_field19c = 6;
-	self->m_field1a0 = 0xfacade00;
+	self->m_fadeTime = 6;
+	self->m_fadeDelay = 0xfacade00;
 }

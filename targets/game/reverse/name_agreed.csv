@@ -2986,3 +2986,7 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_cto
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_zero160,m_riderSubObjects,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field19c,m_fadeTime,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field1a0,m_fadeDelay,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field54,m_decayBeginTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_zero160,m_riderSubObjects,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field19c,m_fadeTime,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field1a0,m_fadeDelay,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
