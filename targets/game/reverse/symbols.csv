@@ -11594,6 +11594,7 @@ name,address,notes
 ??_C@_0BA@NJFDKPFF@DefaultEvaEvent?$AA@,0x00CF1DA8,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
 ??_C@_0BA@OBPCFHMP@RADAR_EXTENDING?$AA@,0x00C74A78,Retail model-condition name table RVA 0x00EA6918 slot 74 points to VA 0x01074A78; full compiler literal RADAR_EXTENDING including NUL equals retail
 ??_C@_0BA@OEELPCJJ@UpgradeComplete?$AA@,0x00CF1D34,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
+??_C@_0BA@OFMCEHG@RemovesUpgrades?$AA@,0x00C89868,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x01089868
 ??_C@_0BA@OGDJFAEA@LivingWorldZoom?$AA@,0x00D0CE04,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal LivingWorldZoom equals retail at VA 0x0110CE04
 ??_C@_0BA@ONJGLDAA@InvertShockWave?$AA@,0x00CCEE40,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal InvertShockWave equals retail at VA 0x010CEE40
 ??_C@_0BA@OOJJBNEN@MinSampleVolume?$AA@,0x00C824E0,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal MinSampleVolume equals retail at VA 0x010824E0
@@ -11783,6 +11784,7 @@ name,address,notes
 ??_C@_0BE@LBFIANAC@RotateSkirmishBases?$AA@,0x00C95488,Retail AI FieldParse table VA 0x01094B00 slot 23; complete compiler literal RotateSkirmishBases including NUL equals retail at VA 0x01095488; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
 ??_C@_0BE@LKEIFJGB@EMOTION_LOOK_TO_SKY?$AA@,0x00C74314,Retail model-condition name table RVA 0x00EA6918 slot 190 points to VA 0x01074314; full compiler literal EMOTION_LOOK_TO_SKY including NUL equals retail
 ??_C@_0BE@MKGEEPAA@GRAB_BUILDING_CHUNK?$AA@,0x00C74494,Retail model-condition name table RVA 0x00EA6918 slot 166 points to VA 0x01074494; full compiler literal GRAB_BUILDING_CHUNK including NUL equals retail
+??_C@_0BE@MNBGIGMN@RequiresAllTriggers?$AA@,0x00C89840,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x01089840
 ??_C@_0BE@NEILFION@STUNNED_STANDING_UP?$AA@,0x00C7454C,Retail model-condition name table RVA 0x00EA6918 slot 153 points to VA 0x0107454C; full compiler literal STUNNED_STANDING_UP including NUL equals retail
 ??_C@_0BE@NIAGPHCM@HARVEST_PREPARATION?$AA@,0x00C73F68,Retail model-condition name table RVA 0x00EA6918 slot 245 points to VA 0x01073F68; full compiler literal HARVEST_PREPARATION including NUL equals retail
 ??_C@_0BE@NIIMOEDF@WEAPONSET_HERO_MODE?$AA@,0x00C73DA4,Retail model-condition name table RVA 0x00EA6918 slot 271 points to VA 0x01073DA4; full compiler literal WEAPONSET_HERO_MODE including NUL equals retail
@@ -11864,6 +11866,7 @@ name,address,notes
 ??_C@_0BG@IOIFGFBJ@ModelConditionUpgrade?$AA@,0x00C8FE84,pool-glue cascade static (back-solved)
 ??_C@_0BG@IOIJPGDH@DestroyObjectWhenDone?$AA@,0x00CC475C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C475C
 ??_C@_0BG@JHIKHCIG@ForceResetTimeSeconds?$AA@,0x00C82530,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal ForceResetTimeSeconds equals retail at VA 0x01082530
+??_C@_0BG@JIFDOJNF@CustomAnimAndDuration?$AA@,0x00C89824,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x01089824
 ??_C@_0BG@JOFMKJEF@WEAPONSET_SPECIAL_TWO?$AA@,0x00C740E0,Retail model-condition name table RVA 0x00EA6918 slot 227 points to VA 0x010740E0; full compiler literal WEAPONSET_SPECIAL_TWO including NUL equals retail
 ??_C@_0BG@LBHIPLGI@StructuresWealthyRate?$AA@,0x00C9564C,Retail AI FieldParse table VA 0x01094B00 slot 5; complete compiler literal StructuresWealthyRate including NUL equals retail at VA 0x0109564C; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
 ??_C@_0BG@LECPNNIC@SubtractPerLogicFrame?$AA@,0x00C9FCB0,Retail VictorySystem field-parse table VA 0x0109FC28 entry; compiler string literal SubtractPerLogicFrame equals retail at VA 0x0109FCB0
@@ -12098,6 +12101,7 @@ name,address,notes
 ??_C@_0L@PNPCNPCG@OVER_WATER?$AA@,0x00C74908,Retail model-condition name table RVA 0x00EA6918 slot 100 points to VA 0x01074908; full compiler literal OVER_WATER including NUL equals retail
 ??_C@_0M@BLHDDDNA@LaserUpdate?$AA@,0x00C90534,pool-glue cascade static (back-solved)
 ??_C@_0M@BNOCIMCH@PREATTACK_B?$AA@,0x00C74CD0,Retail model-condition name table RVA 0x00EA6918 slot 45 points to VA 0x01074CD0; full compiler literal PREATTACK_B including NUL equals retail
+??_C@_0M@CFNGBFFE@TriggeredBy?$AA@,0x00C8988C,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x0108988C
 ??_C@_0M@CNLGDFKM@MONSTERDOCK?$AA@,0x00CFAFCC,Retail command-name table VA 0x012B5F80 entry; compiler string literal MONSTERDOCK equals retail at VA 0x010FAFCC
 ??_C@_0M@DBHAEMPA@DAMAGE_MULT?$AA@,0x00C75144,Retail attribute-name table VA 0x012B4040 entry; compiler string literal DAMAGE_MULT equals retail at VA 0x01075144
 ??_C@_0M@DGBAOIAO@ios?5failure?$AA@,0x0112EBAC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0083ED40 calls; autopin
@@ -12219,6 +12223,7 @@ name,address,notes
 ??_C@_0O@GOMBNLNI@WaitForOthers?$AA@,0x00C95164,Retail AI FieldParse table VA 0x01094B00 slot 55; complete compiler literal WaitForOthers including NUL equals retail at VA 0x01095164; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
 ??_C@_0O@HAGFBBAP@LoadSubsystem?$AA@,0x00D41630,Static INI block-parse node VA 0x012D7764 token; compiler string literal LoadSubsystem equals retail at VA 0x01141630
 ??_C@_0O@HBJJMKB@BEACON_DELETE?$AA@,0x00CFB168,Retail command-name table VA 0x012B5F80 entry; compiler string literal BEACON_DELETE equals retail at VA 0x010FB168
+??_C@_0O@IBDCMNGL@ConflictsWith?$AA@,0x00C8987C,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x0108987C
 ??_C@_0O@IBFIMJHG@ToppleDelayFX?$AA@,0x00CC4A98,Retail StructureTopple field table VA 0x010C4B60 entry; compiler string literal ToppleDelayFX equals retail at VA 0x010C4A98
 ??_C@_0O@IFHMJHMG@WORLD_BUILDER?$AA@,0x00C7427C,Retail model-condition name table RVA 0x00EA6918 slot 197 points to VA 0x0107427C; full compiler literal WORLD_BUILDER including NUL equals retail
 ??_C@_0O@IIBMEOBO@Vertex00Color?$AA@,0x00CF6EF4,Retail Water field-parse table entry; compiler string literal Vertex00Color equals retail at VA 0x010F6EF4
@@ -12236,6 +12241,7 @@ name,address,notes
 ??_C@_0O@MDBNFEMN@SampleCount2D?$AA@,0x00C8268C,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal SampleCount2D equals retail at VA 0x0108268C
 ??_C@_0O@MDKEDOCC@EnterFriendly?$AA@,0x00D0CFCC,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal EnterFriendly equals retail at VA 0x0110CFCC
 ??_C@_0O@NBBCNOPC@LOOP_PINGPONG?$AA@,0x00D23830,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP_PINGPONG equals retail at VA 0x01123830
+??_C@_0O@NJPEONFB@FXListUpgrade?$AA@,0x00C89858,Retail UpgradeMuxData field-parse table VA 0x010898A0 entry; compiler string literal equals retail at VA 0x01089858
 ??_C@_0O@OCMBEFDE@Vertex11Color?$AA@,0x00CF6EC4,Retail Water field-parse table entry; compiler string literal Vertex11Color equals retail at VA 0x010F6EC4
 ??_C@_0O@ODNBMFNI@EndOfCampaign?$AA@,0x00D17030,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal EndOfCampaign equals retail at VA 0x01117030
 ??_C@_0O@OFAMBFFK@SPECIAL_POWER?$AA@,0x00CFB12C,Retail command-name table VA 0x012B5F80 entry; compiler string literal SPECIAL_POWER equals retail at VA 0x010FB12C

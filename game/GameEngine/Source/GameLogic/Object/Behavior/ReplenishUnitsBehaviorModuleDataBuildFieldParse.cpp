@@ -34,7 +34,12 @@ public:
 	static void parseDurationUnsignedInt(INI *ini, void *instance, void *store, const void *userData);
 	static void parseReal(INI *ini, void *instance, void *store, const void *userData);
 	static void parseFXList(INI *ini, void *instance, void *store, const void *userData);
+	static void parseAsciiStringVector(INI *ini, void *instance, void *store, const void *userData);
 };
+
+// Parsers retail reaches through incremental-link thunks are named by those thunks.
+void j_00004b47();
+void j_00045ef3();
 
 // ReplenishStatii's parser is the carved five-byte thunk at 0x00029B9A.
 class Rva00029B9AThunk
@@ -44,7 +49,17 @@ public:
 };
 
 // Retail 0x010898A0: UpgradeMuxData's field-parse table, added at the mux's +8.
-extern const FieldParse g_bfmeBaseTableABF[];
+// Six entries and the null terminator; tokens, parsers and offsets read from the image.
+extern const FieldParse g_bfmeBaseTableABF[] =
+{
+	{ "TriggeredBy", INI::parseAsciiStringVector, 0, 0x30 },
+	{ "ConflictsWith", INI::parseAsciiStringVector, 0, 0x3C },
+	{ "RemovesUpgrades", INI::parseAsciiStringVector, 0, 0x48 },
+	{ "FXListUpgrade", (void (*)(INI *, void *, void *, const void *))j_00004b47, 0, 0x54 },
+	{ "RequiresAllTriggers", INI::parseBool, 0, 0x58 },
+	{ "CustomAnimAndDuration", (void (*)(INI *, void *, void *, const void *))j_00045ef3, 0, 0x5C },
+	{ 0, 0, 0, 0 }
+};
 
 class ReplenishUnitsBehaviorModuleData
 {
