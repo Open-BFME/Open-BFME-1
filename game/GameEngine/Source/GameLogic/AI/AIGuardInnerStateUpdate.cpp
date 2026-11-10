@@ -95,7 +95,7 @@ private:
 class AIGuardMachine : public StateMachine
 {
 public:
-	Bool lookForInnerTarget( void );
+	Bool lookForInnerTargetIlt( void );
 
 	Object *findTargetToGuardByID( void ) { return TheGameLogic->findObjectByID( m_targetToGuard ); }
 	Team *findTeamToGuardByID( void ) { return TheTeamFactory->findTeamByID( m_teamToGuard ); }
@@ -105,6 +105,12 @@ private:
 	Int m_targetToGuard;									///< this+0x44
 	UnsignedInt m_teamToGuard;								///< this+0x48
 };
+
+// Retail reaches AIGuardMachine::lookForInnerTarget (0x0015D530) through ILT 0x000317A5,
+// which the ledger defines as ?j_000317a5@@YAXXZ.
+extern void j_000317a5();
+typedef Bool (AIGuardMachine::*LookForInnerTargetIlt)(void);
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 
 #define BFME_GUARD_STATE_SLOT(n) virtual void bfmeGuardStateSlot##n() = 0;
 
@@ -180,7 +186,7 @@ StateReturnType AIGuardInnerState::update( void )
 	Object *goal = m_attackState->getMachineGoalObject();
 	if (goal == 0 || goal->bfmePrivateStatusBit0())
 	{
-		if (getGuardMachine()->lookForInnerTarget())
+		if ((getGuardMachine()->*iltMemberCall<LookForInnerTargetIlt>(j_000317a5))())
 		{
 			onExit( EXIT_NORMAL );
 			return onEnter();
@@ -193,7 +199,7 @@ StateReturnType AIGuardInnerState::update( void )
 		if (weapon && weapon->bfmeComputeStatus( 0 ) != BFME_WEAPON_STATUS_4)
 		{
 			m_bfmeNextWeaponCheckFrame48 = TheGameLogic->getFrame() + 5;
-			if (getGuardMachine()->lookForInnerTarget())
+			if ((getGuardMachine()->*iltMemberCall<LookForInnerTargetIlt>(j_000317a5))())
 			{
 				onExit( EXIT_NORMAL );
 				return onEnter();
