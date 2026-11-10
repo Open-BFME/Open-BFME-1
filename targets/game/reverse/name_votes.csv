@@ -8013,3 +8013,5 @@ game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataCtorT
 game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataCtorThunk.cpp|member||m_2f0,4a940c71e91a022c2117e7eb,claude-sonnet,20261110110829-e0be78,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataCtorThunk.cpp|member||m_2f1,15d00cac82d3f5a1ba6239ea,claude-sonnet,20261110110829-e0be78,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Contain/HorseHordeContainModuleDataCtorThunk.cpp|member||m_2f2,13a5d85b07ef7cd01a0f5caa,claude-sonnet,20261110110829-e0be78,2026-11-10
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|c,4bdbd3f671a2bf1cb2aba200,claude-sonnet,20261110111035-f8163d,2026-11-10
+game/GameEngine/Source/GameLogic/AI/PathfinderClassifyFence.cpp|local|Pathfinder::classifyFence|s,39f4aaf846bfad65433feeb0,claude-sonnet,20261110111035-f8163d,2026-11-10
