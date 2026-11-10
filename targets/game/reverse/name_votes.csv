@@ -7968,3 +7968,10 @@ game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.c
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_word11c,0de16f82d41ac31c7c56a3a8,claude-sonnet,20261110102831-bbcf0f,2026-11-10
 game/GameEngine/Source/GameClient/MessageStream/HotKeyTranslator_translateGameMessage_Thunk.cpp|local|HotKeyTranslator::translateGameMessage|t,c815c0a74541ae07f04de77f,claude-sonnet,20261110103517-bddb27,2026-11-10
 game/GameEngine/Source/Common/Rva0087F520Fill.cpp|type||BfmeTailF5,cfed30010b3c206440e19d08,claude-sonnet,20261110104142-777796,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme01e,7fa8a6e38169d44d9ebec3c0,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme044,f908cd1a95da6893cc99b5a9,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme064,dc748204bb7ff5d84370aa44,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme065,64716b1d82d7a6733eef79ed,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme068,ab7213d3342fe603962b2a74,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme08c,7b319c797e3b22465ac7bbdc,claude-sonnet,20261110104245-bbe946,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfmeb8c,cdc0a2106068c6f049387519,claude-sonnet,20261110104245-bbe946,2026-11-10
