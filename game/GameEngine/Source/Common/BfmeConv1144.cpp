@@ -7,29 +7,29 @@ struct BfmeG1144
 	char m_bfmePad0019[0x3];
 	char m_bfme01c;
 	char m_bfmePad001d[0x1];
-	char m_bfme01e;
+	char m_useFpsLimit;
 	char m_bfme01f;
 	char m_bfmePad0020[0x8];
 	char m_bfme028;
 	char m_bfmePad0029[0x1b];
-	char m_bfme044;
+	char m_useLightMap;
 	char m_bfmePad0045[0x2];
 	char m_bfme047;
 	char m_bfmePad0048[0x10];
 	char m_bfme058;
 	char m_bfmePad0059[0xb];
-	char m_bfme064;
-	char m_bfme065;
+	char m_useShadowVolumes;
+	char m_useShadowDecals;
 	char m_bfmePad0066[0x2];
-	int m_bfme068;
+	int m_textureReductionFactor;
 	char m_bfmePad006c[0x20];
-	char m_bfme08c;
+	char m_showSoftWaterEdge;
 	char m_bfmePad008d[0x167];
 	int m_bfme1f4;
 	int m_bfme1f8;
 	int m_bfme1fc;
 	char m_bfmePad0200[0x98c];
-	int m_bfmeb8c;
+	int m_maxParticleCount;
 };
 
 struct BfmeH1144
@@ -94,14 +94,14 @@ public:
 
 void BfmeA1144::bfmeGo1144(void)
 {
-	m_bfme0f0 = localG1144()->m_bfmeb8c;
-	m_bfme0f4 = localG1144()->m_bfme064;
-	m_bfme0f5 = localG1144()->m_bfme065;
+	m_bfme0f0 = localG1144()->m_maxParticleCount;
+	m_bfme0f4 = localG1144()->m_useShadowVolumes;
+	m_bfme0f5 = localG1144()->m_useShadowDecals;
 	m_bfme0f6 = localG1144()->m_bfme047;
 	m_bfme0f7 = (char)(localG1144()->m_bfme028 == 0);
 	m_bfme114 = localH1144()->m_bfme170c;
-	m_bfme0f8 = localG1144()->m_bfme044;
-	m_bfme0f9 = localG1144()->m_bfme08c;
+	m_bfme0f8 = localG1144()->m_useLightMap;
+	m_bfme0f9 = localG1144()->m_showSoftWaterEdge;
 	m_bfme0fc = localG1144()->m_bfme1f4;
 	m_bfme100 = localG1144()->m_bfme1f8;
 	m_bfme104 = localG1144()->m_bfme1fc;
@@ -110,8 +110,8 @@ void BfmeA1144::bfmeGo1144(void)
 
 	m_bfme108 = b;
 	m_bfme109 = b;
-	m_bfme10c = localG1144()->m_bfme068;
-	m_bfme110 = localG1144()->m_bfme01e;
+	m_bfme10c = localG1144()->m_textureReductionFactor;
+	m_bfme110 = localG1144()->m_useFpsLimit;
 	m_bfme111 = localG1144()->m_bfme058;
 	m_bfme112 = localG1144()->m_bfme018;
 	m_bfme113 = localG1144()->m_bfme01f;

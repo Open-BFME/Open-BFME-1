@@ -3109,3 +3109,10 @@ game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme065,m_useShadowDeca
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme068,m_textureReductionFactor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme08c,m_showSoftWaterEdge,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfmeb8c,m_maxParticleCount,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme01e,m_useFpsLimit,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme044,m_useLightMap,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme064,m_useShadowVolumes,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme065,m_useShadowDecals,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme068,m_textureReductionFactor,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme08c,m_showSoftWaterEdge,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfmeb8c,m_maxParticleCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
