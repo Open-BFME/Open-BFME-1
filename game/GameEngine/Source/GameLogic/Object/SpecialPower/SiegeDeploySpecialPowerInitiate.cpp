@@ -145,7 +145,13 @@ class BfmeWideForwardC
 public:
 	BfmeWideResult bfmeForwardWideC(Int, Int, Int, Int, Int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+
+// Retail 0x012ED5B8 is EA's PartitionManager *ThePartitionManager, defined
+// once in game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp.
+// The class above is this TU's local ABI view of the call it makes, cast
+// to at the use; the cast is a no-op, so the bytes are unchanged.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 class Team;
 class Waypoint;
@@ -306,7 +312,7 @@ void SiegeDeploySpecialPower::rva002672B0(const void *specialPowerTemplate, cons
 	}
 	else
 	{
-		BfmeWideResult hits = ThePartitionManager->bfmeForwardWideC((Int)&targetObj->m_position,
+		BfmeWideResult hits = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC((Int)&targetObj->m_position,
 			*(const Int *)&getData()->m_searchRadius, 0,
 			(Int)&Rva00251980VptrZeroBlockObject(*(const VptrZeroBlock24 *)&BitFlags<192>(BitFlags<192>::kInit, 0x3B)), 1);
 		Object *other;
