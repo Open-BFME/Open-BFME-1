@@ -33211,7 +33211,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?bfmeSwapEAT@BfmeNodeEAT@Rva0035E510@@QAEXPAV12@@Z,,0x0035E510,108,game/GameEngine/Source/Common/Rva003527B0TablesMarkReleased.cpp,matched,clean C++ from bank; native swap and visible verified71B helper preserve receiver into member link; all bank labels retained under RVA namespace; both32B block layouts witnessed
 ?bfmeSwapEW@BfmeThingEW@@QAEXXZ,,0x0026FD90,57,game/GameEngine/Source/Common/BfmeOneHundredNinetyFour.cpp,matched,
 ?bfmeSwapElem12@@YAXAAUS4SortElem12_00532740@@0@Z,,0x0052E370,152,game/GameEngine/Source/Common/S4SwapElem12.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00532740-s4sortelem12-layout-split.md;S4SortElem12_00532740 layout split;model=claude-opus-5-5;host=GreatFaram
-?bfmeSwapGQ@BfmeStateGQ@@QAEXPAV1@@Z,,0x0006A060,129,game/GameEngine/Source/Common/BfmeConv2068.cpp,matched,field-by-field swap with a helper call for the embedded sub-object
+?swap@BfmeStateGQ@@QAEXPAV1@@Z,,0x0006A060,129,game/GameEngine/Source/Common/BfmeConv2068.cpp,matched,field-by-field swap with a helper call for the embedded sub-object
 ?bfmeSwapGT@BfmeThingGT@@QAEXXZ,,0x0026FE40,57,game/GameEngine/Source/Common/BfmeTwoHundredTwo.cpp,matched,
 ?bfmeSwapObjectIDs@GameLogic@@QAEXPAVObject@@0@Z,,0x0038E640,135,game/GameEngine/Source/GameLogic/System/GameLogic_bfmeSwapObjectIDs.cpp,matched,swap Object IDs and refresh lookup map
 ?bfmeSwapQH@@YAXPAH0@Z,,0x0082CFC0,70,game/GameEngine/Source/Common/BfmeTwoHundredNinetyTwo.cpp,matched,

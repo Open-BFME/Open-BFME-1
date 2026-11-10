@@ -19,7 +19,7 @@ extern void j_0003ee4b();
 class BfmeStateGQ
 {
 public:
-	void bfmeSwapGQ(BfmeStateGQ *other);
+	void swap(BfmeStateGQ *other);
 };
 
 class Rva0006A9D0State
@@ -52,7 +52,7 @@ Rva0006A9D0State &Rva0006A9D0State::operator=(const Rva0006A9D0State &other)
 	copy->m_value24 = 0.0f;
 	copy->m_value20 = 0.0f;
 	copy->m_value1C = 0.0f;
-	reinterpret_cast<BfmeStateGQ *>(this)->bfmeSwapGQ(
+	reinterpret_cast<BfmeStateGQ *>(this)->swap(
 		reinterpret_cast<BfmeStateGQ *>(copy));
 	copy->m_values.~Rva0006A9D0Vector();
 	return *this;

@@ -38725,3 +38725,4 @@ __XcptFilter,0x009F7EEC,claim superseded by the gate-required claim for ?Rva009F
 ?forward@Rva0088CDC0Forwarder@@QAEPAV1@XZ,0x0088CDC0,renamed to ?forward@DebugStackwalk@@QAEPAV1@XZ by tools/name_lane.py: two models agreed
 ?finishState16@Rva56E070StateOwner@@QAEXXZ,0x0056D430,renamed to ?deleteSelectedFile@Rva56E070StateOwner@@QAEXXZ by tools/name_lane.py: two models agreed
 ?bfmeGo1110B@BfmeV1110@@QAEXXZ,0x000EF290,renamed to ?loadPostProcess@BfmeV1110@@QAEXXZ by tools/name_lane.py: two models agreed
+?bfmeSwapGQ@BfmeStateGQ@@QAEXPAV1@@Z,0x0006A060,renamed to ?swap@BfmeStateGQ@@QAEXPAV1@@Z by tools/name_lane.py: two models agreed

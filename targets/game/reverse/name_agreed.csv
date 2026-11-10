@@ -3046,3 +3046,5 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|mem
 game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|member||m_30,m_drawOriginY,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2068.cpp|function|BfmeStateGQ@|bfmeSwapGQ,swap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2068.cpp|param|BfmeStateGQ::bfmeSwapGQ|o,other,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2068.cpp|function|BfmeStateGQ@|bfmeSwapGQ,swap,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2068.cpp|param|BfmeStateGQ::bfmeSwapGQ|o,other,claude-sonnet+gpt-6.1-sol,applied,2026-11-10

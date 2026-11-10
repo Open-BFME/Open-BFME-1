@@ -15,7 +15,7 @@ typedef void (*BfmeSwapSubGQFn)(BfmeSubGQ *a, BfmeSubGQ *b);
 class BfmeStateGQ
 {
 public:
-	void bfmeSwapGQ(BfmeStateGQ *o);
+	void swap(BfmeStateGQ *o);
 
 	int m_bfmeA0GQ;
 	int m_bfmeA1GQ;
@@ -29,9 +29,9 @@ public:
 	float m_bfmeF3GQ;
 };
 
-void BfmeStateGQ::bfmeSwapGQ(BfmeStateGQ *o)
+void BfmeStateGQ::swap(BfmeStateGQ *other)
 {
-	volatile BfmeStateGQ *v = o;
+	volatile BfmeStateGQ *v = other;
 
 	int t0 = m_bfmeA0GQ;
 	m_bfmeA0GQ = v->m_bfmeA0GQ;
@@ -46,20 +46,20 @@ void BfmeStateGQ::bfmeSwapGQ(BfmeStateGQ *o)
 	v->m_bfmeA4GQ = t4;
 
 	float f0 = m_bfmeF0GQ;
-	m_bfmeF0GQ = o->m_bfmeF0GQ;
-	o->m_bfmeF0GQ = f0;
+	m_bfmeF0GQ = other->m_bfmeF0GQ;
+	other->m_bfmeF0GQ = f0;
 
 	float f1 = m_bfmeF1GQ;
-	m_bfmeF1GQ = o->m_bfmeF1GQ;
-	o->m_bfmeF1GQ = f1;
+	m_bfmeF1GQ = other->m_bfmeF1GQ;
+	other->m_bfmeF1GQ = f1;
 
 	float f2 = m_bfmeF2GQ;
-	m_bfmeF2GQ = o->m_bfmeF2GQ;
-	o->m_bfmeF2GQ = f2;
+	m_bfmeF2GQ = other->m_bfmeF2GQ;
+	other->m_bfmeF2GQ = f2;
 
 	float f3 = m_bfmeF3GQ;
-	m_bfmeF3GQ = o->m_bfmeF3GQ;
-	o->m_bfmeF3GQ = f3;
+	m_bfmeF3GQ = other->m_bfmeF3GQ;
+	other->m_bfmeF3GQ = f3;
 
 	int t2 = m_bfmeA2GQ;
 	m_bfmeA2GQ = v->m_bfmeA2GQ;
@@ -69,5 +69,5 @@ void BfmeStateGQ::bfmeSwapGQ(BfmeStateGQ *o)
 	m_bfmeA3GQ = v->m_bfmeA3GQ;
 	v->m_bfmeA3GQ = t3;
 
-	((BfmeSwapSubGQFn)&j_00025176)(&m_bfmeSubGQ, &o->m_bfmeSubGQ);
+	((BfmeSwapSubGQFn)&j_00025176)(&m_bfmeSubGQ, &other->m_bfmeSubGQ);
 }
