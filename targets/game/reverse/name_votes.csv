@@ -7929,3 +7929,4 @@ game/GameEngine/Source/Common/BfmeConv2068.cpp|param|BfmeStateGQ::bfmeSwapGQ|o,0
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva0034E520.cpp|local|compare|n,2c40dfb68dfcca09dad275d8,claude-sonnet,20261110101837-4720c7,2026-11-10
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006C9270ResetTextureStages.cpp|member||m_flag4C,2e419194a86ae7048653eeb2,claude-sonnet,20261110101757-f173af,2026-11-10
 game/GameEngine/Source/Common/BfmeConv815.cpp|type||BfmeThingCAB,74c34eab1d3e9a0394bb900b,claude-sonnet,20261110102122-cba4c6,2026-11-10
+game/GameEngine/Source/GameLogic/LivingWorld/OwnerNotify003C4740.cpp|function|Glo012F1028Type@|rva003C3F40,8d1d175e542d2bb5a3a20af6,claude-sonnet,20261110102016-1ba2e1,2026-11-10
