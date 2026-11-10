@@ -11235,6 +11235,7 @@ name,address,notes
 ??_C@_05BNLFAJKF@KEY_O?$AA@,0x00CFEDCC,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05BOOEKJH@Flags?$AA@,0x00D17348,retail complete NUL-terminated initializer payload; evidence=identity_evidence/00ebb650-fieldparse-storage.md
 ??_C@_05CKAAOPLB@KEY_Z?$AA@,0x00CFED74,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
+??_C@_05CNHHHKBA@BURST?$AA@,0x00CC2884,Retail StructureCollapsePhaseNames table VA 0x012B232C entry; compiler string literal BURST equals retail at VA 0x010C2884
 ??_C@_05CPIDGLCH@KEY_M?$AA@,0x00CFEDDC,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05DEBNJJOB@PRONE?$AA@,0x00C74AD0,Retail model-condition name table RVA 0x00EA6918 slot 70 points to VA 0x01074AD0; full compiler literal PRONE including NUL equals retail
 ??_C@_05DGJIFKGG@KEY_L?$AA@,0x00CFEDE4,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
@@ -11250,11 +11251,13 @@ name,address,notes
 ??_C@_05HEBGGLLE@GUARD?$AA@,0x00CFB214,Retail command-name table VA 0x012B5F80 entry; compiler string literal GUARD equals retail at VA 0x010FB214
 ??_C@_05HJNJMMKB@KEY_K?$AA@,0x00CFEDEC,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05HNMLOGJE@KEY_8?$AA@,0x00CFED34,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
+??_C@_05IBAECHHA@DELAY?$AA@,0x00C897FC,Retail StructureCollapsePhaseNames table VA 0x012B232C entry; compiler string literal DELAY equals retail at VA 0x010897FC
 ??_C@_05IDDGCECL@KEY_A?$AA@,0x00CFEE3C,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05IGLFKALN@KEY_V?$AA@,0x00CFED94,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05IHCEAOBO@KEY_2?$AA@,0x00CFED64,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05IIBBCLNE@NIGHT?$AA@,0x00C75000,Retail model-condition name table RVA 0x00EA6918 slot 7 points to VA 0x01075000; full compiler literal NIGHT including NUL equals retail
 ??_C@_05IPNNLDBD@CYCLE?$AA@,0x00C7593C,Retail curve padding-name table VA 0x012A718C slot +0x8; compiler string literal CYCLE equals retail at VA 0x0107593C
+??_C@_05JEIAEFOF@FINAL?$AA@,0x00C897F4,Retail StructureCollapsePhaseNames table VA 0x012B232C entry; compiler string literal FINAL equals retail at VA 0x010897F4
 ??_C@_05JENKMNJG@ROHAN?$AA@,0x00C87B74,Retail side-name table VA 0x012AA008 entry; compiler string literal ROHAN equals retail at VA 0x01087B74
 ??_C@_05JODPDPFP@KEY_3?$AA@,0x00CFED5C,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_05JPKOJBPM@KEY_W?$AA@,0x00CFED8C,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
@@ -11401,6 +11404,7 @@ name,address,notes
 ??_C@_07IPCPFDOI@KEY_KP1?$AA@,0x00CFED18,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_07JABLCLAF@Comment?$AA@,0x00D2CC54,Video field-parse table g_0112CBD8 entry; compiler string literal Comment equals retail at VA 0x0112CC54
 ??_C@_07JGDEGCKJ@KEY_KP0?$AA@,0x00CFECAC,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
+??_C@_07JGHHDFJC@INITIAL?$AA@,0x00C89804,Retail StructureCollapsePhaseNames table VA 0x012B232C entry; compiler string literal INITIAL equals retail at VA 0x01089804
 ??_C@_07JHFOOBOL@REACT_3?$AA@,0x00C74528,Retail model-condition name table RVA 0x00EA6918 slot 156 points to VA 0x01074528; full compiler literal REACT_3 including NUL equals retail
 ??_C@_07JMGDFJEK@Gravity?$AA@,0x00C7B92C,DefaultModuleTemplate02FieldParse entry; compiler string literal Gravity equals retail at VA 0x0107B92C
 ??_C@_07JNEAJHPP@_unused?$AA@,0x00D05E70,Retail button-state suffix table VA 0x011098B0 entry; compiler string literal _unused equals retail at VA 0x01105E70
@@ -12154,6 +12158,7 @@ name,address,notes
 ??_C@_0N@DHPODKPG@RAISING_FLAG?$AA@,0x00C74834,Retail model-condition name table RVA 0x00EA6918 slot 111 points to VA 0x01074834; full compiler literal RAISING_FLAG including NUL equals retail
 ??_C@_0N@DKEMAMEP@BonusScience?$AA@,0x00CCB03C,Retail SupplyCenterDockUpdateModuleDataFieldParse table VA 0x010CB060 entry; compiler string literal BonusScience equals retail at VA 0x010CB03C
 ??_C@_0N@EBKEAFJ@SnipeVehicle?$AA@,0x00D0CF44,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal SnipeVehicle equals retail at VA 0x0110CF44
+??_C@_0N@ECAHABIP@ALMOST_FINAL?$AA@,0x00CC45C4,Retail StructureCollapsePhaseNames table VA 0x012B232C entry; compiler string literal ALMOST_FINAL equals retail at VA 0x010C45C4
 ??_C@_0N@EJPCKPML@AllyDefeated?$AA@,0x00CF1CFC,Retail pointer-array initializer literal; terminated compiler bytes equal retail; build/rlink/identity-arrays-1791422372/compiled-literal-relocations.log
 ??_C@_0N@EPPOCNFI@CYCLE_OFFSET?$AA@,0x00C7592C,Retail curve padding-name table VA 0x012A718C slot +0xC; compiler string literal CYCLE_OFFSET equals retail at VA 0x0107592C
 ??_C@_0N@FCGNHAAF@HIT_REACTION?$AA@,0x00C744DC,Retail model-condition name table RVA 0x00EA6918 slot 162 points to VA 0x010744DC; full compiler literal HIT_REACTION including NUL equals retail

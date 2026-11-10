@@ -28,7 +28,16 @@ public:
 
 extern FXListStore *TheFXListStore;
 extern ObjectCreationListStore *TheObjectCreationListStore;
-extern const char *const StructureCollapsePhaseNames[6];
+// Retail .rdata VA 0x012B232C: five phase tokens and a null terminator, read from the image.
+extern const char *const StructureCollapsePhaseNames[6] =
+{
+	"INITIAL",
+	"DELAY",
+	"BURST",
+	"ALMOST_FINAL",
+	"FINAL",
+	0
+};
 
 // Only the five parsed slots are modelled; the original class spelling is unknown.
 class Rva002AEDF0ModuleData
