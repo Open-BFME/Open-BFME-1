@@ -1301,16 +1301,34 @@ void ThingTemplate::initForLTA(const AsciiString& name)
 
 
 //=============================================================================
+// Retail's cache helpers are ILT-bound: the generic map-family rows have
+// disputed identities. These calls preserve the target ABI without assigning
+// another template name to a body. See 20261110-armor-finder-provider.md.
+void j_0000ae20();
+void j_0002afa4();
+void j_00036c0a();
+
 const ArmorTemplateSet* ThingTemplate::findArmorTemplateSet(const ArmorSetFlags& t) const
 {
-	struct BFMEThingTemplateArmorView
-	{
-		char m_padding[0x310];
-		ArmorTemplateSetVector m_sets;
-		ArmorTemplateSetFinder m_finder;
-	};
-	const BFMEThingTemplateArmorView *bfme = reinterpret_cast<const BFMEThingTemplateArmorView *>(this);
-	return bfme->m_finder.findBestInfo(bfme->m_sets, t);
+    struct Rva00146780Node { char opaque[0x14]; const ArmorTemplateSet *value; };
+    struct Rva00146780Cache { Rva00146780Node *end; };
+    Rva00146780Cache *cache = (Rva00146780Cache *)((char *)this + 0x31c);
+    typedef Rva00146780Node *(Rva00146780Cache::*Find)(const ArmorSetFlags &) const;
+    typedef const ArmorTemplateSet *(Rva00146780Cache::*Slow)(const ArmorTemplateSetVector &, const ArmorSetFlags &) const;
+    typedef const ArmorTemplateSet *&(Rva00146780Cache::*Slot)(const ArmorSetFlags &);
+    union { void (*raw)(); Find member; } find;
+    union { void (*raw)(); Slow member; } slow;
+    union { void (*raw)(); Slot member; } slot;
+    find.raw = j_0000ae20;
+    slow.raw = j_0002afa4;
+    slot.raw = j_00036c0a;
+    Rva00146780Node *it = (cache->*find.member)(t);
+    const ArmorTemplateSet *first = NULL;
+    if (it != cache->end) first = it->value;
+    if (first != NULL) return first;
+    const ArmorTemplateSet *info = (cache->*slow.member)(*(const ArmorTemplateSetVector *)((char *)this + 0x310), t);
+    if (info != NULL) (cache->*slot.member)(t) = info;
+    return info;
 }
 
 //=============================================================================
@@ -1541,3 +1559,6 @@ template ArmorTemplateSet *std::__uninitialized_fill_n<ArmorTemplateSet *, unsig
 	ArmorTemplateSet *, unsigned int, const ArmorTemplateSet &, const std::__false_type & );
 template void std::vector<ArmorTemplateSet, std::allocator<ArmorTemplateSet> >::_M_set(
 	ArmorTemplateSet *, ArmorTemplateSet *, ArmorTemplateSet * );
+
+// Keep the independently ledgered template bodies emitted.
+template const ArmorTemplateSet* SparseMatchFinder<ArmorTemplateSet, ArmorSetFlags>::findBestInfo(const std::vector<ArmorTemplateSet>&, const ArmorSetFlags&) const;

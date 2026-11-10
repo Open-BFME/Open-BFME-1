@@ -4034,3 +4034,17 @@ lever when retail reloads after some calls and not others.
 
 Source: `game/GameEngineDevice/Source/W3DDevice/GameClient/MapObjectAmbientAudio00088480.cpp`;
 evidence `targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md`.
+
+### Delay a subobject reference until its call (MSVC 7.1)
+
+In ThingTemplate::findArmorTemplateSet, forming the receiver+0x310 vector
+reference before the cache lookup made MSVC emit two early LEAs and a71-byte
+body. Forming it directly in the slow-path call retained the receiver in EDI
+and delayed its ADD until the miss path, reproducing all73 retail bytes.
+Measured with this TU's `/DNDEBUG /DWIN32 /MD /EHsc` STLport context, including
+its existing include flags. This is an observed lifetime/code-shape effect,
+not a general guarantee that moving every reference delays address formation.
+Replacing the original generic call also required an explicit instantiation
+to preserve the other ledgered template emissions. Evidence:
+`targets/game/reverse/attempt_support/20261110-armor-finder-provider.md`;
+source `game/GameEngine/Source/Common/Thing/ThingTemplate.cpp`.
