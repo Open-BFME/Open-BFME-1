@@ -185,7 +185,6 @@ dir32,0x010F5E84,_g_010F5E84,"nothing in the ledger owns 0x010F5E84. Give the da
 dir32,0x010F7118,??_7_bfme_AptGameWindow@@6BS4Owner@@@,"retail 0x010F7118 is already recorded as ??_7_bfme_AptGameWindow@@6BGen_dtor_004654c0Base@@@ (+1 more); reference that name, not a new one"
 dir32,0x010FA3B8,?s_commandButtonFieldParseTable@CommandButton@@2QBUFieldParse@@B,"retail 0x010FA3B8 is already recorded as ?m_commandButtonFieldParseTable@CommandButton@@2QBUFieldParse@@B; reference that name, not a new one"
 dir32,0x010FB888,??_7ControlBar@@6B@,"retail 0x010FB888 is already recorded as ??_7Rva0049DA40Object@@6B@; reference that name, not a new one"
-dir32,0x011052B8,?g_011052B8@@3URva00511430OutElse@@B,the name encodes 0x00511430 but retail reads 0x011052B8
 dir32,0x011052C4,?g_011052C4@@3URva00511430Out3@@B,the name encodes 0x00511430 but retail reads 0x011052C4
 dir32,0x01105A28,?g_01105A28@@3QBDB,"retail 0x01105A28 is already recorded as ??_7BfmeAptScreenLanLobby@@6B@; reference that name, not a new one"
 dir32,0x01106070,??_7LoadScreen0051BF30@@6B@,"nothing in the ledger owns 0x01106070. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
