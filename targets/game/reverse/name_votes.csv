@@ -7849,3 +7849,4 @@ game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorModuleDataCtorThun
 game/GameEngine/Source/Common/LadderPreferences_loadProfile_Bfme.cpp|local|LadderPreferences::loadProfile|p,709de1c7597fff19a12596b6,claude-sonnet,20261110092155-acab73,2026-11-10
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,125c98acb52fb3115c57072d,claude-sonnet,20261110092155-3fcde5,2026-11-10
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||m_rva01338750,6e922f3535db286aa7a6504a,claude-sonnet,20261110092155-3fcde5,2026-11-10
+game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwarder,022b9cba1d7b495322306cd1,claude-sonnet,20261110092154-aa556d,2026-11-10

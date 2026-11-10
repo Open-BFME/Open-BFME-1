@@ -2968,3 +2968,4 @@ game/GameEngine/Source/Common/LadderPreferences_loadProfile_Bfme.cpp|local|Ladde
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,m_count,claude-sonnet+gpt-6-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/LadderPreferences_loadProfile_Bfme.cpp|local|LadderPreferences::loadProfile|p,ladderPref,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,m_count,claude-sonnet+gpt-6-sol,applied,2026-11-10
+game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwarder,DebugStackwalk,claude-sonnet+gpt-6-astra,agreed,2026-11-10
