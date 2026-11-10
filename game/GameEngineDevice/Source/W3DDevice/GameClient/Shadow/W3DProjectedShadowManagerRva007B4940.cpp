@@ -206,14 +206,14 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 		}
 	}
 
-	W3DShadowTexture *texture1 = manager->getTexture((const Char *)left);
-	if (!texture1)
+	W3DShadowTexture *leftTexture = manager->getTexture((const Char *)left);
+	if (!leftTexture)
 		return 0;
 
-	W3DShadowTexture *texture2 = manager->getTexture((const Char *)right);
-	if (!texture2)
+	W3DShadowTexture *rightTexture = manager->getTexture((const Char *)right);
+	if (!rightTexture)
 	{
-		texture1->Release_Ref();
+		leftTexture->Release_Ref();
 		return 0;
 	}
 
@@ -229,8 +229,8 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 		pairObj = created;
 		if (!created || !((BfmeB1159 *)created)->initialize())
 		{
-			texture1->Release_Ref();
-			texture2->Release_Ref();
+			leftTexture->Release_Ref();
+			rightTexture->Release_Ref();
 			return 0;
 		}
 	}
@@ -240,9 +240,9 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 	at60 = robj;
 
 	if (pairObj->m_first)
-		pairObj->m_first->m_texture = texture1;
+		pairObj->m_first->m_texture = leftTexture;
 	if (pairObj->m_second)
-		pairObj->m_second->m_texture = texture2;
+		pairObj->m_second->m_texture = rightTexture;
 
 	Rva007B4940Sub *first = pairObj->m_first;
 	first->m_firstBase = lx;
@@ -259,9 +259,9 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 
 	for (; cur; prev = cur, cur = cur->m_next)
 	{
-		if ((cur->m_first ? cur->m_first->m_texture : 0) != texture1)
+		if ((cur->m_first ? cur->m_first->m_texture : 0) != leftTexture)
 			continue;
-		if ((cur->m_second ? cur->m_second->m_texture : 0) != texture2)
+		if ((cur->m_second ? cur->m_second->m_texture : 0) != rightTexture)
 			continue;
 		break;
 	}
