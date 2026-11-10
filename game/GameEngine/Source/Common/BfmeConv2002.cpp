@@ -12,7 +12,7 @@ struct BfmeSubEVM
 	unsigned char m_bfmePadEVM[1];
 };
 
-class BfmeObjEVM
+class AIUpdateInterface
 {
 public:
 	virtual void bfmeSlot00EVM();
@@ -124,12 +124,12 @@ class BfmeArgEVM
 {
 public:
 	unsigned char m_bfmeHeadEVM[0x204];
-	BfmeObjEVM *m_bfmeObjEVM;
+	AIUpdateInterface *m_ai;
 };
 
 char __stdcall bfmeTryEVM(BfmeArgEVM *arg, int unused)
 {
-	BfmeObjEVM *obj = arg->m_bfmeObjEVM;
+	AIUpdateInterface *obj = arg->m_ai;
 
 	if (obj == 0)
 		return 0;

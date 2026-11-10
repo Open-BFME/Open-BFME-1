@@ -3230,3 +3230,5 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataT
 game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_71,m_ignoreArmorUpgrade,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2002.cpp|type||BfmeObjEVM,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,m_ai,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2002.cpp|type||BfmeObjEVM,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,m_ai,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
