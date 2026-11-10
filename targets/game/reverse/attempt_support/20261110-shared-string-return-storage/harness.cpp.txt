@@ -1,0 +1,79 @@
+// cl: /DNDEBUG /MD /EHsc
+struct SharedResult {
+    SharedResult(const SharedResult &);
+    ~SharedResult();
+    void *data;
+};
+struct CanonicalResult {
+    CanonicalResult(const SharedResult &);
+    CanonicalResult(const CanonicalResult &);
+    ~CanonicalResult();
+    void *data;
+};
+struct ResultProducer { SharedResult copy(); };
+int consume(const CanonicalResult &);
+int converting(ResultProducer *producer) {
+    CanonicalResult value = producer->copy();
+    return consume(value);
+}
+int viewed(ResultProducer *producer) {
+    typedef SharedResult (ResultProducer::*Original)();
+    typedef CanonicalResult (ResultProducer::*View)();
+    union { Original original; View view; } call;
+    call.original = &ResultProducer::copy;
+    CanonicalResult value = (producer->*call.view)();
+    return consume(value);
+}
+int viewedReference(ResultProducer *producer) {
+    typedef SharedResult (ResultProducer::*Original)();
+    typedef CanonicalResult (ResultProducer::*View)();
+    union { Original original; View view; } call;
+    call.original = &ResultProducer::copy;
+    const CanonicalResult &value = (producer->*call.view)();
+    return consume(value);
+}
+void resultThunk();
+int rawViewedReference(ResultProducer *producer) {
+    typedef CanonicalResult (ResultProducer::*View)();
+    union { void (*raw)(); View view; } call;
+    call.raw = resultThunk;
+    const CanonicalResult &value = (producer->*call.view)();
+    return consume(value);
+}
+int rawViewed(ResultProducer *producer) {
+    typedef CanonicalResult (ResultProducer::*View)();
+    union { void (*raw)(); View view; } call;
+    call.raw = resultThunk;
+    CanonicalResult value = (producer->*call.view)();
+    return consume(value);
+}
+__forceinline CanonicalResult bridge(ResultProducer *producer) {
+    typedef CanonicalResult (ResultProducer::*View)();
+    union { void (*raw)(); View view; } call;
+    call.raw = resultThunk;
+    return (producer->*call.view)();
+}
+int bridged(ResultProducer *producer) {
+    CanonicalResult value = bridge(producer);
+    return consume(value);
+}
+extern "C" CanonicalResult __fastcall fastResult(ResultProducer *, int);
+int fastViewed(ResultProducer *producer) {
+    CanonicalResult value = fastResult(producer, 0);
+    return consume(value);
+}
+struct ExplicitResult {
+    __forceinline explicit ExplicitResult(ResultProducer *producer) {
+        typedef void (ResultProducer::*Fill)(ExplicitResult *);
+        union { void (*raw)(); Fill fill; } call;
+        call.raw = resultThunk;
+        (producer->*call.fill)(this);
+    }
+    ~ExplicitResult();
+    void *data;
+};
+int consumeExplicit(const ExplicitResult &);
+int filled(ResultProducer *producer) {
+    ExplicitResult value(producer);
+    return consumeExplicit(value);
+}
