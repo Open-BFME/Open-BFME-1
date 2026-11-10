@@ -8041,3 +8041,5 @@ game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_bfmeE8,1dd261759
 game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_254,6a9aa1f3da8722f861f72be0,claude-sonnet,20261110111445-d2958b,2026-11-10
 game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_258,b2e8bf20992e0433e76c3613,claude-sonnet,20261110111445-d2958b,2026-11-10
 game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_25C,2c2ec5dfdf785cd6c0f119d3,claude-sonnet,20261110111445-d2958b,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_70,4f8ae4cf524e68d0c1a5d343,claude-sonnet,20261110111908-cc2ced,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_71,b45b6816d09dcec3f04f01eb,claude-sonnet,20261110111908-cc2ced,2026-11-10
