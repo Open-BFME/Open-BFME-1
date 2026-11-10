@@ -2069,7 +2069,6 @@ emit	game/GameEngine/Source/GameClient/GameTextManager_initMapStringFile_Thunk.c
 emit	game/GameEngine/Source/GameClient/InGameUI.cpp	*	3405
 emit	game/GameEngine/Source/GameClient/InGameUICreateMouseoverHintThunk.cpp	*	2194
 emit	game/GameEngine/Source/GameClient/InGameUICreateReplayControlThunk.cpp	*	1091
-emit	game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp	*	936
 emit	game/GameEngine/Source/GameClient/InGameUI_setRadiusCursor_Thunk.cpp	*	461
 emit	game/GameEngine/Source/GameClient/MapUtil_getDefaultMap_Thunk.cpp	*	361
 emit	game/GameEngine/Source/GameClient/MapUtil_update_Thunk.cpp	*	366
