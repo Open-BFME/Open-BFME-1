@@ -8045,3 +8045,4 @@ game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataT
 game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_71,b45b6816d09dcec3f04f01eb,claude-sonnet,20261110111908-cc2ced,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2002.cpp|type||BfmeObjEVM,d8d1fccd21afb2fcb2edd00e,claude-sonnet,20261110113335-c066ba,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,afbd6286669e8793fecba6d8,claude-sonnet,20261110113335-c066ba,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Locomotor_copyMatrixAndGo.cpp|local|BfmeSub1CC_EC3::copyMatrixAndGo|t,f6407d7d936c2c772cf3aee0,claude-sonnet,20261110113955-e18947,2026-11-10
