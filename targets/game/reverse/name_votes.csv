@@ -8048,3 +8048,4 @@ game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,afbd6286669e
 game/GameEngine/Source/GameLogic/Object/Locomotor_copyMatrixAndGo.cpp|local|BfmeSub1CC_EC3::copyMatrixAndGo|t,f6407d7d936c2c772cf3aee0,claude-sonnet,20261110113955-e18947,2026-11-10
 game/GameEngine/Source/Common/BfmeSettingsCopyWW.cpp|type||BfmeStrWW,44ae4823bdb6a09b230f1a97,claude-sonnet,20261110114346-835afa,2026-11-10
 game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p,3bc98588e4929504428f816a,claude-sonnet,20261110114737-3edfab,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1541.cpp|local|BfmeThingVOQ::bfmeResetVOQ|v,b3a53f870ef6362947ba6f41,claude-sonnet,20261110115054-8ac8ac,2026-11-10
