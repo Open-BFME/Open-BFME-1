@@ -3002,3 +3002,5 @@ game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|function|Rva56E
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|function|Rva56E070StateOwner@|finishState16,deleteSelectedFile,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1110.cpp|function|BfmeV1110@|bfmeGo1110B,loadPostProcess,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1110.cpp|function|BfmeV1110@|bfmeGo1110B,loadPostProcess,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_18,m_upgradeBonusPercent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_1c,m_upgradeMustBePresent,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10

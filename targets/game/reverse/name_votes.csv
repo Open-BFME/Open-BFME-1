@@ -7891,3 +7891,6 @@ game/GameEngine/Source/Common/BfmeConv1110.cpp|type||BfmeV1110,0f281f550e5a428f2
 game/GameEngine/Source/Common/BfmeConv1110.cpp|member||m_bfme0c,cc70d4b6b7f78bd0c69b3bf6,claude-sonnet,20261110095236-03b23f,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1110.cpp|member||m_bfme274,c2ab265b04cb30222c4a62e1,claude-sonnet,20261110095236-03b23f,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1110.cpp|function|BfmeV1110@|bfmeGo1110B,d51570fa77257e7d153ec918,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_14,03464242a3a76fd12de44ee8,claude-sonnet,20261110095519-95313f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_18,0e4113b8a2237745c58c11c2,claude-sonnet,20261110095519-95313f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_1c,0fc14fe528c5d53f092c3964,claude-sonnet,20261110095519-95313f,2026-11-10
