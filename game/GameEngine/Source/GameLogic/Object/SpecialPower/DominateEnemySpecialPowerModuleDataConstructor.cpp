@@ -29,12 +29,12 @@ public:
 	DominateEnemySpecialPowerModuleData();
 
 private:
-	int m_unmodelled_254;					// +0x254
-	int m_unmodelled_258;					// +0x258
-	int m_unmodelled_25C;					// +0x25C
+	int m_dominateRadius;					// +0x254
+	int m_triggerFX;					// +0x258
+	int m_dominatedFX;					// +0x25C
 };
 
 DominateEnemySpecialPowerModuleData::DominateEnemySpecialPowerModuleData()
-	: m_unmodelled_254( 0 ), m_unmodelled_258( 0 ), m_unmodelled_25C( 0 )
+	: m_dominateRadius( 0 ), m_triggerFX( 0 ), m_dominatedFX( 0 )
 {
 }
