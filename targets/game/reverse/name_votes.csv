@@ -7920,3 +7920,7 @@ game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member
 game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_value24,f306685e763e787e18300d7d,claude-sonnet,20261110100720-fe75a9,2026-11-10
 game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_flag34,40de81742895586e45df35d5,claude-sonnet,20261110100720-fe75a9,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorRva001FE970.cpp|type||Rva0004B015Carrier,a1a7e406fe1ec087b4abe8e4,claude-sonnet,20261110101147-522ce2,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|member||m_28,ecc13d79cb664d9c7a344abe,claude-sonnet,20261110101223-0fde58,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|member||m_2C,a2ff53d4b000b87997d7e543,claude-sonnet,20261110101223-0fde58,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|member||m_30,ce439dca2a9d979287996cf0,claude-sonnet,20261110101223-0fde58,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|member||m_34,13c3bd647a80a0c6822d5c00,claude-sonnet,20261110101223-0fde58,2026-11-10
