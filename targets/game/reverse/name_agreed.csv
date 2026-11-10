@@ -3026,3 +3026,6 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag40,m_rampageRequiresAflame,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown48,m_timeToEjectPassengersOnRampage,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag54,m_fadeOnPortals,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_210,m_cloudBreakRadius,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_214,m_cloudBreakFX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_21C,m_objectSpacing,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10

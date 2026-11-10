@@ -7906,3 +7906,6 @@ game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag40,384389fb6fccdd5206458c00,claude-sonnet,20261110095942-409509,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown48,374c77cbba3395b160936972,claude-sonnet,20261110095942-409509,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag54,0e837312d6db1493d1584c9d,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_210,5a83a12cfddadfd610ceab9a,claude-sonnet,20261110100406-6b92ff,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_214,d7cea49aa812e8c683b2345e,claude-sonnet,20261110100406-6b92ff,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_21C,663b6fb2640476139b0cf835,claude-sonnet,20261110100406-6b92ff,2026-11-10
