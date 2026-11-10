@@ -33,10 +33,17 @@ private:
 
 // The twelve-byte container retail destroys at +0x30.  Its destructor identity
 // is not recovered yet; see the note above.
+extern void j_00045016();  // retail destroys the +0x30 vector through this ILT (jmp 0x00282690)
+
 class AutoPickUpUpdateModuleDataMemberB
 {
 public:
-	~AutoPickUpUpdateModuleDataMemberB();
+	~AutoPickUpUpdateModuleDataMemberB()
+	{
+		typedef void (AutoPickUpUpdateModuleDataMemberB::*DtorFn)();
+		union { void (*fn)(); DtorFn call; } u = { j_00045016 };
+		(this->*u.call)();
+	}
 private:
 	unsigned char m_pad[12];
 };
