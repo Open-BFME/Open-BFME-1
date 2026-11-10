@@ -7945,3 +7945,9 @@ game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|Scor
 game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|x1,b9ba9739f646de7739096afd,claude-sonnet,20261110103327-734898,2026-11-10
 game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|y1,2a2262bd3e27844012bf4efc,claude-sonnet,20261110103327-734898,2026-11-10
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00740440CameraPathAngles.cpp|function|Rva00740440@|rva00740440,6341279a163568dd0aa2ebe2,claude-sonnet,20261110103357-786bbc,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme00,0b06a847dffb9f1acbe55793,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme04,f216af1ad2c75fdc5ae7ff6e,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme08,e6714d79ad003e579a1b8376,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme0c,09e6a0f8020e1fd3095ba8bc,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme10,8c4a6fa94e913ee6535adba2,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme14,99911b5fe3911688f6d04822,claude-sonnet,20261110103435-d64191,2026-11-10
