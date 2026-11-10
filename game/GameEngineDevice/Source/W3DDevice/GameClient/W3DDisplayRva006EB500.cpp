@@ -222,7 +222,13 @@ struct Rva00579160Manager
 	virtual void slot018(void);
 	virtual void slot01C(void);
 };
-extern Rva00579160Manager *Rva00579160TheManager;
+// Retail 0x012F19E8 is the WindowManager singleton defined once in
+// game/GameEngine/Source/GameClient/GUI/WindowManager.cpp (data row
+// ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A). The struct above is
+// this TU's local ABI view of the slot it calls, cast to at the use; the
+// cast is a no-op, so the bytes are unchanged.
+class WindowManager;
+extern WindowManager *g_rva012F19E8WindowManager;
 
 struct Rva005A63D0Mouse
 {
@@ -551,7 +557,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		{
 			TheWindowManager->m_renderLock = 1;
 			TheInGameUI->slot01C();
-			Rva00579160TheManager->slot01C();
+			((Rva00579160Manager *)g_rva012F19E8WindowManager)->slot01C();
 			TheWindowManager->m_renderLock = -1;
 			if (TheMouse)
 				((Rva005A63D0Mouse *)TheMouse)->slot01C();
@@ -576,7 +582,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 				TheInGameUI->slot01C();
 				if (!fading)
 					TheInGameUI->slot130();
-				Rva00579160TheManager->slot01C();
+				((Rva00579160Manager *)g_rva012F19E8WindowManager)->slot01C();
 				TheWindowManager->m_renderLock = 0;
 				TheInGameUI->slot01C();
 				TheWindowManager->m_renderLock = -1;
@@ -594,7 +600,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 			TheInGameUI->slot01C();
 			if (!fading)
 				TheInGameUI->slot130();
-			Rva00579160TheManager->slot01C();
+			((Rva00579160Manager *)g_rva012F19E8WindowManager)->slot01C();
 			TheWindowManager->m_renderLock = 0;
 			TheInGameUI->slot01C();
 			TheWindowManager->m_renderLock = -1;
