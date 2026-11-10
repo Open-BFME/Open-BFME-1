@@ -42,9 +42,9 @@ int Rva007FA6C0::openHost(Rva007FA6C0Arg *arg, unsigned char flag)
 	if (!m_08)
 		return -202;
 	m_0C = Rva007E9B70Get()->v2();
-	unsigned b = arg->m_0C;
+	unsigned port = arg->m_0C;
 	unsigned a = arg->m_08;
-	int r = Rva00806710(m_08, "fesl.ea.com", a, b);
+	int r = Rva00806710(m_08, "fesl.ea.com", a, port);
 	if (flag)
 		Rva00806A70(m_08, 1);
 	return r;
