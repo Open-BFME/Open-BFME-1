@@ -62,8 +62,8 @@ private:
 	void *m_dstTextureWidth;
 	void *m_dstTextureHeight;
 	int m_28;
-	int m_2C;
-	int m_30;
+	int m_drawOriginX;
+	int m_drawOriginY;
 	unsigned char m_34;
 	unsigned char m_clearDstTexture;
 	unsigned char m_borderShroudLevel;
@@ -87,8 +87,8 @@ TaintBuffer::TaintBuffer()
 	, m_dstTextureWidth(0)
 	, m_dstTextureHeight(0)
 	, m_28(4)
-	, m_2C(0)
-	, m_30(0)
+	, m_drawOriginX(0)
+	, m_drawOriginY(0)
 	, m_34(0)
 	, m_clearDstTexture(1)
 	, m_borderShroudLevel(TheWritableGlobalData->m_taintAlpha)
