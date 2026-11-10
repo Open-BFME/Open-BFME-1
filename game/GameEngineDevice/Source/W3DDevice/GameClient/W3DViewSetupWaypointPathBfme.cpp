@@ -72,7 +72,13 @@ struct Rva003FD060TerrainLogic
 	virtual void slot05() = 0;
 	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal = 0) = 0;
 };
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// The global at 0x012EF4CC is EA's TerrainLogic *TheTerrainLogic
+// (?TheTerrainLogic@@3PAVTerrainLogic@@A), defined in
+// game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp. The struct above is
+// this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 
 #define V(N) virtual void slot##N() = 0
 class W3DView
@@ -131,7 +137,7 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn, Real ease
 	// 12-byte frame local; VC7.1 drops the dead z store.
 	Vector3 finalPos(last.x, last.y, last.z);
 	m_mcwpInfo.initialGroundHeight = m_groundLevel;
-	m_mcwpInfo.finalGroundHeight = TheTerrainLogic->getGroundHeight(finalPos.X, finalPos.Y);
+	m_mcwpInfo.finalGroundHeight = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->getGroundHeight(finalPos.X, finalPos.Y);
 	if (m_heightField.m_ready)
 		m_mcwpInfo.finalGroundHeight = m_heightField.sample(finalPos.X, finalPos.Y);
 
