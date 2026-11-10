@@ -61,7 +61,7 @@ struct Coord3D
 struct BfmeG1269
 {
 	unsigned char m_head[0xAB4];
-	Real m_valueAB4;
+	Real m_particleScale;
 };
 
 class GlobalData;
@@ -120,7 +120,7 @@ Coord3D ParticleSystem::computeParticleVelocity(const Coord3D *pos)
 			// retail passes the argument through unchanged; the callee's
 			// `context` is modelled unconstrained, hence the cast.
 			return m_receiver->scale(const_cast<Coord3D *>(pos), &m_value134,
-				(*(volatile Real *)&((BfmeG1269 *)TheWritableGlobalData)->m_valueAB4 + g_bfmeDefaultBU) * g_rva0107533C,
+				(*(volatile Real *)&((BfmeG1269 *)TheWritableGlobalData)->m_particleScale + g_bfmeDefaultBU) * g_rva0107533C,
 				bfmeSlot018(m_value1c4));
 		}
 	}
