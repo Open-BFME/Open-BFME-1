@@ -1,8 +1,13 @@
-// ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z
-// partial score=0.9922 date=2026-10-31
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // stlport
-// Readable reconstruction of ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z.
+// Retail BFME 0x001F6250 (514 bytes): Zero Hour's BridgeTowerBehavior::onDamage
+// (GeneralsMD BridgeTowerBehavior.cpp). Thing's template is Zero Hour's
+// OVERRIDE<ThingTemplate>, whose operator-> null-tests the pointer and walks the
+// inline recursive Overridable::getFinalOverride (one level inlined, the
+// recursion reaches ILT 0x000022BB), as in the matched
+// DrawableGetHealthBoxPosition.cpp. The source lookup passes the damage input's
+// ID directly, as in the reference. Handoff:
+// targets/game/reverse/attempt_support/20261110-001f6250-override-template-walk.md
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -45,7 +50,12 @@ public:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	void *m_vtable;
 	Overridable *m_nextOverride;
@@ -129,6 +139,20 @@ public:
 	virtual ObjectID getTowerID(BridgeTowerType towerType);
 };
 
+template <class T>
+class OVERRIDE
+{
+public:
+	const T *operator->() const
+	{
+		if (!m_obj)
+			return 0;
+		return (T *)m_obj->getFinalOverride();
+	}
+	operator const T *() const { return operator->(); }
+	T *m_obj;
+};
+
 // This is the BFME +0x200 body pointer and the object virtual layout used by
 // the target's getMaxHealth and attemptDamage calls.
 class Object
@@ -164,16 +188,14 @@ public:
 
 	bool isKindOf(KindOfType type) const
 	{
-		const ThingTemplate *finalTemplate = m_template;
-		if (finalTemplate && finalTemplate->m_nextOverride)
-			finalTemplate = (const ThingTemplate *)finalTemplate->m_nextOverride->getFinalOverride();
-		return finalTemplate->isKindOf(type);
+		return getTemplate()->isKindOf(type);
 	}
 
 	ObjectID getID() const { return m_id; }
+	const ThingTemplate *getTemplate() const { return m_template; }
 
 private:
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
 	unsigned char m_unreconstructed08[0x38 - 0x08];
 	unsigned char m_unreconstructed38[0x74 - 0x38];
 	ObjectID m_id;
@@ -261,8 +283,7 @@ void BridgeTowerBehavior::onDamage(DamageInfo *damageInfo)
 
 	if (bridgeInterface)
 	{
-		ObjectID sourceID = damageInfo->in.m_sourceID;
-		Object *source = TheGameLogic->findObjectByID(sourceID);
+		Object *source = TheGameLogic->findObjectByID(damageInfo->in.m_sourceID);
 		if (source == NULL ||
 			(source->isKindOf(KINDOF_BRIDGE) == false &&
 				source->isKindOf(KINDOF_BRIDGE_TOWER) == false))
