@@ -43,8 +43,8 @@ public:
 };
 
 // ??0BfmeRectVNH@@QAE@IABVAsciiString@@D@Z
-BfmeRectVNH::BfmeRectVNH(unsigned w, const AsciiString &s, char f)
+BfmeRectVNH::BfmeRectVNH(unsigned w, const AsciiString &name, char f)
 	: BfmeBaseVNH(w, f)
-	, m_name(s)
+	, m_name(name)
 {
 }
