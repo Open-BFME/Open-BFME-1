@@ -7951,3 +7951,7 @@ game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme08,e6714d79ad003e57
 game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme0c,09e6a0f8020e1fd3095ba8bc,claude-sonnet,20261110103435-d64191,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme10,8c4a6fa94e913ee6535adba2,claude-sonnet,20261110103435-d64191,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1208.cpp|member||m_bfme14,99911b5fe3911688f6d04822,claude-sonnet,20261110103435-d64191,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word0,4921c9fbbb12ca8e185d2a0b,claude-sonnet,20261110102948-af1ec2,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word1,820db2b9903afdc4bd41f082,claude-sonnet,20261110102948-af1ec2,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word2,29bbc3506348b9701ef4d093,claude-sonnet,20261110102948-af1ec2,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word3,df951b908230e1a5dcdf4535,claude-sonnet,20261110102948-af1ec2,2026-11-10
