@@ -7880,3 +7880,4 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstruct
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value00,b89fdc37732f1365e030a06a,claude-sonnet,20261110094655-0c2e05,2026-11-10
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value04,ae25e10754b8bdca46ae2cda,claude-sonnet,20261110094655-0c2e05,2026-11-10
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value08,b24601e1454f20f612dce54e,claude-sonnet,20261110094655-0c2e05,2026-11-10
+game/GameEngine/Source/Common/BfmeRectVNH_ctor.cpp|param|BfmeRectVNH::BfmeRectVNH|s,6d43d7680319d53e05edb9f4,claude-sonnet,20261110094712-229462,2026-11-10
