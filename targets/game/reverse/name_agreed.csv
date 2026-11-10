@@ -3051,3 +3051,4 @@ game/GameEngine/Source/Common/BfmeConv2068.cpp|param|BfmeStateGQ::bfmeSwapGQ|o,o
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006C9270ResetTextureStages.cpp|member||m_flag4C,m_multiPassTerrain,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006C9270ResetTextureStages.cpp|member||m_flag4C,m_multiPassTerrain,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/LivingWorld/OwnerNotify003C4740.cpp|function|Glo012F1028Type@|rva003C3F40,StateSnapshotSave,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/LivingWorld/OwnerNotify003C4740.cpp|function|Glo012F1028Type@|rva003C3F40,StateSnapshotSave,claude-sonnet+gpt-6.1-sol,applied,2026-11-10

@@ -68,7 +68,7 @@ extern "C" __declspec(dllimport) void __cdecl free(void *block);
 class Glo012F1028Type {
 public:
     void rva003C4740();
-    void rva003C3F40();
+    void StateSnapshotSave();
     char m_00[0x28];
     Holder003C4740 *m_28;
     char m_2C[8];
@@ -77,8 +77,8 @@ public:
     void *m_D4;
     int m_D8;
 };
-// ?rva003C3F40@Glo012F1028Type@@QAEXXZ
-void Glo012F1028Type::rva003C3F40() {
+// ?StateSnapshotSave@Glo012F1028Type@@QAEXXZ
+void Glo012F1028Type::StateSnapshotSave() {
     free(m_D4);
     m_D4 = 0;
     m_D8 = 0;
@@ -120,7 +120,7 @@ void Glo012F1028Type::rva003C4740() {
     if(m_34) {
         Gen003BD8D0Built *p=m_28->m_08;
         if(p) {
-            rva003C3F40();
+            StateSnapshotSave();
             Gen003BD7D0Node *owner=((Rva003BF540*)this)->find(m_34);
             if(!owner->build()) {
                 ((Rva003BC9C0*)this)->run((Gen003C0110Result*)owner,p);
