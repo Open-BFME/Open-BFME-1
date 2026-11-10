@@ -7874,3 +7874,4 @@ game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param
 game/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataConstructor.cpp|member||m_64,fef59274b076ffb5a0378a03,claude-sonnet,20261110094347-0d4731,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/TensileFormationUpdateModuleDataConstructor.cpp|member||m_64,fef59274b076ffb5a0378a03,claude-sonnet,20261110094419-048cbc,2026-11-10
 game/GameEngine/Source/Common/INI/AudioEventInfoCopy.cpp|member||m_word7c,dca953caab018e41cd4eb356,claude-sonnet,20261110094534-c33f6e,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1351.cpp|param|BfmeThingVFC::bfmeGoVFC|c,b32b2cd8ed023a293a2976cc,claude-sonnet,20261110093325-c9b77a,2026-11-10
