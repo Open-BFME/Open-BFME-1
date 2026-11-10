@@ -7859,3 +7859,5 @@ game/GameEngine/Source/Common/Rva007751A0ParseS4.cpp|member||m_bfmeAESD,dfeb49b3
 game/GameEngine/Source/Common/Rva007751A0ParseS4.cpp|member||m_bfmeBESD,aa34861a731ecadd17d97223,claude-sonnet,20261110093332-8671be,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Contain/TransportContainModuleDataCtorThunk.cpp|member||m_flag168,6a32c8b3c87737218c391a82,claude-sonnet,20261110092206-0fa61f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Contain/TransportContainModuleDataCtorThunk.cpp|member||m_scalar16c,113b96890fb5cf687470597f,claude-sonnet,20261110092206-0fa61f,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture1,efb1e708e4663b14fe72e584,claude-sonnet,20261110092338-cc88ac,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture2,719c4eb3a0357772a505a2d9,claude-sonnet,20261110092338-cc88ac,2026-11-10

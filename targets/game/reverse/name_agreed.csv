@@ -2972,3 +2972,5 @@ game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwa
 game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwarder,DebugStackwalk,claude-sonnet+gpt-6-astra,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/Rva002D3080Destructor.cpp|member||m_field2c,m_audioHandle,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/Rva002D3080Destructor.cpp|member||m_field2c,m_audioHandle,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture1,leftTexture,claude-sonnet+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture2,rightTexture,claude-sonnet+gpt-6-sol+gpt-6.1-sol,agreed,2026-11-10
