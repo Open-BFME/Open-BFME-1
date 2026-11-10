@@ -114,7 +114,7 @@ struct Rva006C9270DX8Access : DX8Wrapper
 struct Rva006C9270GlobalData
 {
 	char m_unreconstructed[ 0x4C ];
-	unsigned char m_flag4C;
+	unsigned char m_multiPassTerrain;
 };
 
 // The 0x012ED5C8 global is EA's GlobalData *TheWritableGlobalData, defined
@@ -173,7 +173,7 @@ void Rva006C9270ResetTextureStages( void )
 	DX8Wrapper::Set_DX8_Render_State( 0x1B, 0 );
 	DX8Wrapper::Set_DX8_Render_State( 0x13, 5 );
 	DX8Wrapper::Set_DX8_Render_State( 0x14, 6 );
-	if( TheWritableGlobalData && !((Rva006C9270GlobalData *)TheWritableGlobalData)->m_flag4C )
+	if( TheWritableGlobalData && !((Rva006C9270GlobalData *)TheWritableGlobalData)->m_multiPassTerrain )
 	{
 		for( int stage = 0; stage < 8; stage++ )
 		{
