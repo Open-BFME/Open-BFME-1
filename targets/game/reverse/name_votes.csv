@@ -7912,3 +7912,7 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/CloudBreakSpecialPowerModul
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsRva00326F40.cpp|local|ScriptConditions::rva00326f40|temporaryTypes,81ed47c23f1ef735a34df181,claude-sonnet,20261110100518-d4bf74,2026-11-10
 game/GameEngine/Source/Common/BfmeConv636.cpp|member||m_bfmeA,256fedcd0580d41a56a6cb5d,claude-sonnet,20261110100518-b42370,2026-11-10
 game/GameEngine/Source/Common/BfmeConv636.cpp|local|bfmeGoCRC|a,9d0aa6df16d9677bb793e97a,claude-sonnet,20261110100518-b42370,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at10,592718da689cbf29100aec31,claude-sonnet,20261110100446-28b7b4,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at18,037225a477f4d5b87b98cdc1,claude-sonnet,20261110100446-28b7b4,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1c,6278e0414a4b9b72d894463e,claude-sonnet,20261110100446-28b7b4,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at20,4ed62e0ee3a71b11d66ff893,claude-sonnet,20261110100446-28b7b4,2026-11-10
