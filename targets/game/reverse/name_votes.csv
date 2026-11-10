@@ -7896,3 +7896,13 @@ game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_1c,0fc14fe528c5d53f092c3964,claude-sonnet,20261110095519-95313f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_14,03464242a3a76fd12de44ee8,claude-sonnet,20261110095823-cce8e8,2026-11-10
 game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewResetBfme.cpp|member||m_field24AC,0807c597d1d2a1c17e913c3b,claude-sonnet,20261110095836-99fa5f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown20,deae2929664a826b479b8b78,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag28,6451cab4b767bd5fbda11634,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag29,49d0e16851a4ec6c7bd50d58,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown2c,dec7a6d3605ca83643570b12,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown34,a0b596145d0dfebd172fc1b7,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown38,c9a1c883316af1df8fb122fa,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown3c,e76fd66b9724cba54d8b67f3,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag40,384389fb6fccdd5206458c00,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_unknown48,374c77cbba3395b160936972,claude-sonnet,20261110095942-409509,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceModuleDataCtorThunk.cpp|member||m_flag54,0e837312d6db1493d1584c9d,claude-sonnet,20261110095942-409509,2026-11-10
