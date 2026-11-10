@@ -11,18 +11,18 @@ struct BfmeThingQW
 {
 	int find(unsigned char what, unsigned int from);
 
-	char *m_bfmeAt;				// 0x0
-	char *m_bfmeEnd;			// 0x4
+	char *m_begin;				// 0x0
+	char *m_end;			// 0x4
 };
 
 int BfmeThingQW::find(unsigned char what, unsigned int from)
 {
-	if (from > (unsigned int)(m_bfmeEnd - m_bfmeAt))
+	if (from > (unsigned int)(m_end - m_begin))
 		return -1;
 
 	unsigned char one = what;
 
-	char *found = __identifier("?bfmeGoOR@@YAXPAX0E@Z")(m_bfmeAt + from, m_bfmeEnd, one);
+	char *found = __identifier("?bfmeGoOR@@YAXPAX0E@Z")(m_begin + from, m_end, one);
 
-	return (found != m_bfmeEnd) ? (int)(found - m_bfmeAt) : -1;
+	return (found != m_end) ? (int)(found - m_begin) : -1;
 }
