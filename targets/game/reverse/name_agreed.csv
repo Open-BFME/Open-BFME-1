@@ -3120,3 +3120,4 @@ game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,m_begin,
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,m_end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,m_begin,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,m_end,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeConv991.cpp|type||BfmeB991,W3DSmudgeManager,claude-sonnet+gpt-6-astra,agreed,2026-11-10
