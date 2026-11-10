@@ -235,7 +235,12 @@ struct Rva005A63D0Mouse
 	virtual void slot018(void);
 	virtual void slot01C(void);
 };
-extern Rva005A63D0Mouse *TheMouse;
+// Retail 0x012F4C5C is EA's Mouse *TheMouse, defined once in
+// game/GameEngine/Source/GameClient/Input/Mouse.cpp. The struct above is
+// this TU's local ABI view of the slot it calls, cast to at the use; the
+// cast is a no-op, so the bytes are unchanged.
+class Mouse;
+extern Mouse *TheMouse;
 
 struct Rva005A00B0Transition
 {
@@ -248,7 +253,13 @@ struct Rva005A00B0Transition
 	virtual void slot018(void);
 	virtual void slot01C(void);
 };
-extern Rva005A00B0Transition *TheTransitionHandler;
+// Retail 0x012F3330 is EA's GameWindowTransitionsHandler
+// *TheTransitionHandler, defined once in
+// game/GameEngine/Source/GameClient/GUI/GameWindowTransitions.cpp. The
+// struct above is this TU's local ABI view of the slot it calls, cast to
+// at the use; the cast is a no-op, so the bytes are unchanged.
+class GameWindowTransitionsHandler;
+extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 // GlobalData flags; Zero Hour's twin reads m_breakTheMovie, m_disableRender
 // and m_loadScreenRender at these points.
@@ -261,7 +272,12 @@ struct Rva006C9270GlobalData
 	char m_padc0c[0xdbf - 0xc0c];
 	Bool m_dbf;
 };
-extern Rva006C9270GlobalData *TheWritableGlobalData;
+// Retail 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
+// once in game/GameEngine/Source/Common/GlobalData.cpp. The struct above
+// is this TU's local ABI view of the flags it reads, cast to at the use;
+// the cast is a no-op, so the bytes are unchanged.
+class GlobalData;
+extern GlobalData *TheWritableGlobalData;
 
 struct Rva00367E30Logic
 {
@@ -522,17 +538,17 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		}
 	}
 
-	if (!TheWritableGlobalData->m_dbf && !TheWritableGlobalData->m_c0b &&
+	if (!((Rva006C9270GlobalData *)TheWritableGlobalData)->m_dbf && !((Rva006C9270GlobalData *)TheWritableGlobalData)->m_c0b &&
 		WW3D::Begin_Render(true, true, m_1c, g_bfmeA1087->getWaterTransparency(), 0) == WW3D_ERROR_OK)
 	{
-		if (TheWritableGlobalData->m_bb9 == 1)
+		if (((Rva006C9270GlobalData *)TheWritableGlobalData)->m_bb9 == 1)
 		{
 			TheWindowManager->m_renderLock = 1;
 			TheInGameUI->slot01C();
 			Rva00579160TheManager->slot01C();
 			TheWindowManager->m_renderLock = -1;
 			if (TheMouse)
-				TheMouse->slot01C();
+				((Rva005A63D0Mouse *)TheMouse)->slot01C();
 			WW3D::End_Render(true);
 			return true;
 		}
@@ -579,7 +595,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 		}
 		TheInGameUI->rva1f8f2();
 		if (TheMouse)
-			TheMouse->slot01C();
+			((Rva005A63D0Mouse *)TheMouse)->slot01C();
 
 		if (m_34)
 		{
@@ -609,7 +625,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 				}
 			}
 		}
-		TheTransitionHandler->slot01C();
+		((Rva005A00B0Transition *)TheTransitionHandler)->slot01C();
 		if (m_debugDisplayCallback)
 			drawCurrentDebugDisplay();
 		WW3D::End_Render(true);
