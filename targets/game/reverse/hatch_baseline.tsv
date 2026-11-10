@@ -2074,7 +2074,6 @@ emit	game/GameEngine/Source/GameClient/MapUtil_getDefaultMap_Thunk.cpp	*	361
 emit	game/GameEngine/Source/GameClient/MapUtil_update_Thunk.cpp	*	366
 emit	game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultPhysicsModuleInfoCtorThunk.cpp	*	91
 emit	game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp	*	5821
-emit	game/GameEngine/Source/GameLogic/AI/AIAttackFireWeaponStateUpdateThunk.cpp	*	979
 emit	game/GameEngine/Source/GameLogic/AI/AIFollowWaypointPathState_update_Thunk.cpp	*	794
 emit	game/GameEngine/Source/GameLogic/AI/AIHuntState_update_Thunk.cpp	*	800
 emit	game/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp	*	322
