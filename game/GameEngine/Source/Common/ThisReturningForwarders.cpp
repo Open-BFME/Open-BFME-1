@@ -182,4 +182,4 @@ BFME_THIS_FORWARD( Rva005F6580Forwarder, (ConcreteModuleClass<QuadDrawTag>::getI
 BFME_THIS_FORWARD( Rva005F7970Forwarder, (ConcreteModuleClass<RenderObjectDrawTag>::getInstance()) )
 BFME_THIS_FORWARD( Rva005F8530Forwarder, (ConcreteModuleClass<StreakDrawTag>::getInstance()) )
 BFME_THIS_FORWARD( Rva00765AF0Forwarder, (new (this) Rva00761E10) )
-BFME_THIS_FORWARD( Rva0088CDC0Forwarder, (InitDbghelp()) )
+BFME_THIS_FORWARD( DebugStackwalk, (InitDbghelp()) )

@@ -21,13 +21,13 @@ public:
 
 void d_0088e970(void);
 
-class Rva0088CDC0Forwarder
+class DebugStackwalk
 {
 public:
-	Rva0088CDC0Forwarder *forward();
+	DebugStackwalk *forward();
 };
 
-class DebugMember : public Rva0088CDC0Forwarder
+class DebugMember : public DebugStackwalk
 {
 public:
 	DebugMember()
