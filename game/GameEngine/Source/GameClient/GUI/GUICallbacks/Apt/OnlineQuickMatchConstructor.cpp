@@ -190,8 +190,8 @@ private:
 	Rva0002E802QuickMatchPreferences m_preferences;
 	QuickMatchFlags m_flags;
 	Gen_004b5a50 m_slot5C;
-	int m_slot70;
-	int m_slot74;
+	int m_selectedImage;
+	int m_unselectedImage;
 	int m_slot78;
 };
 
@@ -230,8 +230,8 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 	m_slot5C.m_64 = 0;
 	m_slot5C.m_68 = 0;
 	m_slot5C.m_6C = 0;
-	m_slot70 = 0;
-	m_slot74 = 0;
+	m_selectedImage = 0;
+	m_unselectedImage = 0;
 	m_slot78 = 0;
 	if( g_rva012F19E8WindowManager != 0 && reinterpret_cast<void * &>(g_s4Guard0055BC20) == 0 )
 	{
@@ -239,12 +239,12 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 
 		{
 			BFMERetailAsciiString name( "AptCustomMatchSelected" );
-			m_slot70 = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
+			m_selectedImage = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
 				reinterpret_cast<const AsciiString &>( name ) );
 		}
 		{
 			BFMERetailAsciiString name( "AptCustomMatchUnselected" );
-			m_slot74 = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
+			m_unselectedImage = (int)reinterpret_cast<MappedImageCollection *>(TheMappedImageCollection)->findImageByName(
 				reinterpret_cast<const AsciiString &>( name ) );
 		}
 		{

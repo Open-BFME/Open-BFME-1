@@ -2994,3 +2994,5 @@ game/GameEngine/Source/Common/BfmeConv1351.cpp|param|BfmeThingVFC::bfmeGoVFC|c,c
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot70,m_selectedImage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot74,m_unselectedImage,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1351.cpp|param|BfmeThingVFC::bfmeGoVFC|c,cload,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot70,m_selectedImage,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot74,m_unselectedImage,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
