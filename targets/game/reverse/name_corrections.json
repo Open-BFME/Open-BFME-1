@@ -22171,4 +22171,15 @@
   "evidence": "targets/game/reverse/identity_evidence/aimoveanddelete-onenter-thunk-removed.md",
   "reason": "Deleted duplicate lift paired with the verified owner: the placeholder layout pad views vanished with the file, no descriptive name was lost"
  }
+,
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLoadScreen.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLoadScreen.cpp",
+  "old_name": "LoadScreen0051BF30",
+  "new_name": "Rva0051B560Host",
+  "before_sha256": "622a0ec17a67d06c52ef78923b694803ada7824b3126791743a21dff06dc66b1",
+  "after_sha256": "d60fb9bf9291cc784ee6ca2d94878cf4a241413fbe06ed5d25d8eb014ab5cb5d",
+  "evidence": "targets/game/reverse/identity_evidence/0042450f-functor-bfmeprovide.md",
+  "reason": "Rebinding, not a rename: the functor method slot retail reads through ILT 0x0002450F reaches matched bfmeProvide at 0x0051B560, so the binding names the provider class; LoadScreen0051BF30 stays defined and used in the TU and the old method spelling was an undefined external with no ledger row"
+ }
 ]

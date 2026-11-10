@@ -219,6 +219,15 @@ private:
 	char m_data[0x40];
 };
 
+// Retail binds the functor below straight to the matched Apt provider
+// ?bfmeProvide@Rva0051B560Host (0x0051B560, reached through ILT 0x0002450F),
+// not to a LoadScreen method: callee_twin follows the thunk to that body.
+class Rva0051B560Host
+{
+public:
+	void bfmeProvide(int index, char *output, bool setting);
+};
+
 class LoadScreen0051BF30 : public Gen_00490420
 {
 public:
@@ -293,7 +302,7 @@ LoadScreen0051BF30::LoadScreen0051BF30(unsigned int mode)
 		name.format("GameLoading:PlayerColor:%d", player);
 		g_rva012F19E8WindowManager->bindShownWithArg(name, (void *)player,
 			Rva0050F920FunctorHolder(FunctorBindingSingle(
-				reinterpret_cast<FunctorMethodSingle>(&LoadScreen0051BF30::Rva0051B560),
+				reinterpret_cast<FunctorMethodSingle>(&Rva0051B560Host::bfmeProvide),
 				(FunctorTargetSingle *)this)));
 	}
 	{
