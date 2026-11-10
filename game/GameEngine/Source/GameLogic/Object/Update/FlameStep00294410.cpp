@@ -225,14 +225,14 @@ class Rva002918E0Object { public: void set(unsigned char); };
 enum UpdateSleepTime { SLEEP1=1 };
 class FlammableUpdate { public: void doAflameDamage(); protected: UpdateSleepTime calcSleepTime(); friend class FlameStep00294410; };
 class FlameCleanup00293E50 { public: void apply(); };
-struct Config00294410 { char pad00[0x10]; unsigned at10; char pad14[0x21]; bool at35; char pad36[2]; float at38,at3c,at40; bool at44; };
+struct Config00294410 { char pad00[0x10]; unsigned m_aflameDamageDelay; char pad14[0x21]; bool at35; char pad36[2]; float at38,at3c,at40; bool at44; };
 inline const unsigned& minimum00294410(const unsigned& a,const unsigned& b) { return a<b?a:b; }
 class FlameStep00294410 {
 public: int update();
  Config00294410* config() { return *(Config00294410**)((char*)this-12); }
  Object* object() { return *(Object**)((char*)this-8); }
  FlammableUpdate* primary() { return (FlammableUpdate*)((char*)this-16); }
- char pad00[0x14]; unsigned at14,at18,at1c,at20; int at24; char pad28[8]; bool at30; char pad31[3]; unsigned at34; int at38; bool at3c;
+ char pad00[0x14]; unsigned at14,m_aflameEndFrame,m_burnedEndFrame,m_damageEndFrame; int at24; char pad28[8]; bool at30; char pad31[3]; unsigned at34; int at38; bool at3c;
 };
 int FlameStep00294410::update() {
  unsigned now=TheGameLogic->frame;
@@ -279,15 +279,15 @@ int FlameStep00294410::update() {
  }
  if(obj->m_ai && !obj->m_ai->bfmeBlocksFormationRefresh() && reinterpret_cast<Terrain00294410 *>(TheTerrainLogic)->water(obj->m_cachedPos.x,obj->m_cachedPos.y,0,0)) {
   unsigned end=TheGameLogic->frame+15;
-  at18=minimum00294410(at18,end);
+  m_aflameEndFrame=minimum00294410(m_aflameEndFrame,end);
   at30=false;
  }
- if(at20 && now>=at20) { at20=data->at10+now; primary()->doAflameDamage(); }
- if(at1c && now>=at1c) {
+ if(m_damageEndFrame && now>=m_damageEndFrame) { m_damageEndFrame=data->m_aflameDamageDelay+now; primary()->doAflameDamage(); }
+ if(m_burnedEndFrame && now>=m_burnedEndFrame) {
   obj->setStatusBit(11,true);
   if(!obj->m_modelConditionFlags.test(79)) { obj->m_modelConditionFlags.set(79); obj->notifyModelConditionChanged(); }
  }
- if(at18 && now>=at18) {
+ if(m_aflameEndFrame && now>=m_aflameEndFrame) {
   at14=(obj->m_status[0]>>10)&2;
   ((FlameCleanup00293E50*)primary())->apply();
   ((FlamePrimary00294410*)primary())->stopSound();

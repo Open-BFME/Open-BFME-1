@@ -3036,3 +3036,7 @@ game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at18,m_aflameEndFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1c,m_burnedEndFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at20,m_damageEndFrame,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at10,m_aflameDamageDelay,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at18,m_aflameEndFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1c,m_burnedEndFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at20,m_damageEndFrame,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
