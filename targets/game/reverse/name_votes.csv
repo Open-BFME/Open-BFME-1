@@ -7933,3 +7933,4 @@ game/GameEngine/Source/GameLogic/LivingWorld/OwnerNotify003C4740.cpp|function|Gl
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsDigit|c,20531e640cf6bd412c279157,claude-sonnet,20261110102532-3e99d7,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAscii|c,8ed745777b585e8591018258,claude-sonnet,20261110102532-3e99d7,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAlNum|c,2ce94ba441193231b6b85e80,claude-sonnet,20261110102532-3e99d7,2026-11-10
+game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertRva0033F4B0.cpp|local|_M_create_node|tmp,7e0d106a5802366ae072476f,claude-sonnet,20261110102532-6c6f78,2026-11-10

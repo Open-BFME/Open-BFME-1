@@ -3055,3 +3055,4 @@ game/GameEngine/Source/GameLogic/LivingWorld/OwnerNotify003C4740.cpp|function|Gl
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsDigit|c,character,claude-sonnet+gpt-6-sol,agreed,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAscii|c,character,claude-sonnet+gpt-6-sol,agreed,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAlNum|c,character,claude-sonnet+gpt-6-sol,agreed,2026-11-10
+game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertRva0033F4B0.cpp|local|_M_create_node|tmp,newNode,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
