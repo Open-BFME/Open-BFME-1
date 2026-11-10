@@ -98,7 +98,7 @@ void piChangeNickCallbackA(void *chat, int success, const char *oldNick,
  const char *newNick, void *param);
 void chatChangeNickA(void *chat, const char *newNick, void *callback,
 	void *param, int blocking);
-void piAuthenticateCDKeyCallback(void *chat, int result, const char *message,
+void piAuthenticateCDKeyCallbackA(void *chat, int result, const char *message,
  void *param);
 void chatAuthenticateCDKeyA(void *chat, const char *cdkey, void *callback,
 	void *param, int blocking);
@@ -607,7 +607,7 @@ PEERBool piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
 		return 0;
 
 	chatAuthenticateCDKeyA(connection->chat, cdkey,
-		piAuthenticateCDKeyCallback, operation, 0);
+		piAuthenticateCDKeyCallbackA, operation, 0);
 	return 1;
 }
 
