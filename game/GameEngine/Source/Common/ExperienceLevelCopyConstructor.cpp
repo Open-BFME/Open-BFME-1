@@ -16,6 +16,34 @@ extern "C" void _ReadWriteBarrier(void);
 
 #include "ascii_string.h"
 
+// These two retail routes disagree with the generic helper ledger homes.
+// Inline the bindings without emitting competing helper definitions.
+// See attempt_support/20261111-experiencelevel-helper-bindings.md.
+void j_00007554();
+void j_0003827b();
+namespace _STL {
+template <> __declspec(dllimport) __forceinline
+void _Construct<AsciiString, AsciiString>(AsciiString *out, const AsciiString &value)
+{
+    typedef void (__cdecl *Construct)(AsciiString *, const AsciiString &);
+    ((Construct)j_00007554)(out, value);
+}
+template <> __declspec(dllimport) __forceinline
+void vector<AsciiString, allocator<AsciiString> >::_M_insert_overflow(
+    AsciiString *position, const AsciiString &value, const __false_type &,
+    unsigned int count, bool atEnd)
+{
+    typedef void (vector<AsciiString, allocator<AsciiString> >::*Overflow)(AsciiString *, const AsciiString &, const __false_type &, unsigned int, bool);
+    union { void (*raw)(); Overflow member; } overflow;
+    overflow.raw = j_0003827b;
+    // The empty tag has no value to initialize. Value-initializing the
+    // forwarded temporary adds a store absent from the retail caller.
+    __false_type nativeTag;
+    (this->*overflow.member)(position, value, nativeTag, count, atEnd);
+}
+}
+
+
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;

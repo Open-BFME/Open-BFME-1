@@ -4048,3 +4048,15 @@ Replacing the original generic call also required an explicit instantiation
 to preserve the other ledgered template emissions. Evidence:
 `targets/game/reverse/attempt_support/20261110-armor-finder-provider.md`;
 source `game/GameEngine/Source/Common/Thing/ThingTemplate.cpp`.
+
+### Empty tag forwarded through an opaque call (2026-11-11)
+
+ExperienceLevel::operator= (701B, MSVC7.1 `/O2 /DNDEBUG /DWIN32 /MD
+/D_STLP_USE_STATIC_LIB /EHsc`, existing WWLib/STLport includes) gained a
+byte-store when a force-inline vector overflow adapter forwarded its
+value-initialized `__false_type` argument to a recorded native thunk.
+Ignoring the unused incoming tag and passing a separately default-initialized
+`__false_type nativeTag;` removed the store and restored all701 bytes and13
+relocation positions. The native helper does not inspect tag content; this
+is an empty-tag forwarding observation, not permission to pass uninitialized
+value-bearing objects. Evidence: `targets/game/reverse/attempt_support/20261111-experiencelevel-helper-bindings.md`.
