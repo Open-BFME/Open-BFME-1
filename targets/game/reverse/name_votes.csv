@@ -7987,3 +7987,6 @@ game/GameEngine/Source/Common/BfmeConv912.cpp|local|RAMFile::readEntireAndClose|
 game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp|local|Connection::sendNetCommandMsg|p,e407c938ca252d9f9b23e3f3,claude-sonnet,20261110110439-5d8599,2026-11-10
 game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp|local|Connection::sendNetCommandMsg|ref1,d9c6bfbde5e3d4fc25588824,claude-sonnet,20261110110439-5d8599,2026-11-10
 game/GameEngine/Source/GameNetwork/Connection_sendNetCommandMsg.cpp|local|Connection::sendNetCommandMsg|ref2,14fdfa2f57357a1440586cc8,claude-sonnet,20261110110439-5d8599,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_flag10,8d4f84ff0c78a1e9097bbf8e,claude-sonnet,20261110110517-e57ce3,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_text14,aef0e58c619effeb9057268d,claude-sonnet,20261110110517-e57ce3,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_flag18,8b9180dbcf39c601a80c0d91,claude-sonnet,20261110110517-e57ce3,2026-11-10

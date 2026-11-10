@@ -3122,3 +3122,6 @@ game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,m_begin,
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,m_end,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv991.cpp|type||BfmeB991,W3DSmudgeManager,claude-sonnet+gpt-6-astra,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeConv991.cpp|type||BfmeB991,W3DSmudgeManager,claude-sonnet+gpt-6-astra,blocked: hook: [pin-on-other-identity] ?bfmeSet991@W3DSmudgeManager@@QAEXH@Z 0x00024177 | walk 0x00024177 -> 0x00722BD0: the body already carries ?render@W3DSm,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_flag10,m_requiresSpecificTrigger,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_text14,m_runOffMapWaypointName,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/RunOffMapBehaviorModuleDataCtor.cpp|member||m_flag18,m_dieOnMap,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
