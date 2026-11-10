@@ -19,7 +19,7 @@ public:
     OVERRIDE<BfmeThingGN> data4;
     unsigned int word8;
     BfmeSourceGN *ptrC;
-    bool byte10;
+    bool m_active;
     unsigned char pad11[3];
     float float14, float18;
     void rva00618980(int value);
@@ -29,15 +29,15 @@ public:
 void Rva00618980Object::rva00618980(int value)
 {
     unsigned char active = (unsigned char)value;
-    if (byte10 && !active) {
-        byte10 = false;
+    if (m_active && !active) {
+        m_active = false;
         float14 = 0.0f;
         float color = data4->float10;
         Rva007397E0(ptrC->ptr8, color, color, color);
         return;
     }
-    if (!byte10 && active) {
-        byte10 = true;
+    if (!m_active && active) {
+        m_active = true;
         float14 = 0.0f;
     }
 }

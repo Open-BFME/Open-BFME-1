@@ -2978,3 +2978,4 @@ game/GameEngine/Source/GameLogic/LivingWorld/Rva00618980.cpp|member||byte10,m_ac
 game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp|member||m_valueAB4,m_particleScale,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameNetwork/Rva007FA6C0Open.cpp|local|Rva007FA6C0::openHost|b,port,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp|member||m_valueAB4,m_particleScale,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/LivingWorld/Rva00618980.cpp|member||byte10,m_active,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
