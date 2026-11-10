@@ -7919,3 +7919,4 @@ game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at2
 game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_value1c,fdc8c34ca12de952fb6c3ee2,claude-sonnet,20261110100720-fe75a9,2026-11-10
 game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_value24,f306685e763e787e18300d7d,claude-sonnet,20261110100720-fe75a9,2026-11-10
 game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_flag34,40de81742895586e45df35d5,claude-sonnet,20261110100720-fe75a9,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorRva001FE970.cpp|type||Rva0004B015Carrier,a1a7e406fe1ec087b4abe8e4,claude-sonnet,20261110101147-522ce2,2026-11-10
