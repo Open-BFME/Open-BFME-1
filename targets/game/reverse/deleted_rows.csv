@@ -38724,3 +38724,4 @@ __XcptFilter,0x009F7EEC,claim superseded by the gate-required claim for ?Rva009F
 ?d_00895790@@YAXXZ,0x00895790,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva00895790@Gen_uw_00893e70@@QAEXABVBfmeStrVKI@@HHH@Z, a gate-required claim from game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp over the same 287-byte range. The game/gen_asm/d_00894a90.asm scaffold reproduces those bytes but carries no identity."
 ?forward@Rva0088CDC0Forwarder@@QAEPAV1@XZ,0x0088CDC0,renamed to ?forward@DebugStackwalk@@QAEPAV1@XZ by tools/name_lane.py: two models agreed
 ?finishState16@Rva56E070StateOwner@@QAEXXZ,0x0056D430,renamed to ?deleteSelectedFile@Rva56E070StateOwner@@QAEXXZ by tools/name_lane.py: two models agreed
+?bfmeGo1110B@BfmeV1110@@QAEXXZ,0x000EF290,renamed to ?loadPostProcess@BfmeV1110@@QAEXXZ by tools/name_lane.py: two models agreed

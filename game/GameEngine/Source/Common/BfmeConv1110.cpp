@@ -75,7 +75,7 @@ struct BfmeM1110
 class BfmeV1110
 {
 public:
-	void bfmeGo1110B(void);
+	void loadPostProcess(void);
 	char m_bfmePad[4];
 	BfmeM1110 *m_bfme04;
 	char m_bfmePad1[8];
@@ -83,7 +83,7 @@ public:
 	unsigned int m_bfme14;
 };
 
-void BfmeV1110::bfmeGo1110B(void)
+void BfmeV1110::loadPostProcess(void)
 {
 	BfmeM1110 *h = m_bfme04;
 	BfmeM1110 *p;
