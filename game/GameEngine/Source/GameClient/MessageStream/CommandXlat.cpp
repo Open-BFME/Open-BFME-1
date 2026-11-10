@@ -627,7 +627,10 @@ void rva0052B2A0();
 void rva00569D80();
 void Rva004C1040(int);
 int Rva00459060(bool);
-int rva005A9B00(Object*,void*);
+// Retail passes the hero-search callback through ILT slot 0x28ACE, so the
+// table below names the thunk j_00028ace (reaching ?bfmeGo1000B at
+// 0x005A9B00) instead of spelling the target body.
+extern void j_00028ace();
 void pickAndPlayUnitVoiceResponse(const DrawableList*,GameMessage::Type,PickAndPlayInfo* = 0);
 
 class CommandTranslator { public:
@@ -648,8 +651,8 @@ static Object* iNeedAHero(Object* previous)
  Player* localPlayer=ThePlayerList->getLocalPlayer();
  if(!localPlayer) return 0;
  HeroHolder holder; holder.hero=0; holder.previous=previous;
- localPlayer->iterateObjects(rva005A9B00,&holder);
- if(!holder.hero && previous) { holder.previous=0; localPlayer->iterateObjects(rva005A9B00,&holder); }
+ localPlayer->iterateObjects(reinterpret_cast<int (*)(Object*,void*)>(j_00028ace),&holder);
+ if(!holder.hero && previous) { holder.previous=0; localPlayer->iterateObjects(reinterpret_cast<int (*)(Object*,void*)>(j_00028ace),&holder); }
  return holder.hero;
 }
 
