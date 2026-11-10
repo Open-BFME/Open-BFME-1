@@ -41,12 +41,18 @@ template<> _Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _Identity<Gen_t_009ee8
 }
 typedef _STL::_Rb_tree<Gen_t_009ee8e0_k4, Gen_t_009ee8e0_k4, _STL::_Identity<Gen_t_009ee8e0_k4>, _STL::less<Gen_t_009ee8e0_k4>, _STL::allocator<Gen_t_009ee8e0_k4> > Q1ReceiverTree;
 
+void j_00015d7a();
+
 struct Q1ReceiverKeySetCopy
 {
 	__forceinline Q1ReceiverKeySetCopy(const Q1ReceiverSet &source) { ::new (m_storage) Q1ReceiverTree(*(const Q1ReceiverTree *)&source); }
 	~Q1ReceiverKeySetCopy()
 	{
-		get().~Q1ReceiverKeySet();
+		// Use the same witnessed tree teardown as assetmanager_impl.cpp.
+		typedef void (Q1ReceiverKeySet::*TreeDestructor)();
+		union { void (*raw)(); TreeDestructor member; } destroy;
+		destroy.raw = j_00015d7a;
+		(get().*destroy.member)();
 	}
 	Q1ReceiverKeySet &get() { return *(Q1ReceiverKeySet *)m_storage; }
 	int m_storage[sizeof(Q1ReceiverKeySet) / sizeof(int)];
