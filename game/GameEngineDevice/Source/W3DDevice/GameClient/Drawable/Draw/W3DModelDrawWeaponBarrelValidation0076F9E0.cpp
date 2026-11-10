@@ -62,11 +62,16 @@ struct Rva0075B660State
 class GameLogic;
 extern GameLogic *TheGameLogic;
 #define TheBfmeGameLogic ( reinterpret_cast<Rva0075B660Logic *>( TheGameLogic ) )
-extern Rva0075B660State *TheGameState;
+// Retail 0x012EF190 is EA's GameState *TheGameState, defined once in
+// game/GameEngine/Source/Common/System/SaveGame/GameState.cpp. The struct
+// above is this TU's local ABI view of the flag it reads, cast to at the
+// use; the cast is a no-op, so the bytes are unchanged.
+class GameState;
+extern GameState *TheGameState;
 
 inline Bool isValidTimeToCalcLogicStuff()
 {
-	return (TheBfmeGameLogic && TheBfmeGameLogic->m_flag) || (TheGameState && TheGameState->m_flag);
+	return (TheBfmeGameLogic && TheBfmeGameLogic->m_flag) || (TheGameState && ((Rva0075B660State *)TheGameState)->m_flag);
 }
 
 enum { WEAPONSLOT_COUNT = 4 };
@@ -239,7 +244,7 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 
 	if (TheBfmeGameLogic == 0 || !TheBfmeGameLogic->m_flag)
 	{
-		if (TheGameState == 0 || !TheGameState->m_flag)
+		if (TheGameState == 0 || !((Rva0075B660State *)TheGameState)->m_flag)
 			return;
 	}
 
