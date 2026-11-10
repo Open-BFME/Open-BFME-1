@@ -7854,3 +7854,4 @@ game/GameEngine/Source/Common/Rva00477E20Walk.cpp|local|Rva00477E20::walk|p,6581
 game/GameEngine/Source/Common/BfmeConv1134.cpp|member||m_bfme18,2a2a9fd5423f0dc1b3526d56,claude-sonnet,20261110092609-d8baa2,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/Rva002D3080Destructor.cpp|member||m_field2c,9b415cf9913ec234b2cc2e66,claude-sonnet,20261110092739-816fc9,2026-11-10
 game/GameEngine/Source/Common/INI/AudioEventInfoConstructor.cpp|member||m_84,658c095a816747d6e85c0b3c,claude-sonnet,20261110092739-c63dba,2026-11-10
+game/GameEngine/Source/GameLogic/LivingWorld/ArmyObjectSpawner00363E30.cpp|type||Player363E30,39cd803e322cd60d661e740a,claude-sonnet,20261110093217-1f290d,2026-11-10
