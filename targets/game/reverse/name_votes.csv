@@ -7981,3 +7981,4 @@ game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,6467e6b
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,725cc4ffd8dfd38b05023819,claude-sonnet,20261110105054-cbf4b4,2026-11-10
 game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,6467e6b71bdc9f483715798b,claude-sonnet,20261110105054-cbf4b4,2026-11-10
 game/GameEngine/Source/Common/BfmeConv991.cpp|type||BfmeB991,9d737297165d9a0ee5e203f7,claude-sonnet,20261110105017-eb2679,2026-11-10
+game/GameEngine/Source/GameClient/SubsystemRefreshCallbacks.cpp|param|d_001072a0|a3,9447eb8cb967f16cdcaa1b28,claude-sonnet,20261110105454-b9f789,2026-11-10
