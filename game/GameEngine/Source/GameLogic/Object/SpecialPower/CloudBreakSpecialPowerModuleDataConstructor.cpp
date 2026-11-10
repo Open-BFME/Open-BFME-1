@@ -50,16 +50,16 @@ public:
 	CloudBreakSpecialPowerModuleData();
 
 private:
-	float m_unmodelled_210;						// +0x210
-	unsigned int m_unmodelled_214;				// +0x214
+	float m_cloudBreakRadius;						// +0x210
+	unsigned int m_cloudBreakFX;				// +0x214
 	BfmeZeroedWord m_unmodelled_218;			// +0x218
-	float m_unmodelled_21C;						// +0x21C
+	float m_objectSpacing;						// +0x21C
 };
 
 // ??0CloudBreakSpecialPowerModuleData@@QAE@XZ
 CloudBreakSpecialPowerModuleData::CloudBreakSpecialPowerModuleData()
 {
-	m_unmodelled_214 = 0;
-	m_unmodelled_210 = 10.0f;
-	m_unmodelled_21C = 100.0f;
+	m_cloudBreakFX = 0;
+	m_cloudBreakRadius = 10.0f;
+	m_objectSpacing = 100.0f;
 }
