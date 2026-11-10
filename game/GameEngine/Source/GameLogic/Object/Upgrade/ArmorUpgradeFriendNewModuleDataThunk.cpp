@@ -22,8 +22,8 @@ class ArmorUpgradeModuleData
 public:
 	ArmorUpgradeModuleData()
 	{
-		m_70 = 0;
-		m_71 = 0;
+		m_killArmorUpgrade = 0;
+		m_ignoreArmorUpgrade = 0;
 		m_74 = 3;
 	}
 	virtual void dummy();
@@ -31,8 +31,8 @@ public:
 private:
 	int m_pad;
 	char m_sub_space[0x68];
-	unsigned char m_70;
-	unsigned char m_71;
+	unsigned char m_killArmorUpgrade;
+	unsigned char m_ignoreArmorUpgrade;
 	unsigned char m_pad72;
 	unsigned char m_pad73;
 	unsigned int m_74;
