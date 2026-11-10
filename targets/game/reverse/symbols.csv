@@ -11324,6 +11324,7 @@ name,address,notes
 ??_C@_06FMPMFLCI@Alpha2?$AA@,0x00D1334C,Retail DefaultModuleTemplate00FieldParse table VA 0x01113360 entry; compiler string literal Alpha2 equals retail at VA 0x0111334C
 ??_C@_06FNBLLMNB@KEY_F3?$AA@,0x00CFEE98,Keyboard lookup literal; complete NUL bytes and table pointer verified; evidence=targets/game/reverse/identity_evidence/010fe7e0-keyboard-lookup-arrays.md
 ??_C@_06FOBHKECC@EATING?$AA@,0x00C7401C,Retail model-condition name table RVA 0x00EA6918 slot 237 points to VA 0x0107401C; full compiler literal EATING including NUL equals retail
+??_C@_06GDFMINGC@FXList?$AA@,0x00CC2A04,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C2A04
 ??_C@_06GEGEEKND@RIDER3?$AA@,0x00C7341C,Retail model-condition name table RVA 0x00EA6918 slot 212 points to VA 0x0107341C; full compiler literal RIDER3 including NUL equals retail
 ??_C@_06GLDDLHNF@malloc?$AA@,0x01132BE8,retail rdata literal "malloc"; dword 0 of the allocator source-name table at VA 0x012D4D14
 ??_C@_06GLFAGHLM@Color2?$AA@,0x00D1344C,DefaultModuleTemplate0AFieldParse entry; compiler string literal Color2 equals retail at VA 0x0111344C
@@ -11566,6 +11567,7 @@ name,address,notes
 ??_C@_0BA@IAEGFOEI@TransitionToOCL?$AA@,0x00D14DCC,Retail TerrainRoadType::m_terrainBridgeFieldParseTable table VA 0x01114BF0 entry; compiler string literal TransitionToOCL equals retail at VA 0x01114DCC
 ??_C@_0BA@ICAFPBII@SoundsExtension?$AA@,0x00C826EC,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal SoundsExtension equals retail at VA 0x010826EC
 ??_C@_0BA@IMDENKAG@SPECIAL_POWER_1?$AA@,0x00C7424C,Retail model-condition name table RVA 0x00EA6918 slot 200 points to VA 0x0107424C; full compiler literal SPECIAL_POWER_1 including NUL equals retail
+??_C@_0BA@JFAPFBFH@CollapseDamping?$AA@,0x00CC4778,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C4778
 ??_C@_0BA@JKMFNOEK@OCLSpecialPower?$AA@,0x00C8FA28,pool-glue cascade static (back-solved)
 ??_C@_0BA@JNNPLMMN@MovieNameRepeat?$AA@,0x00D17188,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal MovieNameRepeat equals retail at VA 0x01117188
 ??_C@_0BA@KDJDACMK@BridgeModelName?$AA@,0x00D14F18,Retail TerrainRoadType::m_terrainBridgeFieldParseTable table VA 0x01114BF0 entry; compiler string literal BridgeModelName equals retail at VA 0x01114F18
@@ -11618,10 +11620,12 @@ name,address,notes
 ??_C@_0BB@GCFOGMIG@STUNNED_FLAILING?$AA@,0x00C74790,Retail model-condition name table RVA 0x00EA6918 slot 120 points to VA 0x01074790; full compiler literal STUNNED_FLAILING including NUL equals retail
 ??_C@_0BB@GEDEDEOJ@DisableAddButton?$AA@,0x011051FC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00511260 calls; autopin
 ??_C@_0BB@GFABCPDN@3DBufferLengthMS?$AA@,0x00C82620,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal 3DBufferLengthMS equals retail at VA 0x01082620
+??_C@_0BB@GHIGCMKC@MinCollapseDelay?$AA@,0x00CC47A0,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C47A0
 ??_C@_0BB@GLCAHKMB@IgnoreIfUnitIdle?$AA@,0x00CEA684,Field-parse table VA 0x010EA6A8 (_bfmeInfoDCE) entry; compiler string literal IgnoreIfUnitIdle equals retail at VA 0x010EA684
 ??_C@_0BB@GMEPGHPB@AllowForestFires?$AA@,0x00C95184,Retail AI FieldParse table VA 0x01094B00 slot 53; complete compiler literal AllowForestFires including NUL equals retail at VA 0x01095184; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
 ??_C@_0BB@GMNHJEFA@WEAPONSET_RIDER4?$AA@,0x00C74168,Retail model-condition name table RVA 0x00EA6918 slot 221 points to VA 0x01074168; full compiler literal WEAPONSET_RIDER4 including NUL equals retail
 ??_C@_0BB@GPPINPJO@AutoHealBehavior?$AA@,0x00C90DC4,pool-glue cascade static (back-solved)
+??_C@_0BB@HCANPIFA@MaxCollapseDelay?$AA@,0x00CC478C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C478C
 ??_C@_0BB@HFJAMKDN@ExcludedUpgrades?$AA@,0x00D159D0,retail FieldParse table VA 0x011159E8 entry 1 token points to VA 0x011159D0; compiled ExcludedUpgrades literal and NUL equal retail; targets/game/reverse/identity_evidence/00d159e8-fieldparse-table.md
 ??_C@_0BB@HFMMKFBB@WEAPONSET_RIDER5?$AA@,0x00C74154,Retail model-condition name table RVA 0x00EA6918 slot 222 points to VA 0x01074154; full compiler literal WEAPONSET_RIDER5 including NUL equals retail
 ??_C@_0BB@HJJOAGF@ARMORSET_MOUNTED?$AA@,0x00C73C24,Retail model-condition name table RVA 0x00EA6918 slot 288 points to VA 0x01073C24; full compiler literal ARMORSET_MOUNTED including NUL equals retail
@@ -11685,6 +11689,7 @@ name,address,notes
 ??_C@_0BC@KNFJAPL@ShockWaveTaperOff?$AA@,0x00CCEB8C,Retail q4Fields002DD2B0 table VA 0x010CEE68 entry; compiler string literal ShockWaveTaperOff equals retail at VA 0x010CEB8C
 ??_C@_0BC@LDJBCEJE@NumberOfExitPaths?$AA@,0x00CAC534,Retail g_rva002284A0FieldParse table VA 0x010AC600 entry; compiler string literal NumberOfExitPaths equals retail at VA 0x010AC534
 ??_C@_0BC@LJIBFNEH@EXPLODED_BOUNCING?$AA@,0x00C747F8,Retail model-condition name table RVA 0x00EA6918 slot 114 points to VA 0x010747F8; full compiler literal EXPLODED_BOUNCING including NUL equals retail
+??_C@_0BC@MACNJLED@BigBurstFrequency?$AA@,0x00CC2A0C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C2A0C
 ??_C@_0BC@MODJKHLA@MeleeApproachDist?$AA@,0x00C95294,Retail AI FieldParse table VA 0x01094B00 slot 42; complete compiler literal MeleeApproachDist including NUL equals retail at VA 0x01095294; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
 ??_C@_0BC@NANOEGMF@PlaceRemoteCharge?$AA@,0x00D0CEEC,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal PlaceRemoteCharge equals retail at VA 0x0110CEEC
 ??_C@_0BC@NELPMPMJ@AICrushesInfantry?$AA@,0x00C952C8,Retail AI FieldParse table VA 0x01094B00 slot 40; complete compiler literal AICrushesInfantry including NUL equals retail at VA 0x010952C8; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
@@ -11853,6 +11858,7 @@ name,address,notes
 ??_C@_0BG@IMEHLINO@AudioFootprintInBytes?$AA@,0x00C82440,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal AudioFootprintInBytes equals retail at VA 0x01082440
 ??_C@_0BG@IMKHEHAO@MapToCellVictoryRatio?$AA@,0x00C9FD04,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MapToCellVictoryRatio equals retail at VA 0x0109FD04
 ??_C@_0BG@IOIFGFBJ@ModelConditionUpgrade?$AA@,0x00C8FE84,pool-glue cascade static (back-solved)
+??_C@_0BG@IOIJPGDH@DestroyObjectWhenDone?$AA@,0x00CC475C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C475C
 ??_C@_0BG@JHIKHCIG@ForceResetTimeSeconds?$AA@,0x00C82530,Retail AudioSettings field-parse table VA 0x01081D60 entry; compiler string literal ForceResetTimeSeconds equals retail at VA 0x01082530
 ??_C@_0BG@JOFMKJEF@WEAPONSET_SPECIAL_TWO?$AA@,0x00C740E0,Retail model-condition name table RVA 0x00EA6918 slot 227 points to VA 0x010740E0; full compiler literal WEAPONSET_SPECIAL_TWO including NUL equals retail
 ??_C@_0BG@LBHIPLGI@StructuresWealthyRate?$AA@,0x00C9564C,Retail AI FieldParse table VA 0x01094B00 slot 5; complete compiler literal StructuresWealthyRate including NUL equals retail at VA 0x0109564C; evidence build/rlink/ai-fieldparse-1791427446/retail-initializer-and-abi-fixed.log; model=gpt-6.1-sol
@@ -12057,6 +12063,7 @@ name,address,notes
 ??_C@_0L@EDKEELDK@JUST_BUILT?$AA@,0x00C741D0,Retail model-condition name table RVA 0x00EA6918 slot 207 points to VA 0x010741D0; full compiler literal JUST_BUILT including NUL equals retail
 ??_C@_0L@EJHBNMOF@GARRISONED?$AA@,0x00C74FE8,Retail model-condition name table RVA 0x00EA6918 slot 10 points to VA 0x01074FE8; full compiler literal GARRISONED including NUL equals retail
 ??_C@_0L@EMJDLGGO@JETEXHAUST?$AA@,0x00C74978,Retail model-condition name table RVA 0x00EA6918 slot 92 points to VA 0x01074978; full compiler literal JETEXHAUST including NUL equals retail
+??_C@_0L@EPAGNNML@MaxShudder?$AA@,0x00CC2A24,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C2A24
 ??_C@_0L@FBGKLDLL@RadarColor?$AA@,0x00D14F58,Retail TerrainRoadType::m_terrainBridgeFieldParseTable table VA 0x01114BF0 entry; compiler string literal RadarColor equals retail at VA 0x01114F58
 ??_C@_0L@FHOGABNM@DECELERATE?$AA@,0x00C74728,Retail model-condition name table RVA 0x00EA6918 slot 128 points to VA 0x01074728; full compiler literal DECELERATE including NUL equals retail
 ??_C@_0L@GCMPMCJD@StabAttack?$AA@,0x00D0CF04,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal StabAttack equals retail at VA 0x0110CF04
@@ -12195,6 +12202,7 @@ name,address,notes
 ??_C@_0O@EDHCOIJF@SetRallyPoint?$AA@,0x00D0CFA8,Retail cursor INI name table VA 0x012B85D0 entry; compiler string literal SetRallyPoint equals retail at VA 0x0110CFA8
 ??_C@_0O@EELGEOIA@Vertex10Color?$AA@,0x00CF6EE4,Retail Water field-parse table entry; compiler string literal Vertex10Color equals retail at VA 0x010F6EE4
 ??_C@_0O@EHIPKCAH@DriftVelocity?$AA@,0x00D1458C,DefaultModuleTemplate02FieldParse entry; compiler string literal DriftVelocity equals retail at VA 0x0111458C
+??_C@_0O@FAMOAJPN@MaxBurstDelay?$AA@,0x00CC2A5C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C2A5C
 ??_C@_0O@FCNFICKC@CASTLE_UNPACK?$AA@,0x00CFB070,Retail command-name table VA 0x012B5F80 entry; compiler string literal CASTLE_UNPACK equals retail at VA 0x010FB070
 ??_C@_0O@FFEDGHGL@EMOTION_ALERT?$AA@,0x00C74B90,Retail model-condition name table RVA 0x00EA6918 slot 62 points to VA 0x01074B90; full compiler literal EMOTION_ALERT including NUL equals retail
 ??_C@_0O@FIFJMDBD@RECHARGE_TIME?$AA@,0x00C750CC,Retail attribute-name table VA 0x012B4040 entry; compiler string literal RECHARGE_TIME equals retail at VA 0x010750CC
@@ -12227,6 +12235,7 @@ name,address,notes
 ??_C@_0O@ODNBMFNI@EndOfCampaign?$AA@,0x00D17030,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal EndOfCampaign equals retail at VA 0x01117030
 ??_C@_0O@OFAMBFFK@SPECIAL_POWER?$AA@,0x00CFB12C,Retail command-name table VA 0x012B5F80 entry; compiler string literal SPECIAL_POWER equals retail at VA 0x010FB12C
 ??_C@_0O@OINDDPDM@StructureBody?$AA@,0x00C8FB64,pool-glue cascade static (back-solved)
+??_C@_0O@OJOIJCIM@MinBurstDelay?$AA@,0x00CC2A6C,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C2A6C
 ??_C@_0O@OKAIDBNH@EMOTION_COWER?$AA@,0x00C742A8,Retail model-condition name table RVA 0x00EA6918 slot 195 points to VA 0x010742A8; full compiler literal EMOTION_COWER including NUL equals retail
 ??_C@_0O@OOOFGBDO@TextureBroken?$AA@,0x00D14E7C,Retail TerrainRoadType::m_terrainBridgeFieldParseTable table VA 0x01114BF0 entry; compiler string literal TextureBroken equals retail at VA 0x01114E7C
 ??_C@_0O@PGPJPLGP@ResourceBonus?$AA@,0x00D17040,Field-parse table VA 0x01116D70 (_bfmeInfoDCG) entry; compiler string literal ResourceBonus equals retail at VA 0x01117040
@@ -12294,6 +12303,7 @@ name,address,notes
 ??_C@_0P@JOEJIHOP@UNCONTROLLABLE?$AA@,0x00C73CD0,Retail model-condition name table RVA 0x00EA6918 slot 281 points to VA 0x01073CD0; full compiler literal UNCONTROLLABLE including NUL equals retail
 ??_C@_0P@JOPFKPGC@MajorUnitValue?$AA@,0x00C9FCF0,FactionVictoryData field-parse table VA 0x0109FBC8 entry; compiler string literal MajorUnitValue equals retail at VA 0x0109FCF0
 ??_C@_0P@KAPKOOJL@EXIT_CONTAINER?$AA@,0x00CFB1B4,Retail command-name table VA 0x012B5F80 entry; compiler string literal EXIT_CONTAINER equals retail at VA 0x010FB1B4
+??_C@_0P@LGFNFAFL@CollapseHeight?$AA@,0x00CC4748,Retail StructureCollapse field table VA 0x010C47B8 entry; compiler string literal equals retail at VA 0x010C4748
 ??_C@_0P@LIEMJFMM@DOOR_3_OPENING?$AA@,0x00C74E28,Retail model-condition name table RVA 0x00EA6918 slot 29 points to VA 0x01074E28; full compiler literal DOOR_3_OPENING including NUL equals retail
 ??_C@_0P@LMGONLLG@LOOP_BACKWARDS?$AA@,0x00D0F1F8,Retail anim-mode name table VA 0x012BB5BC entry; compiler string literal LOOP_BACKWARDS equals retail at VA 0x0110F1F8
 ??_C@_0P@LMLJEFPB@DOOR_1_OPENING?$AA@,0x00C74EE0,Retail model-condition name table RVA 0x00EA6918 slot 21 points to VA 0x01074EE0; full compiler literal DOOR_1_OPENING including NUL equals retail
