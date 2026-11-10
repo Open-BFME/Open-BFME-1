@@ -7976,3 +7976,5 @@ game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme068,ab7213d3342fe60
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme08c,7b319c797e3b22465ac7bbdc,claude-sonnet,20261110104245-bbe946,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfmeb8c,cdc0a2106068c6f049387519,claude-sonnet,20261110104245-bbe946,2026-11-10
 game/GameEngine/Source/Common/Rva001B74A0Ctor.cpp|member||m_18,c51329c85d1b5e23b76c0c78,claude-sonnet,20261110104556-cf7e00,2026-11-10
+game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,725cc4ffd8dfd38b05023819,claude-sonnet,20261110104803-328811,2026-11-10
+game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,6467e6b71bdc9f483715798b,claude-sonnet,20261110104803-328811,2026-11-10

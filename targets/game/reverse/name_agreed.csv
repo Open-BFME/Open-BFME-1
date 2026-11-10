@@ -3116,3 +3116,5 @@ game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme065,m_useShadowDeca
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme068,m_textureReductionFactor,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfme08c,m_showSoftWaterEdge,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeConv1144.cpp|member||m_bfmeb8c,m_maxParticleCount,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeAt,m_begin,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/BfmeThreeHundredFive.cpp|member||m_bfmeEnd,m_end,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
