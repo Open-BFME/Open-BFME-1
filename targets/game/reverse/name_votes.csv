@@ -7895,3 +7895,4 @@ game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorTh
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_18,0e4113b8a2237745c58c11c2,claude-sonnet,20261110095519-95313f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_1c,0fc14fe528c5d53f092c3964,claude-sonnet,20261110095519-95313f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/AutoDepositUpdateModuleDataCtorThunk.cpp|member||m_14,03464242a3a76fd12de44ee8,claude-sonnet,20261110095823-cce8e8,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewResetBfme.cpp|member||m_field24AC,0807c597d1d2a1c17e913c3b,claude-sonnet,20261110095836-99fa5f,2026-11-10
