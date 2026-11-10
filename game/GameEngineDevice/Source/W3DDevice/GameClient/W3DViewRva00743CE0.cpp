@@ -94,7 +94,13 @@ public:
 	virtual void slot03(); virtual void slot04(); virtual void slot05();
 	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal) const;	// +0x18
 };
-extern Rva003FD060TerrainLogic *TheTerrainLogic;
+// The global at 0x012EF4CC is EA's TerrainLogic *TheTerrainLogic
+// (?TheTerrainLogic@@3PAVTerrainLogic@@A), defined in
+// game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp. The struct above is
+// this TU's local ABI view of the slots it calls, cast to at the use; the cast
+// is a no-op, so the bytes are unchanged.
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
 extern const Real g_bfmeDirectionWeight1285;		// VA 0x01075C74, 10.0f
 extern Mouse *TheMouse;
 
@@ -404,7 +410,7 @@ void W3DView::rva0073D4C0()
 	Real height;
 	if (TheTerrainLogic)
 	{
-		height = TheTerrainLogic->getGroundHeight(m_pos.x, m_pos.y, 0);
+		height = ((Rva003FD060TerrainLogic *)TheTerrainLogic)->getGroundHeight(m_pos.x, m_pos.y, 0);
 		if (height > 700.0f)
 			height = 700.0f;
 	}
