@@ -44,11 +44,11 @@ public:
 	char m_bfmeBuf[0x14];
 };
 
-char BfmeThingVFC::bfmeGoVFC(BfmeChunkVFC *c)
+char BfmeThingVFC::bfmeGoVFC(BfmeChunkVFC *cload)
 {
 	memset(m_bfmeBuf, 0, 0x14);
 	char r = 0;
-	if (c->bfmeReadVFC(m_bfmeBuf, 0x14) == 0x14)
+	if (cload->bfmeReadVFC(m_bfmeBuf, 0x14) == 0x14)
 		r = 1;
 	return r;
 }
