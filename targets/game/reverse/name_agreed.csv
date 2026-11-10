@@ -3101,3 +3101,4 @@ game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.c
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag11a,m_inheritsVeterancy,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_word11c,m_veterancyLevel,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameClient/MessageStream/HotKeyTranslator_translateGameMessage_Thunk.cpp|local|HotKeyTranslator::translateGameMessage|t,type,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameClient/MessageStream/HotKeyTranslator_translateGameMessage_Thunk.cpp|local|HotKeyTranslator::translateGameMessage|t,type,claude-sonnet+gpt-6.1-sol,applied,2026-11-10

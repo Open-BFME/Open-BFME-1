@@ -82,9 +82,9 @@ static __forceinline void setHotKey(UnicodeString &text, WideChar key)
 GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage *msg)
 {
     GameMessageDisposition disp = KEEP_MESSAGE;
-    GameMessage::Type t = msg->getType();
+    GameMessage::Type type = msg->getType();
 
-    if (t == GameMessage::MSG_RAW_KEY_UP)
+    if (type == GameMessage::MSG_RAW_KEY_UP)
     {
         Int keyState = msg->getArgument(1)->integer;
         Int newModState = 0;
