@@ -24,14 +24,13 @@ struct Region2D
 class Bridge
 {
 public:
-	void getBounds(Region2D *bounds) const;
-	
+	void getBoundsIlt(Region2D *bounds) const;
 };
 
 class PolygonTrigger : public Bridge
 {
 public:
-	Bool pointInTrigger(ICoord3D &point) const;
+	Bool pointInTriggerIlt(ICoord3D &point) const;
 };
 
 class PathfindCell
@@ -49,8 +48,18 @@ private:
 class PathfindZoneManager
 {
 public:
-	void markZonesDirty(const IRegion2D *bounds, Bool force);
+	void markZonesDirtyIlt(const IRegion2D *bounds, Bool force);
 };
+
+// Retail calls ILT 0x00015307, which the ledger defines as ?j_00015307@@YAXXZ.
+extern void j_00015307();
+typedef void (PathfindZoneManager::*MarkZonesDirtyIlt)(const IRegion2D *bounds, Bool force);
+// Retail calls ILT 0x0000FEE8 (getBounds) and ILT 0x0004AB6F (pointInTrigger), both defined in the ledger.
+extern void j_0000fee8();
+extern void j_0004ab6f();
+typedef void (Bridge::*GetBoundsIlt)(Region2D *bounds) const;
+typedef Bool (PolygonTrigger::*PointInTriggerIlt)(ICoord3D &point) const;
+template<class T> T iltMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 
 class Pathfinder
 {
@@ -69,7 +78,7 @@ void Pathfinder::setArea(PolygonTrigger *area, Bool blocked)
 {
 	Pathfinder *self = this;
 	IRegion2D bounds;
-	area->getBounds((Region2D *)&bounds);
+	(area->*iltMemberCall<GetBoundsIlt>(j_0000fee8))((Region2D *)&bounds);
 
 	bounds.loX /= 10;
 	bounds.loY /= 10;
@@ -90,7 +99,7 @@ void Pathfinder::setArea(PolygonTrigger *area, Bool blocked)
 		{
 			cellPos.y = cy * 10 + 5;
 
-			if (!area->pointInTrigger(cellPos))
+			if (!(area->*iltMemberCall<PointInTriggerIlt>(j_0004ab6f))(cellPos))
 				continue;
 
 			if (cx < self->m_extent.loX || cx > self->m_extent.hiX ||
@@ -115,5 +124,5 @@ void Pathfinder::setArea(PolygonTrigger *area, Bool blocked)
 	}
 
 	if (cellBounds.hiX != -1)
-		self->m_zoneManager.markZonesDirty(&cellBounds, false);
+		(self->m_zoneManager.*iltMemberCall<MarkZonesDirtyIlt>(j_00015307))(&cellBounds, false);
 }
