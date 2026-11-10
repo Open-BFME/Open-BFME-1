@@ -7955,3 +7955,14 @@ game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.c
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word1,820db2b9903afdc4bd41f082,claude-sonnet,20261110102948-af1ec2,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word2,29bbc3506348b9701ef4d093,claude-sonnet,20261110102948-af1ec2,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||word3,df951b908230e1a5dcdf4535,claude-sonnet,20261110102948-af1ec2,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag104,1cb52897cdc2ade463c6734c,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag109,d6aa325c0073bb22237bcdfc,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag10a,b6ef333c6480f49f5ebc4d52,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag114,0e2c742479ca8de080c69a23,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag115,ab198ed8758456ca9bf08bc1,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag116,d349ab5b975469df548e3d7f,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag117,e17082256d40a24092387fcf,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag118,a739282b506aaec162e84a0d,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag119,eccca7b48c482d2bf6eebcbb,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag11a,bcd983bf793a303545b97c45,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_word11c,0de16f82d41ac31c7c56a3a8,claude-sonnet,20261110102831-bbcf0f,2026-11-10
