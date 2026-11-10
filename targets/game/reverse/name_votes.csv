@@ -7863,3 +7863,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManag
 game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp|local|W3DProjectedShadowManager::createShadowPairRva007B4940|texture2,719c4eb3a0357772a505a2d9,claude-sonnet,20261110092338-cc88ac,2026-11-10
 game/GameEngine/Source/GameLogic/LivingWorld/Rva00618980.cpp|member||byte10,692735cee8535b443dbc4512,claude-sonnet,20261110092338-467298,2026-11-10
 game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp|member||m_valueAB4,8339559f47a71ff4dcdb2043,claude-sonnet,20261110092450-6d7c80,2026-11-10
+game/GameEngine/Source/GameNetwork/Rva007FA6C0Open.cpp|local|Rva007FA6C0::openHost|b,d1fc731ea6ff5214c3602ebd,claude-sonnet,20261110092450-9dbfff,2026-11-10
