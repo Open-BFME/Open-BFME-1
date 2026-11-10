@@ -91,12 +91,12 @@ public:
 	virtual ~Rva002D3080();
 
 private:
-	unsigned int m_field2c;
+	unsigned int m_audioHandle;
 };
 
 // ??1Rva002D3080@@UAE@XZ
 Rva002D3080::~Rva002D3080()
 {
 	if (TheAudio)
-		((AudioClientUpdateSub *)TheAudio)->removeAudioEvent(m_field2c);
+		((AudioClientUpdateSub *)TheAudio)->removeAudioEvent(m_audioHandle);
 }
