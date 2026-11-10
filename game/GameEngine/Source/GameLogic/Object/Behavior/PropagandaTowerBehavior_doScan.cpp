@@ -201,7 +201,12 @@ public:
 	BfmeWideResult bfmeForwardWideC( int, int, int, int, int );
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail 0x012ED5B8 is EA's PartitionManager *ThePartitionManager, defined
+// once in game/GameEngine/Source/GameLogic/Object/PartitionManager.cpp.
+// The class above is this TU's local ABI view of the call it makes, cast
+// to at the use; the cast is a no-op, so the bytes are unchanged.
+class PartitionManager;
+extern PartitionManager *ThePartitionManager;
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<int>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
@@ -304,7 +309,7 @@ void PropagandaTowerBehavior::doScan()
 	else
 		FXList::doFXObj( modData->m_pulseFX, us );
 
-	BfmeWideResult hits = ThePartitionManager->bfmeForwardWideC(
+	BfmeWideResult hits = ((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
 		(int)us->getPosition(), *(const int *)&modData->m_scanRadius, 0,
 		(int)PartitionFilterRelationship( us, 4, false ).link(
 			Rva0025ED50RootFilter().link(
