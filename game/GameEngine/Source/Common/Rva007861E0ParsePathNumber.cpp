@@ -26,12 +26,12 @@ struct Rva007861E0Text
 	const char *reverseFind(char c) const
 	{
 		const char *start = str();
-		const char *p = start + (m_data ? m_data->length : 0);
-		while (p != start)
+		const char *cursor = start + (m_data ? m_data->length : 0);
+		while (cursor != start)
 		{
-			--p;
-			if (*p == c)
-				return p;
+			--cursor;
+			if (*cursor == c)
+				return cursor;
 		}
 		return 0;
 	}

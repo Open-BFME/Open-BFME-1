@@ -3235,3 +3235,4 @@ game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,m_ai,claude-
 game/GameEngine/Source/Common/BfmeSettingsCopyWW.cpp|type||BfmeStrWW,AsciiString,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeSettingsCopyWW.cpp|type||BfmeStrWW,AsciiString,claude-sonnet+gpt-6.1-sol,blocked: hook: skipped 2: base class of unknown size | game/GameEngine/Source/Common/BfmeSettingsCopyWW.cpp: declares its own `AsciiString`; include game/Libra,2026-11-10
 game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p,cursor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p,cursor,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
