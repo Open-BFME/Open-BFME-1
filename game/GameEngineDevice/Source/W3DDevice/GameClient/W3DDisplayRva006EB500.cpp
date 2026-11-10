@@ -284,7 +284,13 @@ struct Rva00367E30Logic
 	char m_pad000[0x11d];
 	Bool m_renderFlag;
 };
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012F0898 is EA's GameLogic *TheGameLogic, defined once in
+// game/GameEngine/Source/GameLogic/System/GameLogic.cpp. The struct above
+// is this TU's local ABI view of the flag it reads, cast to at the use;
+// the cast is a no-op, so the bytes are unchanged. The two direct calls
+// already go through their own receiver views.
+class GameLogic;
+extern GameLogic *TheGameLogic;
 
 class BfmeGameLogicPause { public: Bool isGamePaused(void); };
 class GameLogic { public: Bool rva000652A0(void) const; };
@@ -510,7 +516,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 
 	if (DX8Wrapper::_Get_D3D_Device8() && DX8Wrapper::_Get_D3D_Device8()->TestCooperativeLevel() == 0)
 	{
-		if (!TheBfmeGameLogic->m_renderFlag)
+		if (!((Rva00367E30Logic *)TheGameLogic)->m_renderFlag)
 		{
 			updateViews();
 			Rva00755C80();
@@ -616,7 +622,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 			TheInGameUI->slot130();
 		if (!TheInGameUI->slot154())
 		{
-			if (((Rva003968A0 *)Glo012F1028)->test() || ((GameLogic *)TheBfmeGameLogic)->rva000652A0())
+			if (((Rva003968A0 *)Glo012F1028)->test() || TheGameLogic->rva000652A0())
 			{
 				if (m_13c)
 				{
@@ -637,7 +643,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 	}
 
 	if (TheScriptEngine->frozenPair006EB500() ||
-		((Rva00336EF0ByteField *)TheScriptEngine)->get() || ((BfmeGameLogicPause *)TheBfmeGameLogic)->isGamePaused())
+		((Rva00336EF0ByteField *)TheScriptEngine)->get() || ((BfmeGameLogicPause *)TheGameLogic)->isGamePaused())
 		return false;
 	return true;
 }
