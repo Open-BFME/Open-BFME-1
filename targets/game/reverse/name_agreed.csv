@@ -3064,3 +3064,7 @@ game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,flags,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB0D0AI,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,flags,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|x,startX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|y,startY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|x1,endX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|y1,endY,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10

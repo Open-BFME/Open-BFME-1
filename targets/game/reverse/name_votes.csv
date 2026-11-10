@@ -7940,3 +7940,7 @@ game/GameEngine/Source/Common/BfmeConv894.cpp|function|BfmeThingFEC@|bfmeGoFEC,e
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB0D0AI,6aa2622893b16a0a62d2d456,claude-sonnet,20261110102652-09e204,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,a4c85ca9af01c0c2e152e54c,claude-sonnet,20261110102652-09e204,2026-11-10
 game/GameEngine/Source/Common/BfmeConv894.cpp|function|BfmeThingFEC@|bfmeGoFEC,eb179ce9b3e56f8e8ffe6b6f,claude-sonnet,20261110102809-62cf61,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|x,680be5554d2461274358deb4,claude-sonnet,20261110103327-734898,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|y,25be64ae2164de156ebc89ee,claude-sonnet,20261110103327-734898,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|x1,b9ba9739f646de7739096afd,claude-sonnet,20261110103327-734898,2026-11-10
+game/GameEngine/Source/GameClient/GUI/ScoreScaleUpTransition_draw.cpp|local|ScoreScaleUpTransition::draw|y1,2a2262bd3e27844012bf4efc,claude-sonnet,20261110103327-734898,2026-11-10
