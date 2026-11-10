@@ -7877,3 +7877,6 @@ game/GameEngine/Source/Common/INI/AudioEventInfoCopy.cpp|member||m_word7c,dca953
 game/GameEngine/Source/Common/BfmeConv1351.cpp|param|BfmeThingVFC::bfmeGoVFC|c,b32b2cd8ed023a293a2976cc,claude-sonnet,20261110093325-c9b77a,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot70,a1176cb91b2b14bc78159639,claude-sonnet,20261110093325-794af8,2026-11-10
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot74,a2664df445358902834ac8a1,claude-sonnet,20261110093325-794af8,2026-11-10
+game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value00,b89fdc37732f1365e030a06a,claude-sonnet,20261110094655-0c2e05,2026-11-10
+game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value04,ae25e10754b8bdca46ae2cda,claude-sonnet,20261110094655-0c2e05,2026-11-10
+game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value08,b24601e1454f20f612dce54e,claude-sonnet,20261110094655-0c2e05,2026-11-10
