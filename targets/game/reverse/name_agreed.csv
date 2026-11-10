@@ -2967,3 +2967,4 @@ game/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorModuleDataCtorThun
 game/GameEngine/Source/Common/LadderPreferences_loadProfile_Bfme.cpp|local|LadderPreferences::loadProfile|p,ladderPref,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,m_count,claude-sonnet+gpt-6-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/LadderPreferences_loadProfile_Bfme.cpp|local|LadderPreferences::loadProfile|p,ladderPref,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,m_count,claude-sonnet+gpt-6-sol,applied,2026-11-10

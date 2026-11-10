@@ -27,7 +27,7 @@ struct Rva008B4370Owner
 
 struct Rva008AE770Stack
 {
-	int field00;
+	int m_count;
 	int m_rva0133874C;
 	AptValue** m_rva01338750;
 };
@@ -38,7 +38,7 @@ AptValue *aptSetPackedChannels008B4370(Rva008B4370Owner *self, int argc)
 {
     Rva008AE770Stack& stk = Rva008AE770TheStack;
     AptValue** args = stk.m_rva01338750;
-    AptValue *value = args[stk.field00 - 1];
+    AptValue *value = args[stk.m_count - 1];
     BfmeSlotState1289 *state = self->m_state;
     if (state)
     {
