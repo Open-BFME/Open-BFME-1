@@ -7966,3 +7966,4 @@ game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.c
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag119,eccca7b48c482d2bf6eebcbb,claude-sonnet,20261110102831-bbcf0f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_flag11a,bcd983bf793a303545b97c45,claude-sonnet,20261110102831-bbcf0f,2026-11-10
 game/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetConstructor.cpp|member||m_word11c,0de16f82d41ac31c7c56a3a8,claude-sonnet,20261110102831-bbcf0f,2026-11-10
+game/GameEngine/Source/GameClient/MessageStream/HotKeyTranslator_translateGameMessage_Thunk.cpp|local|HotKeyTranslator::translateGameMessage|t,c815c0a74541ae07f04de77f,claude-sonnet,20261110103517-bddb27,2026-11-10
