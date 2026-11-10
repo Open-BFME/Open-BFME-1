@@ -113,7 +113,8 @@ struct BfmeLookupString008ACCF0;
 struct BfmeLookupObject008ACCF0;
 // Root scratch: typed calls through existing generated ILT/body rows; no
 // helper identity or new pin is claimed.
-extern void d_008accf0(void);
+// Retail 0x008ACCF0 (BfmeLookup008ACCF0.cpp), called directly.
+int bfmeLookup008ACCF0(BfmeLookupObject008ACCF0 *object, BfmeLookupString008ACCF0 *key, unsigned char include);
 extern void d_008a18c0(void);
 
 struct Rva008AE770Stack
@@ -139,16 +140,8 @@ int rva008AE490(void *context, int value)
 	Rva8CD130String name;
 	top->getName(&name);
 	int lookup;
-		{
-			typedef int (__cdecl *LookupThunk)(void *, void *, unsigned char);
-			union
-			{
-				void (*raw)(void);
-				LookupThunk typed;
-			} thunk;
-			thunk.raw = d_008accf0;
-			lookup = thunk.typed(context, &name, 1);
-		}
+	lookup = bfmeLookup008ACCF0((BfmeLookupObject008ACCF0 *)context,
+		(BfmeLookupString008ACCF0 *)&name, 1);
 	if (lookup != 0)
 	{
 		Rva8CD130String secondName;

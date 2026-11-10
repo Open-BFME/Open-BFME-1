@@ -38166,7 +38166,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_008a25c0@@YAXXZ,,0x008A25C0,1454,game/gen_asm/d_008a0830.asm,matched,gen-dump;ghidra=FUN_00ca25c0
 ?d_008aa650@@YAXXZ,,0x008AA650,1219,game/gen_asm/d_008a9710.asm,matched,gen-dump;ghidra=FUN_00caa650
 ?d_008acac0@@YAXXZ,,0x008ACAC0,551,game/GameEngine/Source/Common/Rva008ACAC0GlobalReleases.cpp,matched,no commas
-?d_008accf0@@YAXXZ,,0x008ACCF0,203,game/gen_asm/d_008a9710.asm,matched,gen-dump;ghidra=FUN_00caccf0
 ?d_008b06c0@@YAXXZ,,0x008B06C0,730,game/gen_asm/d_008af650.asm,matched,gen-dump;ghidra=FUN_00cb06c0
 ?d_008b0b00@@YAXXZ,,0x008B0B00,50,game/gen_asm/d_008af650.asm,matched,gen-dump;ghidra=FUN_00cb0b00
 ?d_008b0b32@@YAXXZ,,0x008B0B32,433,game/gen_asm/d_008af650.asm,matched,gen-dump;ghidra=FUN_00cb0b32
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ??1InGameUI@@UAE@XZ,,0x0044AE70,936,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,InGameUI destructor as real C++ replacing the naked lift; ilt_oracle CONFIRMED; member container instantiations and clear helpers bound by ILT-confirmed names;model=claude-opus-5-5;host=vm
 ?onDamage@BridgeTowerBehavior@@UAEXPAVDamageInfo@@@Z,,0x001F6250,514,game/GameEngine/Source/GameLogic/Object/Behavior/BridgeTowerBehaviorOnDamage.cpp,matched,ZH BridgeTowerBehavior::onDamage; ilt_oracle CONFIRMED; template reached through ZH OVERRIDE operator-> with one inlined getFinalOverride level;model=claude-opus-5-5;host=vm
 ?update@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ,,0x0017C250,979,game/GameEngine/Source/GameLogic/AI/AIAttackFireWeaponStateUpdateThunk.cpp,matched,AIAttackFireWeaponState::update as real C++ replacing the naked lift; ilt_oracle CONFIRMED; BFME 2 donor goal-position copy; possible-to-attack filter through its ZH constructor;model=claude-opus-5-5;host=vm
+?bfmeLookup008ACCF0@@YAHPAUBfmeLookupObject008ACCF0@@PAUBfmeLookupString008ACCF0@@E@Z,,0x008ACCF0,203,game/Libraries/Source/Apt/BfmeLookup008ACCF0.cpp,matched,Apt two-table key lookup walked up the object chain; BFME 2 donor shared-counter shape; address-derived name;model=claude-opus-5-5;host=vm
