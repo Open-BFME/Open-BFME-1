@@ -34,7 +34,7 @@ struct Rva00511430OutElse
 // address); the retail bytes are the NUL-terminated literals "GameChat"
 // and "Buddy".
 extern const Rva00511430OutElse g_Va011052B8;
-extern const Rva00511430Out3 g_011052C4;
+extern const Rva00511430Out3 g_Va011052C4;
 
 // ?fill@Rva00511430Host@@QAEXPAX0E@Z
 void Rva00511430Host::fill(void *guard, void *out, unsigned char flag)
@@ -46,8 +46,8 @@ void Rva00511430Host::fill(void *guard, void *out, unsigned char flag)
 	if (m_25C == 3)
 	{
 		Rva00511430Out3 *d = (Rva00511430Out3 *)out;
-		d->m_00 = g_011052C4.m_00;
-		d->m_04 = g_011052C4.m_04;
+		d->m_00 = g_Va011052C4.m_00;
+		d->m_04 = g_Va011052C4.m_04;
 	}
 	else
 	{
