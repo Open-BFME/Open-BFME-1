@@ -3218,3 +3218,6 @@ game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_treeF02,m_lowLod
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_ptStump02,m_lowLodTreeNameNoHarvest,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_bfmeE4,m_lowLodTreeScale,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_bfmeE8,m_disableTrees,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_254,m_dominateRadius,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_258,m_triggerFX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_25C,m_dominatedFX,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10

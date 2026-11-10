@@ -8038,3 +8038,6 @@ game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_treeF02,98ca75c1
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_ptStump02,e7465a26b96e8b064150f98a,claude-sonnet,20261110111131-77908a,2026-11-10
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_bfmeE4,c788b02c0b24d7dade638493,claude-sonnet,20261110111131-77908a,2026-11-10
 game/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp|member||m_bfmeE8,1dd26175906af208df1918a1,claude-sonnet,20261110111131-77908a,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_254,6a9aa1f3da8722f861f72be0,claude-sonnet,20261110111445-d2958b,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_258,b2e8bf20992e0433e76c3613,claude-sonnet,20261110111445-d2958b,2026-11-10
+game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_25C,2c2ec5dfdf785cd6c0f119d3,claude-sonnet,20261110111445-d2958b,2026-11-10
