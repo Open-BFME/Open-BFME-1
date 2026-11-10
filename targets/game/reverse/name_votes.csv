@@ -7868,3 +7868,6 @@ game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_cto
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_zero160,397d16175f4a2e2ad22e2197,claude-sonnet,20261110093721-be701c,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field19c,f9dfbb6abc81a49ca455da42,claude-sonnet,20261110093721-be701c,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field1a0,613bd002e99b0fa2a0e470d4,claude-sonnet,20261110093721-be701c,2026-11-10
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::statusCallback|arg,33206a2d9b48a5c7e6acb01d,claude-sonnet,20261110094230-5c62c3,2026-11-10
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::messageCallback|arg,408b28b87db4f0f312218bab,claude-sonnet,20261110094230-5c62c3,2026-11-10
+game/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadCallbacks.cpp|param|BuddyThreadClass::requestCallback|arg,49d81551d41b2862b7cdb961,claude-sonnet,20261110094230-5c62c3,2026-11-10
