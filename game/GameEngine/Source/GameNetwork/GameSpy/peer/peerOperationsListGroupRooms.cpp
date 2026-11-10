@@ -91,9 +91,10 @@ void piGetPlayerInfoCallbackA(void *chat, int success, const char *nick,
 	const char *user, const char *address, void *param);
 void chatGetBasicUserInfoA(void *chat, const char *nick, void *callback,
 	void *param, int blocking);
-/* Matched peerOperations.c providers: 0085FCD0 and 00860020.
-   Operation constructors pass these addresses as Chat completion callbacks. */
-void piChangeNickCallback(void *chat, int success, const char *oldNick,
+/* peerOperations.c defines the no-A providers (0085FCD0 and 00860020), but
+   retail's operation constructors hand Chat the A-variants: 0x00C5FCD0 here
+   (dir32-recorded _piChangeNickCallbackA) and 0x00C60020 below. */
+void piChangeNickCallbackA(void *chat, int success, const char *oldNick,
  const char *newNick, void *param);
 void chatChangeNickA(void *chat, const char *newNick, void *callback,
 	void *param, int blocking);
@@ -592,7 +593,7 @@ PEERBool piNewChangeNickOperation(PEER peer, const char *newNick,
 		return 0;
 
 	chatChangeNickA(connection->chat, newNick,
-		piChangeNickCallback, operation, 0);
+		piChangeNickCallbackA, operation, 0);
 	return 1;
 }
 
