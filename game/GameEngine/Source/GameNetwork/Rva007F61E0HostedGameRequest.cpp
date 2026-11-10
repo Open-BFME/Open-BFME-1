@@ -61,11 +61,15 @@ void Rva007F5A70Callback(Rva007E8810Message *message, Rva007F5920Owner *owner)
     owner->handleHostedGameReply(message);
 }
 
+// Retail registers the dir32-recorded ?BfmeGameBrowserVJPCallback (thunk VA
+// 0x00BF5A70) as the notifier completion callback, not the adapter above.
+void __stdcall BfmeGameBrowserVJPCallback();
+
 void Rva007F5920Owner::requestHostedGame(int first, int second)
 {
     BfmeC994 message(m_messageBuffer, 0x400);
     m_sender->send(&message, first, second,
         m_overrideId ? m_overrideId : m_defaultId);
-    m_notifier->send(&message, Rva007F5A70Callback, this, m_transaction);
+    m_notifier->send(&message, (void (*)(Rva007E8810Message *, Rva007F5920Owner *))BfmeGameBrowserVJPCallback, this, m_transaction);
     ((Gen_007e86c0 *)&message)->m();
 }

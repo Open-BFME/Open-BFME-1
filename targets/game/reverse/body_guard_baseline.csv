@@ -50,7 +50,6 @@ dir32,0x004488EC,??_F?$list@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@V?$allocato
 dir32,0x00448D42,??1ThingRef@@QAE@XZ,"retail 0x00448D42 is already recorded as ??1Rva0039B450Element@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x00448DD3,??1?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00448DD3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00951DB0,?d_00551db0@@YAXXZ,"nothing in the ledger owns 0x00951DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00BF5A70,?Rva007F5A70Callback@@YAXPAVRva007E8810Message@@PAVRva007F5920Owner@@@Z,"retail 0x00BF5A70 is already recorded as ?BfmeGameBrowserVJPCallback@@YGXXZ; reference that name, not a new one"
 dir32,0x00BF5DF0,?Rva007F5DF0Callback@@YAXPAVRva007E8810Message@@PAVRva007F5D10GameBrowser@@@Z,the name encodes 0x007E8810 but retail reads 0x00BF5DF0
 dir32,0x00BF6FB0,?Rva007F6FB0BrowserLobbyReply@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,the name encodes 0x007E8810 but retail reads 0x00BF6FB0
 dir32,0x00BF6FC0,?Rva007F6FC0BrowserGameReply@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,the name encodes 0x007E8810 but retail reads 0x00BF6FC0
