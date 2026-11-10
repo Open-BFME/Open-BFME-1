@@ -171,8 +171,29 @@ __forceinline void vector<Rva000FB210Element>::push_back(
 // 0x000DD310 destructor stay out of line as in retail.
 template <>
 vector<Rva000FAA30Elem>::vector(const vector<Rva000FAA30Elem> &other);
+}
+
+// Retail's destructor is the ledger-defined ILT ?j_0002a081@@YAXXZ (-> 0x000DD310);
+// nothing defines the vector<Rva000FAA30Elem> destructor symbol itself.
+extern void j_0002a081();
+class Rva000FAA30Vec;
+typedef void (Rva000FAA30Vec::*Rva000DD310Call)();
+template<class T> T dumpMemberCall(void (*p)()) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
+class Rva000FAA30Vec { };
+
+namespace _STL
+{
+// The base's release belongs to the retail destructor body behind the ILT.
 template <>
-vector<Rva000FAA30Elem>::~vector();
+__forceinline _Vector_base<Rva000FAA30Elem, allocator<Rva000FAA30Elem> >::~_Vector_base()
+{
+}
+
+template <>
+__forceinline vector<Rva000FAA30Elem>::~vector()
+{
+	(reinterpret_cast<Rva000FAA30Vec *>(this)->*dumpMemberCall<Rva000DD310Call>(j_0002a081))();
+}
 }
 
 // The 0x003BCD70 getter's ledger identity is TeamPrototype::getTemplateInfo;
