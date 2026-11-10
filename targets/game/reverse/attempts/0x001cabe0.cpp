@@ -1,6 +1,8 @@
 // ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
-// partial score=0.9894 date=2026-10-13
+// partial score=1.0 date=2026-11-10
 // cl: /DNDEBUG /MD /EHsc
+// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
+// candidate (wf 001cabe0): Zero Hour Radar::addObject colour-selection shape
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -87,6 +89,8 @@ public:
 	unsigned char m_pad00[0x34];
 	int m_disguisedPlayerIndex;
 	const ThingTemplate *m_active;
+
+	int getDisguisedPlayerIndex() const { return m_disguisedPlayerIndex; }
 };
 
 class ContainModuleInterface
@@ -135,51 +139,50 @@ int BfmeSubBIC::bfmeAskBIC()
 	Bool useDefaultColor = true;
 
 	ThingTemplate *thing = m_template;
+	if (thing != 0 && thing->m_override != 0)
+		thing = thing->m_override->getFinalOverride();
+
+	if ((thing->m_kindOf[2] & 0x00800000) != 0)
 	{
-		if (thing != 0 && thing->m_override != 0)
-			thing = thing->m_override->getFinalOverride();
+		static NameKeyType key_StealthUpdate =
+			(NameKeyType)TheNameKeyGenerator->nameToKey("StealthUpdate");
+		StealthUpdate *stealth = (StealthUpdate *)
+			reinterpret_cast<Object *>(this)->findModule(key_StealthUpdate);
 
-		if ((thing->m_kindOf[2] & 0x00800000) != 0)
+		if (stealth != 0 && stealth->m_active != 0 &&
+			controller != 0 && localPlayer != 0 &&
+			controller->getRelationship(localPlayer->getDefaultTeam()) !=
+				RelationshipEnemy &&
+			reinterpret_cast<const Rva000DF7F0Player *>(localPlayer)->active())
 		{
-			static NameKeyType key_StealthUpdate =
-				(NameKeyType)TheNameKeyGenerator->nameToKey("StealthUpdate");
-			StealthUpdate *stealth = (StealthUpdate *)
-				reinterpret_cast<Object *>(this)->findModule(key_StealthUpdate);
-
-			if (stealth != 0 && stealth->m_active != 0 &&
-				controller != 0 && localPlayer != 0 &&
-				controller->getRelationship(localPlayer->getDefaultTeam()) !=
-					RelationshipEnemy &&
-				reinterpret_cast<const Rva000DF7F0Player *>(localPlayer)->active())
-			{
-				colorPlayer = ThePlayerList->getNthPlayer(
-					stealth->m_disguisedPlayerIndex);
-				if (colorPlayer != 0)
-					useDefaultColor = false;
-			}
+			colorPlayer = ThePlayerList->getNthPlayer(
+				stealth->getDisguisedPlayerIndex());
+			if (colorPlayer != 0)
+				useDefaultColor = false;
 		}
 	}
 
 	if (getContain() != 0)
 	{
-		const Player *containedPlayer = getContain()->getApparentPlayer(localPlayer);
-		colorPlayer = containedPlayer;
+		colorPlayer = getContain()->getApparentPlayer(localPlayer);
 		if (colorPlayer != 0)
-			return colorPlayer->getPlayerColor();
+			useDefaultColor = false;
 	}
 
-	if (!useDefaultColor && colorPlayer != 0)
-		return colorPlayer->getPlayerColor();
-
-	if (m_indicatorColor != 0)
-		return m_indicatorColor;
-
-	if (m_team != 0)
+	if (useDefaultColor || colorPlayer == 0)
 	{
-		const Player *player = m_team->getControllingPlayer();
-		if (player != 0)
-			return player->getPlayerColor();
+		if (m_indicatorColor != 0)
+			return m_indicatorColor;
+
+		if (m_team != 0)
+		{
+			const Player *player = m_team->getControllingPlayer();
+			if (player != 0)
+				return player->getPlayerColor();
+		}
+
+		return 0xff000000;
 	}
 
-	return 0xff000000;
+	return colorPlayer->getPlayerColor();
 }
