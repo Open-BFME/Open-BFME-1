@@ -51744,7 +51744,7 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?finishShowPurchaseScience@@YAXXZ,,0x00599490,283,game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_finishShowPurchaseScience.cpp,matched,clean post-populate SpellStore window transition
 ?finishSinglePlayerInit@@YAXXZ,,0x004E4790,989,game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/ScoreScreenFinishSinglePlayerInit.cpp,matched,Identity: matched ScoreScreenUpdate calls it via ILT 0x0001F78F; ZH ScoreScreen body reshaped by BFME; ABI slice on the ReplayMenuDeleteCopy string model;model=opus-5.5
 ?finishState14@Rva56E070StateOwner@@QAEXXZ,,0x0056C210,205,game/GameEngine/Source/GameClient/GUI/Rva56E070FinishState14.cpp,matched,Grok conversion independently reviewed; exact C++; independently reviewed helper pins
-?finishState16@Rva56E070StateOwner@@QAEXXZ,,0x0056D430,255,game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp,matched,
+?deleteSelectedFile@Rva56E070StateOwner@@QAEXXZ,,0x0056D430,255,game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp,matched,
 ?finishTransition@Rva00493F30TransitionState@@QAEXXZ,,0x00493EA0,57,game/GameEngine/Source/GameClient/GUI/Rva00493EA0FinishTransition.cpp,matched,caller-proven transition completion body
 ?finishUpdate@OpenContain@@QAEXXZ,,0x00224340,195,game/GameEngine/Source/GameLogic/Object/Contain/OpenContainFinishUpdate.cpp,matched,clean BFME OpenContain finishUpdate; update caller and 0x0000BA50 ILT identify the method; containment dispatch and object cleanup callees match retail
 ?finish_input_pass@D3DX@@YGXPAUjpeg_decompress_struct@1@@Z,,0x00AA9E50,19,inputs/vendor/d3dx9/d3dx9.lib,matched,vendored=d3dx9-summer2003;member=obj\i386\jdinput.obj

@@ -82246,7 +82246,7 @@ name,address,notes
 ?finishSpecialPower@SpecialPowerModule@@QAEXI@Z,0x000251AD,Open-BFME6 ILT of 0x0026A550 finish follow
 ?finishState14@Rva56E070StateOwner@@QAEXXZ,0x000335F0,call target in the 0x0056E070 late-state dispatcher
 ?finishState15@Rva56E070StateOwner@@QAEXXZ,0x0000C4EB,incremental-link call target in the 0x0056E070 late-state dispatcher
-?finishState16@Rva56E070StateOwner@@QAEXXZ,0x00018A2A,incremental-link call target in the 0x0056E070 late-state dispatcher
+?deleteSelectedFile@Rva56E070StateOwner@@QAEXXZ,0x00018A2A,incremental-link call target in the 0x0056E070 late-state dispatcher
 ?finishTail@Rva56E070StateOwner@@QAEXXZ,0x0004895F,address-scoped state-owner tail ILT observed in both exits of retail 0x0056FD30
 ?finishTransition@Rva00493F30TransitionState@@QAEXXZ,0x00005925,Rva00493F30 transition completion thunk to assigned 0x00493EA0 body
 ?finishUpdate@OpenContain@@QAEXXZ,0x0000BA50,OpenContain update helper reached through the retail thunk at 0x00224340

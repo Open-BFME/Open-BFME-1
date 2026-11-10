@@ -60,7 +60,7 @@ public:
 	void finishTail();
 	void finishState14();
 	void finishState15();
-	void finishState16();
+	void deleteSelectedFile();
 	void beginState(int unused);
 	void dispatchLateState(int unused);
 };
@@ -108,7 +108,7 @@ void Rva56E070StateOwner::dispatchLateState(int unused)
 		return;
 	}
 	if (m_state == 16) {
-		finishState16();
+		deleteSelectedFile();
 		return;
 	}
 	if (m_state == 17) {
@@ -116,7 +116,7 @@ void Rva56E070StateOwner::dispatchLateState(int unused)
 	}
 }
 
-void Rva56E070StateOwner::finishState16()
+void Rva56E070StateOwner::deleteSelectedFile()
 {
 	if (m_arg264 != 0)
 	{
