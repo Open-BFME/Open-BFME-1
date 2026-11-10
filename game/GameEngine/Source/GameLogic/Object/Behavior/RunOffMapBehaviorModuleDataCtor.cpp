@@ -77,17 +77,17 @@ public:
 private:
 	float m_speed1;				// +0x08
 	float m_speed2;				// +0x0c
-	bool m_flag10;				// +0x10
-	UnicodeString m_text14;		// +0x14
-	bool m_flag18;				// +0x18
+	bool m_requiresSpecificTrigger;				// +0x10
+	UnicodeString m_runOffMapWaypointName;		// +0x14
+	bool m_dieOnMap;				// +0x18
 };
 
 // ??0RunOffMapBehaviorModuleData@@QAE@XZ
 RunOffMapBehaviorModuleData::RunOffMapBehaviorModuleData()
 {
-	m_flag18 = false;
+	m_dieOnMap = false;
 	m_speed1 = 10.0f;
 	m_speed2 = 10.0f;
-	m_flag10 = false;
-	m_text14.set( (const UnicodeString &)Rva01336E50EmptyString );
+	m_requiresSpecificTrigger = false;
+	m_runOffMapWaypointName.set( (const UnicodeString &)Rva01336E50EmptyString );
 }
