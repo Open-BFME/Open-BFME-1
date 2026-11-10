@@ -7916,3 +7916,6 @@ game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at18,037225a477f4d5b87b98cdc1,claude-sonnet,20261110100446-28b7b4,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at1c,6278e0414a4b9b72d894463e,claude-sonnet,20261110100446-28b7b4,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Update/FlameStep00294410.cpp|member||at20,4ed62e0ee3a71b11d66ff893,claude-sonnet,20261110100446-28b7b4,2026-11-10
+game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_value1c,fdc8c34ca12de952fb6c3ee2,claude-sonnet,20261110100720-fe75a9,2026-11-10
+game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_value24,f306685e763e787e18300d7d,claude-sonnet,20261110100720-fe75a9,2026-11-10
+game/GameEngineDevice/Source/MilesAudioDevice/PlayingAudioConstructor.cpp|member||m_flag34,40de81742895586e45df35d5,claude-sonnet,20261110100720-fe75a9,2026-11-10
