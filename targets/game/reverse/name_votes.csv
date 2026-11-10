@@ -7885,3 +7885,9 @@ game/GameEngine/Source/GameClient/GUI/OnlineHomeMessageOfTheDay.cpp|local|BfmeAp
 game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|function|Rva56E070StateOwner@|finishState16,6a4741d798171be65556ea6b,claude-sonnet,20261110095104-bf8cb5,2026-11-10
 game/GameEngine/Source/Common/S3SeedPairsShort.cpp|member||m_bfmeFirst,2c1c1129aab54e48d39c0fab,claude-sonnet,20261110095237-90e646,2026-11-10
 game/GameEngine/Source/Common/S3SeedPairsShort.cpp|member||m_bfmeSecond,e957cf494728ec2e3b3d3f5c,claude-sonnet,20261110095237-90e646,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|type||BfmeR1110,234a51565e2e5ee8d584f9c7,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|type||BfmeQ1110,48e7d970a6d6e929fbad7711,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|type||BfmeV1110,0f281f550e5a428f26fe7742,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|member||m_bfme0c,cc70d4b6b7f78bd0c69b3bf6,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|member||m_bfme274,c2ab265b04cb30222c4a62e1,claude-sonnet,20261110095236-03b23f,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1110.cpp|function|BfmeV1110@|bfmeGo1110B,d51570fa77257e7d153ec918,claude-sonnet,20261110095236-03b23f,2026-11-10
