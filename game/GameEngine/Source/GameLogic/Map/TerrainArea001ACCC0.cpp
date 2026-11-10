@@ -99,7 +99,13 @@ public:
  virtual void s32();virtual void s33();virtual void s34();
  virtual void notify(TerrainPoint001AC3D0,int);
 };
-extern TerrainVisual001AC3D0 *TheTerrainVisual;
+// The global at 0x012F7014 is EA's TerrainVisual *TheTerrainVisual
+// (?TheTerrainVisual@@3PAVTerrainVisual@@A), defined in
+// game/GameEngine/Source/GameClient/Terrain/TerrainVisual.cpp. The struct
+// above is this TU's local ABI view of the slot it calls, cast to at the
+// use; the cast is a no-op, so the bytes are unchanged.
+class TerrainVisual;
+extern TerrainVisual *TheTerrainVisual;
 void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
  if(!position||!(*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))||!ThePartitionManager||!TheGameLogic)return;
  (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager))->bfmeApplyCircleWorld((const BfmePointFC*)position,*(float*)&radius,128,true);
@@ -110,6 +116,6 @@ void TerrainArea001ACCC0::clearOne001AC3D0(const void *position,int radius) {
  ((TerrainLogicP48ClearNear*)this)->clearNear((const Coord3D*)position,*(float*)&radius);
  if(TheTerrainVisual) {
   const float *p=(const float*)position;
-  TheTerrainVisual->notify(TerrainPoint001AC3D0(p[0],p[1],p[2]),radius);
+  ((TerrainVisual001AC3D0 *)TheTerrainVisual)->notify(TerrainPoint001AC3D0(p[0],p[1],p[2]),radius);
  }
 }
