@@ -7851,3 +7851,4 @@ game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||field00,12
 game/Libraries/Source/EA/Apt/Rva008B4370SetPackedChannels.cpp|member||m_rva01338750,6e922f3535db286aa7a6504a,claude-sonnet,20261110092155-3fcde5,2026-11-10
 game/Libraries/Source/debug/DebugConstructor_00889370.cpp|type||Rva0088CDC0Forwarder,022b9cba1d7b495322306cd1,claude-sonnet,20261110092154-aa556d,2026-11-10
 game/GameEngine/Source/Common/Rva00477E20Walk.cpp|local|Rva00477E20::walk|p,65816125b9282cda2a5adebd,claude-sonnet,20261110092852-c1fdee,2026-11-10
+game/GameEngine/Source/Common/BfmeConv1134.cpp|member||m_bfme18,2a2a9fd5423f0dc1b3526d56,claude-sonnet,20261110092609-d8baa2,2026-11-10
