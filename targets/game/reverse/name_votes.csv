@@ -7864,3 +7864,7 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManag
 game/GameEngine/Source/GameLogic/LivingWorld/Rva00618980.cpp|member||byte10,692735cee8535b443dbc4512,claude-sonnet,20261110092338-467298,2026-11-10
 game/GameEngine/Source/GameClient/System/ParticleSystemComputeParticleVelocity.cpp|member||m_valueAB4,8339559f47a71ff4dcdb2043,claude-sonnet,20261110092450-6d7c80,2026-11-10
 game/GameEngine/Source/GameNetwork/Rva007FA6C0Open.cpp|local|Rva007FA6C0::openHost|b,d1fc731ea6ff5214c3602ebd,claude-sonnet,20261110092450-9dbfff,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field54,2453f7d5a6130a9d9b099a20,claude-sonnet,20261110093721-be701c,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_zero160,397d16175f4a2e2ad22e2197,claude-sonnet,20261110093721-be701c,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field19c,f9dfbb6abc81a49ca455da42,claude-sonnet,20261110093721-be701c,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehaviorModuleData_ctor_Thunk.cpp|member||m_field1a0,613bd002e99b0fa2a0e470d4,claude-sonnet,20261110093721-be701c,2026-11-10
