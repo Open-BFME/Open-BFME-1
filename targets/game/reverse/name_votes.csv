@@ -7927,3 +7927,4 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/TaintBufferConstructor.cpp|mem
 game/GameEngine/Source/Common/BfmeConv2068.cpp|function|BfmeStateGQ@|bfmeSwapGQ,dc8e0979b9d4f4337183d2f4,claude-sonnet,20261110101624-82a3fd,2026-11-10
 game/GameEngine/Source/Common/BfmeConv2068.cpp|param|BfmeStateGQ::bfmeSwapGQ|o,0e9e2b34d2918321c830a576,claude-sonnet,20261110101624-82a3fd,2026-11-10
 game/GameEngine/Source/GameLogic/ScriptEngine/Rva0034E520.cpp|local|compare|n,2c40dfb68dfcca09dad275d8,claude-sonnet,20261110101837-4720c7,2026-11-10
+game/GameEngineDevice/Source/W3DDevice/GameClient/Rva006C9270ResetTextureStages.cpp|member||m_flag4C,2e419194a86ae7048653eeb2,claude-sonnet,20261110101757-f173af,2026-11-10
