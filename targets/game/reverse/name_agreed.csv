@@ -2998,3 +2998,4 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstruct
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineQuickMatchConstructor.cpp|member||m_slot74,m_unselectedImage,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/Common/BfmeRectVNH_ctor.cpp|param|BfmeRectVNH::BfmeRectVNH|s,name,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/BfmeRectVNH_ctor.cpp|param|BfmeRectVNH::BfmeRectVNH|s,name,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameClient/GUI/Rva56E070StateDispatch.cpp|function|Rva56E070StateOwner@|finishState16,deleteSelectedFile,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
