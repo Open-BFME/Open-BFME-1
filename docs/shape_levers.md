@@ -4002,3 +4002,35 @@ Still untested: 0x008941A0, which shows the same back-edge tail.
 Sources: game/Libraries/Source/Apt/Rva00893020KeyPairChecks.cpp,
 game/GameEngine/Source/Common/Rva00896470RefHolderSubmit.cpp. Donor lead: Open-BFME-2
 67a8a17e42 `Bfme5ThirtyFour.cpp` `PlaybackRange`.
+
+## An in-class noinline member gives the caller its side-effect summary but not its register summary (2026-11-10)
+
+Retail 0x00088480 (1019 B, MapObject ambient audio) reads a local reference's pointer
+(`alternate.m_ptr`, address escaped to `operator=` and a constructor) into EDI, calls the
+30-byte ready test 0x000874E0 on another object, and then uses EDI again without a reload:
+`mov edi,[esp+18] ... call ready ... cmp edi,ebp / mov ecx,edi / call ready`. The same
+register then carries the value into the inlined destructor at the tail.
+
+Measured, VC7.1 `/O2 /DNDEBUG /MD /EHsc`, same body, only the ready test's declaration varied:
+
+| Ready test as seen by the caller's TU | Result |
+|---|---|
+| declared only (`int bfmeReady() const;`) | pointer re-read from memory after each call, tests `cmp [esp+18],ebp`; 591-606 diffs |
+| defined out of line in the TU before the caller (`__declspec(noinline) int C::bfmeReady() const {...}`) | no reload, but the pointer lives in EDX across the call and the zero register moves to EBX; 703 diffs |
+| **defined in the class body with `__declspec(noinline)`** | **no reload, pointer in callee-saved EDI, zero register EBP: exact** |
+
+Minimal transformation: give the callee's class an in-class (COMDAT) definition marked
+`__declspec(noinline)` instead of a bare declaration. Observed effect: the caller knows the
+call writes no memory, so an address-taken local survives it in a register, yet the call is
+still treated as clobbering EAX/ECX/EDX. Hypothesis, not measured further: for a COMDAT copy
+the compiler trusts the body's semantics but not this TU's code generation for it, while for
+a strong definition it also reuses the callee's actual register usage. Signature in retail:
+a value cached in a callee-saved register across a call to a small leaf that every other
+call in the function would force to reload.
+
+A local register copy (`T *alt = ref.m_ptr;`) imitates the no-reload part (203 diffs) but
+also removes retail's reloads after the calls that do write memory; prefer the declaration
+lever when retail reloads after some calls and not others.
+
+Source: `game/GameEngineDevice/Source/W3DDevice/GameClient/MapObjectAmbientAudio00088480.cpp`;
+evidence `targets/game/reverse/identity_evidence/00088480-mapobject-ambient-audio.md`.

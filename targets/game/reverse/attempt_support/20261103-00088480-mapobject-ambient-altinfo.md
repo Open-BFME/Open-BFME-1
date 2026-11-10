@@ -50,3 +50,12 @@ Look for a spelling where the second block reads memory but altInfo stays
 live (e.g. altInfo used again after the event blocks), or a Ref accessor that
 returns the pointer by value; callee pin work from the 20260928 bank header
 (0x87720/0x877B0/0x877E0/0x87860 names) is still needed before landing.
+
+## Resolved 2026-11-10
+
+Landed byte-exact. The `altInfo` register local was the wrong model: retail
+reads `alternate.m_ptr` from memory everywhere and the ready test 0x000874E0
+is an in-class `__declspec(noinline)` member, which lets the value survive the
+call in EDI (docs/shape_levers.md, 2026-11-10 entry). Two further retail facts:
+the re-fetched slot 0x5B info is assigned to `current`, and case 3 breaks out
+after the first ready hit.
