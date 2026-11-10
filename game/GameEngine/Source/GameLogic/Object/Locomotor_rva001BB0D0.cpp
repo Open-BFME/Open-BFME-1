@@ -25,7 +25,7 @@ public:
 };
 enum CommandSourceType { COMMANDSOURCE_AI = 2 };
 class AICommandInterface { public: void aiIdle(CommandSourceType); };
-struct Rva001BB0D0AI { char pad000[0x20]; AICommandInterface command; };
+struct AIUpdateInterface { char pad000[0x20]; AICommandInterface command; };
 struct ModelConditionFlags {
  unsigned test(int i) const { return bits[i>>5] & (1u<<(i&31)); }
  void clear(int i) { bits[i>>5] &= ~(1u<<(i&31)); }
@@ -33,7 +33,7 @@ struct ModelConditionFlags {
 };
 // File-static so this TU does not emit a non-retail
 // ?set@ModelConditionFlags@@QAEXH@Z COMDAT ahead of the bitset copy.
-static inline void setModelConditionBit(ModelConditionFlags &f, int i) { f.bits[i>>5] |= (1u<<(i&31)); }
+static inline void setModelConditionBit(ModelConditionFlags &flags, int i) { flags.bits[i>>5] |= (1u<<(i&31)); }
 #define BFME_HAVE_COORD3D
 #define BFME_HAVE_MODELCONDITIONFLAGS
 #define OBJECT_TU_MEMBERS \
@@ -119,7 +119,7 @@ void Rva001BB0D0Mover::move(Object *obj,const Coord3D *goalPos,Real onPathDistTo
    if((obj->m_modelConditionFlags.bits[3]&0x60000000u)==0) goalSpeed=desiredSpeed; else goalSpeed=0.0f;
   else goalSpeed=getFlag(7) ? desiredSpeed : (1.0f-angleCoeff)*desiredSpeed;
   ((BfmeA1282*)this)->bfmeFinish1282((BfmeQ1282*)obj,goalPos,onPathDistToGoal,goalSpeed);
- } else if(fabs(relAngle)<0.01f) ((Rva001BB0D0AI*)obj->m_ai)->command.aiIdle(COMMANDSOURCE_AI);
+ } else if(fabs(relAngle)<0.01f) ((AIUpdateInterface*)obj->m_ai)->command.aiIdle(COMMANDSOURCE_AI);
 }
 
 

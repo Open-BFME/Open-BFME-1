@@ -3062,3 +3062,5 @@ game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManag
 game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp|param|GameWindowManager::winIsAlNum|c,character,claude-sonnet+gpt-6-sol,blocked: game/GameEngine/Source/GameClient/GUI/GameWindowGlobal.cpp: game\GameEngine\Source\GameClient\GUI\GameWindowGlobal.cpp(242) : error C2065: 'c' : undec,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB0D0AI,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,flags,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB0D0AI,AIUpdateInterface,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,flags,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
