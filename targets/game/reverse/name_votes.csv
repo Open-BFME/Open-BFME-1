@@ -8043,3 +8043,5 @@ game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerMo
 game/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPowerModuleDataConstructor.cpp|member||m_unmodelled_25C,2c2ec5dfdf785cd6c0f119d3,claude-sonnet,20261110111445-d2958b,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_70,4f8ae4cf524e68d0c1a5d343,claude-sonnet,20261110111908-cc2ced,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Upgrade/ArmorUpgradeFriendNewModuleDataThunk.cpp|member||m_71,b45b6816d09dcec3f04f01eb,claude-sonnet,20261110111908-cc2ced,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2002.cpp|type||BfmeObjEVM,d8d1fccd21afb2fcb2edd00e,claude-sonnet,20261110113335-c066ba,2026-11-10
+game/GameEngine/Source/Common/BfmeConv2002.cpp|member||m_bfmeObjEVM,afbd6286669e8793fecba6d8,claude-sonnet,20261110113335-c066ba,2026-11-10
