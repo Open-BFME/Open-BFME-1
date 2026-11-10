@@ -6,11 +6,17 @@
 // ledger carries as ??0Snapshot@@QAE@XZ. SnapshotDupReplica is the
 // TU-local spelling functions.csv already records as that body's object
 // symbol.
+// Retail stores vftable 0x011296B0, the table Rva007F6D60ChildConstructor.cpp
+// emits (dir32 row ??_7Rva007F6D60Member2C@@6B@). A virtual handle() here would emit a
+// non-retail vftable that leaves ?handle@SnapshotDupReplica unresolved, so the
+// vptr is a plain word stored by name.
+extern "C" void *__identifier("??_7Rva007F6D60Member2C@@6B@")[];
+
 class SnapshotDupReplica
 {
 public:
 	SnapshotDupReplica();
-	virtual void handle();
+	void *m_vptr;
 };
 
 class Rva007E8810 : public SnapshotDupReplica
@@ -34,6 +40,7 @@ public:
 
 Rva007E8810::Rva007E8810()
 {
+	m_vptr = (void *)__identifier("??_7Rva007F6D60Member2C@@6B@");
 	m_08 = 0;
 	m_0C = 0;
 	m_04 = 0;
