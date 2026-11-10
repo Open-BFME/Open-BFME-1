@@ -1,5 +1,7 @@
 // ?validateSides@SidesList@@QAE_NXZ
-// partial score=0.997 date=2026-09-28
+// partial score=0.9989 date=2026-11-10
+// ?validateSides@SidesList@@QAE_NXZ
+// partial date=2026-11-10 (1810/1810, 2 non-reloc bytes; from 0.997 bank)
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail ?validateSides@SidesList@@QAE_NXZ at 0x0019C920, 1810 bytes.
 //
@@ -207,31 +209,34 @@ Bool SidesList::validateSides()
 		AsciiString pname = pdict->getAsciiString(TheKey_playerName.key());
 		AsciiString tname("team");
 		tname.concat(pname);
-		Int index;
-		Dict *ti = m_teamrec.findTeam(pname, tname, &index);
-		if (ti && index)
+		// look up the player's default team; its index is only needed here.
 		{
-			// make sure the team owner points back to the player.
-			if (ti->getAsciiString(TheKey_teamOwner.key()).compare(pname) != 0)
+			Int index;
+			Dict *ti = m_teamrec.findTeam(pname, tname, &index);
+			if (ti && index)
 			{
-				m_teamrec.setTeamOwnerAndName(index, pname, ti->getAsciiString(TheKey_teamName.key()));
+				// make sure the team owner points back to the player.
+				if (ti->getAsciiString(TheKey_teamOwner.key()).compare(pname) != 0)
+				{
+					m_teamrec.setTeamOwnerAndName(index, pname, ti->getAsciiString(TheKey_teamName.key()));
+					modified = true;
+				}
+				// default teams are always singletons.
+				if (!ti->getBool(TheKey_teamIsSingleton.key()))
+				{
+					ti->setBool(TheKey_teamIsSingleton.key(), true);
+					modified = true;
+				}
+			}
+			else
+			{
+				Dict d;
+				d.setAsciiString(TheKey_teamName.key(), tname);
+				d.setAsciiString(TheKey_teamOwner.key(), pname);
+				d.setBool(TheKey_teamIsSingleton.key(), true);
+				m_teamrec.append(&d);
 				modified = true;
 			}
-			// default teams are always singletons.
-			if (!ti->getBool(TheKey_teamIsSingleton.key()))
-			{
-				ti->setBool(TheKey_teamIsSingleton.key(), true);
-				modified = true;
-			}
-		}
-		else
-		{
-			Dict d;
-			d.setAsciiString(TheKey_teamName.key(), tname);
-			d.setAsciiString(TheKey_teamOwner.key(), pname);
-			d.setBool(TheKey_teamIsSingleton.key(), true);
-			m_teamrec.append(&d);
-			modified = true;
 		}
 
 		AsciiString allies = pdict->getAsciiString(TheKey_playerAllies.key());
