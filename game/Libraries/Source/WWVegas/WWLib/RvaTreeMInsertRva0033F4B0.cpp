@@ -127,10 +127,10 @@ private:
 
 	_Link_type _M_create_node(const Value &v)
 	{
-		_Link_type tmp = (_Link_type)BfmeNodeAllocate(sizeof(_Node));
-		bfmeConstructVSY(reinterpret_cast<BfmeEntVSY *>(&tmp->_M_value_field),
+		_Link_type newNode = (_Link_type)BfmeNodeAllocate(sizeof(_Node));
+		bfmeConstructVSY(reinterpret_cast<BfmeEntVSY *>(&newNode->_M_value_field),
 			reinterpret_cast<const BfmeEntVSY *>(&v));
-		return tmp;
+		return newNode;
 	}
 
 	static const Key &_S_key(_Rb_tree_node_base *node)
