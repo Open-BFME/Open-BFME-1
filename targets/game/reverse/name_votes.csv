@@ -7937,3 +7937,5 @@ game/Libraries/Source/WWVegas/WWLib/RvaTreeMInsertRva0033F4B0.cpp|local|_M_creat
 game/GameEngine/Source/Common/BfmeConv894.cpp|type||BfmeThingFEA,6835ded6e41d097c08b29e96,claude-sonnet,20261110102823-94ebd5,2026-11-10
 game/GameEngine/Source/Common/BfmeConv894.cpp|type||BfmeThingFEF,4336d8647adff1e74e94625b,claude-sonnet,20261110102823-94ebd5,2026-11-10
 game/GameEngine/Source/Common/BfmeConv894.cpp|function|BfmeThingFEC@|bfmeGoFEC,eb179ce9b3e56f8e8ffe6b6f,claude-sonnet,20261110102823-94ebd5,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|type||Rva001BB0D0AI,6aa2622893b16a0a62d2d456,claude-sonnet,20261110102652-09e204,2026-11-10
+game/GameEngine/Source/GameLogic/Object/Locomotor_rva001BB0D0.cpp|param|setModelConditionBit|f,a4c85ca9af01c0c2e152e54c,claude-sonnet,20261110102652-09e204,2026-11-10
