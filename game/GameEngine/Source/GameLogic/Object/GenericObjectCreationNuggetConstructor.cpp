@@ -120,27 +120,27 @@ private:
 	AsciiString m_fadeSoundName;
 	RetailTailWords m_tailWords;
 	AudioEventRTS m_bounceSound;
-	unsigned char m_flag104;
+	unsigned char m_requiresLivePlayer;
 	unsigned char m_flag105;
 	unsigned char m_flag106;
 	unsigned char m_flag107;
 	unsigned char m_flag108;
-	unsigned char m_flag109;
-	unsigned char m_flag10a;
+	unsigned char m_containInsideSourceObject;
+	unsigned char m_preserveLayer;
 	unsigned char m_flag10b;
 	unsigned char m_flag10c;
 	unsigned char m_flag10d;
 	unsigned short m_pad10e;
 	unsigned int m_word110;
 	unsigned char m_flag114;
-	unsigned char m_flag115;
-	unsigned char m_flag116;
-	unsigned char m_flag117;
-	unsigned char m_flag118;
-	unsigned char m_flag119;
-	unsigned char m_flag11a;
+	unsigned char m_okToChangeModelColor;
+	unsigned char m_orientInForceDirection;
+	unsigned char m_spreadFormation;
+	unsigned char m_fadeIn;
+	unsigned char m_fadeOut;
+	unsigned char m_inheritsVeterancy;
 	unsigned char m_pad11b;
-	unsigned int m_word11c;
+	unsigned int m_veterancyLevel;
 	std::bitset<320> m_retailTail;
 };
 
@@ -171,26 +171,26 @@ GenericObjectCreationNugget::GenericObjectCreationNugget()
 	  m_fadeSoundName(AsciiString::TheEmptyString),
 	  m_tailWords(),
 	  m_bounceSound(AsciiString::TheEmptyString, 0),
-	  m_flag104(0),
+	  m_requiresLivePlayer(0),
 	  m_flag105(0),
 	  m_flag106(0),
 	  m_flag107(0),
 	  m_flag108(0),
-	  m_flag109(0),
-	  m_flag10a(1),
+	  m_containInsideSourceObject(0),
+	  m_preserveLayer(1),
 	  m_flag10b(0),
 	  m_flag10c(0),
 	  m_flag10d(0),
 	  m_word110(0),
 	  m_flag114(1),
-	  m_flag115(0),
-	  m_flag116(0),
-	  m_flag117(0),
-	  m_flag118(0),
-	  m_flag119(0),
-	  m_flag11a(0),
+	  m_okToChangeModelColor(0),
+	  m_orientInForceDirection(0),
+	  m_spreadFormation(0),
+	  m_fadeIn(0),
+	  m_fadeOut(0),
+	  m_inheritsVeterancy(0),
 	  m_pad11b(0),
-	  m_word11c(0),
+	  m_veterancyLevel(0),
 	  m_retailTail()
 {
 	m_offset.zero();
