@@ -7881,3 +7881,4 @@ game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value00,b89fdc37732f13
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value04,ae25e10754b8bdca46ae2cda,claude-sonnet,20261110094655-0c2e05,2026-11-10
 game/GameEngine/Source/GameClient/LivingWorld.cpp|member||value08,b24601e1454f20f612dce54e,claude-sonnet,20261110094655-0c2e05,2026-11-10
 game/GameEngine/Source/Common/BfmeRectVNH_ctor.cpp|param|BfmeRectVNH::BfmeRectVNH|s,6d43d7680319d53e05edb9f4,claude-sonnet,20261110094712-229462,2026-11-10
+game/GameEngine/Source/GameClient/GUI/OnlineHomeMessageOfTheDay.cpp|local|BfmeAptScreenOnlineHome::bfmeRefreshMessageOfTheDay|a,e2c4ea400255d7d42ba8fd7a,claude-sonnet,20261110095007-f8887c,2026-11-10
