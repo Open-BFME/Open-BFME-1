@@ -62,7 +62,7 @@ namespace _STL
 	class map
 	{
 	public:
-		Value &operator[]( const Key &key );
+		Value &subscriptIlt( const Key &key );
 
 	private:
 		void *m_header;
@@ -72,6 +72,11 @@ namespace _STL
 }
 
 typedef _STL::map<int, BFMELadderHttpRecord *> BFMEHttpRequestMap;
+
+// Retail calls ILT 0x0000C3B0, which the ledger defines as ?j_0000c3b0@@YAXXZ.
+extern void j_0000c3b0();
+typedef BFMELadderHttpRecord *&(BFMEHttpRequestMap::*BFMEHttpRequestSubscriptIlt)( const int &key );
+template<class T> T iltMemberCall( void (*p)() ) { union { void (*plain)(); T member; } call; call.plain = p; return call.member; }
 
 class BFMENetworkBackend
 {
@@ -101,6 +106,6 @@ void BFMENetworkBackend::_bfme_requestLadderRank( int profileID )
 		BFMELadderHttpRecord *rec = new BFMELadderHttpRecord;
 		rec->backend = this;
 		rec->profileID = profileID;
-		m_requests[requestId] = rec;
+		( m_requests.*iltMemberCall<BFMEHttpRequestSubscriptIlt>( j_0000c3b0 ) )( requestId ) = rec;
 	}
 }
