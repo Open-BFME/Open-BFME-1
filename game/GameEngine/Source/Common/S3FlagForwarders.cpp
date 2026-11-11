@@ -4,6 +4,12 @@
 typedef unsigned int UnsignedInt;
 
 
+class MapObject
+{
+public:
+	void ambientAudio00088480();
+};
+
 class Gen_00088B60
 {
 public:
@@ -11,8 +17,6 @@ public:
 	void bfmeForward(void);
 
 private:
-	void bfmeNext(void);					// ILT 0x00031FCF
-
 	char m_bfmeHead[0x44];
 	UnsignedInt m_bfmeFlags;				// +0x44
 };
@@ -27,7 +31,7 @@ void Gen_00088B60::bfmeClearForward(void)
 {
 	m_bfmeFlags &= ~0x10U;
 
-	bfmeNext();
+	reinterpret_cast<MapObject *>(this)->ambientAudio00088480();
 }
 
 // ?bfmeForward@Gen_00088B60@@QAEXXZ
@@ -35,5 +39,5 @@ void Gen_00088B60::bfmeForward(void)
 {
 	m_bfmeFlags |= 0x10;
 
-	bfmeNext();
+	reinterpret_cast<MapObject *>(this)->ambientAudio00088480();
 }
