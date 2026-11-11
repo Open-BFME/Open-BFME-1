@@ -39,7 +39,7 @@ class RefHandle008958D0 {
 public:
     RefHandle008958D0(BfmeDropObjectA *p=0):m_object(p) { if(p) ++p->refs; }
     RefHandle008958D0(const RefHandle008958D0 &r):m_object(r.m_object) { if(m_object) ++m_object->refs; }
-    ~RefHandle008958D0() { if (m_object && Rva00895B20Ref::decrement(m_object)==0) { BfmeDropObjectA *p=m_object; p->~BfmeDropObjectA(); TheBfmeFree(p,24); } }
+    __declspec(dllimport) __forceinline ~RefHandle008958D0() { if (m_object && Rva00895B20Ref::decrement(m_object)==0) { BfmeDropObjectA *p=m_object; p->~BfmeDropObjectA(); TheBfmeFree(p,24); } }
     bool isNull() const { return m_object==0; }
     BfmeDropObjectA *m_object;
 };
