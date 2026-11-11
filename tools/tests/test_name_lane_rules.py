@@ -18,3 +18,23 @@ def test_a_contested_name_needs_a_two_vote_lead():
     # DoXfer: Fable and Grok agreed while Opus had named the method differently
     assert not name_lane.wins({"claude-fable", "grok"}, [{"claude-opus"}])
     assert name_lane.wins({"claude-fable", "grok", "gpt-5.6-sol"}, [{"claude-opus"}])
+
+
+def test_plain_spelling_strips_cpp_decoration():
+    assert name_lane.plain_spelling("??0StructureCollapseFXVector@@QAE@XZ") == {"StructureCollapseFXVector"}
+    assert name_lane.plain_spelling("?Rva008B5760Get@@YAPAVAptValue@@XZ") == {"Rva008B5760Get"}
+    assert name_lane.plain_spelling("??_7Drawable@@6B@") == {"Drawable"}
+    assert name_lane.plain_spelling("??_C@_0BB@foo@") == set()
+    assert name_lane.plain_spelling("??_R0?AVFoo@@@8") == set()
+
+
+def test_plain_spelling_strips_c_decoration():
+    assert name_lane.plain_spelling("_piChatDisconnectedA") == {"piChatDisconnectedA"}
+    assert name_lane.plain_spelling("_Rva0086B2D0Disconnected") == {"Rva0086B2D0Disconnected"}
+    assert name_lane.plain_spelling("_piUserChangedNickCallback@0") == {"piUserChangedNickCallback"}
+
+
+def test_plain_spelling_derives_only_from_its_input():
+    assert name_lane.plain_spelling("??0BFMERetailAsciiString@@QAE@PBD@Z") == {"BFMERetailAsciiString"}
+    assert name_lane.plain_spelling("??0MadeUpName@@QAE@XZ") == {"MadeUpName"}
+    assert name_lane.plain_spelling("") == set()

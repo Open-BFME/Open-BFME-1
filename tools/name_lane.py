@@ -805,9 +805,41 @@ def retail_import_names():
     return names
 
 
+def plain_spelling(sym):
+    """The identifiers a C/C++ source spells for one recorded COFF symbol:
+    C++ leading ?s plus one facility code, one leading C underscore, stdcall
+    @N suffixes and C++ @@ signatures are stripped (mirroring how
+    retail_import_names() strips IAT entries)."""
+    s = sym.strip().strip('"')
+    marks = re.match(r"^\?+", s)
+    s = s[marks.end():] if marks else s
+    if marks:
+        if len(marks.group(0)) >= 2:
+            if re.match(r"^_C@|^_R[0-9]", s):
+                return set()
+            s = re.sub(r"^(?:[0-9]|_[A-Za-z0-9])", "", s, count=1)
+    else:
+        s = re.sub(r"^_", "", s, count=1)
+    s = s.split("@@", 1)[0]
+    s = re.sub(r"@\d+$", "", s)
+    return set(WORD.findall(s))
+
+
+def ledger_spellings():
+    """Plain identifiers as C/C++ sources spell them, for the byte-gated ledger
+    names in symbols.csv and dir32_addresses.csv. Only ever adds recorded
+    names, so guessing stays refused and byte gates still decide correctness."""
+    spellings = set()
+    for pin in STORED[1:]:
+        for line in git("show", f":{pin.relative_to(ROOT).as_posix()}").splitlines():
+            spellings.update(plain_spelling(line.split(",", 1)[0]))
+    return spellings
+
+
 def cmd_check(args):
     """Refuse a placeholder swapped for a coined name outside the lane. Allowed replacements: an
-    agreed name, an EA name, a retail import, or a name a header already declares (adoption)."""
+    agreed name, an EA name, a retail import, a header-declared name (adoption), or the source
+    spelling of a recorded pin/dir32 name."""
     coined = collections.defaultdict(set)
     for f in git("diff", "--cached", "--name-only", "--diff-filter=M", "--no-renames").split():
         if not f.startswith("game/") or f.startswith(GENERATED) or not f.endswith((".cpp", ".c", ".h", ".inl")):
@@ -828,6 +860,7 @@ def cmd_check(args):
     allowed |= {w for r in csv.DictReader(io.StringIO(EA.read_text(encoding="utf-8"))) if r["kind"] == "name"
                 for w in WORD.findall(r["value"])}
     allowed |= {w for pin in STORED[1:] for w in WORD.findall(git("show", f":{pin.relative_to(ROOT).as_posix()}"))}
+    allowed |= ledger_spellings()
     allowed |= retail_import_names()
 
     def declared(word):
