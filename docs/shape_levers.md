@@ -4084,3 +4084,16 @@ middle body); retail stores before it. Moving the store to the end of the
 novtable outer destructor's body (after its two clears) restored 97/97. The
 compiler's automatic vptr store precedes the state change; a body statement
 of the inlined destructor follows it.
+
+### Explicit storage can forward a differently named small return handle (2026-11-11)
+
+For BfmeConv1347.cpp's two43B wrappers, VC7.1 default `/O2 /GR- /EHsc-`,
+copying a differently named four-byte returned handle or casting the member
+pointer's return type introduced a temporary and copy-back. A force-inline
+constructor on the existing result type, calling the real provider through
+a member-pointer union with a void return and explicit output pointer,
+then `return Result(provider,a,b)`, forwards the caller's original result
+storage directly. Both43B bodies and relocations match; all five provider
+rows pass together. This was measured only for these witnessed ECX plus
+stack-output/row/column ABIs, not arbitrary nontrivial return types.
+Evidence: `targets/game/reverse/attempt_support/20261111-counted-handle-result-forwarding.md`.
