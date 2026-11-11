@@ -7,3 +7,5 @@ Instead of asking VC7.1 to synthesize a deleting destructor that calls an unreso
 Earlier inline-destructor trials added a vptr store and were refuted; this method does not define a C++ destructor and emits no extra table. Retain the old source from base 9de94413dc to reproduce those compiler-generated wrappers. BFME 2 donor 76f0baefa6f285d54bc1ca922397674312a5913f has no supported corresponding BfmeHolderCU provider; no donor body or target fact imported.
 
 Compiler: MSVC 7.1, normal /O2 /GR- plus /DNDEBUG /MD /EHsc. Current live linking remains subject to dependency closure; no linked gain claimed from a stale census.
+
+Sibling independently verified: `game/GameEngine/Source/GameClient/AttachedModelFXNuggetDeletingDestructor.cpp`, `??_GAttachedModelFXNugget@@MAEPAXI@Z` at 0x429b30+30. Original constructor/vtable/ILT evidence remains in the source header. Qualified cleanup calls `Rva00429B60`; add_match verifies the complete body and both relocations with the same flags. No extra vtable or unresolved class-name destructor emitted.
