@@ -4131,3 +4131,16 @@ the TU previously imported. About 5-10% of trial TUs regress byte matches
 because retail used the other allocator for that container. Never apply a flag
 blanket-wide. Renumbered cleanup-funclet labels in kept TUs go through
 `eh_state_pins.py --source F --fix`.
+
+### Explicit scalar-delete wrapper instead of an inline complete destructor
+
+When a synthesized deleting destructor calls an unresolved class-name cleanup,
+inlining a replacement complete destructor can add a vptr store absent from
+retail. For the 30-byte BfmeHolderCU wrapper at 0x005DD340, an explicit
+address-derived thiscall method calls the existing qualified cleanup, conditionally
+calls global delete for flags & 1, and returns this. VC7.1 /O2 /GR- /DNDEBUG /MD
+/EHsc emits the exact scalar-wrapper body without another vtable or complete
+destructor. The ledger keeps the independently proven wrapper identity with an
+object-symbol implementation view. This is measured only for this wrapper;
+verify each sibling's identity, full bytes, flags ABI and cleanup relocation.
+See `targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md`.
