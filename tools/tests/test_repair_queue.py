@@ -273,6 +273,36 @@ def test_a_removed_debt_line_is_reverified(tmp_path):
     assert rq.verify_removed(fail) == []                                   # staged: the hook builds it
 
 
+@pytest.mark.parametrize("layout", ["bfme1", "bfme2"])
+def test_stdin_hook_rechecks_removed_debt_in_checkout(tmp_path, layout):
+    import subprocess
+    source = "game/GameEngine/Loco.cpp" if layout == "bfme1" else "Code/GameEngine/Loco.cpp"
+    baseline = ("targets/game/reverse/body_guard_baseline.csv" if layout == "bfme1"
+                else "reverse/gate_baseline.txt")
+    raw = ("check,target_rva,name,detail\ntail,0x00001000,?a@Loco@@QAEXXZ,mismatch\n"
+           if layout == "bfme1" else "tail 0x00001000 ?a@Loco@@QAEXXZ\n")
+    load(tmp_path, layout, LEDGER, [
+        (source, "// body\n"), (baseline, raw),
+        ("tools/build.py", "raise SystemExit(1)\n")])
+
+    def git(*args):
+        return subprocess.run(["git", "-C", str(tmp_path), *args], capture_output=True, text=True, check=True)
+
+    git("init", "-q")
+    git("add", ".")
+    git("-c", "user.name=t", "-c", "user.email=", "commit", "-qm", "init")
+    (tmp_path / baseline).write_text("")
+    git("add", baseline)
+    env = os.environ.copy()
+    env.pop("REPAIR_ROOT", None)
+    # Match pre-commit's `git show HEAD:... | python3 - verify-removed`.
+    result = subprocess.run([sys.executable, "-", "verify-removed"], cwd=tmp_path,
+                            input=(TOOLS / "repair_queue.py").read_text(),
+                            capture_output=True, text=True, env=env)
+    assert result.returncode == 1
+    assert source in result.stderr and "row still fails" in result.stderr
+
+
 def test_repairs_are_capped_to_one_pick_in_n(tmp_path, monkeypatch):
     rq, _, _ = load(tmp_path, "bfme2", LEDGER)
     monkeypatch.delenv("BFME_REPAIR_EVERY", raising=False)

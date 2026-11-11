@@ -57,9 +57,11 @@ import time
 from functools import lru_cache
 from pathlib import Path
 
-# The hooks run HEAD's copy through stdin (an edit cannot approve itself): no __file__ then.
+# The hooks run HEAD's copy through stdin (an edit cannot approve itself).
+# Python sets __file__ to '<stdin>' there; it is not a path to this tool.
 ROOT = Path(os.environ.get("REPAIR_ROOT")
-            or (Path(__file__).resolve().parents[1] if "__file__" in globals() else Path.cwd()))
+            or (Path(__file__).resolve().parents[1]
+                if "__file__" in globals() and __file__ != "<stdin>" else Path.cwd()))
 BFME1 = (ROOT / "targets" / "game" / "reverse").is_dir()
 REV = "targets/game/reverse" if BFME1 else "reverse"
 LEDGER = f"{REV}/functions.csv"
