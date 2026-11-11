@@ -189,6 +189,41 @@ def test_unmatched_data_owner_retains_literal_source_search(tmp_path, monkeypatc
     assert rq.locate_source(symbol) == f"{src}/Legacy.cpp"
 
 
+@pytest.mark.parametrize("layout", ["bfme1", "bfme2"])
+def test_function_pointer_debt_finds_exact_ledger_owner(tmp_path, monkeypatch, layout):
+    src = "game" if layout == "bfme1" else "Code"
+    rq, _, _ = load(tmp_path, layout, LEDGER, [
+        (f"{src}/GameEngine/Loco.cpp", "void Loco::a() {}\n")])
+
+    def unexpected_grep(*args, **kwargs):
+        pytest.fail("a matched function owner does not need a literal mangled name")
+
+    monkeypatch.setattr(rq.subprocess, "run", unexpected_grep)
+    assert rq.locate_source("?a@Loco@@QAEXXZ") == f"{src}/GameEngine/Loco.cpp"
+
+
+@pytest.mark.parametrize("sources", [
+    ("Missing.cpp",), ("../outside.cpp",), ("Other/Data.cpp",), ("Data.cpp", "Other.cpp")])
+def test_invalid_or_ambiguous_function_owner_does_not_fall_back_to_grep(
+        tmp_path, monkeypatch, sources):
+    symbol = "?callback@@YAXXZ"
+    rq, rev, _ = load(tmp_path, "bfme1", [
+        (symbol, 0x1000 + i * 16, 8, path) for i, path in enumerate(sources)])
+    ledger = rev / "functions.csv"
+    ledger.write_text(ledger.read_text().replace("game/Other/", "Other/"))
+    for relative in sources:
+        if relative != "Missing.cpp":
+            path = tmp_path / "game" / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("void callback() {}\n")
+
+    def unexpected_grep(*args, **kwargs):
+        pytest.fail("an invalid recorded function owner must not select another source")
+
+    monkeypatch.setattr(rq.subprocess, "run", unexpected_grep)
+    assert rq.locate_source(symbol) is None
+
+
 def test_link_items_serve_placed_unwired_rows_first(tmp_path):
     rq, _, _ = load(tmp_path, "bfme2", LEDGER)
     status = tmp_path / "link_status.csv"

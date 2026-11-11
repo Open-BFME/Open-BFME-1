@@ -256,6 +256,13 @@ def shell_quote(text):
 def locate_source(name):
     owners = {row["source"] for row in csv.DictReader(io.StringIO(_read(f"{REV}/data_rows.csv")))
               if row.get("name") == name and row.get("status") == "matched" and row.get("source")}
+    if not owners:
+        # A DIR32 may name a function pointer (including an ILT target), not
+        # just data. C++ need not spell its decorated COFF name literally.
+        with (ROOT / LEDGER).open(newline="", encoding="utf-8") as handle:
+            owners = {row["source"] for row in csv.DictReader(handle)
+                      if row.get("name") == name and row.get("status") == "matched"
+                      and row.get("source")}
     if owners:
         if len(owners) != 1:
             return None
