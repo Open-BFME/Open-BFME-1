@@ -1,5 +1,22 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## Canonical type adoption can masquerade as changed array cleanup (2026-11-11)
+
+After MilesAudioManager's opaque12-byte array became the independently proven
+`set<AsciiString>[3]`, its1550-byte constructor and1256-byte destructor still
+matched, but two24-byte cleanup rows appeared to call unrelated list destructors
+or destroy the wrong array. Their old `$L` names still existed and named other
+actions. Native unwind-map owner/state anchoring with `eh_state_pins.py --fix`
+repointed all12 cleanup labels (final ordinal shift11), recovering every row
+without new callee pins. A private destructor-specialization removal control
+preserved all495 nondebug sections: the declaration had no lowering effect
+and was removed. Do not infer changed teardown from a stale label's bytes.
+Constructor specialization was independently rejected because it suppressed
+the required inline set initialization at+64. Measured with MSVC7.1 13.10.3077,
+`/O2 /MD /EHsc`, static STLport and `_STLP_NO_EXCEPTIONS`; normal provider/consumer
+gate228/228. See `identity_evidence/20261111-miles-ascii-set-constructor.md` and
+`game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerConstructor.cpp`.
+
 ## One-bit bit-fields move a loop count from EBX to EBP (2026-11-04)
 
 The two 146-byte PathfindCellInfo list walks at 0x003F6F60 and 0x003F7020

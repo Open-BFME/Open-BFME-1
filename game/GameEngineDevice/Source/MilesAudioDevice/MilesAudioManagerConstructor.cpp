@@ -154,7 +154,7 @@ struct Gen_t_006a3b50_p12cd { int a[3]; };
 struct Gen_t_006a3c20_p12cd { int a[3]; };
 struct Gen_t_006a3cf0_p12cd { int a[3]; };
 struct Gen00026F35 { int a[3]; };
-struct Rva006AADB0Element { int a[2]; };
+struct Rva006AADB0Element { char m_body[4]; };
 
 // Array element types: out-of-line constructors and destructors passed to the
 // EH vector constructor iterator.
@@ -170,7 +170,6 @@ private:
 	char m_body[0x1c0];
 };
 class Rva0069CEE0 { public: Rva0069CEE0( void ); ~Rva0069CEE0( void ); char m_body[0xc]; };
-class Rva00478100 { public: Rva00478100( void ); ~Rva00478100( void ); char m_body[0xc]; };
 class Rva006967A0 { public: Rva006967A0( void ); ~Rva006967A0( void ); char m_body[0x4]; };
 
 class MilesAudioManager : public Rva00694E00
@@ -215,7 +214,7 @@ private:
 	_STL::hash_map<int, Gen_t_006aad10_p12cd> m_hash96c;	// +0x96c
 	_STL::vector<UnicodeString> m_vector980;						// +0x980
 	_STL::vector<AsciiString> m_vector98c;						// +0x98c
-	Rva00478100 m_998[3];								// +0x998
+	_STL::set<AsciiString> m_998[3];						// +0x998
 	_STL::list<Gen_t_0069e220_p4pod> m_list9bc;						// +0x9bc
 	_STL::list<Gen_t_0069e310_p4pod> m_list9c0;
 	_STL::list<Gen_t_0069e400_p4pod> m_list9c4;
