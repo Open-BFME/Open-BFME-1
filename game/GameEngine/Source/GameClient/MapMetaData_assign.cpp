@@ -12,15 +12,6 @@ typedef unsigned short UnsignedShort;
 
 #include "string_base.h"
 
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &other);
-
-private:
-	void *m_data;
-};
-
 struct WaypointMap
 {
 	unsigned char m_treeStorage[12];
@@ -69,7 +60,7 @@ private:
 	WaypointMap m_waypoints;
 	Coord3DList m_supplyPositions;
 	Coord3DList m_techPositions;
-	UnicodeString m_mapDescription;
+	StringBase<char> m_mapDescription;
 	MapPlayers m_players;
 	StringBase<UnsignedShort> m_displayNameTail;
 	StringBase<UnsignedShort> m_descriptionTail;
