@@ -44,7 +44,7 @@ class Gen_00896320
 {
 public:
 	void append(void **source);
-	void helper(void * a0,void * a1,void * a2) {
+	__declspec(dllimport) __forceinline void helper(void * a0,void * a1,void * a2) {
 	 // retail body is still the gen-dump row ?d_008961e0@@YAXXZ (no C++ row yet); call it by that defined name
 	 union { void (__cdecl *symbol)(); void (Gen_00896320::*member)(void *,void *,void *); } c;
 	 c.symbol = &__identifier("?d_008961e0@@YAXXZ");
