@@ -33,24 +33,25 @@ private:
 
 // Retail fills both 4-element arrays through the EH vector constructor
 // iterator, which takes one construction and one destruction proc per
-// element.  Every element is 0x0C bytes.  The procs are out-of-line bodies
-// with no recovered identity, so the two element types carry the address of
-// their constructor: 0x00127AB0 (m_a) and 0x00127AC0 (m_b).
-class Rva00127AB0Element
+// element.  Every element is 0x0C bytes.  The procs are the recorded
+// StructureCollapse vector ctor/dtor thunks (dir32 0x00447DB1/0x00422D3B
+// for m_a, 0x0043475C/0x00417477 for m_b), so the element types carry
+// those established names instead of address-derived ones.
+class StructureCollapseFXVector
 {
 public:
-	Rva00127AB0Element();
-	~Rva00127AB0Element();
+	StructureCollapseFXVector();
+	~StructureCollapseFXVector();
 
 private:
 	unsigned char m_pad[0x0c];
 };
 
-class Rva00127AC0Element
+class StructureCollapseOCLVector
 {
 public:
-	Rva00127AC0Element();
-	~Rva00127AC0Element();
+	StructureCollapseOCLVector();
+	~StructureCollapseOCLVector();
 
 private:
 	unsigned char m_pad[0x0c];
@@ -84,8 +85,8 @@ private:
 	float m_rubbleRiseDamping;				// 0x48, "RubbleRiseDamping"
 	float m_rubbleHeight;					// 0x4c, "RubbleHeight"
 	float m_maxShudder;						// 0x50, "MaxShudder"
-	Rva00127AB0Element m_a[4];				// 0x54
-	Rva00127AC0Element m_b[4];				// 0x84
+	StructureCollapseFXVector m_a[4];		// 0x54
+	StructureCollapseOCLVector m_b[4];		// 0x84
 	unsigned long m_dwordB4[4];				// 0xb4, initialised to 1
 	unsigned long m_dwordC4[4];				// 0xc4, initialised to 1
 };
