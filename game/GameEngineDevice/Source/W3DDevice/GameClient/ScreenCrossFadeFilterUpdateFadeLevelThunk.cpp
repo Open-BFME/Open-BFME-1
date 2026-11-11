@@ -11,11 +11,17 @@ class ScreenCrossFadeFilter
 
 protected:
     bool updateFadeLevel();
-    static float m_curFadeValue;
+    // m_curFadeValue is retail's global ?g_Va01307200@@3MA at 0x01307200
+    // (defined in FloatConstantGetters.cpp), not a member; the sibling
+    // statics below keep their member spellings.
     static int m_fadeDirection;
     static int m_fadeFrames;
     static int m_curFadeFrame;
 };
+
+// Retail keeps the fade level in the global ?g_Va01307200@@3MA at 0x01307200
+// (defined in FloatConstantGetters.cpp), not in a ScreenCrossFadeFilter member.
+extern float g_Va01307200;
 
 class ScreenCrossFadeFilterUpdateFadeLevelShim
 {
@@ -92,10 +98,10 @@ bool ScreenCrossFadeFilterUpdateFadeLevelShim::update()
         int fade = ScreenCrossFadeFilter::m_curFadeFrame;
 
         if (fade < ScreenCrossFadeFilter::m_fadeFrames) {
-            ScreenCrossFadeFilter::m_curFadeValue = (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
+            g_Va01307200 = (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
         } else {
             ScreenCrossFadeFilter::m_curFadeFrame = 0;
-            ScreenCrossFadeFilter::m_curFadeValue = 1.0f;
+            g_Va01307200 = 1.0f;
             ScreenCrossFadeFilter::m_fadeDirection = 0;
             return false;
         }
@@ -103,10 +109,10 @@ bool ScreenCrossFadeFilterUpdateFadeLevelShim::update()
         int fade = ScreenCrossFadeFilter::m_curFadeFrame;
 
         if (fade < ScreenCrossFadeFilter::m_fadeFrames) {
-            ScreenCrossFadeFilter::m_curFadeValue = 1.0f - (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
+            g_Va01307200 = 1.0f - (float)fade / (float)ScreenCrossFadeFilter::m_fadeFrames;
             ++ScreenCrossFadeFilter::m_curFadeFrame;
         } else {
-            ScreenCrossFadeFilter::m_curFadeValue = 0.0f;
+            g_Va01307200 = 0.0f;
             ((TacticalViewFadeShim *)TheTacticalView)->setViewFilterMode(0);
             ((TacticalViewFadeShim *)TheTacticalView)->setViewFilter(0);
             ScreenCrossFadeFilter::m_curFadeFrame = 0;

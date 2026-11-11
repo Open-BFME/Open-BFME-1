@@ -977,7 +977,8 @@ Int ScreenBWFilterDOT3::shutdown(void)
 
 Int ScreenCrossFadeFilter::m_fadeFrames;
 Int ScreenCrossFadeFilter::m_curFadeFrame;
-Real ScreenCrossFadeFilter::m_curFadeValue;
+// m_curFadeValue lives in the global g_Va01307200 (FloatConstantGetters.cpp),
+// not as a member; the sibling statics below keep their member spellings.
 Int ScreenCrossFadeFilter::m_fadeDirection;
 TextureClass *ScreenCrossFadeFilter::m_fadePatternTexture=NULL;
 Bool ScreenCrossFadeFilter::m_skipRender = FALSE;
@@ -1035,6 +1036,9 @@ Bool ScreenCrossFadeFilter::preRender(Bool &skipRender, CustomScenePassModes &sc
 	return true;
 }
 
+// Retail keeps the fade level in the global ?g_Va01307200@@3MA at 0x01307200
+// (defined in FloatConstantGetters.cpp), not in a ScreenCrossFadeFilter member.
+extern Real g_Va01307200;
 // ?postRender@ScreenCrossFadeFilter@@ present-unmatched
 Bool ScreenCrossFadeFilter::postRender(enum FilterModes mode, Coord2D &scrollDelta,Bool &doExtraRender)
 {
@@ -1076,7 +1080,7 @@ Bool ScreenCrossFadeFilter::postRender(enum FilterModes mode, Coord2D &scrollDel
 	{	DX8Wrapper::_Get_D3D_Device8()->SetTexture(1,m_fadePatternTexture->Peek_D3D_Texture());
 		//Use the current fade level to scale the mask texture, for other modes the texture
 		//comes pre-scaled so doesn't require uv scaling.
-		radius = (1.0f-m_curFadeValue)*2.0f;
+		radius = (1.0f-g_Va01307200)*2.0f;
 		if (radius <= 0)
 			radius = 0.01f;
 		radius = 0.5f/radius;
