@@ -134,7 +134,12 @@ virtual void slot87()=0;
 virtual void slot88()=0;
 virtual void field164(const int*,float*,float)=0;
 };
-extern Rva0071A730View *Rva00EF1600;
+// Retail 0x012F1600 is EA's tactical view singleton, defined once as
+// View *TheTacticalView in game/GameEngine/Source/GameClient/View.cpp.
+// This TU's vtable-ABI view of it is Rva0071A730View; the cast is free.
+class View;
+extern View *TheTacticalView;
+static inline Rva0071A730View *tacticalView() { return (Rva0071A730View *)TheTacticalView; }
 // The native shim operator multiplies inline; this ABI view retains retail's D3DX helper and return-value copy.
 __forceinline D3DXMATRIX multiply(const D3DXMATRIX &a,const D3DXMATRIX &b) {
  D3DXMATRIX r; D3DXMatrixMultiply(&r,&a,&b); return r;
@@ -191,12 +196,12 @@ void Rva0071A730::method() {
  float det;
  D3DXMatrixInverse(&inverse,&det,&current);
  float world[3];
- if(Rva00EF1600) {
+ if(tacticalView()) {
  int originx,originy,screen[2];
-  Rva00EF1600->field4c(&originx,&originy);
-  screen[0]=(int)(Rva00EF1600->field3c()*0.5f);
-  screen[1]=(int)(Rva00EF1600->field44()*0.5f);
-  Rva00EF1600->field164(screen,world,0.0f);
+  tacticalView()->field4c(&originx,&originy);
+  screen[0]=(int)(tacticalView()->field3c()*0.5f);
+  screen[1]=(int)(tacticalView()->field44()*0.5f);
+  tacticalView()->field164(screen,world,0.0f);
  }
  D3DXMatrixTranslation(&translate,-world[0],-world[1],0.0f);
  D3DXMatrixTranslation(&center,0.5f,0.5f,0.0f);
