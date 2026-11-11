@@ -27,9 +27,12 @@ struct String008B5940 { StringBuffer008B5940 *data; };
 extern BfmeS1083 *g_bfmeS1083_0;
 extern BfmeS1083 *g_bfmeS1083_1;
 extern BfmeS1083 *g_bfmeS1083_2;
-extern char Callback00CB5770[];
-extern char Callback00CB5720[];
-extern char Callback00CB5760[];
+class AptValue;
+struct Rva008B5720Value;
+struct Rva008B5770Owner;
+AptValue *rva008B5770NamedProperty(Rva008B5770Owner *owner);
+AptValue *aptPlay(Rva008B5720Value *v);
+AptValue *Rva008B5760Get();
 BfmeS1083* __stdcall Rva008B5940Lookup(void* owner,const String008B5940* key)
 {
  if(owner) {
@@ -38,7 +41,7 @@ BfmeS1083* __stdcall Rva008B5940Lookup(void* owner,const String008B5940* key)
  switch(word->value) {
  case 1:
   if(!g_bfmeS1083_0) {
-   g_bfmeS1083_0=(BfmeS1083*)new Rva00899FC0((int)Callback00CB5770);
+   g_bfmeS1083_0=(BfmeS1083*)new Rva00899FC0((int)&rva008B5770NamedProperty);
    Rva00899FC0* value=(Rva00899FC0*)g_bfmeS1083_0;
    value->flags=(value->flags&0xffffc07f)|0x40;
    g_bfmeS1083_0->unused0();
@@ -46,7 +49,7 @@ BfmeS1083* __stdcall Rva008B5940Lookup(void* owner,const String008B5940* key)
   return g_bfmeS1083_0;
  case 2:
   if(!g_bfmeS1083_2) {
-   g_bfmeS1083_2=(BfmeS1083*)new Rva00899FC0((int)Callback00CB5720);
+   g_bfmeS1083_2=(BfmeS1083*)new Rva00899FC0((int)&aptPlay);
    Rva00899FC0* value=(Rva00899FC0*)g_bfmeS1083_2;
    value->flags=(value->flags&0xffffc07f)|0x40;
    g_bfmeS1083_2->unused0();
@@ -54,7 +57,7 @@ BfmeS1083* __stdcall Rva008B5940Lookup(void* owner,const String008B5940* key)
   return g_bfmeS1083_2;
  case 3:
   if(!g_bfmeS1083_1) {
-   g_bfmeS1083_1=(BfmeS1083*)new Rva00899FC0((int)Callback00CB5760);
+   g_bfmeS1083_1=(BfmeS1083*)new Rva00899FC0((int)&Rva008B5760Get);
    Rva00899FC0* value=(Rva00899FC0*)g_bfmeS1083_1;
    value->flags=(value->flags&0xffffc07f)|0x40;
    g_bfmeS1083_1->unused0();
