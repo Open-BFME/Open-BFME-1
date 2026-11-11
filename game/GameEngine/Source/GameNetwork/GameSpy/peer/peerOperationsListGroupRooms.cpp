@@ -176,10 +176,12 @@ void piMangleStagingRoom(char *room, const char *title,
 char *goastrdup(const char *text);
 extern const char *(__cdecl *GOAGetUniqueID)(void);
 void MD5Digest(const unsigned char *text, unsigned int length, char *digest);
-/* Chat disconnected/private-message callbacks: the constructor's DIR32
-   references are retail 0086B2D0 and 0086B360. Use the matched C providers. */
+/* Chat disconnected/private-message callbacks: piNewConnectOperation's DIR32
+   references are the retail piChat slots 0x00C6B2D0 and 0x00C6B360
+   (dir32-recorded _piChatDisconnectedA/_piChatPrivateMessageA), not the
+   matched C providers at 0086B2D0/0086B360 which stay owned by their TUs. */
 struct Rva0086B2D0Connection;
-void Rva0086B2D0Disconnected(void *chat, const char *reason,
+void piChatDisconnectedA(void *chat, const char *reason,
  struct Rva0086B2D0Connection *connection);
 void Rva0086B360Dispatch(void *chat, const char *nick, const char *message,
  int mode, PEER peer);
@@ -254,7 +256,7 @@ PEERBool piNewConnectOperation(PEER peer, int connectType, const char *nick,
 		return 0;
 
 	memset(&globalCallbacks, 0, sizeof(globalCallbacks));
-	globalCallbacks.disconnected = Rva0086B2D0Disconnected;
+	globalCallbacks.disconnected = piChatDisconnectedA;
 	globalCallbacks.privateMessage = Rva0086B360Dispatch;
 	globalCallbacks.param = peer;
 
