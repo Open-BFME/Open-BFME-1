@@ -203,7 +203,8 @@ protected:
 
 extern int g_scriptFrame012F0760;
 extern int g_scriptFrame012F0764;
-extern bool LogicCanAppContinue;
+extern bool g_012F075D;
+#define LogicCanAppContinue g_012F075D
 extern bool g_012F075C;
 #define ClientCanAppContinue g_012F075C
 

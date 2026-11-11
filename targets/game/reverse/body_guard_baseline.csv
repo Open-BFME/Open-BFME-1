@@ -309,7 +309,6 @@ dir32,0x012EF1F0,?RvaObject012EF1F0@@3VAsciiString@@A,"nothing in the ledger own
 dir32,0x012EF430,?g_rva012EF430@@3PAVAsciiString@@A,"retail 0x012EF430 is already recorded as _bfmeObjDAA; reference that name, not a new one"
 dir32,0x012EF4CC,?g_012EF4CC@@3PAVTerrain006E2540@@A,"retail 0x012EF4CC is already recorded as ?Rva012ef4cc@@3PAVRva0041D290Client@@A (+25 more); reference that name, not a new one"
 dir32,0x012F0054,?$S198@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA,"retail 0x012F0054 is already recorded as ?$S281@?1??getClassMemoryPool@SpecialAbilityUpdate@@CAPAVMemoryPool@@XZ@4IA; reference that name, not a new one"
-dir32,0x012F075D,?LogicCanAppContinue@@3_NA,"retail 0x012F075D is already recorded as ?g_012F075D@@3_NA; reference that name, not a new one"
 dir32,0x012F0760,?g_scriptFrame012F0764@@3HA,"nothing in the ledger owns 0x012F0760. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F0764,?g_scriptFrame012F0760@@3HA,"nothing in the ledger owns 0x012F0764. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012F0770,?g_rva012F0770@@3VShellGameLoadScreen@@A,"retail 0x012F0770 is already recorded as ?TheBfmeObject_00C6FE50@@3VGen_00C6FE50Target@@A; reference that name, not a new one"
