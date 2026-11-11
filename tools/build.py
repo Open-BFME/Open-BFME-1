@@ -3666,7 +3666,14 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
         if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
             return None
         return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
-    encoded = ENCODED_ADDRESS_RE.search(sym)
+    # Ordinary decorated data names carry the variable first, then its scope
+    # and type. An address-derived pointee/class name describes that type, not
+    # the variable's placement (g_head may point to Rva008838F0Owner anywhere).
+    # Check the variable's own address spelling; ownership still comes from
+    # the data ledger below. Special names such as vtables keep their handling.
+    address_name = (sym.split("@", 1)[0] if sym.startswith("?")
+                    and not sym.startswith("??") and not sym.endswith("Z") else sym)
+    encoded = ENCODED_ADDRESS_RE.search(address_name)
     if encoded:
         value = int(encoded.group(1), 16)
         if value in (base, base - 0x400000):

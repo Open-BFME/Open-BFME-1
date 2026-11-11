@@ -190,3 +190,26 @@ def test_owned_data_still_must_agree_with_its_encoded_address():
     identities = ({0x01075354: {"?Existing@@3MB"}}, {sym: 0x01075354})
     assert "encodes 0x01075350" in build.unrecorded_dir32_problem(
         sym, 0x01075354, identities)
+
+
+@pytest.mark.parametrize("sym,base", [
+    ("?g_01336CE0@@3PAVRva008838F0Owner@@A", 0x01336CE0),
+    ("?g_01337820@@3PAVRva008B38F0Global@@A", 0x01337820),
+    ("?g_01338524@@3URva008A9A70Str@@A", 0x01338524),
+])
+def test_owned_data_address_is_not_its_type_address(sym, base):
+    assert build.unrecorded_dir32_problem(sym, base, ({}, {sym: base})) is None
+    assert "data ledger places" in build.unrecorded_dir32_problem(
+        sym, base + 4, ({}, {sym: base}))
+
+
+def test_a_type_address_does_not_establish_data_ownership():
+    sym = "?g_head@@3PAVRva008838F0Owner@@A"
+    assert "nothing in the ledger owns" in build.unrecorded_dir32_problem(
+        sym, 0x008838F0, ({}, {}))
+
+
+def test_owned_variable_address_is_checked_before_its_type():
+    sym = "?g_rva01336CE0@@3PAVRva008838F0Owner@@A"
+    assert "encodes 0x01336CE0" in build.unrecorded_dir32_problem(
+        sym, 0x01336CE4, ({}, {sym: 0x01336CE4}))
