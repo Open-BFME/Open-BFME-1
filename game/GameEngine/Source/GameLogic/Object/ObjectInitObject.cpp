@@ -1,12 +1,11 @@
-// ?initObject@Object@@QAEXXZ
-// partial score=0.9936 date=2026-11-01
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// readable body of ?initObject@Object@@QAEXXZ: game/GameEngine/Source/GameLogic/Object/Object.cpp
+// readable body of ?initObject@Object@@UAEXXZ: game/GameEngine/Source/GameLogic/Object/Object.cpp
 
-// Object::initObject, retail 0x001C6870 (933 bytes, ret at +0x3A4).
+// Object::initObject, retail 0x001C6870 (933 bytes, ret at +0x3A4). Handoff:
+// targets/game/reverse/attempt_support/20261111-001c6870-initobject-virtual.md
 //
-// Identity: the present-unmatched Object.cpp body, its ThingFactory caller and
-// the Zero Hour twin (GeneralsMD Object::initObject) name it. Retail keeps the
+// Identity: the present-unmatched Object.cpp body, the Object vtable slot below
+// and the Zero Hour twin (GeneralsMD Object::initObject) name it. Retail keeps the
 // Zero Hour order of the shared work (weapon-condition reset, upgrade modules,
 // sendObjectCreated, difficulty bonus and battle plans, special-power mask,
 // script notification, weapon set update) and adds the BFME work below the
@@ -20,6 +19,13 @@
 //
 // Every Object, Player, GameLogic and template offset below is read from this
 // body; fields without a witnessed name keep their offset.
+//
+// The method is virtual: Object vtable 0x0109EE58 slot 8 (+0x20) holds ILT
+// 0x00039D79 (the only reference to it), and ilt_oracle confirms the decorated
+// name ?initObject@Object@@UAEXXZ for that slot (QAE is contradicted).
+// m_lastWeaponCondition is Zero Hour's Byte[WEAPONSLOT_COUNT] with BFME 1's
+// four slots: the unrolled four byte stores fold to one dword store, and the
+// four uses of -1 are what keep it in EDI for the later m_field370 compare.
 
 #include "ascii_string.h"
 
@@ -29,8 +35,16 @@ typedef unsigned int UnsignedInt;
 
 enum WeaponSlotType
 {
-	PRIMARY_WEAPON = 0
+	PRIMARY_WEAPON = 0,
+	WEAPONSLOT_COUNT = 4	// BFME 1 count, as W3DModelDrawWeaponBarrelValidation0076F9E0.cpp
 };
+
+enum WeaponSetConditionType
+{
+	WSF_INVALID = -1
+};
+
+typedef unsigned char Byte;
 
 class Object;
 class WeaponTemplate;
@@ -232,7 +246,11 @@ enum
 class Object
 {
 public:
-	void initObject();
+	// Object vtable 0x0109EE58: slots 0..7 are Thing's, slot 8 (+0x20) holds
+	// this body through ILT 0x00039D79.
+	virtual void thingSlot00(); virtual void thingSlot01(); virtual void thingSlot02(); virtual void thingSlot03();
+	virtual void thingSlot04(); virtual void thingSlot05(); virtual void thingSlot06(); virtual void thingSlot07();
+	virtual void initObject();
 	void updateUpgradeModules();
 
 	__forceinline const ThingTemplateView *getTemplate() const
@@ -242,9 +260,9 @@ public:
 			tmpl = tmpl->m_next->getFinalOverride();
 		return reinterpret_cast<const ThingTemplateView *>(tmpl);
 	}
-	__forceinline Int isKindOf(Int k) const
+	__forceinline UnsignedInt isKindOf(Int k) const
 	{
-		return (getTemplate()->m_kindOf[k >> 5] & (1U << (k & 0x1f))) != 0;
+		return getTemplate()->m_kindOf[k >> 5] & (1U << (k & 0x1f));
 	}
 	__forceinline Player *getControllingPlayer() const
 	{
@@ -254,6 +272,8 @@ public:
 	Bool getReceivingDifficultyBonus() const { return m_receivingDifficultyBonus; }
 	__forceinline void setReceivingDifficultyBonus(Bool receive)
 	{
+		if (receive == m_receivingDifficultyBonus)
+			return;
 		m_receivingDifficultyBonus = receive;
 		Player *player = getControllingPlayer();
 		if (player)
@@ -261,7 +281,6 @@ public:
 	}
 
 private:
-	char m_pad000[4];
 	Overridable *m_template;
 	char m_pad008[0x74 - 0x08];
 	Int m_id;
@@ -274,7 +293,7 @@ private:
 	char m_pad240[0x264 - 0x240];
 	WeaponSet m_weaponSet;
 	char m_pad265[0x2A4 - 0x265];
-	Int m_lastWeaponCondition;
+	Byte m_lastWeaponCondition[WEAPONSLOT_COUNT];
 	char m_pad2A8[0x2B8 - 0x2A8];
 	Weapon *m_extraWeapon2B8;
 	Weapon *m_extraWeapon2BC;
@@ -305,7 +324,8 @@ static __forceinline UnsignedInt specialPowerTypeOf(const SpecialPowerTemplate *
 
 void Object::initObject()
 {
-	m_lastWeaponCondition = -1;
+	for (Int i = 0; i < WEAPONSLOT_COUNT; ++i)
+		m_lastWeaponCondition[i] = WSF_INVALID;
 
 	updateUpgradeModules();
 
@@ -341,7 +361,7 @@ void Object::initObject()
 		}
 	}
 
-	if (!isKindOf(KINDOF_PROJECTILE) && ((getTemplate()->m_kindOf[KINDOF_BIT_88 >> 5] & (1U << (KINDOF_BIT_88 & 0x1f))) ? false : true))
+	if (!isKindOf(KINDOF_PROJECTILE) && !isKindOf(KINDOF_BIT_88))
 	{
 		TheScriptEngine->notifyOfObjectCreationOrDestruction();
 		TheGameLogic->updateObjectsChangedTriggerAreas();
