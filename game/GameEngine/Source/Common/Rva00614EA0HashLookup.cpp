@@ -38,7 +38,7 @@ public:
 
 };
 
-inline bool operator==(const AsciiString &left, const AsciiString &right)
+__declspec(dllimport) __forceinline bool operator==(const AsciiString &left, const AsciiString &right)
 {
 	return left.compare(right) == 0;
 }
