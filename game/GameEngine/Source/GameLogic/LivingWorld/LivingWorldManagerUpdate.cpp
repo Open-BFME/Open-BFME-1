@@ -110,6 +110,12 @@ extern unsigned char Rva00563970GetFlag();
 // ILT 0x00024848 reaches the verified ShowControlBar(bool) at 0x004C0E10.
 extern void ShowControlBar(bool immediate);
 extern void j_00004c3c();
+extern void j_00024848();
+extern void j_000284a2();
+extern void j_0002ade7();
+extern void j_00036cff();
+extern void j_000423b6();
+extern void j_00045142();
 extern void j_000231f0();
 extern void j_0003a17a();
 
@@ -198,12 +204,12 @@ void BfmeLivingWorldManager::update()
 	}
 
 	((void (__fastcall *)(BfmeLivingWorldManager *))j_00004c3c)(this);
-	((Rva0060FEB0Owner *)this)->resetAll();
+	((void (__fastcall *)(void *))j_00045142)(this);
 	((void (__fastcall *)(BfmeLivingWorldManager *))j_000231f0)(this);
-	((BfmeHostDQ *)this)->bfmeTickDQ();
+	((void (__fastcall *)(void *))j_000284a2)(this);
 
 	if (m_eyeTower)
-		m_eyeTower->updateState();
+		((void (__fastcall *)(void *))j_0002ade7)(m_eyeTower);
 
 	Rva006174D0Map::iterator it(m_map210.begin());
 	for (; it != m_map210.end(); ++it)
@@ -212,10 +218,10 @@ void BfmeLivingWorldManager::update()
 	}
 
 	if (!m_flag288 && g_bfmeStateDF->m_field04 == 1
-		&& Rva00563970GetFlag()
+		&& ((unsigned char (__cdecl *)())j_00036cff)()
 		&& !reinterpret_cast<Rva003BDEC0 *>(TheLivingWorldLogic)->anyMatching(8))
 	{
-		ShowControlBar(true);
+		((void (__cdecl *)(bool))j_00024848)(true);
 		if (TheMouse)
 			TheMouse->_bfme_setEngineVisibility(true);
 	}
@@ -233,7 +239,7 @@ void BfmeLivingWorldManager::update()
 	}
 
 	if (g_bfmeStateDF->m_field04 == 0
-		&& !((BfmeC977 *)g_theWindowManager)->bfmeGo977C())
+		&& !((char (__fastcall *)(void *))j_000423b6)(g_theWindowManager))
 	{
 		TheMouse->slot38(0x28);
 	}
