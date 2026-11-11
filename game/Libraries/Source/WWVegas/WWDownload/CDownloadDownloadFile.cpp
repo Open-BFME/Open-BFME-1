@@ -40,13 +40,22 @@ enum {
     FTP_SUCCEEDED = 0, FTP_FAILED = 0x80040001
 };
 
+class Cftp {
+public:
+    HRESULT LoginToServer(LPCSTR, LPCSTR);
+    HRESULT GetNextFileBlock(LPCSTR, int *);
+};
+
+// The matched recovery provider leaves its second stack word unused.
+class Rva00886A20Class {
+public:
+    int d_00886a20(LPCSTR, int);
+};
+
 class Rva00884Ftp {
 public:
     HRESULT ConnectToServer(LPCSTR);
-    HRESULT LoginToServer(LPCSTR, LPCSTR);
     HRESULT FindFile(LPCSTR, int *);
-    HRESULT FileRecoveryPosition(LPCSTR, LPCSTR);
-    HRESULT GetNextFileBlock(LPCSTR, int *);
     HRESULT RestartFrom(int i);
     virtual ~Rva00884Ftp();
     int m_iCommandSocket;
@@ -222,7 +231,7 @@ HRESULT CDownload::PumpMessages()
 		// Login to the server
       ////////////DBGMSG("Login to server");
 
-		iResult = m_Ftp->LoginToServer( m_Login, m_Password );
+		iResult = reinterpret_cast<Cftp *>(m_Ftp)->LoginToServer( m_Login, m_Password );
 
 		if( iResult == FTP_SUCCEEDED )
 		{
@@ -294,7 +303,7 @@ HRESULT CDownload::PumpMessages()
 			{
 				m_StartPosition = 0;
 			}
-			else if(	( m_StartPosition = m_Ftp->FileRecoveryPosition( m_LocalFile, m_RegKey ) ) != 0 )
+			else if(	( m_StartPosition = reinterpret_cast<Rva00886A20Class *>(m_Ftp)->d_00886a20( m_LocalFile, reinterpret_cast<int>(m_RegKey) ) ) != 0 )
 			{
 				if( Listener->OnQueryResume() == DOWNLOADEVENT_DONOTRESUME )
 				{
@@ -322,7 +331,7 @@ HRESULT CDownload::PumpMessages()
 		// Get the next chunk of the file
       ///DBGMSG("Get Next File Block");
 
-		iResult = m_Ftp->GetNextFileBlock( m_LocalFile, &m_BytesRead );
+		iResult = reinterpret_cast<Cftp *>(m_Ftp)->GetNextFileBlock( m_LocalFile, &m_BytesRead );
 
 		if( m_TimeStarted == 0 )
 		{
