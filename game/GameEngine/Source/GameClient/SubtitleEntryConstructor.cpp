@@ -7,7 +7,7 @@ typedef int Int;
 // The empty wide payload at 0x0107388C is the recorded
 // ?BFMEEmptyUnicodeString@@3GB.  The wcstok delimiter string at 0x01084C10
 // is not in dir32_addresses.csv, so it keeps an address-derived name.
-extern const WideChar BFMEEmptyUnicodeString[];
+extern const WideChar BFMEEmptyUnicodeString;
 extern const WideChar g_Va01084C10[];
 
 class UnicodeString;
@@ -46,7 +46,7 @@ public:
 
 	const WideChar *str() const
 	{
-		return m_data ? m_data->data : BFMEEmptyUnicodeString;
+		return m_data ? m_data->data : &BFMEEmptyUnicodeString;
 	}
 };
 
