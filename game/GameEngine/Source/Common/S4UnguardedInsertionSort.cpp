@@ -44,11 +44,11 @@
 // SEPARATE types here because nothing in these bytes shows the two layers pass
 // the same object type, only that they call the same code.
 //
-// IDENTITY IS NOT RECOVERED.  Every type is named after the retail body that
-// uses it; each `operator()` is DECLARED, never defined, and pinned to the
-// address its REL32 resolves to through the ILT thunk in the way.  `int` stands
-// in for the element because the bytes fix its width and its scalar category
-// and nothing more.
+// The sort identities remain opaque. The range is still an ABI storage view,
+// not a claim that the bound and predicate were one source-language object.
+// The known predicates do not read this slot, so keep its bound storage
+// independent while calling their existing member declarations. `int` stands
+// in for the element because only its width and scalar category are witnessed.
 //
 // WHAT THE BYTES CANNOT DECIDE.  How WIDE the second parameter is: only its
 // first dword is read, and cdecl leaves the rest invisible from inside.  The
@@ -57,11 +57,14 @@
 // here.  What the predicate compares, beyond taking two elements by value and
 // returning a byte tested with `test al,al`.
 
-#define S4_UNGUARDED_INSERTION( NAME )                                         \
+#define S4_UNGUARDED_INSERTION( NAME, COMPARATOR )                             \
+	struct COMPARATOR                                                         \
+	{                                                                          \
+		bool operator()( int, int ) const;                                     \
+	};                                                                         \
 	struct S4Range##NAME                                                       \
 	{                                                                          \
 		int *m_last;                                                           \
-		bool operator()( int, int ) const;                                     \
 	};                                                                         \
 	void s4uis##NAME( int *first, S4Range##NAME range )                        \
 	{                                                                          \
@@ -70,7 +73,7 @@
 			int val = *i;                                                      \
 			int *cur = i;                                                      \
 			int *next = i - 1;                                                 \
-			while ( range( val, *next ) )                                      \
+			while ( reinterpret_cast<const COMPARATOR *>(&range)->operator()( val, *next ) ) \
 			{                                                                  \
 				*cur = *next;                                                  \
 				cur = next;                                                    \
@@ -80,7 +83,7 @@
 		}                                                                      \
 	}
 
-S4_UNGUARDED_INSERTION( 00342CE0 )
-S4_UNGUARDED_INSERTION( 00453090 )
-S4_UNGUARDED_INSERTION( 00453180 )
-S4_UNGUARDED_INSERTION( 007537C0 )
+S4_UNGUARDED_INSERTION( 00342CE0, Q4Sort0034BFC0 )
+S4_UNGUARDED_INSERTION( 00453090, Q4Sort004566F0 )
+S4_UNGUARDED_INSERTION( 00453180, S4Cmp00452A50 )
+S4_UNGUARDED_INSERTION( 007537C0, Q4Sort00755050 )
