@@ -74,23 +74,29 @@ public:
 	virtual void bfmeTakeAt8C(void *item);		// slot 35, vtable+0x8C
 };
 
-class BfmeSubAccept_00002DEC
-{
-public:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002DEC
-};
+class Xfer;
+class FlagPairTarget;
+class AICommandParmsStorage { public: void doXfer(Xfer *target); };
+class Gen0016B140 { public: void handle(FlagPairTarget *target); };
+class Gen0020F330 { public: void handle(FlagPairTarget *target); };
+class Rva00216170Caller { public: void invoke(FlagPairTarget *target); };
+class Rva00250A40Caller { public: void invoke(FlagPairTarget *target); };
+class Gen_002D9B90 { public: void bfmeSeed(BfmeSeedTarget *target); };
+class Gen_002D9BD0 { public: void bfmeSeed(BfmeSeedTarget *target); };
 
-class BfmeSubAccept_00029DAC
-{
-public:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00029DAC
-};
+// These existing protected providers need an ABI call view, not a new access/layout facade.
+extern "C" void __identifier("?xfer@GarrisonContain@@MAEXPAVXfer@@@Z")();
+extern "C" void __identifier("?DoXfer@AIUpdateInterface@@MAEXAAVXfer@@@Z")();
 
-void bfmeHandOver_00004B79(BfmeSeedTarget *target, void *item);		// ILT 0x00004B79
-class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+class BfmeSubAccept_00002DEC {};
+
+class BfmeSubAccept_00029DAC {};
+
+class MidVirtualSlot90Receiver;
+void Rva0010BE00(MidVirtualSlot90Receiver *target, void *item);		// ILT 0x00004B79
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *target, void *item);
-void bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
-void bfmeHandOver_00020879(BfmeSeedTarget *target, void *item);		// ILT 0x00020879
+BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);		// ILT 0x0000FFE2
+void Rva0010C140(MidVirtualSlot90Receiver *target, void *item);		// ILT 0x00020879
 
 class Gen_000C7C40
 {
@@ -116,8 +122,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
-
 	char m_bfmePad0[0x50];
 	char m_bfmeItem0;				// +0x50
 	char m_bfmePad1[0xB];
@@ -133,8 +137,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
-
 	char m_bfmePad0[0x50];
 	char m_bfmeItem0;				// +0x50
 	char m_bfmePad1[0x3];
@@ -150,8 +152,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00002379
-
 	char m_bfmePad0[0x4E];
 	char m_bfmeItem0;				// +0x4E
 	char m_bfmePad1[0x5];
@@ -207,8 +207,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00031557
-
 	char m_bfmePad0[0xE0];
 	BfmeSubAccept_00029DAC m_bfmeSub0;		// +0xE0
 };
@@ -219,8 +217,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00036714
-
 	char m_bfmePad0[0x14];
 	char m_bfmeItem0;				// +0x14
 };
@@ -231,8 +227,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x0000EAA7
-
 	char m_bfmePad0[0x9B8];
 	char m_bfmeItem0;				// +0x9B8
 };
@@ -241,9 +235,6 @@ class Gen_00250A80
 {
 public:
 	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000099CB
 
 };
 
@@ -266,8 +257,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00043441
-
 	char m_bfmePad0[0x340];
 	BfmeSubAccept_00002DEC m_bfmeSub0;		// +0x340
 	char m_bfmePad1[0x9F];
@@ -308,8 +297,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x00043441
-
 	char m_bfmePad0[0x340];
 	char m_bfmeItem0;				// +0x340
 	char m_bfmePad1[0xB];
@@ -362,8 +349,6 @@ public:
 	void bfmeSeed(BfmeSeedTarget *target);
 
 private:
-	void bfmeAccept(BfmeSeedTarget *target);		// ILT 0x000183FE
-
 	char m_bfmePad0[0x20];
 	char m_bfmeItem0;				// +0x20
 };
@@ -423,7 +408,7 @@ void Gen_0016BA30::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 3;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	if ( !target->bfmeAskAt10() )
 	{
@@ -449,7 +434,7 @@ void Gen_0016C120::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	if ( !target->bfmeAskAt10() )
 	{
@@ -472,7 +457,7 @@ void Gen_0016C350::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0016B140 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	if ( !target->bfmeAskAt10() )
 	{
@@ -484,7 +469,7 @@ void Gen_0016C350::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeTakeAt8C(&m_bfmeItem0);
 		if ( version.m_bfmeVersion >= 2 )
 		{
-			bfmeHandOver_00004B79(target, &m_bfmeItem1);
+			Rva0010BE00(reinterpret_cast<MidVirtualSlot90Receiver *>(target), &m_bfmeItem1);
 		}
 	}
 }
@@ -554,11 +539,11 @@ void Gen_00212FC0::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Gen0020F330 *>(this)->handle(reinterpret_cast<FlagPairTarget *>(target));
 
 	if ( version.m_bfmeVersion >= 2 )
 	{
-		m_bfmeSub0.bfmeAccept(target);
+		reinterpret_cast<Gen_002D9B90 *>(&m_bfmeSub0)->bfmeSeed(target);
 	}
 }
 
@@ -571,7 +556,7 @@ void Gen_00217810::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Rva00216170Caller *>(this)->invoke(reinterpret_cast<FlagPairTarget *>(target));
 
 	if ( version.m_bfmeVersion >= 2 )
 	{
@@ -588,7 +573,11 @@ void Gen_00248BE0::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	typedef void (Gen_00248BE0::*Call)(Xfer *);
+	typedef char CallWidth[sizeof(Call) == sizeof(void (*)()) ? 1 : -1];
+	union { void (*raw)(); Call member; } transfer;
+	transfer.raw = __identifier("?xfer@GarrisonContain@@MAEXPAVXfer@@@Z");
+	(this->*transfer.member)(reinterpret_cast<Xfer *>(target));
 
 	if ( version.m_bfmeVersion >= 2 )
 	{
@@ -605,7 +594,7 @@ void Gen_00250A80::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	reinterpret_cast<Rva00250A40Caller *>(this)->invoke(reinterpret_cast<FlagPairTarget *>(target));
 
 }
 
@@ -631,7 +620,11 @@ void Gen_00281CD0::bfmeSeed(BfmeSeedTarget *target)
 // ?bfmeSeed@Gen_002B5250@@QAEXPAVBfmeSeedTarget@@@Z		240 bytes
 void Gen_002B5250::bfmeSeed(BfmeSeedTarget *target)
 {
-	bfmeAccept(target);
+	typedef void (Gen_002B5250::*Call)(Xfer &);
+	typedef char CallWidth[sizeof(Call) == sizeof(void (*)()) ? 1 : -1];
+	union { void (*raw)(); Call member; } transfer;
+	transfer.raw = __identifier("?DoXfer@AIUpdateInterface@@MAEXAAVXfer@@@Z");
+	(this->*transfer.member)(*reinterpret_cast<Xfer *>(target));
 
 	if ( !target->bfmeAskAt10() )
 	{
@@ -643,7 +636,7 @@ void Gen_002B5250::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeSeed(&version);
 		target->bfmeTakeAt8C(&m_bfmeItem1);
 		target->bfmeTakeAt74(&m_bfmeItem3);
-		bfmeHandOver_00020879(target, &m_bfmeItem2);
+		Rva0010C140(reinterpret_cast<MidVirtualSlot90Receiver *>(target), &m_bfmeItem2);
 		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem4);
 		(void)&Rva0010C3C0((MidVirtualSlot90Receiver *)target, &m_bfmeItem5);
 		target->bfmeTakeAt60(&m_bfmeItem6);
@@ -652,7 +645,7 @@ void Gen_002B5250::bfmeSeed(BfmeSeedTarget *target)
 		target->bfmeTakeAt8C(&m_bfmeItem9);
 		target->bfmeTakeAt8C(&m_bfmeItem10);
 		target->bfmeTakeAt8C(&m_bfmeItem11);
-		m_bfmeSub0.bfmeAccept(target);
+		reinterpret_cast<AICommandParmsStorage *>(&m_bfmeSub0)->doXfer(reinterpret_cast<Xfer *>(target));
 	}
 }
 
@@ -681,11 +674,15 @@ void Gen_002C1740::bfmeSeed(BfmeSeedTarget *target)
 	version.m_bfmeVersion = 2;
 
 	target->bfmeSeed(&version);
-	bfmeAccept(target);
+	typedef void (Gen_002C1740::*Call)(Xfer &);
+	typedef char CallWidth[sizeof(Call) == sizeof(void (*)()) ? 1 : -1];
+	union { void (*raw)(); Call member; } transfer;
+	transfer.raw = __identifier("?DoXfer@AIUpdateInterface@@MAEXAAVXfer@@@Z");
+	(this->*transfer.member)(*reinterpret_cast<Xfer *>(target));
 
 	if ( !target->bfmeAskAt10() )
 	{
-		m_bfmeSub1.bfmeAccept(target);
+		reinterpret_cast<AICommandParmsStorage *>(&m_bfmeSub1)->doXfer(reinterpret_cast<Xfer *>(target));
 		target->bfmeTakeAt60(&m_bfmeItem0);
 		bfmeHandOver_0000FFE2(target, &m_bfmeItem2);
 		target->bfmeTakeAt78(&m_bfmeItem3);
@@ -726,7 +723,7 @@ void Gen_002D4710::bfmeSeed(BfmeSeedTarget *target)
 	{
 		target->bfmeTakeAt8C(&m_bfmeItem0);
 	}
-	bfmeAccept(target);
+	reinterpret_cast<Gen_002D9BD0 *>(this)->bfmeSeed(target);
 
 }
 
