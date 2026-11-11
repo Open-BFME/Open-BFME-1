@@ -2,9 +2,9 @@
 // stlport
 //
 // Fourteen bodies from three layers of STLport's `sort` over element widths the
-// earlier introsort lanes did not reach.  All three are instantiated from the
-// VENDORED header, not replicated: the shapes below say what the retail bytes
-// show, and the header supplies the code.
+// earlier introsort lanes did not reach. Most bodies instantiate the vendored
+// header. Three push-heap specializations retain its loop and opaque signatures
+// so their comparator calls can bind existing native members.
 //
 // WHAT THE BYTES SHOW -- __final_insertion_sort (91/92 bytes, five copies).
 //
@@ -171,12 +171,59 @@ S4_MAKE_HEAP( 00575AA0 )
 S4_MAKE_HEAP( 009F3400 )
 S4_MAKE_HEAP( 009F34B0 )
 
+struct S4Cmp003408C0 { void *m_state; bool operator()( int, int ) const; };
+struct S4Cmp004529D0 { void *m_state; bool operator()( int, int ) const; };
+struct S4Cmp00452A50 { void *m_state; bool operator()( int, int ) const; };
+struct S4Cmp007534F0 { void *m_state; bool operator()( int, int ) const; };
+
+struct Q4Sort0034BFC0 { bool operator()( int, int ) const; };
+struct Q4Sort004566F0 { bool operator()( int, int ) const; };
+struct Q4Sort00755050 { bool operator()( int, int ) const; };
+
+// Keep the original functor slot/signature; the native predicates do not read its state.
+namespace _STL
+{
+template <> inline
+void __push_heap<int *, int, int, S4Cmp003408C0>( int *__first,
+	int __holeIndex, int __topIndex, int __val, S4Cmp003408C0 __comp )
+{
+	int __parent = (__holeIndex - 1) / 2;
+	while (__holeIndex > __topIndex && reinterpret_cast<const Q4Sort0034BFC0 *>(&__comp)->operator()(*(__first + __parent), __val)) {
+		*(__first + __holeIndex) = *(__first + __parent);
+		__holeIndex = __parent;
+		__parent = (__holeIndex - 1) / 2;
+	}
+	*(__first + __holeIndex) = __val;
+}
+
+template <> inline
+void __push_heap<int *, int, int, S4Cmp004529D0>( int *__first,
+	int __holeIndex, int __topIndex, int __val, S4Cmp004529D0 __comp )
+{
+	int __parent = (__holeIndex - 1) / 2;
+	while (__holeIndex > __topIndex && reinterpret_cast<const Q4Sort004566F0 *>(&__comp)->operator()(*(__first + __parent), __val)) {
+		*(__first + __holeIndex) = *(__first + __parent);
+		__holeIndex = __parent;
+		__parent = (__holeIndex - 1) / 2;
+	}
+	*(__first + __holeIndex) = __val;
+}
+
+template <> inline
+void __push_heap<int *, int, int, S4Cmp007534F0>( int *__first,
+	int __holeIndex, int __topIndex, int __val, S4Cmp007534F0 __comp )
+{
+	int __parent = (__holeIndex - 1) / 2;
+	while (__holeIndex > __topIndex && reinterpret_cast<const Q4Sort00755050 *>(&__comp)->operator()(*(__first + __parent), __val)) {
+		*(__first + __holeIndex) = *(__first + __parent);
+		__holeIndex = __parent;
+		__parent = (__holeIndex - 1) / 2;
+	}
+	*(__first + __holeIndex) = __val;
+}
+}
+
 #define S4_PUSH_HEAP( NAME )                                                   \
-	struct S4Cmp##NAME                                                         \
-	{                                                                          \
-		void *m_state;                                                         \
-		bool operator()( int, int ) const;                                     \
-	};                                                                         \
 	void s4ph##NAME( int *first, int hole, int top, int value,                 \
 		S4Cmp##NAME comp )                                                     \
 	{                                                                          \
