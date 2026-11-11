@@ -259,5 +259,5 @@ Rva000FB210Element::Rva000FB210Element(Object *object)
 		m_f34 = module->rva002A23B0();
 		thingTemplate = module->rva002A1B20();
 	}
-	m_name.set(thingTemplate != 0 ? thingTemplate->m_name : AsciiString::TheEmptyString);
+	m_name.StringBase<char>::set(thingTemplate != 0 ? thingTemplate->m_name : AsciiString::TheEmptyString);
 }

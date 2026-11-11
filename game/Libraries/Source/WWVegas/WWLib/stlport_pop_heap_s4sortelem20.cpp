@@ -48,7 +48,7 @@ public:
     AsciiString(const AsciiString &other)
         : StringBase<char>(other) {}
     ~AsciiString() {}
-    void set(const AsciiString &other)
+    __declspec(dllimport) __forceinline void set(const AsciiString &other)
     {
         StringBase<char>::set(other);
     }
