@@ -5,17 +5,22 @@
 // through ILT 0x00002ED7 to this 30-byte wrapper, whose complete destructor
 // route ILT 0x0001BA5E reaches cleanup body 0x004297D0.
 
-class LaserFXNugget
+// Explicit scalar-delete operations; see 20261111-explicit-scalar-wrapper.md.
+void __cdecl operator delete(void *);
+class Rva004297D0
 {
 public:
-	virtual ~LaserFXNugget();
-private:
-	friend void forceLaserFXNuggetDeletingDestructor();
+    ~Rva004297D0();
 };
-
-// The implicit copy constructor (no retail twin) emits the vftable and with
-// it ??_G without a second, non-retail copy of the default constructor.
-void forceLaserFXNuggetDeletingDestructor(const LaserFXNugget &that)
+class Rva004297A0Wrapper
 {
-	LaserFXNugget value(that);
+public:
+    void *method(unsigned int flags);
+};
+void *Rva004297A0Wrapper::method(unsigned int flags)
+{
+    ((Rva004297D0 *)this)->Rva004297D0::~Rva004297D0();
+    if (flags & 1)
+        ::operator delete(this);
+    return this;
 }
