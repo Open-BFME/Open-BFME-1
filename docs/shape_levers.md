@@ -4071,3 +4071,16 @@ actions. Use `eh_state_pins.py --fix`, not byte-only label selection: native
 states1..4 uniquely proved the new labels, and the complete5/5 gate passes.
 Both the parent instructions/relocations and all unwind-action signatures
 remain identical. Evidence: `targets/game/reverse/attempt_support/20261111-giantbird-constructor-eh-repair.md`.
+
+### Hand-stored destructor vftable goes in the outer body, not the inlined middle (2026-11-11)
+
+0x008B2DF0 (`??1Rva008B2DF0TailBase@@UAE@XZ`, 97 B,
+game/GameEngine/Source/Common/Rva008B2DF0Destructor.cpp, VC7.1 `/EHsc`):
+retiring the middle class's unrecorded vftable name made it
+`__declspec(novtable)` with a hand store of the recorded name. Measured: as
+the first statement of the `__forceinline` middle destructor, the store came
+after `push ebx / push ebx / mov [esp+0x1c],1` (the EH state change into the
+middle body); retail stores before it. Moving the store to the end of the
+novtable outer destructor's body (after its two clears) restored 97/97. The
+compiler's automatic vptr store precedes the state change; a body statement
+of the inlined destructor follows it.

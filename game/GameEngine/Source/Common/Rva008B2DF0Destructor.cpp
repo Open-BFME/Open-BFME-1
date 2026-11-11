@@ -21,7 +21,15 @@ public:
 	~Q4Base00D35D68() {}
 };
 
-class Rva008B2DF0Middle : public Q4Base00D35D68
+// 0x01136058 is the middle vftable the dir32 record owns as
+// ??_7Gen_uwm_00899380@@6B@ (+14 more names); novtable suppresses this
+// view's own name.  The outer destructor stores the recorded name after its
+// two clears: in the middle destructor's body the store would follow the EH
+// state change, while retail stores before it.
+// retired debt: ??_7Rva008B2DF0Middle@@6B@ replaced with ??_7Gen_uwm_00899380@@6B@
+extern "C" void *__identifier("??_7Gen_uwm_00899380@@6B@")[];
+
+class __declspec(novtable) Rva008B2DF0Middle : public Q4Base00D35D68
 {
 public:
     virtual void v3();
@@ -53,4 +61,5 @@ Rva008B2DF0TailBase::~Rva008B2DF0TailBase()
 {
     m_20 = 0;
     m_24 = 0;
+    *(volatile void **)this = (void *)__identifier("??_7Gen_uwm_00899380@@6B@");
 }
