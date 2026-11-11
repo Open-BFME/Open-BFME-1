@@ -1,0 +1,42 @@
+diff --git a/game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp b/game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp
+index 825ce42a3c..f650506861 100644
+--- a/game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp
++++ b/game/GameEngine/Source/GameLogic/Object/Body/Rva002157C0Refresh.cpp
+@@ -1,4 +1,4 @@
+-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
++// cl: /DBFME_ASCII_COMPARE_INLINE_ONLY /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+ //
+ // Open-BFME: retail 0x002157C0 (295 bytes; ret at +0x126, int3 at +0x127),
+ // beside the structure-body rubble refresh at 0x00215650 it calls. Same
+diff --git a/game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsPlayerMask.cpp b/game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsPlayerMask.cpp
+index 7a4d11d8f7..5910730fd8 100644
+--- a/game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsPlayerMask.cpp
++++ b/game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsPlayerMask.cpp
+@@ -1,4 +1,4 @@
+-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
++// cl: /DBFME_ASCII_COMPARE_INLINE_ONLY /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib
+ // stlport
+ // readable body of ?evaluatePlayerHasComparisonPercentPower@ScriptConditions@@IAE_NPAVParameter@@00@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+ // readable body of ?evaluatePlayerDestroyedNOrMoreBuildings@ScriptConditions@@IAE_NPAVParameter@@00@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
+diff --git a/game/Libraries/Source/WWVegas/WWLib/ascii_string.h b/game/Libraries/Source/WWVegas/WWLib/ascii_string.h
+index 99ee408b51..6830d9bc00 100644
+--- a/game/Libraries/Source/WWVegas/WWLib/ascii_string.h
++++ b/game/Libraries/Source/WWVegas/WWLib/ascii_string.h
+@@ -86,10 +86,13 @@ public:
+     bool endsWithNoCase(const char *p) const { return StringBase<char>::endsWithNoCase(p); }
+     int compare(const char *p) const { return StringBase<char>::compare(p); }
+     int compareNoCase(const char *p) const { return StringBase<char>::compareNoCase(p); }
+-    // Real body rather than a delegation: retail inlines this comparison at every
+-    // AsciiString call site, and SubsystemLegend::findEntry (0x009A11A0) only
+-    // matches with the repe cmpsb in line. StringBase<char>::compare keeps its own
+-    // out-of-line COMDAT (0x0005FEB0), which the StringBase operator< calls.
++    // SubsystemLegend::findEntry (0x009A11A0) needs this comparison visible
++    // for retail's inlined repe cmpsb. Out-of-line callers use the exported
++    // StringBase<char>::compare implementation at 0x0005FEB0.
++    // Fully inlined consumers must not emit a second out-of-line provider.
++#ifdef BFME_ASCII_COMPARE_INLINE_ONLY
++    __declspec(dllimport) __forceinline
++#endif
+     int compare(const AsciiString &s) const
+     {
+         int thatLen = s.m_data ? s.m_data->length : 0;
