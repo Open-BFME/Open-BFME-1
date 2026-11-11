@@ -1,5 +1,18 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## A global STL linkage flag can hide a large COMDAT side effect (2026-11-11)
+
+TunnelTracker's imported68-byte Object-list base destructor became native66B
+under `_STLP_USE_STATIC_LIB`, and all42 rowed callers still matched—but the
+flag also emitted542 unrelated COMDATs. Reject that as a narrow provider fix.
+A declaration-only `_List_base<Object*,allocator<Object*> >::~_List_base()`
+suppressed the wrong imported copy with zero added COMDATs and kept the
+original allocator/consumer context. Compare the complete definition/undefined/
+COMDAT footprint, not only the repaired helper or matched caller rows. Measured
+with MSVC7.1 13.10.3077 `/O2 /MD /EHsc`, unchanged canonical66B OpenContain
+provider, native pointer/size bucket allocator82E5F0. See
+`identity_evidence/20261111-object-list-base-contract.md`.
+
 ## Canonical type adoption can masquerade as changed array cleanup (2026-11-11)
 
 After MilesAudioManager's opaque12-byte array became the independently proven

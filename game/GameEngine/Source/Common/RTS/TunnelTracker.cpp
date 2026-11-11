@@ -34,6 +34,13 @@
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+#include <list>
+class Object;
+namespace _STL {
+// Keep the native node-allocator context without emitting an imported destructor copy.
+template <> _List_base<Object *, allocator<Object *> >::~_List_base();
+}
+
 #include "Common/GameState.h"
 #include "Common/GlobalData.h"
 #include "Common/KindOf.h"

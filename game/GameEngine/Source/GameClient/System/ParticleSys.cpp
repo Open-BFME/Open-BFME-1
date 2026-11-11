@@ -34,6 +34,16 @@
 #define BFME_PARTICLE_LIST_NODE_TAIL
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+#include <list>
+class Object;
+namespace _STL {
+// Object lists retain native 12-byte nodes; the other list payloads still need the tail.
+template <> struct _List_node<Object *> : public _List_node_base {
+	Object *_M_data;
+	__TRIVIAL_STUFF(_List_node)
+};
+}
+
 #define DEFINE_PARTICLE_SYSTEM_NAMES
 
 #include "Common/GameState.h"

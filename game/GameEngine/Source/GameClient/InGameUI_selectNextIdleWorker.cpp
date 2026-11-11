@@ -4,6 +4,16 @@
 #define BFME_PARTICLE_LIST_NODE_TAIL
 #include "PreRTS.h"
 
+#include <list>
+class Object;
+namespace _STL {
+// Object lists retain native 12-byte nodes; the other list payloads still need the tail.
+template <> struct _List_node<Object *> : public _List_node_base {
+	Object *_M_data;
+	__TRIVIAL_STUFF(_List_node)
+};
+}
+
 #define DEFINE_SHADOW_NAMES
 
 #include "Common/ActionManager.h"

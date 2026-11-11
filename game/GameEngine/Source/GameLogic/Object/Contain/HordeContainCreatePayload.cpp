@@ -1,8 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /D_STLP_USE_STATIC_LIB /DNDEBUG /MD /EHsc
 // stlport
 // Open-BFME: HordeContain initial payload cleanup, retail 0x0023C000.
-
-#define _STLP_USE_NEWALLOC 1
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;

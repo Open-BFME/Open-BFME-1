@@ -39,13 +39,8 @@ typedef bool Bool;
 
 class Object;
 // Retail destroys the passenger list through ILT 0x0000E68D (0x000CEBD0).
-void j_0000e68d();
 namespace _STL {
-template<> inline _List_base<Object*,allocator<Object*> >::~_List_base() {
- typedef _List_base<Object*,allocator<Object*> > Base;
- union { void (*raw)(); void (Base::*member)(); } call;
- call.raw=&j_0000e68d; (this->*call.member)();
-}
+template<> _List_base<Object*,allocator<Object*> >::~_List_base();
 template<> __declspec(noinline) list<Object*,allocator<Object*> >::list(const allocator<Object*>& a) : _Base(a) {}
 }
 class Player;
