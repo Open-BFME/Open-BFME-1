@@ -36,7 +36,7 @@ class AsciiString : public StringBase<char>
 public:
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	__declspec(nothrow) int compareNoCase(const AsciiString &other) const
+	__declspec(dllimport) __forceinline __declspec(nothrow) int compareNoCase(const AsciiString &other) const
 	{
 		return ((const StringBase<char> *)this)->compareNoCase(
 			*(const StringBase<char> *)&other);
