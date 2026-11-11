@@ -293,7 +293,7 @@ enum KindOfType
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf( KindOfType t ) const { return (m_kindof & (1UL << t)) != 0; }
+	__declspec(dllimport) __forceinline Bool isKindOf( KindOfType t ) const { return (m_kindof & (1UL << t)) != 0; }
 
 	UnsignedByte		_bfme_tt_pad[0xc8];
 	UnsignedInt			m_kindof;														///< +0xd0, bit 24 = KINDOF_INERT

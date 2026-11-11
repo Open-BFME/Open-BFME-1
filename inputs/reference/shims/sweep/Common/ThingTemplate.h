@@ -395,7 +395,13 @@ public:
 	EditorSortingType getEditorSorting() const { return (EditorSortingType)m_editorSorting; }
 
 	/// return true iff the template has the specified kindOf flag set.
-	inline Bool isKindOf(KindOfType t) const 
+	// Specialized consumers keep their inline test without exporting a provider.
+#ifdef BFME_KINDOF_INLINE_ONLY
+	__declspec(dllimport) __forceinline
+#else
+	inline
+#endif
+	Bool isKindOf(KindOfType t) const
 	{ 
 		// Retail's inline COMDAT (0x4A2CB0) is `mov ecx,[esi+edx*4+0xC8]`; m_kindof sits at +0x68 in this
 		// layout, so only the accessor reads retail's offset.

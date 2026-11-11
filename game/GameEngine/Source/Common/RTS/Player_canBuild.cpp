@@ -53,7 +53,7 @@ class ThingTemplate
 {
 public:
 	BuildableStatus getBuildable() const;
-	Bool isKindOf(KindOfType t) const { return (m_kindof[t >> 3] & (1 << (t & 7))) != 0; }
+	__declspec(dllimport) __forceinline Bool isKindOf(KindOfType t) const { return (m_kindof[t >> 3] & (1 << (t & 7))) != 0; }
 	Int getPrereqCount() const { return m_prereqInfo.size(); }
 	const ProductionPrerequisite *getNthPrereq(Int i) const { return &m_prereqInfo[i]; }
 	UnsignedShort getTemplateID() const { return m_templateID; }

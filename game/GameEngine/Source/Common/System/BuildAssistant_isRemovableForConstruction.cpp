@@ -33,7 +33,7 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf(KindOfType kind) const
+	__declspec(dllimport) __forceinline Bool isKindOf(KindOfType kind) const
 	{
 		return (m_kindof & (1U << kind)) != 0;
 	}
