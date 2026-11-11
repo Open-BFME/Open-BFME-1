@@ -667,11 +667,10 @@ struct Rva0055AE10Request {
   std::vector<bool> qmMaps;
 };
 
-struct Rva0055AE10MapPredicate {
-  int value;
-  Rva0055AE10MapPredicate(int v) : value(v) {}
-  bool operator()(const MapMetaData *md) const;
-};
+// The predicate's inline body lives with its native partition instance
+// (Rva00450B90PointerPartition.cpp): retail's __partition at 0x00450B90 inlines
+// it, so a body-less view here emitted a non-retail COMDAT copy.
+#include "../../../../Common/Rva0055AE10MapPredicate.h"
 struct Rva0055AE10MapCompare {
   bool operator()(const MapMetaData *a, const MapMetaData *b) const;
 };
