@@ -336,7 +336,6 @@ dir32,0x01336E4C,??_B?1??getRva008877A0Singleton@@YAPAXXZ@51,the name encodes 0x
 dir32,0x01336E5C,?debug01336E5C@@3PAVShadowDebug007BC270@@A,"retail 0x01336E5C is already recorded as ?DebugGlobal00409E20@@3PAVDebugView00409E20@@A (+14 more); reference that name, not a new one"
 dir32,0x013377D8,?g_bfmeHolderBU@@3PAUState8C4DA0@@A,"retail 0x013377D8 is already recorded as ?Rva008A5380Holder@@3PADA (+18 more); reference that name, not a new one"
 dir32,0x01337A30,?g_pool01337A30@@3PAUStringPool008B3AA0@@A,"retail 0x01337A30 is already recorded as ?Rva00892ED0ReleaseTable@@3PAP6AXPAX@ZA (+29 more); reference that name, not a new one"
-dir32,0x01338524,?g_01338524@@3URva008A9A70Str@@A,the name encodes 0x008A9A70 but retail reads 0x01338524
 dir32,0x013385D8,?g_013385D8@@3URva008A9A70Str@@A,the name encodes 0x008A9A70 but retail reads 0x013385D8
 dir32,0x01338678,?g_01338678@@3URva008A9A70Str@@A,the name encodes 0x008A9A70 but retail reads 0x01338678
 dir32,0x0133F49C,?render_state_changed@DX8Wrapper@@2IA,"retail 0x0133F49C is already recorded as ?Rva0133F49CChanged@@3IA (+3 more); reference that name, not a new one"
