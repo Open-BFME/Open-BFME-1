@@ -47,7 +47,7 @@ class AsciiString : private StringBase<char>
 public:
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
+	__declspec(dllimport) __forceinline bool isEmpty() const { return m_data == 0 || m_data->length == 0; }
 	const char *str() const { return m_data ? &m_data->data[0] : ""; }
 
 	bool endsWithNoCase(const char *p) const

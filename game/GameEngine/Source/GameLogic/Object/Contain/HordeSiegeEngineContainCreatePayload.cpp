@@ -102,7 +102,7 @@ void HordeSiegeEngineContain::createPayload()
 				if (scaledCount > 0)
 					dispatchRva001BE220((Rva001BE220Receiver *)payload, 0xcf, scaledCount);
 
-				if (!owner->getName().isEmpty())
+				if (!owner->getName().StringBase<char>::isEmpty())
 				{
 					const char *text = owner->getName().str();
 					char formattedName[256];

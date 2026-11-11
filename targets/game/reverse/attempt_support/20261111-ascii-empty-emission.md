@@ -1,0 +1,5 @@
+# AsciiString empty-test emission
+
+Four queue consumers: private isEmpty bodies in GameState_findHighFileNumber and CastleBehaviorUnpackCost now use imported forceinline; the canonical-header consumers GameWindowManager_winTextLabelToText_Thunk and HordeSiegeEngineContainCreatePayload explicitly call the existing StringBase<char> operation. All seven rows pass normal byte/relocation verification, including the existing GUI unwind row resolved from its parent. COFF inspection finds no AsciiString::isEmpty symbol or new import in any repaired object. No layouts, pins, identities or ledger changes.
+
+Read prior isEmpty-family attempts: these consumer copies are retail-shaped; their loser verdict originates in other earlier copies. Removing redundant consumers reduces that conflict, without claiming to correct the selected provider. BFME 2 76f0baefa6f285d54bc1ca922397674312a5913f kindof-emission-link-20261015/readme.md supplies only the private-emission technique. The canonical base forwarding is directly visible in BFME 1 ascii_string.h. Current linked-byte gain remains unknown.

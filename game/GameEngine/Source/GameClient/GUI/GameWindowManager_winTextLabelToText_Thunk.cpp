@@ -31,7 +31,7 @@ public:
 
 UnicodeString GameWindowManager::winTextLabelToText(AsciiString label)
 {
-	if (label.isEmpty()) {
+	if (label.StringBase<char>::isEmpty()) {
 		return UnicodeString::TheEmptyString;
 	}
 

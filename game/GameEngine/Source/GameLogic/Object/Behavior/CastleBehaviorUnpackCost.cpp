@@ -96,7 +96,7 @@ public:
 	}
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-	Bool isEmpty() const
+	__declspec(dllimport) __forceinline Bool isEmpty() const
 	{
 		return m_buffer == 0 || m_buffer->m_length == 0;
 	}
