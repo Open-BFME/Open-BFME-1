@@ -29,7 +29,6 @@ public:
 	unsigned int getBits(void) const { return *(const unsigned int *)((const char *)this + 0x0c); }
 	Bool getPinched(void) const { return m_pinched; }
 	void setPinched(Bool pinch) { m_pinched = pinch; }
-	void setType(CellType type);
 
 private:
 	char m_bfmeHead[0x0c];
@@ -47,11 +46,23 @@ struct BfmePathfindLayer44
 	char value[0x44];
 };
 
+// Keep the existing storage view: only its address is used here.
 class BfmePathfindZoneManager
 {
+};
+
+class PathfindLayer;
+struct IRegion2D;
+class PathfindZoneManager
+{
 public:
-	void bfmeRebuildZones(void *map, BfmePathfindLayer44 *layers,
-		BfmePathfindExtent *extent);
+	void calculateZones(PathfindCell **map, PathfindLayer layers[], const IRegion2D &bounds);
+};
+
+class Gen_003F68B0
+{
+public:
+	void bfmeSetMode(unsigned int mode);
 };
 
 class Pathfinder
@@ -115,12 +126,13 @@ void Pathfinder::classifyMap(void)
 			{
 				if ((bits & 7) == PathfindCell::CELL_CLEAR)
 				{
-					m_map[i][j].setType(PathfindCell::CELL_CLIFF);
+					reinterpret_cast<Gen_003F68B0 *>(&m_map[i][j])->bfmeSetMode(PathfindCell::CELL_CLIFF);
 				}
 			}
 		}
 	}
 
 	bfmePrepareRefresh();
-	m_zoneManager.bfmeRebuildZones(m_map, m_layers, &m_extent);
+	reinterpret_cast<PathfindZoneManager *>(&m_zoneManager)->calculateZones(m_map,
+		reinterpret_cast<PathfindLayer *>(m_layers), *reinterpret_cast<const IRegion2D *>(&m_extent));
 }
