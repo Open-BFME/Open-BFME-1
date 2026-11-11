@@ -59,8 +59,8 @@ const FieldParse WaterTransparencySetting::m_waterTransparencySettingFieldParseT
 WaterSetting::WaterSetting( void )
 {
 
-	m_skyTextureFile.clear();
-	m_waterTextureFile.clear();
+	m_skyTextureFile.StringBase<char>::clear();
+	m_waterTextureFile.StringBase<char>::clear();
 	m_waterRepeatCount = 0;
 	m_skyTexelsPerUnit = 0.0f;
 

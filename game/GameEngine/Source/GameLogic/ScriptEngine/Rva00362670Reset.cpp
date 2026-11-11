@@ -51,7 +51,7 @@ void Rva00362670Owner::reset()
     field48 = 0;
     field50.clear();
     ((StringBase<unsigned short> *)&field78)->clear();
-    fieldAC.clear();
-    fieldB0.clear();
-    field4C.clear();
+    fieldAC.StringBase<char>::clear();
+    fieldB0.StringBase<char>::clear();
+    field4C.StringBase<char>::clear();
 }
