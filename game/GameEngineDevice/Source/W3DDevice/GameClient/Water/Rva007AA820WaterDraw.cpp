@@ -64,34 +64,37 @@ public:
     float m_at5C;
 };
 
-class BfmeHandleCX {
+class TextureHandle {
 public:
     TextureClass *value;
-    BfmeHandleCX() : value(0) {}
-    BfmeHandleCX(const BfmeHandleCX &other) : value(other.value) { if(value) value->Add_Ref(); }
-    ~BfmeHandleCX() { if(value) value->Release_Ref(); }
-    BfmeHandleCX &operator=(const BfmeHandleCX &other) {
+    TextureHandle() : value(0) {}
+    TextureHandle(const TextureHandle &other) : value(other.value) { if(value) value->Add_Ref(); }
+    ~TextureHandle() { if(value) value->Release_Ref(); }
+    TextureHandle &operator=(const TextureHandle &other) {
         if(other.value) other.value->Add_Ref();
         if(value) value->Release_Ref();
         value=other.value;
         return *this;
     }
 };
-class Rva006D2630Shroud { public: BfmeHandleCX Rva006D2630() const; };
+class W3DShroud { public: TextureHandle getShroudTexture(); };
+class WaterShader007A6AA0 { public: void setup(char *settings); };
+class WaterShader007A7240 { public: void setup(char *settings); };
 struct Rva007A8FF0Terrain {
     float getAt3018() const { return m_depthAt3018; }
-    Rva006D2630Shroud *getShroud() const { return m_shroudAt30B8; }
+    W3DShroud *getShroud() const { return m_shroudAt30B8; }
     char m_before3018[0x3018];
     float m_depthAt3018;
     char m_before30B8[0x9c];
-    Rva006D2630Shroud *m_shroudAt30B8;
+    W3DShroud *m_shroudAt30B8;
 };
 class BaseHeightMapRenderObjClass;
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern int Rva00903060Get();
+class BfmeHandleCX;
 extern BfmeHandleCX g_bfmeTableDU[8];
-static inline void Rva007A8FF0SetTexture(int stage, const BfmeHandleCX &texture) {
-    g_bfmeTableDU[stage]=texture;
+static inline void Rva007A8FF0SetTexture(int stage, const TextureHandle &texture) {
+    reinterpret_cast<TextureHandle *>(g_bfmeTableDU)[stage]=texture;
 }
 
 class WaterRenderObjClass {
@@ -116,8 +119,6 @@ public:
 friend class Rva007AA820;
 protected:
     inline __declspec(noinline) void drawTrapezoidWater(Rva007A8FF0Data *, Vector3 points[4]);
-    void rva007A6AA0(Rva007A8FF0Data *);
-    void rva007A7240(Rva007A8FF0Data *);
 };
 
 class FVFInfoClass;
@@ -403,8 +404,8 @@ inline __declspec(noinline) void WaterRenderObjClass::drawTrapezoidWater(Rva007A
     if (DX8Wrapper::Get_DX8_Render_State(D3DRS_FILLMODE) == D3DFILL_WIREFRAME)
         wireframe = true;
     Bool useAt98 = (DX8Wrapper::Get_Current_Caps()->Get_DX8_Caps().TextureOpCaps & 0x00200000) != 0;
-    if (useAt98 && !wireframe) rva007A6AA0(water);
-    else rva007A7240(water);// lorenzen sez use the alpha shader
+    if (useAt98 && !wireframe) reinterpret_cast<WaterShader007A6AA0 *>(this)->setup(reinterpret_cast<char *>(water));
+    else reinterpret_cast<WaterShader007A7240 *>(this)->setup(reinterpret_cast<char *>(water));// lorenzen sez use the alpha shader
 
 	//If video card supports it and it's enabled, feather the water edge using destination alpha
 	if (Rva00903060Get() == D3DFMT_A8R8G8B8 && Rva007A8FF0Globals()->m_showSoftWaterEdge && reinterpret_cast<Rva007A8FF0Terrain *>(TheTerrainRenderObject)->getAt3018() !=0)
@@ -472,7 +473,7 @@ inline __declspec(noinline) void WaterRenderObjClass::drawTrapezoidWater(Rva007A
 		else
 		{	//do second pass to apply the shroud on water plane for cards that can't do it in main pass.
 			DX8Wrapper::Invalidate_Cached_Render_States();
-            Rva007A8FF0SetTexture(0, reinterpret_cast<Rva007A8FF0Terrain *>(TheTerrainRenderObject)->getShroud()->Rva006D2630());
+            Rva007A8FF0SetTexture(0, reinterpret_cast<Rva007A8FF0Terrain *>(TheTerrainRenderObject)->getShroud()->getShroudTexture());
 			W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 0);
             DX8Wrapper::Set_Shader(ShaderClass::_PresetMultiplicativeSpriteShader);
             DX8Wrapper::Apply_Render_State_Changes();
