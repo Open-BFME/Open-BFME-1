@@ -41,7 +41,7 @@ public:
 
 	Int len(void) const { return m_data ? m_data->m_length : 0; }
 	const char *str(void) const { return m_data ? m_data->m_text : g_bfmeEmptyAscii; }
-	Int compare(const AsciiString &other) const;
+	__declspec(dllimport) __forceinline Int compare(const AsciiString &other) const;
 };
 
 // Retail reaches the item's name getter (body at 0x003A72F0) through the ILT
