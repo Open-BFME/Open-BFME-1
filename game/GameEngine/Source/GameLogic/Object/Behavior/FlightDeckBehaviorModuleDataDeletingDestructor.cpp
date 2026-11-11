@@ -4,11 +4,27 @@
 // (30 bytes).  Its dedicated vtable at 0x010A8268 is installed by the exact
 // named constructor at 0x002131B0; slot zero routes through ILT 0x00029609.
 
-class FlightDeckBehaviorModuleData
+// The scalar-deleting destructor (??_G, matched 30B row) must call the rowed
+// complete destructor ??1Rva00213220 (0x00213220, defined in
+// BigPairMemberDtors.cpp) rather than a FlightDeckBehaviorModuleData
+// complete destructor nothing defines. An explicit empty derived destructor
+// inlines into the generated ??_G wrapper, leaving the direct base call.
+class Rva00213220
+{
+public:
+	~Rva00213220();
+};
+
+class FlightDeckBehaviorModuleData : public Rva00213220
 {
 public:
 	virtual ~FlightDeckBehaviorModuleData();
 };
+
+// ??1FlightDeckBehaviorModuleData@@UAE@XZ present-unmatched
+FlightDeckBehaviorModuleData::~FlightDeckBehaviorModuleData()
+{
+}
 
 // The implicit copy constructor (no retail twin) emits the vftable and with
 // it ??_G without a second, non-retail copy of the default constructor.
