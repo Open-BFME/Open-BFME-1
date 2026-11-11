@@ -56,7 +56,6 @@ dir32,0x00BF7970,?g_00BF7970@@YAXXZ,"nothing in the ledger owns 0x00BF7970. Give
 dir32,0x00BF83E0,?g_00BF83E0@@YAXXZ,"nothing in the ledger owns 0x00BF83E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C6B2D0,_Rva0086B2D0Disconnected,"retail 0x00C6B2D0 is already recorded as _piChatDisconnectedA; reference that name, not a new one"
 dir32,0x00C6B360,_Rva0086B360Dispatch,"retail 0x00C6B360 is already recorded as _piChatPrivateMessageA; reference that name, not a new one"
-dir32,0x00C6B810,_piUserChangedNickCallback,"retail 0x00C6B810 is already recorded as _piChannelUserChangedNickA; reference that name, not a new one"
 dir32,0x00C81DB0,?d_00881db0@@YAXXZ,"nothing in the ledger owns 0x00C81DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C81EA0,?d_00881ea0@@YAXXZ,"nothing in the ledger owns 0x00C81EA0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C92B80,??0BfmeElemBW@@QAE@XZ,"retail 0x00C92B80 is already recorded as ??0Rva008947A0Elem@@QAE@XZ; reference that name, not a new one"
