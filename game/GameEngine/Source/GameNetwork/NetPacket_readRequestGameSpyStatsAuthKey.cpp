@@ -23,7 +23,6 @@ class BFMENetRequestGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
 {
 public:
 	BFMENetRequestGameSpyStatsAuthKeyCommandMsg();
-	void setText1C(AsciiString text);
 
 	AsciiString m_text1C;
 };
@@ -32,12 +31,18 @@ class BFMENetGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
 {
 public:
 	BFMENetGameSpyStatsAuthKeyCommandMsg();
-	void setText1C(AsciiString text);
-	void setText20(AsciiString text);
 
 	AsciiString m_text1C;
 	AsciiString m_text20;
 };
+
+// Native setters name the private base; keep the argument's inline-forwarder shape and ownership.
+extern "C" void __identifier("?setText1C@BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z")();
+extern "C" void __identifier("?setText1C@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z")();
+extern "C" void __identifier("?setText20@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z")();
+
+typedef char NetStatsStringPayloadIsOneWord[(sizeof(AsciiString) == 4 && sizeof(StringBase<char>) == 4) ? 1 : -1];
+typedef char NetStatsCodePointerIsOneWord[(sizeof(void (*)()) == 4) ? 1 : -1];
 
 class NetPacket
 {
@@ -59,7 +64,10 @@ NetCommandMsg *NetPacket::readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *pa
 	}
 	*textCursor = 0;
 	++readOffset;
-	msg->setText1C(AsciiString(textBuffer));
+	union { void (*code)(); void (BFMENetRequestGameSpyStatsAuthKeyCommandMsg::*member)(AsciiString); } setter = {
+		&__identifier("?setText1C@BFMENetRequestGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z") };
+	typedef char RequestSetterIsOneWord[(sizeof(setter) == 4 && sizeof(setter.member) == 4) ? 1 : -1];
+	(msg->*setter.member)(AsciiString(textBuffer));
 	return msg;
 }
 
@@ -77,7 +85,10 @@ NetCommandMsg *NetPacket::readGameSpyStatsAuthKeyMessage(UnsignedByte *packetDat
 	}
 	*textCursor = 0;
 	++readOffset;
-	msg->setText1C(AsciiString(textBuffer));
+	union { void (*code)(); void (BFMENetGameSpyStatsAuthKeyCommandMsg::*member)(AsciiString); } firstSetter = {
+		&__identifier("?setText1C@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z") };
+	typedef char AuthFirstSetterIsOneWord[(sizeof(firstSetter) == 4 && sizeof(firstSetter.member) == 4) ? 1 : -1];
+	(msg->*firstSetter.member)(AsciiString(textBuffer));
 
 	textCursor = textBuffer;
 	while (packetData[readOffset] != 0) {
@@ -87,7 +98,10 @@ NetCommandMsg *NetPacket::readGameSpyStatsAuthKeyMessage(UnsignedByte *packetDat
 	}
 	*textCursor = 0;
 	++readOffset;
-	msg->setText20(AsciiString(textBuffer));
+	union { void (*code)(); void (BFMENetGameSpyStatsAuthKeyCommandMsg::*member)(AsciiString); } secondSetter = {
+		&__identifier("?setText20@BFMENetGameSpyStatsAuthKeyCommandMsg@@QAEXV?$StringBase@D@@@Z") };
+	typedef char AuthSecondSetterIsOneWord[(sizeof(secondSetter) == 4 && sizeof(secondSetter.member) == 4) ? 1 : -1];
+	(msg->*secondSetter.member)(AsciiString(textBuffer));
 
 	return msg;
 }
