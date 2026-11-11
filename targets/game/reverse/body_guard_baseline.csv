@@ -228,9 +228,6 @@ dir32,0x01127A34,??_7AptPalantir@@6BSnapshot@@@,"retail 0x01127A34 is already re
 dir32,0x01127A48,??_7AptPalantir@@6BSubsystemInterface@@@,"retail 0x01127A48 is already recorded as ??_7Rva0079D1D0AptPalantir@@6BSubsystemInterface@@@; reference that name, not a new one"
 dir32,0x011283AC,??_7ProjectedShadowManager@@6B@,"retail 0x011283AC is already recorded as ??_7Rva007AE380Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x011296B0,??_7Rva008038F0Tail@@6B@,"retail 0x011296B0 is already recorded as ??_7Energy@@6B@ (+8 more); reference that name, not a new one"
-dir32,0x01129744,??_7Rva007E92F0BaseB@@6B@,"retail 0x01129744 is already recorded as ??_7Q3MakeBaseB@@6B@ (+3 more); reference that name, not a new one"
-dir32,0x01129808,??_7Rva007E92F0Object@@6BRva007E92F0BaseB@@@,"retail 0x01129808 is already recorded as ??_7Rva007E9B40Object@@6BQ3MakeBaseB@@@; reference that name, not a new one"
-dir32,0x01129810,??_7Rva007E92F0Object@@6BRva007E92F0BaseA@@@,"retail 0x01129810 is already recorded as ??_7Rva007E9B40Object@@6BQ3MakeBaseA@@@; reference that name, not a new one"
 dir32,0x01129D30,??_7Rva007EB850Log@@6B@,"retail 0x01129D30 is already recorded as ?g_bfmeVftTDA@@3PAPAXA (+3 more); reference that name, not a new one"
 dir32,0x0112A590,??_7Rva007EFF30VfptrCtor@@6B@,the name encodes 0x007EFF30 but retail reads 0x0112A590
 dir32,0x0112B980,??_7Rva007F8F60VfptrCtor@@6B@,the name encodes 0x007F8F60 but retail reads 0x0112B980
