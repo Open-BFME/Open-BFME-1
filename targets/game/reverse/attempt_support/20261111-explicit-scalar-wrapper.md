@@ -9,3 +9,5 @@ Earlier inline-destructor trials added a vptr store and were refuted; this metho
 Compiler: MSVC 7.1, normal /O2 /GR- plus /DNDEBUG /MD /EHsc. Current live linking remains subject to dependency closure; no linked gain claimed from a stale census.
 
 Sibling independently verified: `game/GameEngine/Source/GameClient/AttachedModelFXNuggetDeletingDestructor.cpp`, `??_GAttachedModelFXNugget@@MAEPAXI@Z` at 0x429b30+30. Original constructor/vtable/ILT evidence remains in the source header. Qualified cleanup calls `Rva00429B60`; add_match verifies the complete body and both relocations with the same flags. No extra vtable or unresolved class-name destructor emitted.
+
+Sibling independently verified: `game/GameEngine/Source/GameClient/Drawable/Update/BeaconClientUpdateDeletingDestructor.cpp`, `??_GBeaconClientUpdate@@UAEPAXI@Z` at 0x603210+30. Original constructor/vtable/ILT evidence remains in the source header. Qualified cleanup calls `Rva00603120TailDtor`; add_match verifies the complete body and both relocations with the same flags. No extra vtable or unresolved class-name destructor emitted.

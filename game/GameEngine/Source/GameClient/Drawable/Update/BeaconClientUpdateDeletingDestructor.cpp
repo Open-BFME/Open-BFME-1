@@ -6,13 +6,22 @@
 // The named module factory at 0x00121B70 corroborates identity; the complete
 // destructor is called through ILT 0x0003B31D.
 
-class BeaconClientUpdate
+// Explicit scalar-delete operations; see 20261111-explicit-scalar-wrapper.md.
+void __cdecl operator delete(void *);
+class Rva00603120TailDtor
 {
 public:
-	virtual ~BeaconClientUpdate();
+    virtual ~Rva00603120TailDtor();
 };
-
-void forceBeaconClientUpdateDeletingDestructor()
+class Rva00603210Wrapper
 {
-	BeaconClientUpdate value;
+public:
+    void *method(unsigned int flags);
+};
+void *Rva00603210Wrapper::method(unsigned int flags)
+{
+    ((Rva00603120TailDtor *)this)->Rva00603120TailDtor::~Rva00603120TailDtor();
+    if (flags & 1)
+        ::operator delete(this);
+    return this;
 }
