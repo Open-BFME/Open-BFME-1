@@ -808,7 +808,8 @@ def retail_import_names():
 def plain_spelling(sym):
     """The identifiers a C/C++ source spells for one recorded COFF symbol:
     C++ leading ?s plus one facility code, one leading C underscore, stdcall
-    @N suffixes and C++ @@ signatures are stripped (mirroring how
+    @N suffixes and C++ @@ signatures are stripped; a vftable's 6B<base>
+    qualifier contributes the base class name (mirroring how
     retail_import_names() strips IAT entries)."""
     s = sym.strip().strip('"')
     marks = re.match(r"^\?+", s)
@@ -820,9 +821,12 @@ def plain_spelling(sym):
             s = re.sub(r"^(?:[0-9]|_[A-Za-z0-9])", "", s, count=1)
     else:
         s = re.sub(r"^_", "", s, count=1)
+    # a multiple-inheritance vftable ??_7Derived@@6BBase@@@ also spells its
+    # base: the source names that class too
+    base = re.search(r"@@6B((?:[A-Za-z_]\w*@)+)@@$", s)
     s = s.split("@@", 1)[0]
     s = re.sub(r"@\d+$", "", s)
-    return set(WORD.findall(s))
+    return set(WORD.findall(s)) | (set(WORD.findall(base.group(1))) if base else set())
 
 
 def ledger_spellings():

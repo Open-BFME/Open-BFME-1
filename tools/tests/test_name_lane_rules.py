@@ -38,3 +38,9 @@ def test_plain_spelling_derives_only_from_its_input():
     assert name_lane.plain_spelling("??0BFMERetailAsciiString@@QAE@PBD@Z") == {"BFMERetailAsciiString"}
     assert name_lane.plain_spelling("??0MadeUpName@@QAE@XZ") == {"MadeUpName"}
     assert name_lane.plain_spelling("") == set()
+
+
+def test_plain_spelling_reads_a_vftable_base_qualifier():
+    assert name_lane.plain_spelling("??_7Rva007E9B40Object@@6BQ3MakeBaseA@@@") == {"Rva007E9B40Object", "Q3MakeBaseA"}
+    assert name_lane.plain_spelling("??_7Object@@6BThing@@@") == {"Object", "Thing"}
+    assert name_lane.plain_spelling("??_7Drawable@@6B@") == {"Drawable"}
