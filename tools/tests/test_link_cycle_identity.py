@@ -341,6 +341,10 @@ def test_dirty_refusal_and_explicit_flag_are_bound(tmp_path, monkeypatch):
     compiler.mkdir(parents=True)
     for name in ("cl.exe", "link.exe", "lib.exe"):
         (compiler / name).write_bytes(b"synthetic compiler")
+    libraries = compiler.parent / "lib"
+    libraries.mkdir()
+    for name in ("msvcrt.lib", "oldnames.lib"):
+        (libraries / name).write_bytes(b"synthetic runtime")
     monkeypatch.setattr(lc, "ROOT", tmp_path)
     monkeypatch.setattr(lc, "git", lambda *a, **kw: "dirty" if a[0] == "status" else "a" * 40)
     monkeypatch.setattr(lc.subprocess, "run", lambda *a, **kw: subprocess.CompletedProcess(a, 0, b"", b""))
@@ -357,6 +361,11 @@ def test_dirty_refusal_and_explicit_flag_are_bound(tmp_path, monkeypatch):
     assert state["rule_identity"]["id"] == ctx.RULES
     assert state["target"]["sha256"] == state["retail_sha256"] == "target"
     assert state["inputs"]["targets/game/reverse/data_rows.csv"]
+    assert set(state["runtime_libraries_sha256"]) == {"Vc7/lib/msvcrt.lib", "Vc7/lib/oldnames.lib"}
+    (libraries / "msvcrt.lib").write_bytes(b"changed runtime")
+    changed = lc.input_state(allow_dirty=True)
+    assert state["runtime_libraries_sha256"] != changed["runtime_libraries_sha256"]
+    assert lc.receipt_core(state) != lc.receipt_core(changed)
 
 
 def test_archival_refuses_artifacts_that_changed_after_measurement(tmp_path):

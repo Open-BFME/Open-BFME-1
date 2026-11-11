@@ -38,7 +38,9 @@ fixes of research 29, 31 and the round-2 review:
      quarantined and the link repeats until no order item drifts.
   3. Link setup: __except_list is an absolute 0 (the CRT's definition);
      import libraries are generated from retail's own import table for every
-     __imp_ name an object references; /OPT:NOICF. Unresolved names get 4-byte
+     __imp_ name an object references; proved source-owned native thunks retain
+     only their library IAT cells. Shipped /MD runtime archives supply CRT statics
+     and legacy aliases; /OPT:NOICF. Unresolved names get 4-byte
      data stubs, duplicate definitions need /FORCE; both are counted.
   4. Measure (per ledger row, every failing relocation, not the first):
      - a unit counts only when the /MAP shows the link selected its own copy
@@ -545,13 +547,82 @@ def read_through(code, fo):
     return fo >= 1 and code[fo - 1] == 0xA1 and not (fo >= 2 and code[fo - 2] in (0x8B, 0x8D, 0xFF, 0x89, 0xC7))
 
 
-def make_import_libs(entries, outdir):
+def native_import_thunks(rows, objs, retail, imports, entries):
+    """Source-owned FF25 providers proved at their own ledgered retail IAT slots."""
+    expected = {(name if name.startswith("?") else "_" + name): (dll, import_name(name))
+                for dll, names in entries.items() for name in names}
+    owners = collections.defaultdict(list)
+    for row in rows:
+        owners[(str(row_obj(row)), build.ledger_object_symbol(row))].append(row)
+    proved, refused = set(), set()
+    for path in objs.paths:
+        obj = objs.get(path)
+        if obj is None:
+            continue
+        secs, syms, raw = obj
+        for y in syms.values():
+            if y.cls != EXTERNAL or y.name not in expected:
+                continue
+            if y.sec <= 0:
+                if y.sec == -1 or y.value:
+                    refused.add(y.name)
+                continue
+            rows_at = owners.get((str(path), y.name), [])
+            if len(rows_at) != 1 or row_kind(rows_at[0]) != "real" or int(rows_at[0]["target_size"]) != 6:
+                refused.add(y.name)
+                continue
+            sec = secs[y.sec - 1]
+            code = raw[sec.ptr + y.value:sec.ptr + y.value + 6]
+            relocs = [(off - y.value, syms[index].name, kind) for off, index, kind in sec.relocs
+                      if y.value <= off < y.value + 6]
+            rva = int(rows_at[0]["target_rva"], 16)
+            original = retail[rva:rva + 6]
+            if (y.value + 6 > sec.size or not sec.flags & 0x20
+                    or code != b"\xff\x25" + bytes(4) or relocs != [(2, "__imp_" + y.name, DIR32)]
+                    or len(original) != 6 or original[:2] != b"\xff\x25"):
+                refused.add(y.name)
+                continue
+            slot = struct.unpack_from("<I", original, 2)[0] - BASE
+            if imports.get(slot) != expected[y.name]:
+                refused.add(y.name)
+                continue
+            proved.add(y.name)
+    return proved - refused
+
+
+def runtime_libraries():
+    """/NODEFAULTLIB must not discard the shipped /MD CRT statics and aliases."""
+    directory = build.vc71_root() / "Vc7" / "lib"
+    return [directory / "msvcrt.lib", directory / "oldnames.lib"]
+
+
+def undecorate_stdcall_imports(path):
+    """/DEF keeps @N in the DLL name; UNDECORATE keeps it only on the COFF symbol."""
+    data = bytearray(path.read_bytes())
+    at = 8
+    while at + 60 <= len(data):
+        size = int(data[at + 48:at + 58].decode("ascii").strip())
+        start = at + 60
+        if size >= 20 and data[start:start + 4] == b"\0\0\xff\xff":
+            end = data.index(0, start + 20, start + size)
+            symbol = bytes(data[start + 20:end]).decode("latin-1")
+            kind = struct.unpack_from("<H", data, start + 18)[0]
+            if re.fullmatch(r"_[^?@]+@\d+", symbol) and (kind >> 2) & 7 == 2:
+                struct.pack_into("<H", data, start + 18, (kind & ~0x1C) | (3 << 2))
+        at += 60 + size + (size & 1)
+    path.write_bytes(data)
+
+
+def make_import_libs(entries, outdir, native_thunks=()):
     root = build.vc71_root()
     libs = []
     for dll, names in sorted(entries.items()):
         stem = re.sub(r"\W", "_", dll.rsplit(".", 1)[0].lower())
         d = outdir / f"imp_{stem}.def"
-        d.write_text(f"LIBRARY {dll}\nEXPORTS\n" + "".join(f"  {n}\n" for n in names), encoding="latin-1")
+        # CODE also defines a callable thunk; only a proved native owner may replace it.
+        exports = [f"  {n}" + (" DATA" if (n if n.startswith("?") else "_" + n) in native_thunks else "") + "\n"
+                   for n in names]
+        d.write_text(f"LIBRARY {dll}\nEXPORTS\n" + "".join(exports), encoding="latin-1")
         lib = outdir / f"imp_{stem}.lib"
         cmd = [str(root / "Vc7/bin/lib.exe"), "/NOLOGO", "/MACHINE:X86", f"/DEF:{d}", f"/OUT:{lib}"]
         if sys.platform != "win32":
@@ -559,6 +630,7 @@ def make_import_libs(entries, outdir):
         res = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=build.compiler_environment(root))
         if res.returncode or not lib.exists():
             raise SystemExit(f"link_cycle: lib.exe failed for {dll}:\n{res.stdout}{res.stderr}")
+        undecorate_stdcall_imports(lib)
         libs.append(lib)
     return libs
 
@@ -2632,6 +2704,7 @@ def input_state(allow_dirty=False, *, final=False):
                 tool_dependencies=dependencies, tool_digest=context.digest(dependencies),
                 measure_env=measure_env(), target=target, retail_sha256=target["sha256"],
                 toolchain_sha256={n: sha256(root / "Vc7/bin" / n) for n in ("link.exe", "cl.exe", "lib.exe")},
+                runtime_libraries_sha256={p.relative_to(root).as_posix(): sha256(p) for p in runtime_libraries()},
                 inputs=context.input_hashes(ROOT))
 
 
@@ -2823,7 +2896,7 @@ def receipt_core(receipt):
     keep = ("checkout_start", "checkout_end", "run_options", "diagnostic",
             "rule_identity", "executed_modules", "runtime_modules", "runtime_evidence", "allow_dirty", "tool_dependencies", "measure_env", "target", "settings",
             "untracked_sha256", "closure_graph_sha256", "rules", "commit", "submodules", "snapshot", "dirty", "diff_sha256", "tool_digest",
-            "retail_sha256", "toolchain_sha256", "inputs", "objects_digest", "provenance_sha256", "objects",
+            "retail_sha256", "toolchain_sha256", "runtime_libraries_sha256", "inputs", "objects_digest", "provenance_sha256", "objects",
             "objects_missing", "compile_failed", "currency_proofs", "quarantine_sha256", "stubs_sha256",
             "compile_inputs_semantic_sha256",
             "not_ordered", "not_ordered_bytes", "analyze",
@@ -2976,7 +3049,8 @@ def cycle(args):
     cuts = [a for a in ghidra + list(byaddr) if text0 <= a < text0 + textsz]
     retail_imports = globals()["retail_imports"]()
     entries, imp_missing = import_def_entries(undefined_imports(objs), retail_imports)
-    libs = make_import_libs(entries, out)
+    native_thunks = native_import_thunks(rows, objs, R, rimp, entries)
+    libs = make_import_libs(entries, out, native_thunks) + runtime_libraries()
     absobj = write_coff(out / "absolute.obj", [], [(n, -1, v, EXTERNAL) for n, v in ABSOLUTE.items()])
     times["analyze"] = round(time.time() - t)
     print(f"link_cycle: {len(rows):,} rows, {len(units):,} units, {len(present):,} objects "
