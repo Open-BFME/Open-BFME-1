@@ -1,0 +1,65 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
+
+#include <string.h>
+#include <vector>
+
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+class BfmeSharedString : private AsciiString {};
+
+class Rva00361960;
+class BFMERetailAsciiString
+{
+public:
+    __forceinline explicit BFMERetailAsciiString(Rva00361960 *producer);
+    ~BFMERetailAsciiString() { reinterpret_cast<AsciiString *>(this)->~AsciiString(); }
+    int compare(const BfmeSharedString &other) const
+    {
+        return reinterpret_cast<const AsciiString *>(this)->compare(reinterpret_cast<const AsciiString &>(other));
+    }
+private:
+    unsigned char storage[sizeof(AsciiString)];
+};
+
+class Rva00361960
+{
+public:
+	BfmeSharedString copyString();
+
+private:
+	char m_beforeString[0x10];
+	BfmeSharedString m_string;
+	char m_afterString[0x58 - 0x10 - sizeof(BfmeSharedString)];
+};
+
+__forceinline BFMERetailAsciiString::BFMERetailAsciiString(Rva00361960 *producer)
+{
+    union {
+        BfmeSharedString (Rva00361960::*original)();
+        void (Rva00361960::*fill)(BFMERetailAsciiString *);
+    } call;
+    call.original = &Rva00361960::copyString;
+    (producer->*call.fill)(this);
+}
+
+class Rva003634F0LivingWorldEntryStore
+{
+public:
+	int findByField10(const BfmeSharedString &key);
+
+private:
+	char m_beforeEntries[0x18];
+	std::vector<Rva00361960> m_entries;
+};
+
+int Rva003634F0LivingWorldEntryStore::findByField10(
+	const BfmeSharedString &key)
+{
+	for (unsigned int i = 0; i < m_entries.size(); ++i)
+	{
+		BFMERetailAsciiString current(&m_entries[i]);
+		if (current.compare(key) == 0)
+			return i;
+	}
+	return -1;
+}
