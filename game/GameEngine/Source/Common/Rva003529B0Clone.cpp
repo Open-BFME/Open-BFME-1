@@ -19,7 +19,7 @@ private:
 class Rva003529B0
 {
 public:
-	Rva003529B0(const Rva003529B0 *other)
+	__declspec(dllimport) __forceinline Rva003529B0(const Rva003529B0 *other)
 		: m_pair(*(other ? &other->m_pair : 0))
 	{
 		m_vptr = __identifier("?g_ScriptNodeVftable@@3PAPAXA");
