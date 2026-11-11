@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c- /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/iniexception
+// cl: /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/iniexception
 // stlport
 //
 // The FieldParse table at VA 0x010813F8 owns AudioEventInfo's
