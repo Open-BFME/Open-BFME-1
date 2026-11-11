@@ -3655,17 +3655,39 @@ def unrecorded_dir32_problem(sym, base, identities, symbol_map=None):
     # address its name spells: `??1Rva00739C70@@QAE@XZ` encodes its CLASS
     # placeholder. callee_twin follows retail's ILT `jmp rel32` thunks, so a
     # DIR32 to the thunk VA compares against the body the thunk reaches.
-    # Function manglings end with the argument-list terminator Z; data
+    # C++ function manglings end with the argument-list terminator Z; data
     # manglings end with a cv-qualifier letter. `@@[23]` anywhere in the name
     # is NOT that marker: STL nested-class names carry `@@2` inside their
     # template args (`V?$allocator@...@@@2@`), and skipping on it refused the
     # matched ??1?$list@...@_STL dtor reached through its ILT.
-    if (symbol_map is not None and sym in symbol_map and sym not in data
-            and sym.endswith("Z")):
+    if symbol_map is not None and sym in symbol_map and sym not in data:
         import body_guard
-        if body_guard.callee_twin(base - 0x400000, symbol_map[sym]):
-            return None
-        return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
+        cpp_function = sym.startswith("?") and sym.endswith("Z")
+        candidates = symbol_map[sym] if cpp_function else []
+        if not cpp_function and not sym.startswith("?"):
+            import dir32_record_guard
+            candidates = [rva for name, rva, source, status, notes in _dir32_guard_rows()
+                          if name == sym and dir32_record_guard.authored_row(source, status, name, notes)]
+            if len(set(candidates)) > 1:
+                return f"{sym} has multiple matched function placements"
+            occupied = {base} | {0x400000 + rva for rva in candidates}
+            conflict = next((name for name, va in data.items() if va in occupied), None)
+            if candidates and conflict is not None:
+                return f"{sym} conflicts with the data ledger owner {conflict}"
+        # Native C spelling carries no function type; pins alone cannot turn data into code.
+        if candidates:
+            if cpp_function:
+                matches = body_guard.callee_twin(base - 0x400000, candidates)
+            else:
+                matches = base - 0x400000 in candidates
+                if not matches:
+                    import ilt_oracle
+                    first, targets = ilt_oracle.retail_ilt(EXE)
+                    slot, remainder = divmod(base - first, 5)
+                    matches = remainder == 0 and 0 <= slot < len(targets) and targets[slot] in candidates
+            if matches:
+                return None
+            return f"{sym} is a function the ledger places elsewhere, not at 0x{base:08X}"
     # Ordinary decorated data names carry the variable first, then its scope
     # and type. An address-derived pointee/class name describes that type, not
     # the variable's placement (g_head may point to Rva008838F0Owner anywhere).

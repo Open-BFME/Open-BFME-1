@@ -1,0 +1,14 @@
+// cl: /O1 /MD
+#include <math.h>
+
+// Keep the native merr.obj flag and callback together so its strong archive member stays unselected.
+int __defaultmatherr = 1;
+int _commode;
+int _adjust_fdiv;
+int _newmode;
+int _dowildcard;
+
+int __cdecl _matherr(struct _exception *error)
+{
+    return 0;
+}

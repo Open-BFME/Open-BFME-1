@@ -1,0 +1,140 @@
+diff --git a/game/Libraries/Source/CRT/StartupDefaults.c b/game/Libraries/Source/CRT/StartupDefaults.c
+new file mode 100644
+index 0000000000..ef7436d4e2
+--- /dev/null
++++ b/game/Libraries/Source/CRT/StartupDefaults.c
+@@ -0,0 +1,14 @@
++// cl: /O1 /MD
++#include <math.h>
++
++// Keep the native merr.obj flag and callback together so its strong archive member stays unselected.
++int __defaultmatherr = 1;
++int _commode;
++int _adjust_fdiv;
++int _newmode;
++int _dowildcard;
++
++int __cdecl _matherr(struct _exception *error)
++{
++    return 0;
++}
+diff --git a/targets/game/reverse/data_rows.csv b/targets/game/reverse/data_rows.csv
+index e443bbfd59..4535ea4c66 100644
+--- a/targets/game/reverse/data_rows.csv
++++ b/targets/game/reverse/data_rows.csv
+@@ -1851,3 +1851,8 @@ _bfmeStrDYF,0x01080FB4,va,5,.rdata,game/Libraries/Source/WWVegas/WWLib/Rva0084DB
+ ?g_bfmeBaseTableABF@@3QBUFieldParse@@B,0x010898A0,va,112,.rdata,game/GameEngine/Source/GameLogic/Object/Behavior/ReplenishUnitsBehaviorModuleDataBuildFieldParse.cpp,matched,UpgradeMuxData field-parse table read from image: 6 entries + null; builder 0x00204F30 adds it at +8,claude-sonnet-5-5
+ ?m_fieldParseTable@MiscAudio@@2QBUFieldParse@@B,0x01083310,va,528,.rdata,game/GameEngine/Source/Common/INI/INIMiscAudio.cpp,matched,Retail table at VA 0x01083310 read from image: 32 AudioEventRTS entries through ILT 0x00009E94 plus null terminator; offsets match docs/ini_schema.md; 32 literal pins added,claude-sonnet-5.5
+ ?m_fieldParseTable@LivingWorldMapInfo@@2QBUFieldParse@@B,0x01116000,va,1152,.rdata,game/GameEngine/Source/Common/INI/INILivingWorld.cpp,matched,"Retail table VA 0x01116000 read from image: 71 entries + terminator, parsers/offsets per image; docs/ini_schema.md; literal pins added",claude-sonnet-5.5
++__commode,0x0134FBA8,va,4,.data,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native crtexew.obj startup DIR32 and retail four-byte contents plus original public archive provider contract; targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md,gpt-6.1-sol
++__adjust_fdiv,0x013571F8,va,4,.data,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native crtexew.obj startup DIR32 and retail four-byte contents plus original public archive provider contract; targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md,gpt-6.1-sol
++___defaultmatherr,0x012DBDE0,va,4,.data,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native crtexew.obj startup DIR32 and retail four-byte contents plus original public archive provider contract; targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md,gpt-6.1-sol
++__newmode,0x0134FBA4,va,4,.data,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native crtexew.obj startup DIR32 and retail four-byte contents plus original public archive provider contract; targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md,gpt-6.1-sol
++__dowildcard,0x0134FBA0,va,4,.data,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native crtexew.obj startup DIR32 and retail four-byte contents plus original public archive provider contract; targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md,gpt-6.1-sol
+diff --git a/targets/game/reverse/functions.csv b/targets/game/reverse/functions.csv
+index cfdfeb2b26..712beae612 100644
+--- a/targets/game/reverse/functions.csv
++++ b/targets/game/reverse/functions.csv
+@@ -173474,3 +173474,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
+ ??_GBeaconClientUpdate@@UAEPAXI@Z,,0x00603210,30,game/GameEngine/Source/GameClient/Drawable/Update/BeaconClientUpdateDeletingDestructor.cpp,matched,authentic scalar-deleting destructor; exact constructor 0x006030C0 installs vtable 0x01115248 whose slot-zero ILT 0x00041E25 routes here; named factory 0x00121B70 allocates the exact type; complete destructor through ILT 0x0003B31D;object-symbol=?method@Rva00603210Wrapper@@QAEPAXI@Z;explicit C++ scalar wrapper; evidence=targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md;model=gpt-6.1-sol;host=ymo-workstation
+ ??_GDynamicDecalFXNugget@@MAEPAXI@Z,,0x004293C0,30,game/GameEngine/Source/GameClient/DynamicDecalFXNuggetDeletingDestructor.cpp,matched,authentic protected scalar-deleting destructor; vtable 0x00CF3420 slots name DynamicDecalFXNugget (?doFXObj@DynamicDecalFXNugget@@UBEXPBVObject@@0@Z); slot zero routes through ILT 0x00027F52; complete destructor ILT 0x0002E3FC reaches tail body 0x004293F0;object-symbol=?method@Rva004293C0Wrapper@@QAEPAXI@Z;explicit C++ scalar wrapper; evidence=targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md;model=gpt-6.1-sol;host=ymo-workstation
+ ??_GLaserFXNugget@@UAEPAXI@Z,,0x004297A0,30,game/GameEngine/Source/GameClient/LaserFXNuggetDeletingDestructor.cpp,matched,authentic protected scalar-deleting destructor; vtable 0x00CF3438 slots name LaserFXNugget (?doFXPos@LaserFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z and ?doFXObj@LaserFXNugget@@UBEXPBVObject@@0@Z); slot zero routes through ILT 0x00002ED7; complete destructor ILT 0x0001BA5E reaches tail body 0x004297D0;ilt-verified=T1-access(efp=7.18e-03);object-symbol=?method@Rva004297A0Wrapper@@QAEPAXI@Z;explicit C++ scalar wrapper; evidence=targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md;model=gpt-6.1-sol;host=ymo-workstation
++__matherr,,0x009F7FB0,3,game/Libraries/Source/CRT/StartupDefaults.c,matched,Native MSVC71 merr.obj public callback; original crtexew.obj DIR32 at startup+0xC1 points to this complete xor eax eax ret body; C cdecl math.h signature; distinct from following _setargv at009F7FB3; identity-evidence=targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md;model=gpt-6.1-sol;host=archlinux
+diff --git a/targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md b/targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md
+new file mode 100644
+index 0000000000..24db3fda99
+--- /dev/null
++++ b/targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md
+@@ -0,0 +1,83 @@
++# Native CRT startup default providers
++
++BFME1 input reviewed at `be8a87eedf61e99ccef8fafaf3c9002f0cbd4786`.
++Retail executable SHA-256:
++`1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75`.
++Shipped MSVC 7.1 `msvcrt.lib` SHA-256:
++`e888617fbd2e153645b92122deab1c6ec437905431243c43aa7310164c0e7779`.
++
++## Independent BFME1 identity, layout and boundary
++
++The ledgered, native `_WinMainCRTStartup` at RVA `009F72C4` supplies an
++independent relocation witness for each provider. At the offsets below its
++original `crtexew.obj` DIR32 symbol names the corresponding operand read from
++BFME1 retail. These are not identities inferred from equal zero bytes.
++
++| Public COFF name | Retail VA | Startup DIR32 offset | Complete initial value / extent |
++| --- | --- | --- | --- |
++| `__commode` | `0134FBA8` | `+09C` | four zero bytes |
++| `__adjust_fdiv` | `013571F8` | `+0AA` | four zero bytes |
++| `___defaultmatherr` | `012DBDE0` | `+0BA` | `01 00 00 00`, four bytes |
++| `__newmode` | `0134FBA4` | `+0EB` | four zero bytes |
++| `__dowildcard` | `0134FBA0` | `+0F8` | four zero bytes |
++| `__matherr` | `00DF7FB0` | `+0C1` | `33 C0 C3`, complete three-byte function |
++
++The callback operand is passed to the native `__setusermatherr` import, not
++loaded as a datum. The toolchain's public `math.h` declares
++`int __cdecl _matherr(struct _exception *)`; including that header preserves
++its exact C ABI and avoids a private exception-type declaration. Retail returns
++zero without reading the argument. The previous FF25 import thunk ends exactly
++at RVA `009F7FB0`, and the next distinct three-byte function starts at
++`009F7FB3`; the callback's RET at `009F7FB2` completes the boundary.
++`callees.py 0x009F7FB0 3` reports no calls. `eligibility.py` reports this
++unrowed address outside no-ground-truth and not retired.
++
++Retail's zero-filled virtual `.data` tail contains the four zero defaults;
++`___defaultmatherr` is initialized file data, not an inferred zero-fill value.
++The five objects are separate four-byte native integers, not one structure or
++an assumed order inside the new source object. Normal data-row verification
++must independently prove every complete size and retail range.
++
++## Original archive contracts
++
++The shipped public symbols come from these native archive members:
++
++- `xncommod.obj`: `__commode`, exclusive four-byte `.bss`.
++- `adjustfd.obj`: `__adjust_fdiv`, four-byte COMMON, no initialized section.
++- `_newmode.obj`: `__newmode`, exclusive four-byte `.bss`.
++- `wildcard.obj`: `__dowildcard`, exclusive four-byte `.bss`.
++- `merr.obj`: `___defaultmatherr`, exclusive four-byte `.data` initialized to
++  one, and `__matherr`, complete relocation-free three-byte `.text`.
++
++All member names carry the `build\intel\dll_obj\` prefix. `crtexew.obj`
++also declares a four-byte COMMON `___defaultmatherr`; the `merr.obj` strong
++one-valued definition must override that tentative allocation. Keep the flag
++and callback in one new owner so the lazy search does not pull `merr.obj` for
++one and introduce a second strong definition of the other. `_adjust_fdiv`
++retains its native four-byte COMMON semantics; none of these objects is an
++import-address cell. Pristine archive bytes are not edited.
++
++The new source's purpose/layout is supported independently by BFME1's startup
++operands and retail contents. Reviewed BFME2 donor revision
++`76f0baefa6f285d54bc1ca922397674312a5913f`,
++`Code/Libraries/Source/CRT/StartupDefaults.cpp`, supplies the callback-plus-flag
++ownership precedent and public CRT signature, not BFME1 addresses. Unlike the
++donor's folded `_setargv`/`_matherr` bodies, BFME1 has two distinct bodies at
++`009F7FB0` and `009F7FB3`; no alias or fold is introduced and `_setargv` is not
++changed. The existing `_fmode` owner is also left unchanged.
++
++## Acceptance scope
++
++The before gate `./build.sh _WinMainCRTStartup` verifies its 511-byte body but
++fails six missing DIR32 identities; this is a genuine startup prerequisite,
++not a stale-baseline exemption. Admission must use `add_match.py` for the
++callback and `add_data_match.py` for the five datums, then reverify the actual
++startup consumer and all providers. Strict selected-provider and runtime
++controls must distinguish missing/duplicate providers from a genuine fix.
++No new pin, alias, baseline entry, compiler profile or verifier exemption is
++part of this repair. Scoped success does not establish a complete game link,
++authenticated census, closure credit, or game runtime reach.
++
++Scratch proof, exact archive-member hashes and all commands/results are retained
++under the experiment worktree's `build/integration/`; its control-directory
++lane handoff names the actual measured commits and validation outcomes.
+diff --git a/targets/game/reverse/re_attempts.log b/targets/game/reverse/re_attempts.log
+index ddfc10992f..e8dd27cf08 100644
+--- a/targets/game/reverse/re_attempts.log
++++ b/targets/game/reverse/re_attempts.log
+@@ -61018,3 +61018,4 @@ stlport-family-NO_EXCEPTIONS-owner-TUs	0xFB5738E0	0	blocked	blocker=stl/stlport
+ ??_GLaserFXNugget@@UAEPAXI@Z	0x004297A0	30	landed	landed-by=add_match source=game/GameEngine/Source/GameClient/LaserFXNuggetDeletingDestructor.cpp extent=0x004297A0..0x004297BE size=30B model=gpt-6.1-sol ; notes: authentic protected scalar-deleting destructor; vtable 0x00CF3438 slots name LaserFXNugget (?doFXPos@LaserFXNugget@@UBEXPBUCoord3D@@PBVMatrix3D@@M0@Z and ?doFXObj@LaserFXNugget@@UBEXPBVObject@@0@Z); slot zero routes through ILT 0x00002ED7; complete destructor ILT 0x0001BA5E reaches tail body 0x004297D0; ilt-verified=T1-access(efp=7.18e-03); object-symbol=?method@Rva004297A0Wrapper@@QAEPAXI@Z; explicit C++ scalar wrapper; evidence=targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md; model=gpt-6.1-sol; host=ymo-workstation
+ ?drawTrapezoidWater@WaterRenderObjClass@@IAEXPAVRva007A8FF0Data@@QAVVector3@@@Z	0x007A8FF0	4953	solved	Caller-only binding repair to three existing providers; all exact ILTs retained; consumer+providers5/5 rows and2/2 data rows byte verified. Current link preview consumer UNKNOWN,0/4 full units linked: flat shader has10 existing unresolved names and shroud getter duplicate; no census-linked credit. evidence=targets/game/reverse/identity_evidence/007a8ff0-provider-bindings.md t=30min model=gpt-6.1-sol
+ ?PumpMessages@CDownload@@UAEJXZ	0x00884EC0	1065	solved	BFME2 pinned Download.cpp binding repair adapted to existing BFME1 split consumer;3undefined call names now bind existing Cftp login/next-block and neutral recovery providers. All direct body routes unchanged; consumer+providers7/7 exact,20literals30DIR32; historical providers linked but current preview4/4UNKNOWN due cold current definers, no census-linked credit. evidence=targets/game/reverse/identity_evidence/00884ec0-provider-bindings.md t=12min model=gpt-6.1-sol
++__matherr	0x009F7FB0	3	landed	landed-by=add_match source=game/Libraries/Source/CRT/StartupDefaults.c extent=0x009F7FB0..0x009F7FB3 size=3B model=gpt-6.1-sol ; notes: Native MSVC71 merr.obj public callback; original crtexew.obj DIR32 at startup+0xC1 points to this complete xor eax eax ret body; C cdecl math.h signature; distinct from following _setargv at009F7FB3; identity-evidence=targets/game/reverse/identity_evidence/009f7fb0-crt-startup-defaults.md; model=gpt-6.1-sol; host=archlinux
