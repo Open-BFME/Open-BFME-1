@@ -1,0 +1,17 @@
+diff --git a/game/GameEngine/Source/GameClient/GUI/GameWindowManagerAssignDefaultGadgetLook.cpp b/game/GameEngine/Source/GameClient/GUI/GameWindowManagerAssignDefaultGadgetLook.cpp
+index a852df1a1a..0363152b7f 100644
+--- a/game/GameEngine/Source/GameClient/GUI/GameWindowManagerAssignDefaultGadgetLook.cpp
++++ b/game/GameEngine/Source/GameClient/GUI/GameWindowManagerAssignDefaultGadgetLook.cpp
+@@ -40,6 +40,12 @@
+ #define winGetDisabledBorderColor winGetDisabledBorderColor_LocalView
+ #define winGetHiliteColor winGetHiliteColor_LocalView
+ #define winGetHiliteBorderColor winGetHiliteBorderColor_LocalView
++// Slider wrappers inherit this view too; their outlined copies must not replace retail's getters.
++#define GadgetSliderGetEnabledColor GadgetSliderGetEnabledColor_AssignDefaultLookView
++#define GadgetSliderGetDisabledColor GadgetSliderGetDisabledColor_AssignDefaultLookView
++#define GadgetSliderGetDisabledBorderColor GadgetSliderGetDisabledBorderColor_AssignDefaultLookView
++#define GadgetSliderGetHiliteColor GadgetSliderGetHiliteColor_AssignDefaultLookView
++#define GadgetSliderGetHiliteBorderColor GadgetSliderGetHiliteBorderColor_AssignDefaultLookView
+ #include "ascii_string.h"
+ #include "PreRTS.h"
+ #include "GameClient/GameWindowManager.h"
