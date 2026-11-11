@@ -1,0 +1,49 @@
+--- WinMain.cpp
++++ WinMain.argv32.cpp
+@@ -273,10 +273,10 @@
+   }
+   SetCurrentDirectoryA(buffer);
+   int argc=1;
+-  char *argv[20];
++  char *argv[32];
+   argv[0]=0;
+   char *token=nextParam(g_Va012ED270CommandLine,"\" ");
+-  while(argc<20 && token) {
++  while(argc<32 && token) {
+    if((unsigned char)*token==0x96) *token='-';
+    argv[argc++]=Rva0005D5B0Twin::strtrim(token);
+    if(_strcmpi(token,"-win")==0) g_Va012ED23CWindowed=true;
+--- WinMain.cpp
++++ WinMain.second-language-named.cpp
+@@ -296,7 +296,7 @@
+    char filePath[260];
+    sprintf(filePath,"%sSplash.jpg",GetRegistryLanguage().str());
+    if(splashImage.Load(filePath)<0) {
+-    sprintf(filePath,"%sSplash.bmp",GetRegistryLanguage().str());
++    { AsciiString language=GetRegistryLanguage(); sprintf(filePath,"%sSplash.bmp",language.str()); }
+     splashImage.Load(filePath);
+    }
+    g_Va012ED24CBitmap=splashImage;
+--- WinMain.cpp
++++ WinMain.load-result-named.cpp
+@@ -295,7 +295,8 @@
+    ATL::CImage splashImage;
+    char filePath[260];
+    sprintf(filePath,"%sSplash.jpg",GetRegistryLanguage().str());
+-   if(splashImage.Load(filePath)<0) {
++   HRESULT result=splashImage.Load(filePath);
++   if(result<0) {
+     sprintf(filePath,"%sSplash.bmp",GetRegistryLanguage().str());
+     splashImage.Load(filePath);
+    }
+--- WinMain.cpp
++++ WinMain.new-value-initialized.cpp
+@@ -310,7 +310,7 @@
+    }
+    if(!Rva0005F2B0InitializeAppWindows(hInstance,nCmdShow,g_Va012ED23CWindowed)) return 0;
+   }
+-  TheVersion=new Version;
++  TheVersion=new Version();
+   TheVersion->setVersion(1,3,0,13,AsciiString("rtsbuild"),AsciiString("EALA-RTS-BUILD5"),AsciiString("17:15:10"),AsciiString("Nov 28 2005"));
+   if(!CopyProtect::isLauncherRunning()) { delete TheVersion;TheVersion=0;return 0; }
+   if(!CopyProtect::notifyLauncher()) { delete TheVersion;TheVersion=0;return 0; }

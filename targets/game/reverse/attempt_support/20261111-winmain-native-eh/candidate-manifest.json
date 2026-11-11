@@ -1,0 +1,703 @@
+{
+  "source": "build/integration/winmain-bank-candidate/WinMain.cpp",
+  "source_sha256": "e6937817964ed6d86f4eecfc131ebbafcda0b7c0da52b6f96a1f5f65dc7fc0e0",
+  "object_sha256": "819928de215c457d25b582ead3031b2148f3aaf602f0c838fb514aeab94b59d2",
+  "command": [
+    "/usr/bin/wine",
+    "/home/wacket/Projects/worktrees/Open-BFME/sol12h-20261111-171921-integration/inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-DNDEBUG",
+    "-MD",
+    "-EHsc",
+    "-I.",
+    "-I/home/wacket/Projects/worktrees/Open-BFME/sol12h-20261111-171921-integration/inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include",
+    "-I/home/wacket/Projects/worktrees/Open-BFME/sol12h-20261111-171921-integration/inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include",
+    "-showIncludes",
+    "-Fobuild/integration/winmain-bank-candidate/WinMain.obj",
+    "build/integration/winmain-bank-candidate/WinMain.cpp"
+  ],
+  "returncode": 0,
+  "compiler_include_environment": "X:\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\include",
+  "dependency_count": 147,
+  "inputs": {
+    "build/integration/winmain-bank-candidate/WinMain.cpp": "e6937817964ed6d86f4eecfc131ebbafcda0b7c0da52b6f96a1f5f65dc7fc0e0",
+    "game/Libraries/Source/WWVegas/WWLib/ascii_string.h": "3c3bf49bd66de89d1f6491fd34f7cd9b354e57ae22602b89eda4c1d731c0f1c4",
+    "game/Libraries/Source/WWVegas/WWLib/string_base.h": "5176177b03e69a157e7dd1c36cf81daa93335bda32021736ec69683348e69b79",
+    "game/Libraries/Source/WWVegas/WWLib/unicode_string.h": "5a88ee49c8b7a93687ce3120e74080ca553442b6c6a98845cdffd29d3a9539c8",
+    "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/version.h": "b34d87697a4e1bf9585e5f3e769382e50d91a1ced5485260c8e7d21da457a5f6",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/BaseTsd.h": "7048efb55beccbfdc8f65eec7c6da9e62fbeca2bc27bbb61594d2e1a35cc7df4",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/CGuid.h": "8d50856479fe2fc4d14430b4b3c940487919d391a4312bf298835770e31f7a44",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/CdErr.h": "bf32afdc975ba03781b01dfc7b3a450787cc213257a3f4b7f53ec168ce07dd7c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ComCat.h": "5605580eb78c36890be71a4d48730d1933cb1f6dc176099c139248de714711cb",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/CommDlg.h": "d4817259ee3e94e5c45e866b55fc7bac48dde7ebc9059b9f71518ef528ee75e6",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Dde.h": "b6cb1b3bdb2e0538f4d632b23fe0cc14b783bf38ef89b19a80407ab98fd201fc",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Ddeml.h": "dc22392cdafe53ee531017b58d22075f1ca747b9124c36b88a7f031763fc2c94",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Dlgs.h": "5e71a1cf7217ff00f008eed8abef8b63d2308b1afeb4a6274ad55104a17a679d",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlus.h": "ac436445e786c01cb5de105893ff63223b175af241213e927fadce38d06acb4a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusBase.h": "74c53fd219a105790cc5d6248df6152874ae56dd33df279656f401c0186bff34",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusBitmap.h": "62a45393f0ae0d01f311e63f4f26cf6ef7fa90a7fa52253748f07999ff917892",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusBrush.h": "1448ffa9a27c1d2a3d92b9bc9de8ea97cf6a5c96f4f7eba0f82ac0f87d0e78bc",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusCachedBitmap.h": "ec2fb2a612c38abe8265b5a880f3aa86a2ab207f71008bd91622d154ce347c08",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusColor.h": "920ca094d716a78aae2f0cc73f0a05aa11f3b434281262b09f24bd51c6c72672",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusColorMatrix.h": "56bd67adb3b395d9a609100d974a1b2d5b9bd46fce56e7a9d14b1fe3e8453461",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusEnums.h": "d89b600b5cbefa2b16cc2df6df91bb4e3e11604534dfaf4aacb3ec1e89b8674a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusFlat.h": "e3dea2929befa7cf346470c1123ac8907a3d95ad2022d6d0bf7dc15d30f968ed",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusFont.h": "a1c8189c33b2e4a8039dd3dba7685d613adc5687de970f2246daa3c11dec7eed",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusFontCollection.h": "82e3b45cbf1418f73e87bde274243774b4c69b6b84498d50c274290797710ec8",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusFontFamily.h": "d17ba9104ea6aef0667973e3bba6f002a2c9273119a1543fad7df1a2795eb0e9",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusGpStubs.h": "5f6b55a145f239dcb87d4306f09057b698ea784ce80001c3a8b4c436841d9b3a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusGraphics.h": "624f00fc52e2e44446a478a059399c1372042ce80dd8b1b542de1834b7f0348a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusHeaders.h": "d57b811dc57d5faf76df6b9a466cdb84a004cc102764b9fad1a3ff2fc554384d",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusImageCodec.h": "502e36f7ed8f256593606e18f04d722b67b488c745146a2614148916206af658",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusImaging.h": "aa5b38835eea6e152d947d3c20fd285144cc0e45f0d1aca13843647dc3c68010",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusInit.h": "826082b90893d43210437d7c1eed66b8034881d622e6d35870d7123b3579f005",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusLineCaps.h": "c4503fc9c1dabc062c9a1c8a7c72960d61bd5ef1199e7dc4e68011daed0b626f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusMatrix.h": "06df8caf20e86242033ca4c4acb110d83e603ec2e9cce05dcf8545621fabefe2",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusMem.h": "fc21bbf94f59d18919b1db5b3fcb5fdb24d6e2a087dc320d875fe0dbb50a2ddd",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusMetaFile.h": "203de11fa9b1d7a4b6417dd9ba07a2135a8f7463b5dcaeb918dbc5acf298e8bf",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusMetaHeader.h": "705a8d687056251a27a38ae636d480cf3f64864f5a15b43af1ca28b5b3792c55",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusPath.h": "0b419bfb4c8d9a4b96b928cde5468c0e66102a714dccd8acf54d6da0732bed8c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusPen.h": "8115e8ed97ac0ba8592d3f62230af8c68b593812454ba034cab1213ceb896257",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusPixelFormats.h": "9bea4eb9da08f82d1e61b13231202f52c74c8272bca6f09e80a4751586a19088",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusRegion.h": "bfece085630001c04390932cf30f15405a05670de7bf4b73f07be711a13a8822",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusStringFormat.h": "fb075ca52bc2556fa363283e70532514b501e8965c0ecf2070912ef2fad65dee",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusTypes.h": "983c0e3d41d07a0ffbd0fb70d43e86efc44fb096802672dc4947e76289ddd833",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/GdiPlusimageAttributes.h": "ed12641cb8b0cf502d03631213dcb74df014c25a4abe7e03d4935b84add91bc2",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Guiddef.h": "acfa27cc0b8b66d475f26808a51698ccf6c37c526220b0b97271cf788afe3db2",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Imm.h": "db0a714c28b8d636d155eada238e324db83935d0a887ece6eec580902e6d0124",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/LZExpand.h": "9e14cae95284c4b5cf5272aab41d50b9dfe2d413041815e9aad86dc890a247a6",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/MMSystem.h": "71688839895a783fc4a6630c314050d7c66f06daf8037ed8bb96e4fe1dda9bc5",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Mcx.h": "a01f5381c7d65fc7a0b8945821d2f02ef953814a243e92237bad97b5239921a2",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/MsXml.h": "5f366b3f8a2a3ba94fde90c4903a0cfa64514dfcd1632af859afd4c5636ced31",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Nb30.h": "06ea9809f8ab6c0fc57f89b225b70c1a254310e7c16b8c4ec9626fd718fc543b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OAIdl.h": "1aa530130aaa84e42559a1d1553de3b89179638001cc44d30711c1a6fde5e812",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OCIdl.h": "f5f89a60415afbf9ebfac7bfcc1c02967daefe4e23be668d4983ace4ad278caf",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ObjBase.h": "52974d6da8f7277b0bbe86ec811e98e0d7149987e772ffec8fb6bf4256dcc1f4",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ObjIdl.h": "b433e83639950fc25a61928e3d235194242b32f7e2845049234c25a8fc08fed9",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Ole2.h": "1face3bf34a5cc01c05f642f748d2f7b79fb86c2df371c70eb3baaf1797beef8",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OleAcc.h": "c69fc6a50f284f353f17ccb7c4c4fc1845d1e0f1c4e7f5a6949e3fca188a8806",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OleAuto.h": "75f9d08192505cf21d6f73c271b74ce7088d8dbb5235cc15596546536408e5c3",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OleCtl.h": "6512332215547cf503871378581b9dc4d5822421eba5394c12088878028d42ea",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/OleIdl.h": "ccc73b65d19ab9da5e79fa35dfa726039edaf760b498d9d9f171d3166702c86a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PopPack.h": "829888e896f9400c936d4afb89e070160e2a9626c9ecece624ed3f6943b7868b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PrSht.h": "72fa913ef3c665492a5675d06dab8b19fb214ab71d7ff823b78dc782744f4324",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PropIdl.h": "61784eac71f66c036a6c8af73a831757cbbc83528c09186e85bcf217f3fbb824",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PshPack1.h": "32f8fb0648db4564c4e0501b2a5b1f1bcac3f89aa808bbd873f327561d184dbb",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PshPack2.h": "8c3a4e2bab10c86d007c872ef0196599beb892f793cc3a92bd09866886e72e2c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PshPack4.h": "73595d2f1bdc362ddf962cc9721832960df69dd53221820053d83e9466ed239d",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/PshPack8.h": "d9195e68f7a9e618533d1dfb5917cde890aa1a4f47c32e3a7ed0dd7b542636ce",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Reason.h": "874bc02b59d176d65d50b8321ee2e110fbff9c971eb69407b39faf94dfb597a3",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Rpc.h": "769cd17b4992b2297f5d662832ca1bf20f83f00245e68f0825d0d5857de8dffd",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcAsync.h": "1e96c9922b958b730d5446a67f1810ca6667c8bdfe7909e278d6e77b9e67601f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcDce.h": "dc58f2a5303de67ca42463c74c082b92216d20f2338311d22db66340729f4ae7",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcDceP.h": "927cd8396291bf0979cb7fb891d1312a93abea3d4af25a15f55508fd751f3444",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcNdr.h": "2b89b25f631abaff311a2ecee5f165bb297cbf4fd9aeb01dea0294dab74aab6e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcNsi.h": "0ea9d4546b524a4f220d108d10c041d820f2b6fbc56338cc72d460e04b7af2f5",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcNsip.h": "081c562c4dcdce78cf4904b30e08baa10364c5c7dace5d8ee005344029fb8f0e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/RpcNtErr.h": "777beed6d3eaaa39ee0f9b08fe64093649378ad8a69d93bcf844c1c213a2d28c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ServProv.h": "70237d7150b62ccc93f14721a18f2b0644f6eb5f8dd48e1f634c971ea1df9d82",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ShTypes.h": "7082301b5bcc08bad57ad8f09520e9d2709e9f8eeafb79a38c8f9315ca4e80a1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/ShellAPI.h": "6002c261a122b853db9ac98c4b49986e53700d81cfcee600ef28ebd38ea4d1a9",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Shlwapi.h": "98288395e1d3a260c7673d632ad0ad1a81099425337757b1cbd54bb264684959",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/StrAlign.h": "791fd09c603ea4636b275982f322a2a0459410ed3570514c5a8b9f69266936bf",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Tvout.h": "0856762e9e868c79bfa6fe6a80c5bf860ea6c45110d327329cdf5a7eb9dd527e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Unknwn.h": "2d75cedc107962d5d1736d5abd8f2e48a8bbf7ddc3890dcac16adb4b3e5147b6",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/UrlMon.h": "6e2fc75e29b60c9f93bd83347000b331f13ce3bf75bda8fd8e4f2686cd6e8dea",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WTypes.h": "b6668fc6aaf7bd3b2335a6b5207de122527810dd44bf545188ca54dfb456b825",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinBase.h": "db78164a9c430a4fdc121025d561c3c36f724a106d11ed188fa26854ec27684f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinCon.h": "eedd44db20190825063a6f92c7266d148186e3f85515e90720f09c18cbe498fd",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinCrypt.h": "63cbde7f14a59ff38607d248a28b632c2f13b9342c20d7b61eab1fc8ee404978",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinDef.h": "d957f2a345b67cd09dc71f1461e237777ae19dcf3c3e42837db2c76ddd63207b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinEFS.h": "a7c556afe0d591bf0a76b6181869c517d37d7790026c376c8d85e78430cfa73a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinError.h": "34688896f38efe35aa98bcb80bd1808397879ed05271f39a8dfc52fdb9b46ffe",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinGDI.h": "8c6f9233f4e5c5e2f8a76e0c45bd6d778cf92931ffc78bea8de9510349afd44f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinIoCtl.h": "257191f04f814b9fca88aa5368068a2209964cd6a77b510f9f280bf57d4601dc",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinNT.h": "0a4e1cc460a5566b87e9b686ea6187bdf1376c884a75591d5bf122590d16fe9c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinNetWk.h": "5bbd10f956229ebffdb17adca2bbe04af89c633cc7b79055b00e7f742aec94db",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinNls.h": "e5ee5ab6814367250396df8d981bc046c0fa6e8af780e521c2ef4604d0117bb0",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinPerf.h": "5e4cd5db368ed6206edeb88ea751fe93bceec0b74fb33c557ace62d576129a9f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinReg.h": "58f78e9e5b195e50ea2faf7ff5ae5b7b1a6a62fe1da4a1ea863b04da36506c61",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinSCard.h": "d2aca4b69f798781f265caec4a667cb564f67fff589fbb4ea7c9fd10ce82b3d7",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinSmCrd.h": "d76aa6f2bec67a388de742be4cfe37e97d8955694bc4d39fb9dfd15a77fcbff1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinSock.h": "20c03a2620b1f3d551cc1cb65d88259a3bdb9444d07336fce093e0846197dfaf",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinSpool.h": "2420ede69da50d2a64fce928bc0eff71e89ade8e10236c0c8768a70ab7c77073",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinSvc.h": "20a2cf9c5f245eebf0f6e2527dedb8be599bfe7b87c20aa52693b4b15d57d2e8",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinUser.h": "58b8b06ec63fd53fa9540375b5cd248980cbcabf4953e0a65b3436628fe0e98a",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/WinVer.h": "309a8a70df284f20c4f98ca4383e30e19784159a7e5bf3fbc64258d07cd46135",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/Windows.h": "c5ae461b1a3cbee914eec883ef55bd7dfd3eb287a8f178c0ed71eb3d1b1fb6f1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Include/specstrings.h": "8e92870c5e51656b63a730a4a79d4aca1a2c5375a6b03d80edab6c01b64bd656",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/ATLComMem.h": "9a1351b0004b2b139d7bba87760d72044e8bc3a70c65109269da549a25f2373b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlalloc.h": "9e2cc9480cedc6759bb9e47fc3934ed7b2390468aad2d5097a1d6b92e9c95760",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlbase.h": "b9f124f4428b84b1852ed4577d1447a05680ce5931d85afab8098b80ef002cb7",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlbase.inl": "3559f38408235a652454cc28ebb808f5996166ee78cb2d43543a04bdbbed6b65",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlcomcli.h": "5153ba23da4ef85ef5fea84c3040b819ecb6d6e64eca071759f08cadfdab3842",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlconv.h": "78ea8d11067fdf159d960a5929ae8f88e4c53070c14747c281fd64f31f159376",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlcore.h": "3713366ab19be8b8abdebb278d47a6ba64bea41b4baae9b3e068c680cc9dcf8b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atldef.h": "1f898796aed363ee6b8d6282eceb1afc00e5e94cf9d915f75c6cfdc705298016",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlexcept.h": "cb933c3dae828d8a4871922c4e837c106eb689b61ad2ce0bda412c3b908d5e5f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atliface.h": "5cf916ab48ffa87904f4b78d7f177eeb4f1c84c573a3a4c79fad034dc4a74d57",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlimage.h": "997877f89d23706a889a153874e1a6f9fd871909fcac76827812f642f4f7c01c",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlmem.h": "03f56f9c33cd31dd608ad570e0dde5abb4ddadb3385dfcc813d254028e0ab92d",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlrc.h": "6a552626c4294111e9f19df4e4e4349aac67940b6af65b0ae91cdc26981a65a3",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlsimpcoll.h": "870af29c7f2781a66d13b2d4331236e16067b0d4f8205417a5c71149cee8aea6",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlsimpstr.h": "e6daa9fb1202c68818543c93a77ac785f42a5cf5c41bd7359e727e6be3629884",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atlstr.h": "f2fa29af5c2323643c90c679d1049f4f5578b6f9daea9f8bad057e545ad567e1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atltrace.h": "15788fb6ff536430303146cea0881721d20946e4e8a0e97e4dbdfec1fe5b41c9",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atltypes.h": "36cc92150963b48c6c29eab68f94012af3b441b827716aaf55198e02121e8c66",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/atltypes.inl": "013fe1c8949316461d539b547b7e94067898ffba382c7586982e26ff4e97a587",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/cstringt.h": "62ed04e818c587991008e57339889fee32c1114fa24324ec52f026cafc3ec87e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/cstringt.inl": "2620fc4c49b52850ca5efde35b4dabe77cbbbf08121fb380f7e64d55d2ced746",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/atlmfc/include/statreg.h": "fa1ab5db49035db5d42a97235c679f22bfb322fb3a789c68038f7495ca918bf2",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/c1xx.dll": "353f3d5dcd050b876e1c044b99c4bf47958d255f395a4919f406a19921be4dfa",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/c2.dll": "bcd28f39b1798b07989c30a1df471cf87fc20e3802d130901a08f83800e6b81e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/cl.exe": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/crtdbg.h": "f87428316871be9496f15882eb4b049f194547f954e46743d88d1fecf46666d4",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/ctype.h": "b1aeb8f4c91ed630b87acf94a5a4f16d21ff4bfc9eaa7eed85bb562eb64dbca0",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/errno.h": "a9bf2d226c4f33948b72c8eb65a4ec16a08275c25c8aa1a0dd61fc0eb3893774",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/excpt.h": "6a357ada5e2ac00e45396f7a228740d1b4cbea4e4dd6159a4b61d12efd120fbd",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/limits.h": "d3ad33ce7c8eb1c3f7c5f151339efdcd44ae1d76506a314f0b91daf26c004522",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/malloc.h": "17db7a5b4e0e10327f09721fe9c4ff499fa9e4a20c80f39548d3572a4a17ad4e",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/mbstring.h": "bf0175418af1a4e623e9ed04b2a7e5c85175e4261b8e9672d154441b16305703",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/new.h": "8e1737b7550dcc14cb91143b57a2d7c67cb9a55cd84fe7ebe763ec1db57dd356",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/process.h": "7036254c85141a75002c1453d3600f25eaf9bbebf73a30c1de7b02cc5d2a05a1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/stdarg.h": "adf6c92304eb851dc17249502e2437f70347138396d824ec8a5e5135fc128134",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/stddef.h": "491ce357cd01c533b07664fb9a97403a172e277096ee58a924696c0046a96afe",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/stdio.h": "96f0b2c746b580b6a5d9a13f9a221275d210de79ef832e2265e0ed70b0c914e1",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/stdlib.h": "64ff5e0893b39638f7f8e510b7992f8f9c9bb09c046c9747072c44b3348cf946",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/string.h": "b68e9db97d695655abe65dd36d9fc0f92e5bc304371eb9c8a9d2144e55eb8c37",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/tchar.h": "8644c13c6a34b3e380db52fc565b3cea2e013ad78a925f975d857bba2305fbf5",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/wchar.h": "85e9bfe575fa70bd37eb694cb8b8ca5ca2ca9d0fb811d983054a42afc06ecfa1"
+  },
+  "size": 1362,
+  "target_size": 1362,
+  "relocations": [
+    [
+      6,
+      6,
+      "__ehhandler$_WinMain@16"
+    ],
+    [
+      12,
+      6,
+      "__except_list"
+    ],
+    [
+      20,
+      6,
+      "__except_list"
+    ],
+    [
+      37,
+      6,
+      "??_C@_09HBJGHGDI@IMM32?4dll?$AA@"
+    ],
+    [
+      43,
+      6,
+      "__imp__LoadLibraryA@4"
+    ],
+    [
+      56,
+      6,
+      "??_C@_0BL@MBEANDFB@ImmDisableTextFrameService?$AA@"
+    ],
+    [
+      63,
+      6,
+      "__imp__GetProcAddress@8"
+    ],
+    [
+      78,
+      6,
+      "__imp__FreeLibrary@4"
+    ],
+    [
+      86,
+      6,
+      "?g_Va012ED270CommandLine@@3PADA"
+    ],
+    [
+      124,
+      6,
+      "__imp__GetModuleFileNameA@12"
+    ],
+    [
+      186,
+      6,
+      "__imp__SetCurrentDirectoryA@4"
+    ],
+    [
+      191,
+      6,
+      "??_C@_02KOPDJAMB@?$CC?5?$AA@"
+    ],
+    [
+      196,
+      6,
+      "?g_Va012ED270CommandLine@@3PADA"
+    ],
+    [
+      214,
+      20,
+      "?nextParam@@YAPADPAD0@Z"
+    ],
+    [
+      329,
+      6,
+      "__imp___strcmpi"
+    ],
+    [
+      342,
+      6,
+      "??_C@_04EKBMMNPE@?9win?$AA@"
+    ],
+    [
+      361,
+      6,
+      "?g_Va012ED23CWindowed@@3_NA"
+    ],
+    [
+      367,
+      6,
+      "??_C@_0L@BLFFCHBF@?9automatch?$AA@"
+    ],
+    [
+      376,
+      6,
+      "?source@?1??nextParam@@YAPADPAD0@Z@4PADA"
+    ],
+    [
+      396,
+      6,
+      "__imp__strpbrk"
+    ],
+    [
+      401,
+      6,
+      "??_C@_02KOPDJAMB@?$CC?5?$AA@"
+    ],
+    [
+      450,
+      6,
+      "??_C@_02KOPDJAMB@?$CC?5?$AA@"
+    ],
+    [
+      473,
+      6,
+      "?source@?1??nextParam@@YAPADPAD0@Z@4PADA"
+    ],
+    [
+      481,
+      6,
+      "?source@?1??nextParam@@YAPADPAD0@Z@4PADA"
+    ],
+    [
+      512,
+      6,
+      "??_C@_03IJBCKFEA@?9DX?$AA@"
+    ],
+    [
+      529,
+      6,
+      "__imp__strtoul"
+    ],
+    [
+      580,
+      20,
+      "?GetSymbol@Signature@DebugStackwalk@@SAXIPADI@Z"
+    ],
+    [
+      591,
+      6,
+      "?s_initGDIPlus@CImage@ATL@@0VCInitGDIPlus@12@A"
+    ],
+    [
+      598,
+      6,
+      "??_7CImage@ATL@@6B@"
+    ],
+    [
+      644,
+      6,
+      "__imp__EnterCriticalSection@4"
+    ],
+    [
+      649,
+      6,
+      "?s_initGDIPlus@CImage@ATL@@0VCInitGDIPlus@12@A"
+    ],
+    [
+      655,
+      6,
+      "?s_initGDIPlus@CImage@ATL@@0VCInitGDIPlus@12@A"
+    ],
+    [
+      660,
+      6,
+      "?s_initGDIPlus@CImage@ATL@@0VCInitGDIPlus@12@A"
+    ],
+    [
+      666,
+      6,
+      "__imp__LeaveCriticalSection@4"
+    ],
+    [
+      679,
+      20,
+      "?GetRegistryLanguage@@YA?AVAsciiString@@XZ"
+    ],
+    [
+      698,
+      6,
+      "?TheNullChr@?1??str@?$StringBase@D@@QBEPBDXZ@4DB"
+    ],
+    [
+      704,
+      6,
+      "__imp__sprintf"
+    ],
+    [
+      716,
+      6,
+      "??_C@_0N@NBANKKAE@?$CFsSplash?4jpg?$AA@"
+    ],
+    [
+      730,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      745,
+      20,
+      "?Load@CImage@ATL@@QAEJPBD@Z"
+    ],
+    [
+      758,
+      20,
+      "?GetRegistryLanguage@@YA?AVAsciiString@@XZ"
+    ],
+    [
+      777,
+      6,
+      "?TheNullChr@?1??str@?$StringBase@D@@QBEPBDXZ@4DB"
+    ],
+    [
+      789,
+      6,
+      "??_C@_0N@FMEDGFO@?$CFsSplash?4bmp?$AA@"
+    ],
+    [
+      803,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      818,
+      20,
+      "?Load@CImage@ATL@@QAEJPBD@Z"
+    ],
+    [
+      823,
+      6,
+      "?g_Va012A6504WindowClassName@@3PBGB"
+    ],
+    [
+      835,
+      6,
+      "?g_Va012ED24CBitmap@@3PAUHBITMAP__@@A"
+    ],
+    [
+      841,
+      6,
+      "__imp__CreateMutexW@12"
+    ],
+    [
+      849,
+      6,
+      "__imp__GetLastError@0"
+    ],
+    [
+      866,
+      6,
+      "?g_Va012A6504WindowClassName@@3PBGB"
+    ],
+    [
+      874,
+      6,
+      "__imp__FindWindowW@8"
+    ],
+    [
+      887,
+      6,
+      "__imp__SetForegroundWindow@4"
+    ],
+    [
+      896,
+      6,
+      "__imp__ShowWindow@8"
+    ],
+    [
+      907,
+      6,
+      "__imp__CloseHandle@4"
+    ],
+    [
+      913,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      932,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      944,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      956,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      968,
+      20,
+      "?releaseBuffer@?$StringBase@D@@AAEXXZ"
+    ],
+    [
+      974,
+      20,
+      "??3@YAXPAX@Z"
+    ],
+    [
+      983,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      991,
+      20,
+      "??1CImage@ATL@@UAE@XZ"
+    ],
+    [
+      1005,
+      6,
+      "__except_list"
+    ],
+    [
+      1026,
+      6,
+      "?g_Va012ED23CWindowed@@3_NA"
+    ],
+    [
+      1033,
+      20,
+      "?Rva0005F2B0InitializeAppWindows@@YA_NPAXH_N@Z"
+    ],
+    [
+      1051,
+      20,
+      "??1CImage@ATL@@UAE@XZ"
+    ],
+    [
+      1058,
+      20,
+      "??2@YAPAXI@Z"
+    ],
+    [
+      1079,
+      20,
+      "??0Version@@QAE@XZ"
+    ],
+    [
+      1094,
+      6,
+      "??_C@_0M@BBKKMGJO@Nov?528?52005?$AA@"
+    ],
+    [
+      1102,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1107,
+      20,
+      "??0?$StringBase@D@@AAE@PBD@Z"
+    ],
+    [
+      1118,
+      6,
+      "??_C@_08GADJNNNH@17?315?310?$AA@"
+    ],
+    [
+      1127,
+      20,
+      "??0?$StringBase@D@@AAE@PBD@Z"
+    ],
+    [
+      1138,
+      6,
+      "??_C@_0BA@NOHPEENH@EALA?9RTS?9BUILD5?$AA@"
+    ],
+    [
+      1147,
+      20,
+      "??0?$StringBase@D@@AAE@PBD@Z"
+    ],
+    [
+      1158,
+      6,
+      "??_C@_08EAEFLAFO@rtsbuild?$AA@"
+    ],
+    [
+      1167,
+      20,
+      "??0?$StringBase@D@@AAE@PBD@Z"
+    ],
+    [
+      1173,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1188,
+      20,
+      "?setVersion@Version@@QAEXHHHHVAsciiString@@000@Z"
+    ],
+    [
+      1193,
+      20,
+      "?isLauncherRunning@CopyProtect@@SA_NXZ"
+    ],
+    [
+      1202,
+      20,
+      "?notifyLauncher@CopyProtect@@SA_NXZ"
+    ],
+    [
+      1212,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1223,
+      20,
+      "??1Version@@QAE@XZ"
+    ],
+    [
+      1229,
+      20,
+      "??3@YAXPAX@Z"
+    ],
+    [
+      1238,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1259,
+      20,
+      "?bfmeBootBZ@@YAXPAX0@Z"
+    ],
+    [
+      1267,
+      20,
+      "?shutdown@CopyProtect@@SAXXZ"
+    ],
+    [
+      1273,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1284,
+      20,
+      "??1Version@@QAE@XZ"
+    ],
+    [
+      1290,
+      20,
+      "??3@YAXPAX@Z"
+    ],
+    [
+      1298,
+      6,
+      "?TheWritableGlobalData@@3PAVGlobalData@@A"
+    ],
+    [
+      1304,
+      6,
+      "?TheVersion@@3PAVVersion@@A"
+    ],
+    [
+      1318,
+      6,
+      "?TheGameEngine@@3PAVGameEngine@@A"
+    ],
+    [
+      1331,
+      20,
+      "?apply@Rva0006B610@@QAEXXZ"
+    ],
+    [
+      1337,
+      6,
+      "?TheGameEngine@@3PAVGameEngine@@A"
+    ],
+    [
+      1347,
+      20,
+      "?Shutdown@WW3D@@SA_NXZ"
+    ],
+    [
+      1357,
+      6,
+      "$L87471"
+    ]
+  ],
+  "nonreloc_differences": [
+    597,
+    604,
+    607,
+    610,
+    613,
+    616,
+    619,
+    622,
+    625,
+    628,
+    635,
+    638,
+    641,
+    743,
+    755,
+    801,
+    816,
+    829,
+    989,
+    1044,
+    1069,
+    1090,
+    1114,
+    1134,
+    1154
+  ],
+  "score": 0.9816446402349486,
+  "unresolved_rel32": [
+    "??1CImage@ATL@@UAE@XZ",
+    "??1CImage@ATL@@UAE@XZ",
+    "??1Version@@QAE@XZ",
+    "??1Version@@QAE@XZ"
+  ],
+  "diagnostic_only": true,
+  "dir32_identity_verified": false,
+  "donor_revision": "76f0baefa6f285d54bc1ca922397674312a5913f",
+  "retail_image_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+  "retail_image": "inputs/baselines/bfme1/retail-1.03-unpacked/files/lotrbfme.exe"
+}

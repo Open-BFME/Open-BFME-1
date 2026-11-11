@@ -1,0 +1,45 @@
+[
+  {
+    "name": "??1CImage@ATL@@UAE@XZ",
+    "size": 134,
+    "requested": 134,
+    "unresolved_rel32": [],
+    "diffs": 0,
+    "offsets": [],
+    "note": "DIR32 identities not checked; diagnostic only"
+  },
+  {
+    "name": "??_GCImage@ATL@@UAEPAXI@Z",
+    "size": 30,
+    "requested": 30,
+    "unresolved_rel32": [
+      "??1CImage@ATL@@UAE@XZ"
+    ],
+    "diffs": 4,
+    "offsets": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "note": "DIR32 identities not checked; diagnostic only"
+  },
+  {
+    "name": "??1Version@@QAE@XZ",
+    "size": 103,
+    "requested": 103,
+    "unresolved_rel32": [],
+    "diffs": 0,
+    "offsets": [],
+    "note": "DIR32 identities not checked; diagnostic only"
+  },
+  {
+    "name": "??0CImage@ATL@@QAE@XZ",
+    "size": 90,
+    "requested": 90,
+    "unresolved_rel32": [],
+    "diffs": 0,
+    "offsets": [],
+    "note": "DIR32 identities not checked; diagnostic only"
+  }
+]

@@ -1,0 +1,118 @@
+{
+  "object": "/home/wacket/Projects/worktrees/Open-BFME/sol12h-20261111-171921-integration/build/integration/winmain-bank-candidate/WinMain.obj",
+  "main": [
+    431,
+    0
+  ],
+  "handler": [
+    432,
+    76
+  ],
+  "funcinfo": [
+    445,
+    116
+  ],
+  "funcinfo_header": [
+    429065504,
+    10,
+    0,
+    1,
+    0,
+    0,
+    0
+  ],
+  "states": [
+    {
+      "state": 0,
+      "previous": -1,
+      "action": null
+    },
+    {
+      "state": 1,
+      "previous": 0,
+      "action_section": 432,
+      "action_offset": 0,
+      "leading_bytes": "8d4db8e9000000008b4d1083"
+    },
+    {
+      "state": 2,
+      "previous": 1,
+      "action_section": 432,
+      "action_offset": 8,
+      "leading_bytes": "8b4d1083c110e9000000008b"
+    },
+    {
+      "state": 3,
+      "previous": 2,
+      "action_section": 432,
+      "action_offset": 19,
+      "leading_bytes": "8b4d1083c114e9000000008b"
+    },
+    {
+      "state": 4,
+      "previous": 3,
+      "action_section": 432,
+      "action_offset": 30,
+      "leading_bytes": "8b4d1083c118e9000000008b"
+    },
+    {
+      "state": 5,
+      "previous": 0,
+      "action_section": 432,
+      "action_offset": 41,
+      "leading_bytes": "8b451050e80000000059c38b"
+    },
+    {
+      "state": 6,
+      "previous": 0,
+      "action_section": 432,
+      "action_offset": 52,
+      "leading_bytes": "8b4d10e9000000008b4d14e9"
+    },
+    {
+      "state": 7,
+      "previous": 6,
+      "action_section": 432,
+      "action_offset": 60,
+      "leading_bytes": "8b4d14e9000000008b4d08e9"
+    },
+    {
+      "state": 8,
+      "previous": 7,
+      "action_section": 432,
+      "action_offset": 68,
+      "leading_bytes": "8b4d08e900000000b8000000"
+    },
+    {
+      "state": 9,
+      "previous": -1,
+      "action": null
+    }
+  ],
+  "trymap": [
+    445,
+    96
+  ],
+  "try_range": [
+    0,
+    8,
+    9,
+    1
+  ],
+  "handler_type_first_three_words": [
+    0,
+    0,
+    0
+  ],
+  "catch": [
+    431,
+    1356
+  ],
+  "catch_offset_in_main": 1356,
+  "continuation": [
+    431,
+    995
+  ],
+  "continuation_offset_in_main": 995,
+  "note": "Compiler-owned metadata proves catch/cleanup parentage; state1 frame receiver still differs -48 vs native -44. Not a full byte/relocation/EH verification."
+}

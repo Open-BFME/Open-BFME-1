@@ -1,0 +1,425 @@
+[
+  {
+    "name": "composed-explicit",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-composition-trials/results.json"
+  },
+  {
+    "name": "composed-implicit",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-composition-trials/results.json"
+  },
+  {
+    "name": "one-pass-block",
+    "returncode": 0,
+    "size": 1491,
+    "diffs": 261,
+    "local_evidence": "build/integration/winmain-control-trials/results.json"
+  },
+  {
+    "name": "goto-loaded",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-control-trials/results.json"
+  },
+  {
+    "name": "unbraced-shared-guard",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 27,
+    "local_evidence": "build/integration/winmain-control-trials/results.json"
+  },
+  {
+    "name": "g6",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json"
+  },
+  {
+    "name": "g7",
+    "returncode": 0,
+    "size": 1309,
+    "diffs": 824,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json"
+  },
+  {
+    "name": "oy-off",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json"
+  },
+  {
+    "name": "for-scope",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json"
+  },
+  {
+    "name": "gx",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json"
+  },
+  {
+    "name": "gs-off",
+    "returncode": 0,
+    "size": 1486,
+    "diffs": 940,
+    "local_evidence": "build/integration/winmain-flag-trials/results.json",
+    "note": "Compiler warned D4002 unknown -G-; invalid flag control, not a supported GS comparison."
+  },
+  {
+    "name": "both",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-format-trials/results.json"
+  },
+  {
+    "name": "first",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-format-trials/results.json"
+  },
+  {
+    "name": "second",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-format-trials/results.json"
+  },
+  {
+    "name": "window-flag-defined",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "bitmap-defined",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "version-defined",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "known-extent-declaration-control",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "512B array is an isolated codegen control, NOT evidence of native extent.",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "array-definition-control",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "512B array is an isolated codegen control, NOT evidence of native extent.",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "all-scalar-definitions",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "note": "",
+    "local_evidence": "build/integration/winmain-global-trials/results.json"
+  },
+  {
+    "name": "private-inheritance",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-header-trials/results.json"
+  },
+  {
+    "name": "explicit-default-base",
+    "returncode": 2,
+    "local_evidence": "build/integration/winmain-header-trials/results.json"
+  },
+  {
+    "name": "imm-block",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-inline-trials/results.json"
+  },
+  {
+    "name": "imm-helper",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-inline-trials/results.json"
+  },
+  {
+    "name": "imm-native-helper",
+    "returncode": 2,
+    "local_evidence": "build/integration/winmain-inline-trials/results.json"
+  },
+  {
+    "name": "counted-formats",
+    "returncode": 0,
+    "size": 1461,
+    "diffs": 806,
+    "local_evidence": "build/integration/winmain-loop-trials/results.json"
+  },
+  {
+    "name": "format-array",
+    "returncode": 0,
+    "size": 1454,
+    "diffs": 484,
+    "local_evidence": "build/integration/winmain-loop-trials/results.json"
+  },
+  {
+    "name": "countdown-formats",
+    "returncode": 0,
+    "size": 1459,
+    "diffs": 802,
+    "local_evidence": "build/integration/winmain-loop-trials/results.json"
+  },
+  {
+    "name": "value-initialize-version",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-new-trials/results.json"
+  },
+  {
+    "name": "named-version-allocation",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-new-trials/results.json"
+  },
+  {
+    "name": "explicit-version-allocation-scope",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-new-trials/results.json"
+  },
+  {
+    "name": "opaque-instance-parameters",
+    "returncode": 2,
+    "local_evidence": "build/integration/winmain-param-trials/results.json"
+  },
+  {
+    "name": "const-command-parameter",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-param-trials/results.json"
+  },
+  {
+    "name": "const-show-parameter",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-param-trials/results.json"
+  },
+  {
+    "variant": "base",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes/results.json"
+  },
+  {
+    "variant": "second-named",
+    "returncode": 0,
+    "size": 1363,
+    "diffs": 374,
+    "local_evidence": "build/integration/winmain-shapes/results.json"
+  },
+  {
+    "variant": "first-named",
+    "returncode": 0,
+    "size": 1365,
+    "diffs": 459,
+    "local_evidence": "build/integration/winmain-shapes/results.json"
+  },
+  {
+    "variant": "both-named",
+    "returncode": 0,
+    "size": 1366,
+    "diffs": 459,
+    "local_evidence": "build/integration/winmain-shapes/results.json"
+  },
+  {
+    "variant": "filepath-first",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes/results.json"
+  },
+  {
+    "variant": "first-expression-block",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "second-expression-block",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "both-expression-blocks",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "named-load-result",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 27,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "named-load-result-before-image",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 27,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "image-name-control",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "old-loop-index-scope",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "variant": "filePath-outer-scope",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-shapes-2/results.json"
+  },
+  {
+    "name": "storage-before-image",
+    "returncode": 0,
+    "size": 1389,
+    "diffs": 465,
+    "note": "Isolated explicit-lifetime control, not a proposed game-source change.",
+    "local_evidence": "build/integration/winmain-storage-trials/results.json"
+  },
+  {
+    "name": "storage-after-image",
+    "returncode": 0,
+    "size": 1389,
+    "diffs": 465,
+    "note": "Isolated explicit-lifetime control, not a proposed game-source change.",
+    "local_evidence": "build/integration/winmain-storage-trials/results.json"
+  },
+  {
+    "name": "copy-second",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "copy-both",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "const-reference-second",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "const-reference-both",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "assign-command-line",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "named-command-line",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 66,
+    "local_evidence": "build/integration/winmain-value-trials/results.json"
+  },
+  {
+    "name": "ansi-load-declared",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-visibility-trials/ansi-results.json"
+  },
+  {
+    "name": "ansi-load-dtor-declared",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-visibility-trials/ansi-results.json"
+  },
+  {
+    "name": "dtor-declared",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-visibility-trials/results.json"
+  },
+  {
+    "name": "load-declared",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-visibility-trials/results.json"
+  },
+  {
+    "name": "both-declared",
+    "returncode": 0,
+    "size": 1362,
+    "diffs": 25,
+    "local_evidence": "build/integration/winmain-visibility-trials/results.json"
+  }
+]
