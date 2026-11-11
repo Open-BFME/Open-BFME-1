@@ -5,17 +5,22 @@
 // through ILT 0x00027F52 to this 30-byte wrapper, whose complete destructor
 // route ILT 0x0002E3FC reaches cleanup body 0x004293F0.
 
-class DynamicDecalFXNugget
+// Explicit scalar-delete operations; see 20261111-explicit-scalar-wrapper.md.
+void __cdecl operator delete(void *);
+class Rva004293F0
 {
-protected:
-	virtual ~DynamicDecalFXNugget();
-private:
-	friend void forceDynamicDecalFXNuggetDeletingDestructor(const DynamicDecalFXNugget &);
+public:
+    ~Rva004293F0();
 };
-
-// The implicit copy constructor (no retail twin) emits the vftable and with
-// it ??_G without a second, non-retail copy of the default constructor.
-void forceDynamicDecalFXNuggetDeletingDestructor(const DynamicDecalFXNugget &that)
+class Rva004293C0Wrapper
 {
-	DynamicDecalFXNugget value(that);
+public:
+    void *method(unsigned int flags);
+};
+void *Rva004293C0Wrapper::method(unsigned int flags)
+{
+    ((Rva004293F0 *)this)->Rva004293F0::~Rva004293F0();
+    if (flags & 1)
+        ::operator delete(this);
+    return this;
 }
