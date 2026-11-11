@@ -12,8 +12,8 @@ enum KindOfType
 
 // Retail's table of the 181 KindOf bit names at 0x012AA068, in KindOfType
 // order, closed by a null entry (scanIndexList walks to it; 0x2D8 bytes, zeros
-// follow). The name is address-derived: no EA spelling is proven for it.
-const char *g_bfmeRva012AA068[0xB5 + 1] =
+// follow). Retail records this table as TheKindOfBitNames at 0x012AA068.
+const char *TheKindOfBitNames[0xB5 + 1] =
 {
 	"OBSTACLE",
 	"SELECTABLE",
@@ -204,9 +204,9 @@ class KindOfMaskType
 public:
 	static const char *getNameFromSingleBit(Int bit)
 	{
-		if (bit < 0 || bit >= sizeof(g_bfmeRva012AA068)/sizeof(g_bfmeRva012AA068[0]) - 1)
+		if (bit < 0 || bit >= sizeof(TheKindOfBitNames)/sizeof(TheKindOfBitNames[0]) - 1)
 			return 0;
-		return g_bfmeRva012AA068[bit];
+		return TheKindOfBitNames[bit];
 	}
 };
 
