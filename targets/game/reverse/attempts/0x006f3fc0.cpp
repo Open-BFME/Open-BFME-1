@@ -1,6 +1,9 @@
 // ?draw@W3DDisplay@@UAEXXZ
-// partial score=0.9975 date=2026-10-15
-// cl: /DNDEBUG /MD /EHs-c- /Iinputs/reference/shims/sweep
+// partial score=1.0 date=2026-11-11
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
+// W3DDisplay::draw, retail 0x006F3FC0 (1184 B); ilt_oracle confirms the name. The 30-byte
+// clamp_006eab10 (0x006EAB10) lives here with the static frame counter it shares with draw.
+// Handoff: targets/game/reverse/attempt_support/20261111-006f3fc0-w3ddisplay-draw.md
 #include <windows.h>
 void * __cdecl operator new[](unsigned);
 void __cdecl operator delete[](void *);
@@ -22,17 +25,15 @@ class W3DDisplay {
 public:
  virtual void draw();
  char pad04[0x28]; DebugDisplayCallback006F3FC0 *callback2c; char pad30[0xe1]; unsigned char field111;
- void rva006F0300(); void rva006F2CC0(); void rva006EE800(); bool rva006EB500(unsigned);
+ void rva006F2CC0(); void rva006EE800(); bool rva006EB500(unsigned);
 protected:
+ // Retail 0x006F0300 through ILT 0x00022BEC; ilt_oracle confirms this protected decoration.
+ void gatherDebugStats();
  void updateAverageFPS();
  void captureScreen(char *,unsigned);
  // ?captureScreen@W3DDisplay@@IAEXPADUStrideValue006F3FC0@@@Z absent-from-retail
- void captureScreen006EA890(char *,unsigned);
- void captureScreen(char *p,StrideValue006F3FC0 stride) { captureScreen006EA890(p,stride.value); }
+ void captureScreen(char *p,StrideValue006F3FC0 stride) { captureScreen(p,stride.value); }
  void saveScreenShot(char *,unsigned,unsigned);
- // ?saveScreenShot@W3DDisplay@@IAEXPADUStrideValue006F3FC0@@I@Z absent-from-retail
- void saveScreenShot006EDF00(char *,unsigned,unsigned);
- void saveScreenShot(char *p,StrideValue006F3FC0 width,unsigned height) { saveScreenShot006EDF00(p,width.value,height); }
 };
 class RvaDrawSlots { public:
  virtual void slot00();
@@ -110,8 +111,6 @@ class RvaDrawSlots { public:
  virtual void slot120();
  virtual void slot124();
 };
-// The one-register adapter preserves the slot receiver and its zero-stack contract.
-struct DispatchTable006F3FC0 { void *prefix[0x49]; void (__fastcall *slot124)(RvaDrawSlots *); };
 class Rva006F3FC0ClientSlots { public:
  virtual void slot00();
  virtual void slot04();
@@ -219,9 +218,22 @@ extern BfmeGameLogicPause *TheGameLogic;
 extern ScriptEngine *TheScriptEngine;
 extern View *TheTacticalView;
 extern TerrainTracksRenderObjClassSystem *TheTerrainTracksRenderObjClassSystem;
-extern int g_bfmeY1058,TheW3DFrameLengthInMsec,g_006eab10;
-extern unsigned g_va012F8064;
-extern int Rva012BAA5C;
+extern int g_bfmeY1058,TheW3DFrameLengthInMsec;
+// Retail's counter at 0x012F804C is TU-local: only this unit's draw and the
+// 0x006EAB10 callback touch it, and draw's load/dec/store schedule needs that.
+static int g_006eab10;
+// ?clamp_006eab10@@YG_NHH@Z
+bool __stdcall clamp_006eab10(int a, int)
+{
+	if (g_006eab10 > 0)
+		g_006eab10 = 0;
+	else
+		g_006eab10 = a;
+	return true;
+}
+extern unsigned g_rva0075b2e0_value;
+// 0x012BAA5C: initialized to 1 in retail .data and referenced only by draw.
+static int Rva012BAA5C = 1;
 #define Rva012ED5C8 reinterpret_cast<Rva006F3FC0Global *>(TheGlobalData)
 #define Rva012F1464 reinterpret_cast<Rva006F3FC0Client *>(TheGameClient)
 #define Rva012F0898 TheGameLogic
@@ -229,11 +241,10 @@ extern int Rva012BAA5C;
 #define Rva012F1600 reinterpret_cast<Rva006F3FC0Tactical *>(TheTacticalView)
 #define Rva012F9D98 TheTerrainTracksRenderObjClassSystem
 #define Rva012BAA2C (*reinterpret_cast<unsigned *>(&g_bfmeY1058))
-#define Rva012F8064 g_va012F8064
+#define Rva012F8064 g_rva0075b2e0_value
 #define Rva012BB1CC (*reinterpret_cast<unsigned *>(&TheW3DFrameLengthInMsec))
 #define Rva012F804C g_006eab10
 extern HWND ApplicationHWnd;
-extern const float Rva0111E36C,Rva010A13C4;
 
 //DECLARE_PERF_TIMER(BigAssRenderLoop)
 // W3DDisplay::draw ===========================================================
@@ -248,7 +259,7 @@ void W3DDisplay::draw()
     updateAverageFPS();
     reinterpret_cast<BfmeQ1087 *>(this)->bfmeGo1087A();
     // compute debug statistics for display later
-    if (callback2c==reinterpret_cast<DebugDisplayCallback006F3FC0 *>(j_0002f9f0)) rva006F0300();
+    if (callback2c==reinterpret_cast<DebugDisplayCallback006F3FC0 *>(j_0002f9f0)) gatherDebugStats();
     else if (callback2c==reinterpret_cast<DebugDisplayCallback006F3FC0 *>(j_0003413f)) rva006F2CC0();
     else if (callback2c==reinterpret_cast<DebugDisplayCallback006F3FC0 *>(j_0000d779)) rva006EE800();
     bool frozen = !Rva012F1464->fieldc4;
@@ -315,18 +326,16 @@ void W3DDisplay::draw()
                 int count=Rva012ED5C8->fieldecc;
                 captureScreen(image+((count/2+i)%count)*width*3,StrideValue006F3FC0(count*width*3));
             }
-            --(*reinterpret_cast<volatile int *>(&Rva012F804C));
-            saveScreenShot(image,StrideValue006F3FC0(Rva012ED5C8->fieldecc*width),height);
+            --Rva012F804C;
+            saveScreenShot(image,Rva012ED5C8->fieldecc*width,height);
             delete []image;
             Rva012ED5C8->fielded0=false;
         } else if (!rva006EB500(now)) break;
     } while (frozen && !Rva012F1600->slot74() &&
              (Rva012F0898->field10c==1 || Rva012F0898->field10c==5 || Rva012F0898->isGamePaused()));
     if (Rva012F804C>0 && !Rva012ED5C8->fieldecc) {
-        int pending=*reinterpret_cast<volatile int *>(&Rva012F804C);
-        DispatchTable006F3FC0 *table=*reinterpret_cast<DispatchTable006F3FC0 **>(this);
-        *reinterpret_cast<volatile int *>(&Rva012F804C)=pending-1;
-        table->slot124(reinterpret_cast<RvaDrawSlots *>(this));
+        --Rva012F804C;
+        reinterpret_cast<RvaDrawSlots *>(this)->slot124();
     }
     Rva00754A10();
 }  // end draw

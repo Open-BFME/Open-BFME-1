@@ -1,16 +1,21 @@
-// ?d_003492a0@@YAXXZ
-// partial score=0.9925 date=2026-09-28
+// ??1ScriptEngine@@UAE@XZ
+// partial score=1.0 date=2026-11-11
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// ScriptEngine::~ScriptEngine, retail 0x003492A0 (928 B). Probe: 928 B, 7 differing
-// bytes (shape 0.996). Identity: installs the ScriptEngine vftables (0x010E7A30,
+// ScriptEngine::~ScriptEngine, retail 0x003492A0 (928 B). Probe: EXACT (928 B).
+// Identity: installs the ScriptEngine vftables (0x010E7A30,
 // the vtable the ledger ties to ScriptEngine::init, and 0x010E7A18 for Snapshot),
 // clears TheScriptEngine, and runs ZH's GetProcAddress(dll, "DestroyDebugDialog")
 // / FreeLibrary teardown and reset() before the members go. Member offsets and
 // the 25 member EH states are read from the destruction order; names follow the
 // ZH ScriptEngine.h members where the type and order agree, otherwise the address.
-// Residue: the global at 0x012F0754 is loaded into ECX and copied to EDI in
-// retail; ours loads EDI and copies to ECX (7 bytes at +0x6E..+0x7A).
+// The node pointer at 0x012F0754 is file-static (BFME 2 donor
+// Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_dtor.cpp keeps its
+// debug-window holder file-static too). Internal linkage is what gives retail's
+// mov ecx,[g] / cmp / mov edi,ecx home at +0x6E; an extern or defined global
+// homes the operand in EDI (7 bytes) or takes the 929-byte EAX form.
+// 0x00339A80 (the particle sink start, ZH's particleEditorUpdate analogue)
+// lazily creates the node, so it shares this TU and the static.
 #include <list>
 #include <vector>
 #include "ascii_string.h"
@@ -63,6 +68,17 @@ typedef _STL::list<AsciiStringUINT> ListAsciiStringUINT;
 typedef _STL::list<AsciiStringObjectID> ListAsciiStringObjectID;
 typedef _STL::list<AsciiStringCoord3D> ListAsciiStringCoord3D;
 
+class Rva0033C070TailDtor;
+class Rva00339A80ParticleSink
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void attach(void *p) = 0;
+	virtual void adopt(Rva0033C070TailDtor *node) = 0;
+	virtual void start() = 0;
+};
+
 // The auto-release holder the destructor empties (retail 0x003367E0 dtor).
 class Rva003492A0Holder
 {
@@ -76,20 +92,25 @@ public:
 	virtual ~Rva003492A0Holder();
 
 	void *m_guard;
-	void *m_target;
+	Rva00339A80ParticleSink *m_target;
 };
 extern Rva003492A0Holder g_rva012F0770Holder;
 
-// The object behind 0x012F0754: its destructor inlines to the vftable store
-// and a call to its out-of-line clear (retail 0x0033AFF0, ILT 0x00020BA3).
-class Rva012F0754Object
+class Rva00020BA3TailBase
 {
 public:
-	virtual void slot00();
-	~Rva012F0754Object() { clear(); }
-	void clear();
+	virtual ~Rva00020BA3TailBase();
 };
-extern Rva012F0754Object *g_rva012F0754Object;
+class Rva0033C070TailDtor : public Rva00020BA3TailBase
+{
+public:
+	Rva0033C070TailDtor() : m_value(0), m_flag(0) {}
+	virtual ~Rva0033C070TailDtor() {}
+
+	int m_value;
+	char m_flag;
+};
+static Rva0033C070TailDtor *g_rva00339a80Node;
 
 extern HMODULE TheScriptDebugWindowDLL;
 
@@ -146,10 +167,13 @@ ScriptEngine::~ScriptEngine()
 		Rva003492A0Holder released(g_rva012F0770Holder);
 	}
 
-	Rva012F0754Object *object = g_rva012F0754Object;
+	Rva0033C070TailDtor *object = g_rva00339a80Node;
 	if (object)
-		delete object;
-	g_rva012F0754Object = 0;
+	{
+		object->Rva0033C070TailDtor::~Rva0033C070TailDtor();
+		operator delete(object);
+	}
+	g_rva00339a80Node = 0;
 
 	if (TheScriptDebugWindowDLL)
 	{
@@ -161,4 +185,27 @@ ScriptEngine::~ScriptEngine()
 	}
 
 	reset();
+}
+
+class ParticleSystemManager
+{
+public:
+	unsigned char m_unported[0x84];
+	void *m_sinkData;
+};
+extern ParticleSystemManager *TheParticleSystemManager;
+
+void Rva00339A80ParticleSystemSinkStart()
+{
+	if (g_rva012F0770Holder.m_target == 0)
+		return;
+
+	if (g_rva00339a80Node == 0)
+	{
+		g_rva00339a80Node = new Rva0033C070TailDtor;
+		g_rva012F0770Holder.m_target->adopt(g_rva00339a80Node);
+	}
+
+	g_rva012F0770Holder.m_target->attach(TheParticleSystemManager->m_sinkData);
+	g_rva012F0770Holder.m_target->start();
 }
