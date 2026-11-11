@@ -9,7 +9,17 @@
 // Retail's slot calls the compiler's complete-destructor ILT at 0x0004142A,
 // whose TU-local object symbol remains the generated placeholder spelling.
 // The recovered typedef preserves the named class identity at the force site.
-class Gen_dtor_00253f60
+// The scalar-deleting destructor (??_G, matched 30B row) must call the rowed
+// complete destructor ??1Rva00253D30NestedDtor (0x00253D30, defined in
+// NestedInlineDestructors.cpp) rather than a Gen_dtor_00253f60 complete
+// destructor nothing defines. An explicit empty derived destructor inlines
+// into the generated ??_G wrapper, leaving the direct base call.
+struct Rva00253D30NestedDtor
+{
+	virtual ~Rva00253D30NestedDtor();
+};
+
+class Gen_dtor_00253f60 : public Rva00253D30NestedDtor
 {
 public:
 	virtual ~Gen_dtor_00253f60();
@@ -17,6 +27,11 @@ public:
 private:
 	friend void forceCreateCrateDieDeletingDestructor();
 };
+
+// ??1Gen_dtor_00253f60@@UAE@XZ present-unmatched
+Gen_dtor_00253f60::~Gen_dtor_00253f60()
+{
+}
 
 typedef Gen_dtor_00253f60 CreateCrateDie;
 
