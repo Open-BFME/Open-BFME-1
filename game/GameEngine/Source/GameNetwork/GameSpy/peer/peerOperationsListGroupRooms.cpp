@@ -183,7 +183,7 @@ void MD5Digest(const unsigned char *text, unsigned int length, char *digest);
 struct Rva0086B2D0Connection;
 void piChatDisconnectedA(void *chat, const char *reason,
  struct Rva0086B2D0Connection *connection);
-void Rva0086B360Dispatch(void *chat, const char *nick, const char *message,
+void piChatPrivateMessageA(void *chat, const char *nick, const char *message,
  int mode, PEER peer);
 void piConnectNickErrorCallbackA(PEER peer, int type, const char *nick,
 		int numSuggestedNicks, const char **suggestedNicks, void *param);
@@ -257,7 +257,7 @@ PEERBool piNewConnectOperation(PEER peer, int connectType, const char *nick,
 
 	memset(&globalCallbacks, 0, sizeof(globalCallbacks));
 	globalCallbacks.disconnected = piChatDisconnectedA;
-	globalCallbacks.privateMessage = Rva0086B360Dispatch;
+	globalCallbacks.privateMessage = piChatPrivateMessageA;
 	globalCallbacks.param = peer;
 
 	uniqueID = GOAGetUniqueID();

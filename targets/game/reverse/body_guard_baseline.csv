@@ -50,7 +50,6 @@ dir32,0x00BF6FB0,?Rva007F6FB0BrowserLobbyReply@@YAXPAVRva007E8810Message@@PAVRva
 dir32,0x00BF6FC0,?Rva007F6FC0BrowserGameReply@@YAXPAVRva007E8810Message@@PAVRva007F7980Browser@@@Z,the name encodes 0x007E8810 but retail reads 0x00BF6FC0
 dir32,0x00BF7970,?g_00BF7970@@YAXXZ,"nothing in the ledger owns 0x00BF7970. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00BF83E0,?g_00BF83E0@@YAXXZ,"nothing in the ledger owns 0x00BF83E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00C6B360,_Rva0086B360Dispatch,"retail 0x00C6B360 is already recorded as _piChatPrivateMessageA; reference that name, not a new one"
 dir32,0x00C81DB0,?d_00881db0@@YAXXZ,"nothing in the ledger owns 0x00C81DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C81EA0,?d_00881ea0@@YAXXZ,"nothing in the ledger owns 0x00C81EA0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C92B80,??0BfmeElemBW@@QAE@XZ,"retail 0x00C92B80 is already recorded as ??0Rva008947A0Elem@@QAE@XZ; reference that name, not a new one"
