@@ -97,8 +97,10 @@ private:
 // thunk plus a call to the CRT helper, which no declaration can name.
 #pragma comment(linker, "/alternatename:??1TTreeType@@QAE@XZ=?j_00032cf9@@YAXXZ")
 // ??1W3DShrubBuffer@@UAE@XZ
+extern void j_0000a2c2();
+
 W3DShrubBuffer::~W3DShrubBuffer(void)
 {
 	clearAllTrees();
-	freeTreeBuffers();
+	((void (__fastcall *)(W3DShrubBuffer *))j_0000a2c2)(this);
 }
