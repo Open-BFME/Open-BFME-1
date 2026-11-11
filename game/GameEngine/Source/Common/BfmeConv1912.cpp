@@ -21,6 +21,18 @@ public:
 	void handle(FlagPairTarget *target);
 };
 
+class BfmeE988
+{
+public:
+	void bfmeGo988A();
+};
+
+class Gen00296F90
+{
+public:
+	void handle();
+};
+
 struct BfmeInfoBH
 {
 	unsigned char m_bfmeFlagBH;
@@ -81,12 +93,12 @@ class BitFlags
 public:
 	_STL::bitset<NUMBITS> m_bits;
 	void xfer(Xfer *xfer);
+	static int getSingleBitFromName(const char *name);
 	static const char **getBitNames() { return s_bitNameList; }
 private:
 	static const char *s_bitNameList[];
 };
 
-extern int __cdecl bfmeLookup_001c6340(void *name);
 class XferException
 {
 public:
@@ -160,8 +172,6 @@ class BfmeHostBH
 {
 public:
 	void bfmeSaveBH(BfmeAgentBH *ag);
-	void bfmeOnBH();
-	void bfmeOffBH();
 
 	unsigned char m_bfmeHeadBH[0x24];
 	unsigned char m_bfmeSlotABH[4];
@@ -216,7 +226,7 @@ void BfmeSubTwoBH::bfmeSaveBH(BfmeAgentBH *ag)
 			else
 				value = "";
 
-			int bit = bfmeLookup_001c6340(const_cast<char *>(value));
+			int bit = BitFlags<86>::getSingleBitFromName(value);
 			if (bit < 0)
 			{
 				throw XferException(0, 0);
@@ -254,9 +264,9 @@ void BfmeHostBH::bfmeSaveBH(BfmeAgentBH *ag)
 			return;
 
 		if (v != 0)
-			bfmeOnBH();
+			reinterpret_cast<Gen00296F90 *>(this)->handle();
 		else
-			bfmeOffBH();
+			reinterpret_cast<BfmeE988 *>(this)->bfmeGo988A();
 	}
 	else
 		ag->bfmeByteBH(&m_bfmeStateBH);
