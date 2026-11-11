@@ -31,7 +31,7 @@ public:
 	NameKeyType readNameKey();
 	AsciiString readAsciiString();
 	float readReal();
-	Byte bfmeReadByte();
+	char readByte();
 };
 
 class BuildListInfo
@@ -114,13 +114,13 @@ Bool Rva0019A470Owner::parse(DataChunkInput &file, DataChunkInfo *info, Int list
 			record.setLocation(location);
 			record.setAngle(file.readReal());
 
-			record.setInitiallyBuilt(file.bfmeReadByte());
+			record.setInitiallyBuilt(static_cast<Byte>(file.readByte()));
 			record.setNumRebuilds(file.readInt());
 			record.setScript(file.readAsciiString());
 			record.setHealth(file.readInt());
-			record.setWhiner(file.bfmeReadByte());
-			record.setUnsellable(file.bfmeReadByte());
-			record.setRepairable(file.bfmeReadByte());
+			record.setWhiner(static_cast<Byte>(file.readByte()));
+			record.setUnsellable(static_cast<Byte>(file.readByte()));
+			record.setRepairable(static_cast<Byte>(file.readByte()));
 
 			reinterpret_cast<Rva0019A2D0Table *>(this)->appendKeyed(
 				key, reinterpret_cast<const Rva001999C0Element *>(&record), list);

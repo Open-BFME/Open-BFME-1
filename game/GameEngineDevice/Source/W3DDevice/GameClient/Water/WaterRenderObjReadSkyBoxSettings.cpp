@@ -63,6 +63,7 @@ namespace rts
 }
 
 struct DataChunkInfo;
+class UserParser;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
@@ -72,7 +73,7 @@ public:
 
 	float readReal();
 	AsciiString readAsciiString();
-	void registerParser(const AsciiString &label, const AsciiString &parentLabel,
+	UserParser *registerParser(const AsciiString &label, const AsciiString &parentLabel,
 		Parser parser, void *userData);
 	bool parse(void *userData);
 };

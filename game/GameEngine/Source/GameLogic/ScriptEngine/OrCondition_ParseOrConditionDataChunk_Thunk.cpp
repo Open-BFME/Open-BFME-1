@@ -28,13 +28,14 @@ private:
 
 struct DataChunkInfo { AsciiString label; };
 class DataChunkInput;
+class UserParser;
 typedef bool (__cdecl *ChunkParser)(DataChunkInput &, DataChunkInfo *, void *);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkInput
 {
 public:
-	void registerParser(const AsciiString &name, const AsciiString &parent, ChunkParser parser, void *user_data);
+	UserParser *registerParser(const AsciiString &name, const AsciiString &parent, ChunkParser parser, void *user_data);
 	bool parse(void *instance);
 };
 

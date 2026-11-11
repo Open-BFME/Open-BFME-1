@@ -65,9 +65,9 @@ class DataChunkInput
 {
 public:
 	AsciiString readAsciiString();
-	unsigned char bfmeReadByte();
+	char readByte();
 	Int readInt();
-	void registerParser( const AsciiString &name, const AsciiString &label,
+	UserParser *registerParser( const AsciiString &name, const AsciiString &label,
 		BfmeParserCallback callback, void *userData );
 	Bool parse( void *userData );
 };
@@ -105,14 +105,14 @@ Bool Script::Rva0035C0C0( DataChunkInput &file, unsigned short version )
 
 	// One byte feeds both flags: the body stores the single test/setne result
 	// to +0x14 and +0x15 before it reads the next byte.
-	Bool onoff = ( file.bfmeReadByte() != 0 );
+	Bool onoff = ( file.readByte() != 0 );
 	m_isActive = onoff;
 	m_isOneShot = onoff;
-	m_easy = ( file.bfmeReadByte() != 0 );
-	m_normal = ( file.bfmeReadByte() != 0 );
-	m_hard = ( file.bfmeReadByte() != 0 );
-	m_bfmeFlag = ( file.bfmeReadByte() != 0 );
-	m_isSubroutine = ( file.bfmeReadByte() != 0 );
+	m_easy = ( file.readByte() != 0 );
+	m_normal = ( file.readByte() != 0 );
+	m_hard = ( file.readByte() != 0 );
+	m_bfmeFlag = ( file.readByte() != 0 );
+	m_isSubroutine = ( file.readByte() != 0 );
 
 	if ( version >= 2 ) {
 		m_delayEvaluationSeconds = file.readInt();
