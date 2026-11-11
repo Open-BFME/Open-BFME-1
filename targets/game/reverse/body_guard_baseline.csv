@@ -278,7 +278,6 @@ dir32,0x012A77D0,?g_Key001ABC90_012A77D0@@3VKey001ABC90@@A,"nothing in the ledge
 dir32,0x012A77D8,?g_Key001ABC90_012A77D8@@3VKey001ABC90@@A,"nothing in the ledger owns 0x012A77D8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A77E0,?g_Key001ABC90_012A77E0@@3VKey001ABC90@@A,"nothing in the ledger owns 0x012A77E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A7968,?TheKey_multiplayerStartIndex@@3VStaticNameKey@@B,"nothing in the ledger owns 0x012A7968. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012A7978,?TheKey_multiplayerIsLocal@@3VStaticNameKey@@B,"retail 0x012A7978 is already recorded as ?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A; reference that name, not a new one"
 dir32,0x012B4180,?Names00377AF0@@3QBQBDB,"nothing in the ledger owns 0x012B4180. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012B5140,?bfmeRva012B5140FirstCopy@@3URvaTriple@@A,"?bfmeRva012B5140FirstCopy@@3URvaTriple@@A is a function the ledger places elsewhere, not at 0x012B5140"
 dir32,0x012B5198,?bfmeRva012B5198FirstCopy@@3URvaTriple@@A,"?bfmeRva012B5198FirstCopy@@3URvaTriple@@A is a function the ledger places elsewhere, not at 0x012B5198"

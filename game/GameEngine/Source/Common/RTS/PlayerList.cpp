@@ -56,6 +56,10 @@
 #include "Common/Team.h"
 #include "Common/WellKnownKeys.h"
 #include "Common/Xfer.h"
+// Retail records this key non-const (?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A
+// at 0x012A7978); the Zero Hour header declares it const (@@B). Spell the recorded
+// name exactly; the address is identical so the emitted bytes match.
+extern "C" StaticNameKey __identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A");
 #ifdef _DEBUG
 #include "GameLogic/Object.h"
 #endif
@@ -151,7 +155,7 @@ void PlayerList::newGame()
 
 		// Multiplayer override
 		Bool exists;	// throwaway, since we don't care if it exists
-		if (d->getBool(TheKey_multiplayerIsLocal, &exists))
+		if (d->getBool(__identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A"), &exists))
 		{
 			DEBUG_LOG(("Player %s is multiplayer local\n", pname.str()));
 			setLocalPlayer(p);

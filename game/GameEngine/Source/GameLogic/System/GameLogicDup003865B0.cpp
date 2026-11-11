@@ -33,6 +33,10 @@
 #include "Common/WellKnownKeys.h"
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/SidesList.h"
+// Retail records this key non-const (?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A
+// at 0x012A7978); the Zero Hour header declares it const (@@B). Spell the recorded
+// name exactly; the address is identical so the emitted bytes match.
+extern "C" StaticNameKey __identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A");
 
 // Retail inlines ~AsciiString at every scope exit and calls
 // StringBase<char>::releaseBuffer (0x00887940) directly, never the
@@ -109,7 +113,7 @@ void dup_003865b0( void )
 	d.setInt(TheKey_playerNightColor,
 		((const Rva008DE80ColorNight *)TheMultiplayerSettings->getColor(0))->getNightColor());
 	d.setInt(TheKey_multiplayerStartIndex, 0);
-	d.setBool(TheKey_multiplayerIsLocal, FALSE);
+	d.setBool(__identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A"), FALSE);
 
 	((BfmeSidesListObserverShim *)TheSidesList)->rva0001CA12(&d);
 	d.clear();

@@ -72,6 +72,10 @@
 #include "GameClient/Snow.h"
 #include "Common/WellKnownKeys.h"
 #include "Common/Xfer.h"
+// Retail records this key non-const (?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A
+// at 0x012A7978); the Zero Hour header declares it const (@@B). Spell the recorded
+// name exactly; the address is identical so the emitted bytes match.
+extern "C" StaticNameKey __identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A");
 #include "Common/XferCRC.h"
 #include "Common/XferDeepCRC.h"
 #include "Common/GameSpyMiscPreferences.h"
@@ -2908,7 +2912,7 @@ void GameLogic::startNewGame( Bool loadingSaveGame )
 			d.setInt(TheKey_multiplayerStartIndex, slot->getStartPos());
 //			d.setBool(TheKey_multiplayerIsLocal, slot->isLocalPlayer());
 //			d.setBool(TheKey_multiplayerIsLocal, slot->getIP() == game->getLocalIP());
-			d.setBool(TheKey_multiplayerIsLocal, slot->isHuman() && (slot->getName().compare(game->getSlot(game->getLocalSlotNum())->getName().str()) == 0));
+			d.setBool(__identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A"), slot->isHuman() && (slot->getName().compare(game->getSlot(game->getLocalSlotNum())->getName().str()) == 0));
 
 /*
 			if (slot->getIP() == game->getLocalIP())
@@ -2969,7 +2973,7 @@ void GameLogic::startNewGame( Bool loadingSaveGame )
 		d.setInt(TheKey_playerColor, TheMultiplayerSettings->getColor(0)->getColor());
 		d.setInt(TheKey_playerNightColor, ((const Rva008DE80ColorNight *)TheMultiplayerSettings->getColor(0))->getNightColor());
 		d.setInt(TheKey_multiplayerStartIndex, 0);
-		d.setBool(TheKey_multiplayerIsLocal, FALSE);
+		d.setBool(__identifier("?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A"), FALSE);
 
 		TheSidesList->addSide(&d);	
 		d.clear();
