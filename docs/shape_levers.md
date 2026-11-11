@@ -4097,3 +4097,37 @@ storage directly. Both43B bodies and relocations match; all five provider
 rows pass together. This was measured only for these witnessed ECX plus
 stack-output/row/column ABIs, not arbitrary nontrivial return types.
 Evidence: `targets/game/reverse/attempt_support/20261111-counted-handle-result-forwarding.md`.
+
+### STLport configuration decides which container COMDAT copy the link keeps (2026-11-11)
+
+Not a body-shape lever: a translation unit's `// cl:` STLport configuration
+changes the bytes of every container instantiation it emits, while its own
+matched rows often stay byte-identical. When such a TU is the first emitter of
+a name in link order, the census keeps its non-retail copy (`losers` /
+`wrong_selected` rows). Three settings were measured, VC7.1 `/O2 /MD /EHsc`:
+
+- Without `/D_STLP_USE_STATIC_LIB`, allocator calls become
+  `call [__imp_?allocate@?$__node_alloc...]` / `__imp_...__new_alloc...`;
+  retail never imports STLport.
+- Zero Hour's `Common/STLTypedefs.h` defines `_STLP_USE_NEWALLOC`, so a TU
+  reaching it through the ZH include paths calls `??2`/`??3` directly. Most
+  retail copies bucket through `__node_alloc::_M_allocate`/`_M_deallocate` for
+  n <= 0x80. `/DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc`
+  ahead of the ZH paths selects the node allocator. Retail mixes the two:
+  e.g. the `_Vector_base<AsciiString>` dtor most ZH-path TUs emit is a
+  `__new_alloc` body, and `_Deque_base<SightingInfo*>::_M_destroy_nodes`
+  (0x0063B530) is too.
+- Without `/D_STLP_NO_EXCEPTIONS`, `_M_insert_overflow`, `list::insert`, tree
+  `_M_copy` and similar carry an EH frame and `__CxxThrowException@8`.
+
+Method that landed 4337cb866e, d500a906df, 6091aacf5d, a50b6d87c1,
+55eb287e85, 92b67b3cfc and the follow-up: rebuild the candidate TUs with and
+without the change. Compare every external COMDAT's `link_census.RetailTruth`
+verdict and keep only TUs whose rows all still match and where no copy goes
+from retail to anything else or from unknown to wrong. A copy that is no
+longer emitted is not a regression. Each change also emits allocator helpers
+the TU previously imported. About 5-10% of trial TUs regress byte matches
+(funclet `$L` renumbering, EH-heavy bodies) and others lose a retail copy
+because retail used the other allocator for that container. Never apply a flag
+blanket-wide. Renumbered cleanup-funclet labels in kept TUs go through
+`eh_state_pins.py --source F --fix`.

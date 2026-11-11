@@ -1,4 +1,4 @@
-// cl: /O2 /Ob2 /MD /EHsc /D_STLP_USE_STATIC_LIB /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseunicode
+// cl: /O2 /Ob2 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/stringbaseunicode
 // stlport
 // Ported from GeneralsMD/Code/GameEngine/Source/GameClient/MessageStream/CommandXlat.cpp.
 // Copyright 2025 Electronic Arts Inc.; GPL-3.0-or-later, as in the vendored source.
