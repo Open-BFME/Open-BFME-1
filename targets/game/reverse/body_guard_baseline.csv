@@ -231,15 +231,10 @@ dir32,0x011296B0,??_7Rva008038F0Tail@@6B@,"retail 0x011296B0 is already recorded
 dir32,0x01129744,??_7Rva007E92F0BaseB@@6B@,"retail 0x01129744 is already recorded as ??_7Q3MakeBaseB@@6B@ (+3 more); reference that name, not a new one"
 dir32,0x01129808,??_7Rva007E92F0Object@@6BRva007E92F0BaseB@@@,"retail 0x01129808 is already recorded as ??_7Rva007E9B40Object@@6BQ3MakeBaseB@@@; reference that name, not a new one"
 dir32,0x01129810,??_7Rva007E92F0Object@@6BRva007E92F0BaseA@@@,"retail 0x01129810 is already recorded as ??_7Rva007E9B40Object@@6BQ3MakeBaseA@@@; reference that name, not a new one"
-dir32,0x01129AF4,??_7Rva007EA6C0VtableReseat@@6B@,"retail 0x01129AF4 is already recorded as ??_7Rva007EA6D0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01129D30,??_7Rva007EB850Log@@6B@,"retail 0x01129D30 is already recorded as ?g_bfmeVftTDA@@3PAPAXA (+3 more); reference that name, not a new one"
 dir32,0x0112A590,??_7Rva007EFF30VfptrCtor@@6B@,the name encodes 0x007EFF30 but retail reads 0x0112A590
-dir32,0x0112B3B8,??_7Rva007FA670VtableReseat@@6B@,"retail 0x0112B3B8 is already recorded as ??_7Rva007FA8E0Deleting@@6B@ (+2 more); reference that name, not a new one"
-dir32,0x0112B890,??_7Rva007F8720VtableReseat@@6B@,"retail 0x0112B890 is already recorded as ??_7Rva007F89B0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112B980,??_7Rva007F8F60VfptrCtor@@6B@,the name encodes 0x007F8F60 but retail reads 0x0112B980
-dir32,0x0112B9A8,??_7Rva007F95D0VtableReseat@@6B@,"retail 0x0112B9A8 is already recorded as ??_7Rva007F96A0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112B9C0,??_7Rva007F9130VfptrCtor@@6B@,"retail 0x0112B9C0 is already recorded as ?g_0112B9C0@@3PAPBXA; reference that name, not a new one"
-dir32,0x0112C570,??_7Rva00802870VtableReseat@@6B@,"retail 0x0112C570 is already recorded as ??_7Rva00802CA0Base@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x0112E96C,??_7?$money_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,"nothing in the ledger owns 0x0112E96C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0112E97C,??_7?$num_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,"??_7?$num_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@ is a function the ledger places elsewhere, not at 0x0112E97C"
 dir32,0x0112E9B0,??_7?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,"??_7?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@ is a function the ledger places elsewhere, not at 0x0112E9B0"
@@ -252,7 +247,6 @@ dir32,0x0113439C,_g_0113439C,"nothing in the ledger owns 0x0113439C. Give the da
 dir32,0x011343D4,_g_011343D4,"nothing in the ledger owns 0x011343D4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01136058,??_7Rva008B2DF0Middle@@6B@,"retail 0x01136058 is already recorded as ??_7Gen_uwm_00899380@@6B@ (+14 more); reference that name, not a new one"
 dir32,0x01137808,??_7Rva008DCC70Link@@6B@,the name encodes 0x008DCC70 but retail reads 0x01137808
-dir32,0x0113CBAC,??_7Rva00938BC0VtableReseat@@6B@,"retail 0x0113CBAC is already recorded as ??_7Rva00938BF0Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x01145854,_GUID_ATLVer70,"nothing in the ledger owns 0x01145854. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A5000,___xc_a,"nothing in the ledger owns 0x012A5000. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012A617C,___xc_z,"nothing in the ledger owns 0x012A617C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
