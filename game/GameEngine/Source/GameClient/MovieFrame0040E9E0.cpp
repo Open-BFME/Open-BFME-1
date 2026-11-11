@@ -49,7 +49,12 @@ struct MovieControl0040F780 { virtual void v00(); virtual void v04();virtual voi
 // global changes.
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
-extern Engine0040E9E0 *EngineGlobal0040E9E0;
+// Retail 0x012ED524 is recorded as EngineGlobal007629F0 (dir32_addresses.csv).
+// This TU's vtable-ABI view of it is Engine0040E9E0; the active() virtual slot
+// is identical, so the cast is free and bytes match.
+struct Engine007629F0;
+extern Engine007629F0 *EngineGlobal007629F0;
+static inline Engine0040E9E0 *engineGlobal() { return (Engine0040E9E0 *)EngineGlobal007629F0; }
 // ?Previous0040E9E0@@3_JA: eight retail initial bytes are zero.
 __int64 Previous0040E9E0 = 0;
 // ?Elapsed0040E9E0@@3_JA: eight retail initial bytes are zero.
@@ -171,7 +176,7 @@ unsigned MovieOpen0040E3B0::frame0040E9E0(int force)
         return 0;
     if (stream34)
     {
-        if (!EngineGlobal0040E9E0->active())
+        if (!engineGlobal()->active())
         {
             Sleep(10);
             return 0;
@@ -188,7 +193,7 @@ unsigned MovieOpen0040E3B0::frame0040E9E0(int force)
                 if (DX8Wrapper::Try_Acquire_Device_Lock(1))
                 {
                     field138 = 0;
-                    if (!EngineGlobal0040E9E0->active())
+                    if (!engineGlobal()->active())
                     {
                         bfmeUnlock1179();
                         Sleep(10);
