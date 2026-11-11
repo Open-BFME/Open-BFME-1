@@ -8,45 +8,41 @@
 // owner and operation remain address scoped.
 
 #include <string.h>
+
+// stlport
 #include <vector>
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-struct Rva00363360StringData
+template <>
+inline int StringBase<char>::compare(const StringBase<char> &other) const
 {
-	int references;
-	unsigned short length;
-	unsigned short capacity;
-	char text[1];
-};
+    int nb = other.m_data ? other.m_data->length : 0;
+    const char *b = other.m_data ? other.m_data->data : "";
+    return compare(b, nb);
+}
 
-template <typename T> class StringBase
+template <>
+inline int StringBase<char>::compare(const char *b, int nb) const
 {
-	friend class BfmeSharedString;
+    int na = m_data ? m_data->length : 0;
+    const char *a = m_data ? m_data->data : "";
+    int cmp = memcmp(a, b, na < nb ? na : nb);
+    return cmp ? cmp : na - nb;
+}
 
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	Rva00363360StringData *m_data;
-};
-
-class BfmeSharedString : private StringBase<char>
+// BfmeSharedString is the address-scoped view of the narrow-string result the
+// field+0x10 getters share (see NetworkStringGetterIdentities.cpp).  The sole
+// string-destructor definition retail folds here is ??1BfmeSharedString at
+// 0x00887940 (a C++ alias of ?releaseBuffer@?$StringBase@D@@AAEXXZ in
+// game/Libraries/Source/string/StringBase.cpp); this TU stays declaration-only
+// for the lifetime and never defines the body, mirroring BfmeConv2016.cpp.
+class BfmeSharedString : private AsciiString
 {
 public:
-	BfmeSharedString(const BfmeSharedString &other) : StringBase<char>(other) {}
-	~BfmeSharedString();	// retail calls the narrow StringBase release body 0x00887940 directly
-
-	int compare(const BfmeSharedString &other) const
-	{
-		int otherLength = other.m_data ? other.m_data->length : 0;
-		const char *otherText = other.m_data ? other.m_data->text : "";
-		int thisLength = m_data ? m_data->length : 0;
-		const char *thisText = m_data ? m_data->text : "";
-		int length = thisLength < otherLength ? thisLength : otherLength;
-		int result = memcmp(thisText, otherText, length);
-		return result ? result : thisLength - otherLength;
-	}
+    int compare(const BfmeSharedString &other) const
+    {
+        return StringBase<char>::compare(other);
+    }
 };
 
 class Rva00361960
