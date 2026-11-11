@@ -90,13 +90,13 @@ void Rva0039DAC0Owner::appendNames(AsciiString *out)
 	for (Rva0039DAC0Record **it = entry->m_firstStart; it != entry->m_firstFinish; ++it)
 	{
 		const AsciiString &name = (*it)->m_name;
-		out->StringBase<char>::concat(name.str(), name.getLength());
+		out->StringBase<char>::concat(name.str(), name.StringBase<char>::getLength());
 	}
 
 	for (Rva0039DAC0Record **it = entry->m_secondStart; it != entry->m_secondFinish; ++it)
 	{
 		const AsciiString &name = (*it)->m_name;
-		out->StringBase<char>::concat(name.str(), name.getLength());
+		out->StringBase<char>::concat(name.str(), name.StringBase<char>::getLength());
 	}
 
 	for (Int bit = 0; bit < 181; ++bit)

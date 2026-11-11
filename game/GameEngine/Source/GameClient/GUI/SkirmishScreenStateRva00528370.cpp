@@ -22,9 +22,9 @@ void GadgetListBoxSetSelected(GameWindow *listbox, const int *selectList, int se
 
 static inline int CompareNoCase00528370(const AsciiString &self, const AsciiString &other)
 {
-	int thatLen = other.getLength();
+	int thatLen = other.StringBase<char>::getLength();
 	const char *thatData = other.str();
-	int thisLen = self.getLength();
+	int thisLen = self.StringBase<char>::getLength();
 	const char *thisData = self.str();
 	int c = _memicmp(thisData, thatData, thisLen < thatLen ? thisLen : thatLen);
 	return c ? c : thisLen - thatLen;

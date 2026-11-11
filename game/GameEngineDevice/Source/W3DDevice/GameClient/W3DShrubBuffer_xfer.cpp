@@ -17,9 +17,9 @@ extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const vo
 
 inline Int compareNamesNoCase(const AsciiString &self, const AsciiString &other)
 {
- Int lenOther = other.getLength();
+ Int lenOther = other.StringBase<char>::getLength();
  const char *pOther = other.str();
- Int lenThis = self.getLength();
+ Int lenThis = self.StringBase<char>::getLength();
  const char *pThis = self.str();
  Int shorter = lenThis < lenOther ? lenThis : lenOther;
  Int diff = _memicmp(pThis,pOther,shorter);

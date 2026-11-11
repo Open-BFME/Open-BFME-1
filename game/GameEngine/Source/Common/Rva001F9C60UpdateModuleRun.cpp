@@ -144,7 +144,7 @@ void Rva001F9C60UpdateModule::run(void)
 	{
 		UpdateModuleData *moduleData = *(UpdateModuleData **)((char *)this - 0xc);
 
-		if (moduleData->m_moduleName.getLength() > 0)
+		if (moduleData->m_moduleName.StringBase<char>::getLength() > 0)
 		{
 			((Rva00414230GuardedVCall *)drawable)->forward((int)moduleData->m_moduleName.str());
 			TheAI->m_pathfinder->removeObjectFromPathfindMap(obj);

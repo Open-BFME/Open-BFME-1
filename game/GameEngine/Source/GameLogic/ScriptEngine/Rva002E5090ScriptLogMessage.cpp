@@ -80,14 +80,14 @@ void __cdecl Rva002E5090ScriptLogMessage(const char *input)
     StringBase<char> *base = (StringBase<char> *)&message;
     base->concat(text, length);
 
-    if (message.getLength() > 0x50)
+    if (message.StringBase<char>::getLength() > 0x50)
         goto scan;
     if (base->reverseFind('\n') == 0)
         return;
 
 scan:
     const char *start = message.str();
-    int currentLength = message.getLength();
+    int currentLength = message.StringBase<char>::getLength();
 
     const char *end = start + currentLength;
     while (end != start)
