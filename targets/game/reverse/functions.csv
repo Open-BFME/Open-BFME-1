@@ -121700,7 +121700,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?j_001419a0@@YAXXZ,,0x001419A0,5,game/gen_small/gthunks_084.cpp,matched,gen-thunk;gap;target=0x0000A470
 ?j_001419b0@@YAXXZ,,0x001419B0,5,game/gen_small/gthunks_084.cpp,matched,gen-thunk;gap;target=0x00029CAD
 ?j_00141cb0@@YAXXZ,,0x00141CB0,5,game/gen_small/gthunks_084.cpp,matched,gen-thunk;gap;target=0x00015D7A
-?j_00141cc0@@YAXXZ,,0x00141CC0,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00540950
 ?j_001434b0@@YAXXZ,,0x001434B0,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00542250
 ?j_00143510@@YAXXZ,,0x00143510,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00540250
 ?j_00143570@@YAXXZ,,0x00143570,5,game/gen_small/thunks_036.cpp,matched,gen-thunk;target=thunk_FUN_00540310
@@ -173474,3 +173473,4 @@ uw_00c06438,,0x00C06438,8,game/GameEngine/Source/GameLogic/AI/AIStateMachineCons
 ?initObject@Object@@UAEXXZ,,0x001C6870,933,game/GameEngine/Source/GameLogic/Object/ObjectInitObject.cpp,matched,ZH Object::initObject as the virtual slot ilt_oracle confirms (UAE; QAE contradicted); split from Object.cpp whose ZH layout diverges;model=claude-opus-5-5;host=vm
 ??0Rva007E9B40Object@@QAE@PAX@Z,,0x007E92F0,32,game/GameEngine/Source/Common/Rva007E92F0Ctor.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/007e92f0-rva007e9b40object-ctor.md;class reconciled to Rva007E9B40Object: installs Q3MakeBaseB vftable 0x01129744 then the derived pair 0x01129810/0x01129808 dir32-recorded for Rva007E9B40Object (factory 0x007E9B40); same as Rva007F3850Constructor.cpp;model=claude-opus-5-5;host=ymo-workstation
 ?_M_insert_overflow@?$vector@PAVLivingWorldRegion@@V?$allocator@PAVLivingWorldRegion@@@_STL@@@_STL@@IAEXPAPAVLivingWorldRegion@@ABQAV3@ABU__true_type@2@I_N@Z,,0x003C8F80,265,game/GameEngine/Source/GameLogic/System/LivingWorld/RegionTransfer003C9EF0.cpp,matched,STLport vector<LivingWorldRegion*> insert overflow instantiated by m_14.push_back at 0x003C9FC1; COMDAT copy byte-identical to retail with relocations ??2/node_alloc/memmove/??3;model=claude-opus-5-5;host=ymo-workstation
+??1Rva0077CDE0ArrElem@@QAE@XZ,,0x00141CC0,5,game/GameEngine/Source/GameClient/Rva00141CC0ArrElemDestructor.cpp,matched,element dtor of ThingTemplate +0x134 array (ILT 0x0000E746 -> here); single jmp to pointer-set _Rb_tree dtor ILT 0x00015D7A; ctor ILT 0x0002FB80 -> 0x00143B20 set-group ctor;model=claude-opus-5-5;host=ymo-workstation
