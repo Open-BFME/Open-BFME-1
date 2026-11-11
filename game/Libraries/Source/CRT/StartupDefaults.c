@@ -12,3 +12,8 @@ int __cdecl _matherr(struct _exception *error)
 {
     return 0;
 }
+
+int __cdecl _setargv(void)
+{
+    return 0;
+}

@@ -139,12 +139,13 @@ def test_native_crt_startup_defaults_initializers_and_termination(tmp_path):
             assert actual_imports <= retail_imports
             map_text = (tmp_path / (label + ".map")).read_text()
             publics, _, _, owners = lc.read_map(map_text, base)
-            for name in ("__matherr", "___defaultmatherr", "__commode", "__newmode", "__dowildcard"):
+            for name in ("__matherr", "__setargv", "___defaultmatherr", "__commode", "__newmode", "__dowildcard"):
                 assert owners[name] == provider.name.lower(), (name, owners[name])
             assert owners["_WinMainCRTStartup"] == "crtexew.obj"
             assert any("_WinMainCRTStartup" in line and line.rstrip().endswith("msvcrt:crtexew.obj")
                        for line in map_text.splitlines())
             assert "__adjust_fdiv" in publics
+            assert publics["__matherr"] != publics["__setargv"]
             launch = [str(target)] if sys.platform == "win32" else ["wine", str(target)]
             run = subprocess.run(launch, cwd=tmp_path, env=env, capture_output=True, text=True, timeout=30)
             (tmp_path / (label + ".run.log")).write_text(run.stdout + run.stderr)
