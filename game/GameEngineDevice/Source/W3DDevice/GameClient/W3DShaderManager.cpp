@@ -358,7 +358,7 @@ static Int W3DShadersPassCount[W3DShaderManager::ST_MAX];	//number of passes for
 struct ShaderComResource;
 // retired debt: ??m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A@@3PAUShaderComResource@@A replaced with ?m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A
 extern "C" ShaderComResource *__identifier("?m_resource012F9D14@W3DShaderManager@@1PAUShaderComResource@@A"); // BFME shader resource cleared by shutdown.
-extern ShaderComResource *__identifier("?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A"); // BFME shader resource cleared by shutdown.
+extern "C" ShaderComResource *__identifier("?m_resource012F9D18@W3DShaderManager@@1PAUShaderComResource@@A"); // BFME shader resource cleared by shutdown.
 extern VertexBufferClass *ShaderQuadBuffer; // BFME vertex buffer cleared by shutdown.
 extern int ShaderQuadIndex; // BFME quad-ring cursor.
 TextureClass *W3DShaderManager::m_Textures[8];
