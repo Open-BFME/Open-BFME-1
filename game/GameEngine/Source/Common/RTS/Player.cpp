@@ -4161,33 +4161,8 @@ void Player::applyBattlePlanBonusesForPlayerObjects( const BattlePlanBonuses *bo
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */
 //-------------------------------------------------------------------------------------------------
-// ?processSelectTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z present-unmatched
-void Player::processSelectTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
-	if ((hotkeyNum < 0) || (hotkeyNum >= NUM_HOTKEY_SQUADS)) {
-		DEBUG_CRASH(("processSelectTeamGameMessage got an invalid hotkey number"));
-		return;
-	}
-
-	if (m_squads[hotkeyNum] == NULL) {
-		return;
-	}
-
-	m_currentSelection->clearSquad();
-
-	VecObjectPtr objectList = m_squads[hotkeyNum]->getLiveObjects();
-	Int numObjs = objectList.size();
-	
-	for (Int i = 0; i < numObjs; ++i) 
-	{
-		m_currentSelection->addObject(objectList[i]);
-	}
-
-	if( numObjs > 0 )
-	{
-		getAcademyStats()->recordControlGroupsUsed();
-	}
-
-}
+// void Player::processSelectTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
+// Body in Player_processSelectTeamGameMessage.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */

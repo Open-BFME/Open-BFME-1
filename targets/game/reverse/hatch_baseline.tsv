@@ -124929,7 +124929,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	onUnitCreated@Pla
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	onUpgradeCompleted@Player@@QAEXPBVUpgradeTemplate@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	processAddTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	processCreateTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	processSelectTeamGameMessage@Player@@QAEXHPAVGameMessage@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	recruitSpecificTeam@Player@@QAEXPAVTeamPrototype@@M@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	removeBattlePlanBonusesForObject@Player@@QBEXPAVObject@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Player.cpp	removeKindOfProductionCostChange@Player@@QAEXV?$BitFlags@$0HE@@@M@Z	1
