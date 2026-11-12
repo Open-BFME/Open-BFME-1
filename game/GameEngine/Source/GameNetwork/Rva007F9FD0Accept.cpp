@@ -38,8 +38,6 @@ class Rva007E8810Message
 {
 public:
 	~Rva007E8810Message();
-	void addInt( const char *key, int value );
-	void addString( const char *key, const char *value );
 
 	int m_00;
 	int m_04;
@@ -55,6 +53,18 @@ public:
 	int m_2C;
 	char m_30;
 	char m_pad31[ 3 ];
+};
+
+class BfmeThingCIB
+{
+public:
+	void bfmeGoCIB( void *key, void *value );
+};
+
+class BfmeC994
+{
+public:
+	void addString( const char *key, const char *value );
 };
 
 struct Rva007F9FD0Arg
@@ -138,8 +148,9 @@ int Rva007FA2C0::onAccept( void *rawArg )
 		char saved = part[ chunk ];
 		part[ chunk ] = 0;
 		scratch[ 0 ] = 0;
-		message.addInt( "size", (int)encodedLength );
-		message.addString( "data", part );
+		reinterpret_cast<BfmeThingCIB *>( &message )->bfmeGoCIB(
+			const_cast<char *>( "size" ), reinterpret_cast<void *>( encodedLength ) );
+		reinterpret_cast<BfmeC994 *>( &message )->addString( "data", part );
 		onBusy( &message );
 		part[ chunk ] = saved;
 		offset += chunk;
