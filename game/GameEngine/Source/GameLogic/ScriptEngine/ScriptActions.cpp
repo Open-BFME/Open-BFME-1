@@ -2752,19 +2752,8 @@ void ScriptActions::doNamedExitAll(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamExitAll */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamExitAll@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doTeamExitAll(const AsciiString& teamName)
-{
-	Team *theTeamOfTransports = TheScriptEngine->getTeamNamed( teamName );
-	if (!theTeamOfTransports) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	theTeamOfTransports->getTeamAsAIGroup(theGroup);
-
-	theGroup->groupEvacuate( CMD_FROM_SCRIPT );
-}
+// ScriptActions::doTeamExitAll(const AsciiString& teamName)
+// Body in ScriptActionsTeamOrders.cpp (exact NB retail).
 
 
 //-------------------------------------------------------------------------------------------------
