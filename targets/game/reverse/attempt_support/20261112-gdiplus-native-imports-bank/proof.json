@@ -1,0 +1,58 @@
+{
+  "candidate_inputs": {
+    "compile.log": "bf42113e5d1a3bfcfecb79bd0b23960aae8899fc9e3cc7ea30bb4891f6031be5",
+    "GdipAllocImportThunk.cpp.txt": "c6a420da88b086a49b80c8fcf43035ef547dc1e17830987512b3381882a6d9fc",
+    "initial-cli-refusal.log": "97dcf95d293b7066f3eda55b29d0801285d7cab90c29cd4effbd31e63b8f0b09",
+    "admission-refusal.log": "d6c5a44c839393b753d796c43e41733d5535c8d49f8d9cde331d3222bb0a92ff",
+    "compile-command.json": "cca6d6d59c6fedee45789e5578455355400989087cb6fbd76b8db2dcac6e059b"
+  },
+  "private_object_sha256": "1bd398510a4061acd67d4c473b31bcc2766760d0638a1234a93853b1d6ea150e",
+  "actual_symbols": {
+    "_GdipAlloc@4": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdipAlloc@4"
+    },
+    "_GdipDisposeImage@4": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdipDisposeImage@4"
+    },
+    "_GdipCreateBitmapFromFile@8": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdipCreateBitmapFromFile@8"
+    },
+    "_GdipCreateBitmapFromFileICM@8": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdipCreateBitmapFromFileICM@8"
+    },
+    "_GdipFree@4": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdipFree@4"
+    },
+    "_GdiplusStartup@12": {
+      "size": 6,
+      "bytes": "ff2500000000",
+      "relocation_offset": 2,
+      "relocation_kind": "IMAGE_REL_I386_DIR32",
+      "target": "__imp__GdiplusStartup@12"
+    }
+  },
+  "status": "ADMISSION-BLOCKED, not recovered/partial byte success/closure gain",
+  "no_two_base_link_run": true,
+  "no_ledger_edit": true,
+  "parent_declined_admission_category_expansion": true
+}

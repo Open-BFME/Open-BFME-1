@@ -1,0 +1,2 @@
+add_match: --replace-rva 0x009F6BC8 is ?ji_009f6bc8@@YAXXZ (game/gen_small/imports_000.cpp), not a supported generated scaffold row
+add_match: a real identity correction requires --correct-identity and --identity-evidence

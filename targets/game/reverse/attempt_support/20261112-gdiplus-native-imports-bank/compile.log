@@ -1,0 +1,2 @@
+GdipAllocImportThunk.cpp
+cl : Command line warning D4025 : overriding '/EHs' with '/EHs-'

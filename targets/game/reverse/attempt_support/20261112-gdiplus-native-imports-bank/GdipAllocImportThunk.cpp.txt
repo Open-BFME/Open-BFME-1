@@ -1,0 +1,43 @@
+// cl: /DNDEBUG /MD /EHs-c- /Iinputs/toolchains/vs2003/PROG~FBU/MICR~2RR.NET/Vc7/PlatformSDK/Include
+#include <windows.h>
+#include <gdiplus.h>
+
+// Direct IAT reads let these native thunks own the public function names
+// without redeclaring those same functions as dllimport.
+extern "C" void *(__stdcall *__identifier("_imp__GdipAlloc@4"))(unsigned int size);
+
+extern "C" void *__stdcall GdipAlloc(unsigned int size)
+{
+	return __identifier("_imp__GdipAlloc@4")(size);
+}
+
+extern "C" Gdiplus::GpStatus (__stdcall *__identifier("_imp__GdipDisposeImage@4"))(Gdiplus::GpImage *image);
+extern "C" Gdiplus::GpStatus (__stdcall *__identifier("_imp__GdipCreateBitmapFromFile@8"))(const WCHAR *filename, Gdiplus::GpBitmap **bitmap);
+extern "C" Gdiplus::GpStatus (__stdcall *__identifier("_imp__GdipCreateBitmapFromFileICM@8"))(const WCHAR *filename, Gdiplus::GpBitmap **bitmap);
+extern "C" void (__stdcall *__identifier("_imp__GdipFree@4"))(void *memory);
+extern "C" Gdiplus::Status (__stdcall *__identifier("_imp__GdiplusStartup@12"))(ULONG_PTR *token, const Gdiplus::GdiplusStartupInput *input, Gdiplus::GdiplusStartupOutput *output);
+
+extern "C" Gdiplus::GpStatus __stdcall GdipDisposeImage(Gdiplus::GpImage *image)
+{
+	return __identifier("_imp__GdipDisposeImage@4")(image);
+}
+
+extern "C" Gdiplus::GpStatus __stdcall GdipCreateBitmapFromFile(const WCHAR *filename, Gdiplus::GpBitmap **bitmap)
+{
+	return __identifier("_imp__GdipCreateBitmapFromFile@8")(filename, bitmap);
+}
+
+extern "C" Gdiplus::GpStatus __stdcall GdipCreateBitmapFromFileICM(const WCHAR *filename, Gdiplus::GpBitmap **bitmap)
+{
+	return __identifier("_imp__GdipCreateBitmapFromFileICM@8")(filename, bitmap);
+}
+
+extern "C" void __stdcall GdipFree(void *memory)
+{
+	__identifier("_imp__GdipFree@4")(memory);
+}
+
+extern "C" Gdiplus::Status __stdcall GdiplusStartup(ULONG_PTR *token, const Gdiplus::GdiplusStartupInput *input, Gdiplus::GdiplusStartupOutput *output)
+{
+	return __identifier("_imp__GdiplusStartup@12")(token, input, output);
+}
