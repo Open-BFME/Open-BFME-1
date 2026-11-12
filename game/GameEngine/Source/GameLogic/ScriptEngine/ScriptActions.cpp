@@ -2625,30 +2625,8 @@ void ScriptActions::doNamedAttackTeam(const AsciiString& unitName, const AsciiSt
 //-------------------------------------------------------------------------------------------------
 /** doTeamAttackArea */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamAttackArea(const AsciiString& teamName, const AsciiString& areaName)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	// The team is the team based on the name, and the calling team (if any) and the team that
-	// triggered the condition.  jba. :)
-	if (!theTeam) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	if (!theGroup) {
-		return;
-	}
-
-	theTeam->getTeamAsAIGroup(theGroup);
-
-	PolygonTrigger *pTrig = TheScriptEngine->getQualifiedTriggerAreaByName(areaName);
-	if (!pTrig) {
-		return;
-	}
-
-	theGroup->groupAttackArea(pTrig, CMD_FROM_SCRIPT);
-}
+// ScriptActions::doTeamAttackArea(const AsciiString& teamName, const AsciiString& areaName)
+// Body in ScriptActionsTeamOrders.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamAttackNamed */

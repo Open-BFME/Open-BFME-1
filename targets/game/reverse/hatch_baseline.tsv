@@ -128792,7 +128792,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doSkirmishFireSpecialPowerAtMostCost@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doSoundEnableType@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doSpeechPlay@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamAvailableForRecruitment@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamCaptureNearestUnownedFactionUnit@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamDecreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z	1
