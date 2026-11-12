@@ -409,75 +409,8 @@ void INI::load( AsciiString filename, INILoadType loadType, Xfer *pXfer )
 	* therefore ignored from any given line */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?readLine@INI@@ present-unmatched
-void INI::readLine( void )
-{
-	// sanity
-	DEBUG_ASSERTCRASH( m_file, ("readLine(), file pointer is NULL\n") );
-
-  if (m_endOfFile)
-    *m_buffer=0;
-  else
-  {
-    char *p=m_buffer;
-    while (p!=m_buffer+INI_MAX_CHARS_PER_LINE)
-    {
-      // get next character
-      if (m_readBufferNext==m_readBufferUsed)
-      {
-        // refill buffer
-        m_readBufferNext=0;
-        m_readBufferUsed=m_file->read(m_readBuffer,INI_READ_BUFFER);
-
-        // EOF?
-        if (!m_readBufferUsed)
-        {
-          m_endOfFile=true;
-          *p=0;
-          break;
-        }
-      }
-      *p=m_readBuffer[m_readBufferNext++];
-
-      // CR?
-      if (*p=='\n')
-      {
-        *p=0;
-        break;
-      }
-
-      DEBUG_ASSERTCRASH(*p != '\t', ("tab characters are not allowed in INI files (%s). please check your editor settings. Line Number %d\n",m_filename.str(), getLineNum()));
-
-      // comment?
-      if (*p==';')
-        *p=0;
-      // whitespace?
-      else if (*p>0&&*p<32)
-        *p=' ';
-      p++;
-    }
-    *p=0;
-
-		// increase our line count
-		m_lineNum++;
-
-		// check for at the max
-		if ( p == m_buffer+INI_MAX_CHARS_PER_LINE )
-		{
-
-			DEBUG_ASSERTCRASH( 0, ("Buffer too small (%d) and was truncated, increase INI_MAX_CHARS_PER_LINE\n", 
-														 INI_MAX_CHARS_PER_LINE) );
-
-		}  // end if
-  }
-
-	if (s_xfer)
-	{
-		s_xfer->xferUser( m_buffer, sizeof( char ) * strlen( m_buffer ) );
-		//DEBUG_LOG(("Xfer val is now 0x%8.8X in %s, line %s\n", ((XferCRC *)s_xfer)->getCRC(),
-			//m_filename.str(), m_buffer));
-	}
-}
+// INI::readLine()
+// Body in ini.cpp (exact 121B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse UnsignedByte from buffer and assign at location 'store' */
