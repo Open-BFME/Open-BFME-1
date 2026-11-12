@@ -1155,65 +1155,8 @@ void INI::parseDeathTypeFlags(INI* ini, void* /*instance*/, void* store, const v
 // parse the line and return whether the given line is a Block declaration of the form
 // [whitespace] blockType [whitespace] blockName [EOL]
 // both blockType and blockName are case insensitive
-// ?isDeclarationOfType@INI@@ present-unmatched
-Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, char *bufferToCheck )
-{
-	Bool retVal = true;
-	if (!bufferToCheck || blockType.isEmpty() || blockName.isEmpty()) {
-		return false;
-	}
-	// DO NOT RETURN EARLY FROM THIS FUNCTION. (beyond this point)
-	// we have to restore the bufferToCheck to its previous state before returning, so 
-	// it is important to get through all the checks.
-	
-	char restoreChar;
-	char *tempBuff = bufferToCheck;
-	int blockTypeLength = blockType.getLength();
-	int blockNameLength = blockName.getLength();
-
-	while (isspace(*tempBuff)) {
-		++tempBuff;
-	}
-	
-	if (strlen(tempBuff) > blockTypeLength) {
-		restoreChar = tempBuff[blockTypeLength];
-		tempBuff[blockTypeLength] = 0;
-		
-		if (stricmp(blockType.str(), tempBuff) != 0) {
-			retVal = false;
-		}
-
-		tempBuff[blockTypeLength] = restoreChar;
-		tempBuff = tempBuff + blockTypeLength;
-	} else {
-		retVal = false;
-	}
-
-	while (isspace(*tempBuff)) {
-		++tempBuff;
-	}
-
-	if (strlen(tempBuff) > blockNameLength) {
-		restoreChar = tempBuff[blockNameLength];
-		tempBuff[blockNameLength] = 0;
-		
-		if (stricmp(blockName.str(), tempBuff) != 0) {
-			retVal = false;
-		}
-
-		tempBuff[blockNameLength] = restoreChar;
-		tempBuff = tempBuff + blockNameLength;
-	} else {
-		retVal = false;
-	}
-
-	while (strlen(tempBuff)) {
-		retVal = retVal && isspace(tempBuff[0]);
-		++tempBuff;
-	}
-
-	return retVal;
-}
+// INI::isDeclarationOfType(AsciiString, AsciiString, char*)
+// Body in Rva00851BF0LineFilter.cpp (exact 510B retail).
 
 //-------------------------------------------------------------------------------------------------
 // parse the line and return whether the given line is a Block declaration of the form

@@ -124796,7 +124796,6 @@ present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	1INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	getNextAsciiString@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	getNextQuotedAsciiString@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	initFromINIMulti@INI@@	1
-present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	isDeclarationOfType@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	load@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	loadDirectory@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseAndTranslateLabel@INI@@	1
