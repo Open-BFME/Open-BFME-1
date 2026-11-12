@@ -27,6 +27,20 @@ were verified to carry neither the COMDAT nor the import.
 
 ## T4: ??1RefHandle008958D0 (queue #11, 846 B) — blocked, reverted
 
+Follow-up (same session): the current link order keeps cleanup.obj's
+retail 35 B copy first, so the link itself is already correct; the entry is
+hygiene against three wrong 32 B function-pointer-view emitters (submit,
+ManagerFind, CreateHandle). Suppression was attempted in all three:
+- submit: dllimport poisons the TU (inline destructions ODR-use the dtor;
+  dangling __imp_; scoped gate passes but link_check would flag unresolved).
+- ManagerFind (in-class body): dllimport breaks the pinned $L458 funclet
+  ($L458 not in object; row loses its anchor) — the dtor is used.
+- CreateHandle (out-of-line __forceinline body): dllimport on an out-of-line
+  definition is C2264; deleting the body breaks rva00895A00 (the dtor is
+  called, previously via matching routes; removal reroutes to a local 0xC57CD6).
+All three reverted; parents re-verified pristine. The wrong copies can only go
+once their TUs stop needing the body, which their parents forbid.
+
 Emitters today: submit 32 B wrong (function-pointer view: `dec` + indirect
 `call [TheBfmeFree]`) plus three retail-identical 35 B copies (fixup,
 release-unref, cleanup; body matches retail at 0x00784A70, relocs to
