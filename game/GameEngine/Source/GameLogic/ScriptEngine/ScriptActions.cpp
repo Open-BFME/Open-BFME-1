@@ -2485,29 +2485,8 @@ void ScriptActions::updateNamedSetAttitude(const AsciiString& unitName, Int atti
 //-------------------------------------------------------------------------------------------------
 /** doTeamSetRepulsor */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamSetRepulsor.cpp
-// ?doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor)
-{
-	Team *theSrcTeam = TheScriptEngine->getTeamNamed(teamName);
-	if (!theSrcTeam) {
-		return;
-	}
-
-	if (theSrcTeam) 
-	{
-		for (DLINK_ITERATOR<Object> iter = theSrcTeam->iterate_TeamMemberList(); !iter.done(); iter.advance())
-		{
-			Object *obj = iter.cur();
-			if (!obj) 
-			{
-				continue;
-			}
-			obj->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_REPULSOR ), repulsor );
-		}
-	}
-
-}
+// ScriptActions::doTeamSetRepulsor(const AsciiString& teamName, Bool repulsor)
+// Body in ScriptActionsTeamMemberFlags.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedAttackArea */

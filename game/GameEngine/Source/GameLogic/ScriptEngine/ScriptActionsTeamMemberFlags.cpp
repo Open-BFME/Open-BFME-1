@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/objectdlink /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
-// readable body of ?doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
 // This TU contains the BFME virtual-DLINK team walk for the repulsor action:
 //

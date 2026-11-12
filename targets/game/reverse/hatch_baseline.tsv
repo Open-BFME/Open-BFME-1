@@ -128798,7 +128798,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamRemoveOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamSetBoobytrapped@ScriptActions@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamSetUnmanned@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamSpinForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamStartSequentialScript@ScriptActions@@IAEXABVAsciiString@@0H@Z	1
