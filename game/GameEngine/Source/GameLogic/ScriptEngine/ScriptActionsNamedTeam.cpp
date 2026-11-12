@@ -6,7 +6,6 @@
 // readable body of ?doCreateTeamFromCapturedUnits@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamEmoticon@ScriptActions@@IAEXABVAsciiString@@0M@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doGuardSupplyCenter@ScriptActions@@IAEXABVAsciiString@@H@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
-// readable body of ?doBuildTeam@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
 // Ten actions that look a team up by name and do one thing to it:
 //

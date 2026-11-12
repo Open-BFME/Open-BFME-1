@@ -3148,18 +3148,8 @@ void ScriptActions::doCameraMoveHome(void)
 //-------------------------------------------------------------------------------------------------
 /** doBuildTeam */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doBuildTeam_Thunk.cpp
-// ?doBuildTeam@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doBuildTeam(const AsciiString& teamName)
-{
-	TeamPrototype *theTeamProto = TheTeamFactory->findTeamPrototype( teamName );
-	if (theTeamProto) {
-		Player *player = theTeamProto->getControllingPlayer();
-		if (player) {
-			player->buildSpecificTeam(theTeamProto);
-		}
-	}	
-}
+// ScriptActions::doBuildTeam(const AsciiString& teamName)
+// Body in ScriptActionsNamedTeam.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doRecruitTeam */
