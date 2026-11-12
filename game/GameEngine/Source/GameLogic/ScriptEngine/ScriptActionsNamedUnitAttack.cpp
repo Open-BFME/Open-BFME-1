@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
-// readable body of ?doNamedAttack@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doNamedAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doNamedAttackTeam@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doNamedEnterNamed@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp

@@ -2052,32 +2052,8 @@ void ScriptActions::doAttack(const AsciiString& attackerName, const AsciiString&
 //-------------------------------------------------------------------------------------------------
 /** doNamedAttack */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedAttack.cpp
-// ?doNamedAttack@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doNamedAttack(const AsciiString& attackerName, const AsciiString& victimName)
-{
-	/// @todo Implement me (MSB)
-
-	Object *attackingObj = TheScriptEngine->getUnitNamed( attackerName );
-	Object *victimObj = TheScriptEngine->getUnitNamed( victimName );
-
-	if (!attackingObj || !victimObj) {
-		return;
-	}
-	// tell every member of attacking team to attack a random member of victim team
-
-	{
-		AIUpdateInterface *aiUpdate = attackingObj->getAIUpdateInterface();
-
-		if (aiUpdate)
-		{
-			/// @todo Teams should have a method that returns the number of members in the team (MSB)
-			attackingObj->leaveGroup();
-			aiUpdate->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-			aiUpdate->aiForceAttackObject( victimObj, NO_MAX_SHOTS_LIMIT, CMD_FROM_SCRIPT );
-		}
-	}
-}
+// ScriptActions::doNamedAttack(const AsciiString& attackerName, const AsciiString& victimName)
+// Body in ScriptActionsNamedUnitAttack.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doBuildBuilding */

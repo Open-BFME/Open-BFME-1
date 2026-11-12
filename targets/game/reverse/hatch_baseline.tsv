@@ -128727,7 +128727,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doMoviePlayFullScreen@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doMoviePlayRadar@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doMusicTrackChange@ScriptActions@@IAEXABVAsciiString@@_N1@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedAttack@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedAttackArea@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedAttackTeam@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedDamage@ScriptActions@@IAEXABVAsciiString@@H@Z	1
