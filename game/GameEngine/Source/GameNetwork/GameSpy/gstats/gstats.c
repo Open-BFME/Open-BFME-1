@@ -42,6 +42,9 @@ INCLUDES
 #include "../md5.h"
 #include "../available.h"
 
+/* Retail uses ghttp's shared helper, not the later SDK duplicate. */
+int ghiSocketSelect(SOCKET socket, int *readFlag, int *writeFlag, int *exceptFlag);
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -311,7 +314,7 @@ int InitStatsThink()
 			// Check if socket is writeable yet
 			int aWriteFlag = 0;
 			int aExceptFlag = 0;
-			int aResult = GSISocketSelect(sock, NULL, &aWriteFlag, &aExceptFlag);
+			int aResult = ghiSocketSelect(sock, NULL, &aWriteFlag, &aExceptFlag);
 			if ((aResult == -1) ||                   // socket error
 				(aResult == 1 && aExceptFlag == 1))  // exception
 			{
@@ -1213,7 +1216,7 @@ static int get_sockaddrin(char *host, int port, struct sockaddr_in *saddr, struc
 
 	memset(saddr,0,sizeof(struct sockaddr_in));
 	saddr->sin_family = AF_INET;
-	saddr->sin_port = htons((unsigned short)port);
+	saddr->sin_port = ntohs((unsigned short)port);
 	if (host == NULL)
 		saddr->sin_addr.s_addr = INADDR_ANY;
 	else

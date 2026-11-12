@@ -1,0 +1,711 @@
+{
+  "at": "2026-11-12T17:23:33.174488+00:00",
+  "status": "PARENT-VERIFIED LOCAL LINK-ONLY CANDIDATE; independent immutable-range review/publication still pending",
+  "retail_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+  "source_function_recovery_delta": 0,
+  "formal_existing_COMMON_ownership_bytes": 4,
+  "whole_closed_delta": null,
+  "census_before_after": "UNKNOWN; normal link_check before has no census index. No copy/fetch/build of index.",
+  "source_scope": [
+    "game/GameEngine/Source/GameNetwork/GameSpy/available.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/chat/ChatSocketCore.cpp",
+    "game/GameEngine/Source/GameNetwork/GameSpy/chat/chatCrypt.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/darray.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpBuffer.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCallbacks.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCommon.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpConnection.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpMain.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpPost.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiCallback.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiUtility.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gbucket.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gstats.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/hashtable.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/md5c.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/nonport.c",
+    "game/GameEngine/Source/GameNetwork/GameSpy/stringutil.c"
+  ],
+  "frozen_source_object_inputs": {
+    "before": [
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/darray.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_darray.obj",
+        "sha256": "813839772908680cc05d6da3abf08df45c88e094240d146d10ccf5c9c382cbc4"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpPost.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^post.obj",
+        "sha256": "7f2469b695d7da8afa03036246445b55cac103516320f0d763a9b306dc4168d5"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/nonport.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_nonport.obj",
+        "sha256": "e1c1930bf1fbb4fe4689251ac6c7b290327247047c13e7a1c2c86701ece39d41"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCommon.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^common.obj",
+        "sha256": "17a13d62766380af3f237b60ff41a3a561075f63d604a9219ff5a984e1859bc7"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/available.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_available.obj",
+        "sha256": "e8e64085ee965277a8f32133d1a838936057c906eb6b5da2a64e598a8a0b3c4d"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/ChatSocketCore.cpp",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_chat_^chat^socket^core.obj",
+        "sha256": "47fd2435ae415b3388ffe70754b9330ab504579b0a1553787dd7599f76bf143f"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/stringutil.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_stringutil.obj",
+        "sha256": "dc0686b31a7ba30813356ab847220ffa9c5afa6e559d4295c570ec60189e7004"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/hashtable.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_hashtable.obj",
+        "sha256": "82d008eb519f22e1b91e97001e9212b42a98eb2bbeeb81d1b3161aae2666e1ae"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/chatCrypt.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_chat_chat^crypt.obj",
+        "sha256": "80ac568ccf4ae5cc673645501b106498039f3669caa7b06969c69c15843ff152"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/md5c.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_md5c.obj",
+        "sha256": "e6595623222ca473fef085e5b6c57b132b844ebc0fd61286f0c0fe8bddcba326"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpMain.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^main.obj",
+        "sha256": "bc3bbf672ec3b7d983d643cae79840bddf46a2c2addb97d02c5a3f4d128b3fbf"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpConnection.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^connection.obj",
+        "sha256": "5ae15f795322b06de8f4c2558a10edcdbd1a8a8dd20fb084022a8cbaadccab34"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCallbacks.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^callbacks.obj",
+        "sha256": "94eb62c9e01f5d269ca6e6d798d3ae3be9f913a3d8de8a966708aafd25696ff8"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^process.obj",
+        "sha256": "dda0301fd3d0415feb151635fdb62566463d71bd86c4583e45032ba21e838aa6"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpBuffer.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^buffer.obj",
+        "sha256": "7b31097bdc8a1b05e7027ff1a8892510c2b82c0178223fc20202c038bde9e370"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiUtility.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^utility.obj",
+        "sha256": "aedd95319a66e5792747491ecd8ae6fe924e969e3929a24f3982750bee06fa32"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiCallback.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^callback.obj",
+        "sha256": "662c1bfdd9a99e8fcd088469f169059265e3b8b161e57d5e221944ca53943c95"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gstats.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gstats.obj",
+        "sha256": "809ce057f92c09dfe5e3cfe82f10009587e0ab34f16e4c3afbc6c42e976f1305"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gbucket.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/before-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gbucket.obj",
+        "sha256": "0d9b133210fcb2274c2ddfad5d605023a8f7ef3308f9deb3c18dcdfd60a7512f"
+      }
+    ],
+    "after": [
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/darray.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_darray.obj",
+        "sha256": "813839772908680cc05d6da3abf08df45c88e094240d146d10ccf5c9c382cbc4"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpPost.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^post.obj",
+        "sha256": "7f2469b695d7da8afa03036246445b55cac103516320f0d763a9b306dc4168d5"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/nonport.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_nonport.obj",
+        "sha256": "2211f2712efb6e0d427d6fd2e49d2fffa245b1c7a07d622009c9f7b247f39740"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCommon.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^common.obj",
+        "sha256": "17a13d62766380af3f237b60ff41a3a561075f63d604a9219ff5a984e1859bc7"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/available.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_available.obj",
+        "sha256": "e8e64085ee965277a8f32133d1a838936057c906eb6b5da2a64e598a8a0b3c4d"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/ChatSocketCore.cpp",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_chat_^chat^socket^core.obj",
+        "sha256": "0b7c1e5d23bb99b03150a9b32daac6fc5af161f420e1067e65e6e51638ebb8ed"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/stringutil.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_stringutil.obj",
+        "sha256": "dc0686b31a7ba30813356ab847220ffa9c5afa6e559d4295c570ec60189e7004"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/hashtable.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_hashtable.obj",
+        "sha256": "82d008eb519f22e1b91e97001e9212b42a98eb2bbeeb81d1b3161aae2666e1ae"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/chatCrypt.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_chat_chat^crypt.obj",
+        "sha256": "80ac568ccf4ae5cc673645501b106498039f3669caa7b06969c69c15843ff152"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/md5c.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_md5c.obj",
+        "sha256": "e6595623222ca473fef085e5b6c57b132b844ebc0fd61286f0c0fe8bddcba326"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpMain.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^main.obj",
+        "sha256": "bc3bbf672ec3b7d983d643cae79840bddf46a2c2addb97d02c5a3f4d128b3fbf"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpConnection.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^connection.obj",
+        "sha256": "5ae15f795322b06de8f4c2558a10edcdbd1a8a8dd20fb084022a8cbaadccab34"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCallbacks.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^callbacks.obj",
+        "sha256": "94eb62c9e01f5d269ca6e6d798d3ae3be9f913a3d8de8a966708aafd25696ff8"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^process.obj",
+        "sha256": "dda0301fd3d0415feb151635fdb62566463d71bd86c4583e45032ba21e838aa6"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpBuffer.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^buffer.obj",
+        "sha256": "7b31097bdc8a1b05e7027ff1a8892510c2b82c0178223fc20202c038bde9e370"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiUtility.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^utility.obj",
+        "sha256": "aedd95319a66e5792747491ecd8ae6fe924e969e3929a24f3982750bee06fa32"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiCallback.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^callback.obj",
+        "sha256": "662c1bfdd9a99e8fcd088469f169059265e3b8b161e57d5e221944ca53943c95"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gstats.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gstats.obj",
+        "sha256": "61c03b95fec674138e55c70ada1da3480a3ea2d024ea38c026ba4d1487691ece"
+      },
+      {
+        "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gbucket.c",
+        "object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gbucket.obj",
+        "sha256": "0d9b133210fcb2274c2ddfad5d605023a8f7ef3308f9deb3c18dcdfd60a7512f"
+      }
+    ]
+  },
+  "current_normal_graph_binding": [
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/darray.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_darray.obj",
+      "current_object_sha256": "813839772908680cc05d6da3abf08df45c88e094240d146d10ccf5c9c382cbc4",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_darray.obj",
+      "frozen_after_sha256": "813839772908680cc05d6da3abf08df45c88e094240d146d10ccf5c9c382cbc4",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpPost.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^post.obj",
+      "current_object_sha256": "7f2469b695d7da8afa03036246445b55cac103516320f0d763a9b306dc4168d5",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^post.obj",
+      "frozen_after_sha256": "7f2469b695d7da8afa03036246445b55cac103516320f0d763a9b306dc4168d5",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/nonport.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_nonport.obj",
+      "current_object_sha256": "2211f2712efb6e0d427d6fd2e49d2fffa245b1c7a07d622009c9f7b247f39740",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_nonport.obj",
+      "frozen_after_sha256": "2211f2712efb6e0d427d6fd2e49d2fffa245b1c7a07d622009c9f7b247f39740",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCommon.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^common.obj",
+      "current_object_sha256": "17a13d62766380af3f237b60ff41a3a561075f63d604a9219ff5a984e1859bc7",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^common.obj",
+      "frozen_after_sha256": "17a13d62766380af3f237b60ff41a3a561075f63d604a9219ff5a984e1859bc7",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/available.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_available.obj",
+      "current_object_sha256": "af3901ae79d3bf2b1b99f3c16ce1fa2a864d58d1aef5804b7d7a3c53cfc3ed57",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_available.obj",
+      "frozen_after_sha256": "e8e64085ee965277a8f32133d1a838936057c906eb6b5da2a64e598a8a0b3c4d",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/ChatSocketCore.cpp",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_chat_^chat^socket^core.obj",
+      "current_object_sha256": "0b7c1e5d23bb99b03150a9b32daac6fc5af161f420e1067e65e6e51638ebb8ed",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_chat_^chat^socket^core.obj",
+      "frozen_after_sha256": "0b7c1e5d23bb99b03150a9b32daac6fc5af161f420e1067e65e6e51638ebb8ed",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/stringutil.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_stringutil.obj",
+      "current_object_sha256": "dc0686b31a7ba30813356ab847220ffa9c5afa6e559d4295c570ec60189e7004",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_stringutil.obj",
+      "frozen_after_sha256": "dc0686b31a7ba30813356ab847220ffa9c5afa6e559d4295c570ec60189e7004",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/hashtable.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_hashtable.obj",
+      "current_object_sha256": "82d008eb519f22e1b91e97001e9212b42a98eb2bbeeb81d1b3161aae2666e1ae",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_hashtable.obj",
+      "frozen_after_sha256": "82d008eb519f22e1b91e97001e9212b42a98eb2bbeeb81d1b3161aae2666e1ae",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/chat/chatCrypt.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_chat_chat^crypt.obj",
+      "current_object_sha256": "80ac568ccf4ae5cc673645501b106498039f3669caa7b06969c69c15843ff152",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_chat_chat^crypt.obj",
+      "frozen_after_sha256": "80ac568ccf4ae5cc673645501b106498039f3669caa7b06969c69c15843ff152",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/md5c.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_md5c.obj",
+      "current_object_sha256": "e6595623222ca473fef085e5b6c57b132b844ebc0fd61286f0c0fe8bddcba326",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_md5c.obj",
+      "frozen_after_sha256": "e6595623222ca473fef085e5b6c57b132b844ebc0fd61286f0c0fe8bddcba326",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpMain.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^main.obj",
+      "current_object_sha256": "bc3bbf672ec3b7d983d643cae79840bddf46a2c2addb97d02c5a3f4d128b3fbf",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^main.obj",
+      "frozen_after_sha256": "bc3bbf672ec3b7d983d643cae79840bddf46a2c2addb97d02c5a3f4d128b3fbf",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpConnection.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^connection.obj",
+      "current_object_sha256": "5ae15f795322b06de8f4c2558a10edcdbd1a8a8dd20fb084022a8cbaadccab34",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^connection.obj",
+      "frozen_after_sha256": "5ae15f795322b06de8f4c2558a10edcdbd1a8a8dd20fb084022a8cbaadccab34",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpCallbacks.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^callbacks.obj",
+      "current_object_sha256": "94eb62c9e01f5d269ca6e6d798d3ae3be9f913a3d8de8a966708aafd25696ff8",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^callbacks.obj",
+      "frozen_after_sha256": "94eb62c9e01f5d269ca6e6d798d3ae3be9f913a3d8de8a966708aafd25696ff8",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpProcess.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^process.obj",
+      "current_object_sha256": "dda0301fd3d0415feb151635fdb62566463d71bd86c4583e45032ba21e838aa6",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^process.obj",
+      "frozen_after_sha256": "dda0301fd3d0415feb151635fdb62566463d71bd86c4583e45032ba21e838aa6",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/ghttp/ghttpBuffer.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^buffer.obj",
+      "current_object_sha256": "7b31097bdc8a1b05e7027ff1a8892510c2b82c0178223fc20202c038bde9e370",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_ghttp_ghttp^buffer.obj",
+      "frozen_after_sha256": "7b31097bdc8a1b05e7027ff1a8892510c2b82c0178223fc20202c038bde9e370",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiUtility.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^utility.obj",
+      "current_object_sha256": "aedd95319a66e5792747491ecd8ae6fe924e969e3929a24f3982750bee06fa32",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^utility.obj",
+      "frozen_after_sha256": "aedd95319a66e5792747491ecd8ae6fe924e969e3929a24f3982750bee06fa32",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/gp/gpiCallback.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^callback.obj",
+      "current_object_sha256": "662c1bfdd9a99e8fcd088469f169059265e3b8b161e57d5e221944ca53943c95",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gp_gpi^callback.obj",
+      "frozen_after_sha256": "662c1bfdd9a99e8fcd088469f169059265e3b8b161e57d5e221944ca53943c95",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gstats.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_gstats_gstats.obj",
+      "current_object_sha256": "61c03b95fec674138e55c70ada1da3480a3ea2d024ea38c026ba4d1487691ece",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gstats.obj",
+      "frozen_after_sha256": "61c03b95fec674138e55c70ada1da3480a3ea2d024ea38c026ba4d1487691ece",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    },
+    {
+      "source": "game/GameEngine/Source/GameNetwork/GameSpy/gstats/gbucket.c",
+      "current_object": "build/match/game_^game^engine_^source_^game^network_^game^spy_gstats_gbucket.obj",
+      "current_object_sha256": "0d9b133210fcb2274c2ddfad5d605023a8f7ef3308f9deb3c18dcdfd60a7512f",
+      "frozen_after_object": "build/spike2-closure/ghttp-native-pair-v2/after-objects/game_^game^engine_^source_^game^network_^game^spy_gstats_gbucket.obj",
+      "frozen_after_sha256": "0d9b133210fcb2274c2ddfad5d605023a8f7ef3308f9deb3c18dcdfd60a7512f",
+      "complete_parsed_sections_symbols_aux_relocations_equal": true
+    }
+  ],
+  "native_container": {
+    "ar_command": [
+      "/usr/bin/ar",
+      "qS",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/raw/WS2_32.Lib",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-0/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-1/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-2/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-3/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-4/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-5/WS2_32.dll",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/build/spike2-closure/ghttp-parent-ar-native-container-inverted/member-6/WS2_32.dll"
+    ],
+    "ar_exit": 0,
+    "raw_archive_sha256": "b72973fff941d1446e26e36cd839cb4f185e998cf781c7798e75d338d3d8975f",
+    "source_library": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/WS2_32.Lib",
+    "source_library_sha256": "ef99b164cacdcc6b947f48ac563745926dd8f7862b2c2dec07080a9f0d2d974e",
+    "selected": [
+      {
+        "original_order": 2,
+        "original_name": "WS2_32.dll",
+        "symbol": "_setsockopt@20",
+        "sha256": "366def99cfa7e346353b30cd8b63cea98499a7a8668d6f05892c5e63fb13822c",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-00/WS2_32.dll"
+      },
+      {
+        "original_order": 6,
+        "original_name": "WS2_32.dll",
+        "symbol": "_recvfrom@24",
+        "sha256": "3801efc37da7b3daad290b4fc71a3ef055c3ba9e82d5cb30dea0b6cfa73c79c2",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-01/WS2_32.dll"
+      },
+      {
+        "original_order": 7,
+        "original_name": "WS2_32.dll",
+        "symbol": "_recv@16",
+        "sha256": "3cb37234c1789a8de0607c7daf8c8430f65c23f1f1c48b1f1742e4b32a8eb191",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-02/WS2_32.dll"
+      },
+      {
+        "original_order": 16,
+        "original_name": "WS2_32.dll",
+        "symbol": "_getsockopt@20",
+        "sha256": "dc0c6f905ba97cbc0d801518e057e3a322f0e2ebcfe0dd62047b5cdfa2ae0afd",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-03/WS2_32.dll"
+      },
+      {
+        "original_order": 117,
+        "original_name": "WS2_32.dll",
+        "symbol": "\u007fWS2_32_NULL_THUNK_DATA",
+        "sha256": "993efa606716896ed1c8b5028e2c7ad447bdb9f1325603181459109ee66bbbb6",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-04/WS2_32.dll"
+      },
+      {
+        "original_order": 118,
+        "original_name": "WS2_32.dll",
+        "symbol": "__NULL_IMPORT_DESCRIPTOR",
+        "sha256": "ee173ce17d8181557b6d6326ab18af6e7543641c67c920565695264b9eb5f9f9",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-05/WS2_32.dll"
+      },
+      {
+        "original_order": 119,
+        "original_name": "WS2_32.dll",
+        "symbol": "__IMPORT_DESCRIPTOR_WS2_32",
+        "sha256": "c0ca1d133a599490738931048e60220732e1f698ddd8119a8bb0d72ecceeb686",
+        "input": "build/spike2-closure/ghttp-stock-provenance-container/member-06/WS2_32.dll"
+      }
+    ],
+    "lib_command": [
+      "wine",
+      "/home/wacket/Projects/worktrees/Open-BFME/spike2-20261112-092855-closure/inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/bin/lib.exe",
+      "/NOLOGO",
+      "/OUT:build/spike2-closure/ghttp-parent-ar-native-container-inverted/indexed/WS2_32.Lib",
+      "build/spike2-closure/ghttp-parent-ar-native-container-inverted/raw/WS2_32.Lib"
+    ],
+    "lib_exit": 0,
+    "lib_sha256": "3892c55821f628961ebf177537fdb002f3423166ead89c3aa7bc2ea1419fe1eb",
+    "scope": "Parent explicit standard raw-container + native indexing; no source/metadata or payload rewrite/handbuilt index; zero integration/source credit",
+    "output_members": [
+      {
+        "name": "WS2_32.dll",
+        "sha256": "366def99cfa7e346353b30cd8b63cea98499a7a8668d6f05892c5e63fb13822c"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "3801efc37da7b3daad290b4fc71a3ef055c3ba9e82d5cb30dea0b6cfa73c79c2"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "3cb37234c1789a8de0607c7daf8c8430f65c23f1f1c48b1f1742e4b32a8eb191"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "dc0c6f905ba97cbc0d801518e057e3a322f0e2ebcfe0dd62047b5cdfa2ae0afd"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "993efa606716896ed1c8b5028e2c7ad447bdb9f1325603181459109ee66bbbb6"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "ee173ce17d8181557b6d6326ab18af6e7543641c67c920565695264b9eb5f9f9"
+      },
+      {
+        "name": "WS2_32.dll",
+        "sha256": "c0ca1d133a599490738931048e60220732e1f698ddd8119a8bb0d72ecceeb686"
+      }
+    ],
+    "output_sha256": "4176b6427bbbd4a86f95c5bd63137010a521fa319ab86e26c8ed8b16a6803f99",
+    "index_symbols": [
+      "__IMPORT_DESCRIPTOR_WS2_32",
+      "__NULL_IMPORT_DESCRIPTOR",
+      "__imp__getsockopt@20",
+      "__imp__recv@16",
+      "__imp__recvfrom@24",
+      "__imp__setsockopt@20",
+      "_getsockopt@20",
+      "_recv@16",
+      "_recvfrom@24",
+      "_setsockopt@20",
+      "\u007fWS2_32_NULL_THUNK_DATA"
+    ],
+    "status": "PASS container only; native selected-IAT/link proof NOT performed"
+  },
+  "native_libraries": [
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/msvcrt.lib",
+      "sha256": "e888617fbd2e153645b92122deab1c6ec437905431243c43aa7310164c0e7779"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/kernel32.lib",
+      "sha256": "4c6f8667c02e990c496b1054429e01f3d7d1160323ac46b7771013ceaa4cb389"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/User32.Lib",
+      "sha256": "f9f27ed9d0e87d66faa14e699244f0c496673298379132b5b5d20352112c9b0e"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/AdvAPI32.Lib",
+      "sha256": "abb1fa5257ae4bc0f6601b49dced27f4fae7cd5223045af69333f80e074bc600"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/WinMM.Lib",
+      "sha256": "e2a27783d72a4b02c2944a6e879ad8d7b65c61c57bed4bfcdb40f068d12f8988"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/WSock32.Lib",
+      "sha256": "f9becd1da1cf03cab8f093d9bc593eb2e1e6907e738cda0f71a45e18dfdb7586"
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/PlatformSDK/Lib/WS2_32.Lib",
+      "sha256": "ef99b164cacdcc6b947f48ac563745926dd8f7862b2c2dec07080a9f0d2d974e"
+    }
+  ],
+  "images": [
+    {
+      "phase": "before",
+      "base": "0x51000000",
+      "sha256": "e3df3c89af1b4b30857f07df05e0c27b54e455767901df116f85cf15380ffca9",
+      "exit": 0,
+      "imports": 69,
+      "ws2_imports": 4,
+      "nonretail_endpoints": [
+        {
+          "dll": "msvcr71.dll",
+          "raw_name": "_assert",
+          "ordinal": null,
+          "endpoint": "_assert",
+          "iat_rva": "0xc04c",
+          "retail_endpoint": false
+        },
+        {
+          "dll": "wsock32.dll",
+          "raw_name": "ntohl",
+          "ordinal": 14,
+          "endpoint": "ntohl",
+          "iat_rva": "0xc0f0",
+          "retail_endpoint": false
+        },
+        {
+          "dll": "wsock32.dll",
+          "raw_name": "htons",
+          "ordinal": 9,
+          "endpoint": "htons",
+          "iat_rva": "0xc11c",
+          "retail_endpoint": false
+        }
+      ]
+    },
+    {
+      "phase": "before",
+      "base": "0x62000000",
+      "sha256": "b50154a43610321dd7667510387a8c610d095e2661d2e4aeb4f9507eb31ebe8d",
+      "exit": 0,
+      "imports": 69,
+      "ws2_imports": 4,
+      "nonretail_endpoints": [
+        {
+          "dll": "msvcr71.dll",
+          "raw_name": "_assert",
+          "ordinal": null,
+          "endpoint": "_assert",
+          "iat_rva": "0xc04c",
+          "retail_endpoint": false
+        },
+        {
+          "dll": "wsock32.dll",
+          "raw_name": "ntohl",
+          "ordinal": 14,
+          "endpoint": "ntohl",
+          "iat_rva": "0xc0f0",
+          "retail_endpoint": false
+        },
+        {
+          "dll": "wsock32.dll",
+          "raw_name": "htons",
+          "ordinal": 9,
+          "endpoint": "htons",
+          "iat_rva": "0xc11c",
+          "retail_endpoint": false
+        }
+      ]
+    },
+    {
+      "phase": "after",
+      "base": "0x51000000",
+      "sha256": "093b53df972728a3aed87d67f6f93e70e8249d89da163a2c80bf01569e6d5edf",
+      "exit": 0,
+      "imports": 66,
+      "ws2_imports": 4,
+      "nonretail_endpoints": []
+    },
+    {
+      "phase": "after",
+      "base": "0x62000000",
+      "sha256": "d33575a8a87bae0f918dba768b161f2de0bd5ce97b4747d5d2b79048dee1cce8",
+      "exit": 0,
+      "imports": 66,
+      "ws2_imports": 4,
+      "nonretail_endpoints": []
+    }
+  ],
+  "runtime_nodes_before_after": [
+    438,
+    435
+  ],
+  "native_crt_uncredited": [
+    {
+      "member": "llmul.obj",
+      "payload_sha256": "72e84d66067882cdf33c69ea905f51435b1b666b0aec232e4babde512abe28c0",
+      "code_sha256": "3d0898d998acc8af3ea17032ff56fd1b963c685b072f669c52d4b8267f9d0a78",
+      "rva": "0xbb90",
+      "size": 52,
+      "original_publics": [
+        "__allmul"
+      ],
+      "credit": 0
+    },
+    {
+      "member": "lldiv.obj",
+      "payload_sha256": "bf5116e0939f673d4fbc4ad3096010c05c9b48b183832586bb5ba3216101c816",
+      "code_sha256": "8964dcf0d769cb61dd4354feac00491ae8c1b34eb9627a4c5ec2d4350243d395",
+      "rva": "0xbae0",
+      "size": 170,
+      "original_publics": [
+        "__alldiv"
+      ],
+      "credit": 0
+    },
+    {
+      "member": "chkstk.obj",
+      "payload_sha256": "6c76684eb3c123899b38ec4233b2cf9bf3303d64b89884f01c04a6f0671e045a",
+      "code_sha256": "f36f56e85a3b8f0b9f0aaa3f1a49f9bda1143c728ff69d6c27517e4f359a69b8",
+      "rva": "0xba90",
+      "size": 61,
+      "original_publics": [
+        "__alloca_probe",
+        "__chkstk"
+      ],
+      "credit": 0
+    }
+  ],
+  "scope": "All source code/data/addends/COMMON/public placement plus real CRT code/import thunks and PE import+reloc metadata accounted; zero unclassified nonpadding section bytes. Uncovered0/CC explicitly uncredited, not universally asserted padding. Exact nonpadding relocation types/multiplicity and full2base sections pass.",
+  "negative_controls": "Same strict WS2/IAT validation rejects preserved actual malformedv2/v3 PEs; no native-positive rerun of those old artifacts.",
+  "warnings": "Same explicit fixed DLL/NOENTRY/NODEFAULTLIB/NOREF/NOICF fixture flags and real stock libs/order bothsides; no source directives removed, no new fabricated import/DEF/alias/dummy root/forced success. No image executed. Before andafter BOTHlink; improvement is native-provider/import fidelity and retirement of unsupported SDK body, not a new whole-linked-byte figure.",
+  "artifact_hashes": [
+    {
+      "path": "build/spike2-closure/ghttp-parent-native-pair-v5/proof.json",
+      "sha256": "a495a44a7a66b98c68f2cf1e2244a5591e43e5eb690c2b2d511f57345d194e15"
+    },
+    {
+      "path": "build/spike2-closure/ghttp-parent-native-pair-v5/physical-proof.json",
+      "sha256": "86a49e7511730aa4449e567a715c0717e07929aa1530b8244d90b363c8d14682"
+    },
+    {
+      "path": "build/spike2-closure/ghttp-parent-native-pair-v5/two-base-section-proof.json",
+      "sha256": "cd9f9e70a62f2a8724790bae08d08cf746da234c6ab6dd6ba5a54b84aa75a58b"
+    },
+    {
+      "path": "build/spike2-closure/ghttp-parent-native-pair-v5/scope-proof.json",
+      "sha256": "0edf1aec281ee3053c88ca3e5fe6b9385aec2f8bc857b0a8030eac1c550297f5"
+    },
+    {
+      "path": "build/spike2-closure/ghttp-parent-native-pair-v5/malformed-image-negatives.json",
+      "sha256": "2f314268a264b8428942027df340183b6480c028af7ea3b0decd7b7074162f73"
+    },
+    {
+      "path": "build/spike2-closure/parent-v5-normal-19-gate.log",
+      "sha256": "27bd3825e1f2dcb62ce65466dfe9116c0ad383e2b40f8d92bcdfcca1eaddfa7f"
+    },
+    {
+      "path": "build/spike2-closure/parent-v5-current-normal-graph-binding.json",
+      "sha256": "df05a0cf06310ca84c339fac90098a79a688206dd182b9fb7e6f215013302cbb"
+    },
+    {
+      "path": "build/spike2-closure/ghttp_parent_ar_native_container.py",
+      "sha256": "6f168fc01cba5e68e199644a7661f1e936ebafa00a7ac075f7843b9d05d25ce7"
+    },
+    {
+      "path": "build/spike2-closure/ghttp_parent_pair_v5.py",
+      "sha256": "21aa59a33aa07bcf42d970e64f025abe5bc960af9dc98977feb10cd188cf5224"
+    },
+    {
+      "path": "build/spike2-closure/ghttp_parent_verify_v5.py",
+      "sha256": "184a45888ca142b80736aeb92dbb74e5661d9b99312fe441ec937af2376f0ddb"
+    },
+    {
+      "path": "build/spike2-closure/ghttp_parent_scope_v5.py",
+      "sha256": "2f538f79d6b07feece6c199b7ee7224d718fa1994ffc54007d4912dcf8b9b69d"
+    }
+  ]
+}

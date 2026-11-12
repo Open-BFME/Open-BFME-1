@@ -1,5 +1,5 @@
 // cl: /MD -Iinputs/reference/shims/gamespy
-/* GameSpy SDK, 2004 vintage -- pristine upstream C source.
+/* GameSpy SDK, 2004 vintage -- upstream C with BFME1 native socket bindings.
    Sourced from the Area 51 (Inevitable Entertainment / Midway) source release,
    github.com/bisc67/Area51, Support/NetworkMgr/GameSpy -- the only public
    carrier found with the pre-2005 SDK layout (top-level nonport.c, no common/).
@@ -558,88 +558,6 @@ int GetSendBufferSize(SOCKET sock)
 #endif
 }
 
-// Formerly known as ghiSocketSelect
-int GSISocketSelect(SOCKET theSocket, int* theReadFlag, int* theWriteFlag, int* theExceptFlag)
-{
-#if defined(ENTROPY_NETWORK)
-    if( theReadFlag )
-    {
-        *theReadFlag = CanReceiveOnSocket( theSocket );
-    }
-    if( theWriteFlag )
-    {
-        *theWriteFlag = CanSendOnSocket( theSocket );
-    }
-    if( theExceptFlag )
-    {
-        *theExceptFlag = 0;
-    }
-    return 1;
-#else
-    fd_set aReadSet;
-    fd_set aWriteSet;
-    fd_set aExceptSet;
-    fd_set * aReadFds   = NULL;
-    fd_set * aWriteFds  = NULL;
-    fd_set * aExceptFds = NULL;
-    int aResult;
-    struct timeval aTimeout = { 0, 0 };
-
-    assert(theSocket != INVALID_SOCKET);
-
-    // Setup the parameters.
-    ////////////////////////
-    if(theReadFlag != NULL)
-    {
-        FD_ZERO(&aReadSet);
-        FD_SET(theSocket,&aReadSet);
-        aReadFds = &aReadSet;
-    }
-    if(theWriteFlag != NULL)
-    {
-        FD_ZERO(&aWriteSet);
-        FD_SET(theSocket, &aWriteSet);
-        aWriteFds = &aWriteSet;
-    }
-    if(theExceptFlag != NULL)
-    {
-        FD_ZERO(&aExceptSet);
-        FD_SET(theSocket, &aExceptSet);
-        aExceptFds = &aExceptSet;
-    }
-
-    // Perform the select
-    aResult = select(FD_SETSIZE, aReadFds, aWriteFds, aExceptFds, &aTimeout);
-    if(aResult == SOCKET_ERROR)
-        return SOCKET_ERROR;
-
-    // Check results.
-    /////////////////
-    if(theReadFlag != NULL)
-    {
-        if((aResult > 0) && FD_ISSET(theSocket, aReadFds))
-            *theReadFlag = 1;
-        else
-            *theReadFlag = 0;
-    }
-    if(theWriteFlag != NULL)
-    {
-        if((aResult > 0) && FD_ISSET(theSocket, aWriteFds))
-            *theWriteFlag = 1;
-        else
-            *theWriteFlag = 0;
-    }
-    if(theExceptFlag != NULL)
-    {
-        if((aResult > 0) && FD_ISSET(theSocket, aExceptFds))
-            *theExceptFlag = 1;
-        else
-            *theExceptFlag = 0;
-    }
-    return aResult; // 0 or 1 at this point
-#endif
-}
-
 int CanReceiveOnSocket(SOCKET sock)
 {
 #if defined(ENTROPY_NETWORK)
@@ -874,7 +792,7 @@ int IsPrivateIP(IN_ADDR * addr)
 #if defined(ENTROPY_NETWORK)
 	ip = addr->s_addr;
 #else
-	ip = ntohl(addr->s_addr);
+	ip = htonl(addr->s_addr);
 #endif
 	b1 = (int)((ip >> 24) & 0xFF);
 	b2 = (int)((ip >> 16) & 0xFF);

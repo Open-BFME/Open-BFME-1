@@ -96,13 +96,13 @@ int __stdcall recv(unsigned int socket, char *buffer, int length, int flags);
 int __stdcall WSAGetLastError(void);
 unsigned long __stdcall inet_addr(const char *address);
 ciHostEntry *__stdcall gethostbyname(const char *name);
-unsigned short __stdcall htons(unsigned short value);
+unsigned short __stdcall ntohs(unsigned short value);
 unsigned long __stdcall htonl(unsigned long value);
 unsigned int __stdcall socket(int addressFamily, int type, int protocol);
 int __stdcall setsockopt(unsigned int socket, int level, int option, const char *value, int valueLength);
 int __stdcall bind(unsigned int socket, const ciSocketAddress *address, int addressLength);
 int __stdcall connect(unsigned int socket, const ciSocketAddress *address, int addressLength);
-void GSISocketSelect(unsigned int socket, int *readFlag, int *writeFlag, int *exceptFlag);
+int ghiSocketSelect(unsigned int socket, int *readFlag, int *writeFlag, int *exceptFlag);
 void gs_crypt(unsigned char *buffer, int length, gs_crypt_key *key);
 // Retail VA 0130E628 holds the four-byte interface address, initially zero.
 unsigned int gsiSocketInterface = 0;
@@ -188,7 +188,7 @@ CHATBool ciSocketConnect(ciSocket *socket, const char *serverAddress, int port)
 	memset(&address, 0, sizeof(address));
 	address.family = 2;
 	address.internetAddress.address = ip;
-	address.port = htons((unsigned short)port);
+	address.port = ntohs((unsigned short)port);
 
 	memset(&localAddress, 0, sizeof(localAddress));
 	localAddress.family = 2;
@@ -220,7 +220,7 @@ static void ciSocketSelect(unsigned int socket, CHATBool *readFlag, CHATBool *wr
 	int readable = 0;
 	int writable = 0;
 	int exceptional = 0;
-	GSISocketSelect(socket, &readable, &writable, &exceptional);
+	ghiSocketSelect(socket, &readable, &writable, &exceptional);
 	if (readFlag)
 		*readFlag = readable;
 	if (writeFlag)
