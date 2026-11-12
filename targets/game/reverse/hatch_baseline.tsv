@@ -2147,7 +2147,6 @@ emit	game/GameEngineDevice/Source/W3DDevice/GameClient/W3DMouseLoadD3DCursorText
 emit	game/Libraries/Source/WWVegas/WW3D2/D3DXVec4TransformThunk.cpp	*	600
 emit	game/Libraries/Source/WWVegas/WW3D2/DX8CapsComputeCapsThunk.cpp	*	2220
 emit	game/Libraries/Source/WWVegas/WW3D2/FontCharsClass_Create_GDI_FontMethodThunk.cpp	*	398
-emit	game/Libraries/Source/WWVegas/WW3D2/Render2DRenderThunk.cpp	*	2015
 emit	game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceBuildNotCenteredThunk.cpp	*	1934
 emit	game/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_Build_TexturesMethodThunk.cpp	*	530
 emit	game/Libraries/Source/WWVegas/WW3D2/linegrp.cpp	*	4100
