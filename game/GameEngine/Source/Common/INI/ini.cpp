@@ -5,7 +5,6 @@
 // readable body of ?parseAndTranslateLabel@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseAngularVelocityReal@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseAsciiString@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
-// readable body of ?parseAudioEventRTS@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseCoord2D@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseCoord3D@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseDamageTypeFlags@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp

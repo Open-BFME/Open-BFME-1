@@ -772,20 +772,8 @@ void INI::parseDynamicAudioEventRTS( INI *ini, void * /*instance*/, void *store,
 /** Parse an audio event and assign to the 'AudioEventRTS*' at store */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseAudioEventRTS@INI@@ present-unmatched
-void INI::parseAudioEventRTS( INI *ini, void * /*instance*/, void *store, const void* userData )
-{
-	const char *token = ini->getNextToken();
-
-	AudioEventRTS *theSound = (AudioEventRTS*)store;
-	
-	// translate the string into a sound
-	if (stricmp(token, "NoSound") != 0) {
-		theSound->setEventName(AsciiString(token));
-	}
-
-	TheAudio->getInfoForAudioEvent(theSound);
-}
+// INI::parseAudioEventRTS(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 181B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an ThingTemplate and assign to the 'ThingTemplate *' at store */
