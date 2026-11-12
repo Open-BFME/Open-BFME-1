@@ -124980,7 +124980,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	1TeamFactory@@UAE@X
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	1TeamPrototype@@MAE@XZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	1TeamRelationMap@@MAE@XZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	addTeamPrototypeToList@TeamFactory@@QAEXPAVTeamPrototype@@@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	clear@TeamFactory@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	countBuildings@Team@@QAEHXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	countObjects@Team@@QAEHV?$BitFlags@$0HE@@@0@Z	1

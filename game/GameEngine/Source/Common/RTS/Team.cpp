@@ -2463,49 +2463,8 @@ Bool Team::didAllExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) con
 }
 
 // ------------------------------------------------------------------------
-// ?allInside@Team@@QBE_NPAVPolygonTrigger@@I@Z present-unmatched
-Bool Team::allInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
-{
-	// empty teams are not inside.
-	if (!hasAnyObjects()) {
-		return false;
-	}
-
-	Bool anyConsidered = false;
-	Bool anyOutside = false;
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		AIUpdateInterface *ai = iter.cur()->getAIUpdateInterface();
-		if (ai) {
-			const LocomotorSet& locoSet = ai->getLocomotorSet();
-			{
-				if (!locoSetMatches(locoSet.getValidSurfaces(), whichToConsider)) {
-					continue;
-				}
-			}
-		} else {
-			// things without ai should consider themselves ground units
-			if (!locoSetMatches(LOCOMOTORSURFACE_GROUND, whichToConsider)) {
-				continue;
-			}
-		}
-
-		if (iter.cur()->isEffectivelyDead()) {
-			continue;
-		}
-
-		if (iter.cur()->isKindOf(KINDOF_INERT))
-			continue;
-
-		if (!iter.cur()->isInside(pTrigger)) {
-			anyOutside = true;
-		}
-
-		// We need this in order to prevent this from returning a false positive
-		anyConsidered = true;
-	}
-	return anyConsidered && !anyOutside;
-}
+// Bool Team::allInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
+// Body in TeamTriggerAreaTests.cpp (exact NB retail).
 
 // ------------------------------------------------------------------------
 // Bool Team::noneInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
