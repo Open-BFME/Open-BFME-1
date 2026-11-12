@@ -792,21 +792,8 @@ Team *TeamFactory::createTeamOnPrototype( TeamPrototype *prototype )
 	return t;
 }
 // ------------------------------------------------------------------------
-// ?findTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@@Z present-unmatched
-Team* TeamFactory::findTeam(const AsciiString& name)
-{
-	TeamPrototype *tp = findTeamPrototype(name);
-	if (tp)
-	{
-		Team *t = tp->getFirstItemIn_TeamInstanceList();
-		if (t == NULL && !tp->getIsSingleton()) 
-		{
-			t = createInactiveTeam(name);
-		}
-		return t;
-	}
-	return NULL;
-}
+// Team* TeamFactory::findTeam(const AsciiString& name)
+// Body in TeamFactory_findTeamByName.cpp (exact NB retail).
 
 // ------------------------------------------------------------------------
 // ?teamAboutToBeDeleted@TeamFactory@@QAEXPAVTeam@@@Z
