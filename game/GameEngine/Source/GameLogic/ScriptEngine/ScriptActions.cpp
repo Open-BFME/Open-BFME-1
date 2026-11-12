@@ -2725,24 +2725,8 @@ void ScriptActions::doNamedEnterNamed(const AsciiString& unitSrcName, const Asci
 //-------------------------------------------------------------------------------------------------
 /** doTeamEnterNamed */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamEnterNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamEnterNamed(const AsciiString& teamName, const AsciiString& unitDestName)
-{
-	Team *theSrcTeam = TheScriptEngine->getTeamNamed( teamName );
-	if (!theSrcTeam) {
-		return;
-	}
-	
-	Object *theTransport = TheScriptEngine->getUnitNamed( unitDestName );
-	if (!theTransport) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	theSrcTeam->getTeamAsAIGroup(theGroup);
-
-	theGroup->groupEnter(theTransport, CMD_FROM_SCRIPT);
-}
+// ScriptActions::doTeamEnterNamed(const AsciiString& teamName, const AsciiString& unitDestName)
+// Body in ScriptActionsTeamOrders.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedExitAll */
