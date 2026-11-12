@@ -9345,12 +9345,8 @@ void InGameUI::selectNextIdleWorker( void )
 	}
 }
 
-// ?getIdleWorkerCount@InGameUI@@EAEHXZ present-unmatched
-Int InGameUI::getIdleWorkerCount( void )
-{
-	Int index = ThePlayerList->getLocalPlayer()->getPlayerIndex();
-	return m_idleWorkers[index].size();
-}
+// getIdleWorkerCount
+// Body in InGameUIBodies.cpp (exact 41B retail).
 
 
 void InGameUI::showIdleWorkerLayout( void )
