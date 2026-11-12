@@ -69,7 +69,7 @@
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameNetwork/RankPointValue.h"
 #include "GameNetwork/GameSpy/LadderDefs.h"
-
+namespace _STL { template <> void vector<bool, allocator<bool> >::_M_insert_aux(_Bit_iter<_Bit_reference, _Bit_reference *>, bool); } // Imported-allocator copies conflict with the native566B owner.
 struct BFMEFindStringHeader
 {
  int refCount;

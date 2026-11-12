@@ -1,5 +1,16 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## TU declaration lines can be real diagnostic-argument codegen (2026-11-12)
+
+Adding10 declaration lines in ParticleSys changed29 actual PUSH `__LINE__`
+arguments, not merely local-label hashes. In WOLQuickMatchMenu a single
+canonical member declaration instead replaces blank72: all2499 line positions
+and random-call lines1938/1972 stay unchanged. All464 retained runtime-section
+bodies then remain identical (SafeSEH indexes/checksum and section emission
+order are separately accounted for). Measured MSVC7.1 13.10.3077 `/O2 /MD
+/EHsc`; see `identity_evidence/20261112-bool-vector-emission-owner.md`. This
+preserves a known source context, not proof of unverified native line constants.
+
 ## A global STL linkage flag can hide a large COMDAT side effect (2026-11-11)
 
 TunnelTracker's imported68-byte Object-list base destructor became native66B
