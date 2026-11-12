@@ -1,6 +1,11 @@
 # BFME1 GameSpy shared socket-select and native byte-swap ownership
 
-Candidate base a77e288e9c49868f1e239d05dda3057a959b2fd0; retail SHA256
+Reviewed OWN candidate-range base: 7c09e7477b8004f928da3446ecc5222f42057970.
+A content-identical public rebase may add external ancestry; it is not OWN input.
+Historical fixture source base: a77e288e9c49868f1e239d05dda3057a959b2fd0;
+all19 affected source blobs equal the publication base before this repair.
+This is source-scope equality only, NOT whole-tree/input equivalence.
+Retail SHA256:
 1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75.
 This is an existing-source provider/consumer repair, not a new algorithm.
 The parent-run v5 local native pair and current normal 19-TU gate now pass;
