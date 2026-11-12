@@ -1585,14 +1585,8 @@ Bool TeamPrototype::hasAnyBuildFacility() const
 }
 
 // ------------------------------------------------------------------------
-// ?damageTeamMembers@TeamPrototype@@QAEXM@Z present-unmatched
-void TeamPrototype::damageTeamMembers(Real amount)
-{
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
-	{
-		iter.cur()->damageTeamMembers(amount);
-	}
-}
+// void TeamPrototype::damageTeamMembers(Real amount)
+// Body in TeamPrototypeInstanceWalks.cpp (exact NB retail).
 
 
 // ------------------------------------------------------------------------

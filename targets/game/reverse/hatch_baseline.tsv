@@ -124992,7 +124992,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	crc@TeamRelationMap
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	crc@TeamTemplateInfo@@MAEXPAVXfer@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	createTeam@TeamFactory@@QAEPAVTeam@@ABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	damageTeamMembers@TeamPrototype@@QAEXM@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	decreaseAIPriorityForFailure@TeamPrototype@@QBEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	evacuateTeam@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	evaluateProductionCondition@TeamPrototype@@QAE_NXZ	1
