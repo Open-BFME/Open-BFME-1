@@ -14,7 +14,6 @@
 // readable body of ?parseMappedImage@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseQuotedAsciiString@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseThingTemplate@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
-// readable body of ?parseUpgradeTemplate@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseVeterancyLevelFlags@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*

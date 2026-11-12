@@ -857,24 +857,8 @@ void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const 
 /** Parse a upgrade template string and store as template pointer */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseUpgradeTemplate@INI@@ present-unmatched
-void INI::parseUpgradeTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	if (!TheUpgradeCenter)
-	{
-		DEBUG_CRASH(("TheUpgradeCenter not inited yet"));
-		throw ERROR_BUG;
-	}
-
-	const UpgradeTemplate *uu = TheUpgradeCenter->findUpgrade( AsciiString( token ) );
-	DEBUG_ASSERTCRASH( uu || stricmp( token, "None" ) == 0, ("Upgrade %s not found!\n",token) );
-
-	typedef const UpgradeTemplate* ConstUpgradeTemplatePtr;
-	ConstUpgradeTemplatePtr* theUpgradeTemplate = (ConstUpgradeTemplatePtr *)store;		
-	*theUpgradeTemplate = uu;
-} 
+// INI::parseUpgradeTemplate(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 119B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a special power template string and store as template pointer */
