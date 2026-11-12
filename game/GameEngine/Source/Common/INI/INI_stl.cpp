@@ -856,20 +856,8 @@ void INI::parseFXList( INI* ini, void * /*instance*/, void *store, const void* /
 /** Parse a particle system and assign to 'ParticleSystemTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseParticleSystemTemplate@INI@@ present-unmatched
-void INI::parseParticleSystemTemplate( INI *ini, void * /*instance*/, void *store, const void *userData )
-{
-	const char *token = ini->getNextToken();
-
-	const ParticleSystemTemplate *pSystemT = TheParticleSystemManager->findTemplate( AsciiString( token ) );
-	DEBUG_ASSERTCRASH( pSystemT || stricmp( token, "None" ) == 0, ("ParticleSystem %s not found!\n",token) );
-
-	typedef const ParticleSystemTemplate* ConstParticleSystemTemplatePtr;
-	ConstParticleSystemTemplatePtr* theParticleSystemTemplate = (ConstParticleSystemTemplatePtr*)store;		
-
-	*theParticleSystemTemplate = pSystemT;
-
-}  // end parseParticleSystemTemplate
+// INI::parseParticleSystemTemplate(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 163B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an DamageFX and assign to the 'DamageFX *' at store */
