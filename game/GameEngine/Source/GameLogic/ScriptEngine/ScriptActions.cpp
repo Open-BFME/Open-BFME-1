@@ -6747,27 +6747,8 @@ void ScriptActions::doC3CameraShake
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedFaceNamed.cpp
-// ?doNamedFaceNamed@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doNamedFaceNamed( const AsciiString &unitName, const AsciiString &faceUnitName )
-{
-	Object *obj = TheScriptEngine->getUnitNamed( unitName );
-	if( obj ) 
-	{
-		Object *faceObj = TheScriptEngine->getUnitNamed( faceUnitName );
-		if( faceObj )
-		{
-			AIUpdateInterface *ai = obj->getAI();
-			if( ai )
-			{
-				ai->clearWaypointQueue();
-				obj->leaveGroup();
-				ai->chooseLocomotorSet( LOCOMOTORSET_NORMAL );
-				ai->aiFaceObject( faceObj, CMD_FROM_SCRIPT );
-			}
-		}
-	}
-}
+// ScriptActions::doNamedFaceNamed( const AsciiString &unitName, const AsciiString &faceUnitName )
+// Body in ScriptActionsNamedUnitMovement.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedFaceWaypoint.cpp

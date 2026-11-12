@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
-// readable body of ?doNamedFaceNamed@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doNamedFaceWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
 // The four actions that give one named unit a movement or facing order:
