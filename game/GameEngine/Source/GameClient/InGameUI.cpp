@@ -7707,34 +7707,8 @@ VideoBuffer* InGameUI::videoBuffer( void )
 // InGameUI::playMovie
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/InGameUI_playCameoMovie_Thunk.cpp
-// ?playCameoMovie@InGameUI@@UAEXABVAsciiString@@@Z present-unmatched
-void InGameUI::playCameoMovie( const AsciiString& movieName )
-{
-
-	stopCameoMovie();
-
-	m_cameoVideoStream = TheVideoPlayer->open( movieName );
-
-	if ( m_cameoVideoStream == NULL )
-	{
-		return;
-	}
-
-	m_cameoVideoBuffer = TheDisplay->createVideoBuffer();
-
-	if (	m_cameoVideoBuffer == NULL || 
-				!m_cameoVideoBuffer->allocate(	m_cameoVideoStream->width(), 
-													m_cameoVideoStream->height())
-		)
-	{
-		stopCameoMovie();
-		return;
-	}
-	GameWindow *window = TheWindowManager->winGetWindowFromId(NULL,TheNameKeyGenerator->nameToKey( AsciiString("ControlBar.wnd:RightHUD") ));
-	WinInstanceData *winData = window->winGetInstanceData();
-	winData->setVideoBuffer(m_cameoVideoBuffer);
-//	window->winHide(FALSE);
-}
+// playCameoMovie
+// Body in InGameUI_playCameoMovie.cpp (exact 273B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
