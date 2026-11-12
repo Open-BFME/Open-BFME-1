@@ -423,17 +423,8 @@ SuperweaponInfo::SuperweaponInfo(
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/SuperweaponInfoDtor.cpp
-// ??1SuperweaponInfo@@MAE@XZ present-unmatched
-SuperweaponInfo::~SuperweaponInfo()
-{
-	if (m_nameDisplayString)
-		TheDisplayStringManager->freeDisplayString( m_nameDisplayString );
-	m_nameDisplayString = NULL;
-
-	if (m_timeDisplayString)
-		TheDisplayStringManager->freeDisplayString( m_timeDisplayString );
-	m_timeDisplayString = NULL;
-}
+// 1SuperweaponInfo
+// Body in SuperweaponInfo.cpp (exact 127B retail).
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
