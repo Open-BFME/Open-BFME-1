@@ -125023,7 +125023,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	loadPostProcess@Tea
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	loadPostProcess@TeamFactory@@MAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	moveTeamTo@Team@@QAEXUCoord3D@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	moveTeamTo@TeamPrototype@@QAEXUCoord3D@@@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	noneInside@Team@@QBE_NPAVPolygonTrigger@@I@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	notifyTeamOfObjectDeath@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	setAttackPriorityName@Team@@QAEXVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	setControllingPlayer@TeamPrototype@@QAEXPAVPlayer@@@Z	1
