@@ -1,0 +1,28 @@
+// cl: /O1 /G6 /MT /DNDEBUG
+// UNADMITTED: canonical native import route is blocked by consumer validation.
+#include <stddef.h>
+#include <stdarg.h>
+
+int __cdecl vswprintf(wchar_t*, unsigned int, const wchar_t*, va_list);
+
+long __stdcall StringVPrintfWorkerW(wchar_t* destination, unsigned int capacity,
+                                  const wchar_t* format, va_list arguments)
+{
+    long result = 0;
+    if (capacity == 0)
+        result = (long)0x80070057;
+    else {
+        unsigned int maximum = capacity - 1;
+        int written = vswprintf(destination, maximum, format, arguments);
+        if (written < 0 || (unsigned int)written > maximum) {
+            destination += maximum;
+            *destination = 0;
+            result = (long)0x8007007a;
+        }
+        else if ((unsigned int)written == maximum) {
+            destination += maximum;
+            *destination = 0;
+        }
+    }
+    return result;
+}

@@ -1,0 +1,176 @@
+{
+  "status": "BLOCKED-unadmitted-existing-object-only-no-compiler-execution",
+  "source_sha256": "6b2799499184ec41bf32e9670396d529b3411170b6de7b6b22a1d23b57d65983",
+  "object_sha256": "7a86aab019f0b9a2118f9bca9f41cd3ceb812812453e47799e9aadfb2b8bb7e1",
+  "native_original_object_sha256": "2ef7a47b374b4c76c5966e02860c9a0f41852eb2babb5684624c0aebdcc48e77",
+  "source_extent": 369,
+  "native_extent": 374,
+  "diagnostic_raw_coff_positional_equal_fraction": 0.1443850267379679,
+  "diagnostic_mnemonic_sequence_ratio": 0.987012987012987,
+  "normal_stash_score": null,
+  "normal_stash_unavailable_without_new_compilation": "re_log._measure_stash invokes finish_measure.measure -> probe.py -> compiler; forbidden by bounded-finish contract; no partial writer was run",
+  "frame_bias_hypothesis": "Reorder initial EBP/EAX setup to native LEA EBP,[ESP-0x64]; add0x64 to EBP-relative displacements; add EBP,0x64 before LEAVE. Diagnostic normalization ONLY, NOT compiled-source/gate proof or executable artifact.",
+  "diagnostic_normalized_extent": 374,
+  "diagnostic_normalized_coff_equals_original": true,
+  "source_and_original_relocations_after_offset_plus2_agree": true,
+  "ebp_displacements": [
+    {
+      "source_offset": 16,
+      "old": 12,
+      "hypothetical_biased": 112
+    },
+    {
+      "source_offset": 19,
+      "old": -128,
+      "hypothetical_biased": -28
+    },
+    {
+      "source_offset": 49,
+      "old": 8,
+      "hypothetical_biased": 108
+    },
+    {
+      "source_offset": 59,
+      "old": -128,
+      "hypothetical_biased": -28
+    },
+    {
+      "source_offset": 63,
+      "old": 8,
+      "hypothetical_biased": 108
+    },
+    {
+      "source_offset": 66,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 87,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 96,
+      "old": 20,
+      "hypothetical_biased": 120
+    },
+    {
+      "source_offset": 101,
+      "old": 20,
+      "hypothetical_biased": 120
+    },
+    {
+      "source_offset": 106,
+      "old": 16,
+      "hypothetical_biased": 116
+    },
+    {
+      "source_offset": 109,
+      "old": 16,
+      "hypothetical_biased": 116
+    },
+    {
+      "source_offset": 123,
+      "old": -644,
+      "hypothetical_biased": -544
+    },
+    {
+      "source_offset": 140,
+      "old": -644,
+      "hypothetical_biased": -544
+    },
+    {
+      "source_offset": 152,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 168,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 184,
+      "old": 24,
+      "hypothetical_biased": 124
+    },
+    {
+      "source_offset": 205,
+      "old": -388,
+      "hypothetical_biased": -288
+    },
+    {
+      "source_offset": 217,
+      "old": 8,
+      "hypothetical_biased": 108
+    },
+    {
+      "source_offset": 223,
+      "old": 8,
+      "hypothetical_biased": 108
+    },
+    {
+      "source_offset": 226,
+      "old": -388,
+      "hypothetical_biased": -288
+    },
+    {
+      "source_offset": 246,
+      "old": -1668,
+      "hypothetical_biased": -1568
+    },
+    {
+      "source_offset": 258,
+      "old": 20,
+      "hypothetical_biased": 120
+    },
+    {
+      "source_offset": 264,
+      "old": 20,
+      "hypothetical_biased": 120
+    },
+    {
+      "source_offset": 267,
+      "old": -1668,
+      "hypothetical_biased": -1568
+    },
+    {
+      "source_offset": 280,
+      "old": -1668,
+      "hypothetical_biased": -1568
+    },
+    {
+      "source_offset": 287,
+      "old": -644,
+      "hypothetical_biased": -544
+    },
+    {
+      "source_offset": 294,
+      "old": -128,
+      "hypothetical_biased": -28
+    },
+    {
+      "source_offset": 298,
+      "old": -388,
+      "hypothetical_biased": -288
+    },
+    {
+      "source_offset": 310,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 333,
+      "old": -4668,
+      "hypothetical_biased": -4568
+    },
+    {
+      "source_offset": 359,
+      "old": 16,
+      "hypothetical_biased": 116
+    }
+  ],
+  "normal_admission": false,
+  "new_source_bytes": 0,
+  "flags_variant_or_compiler_reexecution": false
+}

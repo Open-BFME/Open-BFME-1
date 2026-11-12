@@ -1,0 +1,141 @@
+{
+  "source_token_inventory": [
+    {
+      "source": "game/gen_small/imports_000.cpp",
+      "sha256": "7d29244132fb12d2fd813501423fc3b6e23f0ee52af1d31ead1d29a4fa519068",
+      "source_references": [
+        {
+          "line": 119,
+          "text": "__declspec(dllimport) void i_009f719c();"
+        },
+        {
+          "line": 327,
+          "text": "void ji_009f719c() { i_009f719c(); }"
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/InGameUI.cpp",
+      "sha256": "333b66f14bdc63b892c4b489398d844c9f18af0216c340599773061fc66014a6",
+      "source_references": [
+        {
+          "line": 2697,
+          "text": "if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( stringManagerString ), args ) < 0 )"
+        },
+        {
+          "line": 2719,
+          "text": "if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )"
+        },
+        {
+          "line": 2741,
+          "text": "if( vswprintf(buf, sizeof( buf )/sizeof( WideChar ) - 1, bfmeMessageText( format ), args ) < 0 )"
+        }
+      ]
+    },
+    {
+      "source": "game/Libraries/Source/string/StringBaseFormatVa.cpp",
+      "sha256": "ace6a12f904d61f14f782a064363ac26772ecde769867d259386e9ddf48ff521",
+      "source_references": [
+        {
+          "line": 24,
+          "text": "int len = vswprintf(buffer, 8192, fmt, args);"
+        }
+      ]
+    },
+    {
+      "source": "game/Libraries/Source/string/StringBaseFormatForwarders.cpp",
+      "sha256": "87e4769395fd4d2a0242a9288f137cbbaec6d3de62b1a7030ec521379943032c",
+      "source_references": [
+        {
+          "line": 2,
+          "text": "// Retail 0x00887040 (narrow _vsnprintf) and 0x00887060 (wide vswprintf):"
+        },
+        {
+          "line": 10,
+          "text": "// ?vswprintf@@YAHPAGIPBGPAD@Z (IAT 0x01359228, targets/game/reverse/imports.csv),"
+        },
+        {
+          "line": 13,
+          "text": "// import table spells it). Declaring it extern \"C\" names `__imp__vswprintf`,"
+        },
+        {
+          "line": 15,
+          "text": "__declspec(dllimport) int __cdecl vswprintf(unsigned short *buffer, unsigned int size, const unsigned short *format, va_list args);"
+        },
+        {
+          "line": 24,
+          "text": "return vswprintf(buffer, size, format, args);"
+        }
+      ]
+    },
+    {
+      "source": "game/Libraries/Source/WWVegas/WWLib/wwstring.cpp",
+      "sha256": "dd077a1ea6ce93dbb3e91a6e1aadbc44ca31b7c12bccdf7cd05d00a85f0dd1a4",
+      "source_references": [
+        {
+          "line": 223,
+          "text": "retval = _vsnwprintf (temp_buffer, 512, format, arg_list);"
+        },
+        {
+          "line": 258,
+          "text": "retval = _vsnwprintf (temp_buffer, 512, format, arg_list);"
+        }
+      ]
+    },
+    {
+      "source": "game/Libraries/Source/WWVegas/WWLib/widestring.cpp",
+      "sha256": "f2ffa9d5455519371a3c6a3d1ac5da2e6639d01c5ab6f9bd5e7af057db5a7211",
+      "source_references": [
+        {
+          "line": 268,
+          "text": "int retval = vswprintf (temp_buffer, 512, format, arg_list);"
+        },
+        {
+          "line": 302,
+          "text": "int retval = vswprintf (temp_buffer, 512, format, arg_list);"
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/Common/System/UnicodeString.cpp",
+      "sha256": "e03af0a38dd3c16c73a8bd0b6c3c86efc13bdf096ddcb99992e4f04519384f14",
+      "source_references": [
+        {
+          "line": 268,
+          "text": "if (_vsnwprintf(buf, sizeof(buf)/sizeof(WideChar)-1, format.str(), args) < 0)"
+        },
+        {
+          "line": 281,
+          "text": "if (_vsnwprintf(buf, sizeof(buf)/sizeof(WideChar)-1, format, args) < 0)"
+        }
+      ]
+    }
+  ],
+  "callable_canonical_or_legacy_pins_before": [],
+  "object_inventory_limit": "Only freshly checked forwarders/UnicodeString receipts; not all historical/whole-census objects available or asserted current.",
+  "normal_import_checks": {
+    "StringBaseFormatForwarders": "PASS",
+    "UnicodeString": "FAIL before metadata/pin changes; byte3/3 PASS; real CRT link imports nonretail _vsnwprintf/wcscspn/wcsspn and alias/invented names"
+  },
+  "decision": "Bank75B under parent no-grandfathering/no-larger-consumer-chain contract; leave all dependency metadata/pins/sources unchanged",
+  "new_source_admission": false,
+  "native_route_proof": {
+    "caller_rva": "0x00AD5443",
+    "caller_extent": 75,
+    "archive_reference": "__vsnwprintf",
+    "native_call_rva": "0x009F719C",
+    "native_stub_hex": "ff2528923501",
+    "iat_va": "0x1359228",
+    "dll": "MSVCR71.dll",
+    "export": "?vswprintf@@YAHPAGIPBGPAD@Z",
+    "canonical_stdio_declaration": "extern C++ _CRTIMP int __cdecl vswprintf(wchar_t*, size_t, const wchar_t*, va_list); stdio.h:376",
+    "new_source_declaration_requirement": "same primitive canonical ABI; omit dllimport to preserve native direct-call stub route; no alias",
+    "existing_gen_import_target": "vswprintf",
+    "proposed_route_note": "MSVCR71.dll!?vswprintf@@YAHPAGIPBGPAD@Z",
+    "live_route_verdict": "0x009F719C: the ledger's gen-import row targets vswprintf, not ?vswprintf@@YAHPAGIPBGPAD@Z",
+    "pin_exists": false,
+    "status": "blocked-pending-parent; no pin or metadata edit made"
+  },
+  "source_sha256": "674676274d2b9bddb02714feea9f1180fd438102ddaff0b0a17524ef41d2e057",
+  "diagnostic": "Private source emits75B and exactly one canonical C++ REL32 at+38; independently binding that edge to PE-proven9F719C reproduces75/75 bytes. NOT normal gate/admission/score."
+}

@@ -1,0 +1,102 @@
+{
+  "status": "five-normal-admitted",
+  "runtime_model": "openai/gpt-6.1-sol:high",
+  "metadata_model": "gpt-6.1-sol",
+  "created_utc": "2026-11-12T12:56:03.837976+00:00",
+  "original_archive_sha256": "07f40f6799edceffb1d9532a5a42d1e8177bbf5a60f5e1b0c9975b9c2cfcb1b5",
+  "original_member": "obj\\i386\\dxerr9.obj",
+  "original_member_sha256": "2ef7a47b374b4c76c5966e02860c9a0f41852eb2babb5684624c0aebdcc48e77",
+  "source": "game/Libraries/Source/DirectX/strsafe.cpp",
+  "source_sha256": "9825dc0498967e5d2e338bdcac8b02e3094dbce118fc6694a9c4b0aa1194f1d8",
+  "source_flags": [
+    "/O1",
+    "/G6",
+    "/MT",
+    "/DNDEBUG"
+  ],
+  "compiler": "MSVC13.10.3077 private win64 prefix;pool1/nice10;empty displays",
+  "functions": [
+    {
+      "name": "?StringCopyWorkerW@@YGJPAGIPBG@Z",
+      "rva": "0xad5401",
+      "full_extent": 66,
+      "nonpadding_all_0xcc_excluded": 66,
+      "native_sha256": "8ec7ef5d24a480971ff661292e671043b214457dcb200988a6b2b3984a80f355",
+      "original_coff_section_sha256": "8ec7ef5d24a480971ff661292e671043b214457dcb200988a6b2b3984a80f355",
+      "ret_cleanup": 12,
+      "routes": []
+    },
+    {
+      "name": "?StringCchCopyA@@YGJPADIPBD@Z",
+      "rva": "0xafd193",
+      "full_extent": 23,
+      "nonpadding_all_0xcc_excluded": 23,
+      "native_sha256": "26c205deec08d5bfd646204c574393c334bb00f0f70da2847e5c2ebaad2052d1",
+      "original_coff_section_sha256": "2a543bb25bb393f7703531080c4dcfad50482585753ccef6acf63154796c1d46",
+      "ret_cleanup": 12,
+      "routes": [
+        {
+          "offset": 19,
+          "symbol": "?StringCopyWorkerA@@YGJPADIPBD@Z",
+          "native_target": "0xa2a893"
+        }
+      ]
+    },
+    {
+      "name": "?StringCchCopyW@@YGJPAGIPBG@Z",
+      "rva": "0xafd1aa",
+      "full_extent": 23,
+      "nonpadding_all_0xcc_excluded": 23,
+      "native_sha256": "e3df6925a2fd5f0c61b9e87f2b157a05b10d33171f9c974efca400c0ead12a5c",
+      "original_coff_section_sha256": "2a543bb25bb393f7703531080c4dcfad50482585753ccef6acf63154796c1d46",
+      "ret_cleanup": 12,
+      "routes": [
+        {
+          "offset": 19,
+          "symbol": "?StringCopyWorkerW@@YGJPAGIPBG@Z",
+          "native_target": "0xad5401"
+        }
+      ]
+    },
+    {
+      "name": "?StringCchPrintfA@@YAJPADIPBDZZ",
+      "rva": "0xafd1c1",
+      "full_extent": 39,
+      "nonpadding_all_0xcc_excluded": 39,
+      "native_sha256": "1b66f0ccd810a3402722623a67c7ac49a8a85241fc1650a322c7ea98f2a70510",
+      "original_coff_section_sha256": "ef1261474948bbb0e7adb30d8ae54cecb5308505c6a794a29fef8826cd015dec",
+      "ret_cleanup": 0,
+      "routes": [
+        {
+          "offset": 33,
+          "symbol": "?StringVPrintfWorkerA@@YGJPADIPBD0@Z",
+          "native_target": "0xa2a8ce"
+        }
+      ]
+    },
+    {
+      "name": "?StringCchPrintfW@@YAJPAGIPBGZZ",
+      "rva": "0xafd1e8",
+      "full_extent": 39,
+      "nonpadding_all_0xcc_excluded": 39,
+      "native_sha256": "da38d6384093758f9ecac709a993f4f0724c8cd7f7d8181d9d624f0800748fbc",
+      "original_coff_section_sha256": "ef1261474948bbb0e7adb30d8ae54cecb5308505c6a794a29fef8826cd015dec",
+      "ret_cleanup": 0,
+      "routes": [
+        {
+          "offset": 33,
+          "symbol": "?StringVPrintfWorkerW@@YGJPAGIPBGPAD@Z",
+          "native_target": "0xad5443"
+        }
+      ]
+    }
+  ],
+  "new_unique_actual_source_bytes": 190,
+  "origin_breakdown": "library-to-source only; no game-algorithm/whole-closure credit",
+  "native_api_imports_in_new_TU": 0,
+  "new_metadata_pins_aliases_globals_hatches": 0,
+  "normal_gates": "5/5 byte matches;0literal/table/DIR32/baseline/unverified/skipped",
+  "tests": "3 fresh compile/read-only tests passed; no code/API execution",
+  "import_check": "normal import_binding PASS; LINK-ONLY fixture labels non-import worker stubs, not selected-provider/whole-program closure",
+  "blocked_unadmitted": "StringVPrintfWorkerW75B; original archive provider retained; see printfw-blocked.md"
+}
