@@ -2930,25 +2930,8 @@ void ScriptActions::doTeamFollowWaypoints(const AsciiString& teamName, const Asc
 //-------------------------------------------------------------------------------------------------
 /** doNamedGuard */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedGuard.cpp
-// ?doNamedGuard@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doNamedGuard(const AsciiString& unitName)
-{
-	Object *theUnit = TheScriptEngine->getUnitNamed( unitName );
-	if (!theUnit) {
-		return;
-	}
-
-	AIUpdateInterface* aiUpdate = theUnit->getAIUpdateInterface();
-	if (!aiUpdate) {
-		return;
-	}
-	
-	theUnit->leaveGroup();
-	Coord3D position = *theUnit->getPosition();
-	aiUpdate->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-	aiUpdate->aiGuardPosition(&position, GUARDMODE_NORMAL, CMD_FROM_SCRIPT);
-}
+// ScriptActions::doNamedGuard(const AsciiString& unitName)
+// Body in ScriptActionsNamedUnitProperties.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamGuard */

@@ -128739,7 +128739,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedFlash@ScriptActions@@IAEXABVAsciiString@@HPBURGBColor@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedFollowWaypoints@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedFollowWaypointsExact@ScriptActions@@IAEXABVAsciiString@@0@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedGuard@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedHideSpecialPowerDisplay@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedHunt@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedKill@ScriptActions@@IAEXABVAsciiString@@@Z	1

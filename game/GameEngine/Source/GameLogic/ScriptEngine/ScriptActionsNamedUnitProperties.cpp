@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
-// readable body of ?doNamedGuard@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
 // The five actions that look one named unit up and change something about it:
 //
