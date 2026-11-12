@@ -13,7 +13,6 @@
 // readable body of ?parseDurationReal@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseDurationUnsignedInt@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseDurationUnsignedShort@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
-// readable body of ?parseFXList@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseGameClientRandomVariable@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseICoord2D@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseMappedImage@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
