@@ -2091,7 +2091,6 @@ emit	game/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_xfer_Thunk.
 emit	game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/HordeTransportContainDestructorThunk.cpp	*	820
 emit	game/GameEngine/Source/GameLogic/Object/Contain/HordeContain/WeaponStorePostProcessLoadThunk.cpp	*	1017
 emit	game/GameEngine/Source/GameLogic/Object/Contain/HordeGarrisonContainDestructorThunk.cpp	*	409
-emit	game/GameEngine/Source/GameLogic/Object/Contain/OpenContainConstructorThunk.cpp	*	722
 emit	game/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain_onRemoving_Thunk.cpp	*	715
 emit	game/GameEngine/Source/GameLogic/Object/Contain/SlaughterHordeContainDestructorThunk.cpp	*	329
 emit	game/GameEngine/Source/GameLogic/Object/ObjectConstructorThunk.cpp	*	4246
