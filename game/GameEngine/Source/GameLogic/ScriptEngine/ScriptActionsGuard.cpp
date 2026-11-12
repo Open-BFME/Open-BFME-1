@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
-// readable body of ?doTeamGuardPosition@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamGuardObject@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamGuardArea@ScriptActions@@IAEXABVAsciiString@@00@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //

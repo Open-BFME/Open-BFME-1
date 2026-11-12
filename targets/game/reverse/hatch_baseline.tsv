@@ -128793,7 +128793,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamGuardForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamGuardInTunnelNetwork@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamGuardObject@ScriptActions@@IAEXABVAsciiString@@0@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamGuardPosition@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamHuntWithCommandButton@ScriptActions@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamIdleForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamKill@ScriptActions@@IAEXABVAsciiString@@@Z	1

@@ -2941,24 +2941,8 @@ void ScriptActions::doTeamFollowWaypoints(const AsciiString& teamName, const Asc
 //-------------------------------------------------------------------------------------------------
 /** doTeamGuardPosition */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamGuardPosition@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::doTeamGuardPosition(const AsciiString& teamName, const AsciiString& waypointName)
-{
-	Waypoint *way = TheTerrainLogic->getWaypointByName(waypointName); 
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	if (!theTeam || !way) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	if (!theGroup) {
-		return;
-	}
-	theTeam->getTeamAsAIGroup(theGroup);
-	Coord3D position = *way->getLocation();
-
-	theGroup->groupGuardPosition( &position, GUARDMODE_NORMAL, CMD_FROM_SCRIPT );
-}
+// ScriptActions::doTeamGuardPosition(const AsciiString& teamName, const AsciiString& waypointName)
+// Body in ScriptActionsGuard.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamGuardObject */
