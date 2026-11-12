@@ -759,10 +759,10 @@ opposite corners of the map would check every polygon in the map).
 */
 //=============================================================================
 // ?Cast_Ray@BaseHeightMapRenderObjClass@@UAE_NAAVRayCollisionTestClass@@@Z
-// Body in BaseHeightMap_Cast_Ray.asm (exact 2839B retail @ 0x006CDF90; queue
-// 0x0096A3CA was MISPLACED). m_map@+0x2FF4; field-offset blocks C++.
+// Body in BaseHeightMap_Cast_Ray.cpp (exact 2839B retail @ 0x006CDF90).
 // Keep MinMaxAABoxClass(Vector3,Vector3) + LineSegClass::operator= COMDATs
-// in this TU (were only referenced by the old C++ Cast_Ray body).
+// in this TU: retail's Cast_Ray calls this TU's LineSegClass::operator=
+// (0x006C6350 via ILT 0x00044AA8) out of line.
 static MinMaxAABoxClass _BaseHeightMap_Force_MinMaxAABox(Vector3(0,0,0), Vector3(0,0,0));
 LineSegClass& (LineSegClass::*_BaseHeightMap_Force_LineSeg_eq)(const LineSegClass&) = &LineSegClass::operator=;
 

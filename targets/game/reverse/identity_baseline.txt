@@ -36,7 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 19
 ctor_vtable.unreadable = 0
-one_identity.surplus = 2084
+one_identity.surplus = 2083
 # Retail registration proves DynamicPortalBehaviour owns ctor 001F8B80 and factory 001156B0; four false aliases retired.
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 # 4c8346b3c9 retired the GDIFileStream ctor over-claim at 0x00087A50 (a zero-store body).
@@ -1217,8 +1217,6 @@ null_reloc.max_unreadable = 1000
 @ one_identity.surplus 0x005F6970 ??0Matrix3@@QAE@ABV0@@Z
 @ one_identity.surplus 0x005F6970 ??4Matrix3@@QAEAAV0@ABV0@@Z
 @ one_identity.surplus 0x005F6970 ??4SentenceDataStruct@Render2DSentenceClass@@QAEAAU01@ABU01@@Z
-@ one_identity.surplus 0x006098D0 ??4LineSegClass@@QAEAAV0@ABV0@@Z
-@ one_identity.surplus 0x006098D0 ??4_ArcInfoStruct@VehicleCurveClass@@QAEAAU01@ABU01@@Z
 @ one_identity.surplus 0x0060C330 ??0Matrix3@@QAE@_N@Z
 @ one_identity.surplus 0x0060C330 ??0Matrix3x3@@QAE@_N@Z
 @ one_identity.surplus 0x00615370 ??E?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@U?$_Const_traits@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@PAVParticleSystemTemplate@@@_STL@@@2@@_STL@@QAEAAU01@XZ
