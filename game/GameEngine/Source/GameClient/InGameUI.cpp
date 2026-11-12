@@ -3878,36 +3878,8 @@ Bool InGameUI::isAllSelectedKindOf( KindOfType kindOf ) const
 /** Set the input enabled/disabled */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUIBodies.cpp
-// ?setInputEnabled@InGameUI@@UAEX_N@Z present-unmatched
-void InGameUI::setInputEnabled( Bool enable )
-{
-	if(!enable)
-		setSelecting( FALSE );
-	
-	Bool wasEnabled = m_inputEnabled;
-
-	m_inputEnabled = enable;
-	
-	if (wasEnabled && !enable)
-	{
-		/*
-			when input is disabled, clear out all the special "modes" we can be in, since we can miss
-			the "exit mode" message during the cinematic. e.g., hold down the ctrl key when a cinematic
-			begins, then release it during the cinematic... since input is disabled, we never see the keyup
-			and thus think we're still in forceattack when its done, until you jiggle that key again.
-			(admittedly, this code will actually do the wrong thing if you were to hold down the ctrl
-			key thru the whole cinematic, but that's even more unlikely...)
-		*/
-		setForceAttackMode( false );			// CTRL
-		setForceMoveMode( false );				// apparently unmapped in current CommandMap.ini
-		setWaypointMode( false );					// ALT
-		setPreferSelectionMode( false );	// SHIFT
-		setCameraRotateLeft( false );			// KP4
-		setCameraRotateRight( false );		// KP6
-		setCameraZoomIn( false );					// KP8
-		setCameraZoomOut( false );				// KP2
-	}
-}
+// setInputEnabled
+// Body in InGameUIBodies.cpp (exact 151B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Drawable is being destroyed, clean up any UI elements associated with it. */
