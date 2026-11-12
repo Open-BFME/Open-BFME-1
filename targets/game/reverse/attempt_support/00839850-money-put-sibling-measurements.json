@@ -1,0 +1,217 @@
+{
+  "status": "blocked-no-recovered-bytes",
+  "target_rva": "0x00839850",
+  "extent": 2687,
+  "retail_extent_sha256": "445432e5a5922df5fc84cbb43a21fef704b7cdd63c6edf4ade73c6579f04eb2d",
+  "retail_frame_reservation": 232,
+  "retail_unwind_entries": 22,
+  "source_head": "a661a9c828359a6b2a826ccbdd6b0aca5cc7083c",
+  "candidate_with_license_sha256": "4b8fbb3845311c0b659423f16323c56750b9dc15ae88edef23086204a21594fa",
+  "positional_differences_note": "COFF relocation fields excluded for discovery only; shifted instructions make this unsuitable as fidelity score; no gate/admission/identity proof",
+  "variants": [
+    {
+      "variant": "p0",
+      "source_sha256": "3f56b63cce169451242b25b22e6bb1bf494fadcca4070ceb7f19ebcd20aa9c2f",
+      "result": "compile-failed",
+      "error": "C2440 narrow grouping must remain std::string"
+    },
+    {
+      "variant": "p1",
+      "source_sha256": "fddfe015987b448117e25543bb412126a02a4a00bbd20f01c7e010711d5ecfee",
+      "result": "compiled-not-admitted",
+      "object_sha256": "3339ecb14ee009f58d7c26759ef396bf03e86825cf9acdf585306dd088583c56",
+      "emitted_bytes": 2759,
+      "frame_reservation": 208,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2198,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "p2a",
+      "source_sha256": "4f989b2a2963b09142646703c491e3e9c2220d6a489e0ccf15a5fd3d521281a6",
+      "result": "compiled-not-admitted",
+      "object_sha256": "e7c06853bbac45a0b7c0fa4723f2ee4ffcb8c033c7ebb87a4501a65259d73767",
+      "emitted_bytes": 2911,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2273,
+      "node_release_calls": 12,
+      "wstring_destructor_calls": 0
+    },
+    {
+      "variant": "depth1",
+      "source_sha256": "5949625525fc98895451e839e5328d20661648fbf40cc41ebcfc89b649ed1324",
+      "result": "compiled-not-admitted",
+      "object_sha256": "af67c22578ef88fa0c97e13e74b938646f5cd1a64aa07e180ed9e0baf3b0f2b8",
+      "emitted_bytes": 2911,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2273,
+      "node_release_calls": 12,
+      "wstring_destructor_calls": 0
+    },
+    {
+      "variant": "depth2",
+      "source_sha256": "5c98da6c993d7389799cfab0f935d12c561b4c5017dc7c5bea47822fef0e5e32",
+      "result": "compiled-not-admitted",
+      "object_sha256": "7abb63a9d2e8601c773128a289e672e91f907941729a49dbdc784c3dca2f15ef",
+      "emitted_bytes": 2911,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2273,
+      "node_release_calls": 12,
+      "wstring_destructor_calls": 0
+    },
+    {
+      "variant": "currency",
+      "source_sha256": "084013236caf8beff20f16b210d4bb1e06999cb9298debbcc0ba129378a37db6",
+      "result": "compiled-not-admitted",
+      "object_sha256": "da467deadd11808f6619d4670627a8878003fd065bb3b8d8786ac4ca39a3d763",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "Mopaque",
+      "source_sha256": "df5eb0f2e0a053542ebf708a45c0faf7402312fc1a22475229bc1d1b7ec94aaa",
+      "result": "compiled-not-admitted",
+      "object_sha256": "b2de4bdf7e5b06a06ea82dcd401984b5e48df053efe97d02625c550f34ff4c26",
+      "emitted_bytes": 3214,
+      "frame_reservation": 280,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2264,
+      "node_release_calls": 15,
+      "wstring_destructor_calls": 0
+    },
+    {
+      "variant": "dtor1",
+      "source_sha256": "b83e981bcee24ea83ec91eed121bc0726842bc445b32dd68e2902a78a79063d9",
+      "result": "compile-failed",
+      "error": "C2908 destructor already instantiated"
+    },
+    {
+      "variant": "dtor2",
+      "source_sha256": "f1ce3dd5554fc24ba9223d5625dcf34780f5ad318a56d0f247cf932ce0b175e1",
+      "result": "not-run",
+      "reason": "preceding destructor specialization failed; batch stopped"
+    },
+    {
+      "variant": "dtor3",
+      "source_sha256": "396033589cdc1e92251a603f17ebdd88af2b8806a65076fe14ed5f4875f7277c",
+      "result": "not-run",
+      "reason": "preceding destructor specialization failed; batch stopped"
+    },
+    {
+      "variant": "client",
+      "source_sha256": "a7cda6ed760d11765d2d255534261264ea6b46916bf8e7ea1fa121b1757dccbe",
+      "result": "compiled-not-admitted",
+      "object_sha256": "e7f4319e270835e732852c0fcfc3bc9abe8a70e52875ad26b22aa4a0bf2f5544",
+      "emitted_bytes": 3214,
+      "frame_reservation": 280,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2264,
+      "node_release_calls": 15,
+      "wstring_destructor_calls": 0
+    },
+    {
+      "variant": "limit4",
+      "source_sha256": "8cc1e09bdd242868ecffa208ee7f3151294feddb7e3560db2b40d081be004328",
+      "result": "compiled-not-admitted",
+      "object_sha256": "e622559124974e28faf7e72c5d29f300c505f78fdef4fe7018e835c8a5a093cf",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "limit6",
+      "source_sha256": "6dec19638861c249c2a541b1b43f6ea689a41ba1feb09247737fb71ead637463",
+      "result": "compiled-not-admitted",
+      "object_sha256": "c173e8005a30b9f7cb03c846368d79ec98bee91a93e49cb063410e6b7ab317ab",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "limit8",
+      "source_sha256": "7210b6099aec3bcbab845c530832e806bb90819a1b3dcaa556cb9f4439343ec8",
+      "result": "compiled-not-admitted",
+      "object_sha256": "c721dff3dd95630dc5402cfdb00b327d55762942dcf10be9adbbcdd4a31f6b3f",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "limit12",
+      "source_sha256": "fba4f5dae2ae528ad48642ab7e19f34ede3588c3713a0474f762d15296f7938a",
+      "result": "compiled-not-admitted",
+      "object_sha256": "7d2118bbf34f976e0bc8d2707ed0b91ab9fec54c9b22704d5054ba0ad782bd63",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "headerdepth1",
+      "source_sha256": "7d87b8fd80eb7f59b9273815b3203d5a315c4a1da6c0ad260b87e246f33695c9",
+      "result": "compiled-not-admitted",
+      "object_sha256": "b12e205227dbceb4cf107c549b35f00748853e7fc3a8ee4d54f89cb93d5b46d0",
+      "emitted_bytes": 2730,
+      "frame_reservation": 208,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2186,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "headerdepth2",
+      "source_sha256": "e12da65867b4ed5a47e43788e180b447fed2c6e4a85b3b8f4110c95013621be5",
+      "result": "compiled-not-admitted",
+      "object_sha256": "289866a24ce068dcfd2dccbdad616b740fc5e44d61c1c5da8180ab8db1cde084",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "headerdepth3",
+      "source_sha256": "c8904daa2d59d9f33ff83b14603a51f8bfad90533db18eda884a6ab932a6c764",
+      "result": "compiled-not-admitted",
+      "object_sha256": "e34c7e0bd0f6930751f920edbcc669ed0ab7d9ecc82ed96925a174f3d5969054",
+      "emitted_bytes": 2729,
+      "frame_reservation": 200,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    },
+    {
+      "variant": "EHs",
+      "source_sha256": "77ad4fb4cf8c6ad0eb9f825d14b467d6ecbaa6c96889190ed7e56727135ce5ca",
+      "result": "compiled-not-admitted",
+      "object_sha256": "8cd98735191a46a1c5fdc258af5d7bd1a3407f9fd5b209da00ee0e2cc2ccd0e8",
+      "emitted_bytes": 2880,
+      "frame_reservation": 280,
+      "unwind_entries": 22,
+      "positional_nonrelocation_differences": 2099,
+      "node_release_calls": 0,
+      "wstring_destructor_calls": 8
+    }
+  ]
+}
