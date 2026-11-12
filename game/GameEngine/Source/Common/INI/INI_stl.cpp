@@ -901,27 +901,8 @@ void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const 
 /** Parse an ArmorTemplate and assign to the 'ArmorTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseArmorTemplate@INI@@ present-unmatched
-void INI::parseArmorTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	typedef const ArmorTemplate *ConstArmorTemplatePtr;
-	ConstArmorTemplatePtr* theArmorTemplate = (ConstArmorTemplatePtr*)store;		
-
-	if (stricmp(token, "None") == 0)
-	{
-		*theArmorTemplate = NULL;
-	}
-	else
-	{
-		const ArmorTemplate *tt = TheArmorStore->findArmorTemplate(token);	// could be null!
-		DEBUG_ASSERTCRASH(tt, ("ArmorTemplate %s not found!\n",token));
-		// assign it, even if null!
-		*theArmorTemplate = tt;
-	}
-
-} 
+// INI::parseArmorTemplate(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 80B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an WeaponTemplate and assign to the 'WeaponTemplate *' at store */

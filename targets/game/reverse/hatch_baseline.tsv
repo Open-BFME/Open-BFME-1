@@ -124800,7 +124800,6 @@ present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	isDeclarationOfT
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	load@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	loadDirectory@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseAndTranslateLabel@INI@@	1
-present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseArmorTemplate@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseAsciiStringVector@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseAsciiStringVectorAppend@INI@@	1
 present_unmatched	game/GameEngine/Source/Common/INI/INI_stl.cpp	parseAudioEventRTS@INI@@	1
