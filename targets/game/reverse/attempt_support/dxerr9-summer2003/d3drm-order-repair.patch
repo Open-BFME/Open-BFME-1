@@ -1,0 +1,38 @@
+--- failed-descriptiona.cpp
++++ verified-descriptiona.cpp
+@@ -558,14 +558,6 @@
+     case 0x80150180:
+     case 0x80158650:
+         return "User cancel";
+-    case 0x88760366:
+-        return "Internal error";
+-    case 0x88760368:
+-        return "Bad intrinsics";
+-    case 0x88760369:
+-        return "No more stream handles";
+-    case 0x8876036C:
+-        return "No internet";
+     case 0x88760818:
+         return "Wrong texture format";
+     case 0x88760819:
+@@ -667,12 +659,20 @@
+         return "Bad array size";
+     case 0x88760365:
+         return "Bad data reference";
++    case 0x88760366:
++        return "Internal error";
+     case 0x88760367:
+         return "No more objects";
++    case 0x88760368:
++        return "Bad intrinsics";
++    case 0x88760369:
++        return "No more stream handles";
+     case 0x8876036A:
+         return "No more data";
+     case 0x8876036B:
+         return "Bad cache file";
++    case 0x8876036C:
++        return "No internet";
+     case 0x0878000A:
+         return "The call succeeded, but we had to substitute the 3D algorithm";
+     case 0x8878000A:

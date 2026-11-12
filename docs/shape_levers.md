@@ -4185,3 +4185,22 @@ destructor. The ledger keeps the independently proven wrapper identity with an
 object-symbol implementation view. This is measured only for this wrapper;
 verify each sibling's identity, full bytes, flags ABI and cleanup relocation.
 See `targets/game/reverse/attempt_support/20261111-explicit-scalar-wrapper.md`.
+
+### HRESULT lookup switches: return-group order is observable
+
+In the four Summer 2003 DXErr9 lookup TUs under
+`game/Libraries/Source/DirectX/`, MSVC 13.10.3077 with
+`/O1 /G6 /MT /DNDEBUG` reproduces the older 13.0 archive's switches.
+For the name switches, grouping target-proven cases by their native immediate
+literal-return instruction and ordering those groups by that instruction's
+offset removed 40/50 differing direct-branch bytes without changing the extent.
+This is a measured reconstruction order, not proof of the original source order.
+For the descriptions, changing the two `Invalid flags` / `Invalid group` aliases
+from grouped labels to separate identical returns selected the native shared
+tails and removed six extra bytes. Reordering the D3DRM description groups fixed
+ten literal misbindings that an instruction comparison with copied DIR32 sites
+had hidden. Do not accept the masked comparison: verify the exact literal at
+every pointer site and every embedded jump-table label through the normal gate.
+Only these four switches were tested; see
+`targets/game/reverse/identity_evidence/dxerr9-summer2003-source.md` and its
+reproducible attempt-support evidence.
