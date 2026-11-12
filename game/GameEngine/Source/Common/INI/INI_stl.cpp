@@ -1334,13 +1334,8 @@ void INI::parseDurationUnsignedShort( INI *ini, void * /*instance*/, void *store
 //-------------------------------------------------------------------------------------------------
 // parse acceleration in (dist/sec) and convert to (dist/frame)
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseVelocityReal@INI@@ present-unmatched
-void INI::parseVelocityReal( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-	Real val = scanReal(token);
-	*(Real *)store = ConvertVelocityInSecsToFrames(val);
-}
+// INI::parseVelocityReal(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 37B retail).
 
 //-------------------------------------------------------------------------------------------------
 // parse acceleration in (dist/sec^2) and convert to (dist/frame^2)
