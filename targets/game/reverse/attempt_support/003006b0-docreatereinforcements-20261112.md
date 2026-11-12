@@ -82,3 +82,23 @@ The partition section copies the matched `ScriptActions_doLoadAllTransports.cpp`
 - Landing needs a functions.csv rename of the `?d_003006b0` gen-dump row to the 3-argument name
   (`add_match --replace-rva`). It also needs the present-unmatched 2-argument ZH body in
   ScriptActions.cpp reconciled with that name.
+
+## 2026-11-12 follow-up: packing rules applied (analysis only, no new probe)
+
+These are the shape_levers.md row-213 rules applied to the two slot maps above. Retail's 24-byte
+group at 0x5C holds the iterator, whose PMF words are at 0x64..0x6C. The group packet (16) and the
+pair temporaries (8) join it, which is consistent with rule 1 (16 and 8 are within a factor of two
+of 24, or chain through 16). Ours instead groups the iterators with pos and vecOfTransports
+(12 each) at 0x3C, and gives the packet its own slot at 0x7C.
+
+Rule 2 does not block the packet: the newObject mask temporaries ($T) number after every named
+local, so the packet is not the last-created candidate. Rule 3 does not apply either: the packet
+is block-scoped.
+
+The lead to test next is the 12-byte group. Retail's unit-loop pos, vecOfTransports and the
+contain-loop mask share 0x14. In ours pos and vecOfTransports take the iterator group. If they
+are moved off it, by giving the contain-loop pos and the newObject masks the same declaration
+pattern as retail's, the iterator group frees for the packet. The companion body 0x00204B50
+shows the same symptom with conditional temporaries. That handoff's 2026-11-12 section records
+that conditional (bitmask-guarded) temporaries DO share in retail, so the shared explanation is
+the order in which candidates are packed, not their kind.
