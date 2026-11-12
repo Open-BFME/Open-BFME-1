@@ -514,16 +514,8 @@ maintain existing code.
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini_parsers.cpp
-// ?parseAsciiStringVector@INI@@ present-unmatched
-void INI::parseAsciiStringVector( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	std::vector<AsciiString>* asv = (std::vector<AsciiString>*)store;
-	asv->clear();
-	for (const char *token = ini->getNextTokenOrNull(); token != NULL; token = ini->getNextTokenOrNull())
-	{
-		asv->push_back(token);
-	}
-}
+// INI::parseAsciiStringVector(INI*, void*, void*, const void*)
+// Body in ini_parsers.cpp (exact 39B retail).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
