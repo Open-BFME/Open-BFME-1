@@ -30,10 +30,15 @@ class BfmeSubYR { public: char bfmeDoYR(void *,void *,void *,void *,int); };
 
 class GeometryInfo {};
 
+class Gen_000ED3B0
+{
+public:
+	Real bfmeGapSq(const Gen_000ED3B0 *) const;
+};
+
 class Object
 {
 public:
-	Real getDistanceSquared(const Object *) const;
 
 	__forceinline Bool bfmeIntersectsAtZeroAngle(const Object *other) const
 	{
@@ -126,7 +131,8 @@ Bool SpecialAbilityUpdate::isWithinAbilityAbortRange()
 	{
 		target = TheGameLogic->findObjectByID(targetID);
 		if (target)
-			fDistSquared = self->getDistanceSquared(target);
+			fDistSquared = ((const Gen_000ED3B0 *)self)->bfmeGapSq(
+				(const Gen_000ED3B0 *)target);
 	}
 	else if (m_targetPos.x || m_targetPos.y || m_targetPos.z)
 	{
