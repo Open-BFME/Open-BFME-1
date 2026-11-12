@@ -863,27 +863,8 @@ void INI::parseFXList( INI* ini, void * /*instance*/, void *store, const void* /
 /** Parse an DamageFX and assign to the 'DamageFX *' at store */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseDamageFX@INI@@ present-unmatched
-void INI::parseDamageFX( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	typedef const DamageFX *ConstDamageFXPtr;
-	ConstDamageFXPtr* theDamageFX = (ConstDamageFXPtr*)store;		
-
-	if (stricmp(token, "None") == 0)
-	{
-		*theDamageFX = NULL;
-	}
-	else
-	{
-		const DamageFX *fxl = TheDamageFXStore->findDamageFX(token);	// could be null!
-		DEBUG_ASSERTCRASH(fxl, ("DamageFX %s not found!\n",token));
-		// assign it, even if null!
-		*theDamageFX = fxl;
-	}
-
-} 
+// INI::parseDamageFX(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 80B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an ObjectCreationList and assign to the 'ObjectCreationList *' at store */
