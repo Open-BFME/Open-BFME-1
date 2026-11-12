@@ -1521,36 +1521,8 @@ InGameUI::InGameUI()
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/InGameUIDestructorThunk.cpp
-// ??1InGameUI@@UAE@XZ present-unmatched
-InGameUI::~InGameUI()
-{
-	delete TheControlBar;
-	TheControlBar = NULL;
-
-	// free all the display strings if we're
-	removeMilitarySubtitle();
-
-	stopMovie();
-	stopCameoMovie();
-
-	// remove any build available status
-	placeBuildAvailable( NULL, NULL );
-	setRadiusCursorNone();
-
-	// delete the message resources
-	freeMessageResources();
-
-	// delete the array for the drawbles
-	delete [] m_placeIcon;
-	m_placeIcon = NULL;
-
-	// clear floating text
-	clearFloatingText();
-
-	// clear world animations
-	clearWorldAnimations();
-	resetIdleWorker();
-}
+// 1InGameUI
+// Body in InGameUIDestructorThunk.cpp (exact 936B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Initialize the in game user interface */
