@@ -1126,28 +1126,8 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
  * The format is "FIELD = low high [distribution]".
  */
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseGameClientRandomVariable@INI@@ present-unmatched
-void INI::parseGameClientRandomVariable( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	GameClientRandomVariable *var = static_cast<GameClientRandomVariable *>(store);
-
-	const char* token;
-
-	token = ini->getNextToken();
-	Real low = INI::scanReal(token);
-
-	token = ini->getNextToken();
-	Real high = INI::scanReal(token);
-
-	// if omitted, assume uniform
-	GameClientRandomVariable::DistributionType type = GameClientRandomVariable::UNIFORM;
-	token = ini->getNextTokenOrNull();
-	if (token)
-		type = (GameClientRandomVariable::DistributionType)INI::scanIndexList(token, GameClientRandomVariable::DistributionTypeNames);
-
-	// set the range of the random variable
-	var->setRange( low, high, type );
-}
+// INI::parseGameClientRandomVariable(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 113B retail).
 
 //-------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in frames
