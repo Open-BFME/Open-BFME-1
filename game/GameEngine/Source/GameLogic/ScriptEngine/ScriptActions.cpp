@@ -3189,18 +3189,8 @@ void ScriptActions::doNamedDelete(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamDelete */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamDelete_Thunk.cpp
-// ?doTeamDelete@ScriptActions@@IAEXABVAsciiString@@_N@Z present-unmatched
-void ScriptActions::doTeamDelete(const AsciiString& teamName, Bool ignoreDead)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-
-	if (!team) {
-		return;
-	}
-
-	team->deleteTeam(ignoreDead);
-}
+// ScriptActions::doTeamDelete(const AsciiString& teamName, Bool ignoreDead)
+// Body in ScriptActionsNamedTeam.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamWander */

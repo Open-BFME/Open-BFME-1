@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-// readable body of ?doTeamDelete@ScriptActions@@IAEXABVAsciiString@@_N@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamKill@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamStopSequentialScript@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamSpinForFramecount@ScriptActions@@IAEXABVAsciiString@@H@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp

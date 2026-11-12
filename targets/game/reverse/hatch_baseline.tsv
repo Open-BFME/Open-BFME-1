@@ -128777,7 +128777,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamAvailableForRecruitment@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamCaptureNearestUnownedFactionUnit@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamDecreasePriority@ScriptActions@@IAEXABVAsciiString@@@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamDelete@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamEmoticon@ScriptActions@@IAEXABVAsciiString@@0M@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamEnableStealth@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doTeamExitAllBuildings@ScriptActions@@IAEXABVAsciiString@@@Z	1
