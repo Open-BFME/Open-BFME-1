@@ -2043,7 +2043,6 @@ emit	game/GameEngine/Source/Common/Audio/AudioManager_isMusicAlreadyLoadedMethod
 emit	game/GameEngine/Source/Common/INI/INI_getNextQuotedAsciiString_Thunk.cpp	*	401
 emit	game/GameEngine/Source/Common/RTS/ActionManager.cpp	*	3094
 emit	game/GameEngine/Source/Common/RTS/GameLogicUpdateLoadProgressThunk.cpp	*	3751
-emit	game/GameEngine/Source/Common/RTS/Player_becomingLocalPlayerMethodThunk.cpp	*	748
 emit	game/GameEngine/Source/Common/RTS/Player_update_Thunk.cpp	*	551
 emit	game/GameEngine/Source/Common/RTS/Team_tryToRecruit_Thunk.cpp	*	568
 emit	game/GameEngine/Source/Common/RTS/Team_updateGenericScriptsMethodThunk.cpp	*	412

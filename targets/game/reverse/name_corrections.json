@@ -22220,5 +22220,15 @@
   "after_sha256": "01b444cef8df8ec4900bd54183af7b8e394ff7f1b8ef694ffc50d7209cd17756",
   "evidence": "targets/game/reverse/identity_evidence/01073744-delayedlua-snapshot-base.md",
   "reason": "Identity correction, not a rename: the polymorphic base is the Snapshot base vtable at VA 0x01073744 (dir32 row 1268 records ??_7BfmeSnapshotBase@@6B@; pin note 5152 assigns the Snapshot vptr write), and Team_notifyTeamOfObjectDeath.cpp already uses BfmeSnapshotBase for the same VA. All seven destructor COMDAT copies are byte-identical; converging the spelling clears the link-queue losers (verified 0 losers) with unchanged parents."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x000d77b0.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/PlayerBecomingLocal.cpp",
+  "old_name": "iterateAllObjects",
+  "new_name": "bfmeForwardResultA",
+  "before_sha256": "bb675c74d5420b25ad098a08e46c7f3ab1829998f40407a9c65749090c0c1419",
+  "after_sha256": "3ac4a43c5fed92c42356feeac46cdc72019b017a5822d87dee9682acb0bd6b42",
+  "evidence": "targets/game/reverse/identity_evidence/000d77b0-becominglocalplayer.md",
+  "reason": "ABI correction, not a rename: retail calls 0x009F2A20 with a hidden return pointer for a one-word refcounted result, which the ledger matches as ?bfmeForwardResultA@BfmeResultForwardA@@QAE?AUBfmeResultA@@XZ; the bank's Zero Hour iterateAllObjects returns ObjectIterator* and cannot link to that body. The forwarder's EA name stays unproven."
  }
 ]
