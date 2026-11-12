@@ -2474,22 +2474,8 @@ void ScriptActions::updateNamedSetAttitude(const AsciiString& unitName, Int atti
 //-------------------------------------------------------------------------------------------------
 /** updateTeamSetAttitude */
 //-------------------------------------------------------------------------------------------------
-// ?updateTeamSetAttitude@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
-void ScriptActions::updateTeamSetAttitude(const AsciiString& teamName, Int attitude)
-{
-	Team *theSrcTeam = TheScriptEngine->getTeamNamed(teamName);
-	if (!theSrcTeam) {
-		return;
-	}
-
-	AIGroup *pAIGroup = TheAI->createGroup();
-	if (!pAIGroup) {
-		return;
-	}
-
-	theSrcTeam->getTeamAsAIGroup(pAIGroup);
-	pAIGroup->setAttitude((AttitudeType) attitude);
-}
+// ScriptActions::updateTeamSetAttitude(const AsciiString& teamName, Int attitude)
+// Body in ScriptActionsTeamRelations.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetRepulsor */

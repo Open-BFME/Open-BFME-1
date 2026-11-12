@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
-// readable body of ?updateTeamSetAttitude@ScriptActions@@IAEXABVAsciiString@@H@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamSetOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0H@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamRemoveOverrideRelationToTeam@ScriptActions@@IAEXABVAsciiString@@0@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //

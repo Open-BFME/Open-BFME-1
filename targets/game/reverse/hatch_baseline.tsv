@@ -128824,7 +128824,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	updateBaseConstructionSpeed@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	updateNamedSetAttitude@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	updatePlayerRelationTowardPlayer@ScriptActions@@IAEXABVAsciiString@@H0@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	updateTeamSetAttitude@ScriptActions@@IAEXABVAsciiString@@H@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamMemberWalk.cpp	getName@Team@@QBEABVAsciiString@@XZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTransferTeamToPlayer_Rva003028B0.cpp	is	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp	0ScriptConditions@@QAE@XZ	1
