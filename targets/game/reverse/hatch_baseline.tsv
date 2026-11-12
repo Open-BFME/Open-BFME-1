@@ -125024,7 +125024,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	moveTeamTo@TeamProt
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	notifyTeamOfObjectDeath@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	setAttackPriorityName@Team@@QAEXVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	setControllingPlayer@TeamPrototype@@QAEXPAVPlayer@@@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	someInsideSomeOutside@Team@@QBE_NPAVPolygonTrigger@@I@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	update@TeamFactory@@UAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	updateGenericScripts@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	xfer@Team@@MAEXPAVXfer@@@Z	1
