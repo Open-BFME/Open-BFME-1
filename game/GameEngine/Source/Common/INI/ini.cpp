@@ -13,7 +13,6 @@
 // readable body of ?parseICoord2D@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseMappedImage@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseQuotedAsciiString@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
-// readable body of ?parseSpecialPowerTemplate@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseThingTemplate@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseUpgradeTemplate@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp
 // readable body of ?parseVeterancyLevelFlags@INI@@: game/GameEngine/Source/Common/INI/INI_stl.cpp

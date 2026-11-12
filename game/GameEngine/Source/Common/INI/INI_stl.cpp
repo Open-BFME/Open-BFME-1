@@ -880,27 +880,8 @@ void INI::parseUpgradeTemplate( INI* ini, void * /*instance*/, void *store, cons
 /** Parse a special power template string and store as template pointer */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseSpecialPowerTemplate@INI@@ present-unmatched
-void INI::parseSpecialPowerTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	if (!TheSpecialPowerStore)
-	{
-		DEBUG_CRASH(("TheSpecialPowerStore not inited yet"));
-		throw ERROR_BUG;
-	}
-
-	const SpecialPowerTemplate *sPowerT = TheSpecialPowerStore->findSpecialPowerTemplate( AsciiString( token ) );
-	if( !sPowerT && stricmp( token, "None" ) != 0 )
-	{
-		DEBUG_CRASH( ("[LINE: %d in '%s'] Specialpower %s not found!\n", ini->getLineNum(), ini->getFilename().str(), token) );
-	}
-
-	typedef const SpecialPowerTemplate* ConstSpecialPowerTemplatePtr;
-	ConstSpecialPowerTemplatePtr* theSpecialPowerTemplate = (ConstSpecialPowerTemplatePtr *)store;		
-	*theSpecialPowerTemplate = sPowerT;
-} 
+// INI::parseSpecialPowerTemplate(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 77B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a science string and store as science type */
