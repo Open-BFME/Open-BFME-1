@@ -3066,22 +3066,8 @@ void ScriptActions::doNamedHunt(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamHunt */
 //-------------------------------------------------------------------------------------------------
-// ?doTeamHunt@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doTeamHunt(const AsciiString& teamName)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	if (!theTeam) {
-		return;
-	}
-
-	AIGroup* theGroup = TheAI->createGroup();
-	if (!theGroup) {
-		return;
-	}
-	theTeam->getTeamAsAIGroup(theGroup);
-
-	theGroup->groupHunt( CMD_FROM_SCRIPT );
-}
+// ScriptActions::doTeamHunt(const AsciiString& teamName)
+// Body in ScriptActionsTeamOrders.cpp (exact NB retail).
 //-------------------------------------------------------------------------------------------------
 /** doTeamHunt */
 //-------------------------------------------------------------------------------------------------
