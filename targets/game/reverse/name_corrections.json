@@ -10847,7 +10847,7 @@
   "before_sha256": "f7e5d09f1cbf930ac788454f477de0f8a34230a240809a07b39ad4de302464bb",
   "after_sha256": "d2b55bf8e53365558121bbc7b5b9e7ba359746f86886b4d7d44fffbbd6e4b1ec",
   "evidence": "targets/game/reverse/identity_evidence/00905140-gen-handle.md",
-  "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank’s RefCountPtr<TextureClass> return."
+  "reason": "The matched WaterRenderObjClass::ReAcquireResources source declares DX8Wrapper::Create_Render_Target as returning Gen_005D2040 and stores it in a Gen_005D2040 member. That signature refutes the bank\u2019s RefCountPtr<TextureClass> return."
  },
  {
   "old_path": "targets/game/reverse/attempts/0x00410f90.cpp",
@@ -22170,8 +22170,7 @@
   "after_sha256": "6e8ed8cd16dc08c530a50a5273e206a72ed47a6b4236b079ba0ef6fad095c7ef",
   "evidence": "targets/game/reverse/identity_evidence/aimoveanddelete-onenter-thunk-removed.md",
   "reason": "Deleted duplicate lift paired with the verified owner: the placeholder layout pad views vanished with the file, no descriptive name was lost"
- }
-,
+ },
  {
   "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLoadScreen.cpp",
   "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptLoadScreen.cpp",
@@ -22181,5 +22180,45 @@
   "after_sha256": "d60fb9bf9291cc784ee6ca2d94878cf4a241413fbe06ed5d25d8eb014ab5cb5d",
   "evidence": "targets/game/reverse/identity_evidence/0042450f-functor-bfmeprovide.md",
   "reason": "Rebinding, not a rename: the functor method slot retail reads through ILT 0x0002450F reaches matched bfmeProvide at 0x0051B560, so the binding names the provider class; LoadScreen0051BF30 stays defined and used in the TU and the old method spelling was an undefined external with no ledger row"
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva002BCEE0DelayedLuaDispatch.cpp",
+  "old_name": "Inner01073744",
+  "new_name": "BfmeSnapshotBase",
+  "before_sha256": "e8f1b488e045dfaa7afc3e73526d9c81d28ac21892692e8a3c7aaa1d9e10edcf",
+  "after_sha256": "d20a1c6409159c6776eec726ee0ddf231db74475237e289af56090c3d27854b8",
+  "evidence": "targets/game/reverse/identity_evidence/01073744-delayedlua-snapshot-base.md",
+  "reason": "Identity correction, not a rename: the polymorphic base is the Snapshot base vtable at VA 0x01073744 (dir32 row 1268 records ??_7BfmeSnapshotBase@@6B@; pin note 5152 assigns the Snapshot vptr write), and Team_notifyTeamOfObjectDeath.cpp already uses BfmeSnapshotBase for the same VA. All seven destructor COMDAT copies are byte-identical; converging the spelling clears the link-queue losers (verified 0 losers) with unchanged parents."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/System/GameLogicSendObjectCreated.cpp",
+  "old_name": "Inner01073744",
+  "new_name": "BfmeSnapshotBase",
+  "before_sha256": "b2d0d12c99a58eec5e6aa6a7a76a68ff94c9247514f4aa736617fd5da58f90cf",
+  "after_sha256": "dea05a1c204d2938297afeb66b06f5dc3b6a642bb9ba0b16c8e5bf5940a202c6",
+  "evidence": "targets/game/reverse/identity_evidence/01073744-delayedlua-snapshot-base.md",
+  "reason": "Identity correction, not a rename: the polymorphic base is the Snapshot base vtable at VA 0x01073744 (dir32 row 1268 records ??_7BfmeSnapshotBase@@6B@; pin note 5152 assigns the Snapshot vptr write), and Team_notifyTeamOfObjectDeath.cpp already uses BfmeSnapshotBase for the same VA. All seven destructor COMDAT copies are byte-identical; converging the spelling clears the link-queue losers (verified 0 losers) with unchanged parents."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp",
+  "old_name": "Inner01073744",
+  "new_name": "BfmeSnapshotBase",
+  "before_sha256": "3b6d1269d2d99064c3600c22ea19e0d03b6747866f1b7a4b6a8363027cf9991b",
+  "after_sha256": "6425bbcf7d132613ec3d6a4e13ecf799431c99feea3a7e0f3d807edd482677e4",
+  "evidence": "targets/game/reverse/identity_evidence/01073744-delayedlua-snapshot-base.md",
+  "reason": "Identity correction, not a rename: the polymorphic base is the Snapshot base vtable at VA 0x01073744 (dir32 row 1268 records ??_7BfmeSnapshotBase@@6B@; pin note 5152 assigns the Snapshot vptr write), and Team_notifyTeamOfObjectDeath.cpp already uses BfmeSnapshotBase for the same VA. All seven destructor COMDAT copies are byte-identical; converging the spelling clears the link-queue losers (verified 0 losers) with unchanged parents."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Object/Update/FlameCleanup00293E50.cpp",
+  "old_name": "Inner01073744",
+  "new_name": "BfmeSnapshotBase",
+  "before_sha256": "0156ec2e8aa52c9f4f4dda51368c773fa5bb95de3d1cb06fe3c9cb7809da3cd1",
+  "after_sha256": "01b444cef8df8ec4900bd54183af7b8e394ff7f1b8ef694ffc50d7209cd17756",
+  "evidence": "targets/game/reverse/identity_evidence/01073744-delayedlua-snapshot-base.md",
+  "reason": "Identity correction, not a rename: the polymorphic base is the Snapshot base vtable at VA 0x01073744 (dir32 row 1268 records ??_7BfmeSnapshotBase@@6B@; pin note 5152 assigns the Snapshot vptr write), and Team_notifyTeamOfObjectDeath.cpp already uses BfmeSnapshotBase for the same VA. All seven destructor COMDAT copies are byte-identical; converging the spelling clears the link-queue losers (verified 0 losers) with unchanged parents."
  }
 ]

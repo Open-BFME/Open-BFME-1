@@ -48,13 +48,15 @@ private:
 	char m_bfmeBody[0x18];
 };
 
-class BfmeBaseVUQ
+// Base vtable 01073744 is the Snapshot base vtable (dir32 records it as
+// ??_7BfmeSnapshotBase@@6B@, mirroring Team_notifyTeamOfObjectDeath.cpp).
+class BfmeSnapshotBase
 {
 public:
-	virtual ~BfmeBaseVUQ(void) {}
+	virtual ~BfmeSnapshotBase(void) {}
 };
 
-class DelayedLuaEventList : public BfmeBaseVUQ
+class DelayedLuaEventList : public BfmeSnapshotBase
 {
 public:
 	BfmeDelayedLuaEvent m_bfmeEvents[3];			// +0x04

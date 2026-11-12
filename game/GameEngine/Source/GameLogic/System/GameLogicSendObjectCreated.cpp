@@ -13,14 +13,16 @@ public:
 };
 
 // Constructor EDBB0 constructs three 24-byte events at +4. Destructor EDC40
-// destroys them and restores base vtable 01073744. It does not install the
-// derived vtable on entry. This destructor view preserves that behavior and
-// its base cleanup state when inlined; the base's original name is unknown.
-class Inner01073744 {
+// destroys them and restores base vtable 01073744 (the Snapshot base vtable;
+// dir32 records it as ??_7BfmeSnapshotBase@@6B@, mirroring
+// Team_notifyTeamOfObjectDeath.cpp). It does not install the derived vtable
+// on entry. This destructor view preserves that behavior and its base cleanup
+// state when inlined.
+class BfmeSnapshotBase {
 public:
-    virtual ~Inner01073744() {}
+    virtual ~BfmeSnapshotBase() {}
 };
-class __declspec(novtable) DelayedLuaEventList : public Inner01073744 {
+class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase {
 public:
     DelayedLuaEventList();
     __forceinline ~DelayedLuaEventList() {}

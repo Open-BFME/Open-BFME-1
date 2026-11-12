@@ -20,13 +20,15 @@ public:
 	unsigned int m_count;
 };
 
-class Inner01073744
+// Base vtable 01073744 is the Snapshot base vtable (dir32 records it as
+// ??_7BfmeSnapshotBase@@6B@, mirroring Team_notifyTeamOfObjectDeath.cpp).
+class BfmeSnapshotBase
 {
 public:
-	virtual ~Inner01073744(void) {}
+	virtual ~BfmeSnapshotBase(void) {}
 };
 
-class __declspec(novtable) DelayedLuaEventList : public Inner01073744
+class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase
 {
 public:
 	DelayedLuaEventList(void);             // ILT 0x00019CF9

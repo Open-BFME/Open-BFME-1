@@ -72,13 +72,15 @@ public:
 	unsigned char m_data[0x18];
 };
 
-class Inner01073744
+// Base vtable 01073744 is the Snapshot base vtable (dir32 records it as
+// ??_7BfmeSnapshotBase@@6B@, mirroring Team_notifyTeamOfObjectDeath.cpp).
+class BfmeSnapshotBase
 {
 public:
-	virtual ~Inner01073744() {}
+	virtual ~BfmeSnapshotBase() {}
 };
 
-class __declspec(novtable) DelayedLuaEventList : public Inner01073744
+class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase
 {
 public:
 	DelayedLuaEventList();

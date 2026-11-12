@@ -14,8 +14,10 @@ class Rva001C1EA0Object { public: void rva001C1EA0(bool); };
 class BfmeMarksYE { public: void bfmeSetYE(unsigned char,unsigned char); };
 class Rva002918E0Object { public: void set(unsigned char); };
 class BfmeDelayedLuaEvent { public: ~BfmeDelayedLuaEvent(); char data[0x18]; };
-class Inner01073744 { public: virtual ~Inner01073744() {} };
-class __declspec(novtable) DelayedLuaEventList : public Inner01073744 { public: DelayedLuaEventList(); __forceinline ~DelayedLuaEventList() {} BfmeDelayedLuaEvent events[3]; };
+// Base vtable 01073744 is the Snapshot base vtable (dir32 records it as
+// ??_7BfmeSnapshotBase@@6B@, mirroring Team_notifyTeamOfObjectDeath.cpp).
+class BfmeSnapshotBase { public: virtual ~BfmeSnapshotBase() {} };
+class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase { public: DelayedLuaEventList(); __forceinline ~DelayedLuaEventList() {} BfmeDelayedLuaEvent events[3]; };
 class BfmeOwnerBR { public: void bfmeGo939B(int,Object*,DelayedLuaEventList*); };
 extern BfmeOwnerBR* g_script00293E50;
 enum UpdateSleepTime { SLEEP1=1 };
