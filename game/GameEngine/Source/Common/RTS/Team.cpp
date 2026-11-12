@@ -1394,14 +1394,8 @@ Int TeamPrototype::countObjects(KindOfMaskType setMask, KindOfMaskType clearMask
 }
 
 // ------------------------------------------------------------------------
-// ?healAllObjects@TeamPrototype@@QAEXXZ present-unmatched
-void TeamPrototype::healAllObjects(void)
-{
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance()) 
-	{
-		iter.cur()->healAllObjects();
-	}
-}
+// void TeamPrototype::healAllObjects(void)
+// Body in TeamPrototypeHealAllObjects.cpp (exact NB retail).
 
 // ------------------------------------------------------------------------
 // ?iterateObjects@TeamPrototype@@QAEXP6AXPAVObject@@PAX@Z1@Z present-unmatched

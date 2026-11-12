@@ -125009,7 +125009,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	hasAnyObjects@Team@
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	hasAnyObjects@TeamPrototype@@QBE_NXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	hasAnyUnits@Team@@QBE_NXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	healAllObjects@Team@@QAEXXZ	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	healAllObjects@TeamPrototype@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	init@TeamFactory@@UAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	initTeam@TeamFactory@@QAEXABVAsciiString@@0_NPAVDict@@@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	isIdle@Team@@QBE_NXZ	1
