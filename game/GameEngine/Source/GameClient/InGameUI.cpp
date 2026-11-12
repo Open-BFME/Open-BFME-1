@@ -3452,25 +3452,8 @@ const CommandButton *InGameUI::getGUICommand( void ) const
 //-------------------------------------------------------------------------------------------------
 /** Destroy any drawables we have in our placement icon array and set to NULL */
 //-------------------------------------------------------------------------------------------------
-// ?destroyPlacementIcons@InGameUI@@IAEXXZ present-unmatched
-void InGameUI::destroyPlacementIcons( void )
-{
-	Int i;
-
-	for( i = 0; i < TheGlobalData->m_maxLineBuildObjects; ++i )
-	{
-
-		if( m_placeIcon[ i ] ) 
-		{
-			TheTerrainVisual->removeFactionBibDrawable(m_placeIcon[ i ]);
-			TheGameClient->destroyDrawable( m_placeIcon[ i ] );
-		}
-		m_placeIcon[ i ] = NULL;
-
-	}  // end for i
-	TheTerrainVisual->removeAllBibs();
-
-}  // end destroyPlacementIcons
+// destroyPlacementIcons
+// Body in InGameUIBodies.cpp (exact 71B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** User has clicked on a built item that requires placement in the world.  We will 
