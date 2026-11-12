@@ -1799,44 +1799,8 @@ void InGameUI::setRadiusCursor(RadiusCursorType cursorType, const SpecialPowerTe
 /** handle updating of "radius cursors" that follow the mouse pos */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUIBodies.cpp
-// ?handleRadiusCursor@InGameUI@@IAEXXZ present-unmatched
-void InGameUI::handleRadiusCursor()
-{
-	if (!m_curRadiusCursor.isEmpty())
-	{
-		const MouseIO* mouseIO = TheMouse->getMouseStatus();
-		Coord3D pos;
-
-		//
-		// if the mouse is in the radar window, the position in the world is that which is
-		// represented by the radar, otherwise we use the mouse position itself transformed
-		// from screen to world
-		// But only if the radar is on.
-		//
-		Bool radarOn = TheRadar->isRadarForced() 
-									|| ( !TheRadar->isRadarHidden() 
-												&& ThePlayerList->getLocalPlayer() 
-												&& ThePlayerList->getLocalPlayer()->hasRadar()
-											);
-
-		if( !radarOn  ||  (TheRadar->screenPixelToWorld( &mouseIO->pos, &pos ) == FALSE) )// if radar off, or point not on radar
-			TheTacticalView->screenToTerrain( &mouseIO->pos, &pos );
-
-
-    if ( TheGlobalData->m_doubleClickAttackMove && m_duringDoubleClickAttackMoveGuardHintTimer > 0 )
-    {
-      m_curRadiusCursor.setOpacity( m_duringDoubleClickAttackMoveGuardHintTimer * 0.1f );
-  		m_curRadiusCursor.setPosition( m_duringDoubleClickAttackMoveGuardHintStashedPosition );	//world space position of center of decal
-
-    }
-    else
-    {
-  		m_curRadiusCursor.setPosition(pos);	//world space position of center of decal
-      m_curRadiusCursor.update();
-    }
-
-  }
-}
+// handleRadiusCursor
+// Body in InGameUIBodies.cpp (exact 210B retail).
 
 
 // ?triggerDoubleClickAttackMoveGuardHint@InGameUI@@QAEXXZ present-unmatched
