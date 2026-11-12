@@ -3287,18 +3287,8 @@ void ScriptActions::doNamedKill(const AsciiString& unitName)
 //-------------------------------------------------------------------------------------------------
 /** doTeamKill */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamKill_Thunk.cpp
-// ?doTeamKill@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doTeamKill(const AsciiString& teamName)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-
-	if (!team) {
-		return;
-	}
-
-	team->killTeam();
-}
+// ScriptActions::doTeamKill(const AsciiString& teamName)
+// Body in ScriptActionsNamedTeam.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doPlayerKill */
