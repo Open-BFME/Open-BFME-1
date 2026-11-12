@@ -9230,26 +9230,8 @@ void InGameUI::resetIdleWorker( void )
 }
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUIBodies.cpp
-// ?recreateControlBar@InGameUI@@UAEXXZ present-unmatched
-void InGameUI::recreateControlBar( void )
-{
-	GameWindow *win = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey(AsciiString("ControlBar.wnd")));
-	if(win)
-		win->deleteInstance();
-	
-	m_idleWorkerWin = NULL;	
-	
-	createControlBar();
-		
-	if(TheControlBar)
-	{
-		delete TheControlBar;
-		TheControlBar = NEW ControlBar;
-		TheControlBar->init();
-	}
-
-
-}
+// recreateControlBar
+// Body in InGameUIBodies.cpp (exact 279B retail).
 
 // ?disableTooltipsUntil@InGameUI@@UAEXI@Z present-unmatched
 void InGameUI::disableTooltipsUntil(UnsignedInt frameNum)
