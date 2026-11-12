@@ -850,20 +850,8 @@ void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const 
 // body and owns nothing. The donor that used to hold it carried one marker for
 // each of the two destinations and could only ever feed one of them.
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseObjectCreationList@INI@@ present-unmatched
-void INI::parseObjectCreationList( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	typedef const ObjectCreationList *ConstObjectCreationListPtr;
-	ConstObjectCreationListPtr* theObjectCreationList = (ConstObjectCreationListPtr*)store;		
-
-	const ObjectCreationList *ocl = TheObjectCreationListStore->findObjectCreationList(token);	// could be null!
-	DEBUG_ASSERTCRASH(ocl || stricmp(token, "None") == 0, ("ObjectCreationList %s not found!\n",token));
-	// assign it, even if null!
-	*theObjectCreationList = ocl;
-
-} 
+// INI::parseObjectCreationList(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 30B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse a upgrade template string and store as template pointer */
