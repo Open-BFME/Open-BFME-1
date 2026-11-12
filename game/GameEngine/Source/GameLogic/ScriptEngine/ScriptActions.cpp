@@ -1926,18 +1926,8 @@ void ScriptActions::doOversizeTheTerrain(Int amount)
 //-------------------------------------------------------------------------------------------------
 /** doModCameraLookToward */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doModCameraLookToward.cpp
-// ?doModCameraLookToward@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doModCameraLookToward(const AsciiString& waypoint)
-{
-	for (Waypoint *way = TheTerrainLogic->getFirstWaypoint(); way; way = way->getNext()) {
-		if (way->getName() == waypoint) {
-			Coord3D destination = *way->getLocation();
-			TheTacticalView->cameraModLookToward(&destination);			
-			break;
-		}
-	}
-}
+// ScriptActions::doModCameraLookToward(const AsciiString& waypoint)
+// Body in ScriptActionsCamera.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doModCameraFinalLookToward */

@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?doModCameraFinalLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
-// readable body of ?doModCameraLookToward@ScriptActions@@IAEXABVAsciiString@@@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
 // Every ScriptActions action that drives the tactical view:
