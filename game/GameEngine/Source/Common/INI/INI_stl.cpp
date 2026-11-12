@@ -1126,12 +1126,8 @@ void INI::initFromINIMulti( void *what, const MultiIniFieldParse& parseTableList
 //-------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in integral number of frames, (unsignedint) rounding UP
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseDurationUnsignedInt@INI@@ present-unmatched
-void INI::parseDurationUnsignedInt( INI *ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	UnsignedInt val = scanUnsignedInt(ini->getNextToken());
-	*(UnsignedInt *)store = (UnsignedInt)ceilf(ConvertDurationFromMsecsToFrames((Real)val));
-}
+// INI::parseDurationUnsignedInt(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 67B retail).
 
 // ------------------------------------------------------------------------------------------------
 // parse a duration in msec and convert to duration in integral number of frames, (unsignedshort) rounding UP
