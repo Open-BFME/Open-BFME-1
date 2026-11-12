@@ -83,3 +83,45 @@ retail's recorder test plus setDefaultControlBarConfig); end with
 Not a spelling problem inside this function. Untested: a lever that changes
 switchToContext's IR without changing its out-of-line bytes. If one fixes this body,
 try it on 0x0049F8B0 too (same residue).
+
+## Second pass (2026-11-12, claude-opus-5-5, t=60min): still 818/818, 6 bytes
+
+All new trials leave the same 6 bytes unless noted. They were run on the in-TU form
+(the compiler inlines switchToContext) or on its hand expansion, and the
+switchToContext variants were also probed against 0x0049E780.
+
+- **Typed one-argument `__fastcall` vtable slot** (shape_levers row "A virtual call
+  uses the wrong vtable temporary register"). Tried on the overlay `slot04` (direct,
+  and with a receiver local) and on the transition `slot04`.
+- **Guard-chain spellings above the mismatch** (the row-241 lever). Tried on the
+  overlay guard: nested ifs, De Morgan, `goto` skips, empty-then/else, a ternary,
+  `do { break; } while (0)`, and an inline helper holding the whole guard.
+  Also tried on the focus guard below the mismatch:
+  - local `mode`: 6
+  - inline focus helper: 6
+  - one-case `switch` on mode: 8
+- **Selection state passed out of line.** Tried passing it by reference to an inline
+  finisher, passing (old, chat) as inline parameters with and without a chat local,
+  and returning old from an inline swap helper.
+- **`throw()` on every call before the mismatch.** Tried on setRadiusCursorNone,
+  the overlay and transition `slot04`, `Gen_004AFA80::bfmeTake` and
+  `Rva0058C040::invoke`. None moves a register. switchToContext stays exact.
+- **Respelling switchToContext's selection block.** Merging the chat test into the
+  focus `&&` chain with the cache store first gives 817/286 (switchToContext 133).
+  Storing to the cache straight from the member gives 12 (switchToContext 7).
+  Putting the store inside each arm of the merged chain gives 826/282.
+- **Inverting the outer `pt == observer` test** (else arm first) gives 817/376: the
+  layout changes.
+
+Reading of the residue: everything up to +0x179 is byte-identical. MSVC 7.1 gives
+oldSelected the next round-robin scratch register; in our build that is EAX, in retail
+ECX. Under the `allocation_residue.md` model, that means the register state that
+reaches the +0x179 join comes from the cur-test `je` path in ours and from the
+overlay-call path in retail. No block structure tried above changes which path
+supplies it.
+
+**0x0049F8B0 in-TU (coordinator idea).** Compiling setControlBarSchemeByPlayer inside
+ControlBar.cpp, next to this body, with the same views and `!p->isPlayerActive()`,
+gives 790/790 with 61 bytes, identical to its bank. Retail gives that body p=EBX but
+this one pt=EBP; our compiler gives EBP to both. Moving it into the TU therefore
+does not shrink its residue.
