@@ -8697,55 +8697,8 @@ try_again:
 //-------------------------------------------------------------------------------------------------
 /** modify the position of our floating text */
 //-------------------------------------------------------------------------------------------------
-// ?updateFloatingText@InGameUI@@ present-unmatched
-void InGameUI::updateFloatingText( void )
-{
-	FloatingTextData *ftd;		// pointer to our floating point data
-	UnsignedInt currLogicFrame = TheGameLogic->getFrame();			// the current logic frame
-	UnsignedByte r, g, b, a;	// we'll need to break apart our color so we can modify the alpha
-	Int amount;								// The amout we'll change the alpha
-	static UnsignedInt lastLogicFrameUpdate = currLogicFrame;		// We need to make sure our current frame is different then our last frame we updated.
-
-	// only update the position if we're incrementing frames
-	if(lastLogicFrameUpdate == currLogicFrame)
-		return;
-	
-	lastLogicFrameUpdate = currLogicFrame;
-
-	// Loop through our floating text list
-	for(FloatingTextListIt it = m_floatingTextList.begin(); it != m_floatingTextList.end();)
-	{
-		ftd = *it;
-		
-		// move it up
-		++ftd->m_frameCount;
-		
-		// fade the text
-		if( currLogicFrame > ftd->m_frameTimeOut)
-		{
-			// modify the color
-			GameGetColorComponents(ftd->m_color, &r, &g, &b, &a);		
-			amount = REAL_TO_INT( (currLogicFrame - ftd->m_frameTimeOut) * m_floatingTextMoveVanishRate);
-			if(a - amount < 0)
-				a = 0;
-			else
-				a -= amount;
-			ftd->m_color = GameMakeColor(r, g, b, a);
-			// if we have 0 alpha delete it
-			if( a <= 0)
-			{
-				it = m_floatingTextList.erase(it);
-				ftd->deleteInstance();
-				continue; // don't do the ++it below
-			}
-
-		}
-		// increase our itterator
-		++it;
-	
-	}
-
-}
+// updateFloatingText
+// Body in InGameUI_updateFloatingText.cpp (exact 314B retail).
 
 // The shroud subsystem is a SEPARATE global from the partition manager in BFME:
 // the engine-init tag block at 0x0038A1F0 stores 0x012ED5BC and then pushes the

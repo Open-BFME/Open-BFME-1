@@ -126072,7 +126072,6 @@ present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	stopMovie@InGam
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	triggerDoubleClickAttackMoveGuardHint@InGameUI@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	unregisterWindowLayout@InGameUI@@QAEXPAVWindowLayout@@@Z	1
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	updateAndDrawWorldAnimations@InGameUI@@IAEXXZ	1
-present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	updateFloatingText@InGameUI@@	1
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	updateIdleWorker@InGameUI@@EAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	videoBuffer@InGameUI@@UAEPAVVideoBuffer@@XZ	1
 present_unmatched	game/GameEngine/Source/GameClient/InGameUI.cpp	xfer@InGameUI@@MAEXPAVXfer@@@Z	1
