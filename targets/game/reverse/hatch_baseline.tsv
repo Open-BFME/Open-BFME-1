@@ -124996,7 +124996,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	damageTeamMembers@T
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	decreaseAIPriorityForFailure@TeamPrototype@@QBEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	evacuateTeam@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	evaluateProductionCondition@TeamPrototype@@QAE_NXZ	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	findTeamByID@TeamPrototype@@QAEPAVTeam@@I@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	findTeamPrototypeByID@TeamFactory@@QAEPAVTeamPrototype@@I@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	getControllingPlayer@TeamPrototype@@QBEPAVPlayer@@XZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	getEstimateTeamPosition@Team@@QBEPBUCoord3D@@XZ	1

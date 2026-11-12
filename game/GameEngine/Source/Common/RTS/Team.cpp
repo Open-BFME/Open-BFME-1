@@ -1274,16 +1274,8 @@ Player *TeamPrototype::getControllingPlayer() const
 }
 
 // ------------------------------------------------------------------------
-// ?findTeamByID@TeamPrototype@@QAEPAVTeam@@I@Z present-unmatched
-Team *TeamPrototype::findTeamByID( TeamID teamID )
-{
-	for (DLINK_ITERATOR<Team> iter = iterate_TeamInstanceList(); !iter.done(); iter.advance())
-	{
-		if( iter.cur()->getID() == teamID )
-			return iter.cur();
-	}
-	return NULL;
-}
+// Team *TeamPrototype::findTeamByID( TeamID teamID )
+// Body in TeamPrototypeInstanceWalks.cpp (exact NB retail).
 
 // ------------------------------------------------------------------------
 // ?setControllingPlayer@TeamPrototype@@QAEXPAVPlayer@@@Z present-unmatched
