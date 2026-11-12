@@ -779,33 +779,8 @@ void INI::parseDynamicAudioEventRTS( INI *ini, void * /*instance*/, void *store,
 /** Parse an ThingTemplate and assign to the 'ThingTemplate *' at store */
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseThingTemplate@INI@@ present-unmatched
-void INI::parseThingTemplate( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
-{
-	const char *token = ini->getNextToken();
-
-	if (!TheThingFactory)
-	{
-		DEBUG_CRASH(("TheThingFactory not inited yet"));
-		throw ERROR_BUG;
-	}
-
-	typedef const ThingTemplate *ConstThingTemplatePtr;
-	ConstThingTemplatePtr* theThingTemplate = (ConstThingTemplatePtr*)store;		
-
-	if (stricmp(token, "None") == 0)
-	{
-		*theThingTemplate = NULL;
-	}
-	else
-	{
-		const ThingTemplate *tt = TheThingFactory->findTemplate(token);	// could be null!
-		DEBUG_ASSERTCRASH(tt, ("ThingTemplate %s not found!\n",token));
-		// assign it, even if null!
-		*theThingTemplate = tt;
-	}
-
-} 
+// INI::parseThingTemplate(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 186B retail).
 
 //-------------------------------------------------------------------------------------------------
 /** Parse an ArmorTemplate and assign to the 'ArmorTemplate *' at store */
