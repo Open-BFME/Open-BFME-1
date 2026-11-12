@@ -125019,7 +125019,6 @@ present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	initTeam@TeamFactor
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	isIdle@Team@@QBE_NXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	iterateObjects@Team@@QAEXP6AXPAVObject@@PAX@Z1@Z	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	iterateObjects@TeamPrototype@@QAEXP6AXPAVObject@@PAX@Z1@Z	1
-present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	killTeam@Team@@QAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	loadPostProcess@Team@@MAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	loadPostProcess@TeamFactory@@MAEXXZ	1
 present_unmatched	game/GameEngine/Source/Common/RTS/Team.cpp	moveTeamTo@Team@@QAEXUCoord3D@@@Z	1

@@ -2764,42 +2764,8 @@ static Bool isInBuildVariations(const ThingTemplate* ttWithVariations, const Thi
 // Body in Team_evacuateTeam.cpp (exact 326B retail).
 
 // ------------------------------------------------------------------------
-// ?killTeam@Team@@QAEXXZ present-unmatched
-void Team::killTeam(void)
-{
-	std::list<Object *> objectsToProcess;
-
-	evacuateTeam();
-
-	// beacons are effectively dead, so we need to destroy via a non-kill() method
-	const ThingTemplate *beaconTemplate = TheThingFactory->findTemplate( getControllingPlayer()->getPlayerTemplate()->getBeaconTemplate() );
-
-	// now find objects to kill
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) {
-		Object *obj = iter.cur();
-		if (!obj || obj->isDestroyed() || (obj->isEffectivelyDead() && !obj->getTemplate()->isEquivalentTo(beaconTemplate)))
-		{
-			continue;
-		}
-		Team *objTeam = obj->getTeam();
-		// the object's team could change after having all the passengers get out.
-		if (objTeam == this) {
-			objectsToProcess.push_back(obj);
-		}
-	}
-
-	// and finally, kill things
-	std::list<Object *>::iterator objIt;
-	for (objIt = objectsToProcess.begin(); objIt != objectsToProcess.end(); ++objIt)
-	{
-		Object *obj = *objIt;
-		if (obj->isKindOf(KINDOF_TECH_BUILDING))
-			obj->setTeam(ThePlayerList->getNeutralPlayer()->getDefaultTeam());
-		else
-			obj->kill();
-	}
-	objectsToProcess.clear();
-}
+// void Team::killTeam(void)
+// Body in Team_killTeam.cpp (exact NB retail).
 
 // ------------------------------------------------------------------------
 /// @todo This should give a "team move" command, not individual move orders (MSB)
