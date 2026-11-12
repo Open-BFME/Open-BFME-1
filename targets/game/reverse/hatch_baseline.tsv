@@ -128756,7 +128756,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doPlayerTransferAssetsToPlayer@ScriptActions@@IAEXABVAsciiString@@0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doQuickVictory@ScriptActions@@IAEXXZ	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doRecruitTeam@ScriptActions@@IAEXABVAsciiString@@M@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doResumeSupplyTruckingForIdleUnits@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doRevealMapAtWaypoint@ScriptActions@@IAEXABVAsciiString@@M0@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doRevealMapEntire@ScriptActions@@IAEXABVAsciiString@@@Z	1

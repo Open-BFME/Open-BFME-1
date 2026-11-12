@@ -1954,18 +1954,8 @@ void ScriptActions::doModCameraFinalLookToward(const AsciiString& waypoint)
 //-------------------------------------------------------------------------------------------------
 /** doResetCamera */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doModCameraLookToward.cpp
-// ?doResetCamera@ScriptActions@@IAEXABVAsciiString@@MMM@Z present-unmatched
-void ScriptActions::doResetCamera(const AsciiString& waypoint, Real sec, Real easeIn, Real easeOut)
-{
-	for (Waypoint *way = TheTerrainLogic->getFirstWaypoint(); way; way = way->getNext()) {
-		if (way->getName() == waypoint) {
-			Coord3D destination = *way->getLocation();
-			TheTacticalView->resetCamera(&destination, sec*1000, easeIn*1000.0f, easeOut*1000.0f);			
-			break;
-		}
-	}
-}
+// ScriptActions::doResetCamera(const AsciiString& waypoint, Real sec, Real easeIn, Real easeOut)
+// Body in ScriptActionsCamera.cpp (exact NB retail).
 
 //-------------------------------------------------------------------------------------------------
 /** doRotateCamera around the object we are looking at. */
