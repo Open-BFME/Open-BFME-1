@@ -292,19 +292,8 @@ void INI::prepFile( AsciiString filename, INILoadType loadType )
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?unPrepFile@INI@@ present-unmatched
-void INI::unPrepFile()
-{
-	// close the file
-	m_file->close();
-	m_file = NULL;
-  m_readBufferUsed=m_readBufferNext=0;
-	m_filename = "None";
-	m_loadType = INI_LOAD_INVALID;
-	m_lineNum = 0;
-	m_endOfFile = FALSE;
-	s_xfer = NULL;
-}
+// INI::unPrepFile()
+// Body in ini.cpp (exact 50B retail).
 
 //-------------------------------------------------------------------------------------------------
 static INIBlockParse findBlockParse(const char* token)
