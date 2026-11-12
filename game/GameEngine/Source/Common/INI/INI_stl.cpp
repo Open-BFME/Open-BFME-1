@@ -1106,41 +1106,8 @@ void INI::parseDurationUnsignedShort( INI *ini, void * /*instance*/, void *store
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/ini.cpp
-// ?parseVeterancyLevelFlags@INI@@ present-unmatched
-void INI::parseVeterancyLevelFlags(INI* ini, void* /*instance*/, void* store, const void* /*userData*/)
-{
-	VeterancyLevelFlags flags = VETERANCY_LEVEL_FLAGS_ALL;
-	for (const char* token = ini->getNextToken(); token; token = ini->getNextTokenOrNull())
-	{
-		if (stricmp(token, "ALL") == 0)
-		{
-			flags = VETERANCY_LEVEL_FLAGS_ALL;
-			continue;
-		}
-		else if (stricmp(token, "NONE") == 0)
-		{
-			flags = VETERANCY_LEVEL_FLAGS_NONE;
-			continue;
-		}
-		else if (token[0] == '+')
-		{
-			VeterancyLevel dt = (VeterancyLevel)INI::scanIndexList(token+1, TheVeterancyNames);
-			flags = setVeterancyLevelFlag(flags, dt);
-			continue;
-		}
-		else if (token[0] == '-')
-		{
-			VeterancyLevel dt = (VeterancyLevel)INI::scanIndexList(token+1, TheVeterancyNames);
-			flags = clearVeterancyLevelFlag(flags, dt);
-			continue;
-		}
-		else
-		{
-			throw INI_UNKNOWN_TOKEN;
-		}
-	}
-	*(VeterancyLevelFlags*)store = flags;
-}
+// INI::parseVeterancyLevelFlags(INI*, void*, void*, const void*)
+// Body in ini.cpp (exact 210B retail).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
