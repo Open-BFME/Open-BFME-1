@@ -168,7 +168,6 @@ dir32,0x011060C0,??_7FunctorWrapper011060C0@@6B@,"retail 0x011060C0 is already r
 dir32,0x0110B5F0,?m_shellMenuSchemeFieldParseTable@ShellMenuSchemeManager@@2QBUFieldParse@@B,"retail 0x0110B5F0 is already recorded as ?m_shellMenuSchemeFieldParseTable@BfmeShellMenuSchemeManager@@2QBUFieldParse@@B; reference that name, not a new one"
 dir32,0x0110B638,?g_shellMenuSchemeImageFieldParse@@3QBUFieldParse@@B,"retail 0x0110B638 is already recorded as ?g_shellMenuSchemeImageFieldParse@@3QBEB; reference that name, not a new one"
 dir32,0x0110B6A0,?g_shellMenuSchemeLineFieldParse@@3QBUFieldParse@@B,"retail 0x0110B6A0 is already recorded as ?g_shellMenuSchemeLineFieldParse@@3QBEB; reference that name, not a new one"
-dir32,0x0110FE48,??_7ParticleSystem@@6B@,"nothing in the ledger owns 0x0110FE48. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01110500,?g_01110500@FXParticleSystem@@3QBUModuleCategoryEntry@1@B,"nothing in the ledger owns 0x01110500. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01111348,??_7T1Derived_005DEC00@@6BBfmeHolderCU@@@,"retail 0x01111348 is already recorded as ??_7Rva005ED8B0@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
 dir32,0x01111360,??_7T1Derived_005DEC40@@6BBfmeHolderCU@@@,"retail 0x01111360 is already recorded as ??_7Rva005ED310@@6BV3NodeHead@@@ (+1 more); reference that name, not a new one"
