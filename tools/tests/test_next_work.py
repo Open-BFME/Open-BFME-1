@@ -90,6 +90,13 @@ def test_explicit_link_shards_partition_the_existing_queue(link_picker):
     assert keys[0].union(keys[1]) == {key(item) for item in complete}
 
 
+def test_selected_link_task_prints_without_ghidra_fields(link_picker):
+    human = link_picker()
+    assert "== selected work: link repair" in human
+    assert "unit does not link" in human
+    assert "pass test: python3 tools/link_check.py" in human
+
+
 def test_empty_off_turn_queues_return_no_work():
     import next_work
 

@@ -1300,6 +1300,12 @@ def named_size_label(candidate):
 
 def print_candidate(label, candidate, meta, candidates=()):
     print(f"== selected work: {label} (drawn from {meta['pool']}) ==")
+    if label == "link repair":
+        print(f"  {candidate['size']:>5}B {candidate['target_rva']} {candidate['function']}")
+        print(f"       {candidate['source']}")
+        print(f"       why: {candidate['why']}")
+        print(f"       pass test: {candidate['pass_test']}")
+        return
     if label == "gate-debt repair":
         print(f"  {candidate['size']:>5}B  {candidate['check']}  {candidate['function']}")
         print(f"       {candidate['target_rva']} in {candidate['source']}")
