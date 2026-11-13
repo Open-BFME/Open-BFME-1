@@ -1,0 +1,52 @@
+import sys,json
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'tools'))
+import build,probe
+root=Path('build/spike3/display-stats-variants'); root.mkdir(parents=True,exist_ok=True)
+base=Path('targets/game/reverse/attempts/0x006f0300.cpp').read_text()
+lookup='((Rva006F0300Client *)TheGameClient)->findDrawableByID( ((Rva006F0300UI *)TheInGameUI)->getMousedOverDrawableID() )'
+old='''if( mouseStatus->rightState )
+		{
+			unibuffer.concat( L"RMB " );
+		}
+
+		Object *object = NULL;
+		Drawable *draw = '''+lookup+''';'''
+new='''Drawable *draw;
+        if (mouseStatus->rightState)
+        {
+            unibuffer.concat(L"RMB ");
+            draw = '''+lookup+''';
+        }
+        else
+            draw = '''+lookup+''';
+        Object *object = NULL;'''
+assert old in base
+sel_old='''if (draw && ((Rva006F0300Drawable *)draw)->getObject()) {
+            Object *obj = ((Rva006F0300Drawable *)draw)->getObject();'''
+sel_new='''Object *obj;
+        if (draw && (obj = ((Rva006F0300Drawable *)draw)->getObject()) != 0) {'''
+assert sel_old in base
+variants={
+ 'donor-rmb-branch-local-lookup':base.replace(old,new),
+ 'donor-selected-object-assignment':base.replace(sel_old,sel_new),
+ 'donor-lookup-and-object-assignment':base.replace(old,new).replace(sel_old,sel_new),
+}
+last=variants['donor-lookup-and-object-assignment']
+body='            Rva006F0300Body *body = ((Rva006F0300Object *)obj)->getBody();\n'
+assert body in last
+last=last.replace(body,'')
+position='            Coord3D pos = *((BFMERopeDrawable *)draw)->getPosition();\n'
+assert position in last
+variants['donor-lookup-object-position-order']=last.replace(position,position+body)
+symbol='?gatherDebugStats@W3DDisplay@@IAEXXZ'; image=Path(build.EXE).read_bytes(); off=build.rva_to_file_offset(build.pe_sections(image),0x6f0300); retail=image[off:off+4490]
+results=[]
+for name,text in variants.items():
+ src=(root/(name+'.cpp')).resolve(); obj=(root/(name+'.obj')).resolve();src.write_text(text)
+ ok,_,diagnostic=build.try_compile_source(src,obj)
+ if not ok:r={'variant':name,'error':str(diagnostic)}
+ else:
+  compiled,relocs=build.read_object_symbol_bytes(obj,symbol); ours,theirs=probe.masked(bytes(compiled),relocs),probe.masked(retail,relocs); diffs=[i for i,(a,b) in enumerate(zip(ours,theirs)) if a!=b]
+  r={'variant':name,'size':len(compiled),'relocs':len(relocs),'diffs':len(diffs),'first':diffs[0] if diffs else None,'offsets':diffs[:12]}
+ print(json.dumps(r),flush=True);results.append(r)
+(root/'results.json').write_text(json.dumps(results,indent=2)+'\n')

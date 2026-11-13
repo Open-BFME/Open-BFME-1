@@ -1,0 +1,45 @@
+import sys,json
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'tools'))
+import build,probe
+root=Path('build/spike3/display-hover-variants');root.mkdir(parents=True,exist_ok=True)
+base=Path('targets/game/reverse/attempts/0x006f0300.cpp').read_text()
+old='''Object *object = NULL;
+		Drawable *draw = ((Rva006F0300Client *)TheGameClient)->findDrawableByID( ((Rva006F0300UI *)TheInGameUI)->getMousedOverDrawableID() );
+		if( draw  )
+			object = ((Rva006F0300Drawable *)draw)->getObject();
+		if( object )'''
+new='''Drawable *draw = ((Rva006F0300Client *)TheGameClient)->findDrawableByID( ((Rva006F0300UI *)TheInGameUI)->getMousedOverDrawableID() );
+        Object *object;
+        if (draw && (object = ((Rva006F0300Drawable *)draw)->getObject()) != 0)'''
+assert old in base
+sel_old='''if (draw && ((Rva006F0300Drawable *)draw)->getObject()) {
+            Object *obj = ((Rva006F0300Drawable *)draw)->getObject();'''
+sel_new='''Object *obj;
+        if (draw && (obj = ((Rva006F0300Drawable *)draw)->getObject()) != 0) {'''
+format_old='''unibuffer2.format( UnicodeString(L"Moused over object: %S (%d) "), rva006F0300Field<AsciiString,0x20>((void *)Rva006F0300Template(object)).str(), ((Rva006F0300Object *)object)->getID() );'''
+format_new='''Int objectID = ((Rva006F0300Object *)object)->getID();
+            unibuffer2.format( UnicodeString(L"Moused over object: %S (%d) "), rva006F0300Field<AsciiString,0x20>((void *)Rva006F0300Template(object)).str(), objectID );'''
+assert format_old in base
+variants={'donor-hover-assignment':base.replace(old,new),'donor-both-object-assignments':base.replace(old,new).replace(sel_old,sel_new),'donor-hover-id-local':base.replace(format_old,format_new),'donor-hover-assignment-id-local':base.replace(old,new).replace(format_old,format_new)}
+# Test the complete witnessed donor lookup/control-flow shape once, not
+# combinations of artificial register toggles.
+full=Path('build/spike3/display-stats-variants/donor-lookup-object-position-order.cpp').read_text()
+full=full.replace('''Object *object = NULL;
+		if( draw  )
+			object = ((Rva006F0300Drawable *)draw)->getObject();
+		if( object )''','''Object *object;
+        if (draw && (object = ((Rva006F0300Drawable *)draw)->getObject()) != 0)''')
+assert full!=Path('build/spike3/display-stats-variants/donor-lookup-object-position-order.cpp').read_text()
+variants['complete-donor-object-flow']=full.replace(format_old,format_new)
+symbol='?gatherDebugStats@W3DDisplay@@IAEXXZ'; image=Path(build.EXE).read_bytes(); off=build.rva_to_file_offset(build.pe_sections(image),0x6f0300); retail=image[off:off+4490]
+results=[]
+for name,text in variants.items():
+ src=(root/(name+'.cpp')).resolve();obj=(root/(name+'.obj')).resolve();src.write_text(text)
+ ok,_,diagnostic=build.try_compile_source(src,obj)
+ if not ok:r={'variant':name,'error':str(diagnostic)}
+ else:
+  compiled,relocs=build.read_object_symbol_bytes(obj,symbol);ours,theirs=probe.masked(bytes(compiled),relocs),probe.masked(retail,relocs);diffs=[i for i,(a,b) in enumerate(zip(ours,theirs)) if a!=b]
+  r={'variant':name,'size':len(compiled),'relocs':len(relocs),'diffs':len(diffs),'first':diffs[0] if diffs else None}
+ print(json.dumps(r),flush=True);results.append(r)
+(root/'results.json').write_text(json.dumps(results,indent=2)+'\n')

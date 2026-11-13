@@ -1,0 +1,31 @@
+import sys,json
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'tools'))
+import build,probe
+root=Path('build/spike3/display-font-variants');root.mkdir(parents=True,exist_ok=True)
+base=Path('targets/game/reverse/attempts/0x006f0300.cpp').read_text()
+first='''else
+			font = ((FontLibraryBFMERetail *)TheFontLibrary)->getFont( &AsciiString("FixedSys"), 8.0f, FALSE );'''
+first_new='''else {
+            AsciiString fixedSys("FixedSys");
+            font = ((FontLibraryBFMERetail *)TheFontLibrary)->getFont(&fixedSys, 8.0f, FALSE);
+        }'''
+second='''GameFont *thisFont = ((FontLibraryBFMERetail *)TheFontLibrary)->getFont( &AsciiString("FixedSys"), 8.0f, FALSE );'''
+second_new='''GameFont *thisFont;
+        {
+            AsciiString fixedSys("FixedSys");
+            thisFont = ((FontLibraryBFMERetail *)TheFontLibrary)->getFont(&fixedSys, 8.0f, FALSE);
+        }'''
+assert first in base and second in base
+variants={'donor-first-named-font':base.replace(first,first_new),'second-named-font-scope':base.replace(second,second_new),'both-named-font-scopes':base.replace(first,first_new).replace(second,second_new)}
+symbol='?gatherDebugStats@W3DDisplay@@IAEXXZ'; image=Path(build.EXE).read_bytes(); off=build.rva_to_file_offset(build.pe_sections(image),0x6f0300); retail=image[off:off+4490]
+results=[]
+for name,text in variants.items():
+ src=(root/(name+'.cpp')).resolve();obj=(root/(name+'.obj')).resolve();src.write_text(text)
+ ok,_,diagnostic=build.try_compile_source(src,obj)
+ if not ok:r={'variant':name,'error':str(diagnostic)}
+ else:
+  compiled,relocs=build.read_object_symbol_bytes(obj,symbol);ours,theirs=probe.masked(bytes(compiled),relocs),probe.masked(retail,relocs);diffs=[i for i,(a,b) in enumerate(zip(ours,theirs)) if a!=b]
+  r={'variant':name,'size':len(compiled),'relocs':len(relocs),'diffs':len(diffs),'first':diffs[0] if diffs else None}
+ print(json.dumps(r),flush=True);results.append(r)
+(root/'results.json').write_text(json.dumps(results,indent=2)+'\n')
