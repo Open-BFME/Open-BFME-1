@@ -262,7 +262,6 @@ dir32,0x012DBD60,?g_rva00EDBD60DistanceProcs@@3PAP6AMPBX0H@ZA,"nothing in the le
 dir32,0x012ED5CC,?m_theOriginal@GlobalData@@2PAV1@A,"retail 0x012ED5CC is already recorded as ?g_bfmeGlobalDataOriginal@@3PAVGlobalData@@A (+1 more); reference that name, not a new one"
 dir32,0x012ED828,?RvaObject012ED828@@3VAsciiString@@A,"nothing in the ledger owns 0x012ED828. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012ED82C,?RvaObject012ED82C@@3VAsciiString@@A,"nothing in the ledger owns 0x012ED82C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x012EF180,?RvaObject012EF180@@3VAsciiString@@A,"nothing in the ledger owns 0x012EF180. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012EF1E4,?RvaObject012EF1E4@@3VAsciiString@@A,"nothing in the ledger owns 0x012EF1E4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012EF1F0,?RvaObject012EF1F0@@3VAsciiString@@A,"nothing in the ledger owns 0x012EF1F0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012EF430,?g_rva012EF430@@3PAVAsciiString@@A,"retail 0x012EF430 is already recorded as _bfmeObjDAA; reference that name, not a new one"

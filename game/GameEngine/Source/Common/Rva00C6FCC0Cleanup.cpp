@@ -35,13 +35,13 @@ struct Gen0000D828 { void handle(); };
 extern AsciiString TheOptionGroupName; // 0x012ED60C
 extern AsciiString RvaObject012ED828;
 extern AsciiString RvaObject012ED82C;
-extern AsciiString RvaObject012EF180;
+extern AsciiString g_Va012EF180;
 extern AsciiString RvaObject012EF1E4;
 extern AsciiString RvaObject012EF1F0;
 void rva00C6FCE0() { reinterpret_cast<Gen0000D828 *>(&TheOptionGroupName)->handle(); }
 void rva00C6FCF0() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED828)->handle(); }
 void rva00C6FD00() { reinterpret_cast<Gen0000D828 *>(&RvaObject012ED82C)->handle(); }
-void rva00C6FD20() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF180)->handle(); }
+void rva00C6FD20() { reinterpret_cast<Gen0000D828 *>(&g_Va012EF180)->handle(); }
 void rva00C6FD30() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF1E4)->handle(); }
 void rva00C6FD40() { reinterpret_cast<Gen0000D828 *>(&RvaObject012EF1F0)->handle(); }
 
