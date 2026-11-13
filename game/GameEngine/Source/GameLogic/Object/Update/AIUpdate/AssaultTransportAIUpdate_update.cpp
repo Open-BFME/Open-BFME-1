@@ -373,7 +373,6 @@ Bool AssaultTransportAIUpdate::isAttackPointless() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?isMemberWounded@AssaultTransportAIUpdate@@ present-unmatched
 Bool AssaultTransportAIUpdate::isMemberWounded( const Object *member ) const
 {
 	const AssaultTransportAIUpdateModuleData *data = getAssaultTransportAIUpdateModuleData();
