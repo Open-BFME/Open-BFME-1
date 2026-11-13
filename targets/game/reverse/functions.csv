@@ -16561,7 +16561,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?Get_Total_Buffer_Count@VertexBufferClass@@SAIXZ,,0x0091D990,6,game/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.cpp,matched,
 ?Get_Total_Time@HCompressedAnimClass@@UAEMXZ,,0x0095B870,7,game/Libraries/Source/WWVegas/WW3D2/hcanim.cpp,matched,gen-alias;object-symbol=?Get_Total_Time@HCompressedAnimClass@@UAEMXZ;C++ alias
 ?Get_Total_Time@HRawAnimClass@@UAEMXZ,,0x00959A50,7,game/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,gen-alias;object-symbol=?Get_Total_Time@HRawAnimClass@@UAEMXZ;C++ alias
-?Get_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@AAVMatrix4@@@Z,,0x005F0F00,854,game/Libraries/Source/WWVegas/WW3D2/render2d.cpp,matched,D3D shim vtable aligned to retail (+7 slots)
 ?Get_Transform@HCompressedAnimClass@@UBEXAAVMatrix3D@@HM@Z,,0x0095BCB0,1063,game/Libraries/Source/WWVegas/WW3D2/hcanim.cpp,matched,retail-vtable=0x0113E038+0x2C; clean-C++; full1063B; all17relocs-proven
 ?Get_Transform@HRawAnimClass@@UBEXAAVMatrix3D@@HM@Z,,0x0095A520,1756,game/Libraries/Source/WWVegas/WW3D2/hrawanim.cpp,matched,
 ?Get_Transform@HTreeClass@@QBEABVMatrix3D@@H@Z,,0x00924860,20,game/Libraries/Source/WWVegas/WW3D2/meshgeometry.cpp,matched,
@@ -25003,7 +25002,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?Set_Transform@Animatable3DObjClass@@UAEXABVMatrix3D@@@Z,,0x00982110,24,game/Libraries/Source/WWVegas/WW3D2/animobj.cpp,matched,
 ?Set_Transform@CameraClass@@UAEXABVMatrix3D@@@Z,,0x009312F0,24,game/Libraries/Source/WWVegas/WW3D2/camera.cpp,matched,
 ?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix3D@@@Z,,0x006CB570,682,game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterTracksRenderSystem_flush.cpp,matched,
-?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix4@@@Z,,0x006DB7D0,1057,game/Libraries/Source/WWVegas/WW3D2/render2d.cpp,matched,D3D shim vtable aligned to retail (+7 slots)
 ?Set_Transform@HLodClass@@UAEXABVMatrix3D@@@Z,,0x00979D20,24,game/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,
 ?Set_Transform@OBBoxRenderObjClass@@UAEXABVMatrix3D@@@Z,,0x00956B50,27,game/Libraries/Source/WWVegas/WW3D2/boxrobj.cpp,matched,OBBox vtable 0x0113DC20 slot 21; ICF-equivalent transform body
 ?Set_Transform@ProxyClass@@QAEXABVMatrix3D@@@Z,,0x009793F0,78,game/Libraries/Source/WWVegas/WW3D2/hlod.cpp,matched,
@@ -25036,7 +25034,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?Set_Vertex_Buffer@DX8Wrapper@@SAXPBVVertexBufferClass@@I@Z,,0x009043D0,146,game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp,matched,
 ?Set_Vertex_Index_Range@DX8PolygonRendererClass@@QAEXII@Z,,0x006742A0,17,game/Libraries/Source/WWVegas/WW3D2/DX8TextureCategoryAddMesh.cpp,matched,model=sonnet-5.5;host=GreatFaram
 ?Set_Vertex_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z,,0x0071BEB0,94,game/Libraries/Source/WWVegas/WW3D2/DX8WrapperApplyDefaultState.cpp,matched,Existing canonical header body; emitter moved with Apply_Default_State; vertex constant device slot94; original identity evidence 0071beb0.md;model=GPT-6
-?Set_View_Identity@DX8Wrapper@@SAXXZ,,0x0078AED0,187,game/Libraries/Source/WWVegas/WW3D2/render2d.cpp,matched,
 ?Set_View_Plane@CameraClass@@QAEXABVVector2@@0@Z,,0x00931D70,72,game/Libraries/Source/WWVegas/WW3D2/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
 ?Set_View_Plane@CameraClass@@QAEXMM@Z,,0x00931780,117,game/Libraries/Source/WWVegas/WW3D2/camera.cpp,matched,RenderObjClass +0x34 (camera shim)
 ?Set_Viewport@CameraClass@@QAEXABVVector2@@0@Z,,0x0073DB60,52,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp,matched,
@@ -173474,3 +173471,6 @@ dup_3828c0,,0x003828C0,16,game/GameEngine/Source/GameClient/FXListStoreClone.cpp
 ?png_get_signature@D3DX@@YGPAEPAUpng_struct_def@1@PAUpng_info_struct@1@@Z,,0x00A64535,25,game/Libraries/Source/LibPNG/D3DXPngGet.cpp,matched,vendored=libpng-1.0.5; original D3DX pngget.obj; Terra candidate with parent Sol feature-profile ABI rescue;model=openai/gpt-6.1-sol;host=v2202610437078538603
 ?png_get_tRNS@D3DX@@YGKPAUpng_struct_def@1@PAUpng_info_struct@1@PAPAEPAHPAPAUpng_color_16_struct@1@@Z,,0x00A646AF,105,game/Libraries/Source/LibPNG/D3DXPngGet.cpp,matched,vendored=libpng-1.0.5; original D3DX pngget.obj; Terra candidate with parent Sol feature-profile ABI rescue;model=openai/gpt-6.1-sol;host=v2202610437078538603
 ?png_get_valid@D3DX@@YGKPAUpng_struct_def@1@PAUpng_info_struct@1@K@Z,,0x00A644E6,29,game/Libraries/Source/LibPNG/D3DXPngGet.cpp,matched,vendored=libpng-1.0.5; original D3DX pngget.obj; Terra candidate with parent Sol feature-profile ABI rescue;model=openai/gpt-6.1-sol;host=v2202610437078538603
+?Get_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@AAVMatrix4@@@Z,,0x005F0F00,854,game/Libraries/Source/WWVegas/WW3D2/Render2DRenderThunk.cpp,matched,provider-rehome=targets/game/reverse/attempt_support/20261113-render2d-provider.md; existing identity extent and bindings preserved;model=gpt-6.1-sol;host=ymo-workstation
+?Set_Transform@DX8Wrapper@@SAXW4_D3DTRANSFORMSTATETYPE@@ABVMatrix4@@@Z,,0x006DB7D0,1057,game/Libraries/Source/WWVegas/WW3D2/Render2DRenderThunk.cpp,matched,provider-rehome=targets/game/reverse/attempt_support/20261113-render2d-provider.md; existing identity extent and bindings preserved;model=gpt-6.1-sol;host=ymo-workstation
+?Set_View_Identity@DX8Wrapper@@SAXXZ,,0x0078AED0,187,game/Libraries/Source/WWVegas/WW3D2/Render2DRenderThunk.cpp,matched,provider-rehome=targets/game/reverse/attempt_support/20261113-render2d-provider.md; existing identity extent and bindings preserved;model=gpt-6.1-sol;host=ymo-workstation
