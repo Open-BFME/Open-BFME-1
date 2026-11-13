@@ -69,7 +69,8 @@ public:
 	std::vector<ExperienceScalarTable *> m_scalarTables;	// +0x20
 };
 
-extern BfmeExperienceLevelSystem *TheExperienceLevelSystem;	// 0x012F0888
+class ExperienceLevelSystem;
+extern ExperienceLevelSystem *TheExperienceLevelSystem;	// 0x012F0888
 
 __declspec(noinline) ExperienceScalarTable::ExperienceScalarTable( const AsciiString &name ) :
 	m_unmodelled_00( 0 ),
@@ -110,5 +111,5 @@ void parseExperienceScalarTable( INI *ini )
 
 	ini->initFromINI( table, ExperienceScalarTable::m_fieldParseTable );
 
-	TheExperienceLevelSystem->addScalarTable( table );
+	reinterpret_cast<BfmeExperienceLevelSystem *>(TheExperienceLevelSystem)->addScalarTable( table );
 }
