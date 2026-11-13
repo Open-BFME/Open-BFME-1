@@ -12,16 +12,7 @@ struct Coord3D;
 class Matrix3D;
 
 
-// ?doFXObj@FXList@@SAXPBV1@PBVObject@@1@Z
-void FXList::doFXObj(const FXList *fxList, const Object *primary, const Object *secondary)
-{
-	if (fxList)
-	{
-		FXList *self = const_cast<FXList *>(fxList);
-		if (!self->bfmeIsBlocked())
-			self->doFXObj(primary, secondary);
-	}
-}
+// Static doFXObj is emitted and verified in PropagandaTowerBehavior_doScan.cpp.
 
 // ?doFXPos@FXList@@SAXPBV1@PBUCoord3D@@PBVMatrix3D@@M1@Z
 void FXList::doFXPos(const FXList *fxList, const Coord3D *position,
