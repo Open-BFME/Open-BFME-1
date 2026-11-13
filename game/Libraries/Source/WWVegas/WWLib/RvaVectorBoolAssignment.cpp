@@ -7,4 +7,17 @@
 
 #include <vector>
 
-template class _STL::vector<bool>;
+// Keep the native inline deallocation without a competing standalone copy.
+namespace _STL {
+template <> __declspec(dllimport) __forceinline
+void _Bvector_base<allocator<bool> >::_M_deallocate()
+{
+    if (_M_start._M_p)
+        _M_end_of_storage.deallocate(_M_start._M_p,
+            _M_end_of_storage._M_data - _M_start._M_p);
+}
+}
+
+// Instantiate only the two members owned by this translation unit.
+template _STL::vector<bool> &_STL::vector<bool>::operator=(const _STL::vector<bool> &);
+template void _STL::vector<bool>::reserve(unsigned int);
