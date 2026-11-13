@@ -31,3 +31,4 @@ for item in report:
     print(item['state'],hex(item['base']),'exit',item['exit'],'duplicates',len(item['duplicates']),'unresolved',len(item['unresolved']))
 assert all(len(x['duplicates'])==(1 if x['state']=='before' else 0) for x in report)
 assert all(x['exit']!=0 and len(x['unresolved'])==244 for x in report)
+assert all(x['unresolved']==report[0]['unresolved'] for x in report)
