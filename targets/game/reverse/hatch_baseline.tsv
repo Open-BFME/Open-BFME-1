@@ -128706,7 +128706,6 @@ present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cp
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetGarrisonEvacDisposition@ScriptActions@@IAEXABVAsciiString@@I@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetHeld@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z	1
-present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetTrainHeld@ScriptActions@@	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedSetUnmanned@ScriptActions@@IAEXABVAsciiString@@@Z	1
 present_unmatched	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp	doNamedShowSpecialPowerDisplay@ScriptActions@@IAEXABVAsciiString@@@Z	1

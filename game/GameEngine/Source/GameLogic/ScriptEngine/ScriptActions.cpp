@@ -4573,24 +4573,8 @@ void ScriptActions::doNamedSetHeld(const AsciiString& unit, Bool held)
 //-------------------------------------------------------------------------------------------------
 /** doNamedSetStoppingDistance */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doNamedSetStoppingDistance.cpp
-// ?doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z present-unmatched
-void ScriptActions::doNamedSetStoppingDistance(const AsciiString& unit, Real stoppingDistance)
-{
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	if (theObj) 
-	{
-		AIUpdateInterface *aiUpdate = theObj->getAIUpdateInterface();
-		if (!aiUpdate || !aiUpdate->getCurLocomotor()) {
-			return;
-		}
-		
-		if (stoppingDistance >= 0.5f)
-		{
-			aiUpdate->getCurLocomotor()->setCloseEnoughDist(stoppingDistance);
-		}
-	}
-}
+// ScriptActions::doNamedSetStoppingDistance(const AsciiString& unit, Real stoppingDistance)
+// Body in ScriptActionsNamedUnitProperties.cpp (exact retail 0x002EF710).
 
 //-------------------------------------------------------------------------------------------------
 /** doDisableSpecialPowerDisplay */
