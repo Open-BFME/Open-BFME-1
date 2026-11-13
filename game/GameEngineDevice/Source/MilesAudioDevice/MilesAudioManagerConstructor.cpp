@@ -170,7 +170,7 @@ private:
 	char m_body[0x1c0];
 };
 class Rva0069CEE0 { public: Rva0069CEE0( void ); ~Rva0069CEE0( void ); char m_body[0xc]; };
-class Rva006967A0 { public: Rva006967A0( void ); ~Rva006967A0( void ); char m_body[0x4]; };
+class Rva004046F6 { public: Rva004046F6( void ); ~Rva004046F6( void ); char m_body[0x4]; };
 
 class MilesAudioManager : public Rva00694E00
 {
@@ -223,7 +223,7 @@ private:
 	_STL::list<Gen_t_006a0470_p4cd> m_list9d0;
 	_STL::queue<Rva006AADB0Element> m_queues[6];			// +0x9d4
 	UnsignedInt m_ac4[3];								// +0xac4
-	Rva006967A0 m_ad0[3];								// +0xad0
+	Rva004046F6 m_ad0[3];								// +0xad0
 	_STL::vector<double> m_vectoradc;						// +0xadc
 	_STL::vector<double> m_vectorae8;						// +0xae8
 	_STL::map<int, Gen_t_006a00d0_p4pod> m_mapaf4;						// +0xaf4
