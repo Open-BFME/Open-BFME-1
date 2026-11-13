@@ -1,0 +1,69 @@
+import sys
+from pathlib import Path
+import json
+sys.path.insert(0, str(Path.cwd() / 'tools'))
+import build
+import probe
+
+root = Path('build/spike3/parser-variants')
+root.mkdir(parents=True, exist_ok=True)
+base = Path('build/spike3/sides-parser-provider-view.cpp').read_text()
+symbol = '?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z'
+image = Path(build.EXE).read_bytes()
+offset = build.rva_to_file_offset(build.pe_sections(image), 0x19bf40)
+retail = image[offset:offset+1197]
+variants = {}
+def add(name, changes):
+    text = base
+    for old,new in changes:
+        assert old in text, name + ': ' + old
+        text = text.replace(old,new)
+    variants[name] = text
+
+getter = 'return index>=0 && index<m_numSides ? &m_sides[index] : 0;'
+for name, body in [
+    ('getter-if-block', 'if (index>=0 && index<m_numSides) { return &m_sides[index]; } return 0;'),
+    ('getter-two-early-outs', 'if (index < 0) return 0; if (index >= m_numSides) return 0; return &m_sides[index];'),
+]:
+    add(name, [(getter,body)])
+
+flags = [('m_initiallyBuilt','setInitiallyBuilt'), ('m_whiner','setWhiner'),
+         ('m_unsellable','setUnsellable'), ('m_repairable','setRepairable')]
+setters = '\n'.join('    void '+fn+'(bool value) { '+field+' = value; }' for field,fn in flags)
+flag_changes = [('    void setLocation(Coord3D loc)', setters+'\n    void setLocation(Coord3D loc)')]
+for field,fn in flags:
+    flag_changes.append(('pBuildList->'+field+' = (file.readByte() != 0) ? 1 : 0;',
+                         'pBuildList->'+fn+'(file.readByte());'))
+add('reference-bool-setters', flag_changes)
+add('reference-bool-members-and-setters', flag_changes +
+    [('unsigned char '+field+';', 'bool '+field+';') for field,_ in flags])
+add('reference-bool-members', [('unsigned char '+field+';', 'bool '+field+';') for field,_ in flags])
+add('registration-member-label', [('(AsciiString *)info', '&info->m_label')])
+add('registration-array-decay', [('(void *)&scripts[0]', 'scripts')])
+add('reference-registration-arguments', [('(AsciiString *)info', '&info->m_label'),
+                                       ('(void *)&scripts[0]', 'scripts'), ('(void *)&count', '&count')])
+
+# The bound parser's old virtual view has been replaced by the constructor
+# provider's established explicit-vptr view; now test the reference's scope.
+add('reference-pre5-scope', [('if (info->m_version >= 5)\n\t\treturn true;\n\n\tScriptList *scripts[32];',
+    'if (info->m_version < 5) {\n\tScriptList *scripts[32];'),
+    ('\n\n\treturn true;\n}', '\n\t}\n\n\treturn true;\n}')])
+
+results = []
+for name,text in variants.items():
+    source = (root / (name+'.cpp')).resolve()
+    obj = (root / (name+'.obj')).resolve()
+    source.write_text(text)
+    ok,_,diagnostic = build.try_compile_source(source,obj)
+    if not ok:
+        result = {'variant':name,'error':str(diagnostic)}
+    else:
+        compiled,relocs = build.read_object_symbol_bytes(obj,symbol)
+        ours,theirs = probe.masked(bytes(compiled),relocs),probe.masked(retail,relocs)
+        diffs = [i for i,(a,b) in enumerate(zip(ours,theirs)) if a!=b]
+        result = {'variant':name,'size':len(compiled),'relocs':len(relocs),'diffs':len(diffs),
+                  'first':diffs[0] if diffs else None,
+                  'frame':bytes(compiled)[0x15:0x1b].hex()}
+    print(json.dumps(result),flush=True)
+    results.append(result)
+(root/'results.json').write_text(json.dumps(results,indent=2)+'\n')

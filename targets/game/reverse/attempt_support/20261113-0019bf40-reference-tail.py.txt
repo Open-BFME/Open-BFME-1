@@ -1,0 +1,47 @@
+import sys
+from pathlib import Path
+import json
+sys.path.insert(0, str(Path.cwd() / 'tools'))
+import build
+import probe
+root = Path('build/spike3/parser-tail-variants'); root.mkdir(parents=True, exist_ok=True)
+base = Path('build/spike3/sides-parser-scope-setters.cpp').read_text()
+symbol = '?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z'
+image = Path(build.EXE).read_bytes(); off=build.rva_to_file_offset(build.pe_sections(image),0x19bf40); retail=image[off:off+1197]
+script_accessors = [('\tScriptList *m_scripts;\t\t\t// +0x08', '\tScriptList *m_scripts;\t\t\t// +0x08\n    ScriptList *getScriptList() { return m_scripts; }\n    void setScriptList(ScriptList *scripts) { m_scripts = scripts; }'),
+ ('getSideInfo(k)->m_scripts;', 'getSideInfo(k)->getScriptList();'),
+ ('getSideInfo(k)->m_scripts = scripts[k];', 'getSideInfo(k)->setScriptList(scripts[k]);')]
+count_accessor = [('bool parseSidesDataChunk(DataChunkInput &file, DataChunkInfo *info);','bool parseSidesDataChunk(DataChunkInput &file, DataChunkInfo *info);\n    int getNumSides() { return m_numSides; }'), ('if (k < m_numSides)','if (k < getNumSides())')]
+shared_index = [('for (Int i = 0; i < count; i++)', 'Int i;\n\tfor (i = 0; i < count; i++)'), ('for (Int k = 0; k < count; k++)','for (i = 0; i < count; i++)'), ('getSideInfo(k)', 'getSideInfo(i)'), ('scripts[k]','scripts[i]'), ('if (k < m_numSides)', 'if (i < m_numSides)')]
+variants = {}
+def add(name, changes):
+    text=base
+    for old,new in changes:
+        assert old in text, name+':'+old
+        text=text.replace(old,new)
+    variants[name]=text
+add('script-accessors',script_accessors)
+add('count-accessor',count_accessor)
+add('script-and-count-accessors',script_accessors+count_accessor)
+add('shared-side-script-index',shared_index)
+# Both loops use the reference accessor chain; no extra object or fake input.
+add('shared-index-script-accessors',shared_index+[(a.replace('(k)','(i)').replace('[k]','[i]'),b.replace('(k)','(i)').replace('[k]','[i]')) for a,b in script_accessors])
+add('script-explicit-side-pointer', [('ScriptList *pSL = getSideInfo(k)->m_scripts;', 'BfmeItemCMC *side = getSideInfo(k);\n\t\t\tScriptList *pSL = side->m_scripts;')])
+add('script-braced-delete', [('if (pSL)\n\t\t\t\tdelete pSL;', 'if (pSL) { delete pSL; }')])
+add('script-declared-index', [('for (Int k = 0; k < count; k++)', 'Int k;\n\tfor (k = 0; k < count; k++)')])
+add('getter-if-branch', [('return index>=0 && index<m_numSides ? &m_sides[index] : 0;', 'if (index>=0 && index<m_numSides) { return &m_sides[index]; } return 0;')])
+add('getter-nested-branch', [('return index>=0 && index<m_numSides ? &m_sides[index] : 0;', 'if (index >= 0) { if (index < m_numSides) return &m_sides[index]; } return 0;')])
+add('getter-throw-reference-tail', [('return index>=0 && index<m_numSides ? &m_sides[index] : 0;', 'if (index>=0 && index<m_numSides) { return &m_sides[index]; } throw ERROR_CORRUPT_FILE_FORMAT;')])
+# The throw variant tests the released header contract only; it is not
+# semantically substitutable for the native nullable getter and cannot land.
+results=[]
+for name,text in variants.items():
+    source=(root/(name+'.cpp')).resolve(); obj=(root/(name+'.obj')).resolve(); source.write_text(text)
+    ok,_,diagnostic=build.try_compile_source(source,obj)
+    if not ok: r={'variant':name,'error':str(diagnostic)}
+    else:
+        compiled,relocs=build.read_object_symbol_bytes(obj,symbol); ours,theirs=probe.masked(bytes(compiled),relocs),probe.masked(retail,relocs)
+        diffs=[i for i,(a,b) in enumerate(zip(ours,theirs)) if a!=b]
+        r={'variant':name,'size':len(compiled),'relocs':len(relocs),'diffs':len(diffs),'first':diffs[0] if diffs else None,'frame':bytes(compiled)[0x15:0x1b].hex()}
+    print(json.dumps(r),flush=True); results.append(r)
+(root/'results.json').write_text(json.dumps(results,indent=2)+'\n')

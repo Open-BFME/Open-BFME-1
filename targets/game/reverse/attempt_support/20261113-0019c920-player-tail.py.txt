@@ -1,0 +1,63 @@
+import sys
+from pathlib import Path
+import json
+sys.path.insert(0, str(Path.cwd() / 'tools'))
+import build
+import probe
+
+root = Path('build/spike3/sides-variants')
+root.mkdir(parents=True, exist_ok=True)
+base = Path('targets/game/reverse/attempts/0x0019c920.cpp').read_text()
+symbol = '?validateSides@SidesList@@QAE_NXZ'
+image = Path(build.EXE).read_bytes()
+offset = build.rva_to_file_offset(build.pe_sections(image), 0x19c920)
+retail = image[offset:offset+1810]
+variants = {}
+def add(name, old, new):
+    assert old in base, name
+    variants[name] = base.replace(old, new)
+
+# The bank's only residue follows the player loop's destructors and backedge.
+# These retain both validations and their effects, unlike deletion diagnostics.
+for argument in ('allies', 'enemies'):
+    condition = 'if (validateAllyEnemyList(pname, ' + argument + '))'
+    add(argument + '-named-result', condition,
+        'Bool changed_' + argument + ' = validateAllyEnemyList(pname, ' + argument + ');\n\t\tif (changed_' + argument + ')')
+    add(argument + '-explicit-true', condition,
+        'if (validateAllyEnemyList(pname, ' + argument + ') == true)')
+    key = 'TheKey_playerAllies' if argument == 'allies' else 'TheKey_playerEnemies'
+    statements = 'pdict->setAsciiString(' + key + '.key(), ' + argument + ');\n\t\t\tmodified = true;'
+    add(argument + '-mark-before-set', statements,
+        'modified = true;\n\t\t\tpdict->setAsciiString(' + key + '.key(), ' + argument + ');')
+
+add('player-preincrement', 'for (i = 0; i < getNumSides(); i++)',
+    'for (i = 0; i < getNumSides(); ++i)')
+add('player-backedge-count-local', 'for (i = 0; i < getNumSides(); i++)',
+    'for (i = 0; ; i++)\n\t{\n\t\tInt numSides = getNumSides();\n\t\tif (i >= numSides) break;\n\t')
+# Close the outer block paired with this intentionally open source transformation.
+variants['player-backedge-count-local'] = variants['player-backedge-count-local'].replace(
+    '\n\t// ensure there\'s no overlap', '\n\t}\n\n\t// ensure there\'s no overlap')
+add('count-accessor-const', 'Int getNumSides() { return m_numSides; }',
+    'Int getNumSides() const { return m_numSides; }')
+add('player-index-increment-assignment', 'for (i = 0; i < getNumSides(); i++)',
+    'for (i = 0; i < getNumSides(); i = i + 1)')
+add('player-count-negated-condition', 'for (i = 0; i < getNumSides(); i++)',
+    'for (i = 0; !(i >= getNumSides()); i++)')
+
+results = []
+for name, text in variants.items():
+    source = (root / (name + '.cpp')).resolve()
+    obj = (root / (name + '.obj')).resolve()
+    source.write_text(text)
+    ok, _, diagnostic = build.try_compile_source(source, obj)
+    if not ok:
+        result = {'variant': name, 'error': str(diagnostic)}
+    else:
+        compiled, relocs = build.read_object_symbol_bytes(obj, symbol)
+        ours, theirs = probe.masked(bytes(compiled), relocs), probe.masked(retail, relocs)
+        diffs = [i for i, (a, b) in enumerate(zip(ours, theirs)) if a != b]
+        result = {'variant': name, 'size': len(compiled), 'relocs': len(relocs), 'diffs': len(diffs),
+                  'first': diffs[0] if diffs else None, 'offsets': diffs if len(diffs) < 15 else diffs[:15]}
+    results.append(result)
+    print(json.dumps(result), flush=True)
+(root / 'results.json').write_text(json.dumps(results, indent=2) + '\n')
