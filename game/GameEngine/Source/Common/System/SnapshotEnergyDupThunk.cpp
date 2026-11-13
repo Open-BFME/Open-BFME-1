@@ -23,16 +23,4 @@ SnapshotDupReplica::SnapshotDupReplica() : m_reserved(0)
 {
 }
 
-class Inner010EAD58
-{
-public:
-	Inner010EAD58();
-	virtual ~Inner010EAD58() {}
-
-private:
-	int m_reserved;
-};
-
-Inner010EAD58::Inner010EAD58() : m_reserved(0)
-{
-}
+// Inner010EAD58 constructor is emitted and verified in FXListStoreClone.cpp.
