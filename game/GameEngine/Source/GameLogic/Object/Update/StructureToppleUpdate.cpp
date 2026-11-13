@@ -69,6 +69,16 @@ inline AsciiString::AsciiString(const AsciiString &stringSrc)
 //#pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
+// Retail doToppleDoneStuff calls ILT 0x00023D49, which jumps to the matched
+// body BfmeThingTN::bfmeSetTransformTN (0x001C16A0), not Thing.cpp's
+// 0x00132350; spell the call the way Rva0023B7A0HordeContainView.cpp does.
+class Matrix3DTN;
+class BfmeThingTN
+{
+public:
+	void bfmeSetTransformTN( const Matrix3DTN *transform );
+};
+
 const Int MAX_IDX = 32;
 
 //-------------------------------------------------------------------------------------------------
@@ -502,7 +512,7 @@ void StructureToppleUpdate::doToppleDoneStuff()
 
 	Matrix3D xfrm = *building->getTransformMatrix();
 	xfrm.In_Place_Pre_Rotate_Z(toppleAngle-origAngle);
-	building->setTransformMatrix(&xfrm);
+	( (BfmeThingTN *)building )->bfmeSetTransformTN( (const Matrix3DTN *)&xfrm );
 }
 
 //-------------------------------------------------------------------------------------------------

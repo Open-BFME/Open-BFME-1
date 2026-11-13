@@ -88688,7 +88688,6 @@ name,address,notes
 ?setTimePlayed@SkirmishBattleHonors@@QAEXVAsciiString@@M@Z,0x0009C220,BFME per-side variant of ZH SkirmishBattleHonors::setTimePlayed: concat("TimePlayed" at VA 0x01080488) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setReal body 0x000A9650 via ILT 0x000445C1; ret 8
 ?setTooltipText@WinInstanceData@@QAEXVUnicodeString@@@Z,0x00040B92,incremental-link thunk fronting the unclaimed body 0x00499CC0
 ?setTotalDataLength@NetWrapperCommandMsg@@QAEXI@Z,0x0003EC52,ILT thunk; real body 0xA73F50
-?setTransformMatrix@Thing@@QAEXPBVMatrix3D@@@Z,0x00023D49
 ?setTransformMatrix@ThingSetTransformMatrixShim@@QAEXPBVMatrix3D@@@Z,0x001C16A0,Thing::setTransformMatrix incremental-link thunk target through a TU-local forwarding shim
 ?setTurretEnabled@AIUpdateInterface@@QAEXW4WhichTurretType@@_N@Z,0x0002ABBC,BattlePlanUpdate::enableTurret retail REL32 target
 ?setTurretTargetObject@Rva001764E0AIUpdate@@QAEXW4WhichTurretType@@PAVObject@@_N@Z,0x0001A0E1,AIAttackPursueTargetState update turret target call

@@ -49,9 +49,15 @@ class BfmeGeometryInfo {public: float boxMajorRadius() const;};
 class Thing { public:
     void setPosition(const Coord3D *);
     void setOrientation(float);
-    void setTransformMatrix(const Matrix3D *);
     bool isKindOf(KindOfType) const;
     const Coord3D *getUnitDirectionVector2D() const;
+};
+// Retail +0x255 calls ILT 0x00023D49, which jumps to the matched body
+// BfmeThingTN::bfmeSetTransformTN (0x001C16A0), not Thing::setTransformMatrix
+// (0x00132350); spell the call the way Rva0023B7A0HordeContainView.cpp does.
+class Matrix3DTN;
+class BfmeThingTN { public:
+    void bfmeSetTransformTN(const Matrix3DTN *);
 };
 class Object : public Thing { public:
     Module *findModule(NameKeyType) const;
@@ -136,7 +142,7 @@ void SiegeExit0024AE60::release(Object *rider,void *argument)
         if (me->isKindOf(Kind0024AE60_5C)) {
             Matrix3D transform;
             me->getSingleLogicalBonePosition("Ladder04",&position,&transform);
-            rider->setTransformMatrix(&transform);
+            ((BfmeThingTN *)rider)->bfmeSetTransformTN((const Matrix3DTN *)&transform);
             rider->setLayer(Layer0024AE60_11);
             AIUpdateInterface *ai=rider->ai();
             TheAI->pathfinder()->addObjectToPathfindMap(rider);
