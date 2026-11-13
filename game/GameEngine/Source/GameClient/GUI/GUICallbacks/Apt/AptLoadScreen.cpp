@@ -253,7 +253,7 @@ private:
 	bool m_A0;
 };
 
-extern LoadScreen0051BF30 *g_loadScreen012F49B0;
+extern int g_Va012F49B0;
 
 class Rva005A00B0AudioClient
 {
@@ -288,7 +288,7 @@ LoadScreen0051BF30::LoadScreen0051BF30(unsigned int mode)
 	  m_5C(-1),
 	  m_A0(false)
 {
-	g_loadScreen012F49B0 = this;
+	g_Va012F49B0 = (int)this;
 	for (int i = 0; i < 8; ++i)
 	{
 		m_60[i] = -1;
@@ -369,5 +369,5 @@ LoadScreen0051BF30::~LoadScreen0051BF30()
 		g_rva012F19E8WindowManager->bfme_setAptText(level, TheGameText->fetch("GUI:Level", 0));
 	}
 	TheTransitionHandler->setGroup(AsciiString("MainMenuToSubMenu"));
-	g_loadScreen012F49B0 = 0;
+	g_Va012F49B0 = 0;
 }
