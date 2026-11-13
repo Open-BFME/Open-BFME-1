@@ -97,7 +97,10 @@ struct ModelConditionInfo
 		Int m_muzzleFlashBone;
 		Matrix3D m_projectileOffsetMtx;
 
-		WeaponBarrelInfo() : m_recoilBone(0), m_fxBone(0), m_muzzleFlashBone(0) {}
+		WeaponBarrelInfo()
+		{
+			clear();
+		}
 		void clear()
 		{
 			m_recoilBone = 0;
