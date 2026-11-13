@@ -1,0 +1,62 @@
+// Uncompiled canonical-layout proposal, not an admitted header.
+// Native storage is witnessed; original base ancestry and aggregate types are not.
+#ifndef BFME1_POLYGON_TRIGGER_CONTRACT_PROPOSAL_H
+#define BFME1_POLYGON_TRIGGER_CONTRACT_PROPOSAL_H
+
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+struct ICoord3D;
+struct Coord3D;
+
+class PolygonTrigger
+{
+public:
+    PolygonTrigger(int initialAllocation);
+    PolygonTrigger(int id, int initialAllocation);
+    virtual ~PolygonTrigger();
+    bool pointInTrigger(ICoord3D &point) const;
+    bool bfmeContainsPointAt0018FA20(Coord3D &point) const;
+    void bfmeGrowVector3();
+    void rva0018F270(bool value);
+    void rva0018F2C0(float value);
+    void rva0018F2E0(float value);
+    void rva0018F300(float value);
+
+private:
+    void rva001901F0(int initialAllocation);
+    void updateBounds() const;
+    PolygonTrigger *m_nextPolygonTrigger;
+    AsciiString m_triggerName;
+    int m_triggerID;
+    ICoord3D *m_points;
+    int m_numPoints;
+    int m_sizePoints;
+    mutable int m_bounds[4];
+    mutable float m_radius;
+    mutable bool m_boundsNeedsUpdate;
+    unsigned char m_field31;
+    bool m_isWaterArea;
+    unsigned char m_pad33;
+    AsciiString m_layerName;
+    unsigned char m_flag38;
+    unsigned char m_flag39;
+    unsigned char m_pad3A[2];
+    PolygonTrigger *m_self3C;
+    bool m_field40;
+    unsigned char m_pad41[3];
+    int m_field44;
+    AsciiString m_textures[6];
+    bool m_field60;
+    unsigned char m_pad61[3];
+    float m_color[3];
+    float m_field70;
+    float m_field74;
+    unsigned char m_unmodelled78[4];
+    float m_field7C;
+    void *m_pointer80;
+    void *m_pointer84;
+};
+
+// These assertions are candidate obligations, not results of a compile.
+typedef char ProposedPolygonTriggerSize[(sizeof(PolygonTrigger) == 0x88) ? 1 : -1];
+typedef char ProposedPolygonTriggerAlignment[(__alignof(PolygonTrigger) == 4) ? 1 : -1];
+#endif

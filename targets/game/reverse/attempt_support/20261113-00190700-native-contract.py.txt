@@ -1,0 +1,23 @@
+import sys, struct, json, hashlib
+from pathlib import Path
+sys.path.insert(0, str(Path.cwd()/'tools'))
+import build
+from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+image=Path(build.EXE).read_bytes()
+sections=build.pe_sections(image)
+def read(rva,size):
+    at=build.rva_to_file_offset(sections,rva)
+    return image[at:at+size]
+cs=Cs(CS_ARCH_X86,CS_MODE_32)
+for start,size in [(0x190700,1450),(0x1903f0,160),(0x190610,146),(0x190f10,65)]:
+    print('\nRANGE',hex(start),size)
+    for ins in cs.disasm(read(start,size),start):
+        print('%08X %-28s %-8s %s'%(ins.address,ins.bytes.hex(),ins.mnemonic,ins.op_str))
+for va in [0x109bfb0,0x109bfbc]:
+    entries=struct.unpack('<II',read(va-0x400000,8))
+    print('VTABLE',hex(va),[hex(v) for v in entries])
+    for entry in entries:
+        for ins in cs.disasm(read(entry-0x400000,5),entry-0x400000):
+            print('ROUTE',hex(ins.address),ins.mnemonic,ins.op_str)
+body=read(0x190700,1438)
+print(json.dumps({'rva':'0x00190700','size':len(body),'nonCC':sum(v!=0xcc for v in body),'sha256':hashlib.sha256(body).hexdigest(),'tail':read(0x190c9b,12).hex()}))

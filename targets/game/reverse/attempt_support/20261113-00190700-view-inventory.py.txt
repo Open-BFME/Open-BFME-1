@@ -1,0 +1,20 @@
+import sys,csv,json,hashlib,re
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'tools'))
+import class_layouts
+names={'PolygonTrigger','BfmeOwnVVB','Gen_0018F210','Gen_0018f2c0','Gen_0018F290','Rva001901F0','Rva00190560','Rva00190590'}
+files={}
+for line in Path('build/spike3/polygon-class-candidates.txt').read_text().splitlines():
+    p=Path(line);text=p.read_text(encoding='latin-1'); bodies=set(class_layouts.class_bodies(text))&names
+    if bodies:files[line]={'classes':sorted(bodies),'otherPrivateTypes':sorted(set(class_layouts.class_bodies(text))&{'AsciiString','StringBase','ICoord3D','RGBColor','IRegion2D'}),'sha256':hashlib.sha256(p.read_bytes()).hexdigest(),'matchedRows':[]}
+for line in Path('build/spike3/polygon-zh-includes.txt').read_text().splitlines():
+    p=line.split(':',1)[0];files.setdefault(p,{'classes':[],'sha256':hashlib.sha256(Path(p).read_bytes()).hexdigest(),'matchedRows':[]})['zhInclude']=True
+with open('targets/game/reverse/functions.csv',newline='') as f:
+    for row in csv.DictReader(f):
+        if row['source'] in files and row['status']=='matched':
+            files[row['source']]['matchedRows'].append({'name':row['name'],'rva':row['target_rva'],'size':int(row['target_size'])})
+for p,v in files.items():
+    print(len(v['matchedRows']),','.join(v['classes']),p,'ZH' if v.get('zhInclude') else '')
+summary={'files':len(files),'privateViewFiles':sum(bool(v['classes']) for v in files.values()),'zhIncludeFiles':sum(bool(v.get('zhInclude')) for v in files.values()),'matchedRows':sum(len(v['matchedRows']) for v in files.values()),'matchedRawBytes':sum(r['size'] for v in files.values() for r in v['matchedRows']),'privateStringFiles':sum(bool(set(v.get('otherPrivateTypes',[]))&{'AsciiString','StringBase'}) for v in files.values())}
+print(json.dumps(summary))
+Path('build/spike3/polygon-view-inventory.json').write_text(json.dumps({'summary':summary,'files':files},indent=2)+'\n')

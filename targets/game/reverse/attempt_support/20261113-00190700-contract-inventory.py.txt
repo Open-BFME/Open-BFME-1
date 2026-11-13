@@ -1,0 +1,28 @@
+import sys,csv,json,struct
+from pathlib import Path
+sys.path.insert(0,str(Path.cwd()/'tools'))
+import build
+from capstone import Cs,CS_ARCH_X86,CS_MODE_32
+image=Path(build.EXE).read_bytes(); sections=build.pe_sections(image)
+def data(rva,n):
+    p=build.rva_to_file_offset(sections,rva); return image[p:p+n]
+cs=Cs(CS_ARCH_X86,CS_MODE_32)
+rows=[]
+with open('targets/game/reverse/functions.csv',newline='') as f:
+    for row in csv.DictReader(f):
+        r=int(row['target_rva'],16)
+        if 0x18f000<=r<0x190610 or r in (0x191380,0x1b2060):
+            rows.append(row)
+for row in rows:
+    r=int(row['target_rva'],16); n=int(row['target_size'])
+    print('ROW',hex(r),n,row['name'],row['source'])
+    for ins in cs.disasm(data(r,n),r):
+        print('%08X %-8s %s'%(ins.address,ins.mnemonic,ins.op_str))
+for r,n in [(0x190490,167),(0x1027b0,64),(0x1901f0,262),(0x13b10,5),(0x26c1,5),(0xd828,5),(0x17bd9,5),(0x116da,5),(0x62030,9),(0x5ee90,5),(0x190f10,398)]:
+
+    print('EXTRA',hex(r),n)
+    for ins in cs.disasm(data(r,n),r):print('%08X %-8s %s'%(ins.address,ins.mnemonic,ins.op_str))
+print('OBJECT VTABLE WORDS',data(0xc9bfa4,28).hex())
+for term in [b'.?AVPolygonTrigger@@',b'.?AUPolygonTrigger@@',b'.?AVBfmeOwnVVB@@']:
+    print('RTTI_LITERAL',repr(term),'FILE_OFFSET',image.find(term))
+Path('build/spike3/polygon-provider-rows.json').write_text(json.dumps(rows,indent=2)+'\n')
