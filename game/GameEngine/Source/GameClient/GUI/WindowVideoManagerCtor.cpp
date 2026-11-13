@@ -67,9 +67,9 @@ private:
 };
 extern void j_0002a685();
 
-class VideoPlayer;
+class VideoPlayerInterface;
 class Display;
-extern VideoPlayer *TheVideoPlayer;
+extern VideoPlayerInterface *TheVideoPlayer;
 extern Display *TheDisplay;
 extern void j_00027a2f();
 
