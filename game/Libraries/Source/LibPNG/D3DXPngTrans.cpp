@@ -1,5 +1,6 @@
-// cl: /MD /Gz /Os /DPNG_NO_READ_USER_TRANSFORM /DPNG_NO_WRITE_USER_TRANSFORM /DPNG_NO_READ_bKGD /DPNG_NO_READ_BACKGROUND /DPNG_NO_CONSOLE_IO /DPNG_NO_READ_cHRM /Igame/Libraries/Source/Compression/ZLib /Igame/Libraries/Source/LibPNG
+// cl: /MD /Gz /Os /Igame/Libraries/Source/Compression/ZLib /Igame/Libraries/Source/LibPNG
 /* libpng 1.0.5: adapted from LibPNG/pngtrans.c; copyright and license in LibPNG/png.h. */
+#include "D3DXPngConfig.h"
 #include <stdio.h>
 #include <setjmp.h>
 #include "zlib.h"
@@ -15,6 +16,10 @@
 #define png_do_bgr png_do_bgr_header_declaration
 namespace D3DX {
 #include "png.h"
+// Stock allocation sizes must survive changes to the shared feature profile.
+typedef char png_struct_native_size[sizeof(png_struct) == 0x19c ? 1 : -1];
+typedef char png_info_native_size[sizeof(png_info) == 0x40 ? 1 : -1];
+typedef char png_row_info_native_size[sizeof(png_row_info) == 0xc ? 1 : -1];
 #undef png_set_bgr
 #undef png_set_swap
 #undef png_set_packing
