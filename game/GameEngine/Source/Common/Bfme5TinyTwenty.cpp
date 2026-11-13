@@ -1,31 +1,10 @@
-// Five more: a three-way readiness test, two accumulators gated on the same
+// Four more (the readiness test now lives with its caller): two accumulators gated on the same
 // global flag, a cursor that stores through itself and then advances, and a
 // bit test that lands as a zero/one.
 
-class Gen_000874E0
-{
-public:
-	int bfmeReady(void) const;
-
-private:
-	int m_bfmeHead[15];					// +0x00
-	unsigned char m_bfmeFlags;				// +0x3C
-	int m_bfmeGap[17];					// +0x40
-	int m_bfmeState;					// +0x84
-};
-
-// ?bfmeReady@Gen_000874E0@@QBEHXZ
-int Gen_000874E0::bfmeReady(void) const
-{
-	int state = m_bfmeState;
-
-	// The whole test answers "no" first, so the three affirmatives share the
-	// one block the compiler leaves at the end.
-	if (state != 0 && state != 3 && (m_bfmeFlags & 1) == 0)
-		return 0;
-
-	return 1;
-}
+// The three-way readiness test Gen_000874E0::bfmeReady (retail 0x000874E0)
+// is emitted by its caller's TU, MapObjectAmbientAudio00088480.cpp, as an
+// inline COMDAT; a second strong definition here would not link.
 
 class BfmeSwitchCJ
 {
