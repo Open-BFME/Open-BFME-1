@@ -99,7 +99,6 @@ dir32,0x010A78B0,??_7ActiveBody@@6BObjectModule@@@,"retail 0x010A78B0 is already
 dir32,0x010A8E18,??_7PorcupineFormationBodyModule@@6B@,"retail 0x010A8E18 is already recorded as ??_7PorcupineFormationBodyModule@@6BBodyModuleInterface@@@; reference that name, not a new one"
 dir32,0x010AA21C,??_7CivilianSpawnCollide@@6BObjectModule@@@,"retail 0x010AA21C is already recorded as ??_7CivilianSpawnCollide@@6BCivilianSpawnCollideBase@@@; reference that name, not a new one"
 dir32,0x010AA378,??_7CrateCollideModuleData@@6B@,"??_7CrateCollideModuleData@@6B@ is a function the ledger places elsewhere, not at 0x010AA378"
-dir32,0x010AC338,??_7OpenContainModuleData@@6B@,"nothing in the ledger owns 0x010AC338. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010AD180,??_7HordeSiegeEngineContainModuleData@@6B@,"nothing in the ledger owns 0x010AD180. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010ADE98,??_7GarrisonContainModuleData@@6B@,"nothing in the ledger owns 0x010ADE98. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010AE8E0,??_7HordeContainEleventhBase@@6B@,"retail 0x010AE8E0 is already recorded as ??_7Rva002321A0@@6B@; reference that name, not a new one"
