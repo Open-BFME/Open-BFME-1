@@ -224,76 +224,10 @@ void AICommandParmsStorage::reconstitute(AICommandParms& parms) const
 }
 
 //----------------------------------------------------------------------------------------------------------
-// ?doXfer@AICommandParmsStorage@@QAEXPAVXfer@@@Z present-unmatched
-void AICommandParmsStorage::doXfer(Xfer *xfer) 
-{
-	xfer->xferUser(&m_cmd, sizeof(m_cmd));
-	xfer->xferUser(&m_cmd, sizeof(m_cmdSource));
-	xfer->xferCoord3D(&m_pos);
-	xfer->xferObjectID(&m_obj);
-	xfer->xferObjectID(&m_otherObj);
-	xfer->xferAsciiString(&m_teamName);
-	Int numCoords = m_coords.size();
-	xfer->xferInt(&numCoords);
-	Int i;
-	if (xfer->getXferMode() == XFER_LOAD)
-	{
-		for (i=0; i<numCoords; i++) {
-			Coord3D pos;
-			xfer->xferCoord3D(&pos);
-			m_coords.push_back(pos);
-		}
-	} else {
-		for (i=0; i<numCoords; i++) {
-			Coord3D pos = m_coords[i];
-			xfer->xferCoord3D(&pos);
-		}
-	}
-
- 	UnsignedInt id = INVALID_WAYPOINT_ID;
-	if (m_waypoint) {
-		id = m_waypoint->getID();
-	}
-	xfer->xferUnsignedInt(&id);
-	if (xfer->getXferMode() == XFER_LOAD && id!= INVALID_WAYPOINT_ID)
-	{
-		m_waypoint = TheTerrainLogic->getWaypointByID(id);
-	}
-
-	AsciiString triggerName;
-	if (m_polygon) triggerName = m_polygon->getTriggerName();
-	xfer->xferAsciiString(&triggerName);
-	if (xfer->getXferMode() == XFER_LOAD)
-	{
-		if (triggerName.isNotEmpty()) {
-			m_polygon = TheTerrainLogic->getTriggerAreaByName(triggerName);
-		}
-	} 
-
-	xfer->xferInt(&m_intValue);
-
-	xfer->xferSnapshot(&m_damage);
-
-	AsciiString cmdName;
-	if (m_commandButton) {
-		cmdName = m_commandButton->getName();
-	}
-	xfer->xferAsciiString(&cmdName);
-	if (cmdName.isNotEmpty() && m_commandButton==NULL) {
-		m_commandButton = TheControlBar->findCommandButton(cmdName);
-	}
-
-	Bool hasPath = m_path!=NULL;
-	xfer->xferBool(&hasPath);
-	if (hasPath && m_path==NULL) {
-		m_path = newInstance(Path);
-	}
-	if (hasPath) {
-		xfer->xferSnapshot(m_path);
-	}
-
-}
-
+// The Zero Hour storage lacks BFME's version/team-owner fields; use the
+// retail provider in AICommandParmsStorageXfer.cpp instead.
+// Preserve the remaining random-call source coordinates when retiring this body.
+#line 297
 //----------------------------------------------------------------------------------------------------------
 /**
  * Compare two positions to see if they are logically equal

@@ -1,0 +1,115 @@
+{
+  "??2Path@@SAPAXIW4PathMagicEnum@0@@Z": {
+    "ledger_owners": [],
+    "before_inbound": [],
+    "after_inbound": [],
+    "canonical_definitions": []
+  },
+  "??3Path@@SAXPAXW4PathMagicEnum@0@@Z": {
+    "ledger_owners": [
+      {
+        "name": "??3Path@@SAXPAXW4PathMagicEnum@0@@Z",
+        "export_rva": "",
+        "target_rva": "0x007EFFF0",
+        "target_size": "12",
+        "source": "game/GameEngine/Source/Common/RTS/RtsPoolGlueDeletes.cpp",
+        "status": "matched",
+        "notes": ""
+      }
+    ],
+    "before_inbound": [
+      [
+        [
+          ".text$x",
+          [
+            ".text",
+            [
+              "?doXfer@AICommandParmsStorage@@QAEXPAVXfer@@@Z"
+            ]
+          ]
+        ],
+        31,
+        20
+      ]
+    ],
+    "after_inbound": [],
+    "canonical_definitions": []
+  },
+  "?getName@CommandButton@@QBEABVAsciiString@@XZ": {
+    "ledger_owners": [],
+    "before_inbound": [],
+    "after_inbound": [],
+    "canonical_definitions": [
+      {
+        "key": [
+          ".text",
+          [
+            "?getName@CommandButton@@QBEABVAsciiString@@XZ"
+          ]
+        ],
+        "size": 4,
+        "flags": 1615859744,
+        "body": "8d410cc3",
+        "relocations": [],
+        "symbols": [
+          [
+            [
+              ".text",
+              0,
+              [
+                ".text",
+                [
+                  "?getName@CommandButton@@QBEABVAsciiString@@XZ"
+                ]
+              ],
+              0,
+              3
+            ],
+            [
+              4,
+              0,
+              0,
+              3232978199,
+              0,
+              2,
+              0,
+              0
+            ]
+          ],
+          [
+            [
+              "?getName@CommandButton@@QBEABVAsciiString@@XZ",
+              0,
+              [
+                ".text",
+                [
+                  "?getName@CommandButton@@QBEABVAsciiString@@XZ"
+                ]
+              ],
+              32,
+              2
+            ],
+            null
+          ]
+        ]
+      }
+    ]
+  },
+  "?getTriggerName@PolygonTrigger@@QBE?AVAsciiString@@XZ": {
+    "ledger_owners": [],
+    "before_inbound": [
+      [
+        [
+          ".text",
+          [
+            "?doXfer@AICommandParmsStorage@@QAEXPAVXfer@@@Z"
+          ]
+        ],
+        428,
+        20
+      ]
+    ],
+    "after_inbound": [],
+    "canonical_definitions": []
+  }
+}
