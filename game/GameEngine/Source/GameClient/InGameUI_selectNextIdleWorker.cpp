@@ -73,6 +73,25 @@ template <> struct _List_node<Object *> : public _List_node_base {
 
 #include "Common/UnitTimings.h"
 
+// Retail's ObjectID append calls the GameMessage::appendObjectIDArgument ILT
+// at 0x0002BCEC (-> body 0x0008ABB0), which no ledger row defines under the
+// ObjectID-typed name; reach it the way retail does, through the ILT (same
+// pattern as GUICommandTranslator_doGuardCommand.cpp).
+extern void j_0002bcec();
+
+class GameMessageObjectIDIlt
+{
+public:
+	void append(ObjectID id);
+};
+
+static void appendObjectIDArgumentViaILT(GameMessage *msg, ObjectID id)
+{
+	typedef void (GameMessageObjectIDIlt::*AppendCall)(ObjectID);
+	union { void (*fn)(); AppendCall call; } append = { j_0002bcec };
+	(reinterpret_cast<GameMessageObjectIDIlt *>(msg)->*append.call)(id);
+}
+
 namespace {
 
 struct BfmeIdleWorkerNode {
@@ -280,7 +299,7 @@ void InGameUI::selectNextIdleWorker(void)
 		selectView->deselectAllDrawables();
 		GameMessage *teamMsg = ((BfmeMessageStreamSelectView *)TheMessageStream)->appendMessage(GameMessage::MSG_CREATE_SELECTED_GROUP);
 		teamMsg->appendBooleanArgument(TRUE);
-		teamMsg->appendObjectIDArgument(((BfmeObjectSelectView *)selectThisObject)->m_id);
+		appendObjectIDArgumentViaILT(teamMsg, ((BfmeObjectSelectView *)selectThisObject)->m_id);
 		selectView->selectDrawable(((BfmeObjectSelectView *)selectThisObject)->getDrawable());
 		((BfmeTacticalViewSelectView *)TheTacticalView)->lookAt(selectThisObject->getPosition());
 	}
