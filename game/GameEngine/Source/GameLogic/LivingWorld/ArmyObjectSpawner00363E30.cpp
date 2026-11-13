@@ -230,7 +230,7 @@ void ArmyObjectSpawner00363E30::spawn(const LivingWorldArmy *army,int count,_STL
         at363E30<StringBase<unsigned short> >(object,0x388).set(*(const StringBase<unsigned short>*)&army->field78);
         at363E30<int>(object,0x37c)=army->field44;
         object->setRestoreState363E30(army->field48);
-        if(!army->getLabel().isEmpty()) at363E30<AsciiString>(object,0x38c)=army->getLabel();
+        if(!static_cast<const StringBase<char> &>(army->getLabel()).isEmpty()) at363E30<AsciiString>(object,0x38c)=army->getLabel();
         object->clearAndSetModelConditionFlags(BitFlags<320>(),army->getFlags());
         Object *other=call1<Object*>(j_0000faa6,object,false);
         if(other && other->getContain() && other->getContain()->getInterface())other->getContain()->getInterface()->apply(&army->field10,false);
