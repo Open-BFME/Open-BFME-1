@@ -3,4 +3,5 @@
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
-template class _STL::_Vector_base<int, _STL::allocator<int> >;
+// Emit only the retail-owned destructor; the unrelated constructor conflicts.
+template _STL::_Vector_base<int, _STL::allocator<int> >::~_Vector_base();
