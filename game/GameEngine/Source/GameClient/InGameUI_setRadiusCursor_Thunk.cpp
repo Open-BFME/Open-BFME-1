@@ -93,7 +93,7 @@ private:
 class Drawable
 {
 public:
-	Object *getObject() { return m_object; }
+	__declspec(dllimport) __forceinline Object *getObject() { return m_object; }
 private:
 	unsigned char m_unmodelled_000[0xFC];
 	Object *m_object;					// +0x0FC
