@@ -178,7 +178,7 @@ public:
 	void killTeam(void);
 	void evacuateTeam(void);
 
-	Player *getControllingPlayer(void) const
+	__declspec(dllimport) __forceinline Player *getControllingPlayer(void) const
 	{
 		TeamPrototype *prototype = *reinterpret_cast<TeamPrototype *const *>(
 			reinterpret_cast<const unsigned char *>(this) + 4);
