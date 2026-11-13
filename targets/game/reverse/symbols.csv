@@ -91334,3 +91334,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?d_00895790@@YAXXZ,0x00895790,legacy address-only alias of ?rva00895790@Gen_uw_00893e70@@QAEXABVBfmeStrVKI@@HHH@Z; Rva00896470RefHolderSubmit.cpp and Rva008958B0Forward.cpp still bind this name after the dump conversion
 ?Rva000877B0@Rva000877B0Ref@@QAEXXZ,0x000362FF,abi-view=?dup_000877b0@@YAXXZ; address-named view MapObject 0x00088480 uses to release the temporary of the raw-pointer constructor 0x00087720 (call at +0x1D0)
 ??0Rva004046F6@@QAE@XZ,0x00031EDF,pin
+??0BoneOCLInfo@@QAE@XZ,0x000402EB,pin

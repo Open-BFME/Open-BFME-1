@@ -31,7 +31,6 @@ dir32,0x0043C961,??1?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH
 dir32,0x0043D42E,?ownerAvailableForSupplying@SupplyTruckStateMachine@@SA_NPAVState@@PAX@Z,"nothing in the ledger owns 0x0043D42E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043ECF7,??0ConditionTemplate@@QAE@XZ,"nothing in the ledger owns 0x0043ECF7. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0043EE50,??_F?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXXZ,"nothing in the ledger owns 0x0043EE50. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x004402EB,??0BoneOCLInfo@@QAE@XZ,"nothing in the ledger owns 0x004402EB. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00443649,??0?$map@GHU?$FileIDLess@$0GGFBHA@@@V?$allocator@U?$pair@$$CBGH@_STL@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00443649. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004442AB,?Rva0051B5F0@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 0x0051B5F0 but retail reads 0x004442AB
 dir32,0x0044454E,??1MoveHint0043AAD0@@QAE@XZ,"nothing in the ledger owns 0x0044454E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
