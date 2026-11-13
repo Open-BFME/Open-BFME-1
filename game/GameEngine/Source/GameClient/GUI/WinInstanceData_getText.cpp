@@ -46,10 +46,4 @@ UnicodeString WinInstanceData::getTooltipText( void )
 	return UnicodeString::TheEmptyString;
 }
 
-// ?getText@WinInstanceData@@QAE?AVUnicodeString@@XZ
-UnicodeString WinInstanceData::getText( void )
-{
-	if( m_text )
-		return m_text->getText();
-	return UnicodeString::TheEmptyString;
-}
+// getText is emitted and verified in GameWindow.cpp (0x00479B00, 58 bytes).
