@@ -2560,62 +2560,7 @@ void ScriptActions::doNamedAttackTeam(const AsciiString& unitName, const AsciiSt
 //-------------------------------------------------------------------------------------------------
 /** doLoadAllTransports */
 //-------------------------------------------------------------------------------------------------
-// ?doLoadAllTransports@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
-void ScriptActions::doLoadAllTransports(const AsciiString& teamName)
-{
-	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
-	// The team is the team based on the name, and the calling team (if any) and the team that
-	// triggered the condition.  jba. :)
-	if (!theTeam) {
-		return;
-	}
-
-	EntriesVec vecOfUnits;
-	SpacesVec vecOfTransports;
-	
-	for (DLINK_ITERATOR<Object> iter = theTeam->iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		if (!obj) {
-			continue;
-		}
-
-		if( obj->isKindOf(KINDOF_TRANSPORT) ) 
-		{
-			ContainModuleInterface *contain = obj->getContain();
-			if( contain )
-			{
-				vecOfTransports.push_back(std::make_pair(obj->getID(), ((TransportContain*)obj->getContain())->getContainMax()));
-			}
-			else
-			{
-				DEBUG_CRASH( ("doLoadAllTransports script -- transport doesn't have a container!") );
-			}
-		} 
-		else 
-		{
-			vecOfUnits.push_back(std::make_pair(obj->getID(), obj->getTransportSlotCount()));
-		}
-	}
-
-	// we've now built the necessary stuff. Partition the units.
-
-	PartitionSolver partition(vecOfUnits, vecOfTransports, PREFER_FAST_SOLUTION);
-	partition.solve();
-	SolutionVec solution = partition.getSolution();
-	for (int i = 0; i < solution.size(); ++i) {
-		Object *unit = TheGameLogic->findObjectByID(solution[i].first);
-		Object *trans = TheGameLogic->findObjectByID(solution[i].second);
-		if (!unit || !trans) {
-			continue;
-		}
-		if( unit->getAIUpdateInterface() )
-		{
-			unit->getAIUpdateInterface()->chooseLocomotorSet(LOCOMOTORSET_NORMAL);
-			unit->getAIUpdateInterface()->aiEnter(trans, CMD_FROM_SCRIPT);
-		}
-	}		
-}
+// Body in ScriptActions_doLoadAllTransports.cpp (verified 979B at 0x003014C0).
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedEnterNamed */
