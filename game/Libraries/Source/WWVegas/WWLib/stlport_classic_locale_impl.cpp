@@ -125,7 +125,7 @@ extern _STL::_Locale_impl g_classic0130B2A0;
 extern _STL::ctype<char> g_classic0130BC78;
 extern _STL::collate<char> g_classic0130BC90;
 extern _STL::codecvt<char, char, mbstate_t> g_classic0130B7E0;
-extern _STL::numpunct<char> g_classic0130B270;
+extern _STL::numpunct<char> g_Va0130B270;
 extern _STL::num_get<char, BfmeNarrowInput> g_classic0130B2B8;
 extern _STL::num_put<char, BfmeNarrowOutput> g_classic0130B2E8;
 extern _STL::time_get<char, BfmeNarrowInput> g_classic0130BA50;
@@ -162,7 +162,7 @@ void *bfmeTwoTB()
 	new (&g_classic0130BC78) _STL::ctype<char>(0, false, 1);
 	new (&g_classic0130BC90) _STL::collate<char>(1);
 	new (&g_classic0130B7E0) _STL::codecvt<char, char, mbstate_t>(1);
-	new (&g_classic0130B270) _STL::numpunct<char>(1);
+	new (&g_Va0130B270) _STL::numpunct<char>(1);
 	new (&g_classic0130B2B8) _STL::num_get<char, BfmeNarrowInput>(1);
 	new (&g_classic0130B2E8) _STL::num_put<char, BfmeNarrowOutput>(1);
 	new (&g_classic0130BA50) _STL::time_get<char, BfmeNarrowInput>(1);

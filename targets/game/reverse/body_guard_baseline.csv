@@ -291,7 +291,6 @@ dir32,0x01306EEC,?g_01306EEC@@3PAUState006E2540@@A,"retail 0x01306EEC is already
 dir32,0x01306F34,?lastActiveVertexBuffer@@3PAUShadowBuffer007BC270@@A,"nothing in the ledger owns 0x01306F34. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x013071E4,?g_rva013071E4Object@@3VRva007D3580@@A,"retail 0x013071E4 is already recorded as ?g_bfmeTarget986B@@3PADA; reference that name, not a new one"
 dir32,0x0130B260,?g_classic0130B260@@3VBfmeF1124@@A,"nothing in the ledger owns 0x0130B260. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0130B270,?g_classic0130B270@@3V?$numpunct@D@_STL@@A,"nothing in the ledger owns 0x0130B270. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B280,?g_classic0130B280@@3V?$ctype@G@_STL@@A,"nothing in the ledger owns 0x0130B280. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B290,?g_classic0130B290@@3VBfmeE1124@@A,"nothing in the ledger owns 0x0130B290. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B2B8,?g_classic0130B2B8@@3V?$num_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@A,"nothing in the ledger owns 0x0130B2B8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
