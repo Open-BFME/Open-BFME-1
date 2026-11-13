@@ -31,8 +31,9 @@
 // pointer pairs and no calls -- so the two classes are 0x44 and 0x74 wide with
 // nothing but scalars past the texture pointer.
 //
-// IDENTITY IS NOT RECOVERED beyond TextureBaseClass: the two classes and their
-// fields are address-derived.
+// IDENTITY: 0x0095C860 is StreakRendererClass::operator= (its matched copy
+// constructor calls it); 0x00933C60's class and both field lists stay
+// address-derived.
 
 typedef int Int;
 typedef unsigned short UnsignedShort;
@@ -49,56 +50,59 @@ public:
 	UnsignedShort m_unreconstructed_06;
 };
 
-class Rva0095C860
+// 0x0095C860 is StreakRendererClass::operator= (identity_evidence/
+// 0095c860-streakrenderer-assign.md). Members carry Zero Hour streakRender.h
+// names; each is viewed as the dword(s) retail copies, so the floats, the
+// ShaderClass and the vectors move as plain integers exactly as retail does.
+struct StreakRendererDword3 { Int X; Int Y; Int Z; };
+struct StreakRendererDword2 { Int X; Int Y; };
+
+class StreakRendererClass
 {
 public:
-	Rva0095C860 &operator=( const Rva0095C860 &other );
+	StreakRendererClass &operator=( const StreakRendererClass &other );
 
-	TextureBaseClass *m_texture;
-	Int m_field04;
-	Int m_field08;
-	Int m_field0C;
-	Int m_field10;
-	Int m_field14;
-	Int m_field18;
-	Int m_field1C;
-	Int m_field20;
-	Int m_field24;
-	Int m_field28;
-	Int m_field2C;
-	Int m_field30;
-	Int m_field34;
-	Int m_field38;
-	Int m_field3C;
-	Int m_field40;
+	TextureBaseClass *Texture;					// +0x00
+	Int Shader;									// +0x04 ShaderClass
+	Int Width;									// +0x08 float
+	StreakRendererDword3 Color;					// +0x0C Vector3
+	Int Opacity;								// +0x18 float
+	Int SubdivisionLevel;						// +0x1C
+	Int NoiseAmplitude;							// +0x20 float
+	Int MergeAbortFactor;						// +0x24 float
+	Int TextureTileFactor;						// +0x28 float
+	Int LastUsedSyncTime;						// +0x2C
+	StreakRendererDword2 CurrentUVOffset;		// +0x30 Vector2
+	StreakRendererDword2 UVOffsetDeltaPerMS;	// +0x38 Vector2
+	Int Bits;									// +0x40
 };
 
-Rva0095C860 &Rva0095C860::operator=( const Rva0095C860 &other )
+StreakRendererClass &StreakRendererClass::operator=( const StreakRendererClass &other )
 {
 	if ( this != &other )
 	{
-		if ( other.m_texture )
-			other.m_texture->Add_Ref();
-		if ( m_texture )
-			m_texture->Release_Ref();
+		if ( other.Texture )
+			other.Texture->Add_Ref();
+		if ( Texture )
+			Texture->Release_Ref();
 
-		m_texture = other.m_texture;
-		m_field04 = other.m_field04;
-		m_field08 = other.m_field08;
-		m_field0C = other.m_field0C;
-		m_field10 = other.m_field10;
-		m_field14 = other.m_field14;
-		m_field18 = other.m_field18;
-		m_field1C = other.m_field1C;
-		m_field20 = other.m_field20;
-		m_field24 = other.m_field24;
-		m_field28 = other.m_field28;
-		m_field2C = other.m_field2C;
-		m_field30 = other.m_field30;
-		m_field34 = other.m_field34;
-		m_field38 = other.m_field38;
-		m_field3C = other.m_field3C;
-		m_field40 = other.m_field40;
+		Texture = other.Texture;
+		Shader = other.Shader;
+		Width = other.Width;
+		Color.X = other.Color.X;
+		Color.Y = other.Color.Y;
+		Color.Z = other.Color.Z;
+		Opacity = other.Opacity;
+		SubdivisionLevel = other.SubdivisionLevel;
+		NoiseAmplitude = other.NoiseAmplitude;
+		MergeAbortFactor = other.MergeAbortFactor;
+		TextureTileFactor = other.TextureTileFactor;
+		LastUsedSyncTime = other.LastUsedSyncTime;
+		CurrentUVOffset.X = other.CurrentUVOffset.X;
+		CurrentUVOffset.Y = other.CurrentUVOffset.Y;
+		UVOffsetDeltaPerMS.X = other.UVOffsetDeltaPerMS.X;
+		UVOffsetDeltaPerMS.Y = other.UVOffsetDeltaPerMS.Y;
+		Bits = other.Bits;
 	}
 
 	return *this;

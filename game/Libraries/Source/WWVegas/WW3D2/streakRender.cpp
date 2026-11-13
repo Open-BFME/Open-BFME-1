@@ -66,8 +66,8 @@
 
 
 
-// StreakRendererClass::operator= is retail's 0x0095C860 body (ledger row
-// ??4Rva0095C860, pinned to ??4StreakRendererClass); declared only so the
+// StreakRendererClass::operator= is retail's 0x0095C860 body (ledger row in
+// TextureRefAssignOperators.cpp); declared only so the
 // non-retail inline copy does not shadow it at link time.
 
 // ??1StreakRendererClass@@QAE@XZ present-unmatched

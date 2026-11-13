@@ -4,11 +4,12 @@
 #include "rendobj.h"
 #include "seglinerenderer.h"
 
-// The assignment at 0x0095C860 is owned by TextureRefAssignOperators.cpp.
-class Rva0095C860
+// The assignment at 0x0095C860 is StreakRendererClass::operator=, owned by
+// TextureRefAssignOperators.cpp (identity_evidence/0095c860-streakrenderer-assign.md).
+class StreakRendererClass
 {
 public:
-	Rva0095C860 &operator=(const Rva0095C860 &other);
+	StreakRendererClass &operator=(const StreakRendererClass &other);
 };
 
 class BfmeSubAVIK
@@ -64,7 +65,7 @@ BfmeThingVIK &BfmeThingVIK::bfmeAssignVIK(const BfmeThingVIK &o)
 		m_bfmefc = o.m_bfmefc;
 		m_bfme100 = o.m_bfme100;
 		*(SegLineRendererClass *)&m_bfme104 = *(const SegLineRendererClass *)&o.m_bfme104;
-		*(Rva0095C860 *)&m_bfme154 = *(const Rva0095C860 *)&o.m_bfme154;
+		*(StreakRendererClass *)&m_bfme154 = *(const StreakRendererClass *)&o.m_bfme154;
 		m_bfmecc = o.m_bfmecc;
 	}
 	return *this;
