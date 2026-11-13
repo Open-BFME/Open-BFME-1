@@ -307,7 +307,6 @@ dir32,0x0130B2E8,?g_classic0130B2E8@@3V?$num_put@DV?$ostreambuf_iterator@DV?$cha
 dir32,0x0130B2F8,?g_classic0130B2F8@@3VBfmeChannelPair848030@@A,"nothing in the ledger owns 0x0130B2F8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B310,?g_classic0130B310@@3V?$time_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@A,"nothing in the ledger owns 0x0130B310. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B538,?g_classic0130B538@@3VBfmeChannelPair847F90@@A,"nothing in the ledger owns 0x0130B538. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0130B550,?g_classic0130B550@@3V?$codecvt@GDH@_STL@@A,"nothing in the ledger owns 0x0130B550. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B560,?g_classic0130B560@@3V?$numpunct@G@_STL@@A,"nothing in the ledger owns 0x0130B560. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B570,?g_classic0130B570@@3V?$time_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@A,"nothing in the ledger owns 0x0130B570. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0130B798,?g_classic0130B798@@3V?$collate@G@_STL@@A,"nothing in the ledger owns 0x0130B798. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
