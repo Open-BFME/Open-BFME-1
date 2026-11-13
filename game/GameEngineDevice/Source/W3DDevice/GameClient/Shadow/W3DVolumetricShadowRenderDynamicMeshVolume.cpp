@@ -205,7 +205,10 @@ class ShadowDebug007BC270 { public:
  virtual void slot68();
  virtual ShadowLog007BC270* stream(int,int);
 };
-extern ShadowDebug007BC270* debug01336E5C;
+// Retail 0x01336E5C is ?g_Rva00F36E5C@@3PAXA (data_rows.csv,
+// debug/Rva00F36E5C.cpp); the old debug01336E5C spelling was unrecorded.
+extern void *g_Rva00F36E5C;
+#define shadowDebugView ( *(ShadowDebug007BC270 **)&g_Rva00F36E5C )
 bool _bfme_debugReportingEnabled();
 void _bfme_debugRecordCallsite(int);
 class RenderObjClass { public:
@@ -252,16 +255,16 @@ void W3DVolumetricShadow::RenderDynamicMeshVolume(int meshIndex,int lightIndex,c
  if(numVerts>SHADOW_VERTEX_SIZE) {
   if(_bfme_debugReportingEnabled()) {
    _bfme_debugRecordCallsite(1);
-   debug01336E5C->begin();
-   debug01336E5C->stream(0,0)->text("Shadow geometry for ")->text(m_robj->Get_Name())->text(" has too many vertices (")->number(numVerts)->text(" with a limit of ")->number(SHADOW_VERTEX_SIZE)->text("). Either reduce the geometric complexity or have engineering increase SHADOW_VERTEX_SIZE. Unless this is fixed the given object will not have a volumetric shadow. [mh]")->end(2);
+   shadowDebugView->begin();
+   shadowDebugView->stream(0,0)->text("Shadow geometry for ")->text(m_robj->Get_Name())->text(" has too many vertices (")->number(numVerts)->text(" with a limit of ")->number(SHADOW_VERTEX_SIZE)->text("). Either reduce the geometric complexity or have engineering increase SHADOW_VERTEX_SIZE. Unless this is fixed the given object will not have a volumetric shadow. [mh]")->end(2);
   }
   return;
  }
  if(numIndex>SHADOW_INDEX_SIZE) {
   if(_bfme_debugReportingEnabled()) {
    _bfme_debugRecordCallsite(1);
-   debug01336E5C->begin();
-   debug01336E5C->stream(0,0)->text("Shadow geometry for ")->text(m_robj->Get_Name())->text(" has too many indices (")->number(numIndex)->text(" with a limit of ")->number(SHADOW_INDEX_SIZE)->text("). Either reduce the geometric complexity or have engineering increase SHADOW_INDEX_SIZE. Unless this is fixed the given object will not have a volumetric shadow. [mh]")->end(2);
+   shadowDebugView->begin();
+   shadowDebugView->stream(0,0)->text("Shadow geometry for ")->text(m_robj->Get_Name())->text(" has too many indices (")->number(numIndex)->text(" with a limit of ")->number(SHADOW_INDEX_SIZE)->text("). Either reduce the geometric complexity or have engineering increase SHADOW_INDEX_SIZE. Unless this is fixed the given object will not have a volumetric shadow. [mh]")->end(2);
   }
   return;
  }
