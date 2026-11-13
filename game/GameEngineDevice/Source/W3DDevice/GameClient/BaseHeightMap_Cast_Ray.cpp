@@ -76,7 +76,7 @@ class BaseHeightMapRenderObjClass
 public:
 	virtual bool Cast_Ray(RayCollisionTestClass &raytest);
 
-	UnsignedShort getClipHeight(Int x, Int y) const
+	__declspec(dllimport) __forceinline UnsignedShort getClipHeight(Int x, Int y) const
 	{
 		Int xextent = m_map->getXExtent();
 		Int yextent = m_map->getYExtent();
