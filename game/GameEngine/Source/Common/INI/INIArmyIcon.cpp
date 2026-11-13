@@ -80,6 +80,22 @@ static inline BfmeLivingWorldManagerIcons *livingWorldManager()
 	return (BfmeLivingWorldManagerIcons *)TheLivingWorldManager;
 }
 
+// Retail .rdata VA 0x01115DC8 (64 B), the table ParseArmyIconBlock hands
+// INI::initFromINI. Its parser slots hold the incremental-link thunks, not the
+// bodies: ILT 0x0001E32B jumps to ParseIconObjectBlock (0x0060B710) and ILT
+// 0x00018E7B to INI::rva000BABF0 (0x000BABF0), so the thunk rows' names are
+// the relocation targets.
+extern "C" void __identifier("?j_0001e32b@@YAXXZ")( INI *, void *, void *, const void * );
+extern "C" void __identifier("?j_00018e7b@@YAXXZ")( INI *, void *, void *, const void * );
+
+const FieldParse BfmeArmyIcon::m_fieldParseTable[] =
+{
+	{ "Object", __identifier("?j_0001e32b@@YAXXZ"), 0, 0x0 },
+	{ "OnSelectedSound", __identifier("?j_00018e7b@@YAXXZ"), 0, 0x4 },
+	{ "OnMoveSound", __identifier("?j_00018e7b@@YAXXZ"), 0, 0x8 },
+	{ 0, 0, 0, 0 }
+};
+
 // ?findArmyIcon@BfmeLivingWorldManagerIcons@@QAEPAVBfmeArmyIcon@@ABVAsciiString@@@Z
 BfmeArmyIcon *BfmeLivingWorldManagerIcons::findArmyIcon( const AsciiString &name )
 {
