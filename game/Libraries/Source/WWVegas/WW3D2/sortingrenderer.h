@@ -31,7 +31,7 @@ class SphereClass;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.h
 class SortingRendererClass
 {
-	static bool _EnableTriangleDraw;
+	static bool Rva012D71A4;
 
 	static void Flush_Sorting_Pool();
 	static void Insert_To_Sorting_Pool(SortingNodeStruct* state);
@@ -63,8 +63,8 @@ public:
 	
 	static void SetMinVertexBufferSize( unsigned val );
 
-	static void _Enable_Triangle_Draw(bool enable) { _EnableTriangleDraw=enable; }
-	static bool _Is_Triangle_Draw_Enabled() { return _EnableTriangleDraw; }
+	static void _Enable_Triangle_Draw(bool enable) { Rva012D71A4=enable; }
+	static bool _Is_Triangle_Draw_Enabled() { return Rva012D71A4; }
 };
 
 #endif

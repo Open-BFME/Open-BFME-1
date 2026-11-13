@@ -255,7 +255,6 @@ dir32,0x012C7388,?g_classicFacets012C7388@@3PAPAVfacet@locale@_STL@@A,"nothing i
 dir32,0x012D5298,?g_bfmeDefaultString1284@@3URva008CAAE0StringBlock@@A,"retail 0x012D5298 is already recorded as ?Rva012D5298Empty@@3URva00893410Block@@A (+30 more); reference that name, not a new one"
 dir32,0x012D5298,?g_default012D5298@@3UStringBlock008A73E0@@A,"retail 0x012D5298 is already recorded as ?Rva012D5298Empty@@3URva00893410Block@@A (+30 more); reference that name, not a new one"
 dir32,0x012D5298,?g_default012D5298@@3UStringBlock008B3C40@@A,"retail 0x012D5298 is already recorded as ?Rva012D5298Empty@@3URva00893410Block@@A (+30 more); reference that name, not a new one"
-dir32,0x012D71A4,?_EnableTriangleDraw@SortingRendererClass@@0_NA,"nothing in the ledger owns 0x012D71A4. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012D9930,?CRC32_Table@@3PAKA,"nothing in the ledger owns 0x012D9930. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012D9DF0,?_Table@CRC@@0PAKA,"nothing in the ledger owns 0x012D9DF0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x012DBD60,?g_rva00EDBD60DistanceProcs@@3PAP6AMPBX0H@ZA,"nothing in the ledger owns 0x012DBD60. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

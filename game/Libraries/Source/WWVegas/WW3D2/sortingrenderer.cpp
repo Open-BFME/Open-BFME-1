@@ -149,7 +149,7 @@ struct BfmeSortingRenderStateStruct
 // #pragma MESSAGE("************************************** WARNING, optimization disabled for debugging purposes")
 #endif
 
-bool SortingRendererClass::_EnableTriangleDraw=true;
+bool SortingRendererClass::Rva012D71A4=true;
 
 // ?SetMinVertexBufferSize@SortingRendererClass@@SAXI@Z present-unmatched
 void SortingRendererClass::SetMinVertexBufferSize( unsigned val )
@@ -805,7 +805,7 @@ void SortingRendererClass::Flush()
 	}
 
 	bool old_enable=DX8Wrapper::_Is_Triangle_Draw_Enabled();
-	DX8Wrapper::_Enable_Triangle_Draw(_EnableTriangleDraw);
+	DX8Wrapper::_Enable_Triangle_Draw(Rva012D71A4);
 	Flush_Sorting_Pool();
 	DX8Wrapper::_Enable_Triangle_Draw(old_enable);
 

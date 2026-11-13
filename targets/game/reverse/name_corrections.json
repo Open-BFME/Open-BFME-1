@@ -22231,4 +22231,24 @@
   "evidence": "targets/game/reverse/identity_evidence/000d77b0-becominglocalplayer.md",
   "reason": "ABI correction, not a rename: retail calls 0x009F2A20 with a hidden return pointer for a one-word refcounted result, which the ledger matches as ?bfmeForwardResultA@BfmeResultForwardA@@QAE?AUBfmeResultA@@XZ; the bank's Zero Hour iterateAllObjects returns ObjectIterator* and cannot link to that body. The forwarder's EA name stays unproven."
  }
-]
+,
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/sortingrenderer.h",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/sortingrenderer.h",
+  "old_name": "_EnableTriangleDraw",
+  "new_name": "Rva012D71A4",
+  "before_sha256": "c03090f69591e23d318a815ac3c0eef535a88cda67be3c7bdfd8ba2f12a04e00",
+  "after_sha256": "72e2e69b7d2241bd582a98f72fc34ea706f960465f316299d07886889f1b9997",
+  "evidence": "targets/game/reverse/identity_evidence/012d71a4-sortingrenderer-static-member.md",
+  "reason": "Retail datum at VA 0x012D71A4 is this private static bool; no ledger row owns the descriptive mangling and private members cannot be probed for a data row, so the member adopts the address-derived ?Rva012D71A4@SortingRendererClass@@0_NA convention used by 197 WW3D static-member rows; DIR32 operand unchanged (masked), 41/41 rows byte-match."
+ },
+ {
+  "old_path": "game/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp",
+  "new_path": "game/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp",
+  "old_name": "_EnableTriangleDraw",
+  "new_name": "Rva012D71A4",
+  "before_sha256": "c59cf9d2726f53344ada5b59cd3b1df04b116f0a39f70f37d9abd076724ffe76",
+  "after_sha256": "bcec8a638d89defd0441c89e40c8e1fcbfffb07e1b691f0bf833aa4915ea5653",
+  "evidence": "targets/game/reverse/identity_evidence/012d71a4-sortingrenderer-static-member.md",
+  "reason": "Retail datum at VA 0x012D71A4 is this private static bool; no ledger row owns the descriptive mangling and private members cannot be probed for a data row, so the member adopts the address-derived ?Rva012D71A4@SortingRendererClass@@0_NA convention used by 197 WW3D static-member rows; DIR32 operand unchanged (masked), 41/41 rows byte-match."
+ }]
