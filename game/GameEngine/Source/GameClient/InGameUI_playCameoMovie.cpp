@@ -59,7 +59,8 @@ public:
 	virtual void v02c();
 	virtual VideoStreamInterface *open(AsciiString movieTitle, int flags);
 };
-extern VideoPlayer *TheVideoPlayer;
+class VideoPlayerInterface;
+extern VideoPlayerInterface *TheVideoPlayer;
 
 class Display
 {
@@ -273,7 +274,7 @@ private:
 void InGameUI::playCameoMovie(const AsciiString &movieName)
 {
 	stopCameoMovie();
-	m_cameoVideoStream = TheVideoPlayer->open(movieName, 0);
+	m_cameoVideoStream = reinterpret_cast<VideoPlayer *>(TheVideoPlayer)->open(movieName, 0);
 	if (m_cameoVideoStream == 0)
 		return;
 
