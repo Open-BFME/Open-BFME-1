@@ -216,7 +216,6 @@ dir32,0x01127A48,??_7AptPalantir@@6BSubsystemInterface@@@,"retail 0x01127A48 is 
 dir32,0x011283AC,??_7ProjectedShadowManager@@6B@,"retail 0x011283AC is already recorded as ??_7Rva007AE380Deleting@@6B@ (+1 more); reference that name, not a new one"
 dir32,0x011296B0,??_7Rva008038F0Tail@@6B@,"retail 0x011296B0 is already recorded as ??_7Energy@@6B@ (+8 more); reference that name, not a new one"
 dir32,0x01129D30,??_7Rva007EB850Log@@6B@,"retail 0x01129D30 is already recorded as ?g_bfmeVftTDA@@3PAPAXA (+3 more); reference that name, not a new one"
-dir32,0x0112A590,??_7Rva007EFF30VfptrCtor@@6B@,the name encodes 0x007EFF30 but retail reads 0x0112A590
 dir32,0x0112B980,??_7Rva007F8F60VfptrCtor@@6B@,the name encodes 0x007F8F60 but retail reads 0x0112B980
 dir32,0x0112B9C0,??_7Rva007F9130VfptrCtor@@6B@,"retail 0x0112B9C0 is already recorded as ?g_0112B9C0@@3PAPBXA; reference that name, not a new one"
 dir32,0x0112E96C,??_7?$money_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,"nothing in the ledger owns 0x0112E96C. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"

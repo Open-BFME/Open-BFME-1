@@ -36,7 +36,20 @@
 	}
 
 BFME_VFPTR_CTOR( Rva01129D1C )
-BFME_VFPTR_CTOR( Rva007EFF30VfptrCtor )
+// ??_7Rva007EFF30VfptrCtor@@6B@ sits at retail 0x0112A590 with no owner class
+// or recorded name; store it through the address-derived array g_Va0112A590
+// so the DIR32 encodes the base retail reads.
+extern void *g_Va0112A590[];
+class Rva007EFF30VfptrCtor
+{
+public:
+	Rva007EFF30VfptrCtor();
+	void *m_vftable;
+};
+Rva007EFF30VfptrCtor::Rva007EFF30VfptrCtor()
+{
+	m_vftable = g_Va0112A590;
+}
 // ??_7Rva007F5540VfptrCtor@@6B@: reference recorded ?g_bfmeVftBTWB@@3PAPAXA
 extern void *g_bfmeVftBTWB[];
 class Rva007F5540VfptrCtor
