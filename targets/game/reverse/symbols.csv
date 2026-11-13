@@ -79995,7 +79995,6 @@ name,address,notes
 ?bfmeSetPosTP@BfmeHostTP@@QAEXPBVBfmePosTP@@@Z,0x0003A1A7,pin set pos for BfmeConv2025
 ?bfmeSetQQ@BfmeThingQQ@@QAEXPBDI@Z,0x0088A8F0,pin
 ?bfmeSetQR@BfmeThingQR@@QAEXPBDI@Z,0x0088A8F0,pin
-?bfmeSetRQ@BfmeInnerRQ@@QAEXHH@Z,0x0000A5DD,pin
 ?bfmeSetRectDY@BfmeThingDY@@QAEXHHHHH@Z,0x00017896,ILT thunk to assigned 0x0061D0E0 same-layout five-value state setter
 ?bfmeSetReferenceEW@BfmeTargetEW@@QAEXPAVBfmeRefEW@@@Z,0x0091FC90,pin
 ?bfmeSetSLA@BfmeSetterSLA@@QAEXPAXH@Z,0x000307E7,pin

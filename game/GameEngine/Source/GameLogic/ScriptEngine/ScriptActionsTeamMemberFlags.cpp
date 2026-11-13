@@ -88,11 +88,19 @@ typedef Object *(Object::*BfmeGetNextTeamMemberFunc)(void) const;
 
 class AIUpdateInterface;
 
-// The AI command block at AIUpdateInterface+0x20.
-class BfmeInnerRQ
+// The AI command block at AIUpdateInterface+0x20 is its AICommandInterface
+// base: retail calls ILT 0x0000A5DD, which jumps to the matched
+// AICommandInterface::aiExit body (0x00154330), with (NULL, CMD_FROM_SCRIPT).
+enum CommandSourceType
+{
+	CMD_FROM_PLAYER = 0,
+	CMD_FROM_SCRIPT
+};
+
+class AICommandInterface
 {
 public:
-	void bfmeSetRQ(Int object, Int commandSource);
+	void aiExit(Object *objectToExit, CommandSourceType cmdSource);
 };
 
 #define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
@@ -209,9 +217,9 @@ void ScriptActions::doTeamExitAllBuildings(const AsciiString &teamName)
 				reinterpret_cast<unsigned char *>(obj) + 0x204);
 			if (ai != 0)
 			{
-				BfmeInnerRQ *command = reinterpret_cast<BfmeInnerRQ *>(
+				AICommandInterface *command = reinterpret_cast<AICommandInterface *>(
 					reinterpret_cast<unsigned char *>(ai) + 0x20);
-				command->bfmeSetRQ(0, 1);
+				command->aiExit(0, CMD_FROM_SCRIPT);
 			}
 		}
 	}
