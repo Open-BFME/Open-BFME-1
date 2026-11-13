@@ -39,7 +39,6 @@ dir32,0x004442AB,?Rva0051B5F0@LoadScreen0051BF30@@QAEXPAX0_N@Z,the name encodes 
 dir32,0x0044454E,??1MoveHint0043AAD0@@QAE@XZ,"nothing in the ledger owns 0x0044454E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00446D44,??1?$queue@URva006AADB0Element@@V?$deque@URva006AADB0Element@@V?$allocator@URva006AADB0Element@@@_STL@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00446D44. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x004488EC,??_F?$list@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@V?$allocator@U?$pair@VAsciiString@@W4ObjectID@@@_STL@@@2@@_STL@@QAEXXZ,"nothing in the ledger owns 0x004488EC. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00448D42,??1ThingRef@@QAE@XZ,"retail 0x00448D42 is already recorded as ??1Rva0039B450Element@@QAE@XZ (+1 more); reference that name, not a new one"
 dir32,0x00448DD3,??1?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@XZ,"nothing in the ledger owns 0x00448DD3. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00951DB0,?d_00551db0@@YAXXZ,"nothing in the ledger owns 0x00951DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00BF7970,?g_00BF7970@@YAXXZ,"nothing in the ledger owns 0x00BF7970. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
