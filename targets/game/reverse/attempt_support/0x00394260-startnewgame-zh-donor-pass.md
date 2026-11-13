@@ -165,3 +165,95 @@ family that walls this body. The only diff in this body's TU (GameLogic.cpp,
 startNewGame. Bank inputs otherwise byte-unchanged, so no re-probe per "do not
 repeat unchanged scans" (shape 0.892 / 4655 non-reloc / 172 structural, frame
 0x344 vs 0x340 stands). Verdict 17 (8th draw) recorded. Block stands.
+
+## Re-draw 2026-11-13 (9th draw): the Zero Hour reference lane, run for the first time
+
+Verdicts 1-17 left the Zero Hour reference lane NEVER run in this checkout:
+`build/spike_zh` and `build/zh_sweep` did not exist, so no ZH compile or byte-compare
+had ever been attempted for this body. This draw ran the lane end to end, so the
+donor is now byte-compared rather than read. Claim `Claim-Lease: 0x00394260=64a076783de34ec487bc1832b2681de6`
+(own lease). No production source, pin or ledger row changed by this draw.
+
+### What the lane produced (`tools/zh_sweep.py compile` / `match` / `land-multi`)
+
+* `compile`: 918 built, 1 cached, 68 failed of 987 `GeneralsMD/Code` TUs over the
+  sweep's ten subtrees. All 68 failures are the WWAudio/MILES shim family (`AIL_*`,
+  `HSTREAM`, `HPROVIDER`, `LPCTSTR` unresolved against
+  `inputs/reference/shims/sweep/windows.h`). The unit that owns our target's body,
+  `GameEngine/Source/GameLogic/System/GameLogic.cpp`, compiled; its
+  `GameLogic_System_GameLogic.stl.obj` is in the cache.
+* `match`: 26,402 function COMDATs from 919 objects — 3871 exact-multi (256,050 B),
+  2076 exact-unique-CLAIMED (286,516 B), 4708 near, 4670 no-needle, 11077 no-placement.
+  There is **no `exact-unique-unclaimed` bucket at all**: every exactly-unique ZH
+  placement lands on ground the ledger already claims, so `zh_sweep.py land` has
+  nothing new to append. Evidence: `build/zh_sweep/match.json`.
+* The target's own donor COMDAT: `?startNewGame@GameLogic@@QAEX_N@Z` from the ZH
+  unit is **8968 B against retail's proven 7643 B** and bucketed `no-placement` —
+  it had a searchable reloc-free needle (>= 10 bytes) and that needle occurs nowhere
+  in BFME 1's `.text`. Not a byte twin, not a near miss, not a placement anywhere.
+  This is the measurement the earlier donor pass was missing, and it confirms that
+  pass's verdict: a semantic twin, not a tier-1/2 byte-path repair.
+* The four dump callees 0x0019FF20 / 0x0038F7B0 / 0x003916F0 / 0x00392D00: no ZH
+  COMDAT places at any of them, exact or near. `land-multi` over all 901 gen-dump
+  rows at HEAD (705,598 B, 489 distinct sizes) against the 1196 multi-placed bodies
+  reports **0 dump addresses an exact-multi twin can be landed on**, 0 proven pins,
+  0 string rejections — "every candidate was filtered out". Resume condition (a)
+  is NOT fired: the four rows are still `matched,gen-dump` (functions.csv
+  37063/37393/37395/37397 at this tree).
+* `packets`: deliberately NOT run. `do_packets` rebuilds the TRACKED
+  `targets/game/reverse/zh_sweep/packets/` directory and unlinks every packet this
+  run does not reproduce, which would delete another contributor's annotated lead.
+  The same filter reproduced read-only over `match.json` (near with align >= 0.85,
+  live ledger claims re-derived from `functions.csv` spans): 1495 near records over
+  849 distinct addresses, **all 849 already claimed -> 0 packets**, and 0x00394260
+  is not among the near addresses. The lane is exhausted against the live ledger
+  repo-wide, not just for this body.
+
+### BFME 1's own home TU already carries the vendored source (new this draw)
+
+`game/GameEngine/Source/GameLogic/System/GameLogic.cpp` (the wb1 home) carries the
+EA source of `GameLogic::startNewGame( Bool loadingSaveGame )` at lines 2604-3870,
+marked `// ?startNewGame@GameLogic@@QAEX_N@Z present-unmatched`. Probing that real
+TU with its own `// cl:` line
+(`tools/probe.py game/GameEngine/Source/GameLogic/System/GameLogic.cpp
+"?startNewGame@GameLogic@@QAEX_N@Z" 0x00394260 --size 7643 --shape`): emitted 8263 B,
+5427 non-reloc diffs, **shape 0.360, 209 structural**, frame `sub esp, 0x304` vs
+retail `0x340`. Divergence is immediate at +001b: retail does `push ebx / push ebp /
+push esi / push edi / xor edi,edi` while ours reads a flag first (`mov al,[esp+0x314]`)
+then `mov ebp,ecx / mov ebx,1`. So the vendored body is 620 B too large and
+structurally unlike retail; the hand-authored bank (shape 0.892 / 172 structural,
+frame 0x344) remains far and away the best candidate. Do not "land" the vendored
+source in place of the bank: it is a present-unmatched filler and swapping it would
+be the tier-4 fallback the rules forbid.
+
+### BFME 2 donor attempt (setup blocked, not evidence about the body)
+
+`tools/bfme2_sweep.py compile Code/GameEngine/Source/GameLogic/System/GameLogicInit.cpp`
+fails. Unmapped it resolves the donor's own
+`inputs/reference/open-bfme-2/reference/shims/{bfmealloc,bfme2_ascii,bfmelist}` and
+dies on `_STL::list<_Tp,_Alloc>::resize` / `_STL::allocator<char>::deallocate`
+unable to match (trial `build/bfme2_sweep/trials/7c00bd55265b4bc7bb0c28381d956eaa`).
+Mapped to BFME 1's `inputs/reference/shims/stlport_bfme` and
+`asciistring_outofline` (`build/local-model-probe/zh_bfme2_map.json`) it fails earlier:
+`quoted include unresolved: ascii_string.h`. Per the repository rules a path/setup
+failure is recorded as a blocker, not as evidence the donor body is wrong.
+Structurally the BFME 2 route is ruled out regardless of further mapping work: BFME 2's
+own `?startNewGame@GameLogic@@QAEX_N@Z` row is 546 B at 0x00248558 in a different
+executable, decomposed into `startNewGame_Init` 0x00241230/431 B,
+`startNewGame_PlaceMPBuildings` 0x002421F5/494 B,
+`startNewGame_OpenLoadScreen` 0x00244CB0/166 B plus a 736 B tail row — functions BFME 1
+retail does not contain. Tier-1/2 donor reuse cannot reproduce a 7643 B monolith; the
+donor's value is the call-stream semantics the bank already encodes.
+
+### Resume for the next agent
+
+Resume conditions are now: (a) one of the four dump callees lands — the ZH lane cannot
+land them (0 supersessions), so only a BFME 1 structural recovery of one of them will
+do; (b) a new `docs/shape_levers.md` entry targeting the zero-register (ebx/ebp)
+lifetime, spill choice or frame slot packing. The four entries added 2026-11-12
+(`a661a9c828` HRESULT switch return-group order, `2ccc080692` `__LINE__` diagnostic
+arguments, `c79eeaa702` a global STL-linkage COMDAT footprint, `832811202e` canonical
+adoption with `eh_state_pins.py` label repinning) do not target that family. Do not
+re-run the ZH sweep while its inputs are unchanged: the object cache `build/spike_zh`,
+`build/zh_sweep/match.json` and this section record what it concluded, and its
+conclusion is that the lane is exhausted. Verdict 18 (9th draw) recorded. Block stands.
