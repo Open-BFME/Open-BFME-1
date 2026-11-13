@@ -25,7 +25,11 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
-typedef _STL::list<int> Rva00238580List;
+// The list destructor is reached through ILT 0x0000E68D, whose body 0x000CEBD0
+// is the Object-pointer list base destructor (identity_evidence/
+// 20261111-object-list-base-contract.md), so the populated list holds Object *.
+class Object;
+typedef _STL::list<Object *> Rva00238580List;
 
 // The retail call is the 61st virtual slot (0xf0 / sizeof(void *)).  This is
 // a declaration-only interface: no object or vtable is emitted by this TU.

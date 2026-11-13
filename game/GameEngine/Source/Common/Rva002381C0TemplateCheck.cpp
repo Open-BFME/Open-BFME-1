@@ -23,7 +23,11 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
-typedef _STL::list<int> Rva002381C0List;
+// The list destructor is reached through ILT 0x0000E68D, whose body 0x000CEBD0
+// is the Object-pointer list base destructor (identity_evidence/
+// 20261111-object-list-base-contract.md), so the populated list holds Object *.
+class Object;
+typedef _STL::list<Object *> Rva002381C0List;
 
 // Retail dispatches through vtable slot 0xf0.  This interface is declaration-
 // only; no object or vtable is emitted by this translation unit.
