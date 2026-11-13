@@ -40,7 +40,6 @@ dir32,0x00448DD3,??1?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@
 dir32,0x00951DB0,?d_00551db0@@YAXXZ,"nothing in the ledger owns 0x00951DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00BF83E0,?g_00BF83E0@@YAXXZ,"nothing in the ledger owns 0x00BF83E0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C81DB0,?d_00881db0@@YAXXZ,"nothing in the ledger owns 0x00C81DB0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x00C81EA0,?d_00881ea0@@YAXXZ,"nothing in the ledger owns 0x00C81EA0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x00C92B80,??0BfmeElemBW@@QAE@XZ,"retail 0x00C92B80 is already recorded as ??0Rva008947A0Elem@@QAE@XZ; reference that name, not a new one"
 dir32,0x00DF7F4E,__RTC_Terminate,"nothing in the ledger owns 0x00DF7F4E. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x01070EC0,?obj@?1??getRva008877A0Singleton@@YAPAXXZ@$AVRva008877A0Type@@A,the name encodes 0x008877A0 but retail reads 0x01070EC0
