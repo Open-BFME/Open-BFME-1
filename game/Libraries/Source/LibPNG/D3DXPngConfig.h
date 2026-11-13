@@ -1,6 +1,16 @@
 #ifndef D3DX_PNG_CONFIG_H
 #define D3DX_PNG_CONFIG_H
 
+#ifdef _PNG_H
+#error D3DXPngConfig.h must precede png.h
+#endif
+
+#define PNG_CALLBACK __cdecl
+
+// VC7.1 needs a compile-time type check that emits no runtime provider.
+template<class A, class B> struct D3DXPngSameType { enum { value = 0 }; };
+template<class A> struct D3DXPngSameType<A, A> { enum { value = 1 }; };
+
 // These archive-disabled features change libpng's shared structs, not just its API.
 #define PNG_NO_READ_USER_TRANSFORM 1
 #define PNG_NO_WRITE_USER_TRANSFORM 1

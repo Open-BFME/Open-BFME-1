@@ -20,6 +20,12 @@ namespace D3DX {
 typedef char png_struct_native_size[sizeof(png_struct) == 0x19c ? 1 : -1];
 typedef char png_info_native_size[sizeof(png_info) == 0x40 ? 1 : -1];
 typedef char png_row_info_native_size[sizeof(png_row_info) == 0xc ? 1 : -1];
+typedef char png_callbacks_native_abi[
+   D3DXPngSameType<png_error_ptr, void (__cdecl *)(png_structp, png_const_charp)>::value &&
+   D3DXPngSameType<png_rw_ptr, void (__cdecl *)(png_structp, png_bytep, png_size_t)>::value &&
+   D3DXPngSameType<png_flush_ptr, void (__cdecl *)(png_structp)>::value &&
+   D3DXPngSameType<png_read_status_ptr, void (__cdecl *)(png_structp, png_uint_32, int)>::value &&
+   D3DXPngSameType<png_write_status_ptr, void (__cdecl *)(png_structp, png_uint_32, int)>::value ? 1 : -1];
 #undef png_set_bgr
 #undef png_set_swap
 #undef png_set_packing

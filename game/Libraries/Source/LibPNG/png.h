@@ -608,26 +608,31 @@ typedef png_row_info FAR * FAR * png_row_infopp;
 typedef struct png_struct_def png_struct;
 typedef png_struct FAR * png_structp;
 
-typedef void (*png_error_ptr) PNGARG((png_structp, png_const_charp));
-typedef void (*png_rw_ptr) PNGARG((png_structp, png_bytep, png_size_t));
-typedef void (*png_flush_ptr) PNGARG((png_structp));
-typedef void (*png_read_status_ptr) PNGARG((png_structp, png_uint_32, int));
-typedef void (*png_write_status_ptr) PNGARG((png_structp, png_uint_32, int));
+/* A caller's API convention need not be its callback convention. */
+#ifndef PNG_CALLBACK
+#define PNG_CALLBACK
+#endif
+
+typedef void (PNG_CALLBACK *png_error_ptr) PNGARG((png_structp, png_const_charp));
+typedef void (PNG_CALLBACK *png_rw_ptr) PNGARG((png_structp, png_bytep, png_size_t));
+typedef void (PNG_CALLBACK *png_flush_ptr) PNGARG((png_structp));
+typedef void (PNG_CALLBACK *png_read_status_ptr) PNGARG((png_structp, png_uint_32, int));
+typedef void (PNG_CALLBACK *png_write_status_ptr) PNGARG((png_structp, png_uint_32, int));
 #ifdef PNG_PROGRESSIVE_READ_SUPPORTED
-typedef void (*png_progressive_info_ptr) PNGARG((png_structp, png_infop));
-typedef void (*png_progressive_end_ptr) PNGARG((png_structp, png_infop));
-typedef void (*png_progressive_row_ptr) PNGARG((png_structp, png_bytep,
+typedef void (PNG_CALLBACK *png_progressive_info_ptr) PNGARG((png_structp, png_infop));
+typedef void (PNG_CALLBACK *png_progressive_end_ptr) PNGARG((png_structp, png_infop));
+typedef void (PNG_CALLBACK *png_progressive_row_ptr) PNGARG((png_structp, png_bytep,
    png_uint_32, int));
 #endif /* PNG_PROGRESSIVE_READ_SUPPORTED */
 
 #if defined(PNG_READ_USER_TRANSFORM_SUPPORTED) || \
     defined(PNG_WRITE_USER_TRANSFORM_SUPPORTED)
-typedef void (*png_user_transform_ptr) PNGARG((png_structp,
+typedef void (PNG_CALLBACK *png_user_transform_ptr) PNGARG((png_structp,
     png_row_infop, png_bytep));
 #endif /* PNG_READ|WRITE_USER_TRANSFORM_SUPPORTED */
 
-typedef png_voidp (*png_malloc_ptr) PNGARG((png_structp, png_size_t));
-typedef void (*png_free_ptr) PNGARG((png_structp, png_voidp));
+typedef png_voidp (PNG_CALLBACK *png_malloc_ptr) PNGARG((png_structp, png_size_t));
+typedef void (PNG_CALLBACK *png_free_ptr) PNGARG((png_structp, png_voidp));
 
 /* The structure that holds the information to read and write PNG files.
  * The only people who need to care about what is inside of this are the
