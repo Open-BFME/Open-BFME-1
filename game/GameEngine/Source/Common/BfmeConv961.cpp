@@ -24,8 +24,10 @@ struct BfmeFlag961
 // BfmeResetA961 above is this TU's own view of that address, so the call casts.
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;
-extern BfmeGate961 *g_bfmeGate961;
-extern BfmeFlag961 *g_bfmeFlag961;
+// Retail 0x012F706C: use the existing data owner; retain the local pointee view.
+extern class LivingWorldManager *TheLivingWorldManager;
+// Retail 0x012F7048: use the existing data owner; retain the local pointee view.
+extern class Rva006092D0State *g_rva012F7048LivingWorld;
 
 class BfmeHost961
 {
@@ -38,8 +40,8 @@ void BfmeHost961::bfmeGo961()
 {
 	((BfmeResetA961 *)TheLivingWorldLogic)->bfmeReset961();
 
-	if (g_bfmeGate961->bfmeCheck961() && !g_bfmeFlag961->m_bfmeFlag) {
-		g_bfmeGate961->bfmeFinish961();
+	if (reinterpret_cast<BfmeGate961 *>(TheLivingWorldManager)->bfmeCheck961() && !reinterpret_cast<BfmeFlag961 *>(g_rva012F7048LivingWorld)->m_bfmeFlag) {
+		reinterpret_cast<BfmeGate961 *>(TheLivingWorldManager)->bfmeFinish961();
 		return;
 	}
 

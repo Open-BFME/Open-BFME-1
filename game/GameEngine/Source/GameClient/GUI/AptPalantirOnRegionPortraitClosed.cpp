@@ -12,10 +12,11 @@ struct AptPalantirRegionOwner
 	AptPalantirRegionPanel m_regionPanel;
 };
 
-extern AptPalantirRegionOwner *g_bfmeObjDXJ;
+// Retail 0x012F4B98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 
 // ?aptPalantirOnRegionPortraitClosed@@YAXPAX@Z
 void aptPalantirOnRegionPortraitClosed( void *regionText )
 {
-	g_bfmeObjDXJ->m_regionPanel.closePortrait( atoi( regionText ) );
+	reinterpret_cast<AptPalantirRegionOwner *>(TheAptPalantir)->m_regionPanel.closePortrait( atoi( regionText ) );
 }

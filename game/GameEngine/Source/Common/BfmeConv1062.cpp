@@ -54,7 +54,8 @@ struct BfmeP1062
 	int m_bfme50;
 };
 
-extern BfmeP1062 *g_bfmeP1062;
+// Retail 0x012F4B98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 extern char g_bfmeLit1_1062[];
 
 class BfmeX1062;
@@ -85,7 +86,7 @@ void bfmeGo1062D(void)
 {
 	char *s;
 
-	switch (g_bfmeP1062->m_bfme50) {
+	switch (reinterpret_cast<BfmeP1062 *>(TheAptPalantir)->m_bfme50) {
 		case 1:
 			s = g_bfmeLit1_1062;
 			break;

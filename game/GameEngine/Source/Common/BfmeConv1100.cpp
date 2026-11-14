@@ -73,8 +73,10 @@ public:
 	void bfmeEnd1100(int a);
 };
 
-extern BfmeA1100 *g_bfmeA1100;
-extern BfmeB1100 *g_bfmeB1100;
+// Retail 0x12f7048: use the existing data owner; retain the local pointee view.
+extern class Rva006092D0State *g_rva012F7048LivingWorld;
+// Retail 0x12f1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 class Mouse;
 extern Mouse *TheMouse;
 
@@ -90,13 +92,13 @@ public:
 
 void BfmeQ1100::bfmeGo1100B(void)
 {
-	if (g_bfmeA1100->m_bfme04 != 2)
+	if ((reinterpret_cast<BfmeA1100 *>(g_rva012F7048LivingWorld))->m_bfme04 != 2)
 		m_bfme288 = 0;
-	if (g_bfmeA1100->m_bfme04 != 1)
+	if ((reinterpret_cast<BfmeA1100 *>(g_rva012F7048LivingWorld))->m_bfme04 != 1)
 		return;
-	if (!g_bfmeB1100)
+	if (!(reinterpret_cast<BfmeB1100 *>(TheLivingWorldLogic)))
 		return;
-	if (g_bfmeB1100->bfmeChk1100(8))
+	if ((reinterpret_cast<BfmeB1100 *>(TheLivingWorldLogic))->bfmeChk1100(8))
 		return;
 	bfmeDo1100(1);
 	if (reinterpret_cast<BfmeZ1100 *>(TheMouse))

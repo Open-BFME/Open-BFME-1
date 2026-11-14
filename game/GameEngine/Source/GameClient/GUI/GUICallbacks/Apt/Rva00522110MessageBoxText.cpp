@@ -27,7 +27,8 @@ struct Rva00522110State
 };
 
 class BfmeThingCB;
-extern BfmeThingCB *g_bfmeThingCB;
+// Retail 0x012F49D0: use the existing data owner; retain the local pointee view.
+extern void *g_rva012F49D0;
 
 class WindowManager
 {
@@ -42,12 +43,12 @@ extern WindowManager *g_rva012F19E8WindowManager;
 // ?rva00522110@@YA_NHABVUnicodeString@@0@Z
 bool rva00522110(int mode, const UnicodeString &title, const UnicodeString &body)
 {
-    if (g_bfmeThingCB == 0)
+    if (g_rva012F49D0 == 0)
         return false;
-    if (reinterpret_cast<Rva00522110State *>(g_bfmeThingCB)->m_38 == 4)
+    if (reinterpret_cast<Rva00522110State *>(g_rva012F49D0)->m_38 == 4)
         return false;
-    reinterpret_cast<Rva00522110State *>(g_bfmeThingCB)->m_34 = 4;
-    reinterpret_cast<Rva00522110State *>(g_bfmeThingCB)->m_38 = mode;
+    reinterpret_cast<Rva00522110State *>(g_rva012F49D0)->m_34 = 4;
+    reinterpret_cast<Rva00522110State *>(g_rva012F49D0)->m_38 = mode;
     if (title.isEmpty())
         g_theWindowManager->bfme_setAptText(AsciiString("APT:MessageBoxGenericTitle"), UnicodeString(L" "));
     else

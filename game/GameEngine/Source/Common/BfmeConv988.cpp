@@ -8,7 +8,8 @@ public:
 	void bfmeDrop988(BfmeE988 *e);
 };
 
-extern BfmeReg988 *g_bfmeReg988;
+// Retail 0x012F1044: use the existing data owner; retain the local pointee view.
+extern class LargeGroupAudio *TheLargeGroupAudio;
 
 class BfmeE988
 {
@@ -26,7 +27,7 @@ public:
 void BfmeE988::bfmeGo988A()
 {
 	if (m_bfmeOn) {
-		g_bfmeReg988->bfmeDrop988(this);
+		reinterpret_cast<BfmeReg988 *>(TheLargeGroupAudio)->bfmeDrop988(this);
 		bfmeSet988(m_bfmeVal, 0x3fffffff);
 		m_bfmeOn = 0;
 	}
@@ -35,7 +36,7 @@ void BfmeE988::bfmeGo988A()
 void BfmeE988::bfmeGo988B()
 {
 	if (m_bfmeOn) {
-		g_bfmeReg988->bfmeDrop988(this);
+		reinterpret_cast<BfmeReg988 *>(TheLargeGroupAudio)->bfmeDrop988(this);
 		bfmeSet988(m_bfmeVal, 0x3fffffff);
 		m_bfmeOn = 0;
 	}

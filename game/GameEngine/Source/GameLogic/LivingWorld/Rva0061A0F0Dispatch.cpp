@@ -26,7 +26,8 @@ public:
 	BfmeRoomYC Rva003B3950Room(void);
 };
 
-extern Glo012F1024Type *TheLivingWorldCampaignManager;
+// Retail 0x12f1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 // The 0x24-byte record 0x00619C40 receives (its pinned 0x006196C0 getter
 // names the type); 0x006196F0 is a second AsciiString getter on it, reached
@@ -58,7 +59,7 @@ public:
 
 void Rva0061A0F0Owner::rva0061A0F0()
 {
-	BfmeRoomYC name = TheLivingWorldCampaignManager->Rva003B3950Room();
+	BfmeRoomYC name = (reinterpret_cast<Glo012F1024Type *>(TheLivingWorldCampaignManager))->Rva003B3950Room();
 	if (name.getLength() == 0)
 		name.format(AsciiString("NoActNameFound"));
 	bool found = false;

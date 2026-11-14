@@ -62,7 +62,8 @@ public:
 	int bfmeCount932D(void *a, int f);
 };
 
-extern BfmeGlob932D *g_bfme932GlobD;
+// Retail 0x012F0888: use the existing data owner; retain the local pointee view.
+extern class ExperienceLevelSystem *TheExperienceLevelSystem;
 
 class BfmeThing932D
 {
@@ -74,7 +75,7 @@ public:
 
 char BfmeThing932D::bfmeGo932D()
 {
-	int r = g_bfme932GlobD->bfmeCount932D(m_bfmeP, 0);
+	int r = reinterpret_cast<BfmeGlob932D *>(TheExperienceLevelSystem)->bfmeCount932D(m_bfmeP, 0);
 	return (char)(r > 0);
 }
 

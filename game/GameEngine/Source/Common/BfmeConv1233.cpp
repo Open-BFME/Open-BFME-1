@@ -44,7 +44,8 @@ public:
 };
 extern EAStringC::StringDataC g_rva012D5298Empty;
 BfmeStr1233 g_bfmeStr1233 = { (BfmeBuf1233 *)&g_rva012D5298Empty };
-extern BfmeAlloc1233 *g_bfmeAlloc1233;
+// Retail 0x01337A30: use the existing data owner; retain the local pointee view.
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
 struct Rva008AE770Stack
 {
 	int field00;
@@ -74,7 +75,7 @@ void *bfmeVisit1233(BfmeN1233 *a, int n)
 		buf = g_bfmeStr1233.m_bfme00;
 		--buf->m_bfme00;
 		if (buf->m_bfme00 == 0)
-			g_bfmeAlloc1233->m_bfme04(buf);
+			reinterpret_cast<BfmeAlloc1233 *>(g_rva01337A30AllocPair)->m_bfme04(buf);
 		++((BfmeBuf1233 *)&g_rva012D5298Empty)->m_bfme00;
 		g_bfmeStr1233.m_bfme00 = (BfmeBuf1233 *)&g_rva012D5298Empty;
 	}

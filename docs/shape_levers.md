@@ -4204,3 +4204,27 @@ every pointer site and every embedded jump-table label through the normal gate.
 Only these four switches were tested; see
 `targets/game/reverse/identity_evidence/dxerr9-summer2003-source.md` and its
 reproducible attempt-support evidence.
+
+### Canonical global pointer: preserve a volatile load before the local view
+
+`BfmeTimerAZTick.cpp` reads the weather singleton through a volatile pointer
+lvalue before saving `this`; that read ordering is part of its matched
+108-byte body at RVA 0x006E1670. Its old declaration used the private
+`BfmeModeGF *g_bfmeModeGF` spelling, while the existing data owner declares
+`RetailGlobalWeatherSystem *TheGlobalWeatherSystem` at VA 0x012F0FE0.
+
+When binding the consumer to that owner, qualify the canonical pointer
+lvalue first with
+`static_cast<RetailGlobalWeatherSystem *volatile &>(TheGlobalWeatherSystem)`,
+then convert the loaded pointer value to the existing local `BfmeModeGF *`
+view. This retains the volatile load without accessing the pointer cell
+through an unrelated pointer-reference type. Taking the address of an
+already converted pointer value is ill-formed; a value conversion alone
+would discard the original volatile access.
+
+With MSVC 13.10.3077 and this TU's `/O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD`
+settings, all 108 bytes and the complete ordered non-debug COFF section
+and relocation graph are unchanged except for the global symbol binding.
+This is a measured preservation of the existing solution, not a new
+claim about the original class layout or a general instruction-order rule.
+See `targets/game/reverse/identity_evidence/20261115-twenty-singleton-consumers.md`.

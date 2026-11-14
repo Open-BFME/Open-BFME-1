@@ -45,17 +45,18 @@ public:
 	int m_bfmeSlot;
 };
 
-extern BfmeB991 *g_bfmeB991;
+// Retail 0x012F9D88: use the existing data owner; retain the local pointee view.
+extern class SmudgeManager *TheSmudgeManager;
 extern int g_bfmeVal991;
 
 void bfmeGo991B(int a)
 {
-	if (!g_bfmeB991)
+	if (!reinterpret_cast<BfmeB991 *>(TheSmudgeManager))
 		return;
 
-	g_bfmeB991->bfmeSet991(a);
-	g_bfmeB991->bfmeTick991();
-	g_bfmeB991->m_bfmeSlot = g_bfmeVal991;
+	reinterpret_cast<BfmeB991 *>(TheSmudgeManager)->bfmeSet991(a);
+	reinterpret_cast<BfmeB991 *>(TheSmudgeManager)->bfmeTick991();
+	reinterpret_cast<BfmeB991 *>(TheSmudgeManager)->m_bfmeSlot = g_bfmeVal991;
 }
 
 class BfmeDev991

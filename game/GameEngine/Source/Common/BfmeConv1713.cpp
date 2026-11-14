@@ -7,7 +7,8 @@ public:
 	int m_bfmeKindGF;
 };
 
-extern BfmeModeGF *g_bfmeModeGF;
+// Retail 0x012F0FE0: use the existing data owner; retain the local pointee view.
+extern struct RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 
 class BfmeTimerGF
 {
@@ -33,8 +34,8 @@ void BfmeTimerGF::bfmeTickGF(void)
 	m_bfmeCountGF = 0;
 	m_bfmeStateGF = 0;
 
-	if (g_bfmeModeGF->m_bfmeKindGF == 4)
-		g_bfmeModeGF->bfmeStopGF(0);
+	if (reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->m_bfmeKindGF == 4)
+		reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->bfmeStopGF(0);
 
 	m_bfmeOtherGF = 0;
 }

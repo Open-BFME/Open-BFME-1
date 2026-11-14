@@ -6,7 +6,8 @@ struct BfmeP1060
 	volatile int m_bfme54;
 };
 
-extern BfmeP1060 *g_bfmeP1060;
+// Retail 0x12f4b98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 extern const char g_rva01080FC0[2];
 
 class BfmeX1060;
@@ -40,7 +41,7 @@ public:
 
 void bfmeGo1060B(void)
 {
-	int v = g_bfmeP1060->m_bfme54;
+	int v = (reinterpret_cast<BfmeP1060 *>(TheAptPalantir))->m_bfme54;
 	char *s = --v ? "0" : const_cast<char *>(g_rva01080FC0);
 
 	((BfmeLevelAN *)g_rva012F19E8WindowManager)->bfmeBuildAN((unsigned int)g_aptPalantirWindow,
@@ -82,7 +83,8 @@ public:
 	BfmeSub1060 m_bfmeSub;
 };
 
-extern BfmeW1060 *g_bfmeW1060;
+// Retail 0x12f3330: use the existing data owner; retain the local pointee view.
+extern class GameWindowTransitionsHandler *TheTransitionHandler;
 
 void bfmeGo1060D(BfmeO1060 *o, int b, int c, int d)
 {
@@ -90,5 +92,5 @@ void bfmeGo1060D(BfmeO1060 *o, int b, int c, int d)
 	// TU-local, so cast at the call and keep the pushed bytes identical.
 	int t = (int)TheNameKeyGenerator->nameToKey((const char *)o->bfmeGet1060(0));
 
-	g_bfmeW1060->m_bfmeSub.bfmeFind1060(&t)->m_bfmeFn(o, b, c, d);
+	(reinterpret_cast<BfmeW1060 *>(TheTransitionHandler))->m_bfmeSub.bfmeFind1060(&t)->m_bfmeFn(o, b, c, d);
 }

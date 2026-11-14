@@ -13,7 +13,8 @@ public:
 	BfmeLwcmFindResult *findByKey(void *key);
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+// Retail 0x012F1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class BfmePointerVector
 {
@@ -40,7 +41,7 @@ void BfmeLwcmPointerVectorOwner::applyFound(void *key)
 {
 	unsigned i;
 	BfmeLwcmPointerVectorOwner *self = this;
-	BfmeLwcmFindResult *found = TheLivingWorldCampaignManager->findByKey(key);
+	BfmeLwcmFindResult *found = reinterpret_cast<BfmeLivingWorldCampaignManager *>(TheLivingWorldCampaignManager)->findByKey(key);
 	if (!found)
 		return;
 	for (i = 0; i < self->m_entries.size(); ++i)

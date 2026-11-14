@@ -53,7 +53,8 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern BfmeS1097 *g_bfmeS1097;
+// Retail 0x012EF1D8: use the existing data owner; retain the local pointee view.
+extern class ThingFactory *TheThingFactory;
 
 // retail 0x012ED748: EA's `PlayerList *ThePlayerList`, defined once in
 // game/GameEngine/Source/Common/RTS/PlayerList.cpp, so the reference carries
@@ -77,7 +78,7 @@ void __stdcall bfmeGo1097A(int a, char b)
 		r->bfmeClr1097();
 		return;
 	}
-	u = g_bfmeS1097->m_bfme08;
+	u = reinterpret_cast<BfmeS1097 *>(TheThingFactory)->m_bfme08;
 	r->bfmeClr1097();
 	while (u) {
 		if ((u->m_bfmec8 & 0x80) && !u->m_bfme28.bfmeCmp1097(&r->m_bfme28))

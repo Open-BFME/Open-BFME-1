@@ -1,5 +1,5 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Sibling of BfmeTimerGF::bfmeTickGF at 0x006E1620. Same global g_bfmeModeGF
+// Sibling of BfmeTimerGF::bfmeTickGF at 0x006E1620. Same global TheGlobalWeatherSystem
 // (VA 0x012F0FE0) and same stop callee. Address-derived method on a same-layout
 // ticker: if the global kind is 4 and this copy is not, arm a 0xFF countdown
 // that calls the stop helper and clears the copy.
@@ -13,7 +13,8 @@ public:
 	int m_bfmeKindGF;
 };
 
-extern BfmeModeGF *g_bfmeModeGF;
+// Retail 0x012F0FE0: use the existing data owner; retain the local pointee view.
+extern struct RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 
 class BfmeTimerAZ
 {
@@ -29,7 +30,7 @@ public:
 // ?bfmeTickAZ@BfmeTimerAZ@@QAEXXZ
 void BfmeTimerAZ::bfmeTickAZ(void)
 {
-	int mode = (*(BfmeModeGF *volatile *)&g_bfmeModeGF)->m_bfmeKindGF;
+	int mode = reinterpret_cast<BfmeModeGF *>(static_cast<RetailGlobalWeatherSystem *volatile &>(TheGlobalWeatherSystem))->m_bfmeKindGF;
 	int four = 4;
 	BfmeTimerAZ *self = this;
 	if (mode == four && self->m_bfmeOtherAZ != four)
@@ -49,8 +50,8 @@ void BfmeTimerAZ::bfmeTickAZ(void)
 				self->m_bfmeCountAZ = 0;
 				self->m_bfmeStateAZ = 0;
 
-				if (g_bfmeModeGF->m_bfmeKindGF == four)
-					g_bfmeModeGF->bfmeStopGF(0);
+				if (reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->m_bfmeKindGF == four)
+					reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->bfmeStopGF(0);
 
 				self->m_bfmeOtherAZ = 0;
 			}

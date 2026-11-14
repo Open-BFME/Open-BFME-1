@@ -4,7 +4,8 @@ public:
 	void selectHero( int index );
 };
 
-extern AptPalantirHeroSelector *g_bfmeW1027;
+// Retail 0x012F4B98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 extern "C" __declspec(dllimport) int __cdecl strncmp( char *left, char *right, int count );
 extern "C" __declspec(dllimport) int __cdecl atoi( char *text );
 
@@ -14,5 +15,5 @@ void aptPalantirOnButtonHeroSelect( char *hero )
 	if( strncmp( hero, "Hero", 4 ) != 0 )
 		return;
 
-	g_bfmeW1027->selectHero( atoi( hero + 4 ) - 1 );
+	reinterpret_cast<AptPalantirHeroSelector *>(TheAptPalantir)->selectHero( atoi( hero + 4 ) - 1 );
 }

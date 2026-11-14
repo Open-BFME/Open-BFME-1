@@ -17,13 +17,12 @@ struct BfmeP1227
 // game/GameEngine/Source/Common/BfmeTwoHundredThirtyTwo.cpp); no header declares
 // them, so name the callee by its defining spelling with a declaration-only
 // slice: this body only calls bfmePushLP through the singleton, never a layout.
-// g_bfmeR1227's retail mangled name spells its type, so the pointer keeps the
-// BfmeR1227 spelling; only the member it reaches is respelled.
 class BfmeR1227
 {
 };
 
-extern BfmeR1227 *g_bfmeR1227;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 
 // BfmeOtherLP and BfmeThingLP are real classes (defined in
 // game/GameEngine/Source/Common/BfmeTwoHundredThirtyTwo.cpp); no header declares
@@ -54,7 +53,7 @@ void BfmeA1227::bfmeDump1227(void *a, int k)
 	for (i = 0; i < m_bfme04[k].m_bfme00; ++i) {
 		e = m_bfme04[k].m_bfme04[i];
 		if (e->m_bfme00 == 1)
-			reinterpret_cast<BfmeThingLP *>(g_bfmeR1227)->bfmePushLP(
+			reinterpret_cast<BfmeThingLP *>(g_bfmeHolderBU)->bfmePushLP(
 				&e->m_bfme04,
 				reinterpret_cast<BfmeOtherLP *>(a),
 				reinterpret_cast<int>(g_bfmeTag1227));
