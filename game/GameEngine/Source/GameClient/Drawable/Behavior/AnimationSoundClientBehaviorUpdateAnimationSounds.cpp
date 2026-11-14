@@ -202,8 +202,8 @@ public:
 	void noteOwner(U4Owner00604C00 *owner);
 };
 
-class BfmeResetSubsystem;
-extern BfmeResetSubsystem *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 
 class AnimationSoundClientBehavior
 {
@@ -251,8 +251,8 @@ void AnimationSoundClientBehavior::updateAnimationSounds()
 	}
 	if (!inRange)
 	{
-		if (g_animationSoundClientBehaviorGlobal)
-			((U4Notify *)g_animationSoundClientBehaviorGlobal)->noteOwner((U4Owner00604C00 *)this);
+		if (TheAnimationSoundModuleManager)
+			((U4Notify *)TheAnimationSoundModuleManager)->noteOwner((U4Owner00604C00 *)this);
 		return;
 	}
 	Rva00605800Tree *sounds = &getModuleData006059F0()->m_sounds;

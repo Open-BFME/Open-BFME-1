@@ -173,7 +173,8 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern Keyboard *TheKeyboard;
 extern ImageCollection *TheMappedImageCollection;
 extern Anim2DCollection *TheAnim2DCollection;
-extern AnimationSoundClientBehaviorGlobal *g_animationSoundClientBehaviorGlobal;
+class AnimationSoundModuleManager;
+extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern MessageStream *TheMessageStream;
 extern FontLibrary *TheFontLibrary;
 extern Mouse *TheMouse;
@@ -260,9 +261,9 @@ void GameClient::init()
     TheAnim2DCollection = new Anim2DCollection;
     TheAnim2DCollection->init();
     TheAnim2DCollection->setNameInline(AsciiString("TheAnim2DCollection"));
-    g_animationSoundClientBehaviorGlobal = (AnimationSoundClientBehaviorGlobal *)new BfmeReg963;
-    g_animationSoundClientBehaviorGlobal->init();
-    g_animationSoundClientBehaviorGlobal->setNameInline(AsciiString("TheAnimationSoundModuleManager"));
+    TheAnimationSoundModuleManager = (AnimationSoundModuleManager *)new BfmeReg963;
+    reinterpret_cast<AnimationSoundClientBehaviorGlobal *>(TheAnimationSoundModuleManager)->init();
+    reinterpret_cast<AnimationSoundClientBehaviorGlobal *>(TheAnimationSoundModuleManager)->setNameInline(AsciiString("TheAnimationSoundModuleManager"));
     if (TheMessageStream)
     {
         m_translators[m_numTranslators++] = TheMessageStream->attachTranslator((GameMessageTranslator *)new Rva0042ECB0, 4);
