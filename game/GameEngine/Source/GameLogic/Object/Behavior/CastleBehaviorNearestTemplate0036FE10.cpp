@@ -1,6 +1,12 @@
-// ?find@NearestTemplate0036FE10@@QAEPAXABVAsciiString@@@Z
-// partial score=0.9857 date=2026-10-03
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
+// ?find@NearestTemplate0036FE10@@QAEPAXABVAsciiString@@@Z
+// Retail 0x0036FE10, 279 bytes (tu_map: CastleBehavior range 0x0036FD20..0x0036FF70).
+// Walks TheBfmeGameLogic's object list (next at +0x88) and returns the object whose
+// final-override template name (+0x20) equals the argument and which is nearest, by
+// Coord3D::GetLengthEstimate, to the owner at this+8. The identity is unproven, so
+// the class name keeps the address.
+// Reading the owner position inline in the subtraction, instead of through a named
+// pointer, gives retail's register choice (this in EDX, copied z in ECX).
 #include "ascii_string.h"
 #include "coord3d.h"
 #include <math.h>
@@ -23,7 +29,7 @@ static __forceinline float estimateLength3D(const Coord3D &coord)
     return az + length_estimate_factor * estimateLength2D(ax, ay);
 }
 
-__declspec(noinline) float Coord3D::GetLengthEstimate() const
+inline __declspec(noinline) float Coord3D::GetLengthEstimate() const
 {
     return estimateLength3D(*this);
 }
@@ -40,9 +46,6 @@ class NearestTemplate0036FE10 {
 public:
  void *find(const AsciiString &name);
 };
-#pragma comment(linker, "/alternatename:?m@Gen_00383090@@QAEHXZ=?j_000358be@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GetLengthEstimate@Coord3D@@QBEMXZ=?j_00036aa2@@YAXXZ")
 void *NearestTemplate0036FE10::find(const AsciiString &name) {
  void *object=(void*)((Gen_00383090 *)TheBfmeGameLogic)->m();
  void *best=0;
@@ -57,9 +60,8 @@ void *NearestTemplate0036FE10::find(const AsciiString &name) {
   }
   if(((const AsciiString*)((const char*)tmpl+0x20))->compare(*(const AsciiString*)&nameData)==0) {
    const Coord3DBase *src=(const Coord3DBase*)((char*)object+0x38);
-   const Coord3DBase *pos=(const Coord3DBase*)((char*)*(void**)((char*)this+8)+0x38);
    Coord3D delta(*src);
-   delta -= *pos;
+   delta -= *(const Coord3DBase*)((char*)*(void**)((char*)this+8)+0x38);
    float d=((const Coord3D*)&delta)->GetLengthEstimate();
    if(!best || d<distance) { distance=d; best=object; }
   }
