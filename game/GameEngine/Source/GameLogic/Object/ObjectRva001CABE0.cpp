@@ -1,8 +1,8 @@
-// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
-// partial score=1.0 date=2026-11-10
 // cl: /DNDEBUG /MD /EHsc
-// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
-// candidate (wf 001cabe0): Zero Hour Radar::addObject colour-selection shape
+// Retail RVA 0x001CABE0 (376 bytes). Zero Hour Radar::addObject colour-selection
+// shape; identity is an address-derived Bfme* stand-in (ILT 0x0002CA61), not an
+// EA name. Landing evidence: targets/game/reverse/attempt_support/
+// 20261110-001cabe0-flag-join-tail.md
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -45,7 +45,7 @@ public:
 };
 
 #define OBJECT_TU_MEMBERS public: Module *findModule(NameKeyType key) const;
-#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
+#include "object.h"
 
 class Team
 {
