@@ -48,7 +48,7 @@ public:
 	Overridable *m_nextOverride; // +0x04
 };
 
-extern const Real BfmeSubdualCapERD;
+extern float g_bfmeDefaultBU;
 
 class ThingTemplate : public Overridable
 {
@@ -73,7 +73,7 @@ int ThingTemplate::calcCostToBuild(const Player *player, int baseCost) const
 	if (!player)
 		return cost;
 
-	Real factionModifier = BfmeSubdualCapERD + player->getProductionCostChangePercent(*(const AsciiString *)m_nameString);
+	Real factionModifier = g_bfmeDefaultBU + player->getProductionCostChangePercent(*(const AsciiString *)m_nameString);
 	factionModifier *= ((Rva000D6030Owner *)player)->rva000d6030(this);
 	Real buildCost = cost;
 	return (int)(buildCost * player->m_handicap.getHandicap(Handicap::BUILDCOST, this) * factionModifier);

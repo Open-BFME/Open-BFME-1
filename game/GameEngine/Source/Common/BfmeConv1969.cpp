@@ -9,7 +9,7 @@ public:
 	virtual float bfmeSlot05ESE();
 };
 
-extern float g_bfmeDefaultESE;
+extern float g_bfmeDefaultBU;
 
 class BfmeThingESE
 {
@@ -51,7 +51,7 @@ void BfmeHostESE::bfmeStepESE(BfmeThingESE *thing, void *ctx)
 {
 	BfmeStateESE *state = thing->m_bfmeStateESE;
 
-	if (state != 0 && state->bfmeSlot05ESE() < g_bfmeDefaultESE)
+	if (state != 0 && state->bfmeSlot05ESE() < g_bfmeDefaultBU)
 	{
 		void *owner = m_bfme08ESE;
 

@@ -11,7 +11,7 @@
 
 typedef float Real;
 
-extern const float BfmeBoundaryZero3D;
+extern const float g_rva01075350;
 extern const float g_bfmeDefaultBU;
 
 // class-gate: allow Coord2D ZH's inline length()/normalize() (absent from the canonical header) are inlined into retail's scatter delta
@@ -28,7 +28,7 @@ struct Coord2D
 	void normalize(void)
 	{
 		Real len = length();
-		if (len != BfmeBoundaryZero3D)
+		if (len != g_rva01075350)
 		{
 			x *= g_bfmeDefaultBU / len;
 			y *= g_bfmeDefaultBU / len;

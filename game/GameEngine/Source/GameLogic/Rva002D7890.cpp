@@ -3,7 +3,7 @@
 
 typedef float Real;
 
-extern const Real g_bfmeK1239;
+extern float g_bfmeDefaultBU;
 extern const Real BfmeShadowScale;
 
 class Rva00010A23Target
@@ -48,7 +48,7 @@ void Rva002D7890Owner::rva002d7890(void)
 		return;
 
 	target->rva00010a23(thing->m_tail,
-		(thing->m_amount - g_bfmeK1239) /
+		(thing->m_amount - g_bfmeDefaultBU) /
 		(*(volatile Real *)&thing->m_amount * BfmeShadowScale),
 		thing->m_extra);
 }

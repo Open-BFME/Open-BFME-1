@@ -28,7 +28,7 @@ extern "C" __declspec(dllimport) double __cdecl floor(double);
 
 extern const Real g_rva01075350;
 extern const Real g_bfmeDefaultBU;
-extern const Real g_bfmeK1253;
+extern const float g_rva0107533C;
 
 class Pathfinder;
 
@@ -230,9 +230,9 @@ Path *Pathfinder::rva003E6B80(const Coord3D *fromPos,
 
 			offset = adjustedPosition;
 			offset.sub(currentPosition);
-			offset.x *= g_bfmeK1253;
-			offset.y *= g_bfmeK1253;
-			offset.z *= g_bfmeK1253;
+			offset.x *= g_rva0107533C;
+			offset.y *= g_rva0107533C;
+			offset.z *= g_rva0107533C;
 			adjustedPosition = *currentPosition;
 			adjustedPosition.add(&offset);
 			*currentPosition = adjustedPosition;

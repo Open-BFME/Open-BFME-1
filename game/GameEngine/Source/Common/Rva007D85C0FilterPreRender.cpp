@@ -19,7 +19,7 @@ public:
 unsigned __cdecl bfmeCurrentCU();
 void __cdecl bfmeCopyCuSnap(void *vec, void *snap);
 
-extern unsigned char g_bfmeDirtyCU;
+extern bool g_bfmeDirtyCU;
 
 class Rva007D85C0
 {

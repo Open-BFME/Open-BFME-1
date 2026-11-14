@@ -20,7 +20,7 @@ public:
 
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
-extern const float g_bfmeK1240;
+extern float g_bfmeDefaultBU;
 
 extern "C" int bfmeQuery1240(void);
 extern "C" BfmeE1240 *bfmeMake1240(int a);
@@ -41,7 +41,7 @@ void bfmeGo1240(BfmeA1240 *a)
 		if ((e->m_bfme04 & 0x3f) == 7 && !((unsigned char)(~(e->m_bfme04 >> 15)) & 1))
 			v = bfmeMake1240(e->bfmeVal1240() - 1);
 		else
-			v = bfmeMakeF1240(e->bfmeF1240() - g_bfmeK1240);
+			v = bfmeMakeF1240(e->bfmeF1240() - g_bfmeDefaultBU);
 	}
 
 	e = a->m_bfme08[a->m_bfme00 - 1];

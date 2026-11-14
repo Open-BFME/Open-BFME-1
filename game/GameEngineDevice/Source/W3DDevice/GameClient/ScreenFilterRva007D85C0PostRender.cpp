@@ -19,7 +19,7 @@ enum FilterModes
 };
 
 extern Real g_bfmeDefaultBU;
-extern const Real g_bfmeK1253;
+extern const float g_rva0107533C;
 
 extern bool HighlightRendering;
 #define Rva007D85C0RenderFlag HighlightRendering
@@ -157,7 +157,7 @@ Bool Rva007D85C0::postRender(FilterModes mode, Coord2D &scrollDelta,
 	((Rva0005C600Iterator)&__identifier("??_H@YGXPAXIHP6EPAX0@Z@Z"))(vertex, sizeof(Vertex), 4, (const void *)&j_00044486);
 
 	Real inverse = g_bfmeDefaultBU / (Real)m_08;
-	Real halfTexel = inverse * g_bfmeK1253;
+	Real halfTexel = inverse * g_rva0107533C;
 	vertex[0].p = Vec4(1.0f, 1.0f, 0.0f, 1.0f);
 	vertex[0].u = g_bfmeDefaultBU + halfTexel;
 	vertex[0].v = halfTexel;
@@ -207,24 +207,24 @@ Bool Rva007D85C0::postRender(FilterModes mode, Coord2D &scrollDelta,
 	width = Rva007D85C0TacticalViewGlobal->getWidth();
 	height = Rva007D85C0TacticalViewGlobal->getHeight();
 	Real finalHalfTexel = (g_bfmeDefaultBU / (Real)m_08) *
-		g_bfmeK1253;
+		g_rva0107533C;
 
-	vertex[0].p = Vec4((Real)(xpos + width) - g_bfmeK1253, (Real)(ypos + height) - g_bfmeK1253, 0.0f, 1.0f);
+	vertex[0].p = Vec4((Real)(xpos + width) - g_rva0107533C, (Real)(ypos + height) - g_rva0107533C, 0.0f, 1.0f);
 	vertex[0].u = (g_bfmeDefaultBU / displaySize->x) * (Real)(xpos + width) - finalHalfTexel;
 	vertex[0].v = (Real)(ypos + height) / displaySize->y - finalHalfTexel;
 	vertex[0].u1 = (g_bfmeDefaultBU / displaySize->x) * (Real)(xpos + width) + finalHalfTexel;
 	vertex[0].v1 = (Real)(ypos + height) / displaySize->y - finalHalfTexel;
-	vertex[1].p = Vec4((Real)(xpos + width) - g_bfmeK1253, (Real)ypos - g_bfmeK1253, 0.0f, 1.0f);
+	vertex[1].p = Vec4((Real)(xpos + width) - g_rva0107533C, (Real)ypos - g_rva0107533C, 0.0f, 1.0f);
 	vertex[1].u = (g_bfmeDefaultBU / displaySize->x) * (Real)(xpos + width) - finalHalfTexel;
 	vertex[1].v = (Real)ypos / displaySize->y - finalHalfTexel;
 	vertex[1].u1 = (g_bfmeDefaultBU / displaySize->x) * (Real)(xpos + width) + finalHalfTexel;
 	vertex[1].v1 = (Real)ypos / displaySize->y - finalHalfTexel;
-	vertex[2].p = Vec4((Real)xpos - g_bfmeK1253, (Real)(ypos + height) - g_bfmeK1253, 0.0f, 1.0f);
+	vertex[2].p = Vec4((Real)xpos - g_rva0107533C, (Real)(ypos + height) - g_rva0107533C, 0.0f, 1.0f);
 	vertex[2].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos - finalHalfTexel;
 	vertex[2].v = (Real)(ypos + height) / displaySize->y - finalHalfTexel;
 	vertex[2].u1 = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos + finalHalfTexel;
 	vertex[2].v1 = (Real)(ypos + height) / displaySize->y - finalHalfTexel;
-	vertex[3].p = Vec4((Real)xpos - g_bfmeK1253, (Real)ypos - g_bfmeK1253, 0.0f, 1.0f);
+	vertex[3].p = Vec4((Real)xpos - g_rva0107533C, (Real)ypos - g_rva0107533C, 0.0f, 1.0f);
 	vertex[3].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos - finalHalfTexel;
 	vertex[3].v = (Real)ypos / displaySize->y - finalHalfTexel;
 	vertex[3].u1 = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos + finalHalfTexel;

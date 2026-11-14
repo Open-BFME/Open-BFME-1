@@ -303,7 +303,7 @@ static __forceinline Rva00730590GlobalData *localWritableGlobalData()
 {
 	return (Rva00730590GlobalData *)TheWritableGlobalData;
 }
-extern Bool Rva012F08A0;
+extern bool g_aiTargetDispatchSuppressed;
 
 class Rva00730590
 {
@@ -350,7 +350,7 @@ void Rva00730590::init(void)
 	TheSmudgeManager = smudge;
 	smudge->init();
 
-	if (!Rva012F08A0 && localWritableGlobalData()->m_waterType != 1 && m_waterRenderObject)
+	if (!g_aiTargetDispatchSuppressed && localWritableGlobalData()->m_waterType != 1 && m_waterRenderObject)
 		reinterpret_cast<SceneClass *>(W3DDisplay::m_3DScene)->Add_Render_Object(
 			static_cast<RenderObjClass *>(m_waterRenderObject));
 

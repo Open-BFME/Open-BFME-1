@@ -41,7 +41,7 @@ extern OVERRIDE<WeatherSetting> TheWeatherSetting;
 struct RetailGlobalWeatherSystem;
 extern RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 #define g_bfmeGlo012F0FE0 ( *(BFMEFrameState **)&TheGlobalWeatherSystem )
-extern "C" float g_bfmeDefaultBU;
+extern float g_bfmeDefaultBU;
 
 class W3DSnowManager
 {
