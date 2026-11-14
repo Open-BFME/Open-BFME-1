@@ -1,5 +1,5 @@
 // ?bfmeSet1016@BfmeDst1016@@QAEXHHH@Z
-// partial score=0.9878 date=2026-10-17
+// partial score=0.9902 date=2026-11-14
 // cl: /DNDEBUG /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5 conversions.
 
@@ -20,6 +20,21 @@ struct Rva00925D10Tree
 {
 	char m_pad0[0x14];
 	Rva00925D10Pivot *m_pivots;
+};
+
+struct Rva00925D10Rotator : public Matrix3D
+{
+	__forceinline void rotateVector3Array(const Vector3 *in, Vector3 *out, int count) const
+	{
+		while (count--)
+		{
+			out->X = Row[0].X * in->X + Row[0].Y * in->Y + Row[0].Z * in->Z;
+			out->Y = Row[1].X * in->X + Row[1].Y * in->Y + Row[1].Z * in->Z;
+			out->Z = Row[2].X * in->X + Row[2].Y * in->Y + Row[2].Z * in->Z;
+			++in;
+			++out;
+		}
+	}
 };
 
 class BfmeDst1016
@@ -119,20 +134,8 @@ void BfmeDst1016::bfmeSet1016(int a, int b, int r)
 			}
 		} else {
 			const Matrix3D *pm = &tree->m_pivots[b0].m_tm;
-			const Matrix3D &m = *pm;
-			const Vector3 *in;
-			Vector3 *out;
 			pm->mulVector3Array(srcV[0], dstV, n);
-			in = srcN[0];
-			out = dstN;
-			c = n;
-			while (c--) {
-				out->X = m[0].X * in->X + m[0].Y * in->Y + m[0].Z * in->Z;
-				out->Y = m[1].X * in->X + m[1].Y * in->Y + m[1].Z * in->Z;
-				out->Z = m[2].X * in->X + m[2].Y * in->Y + m[2].Z * in->Z;
-				++in;
-				++out;
-			}
+			((const Rva00925D10Rotator *)pm)->rotateVector3Array(srcN[0], dstN, n);
 		}
 		links += n;
 		for (i = 0; i < streams; i++) {
