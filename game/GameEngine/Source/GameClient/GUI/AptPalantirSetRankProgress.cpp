@@ -51,7 +51,7 @@ void AptPalantir::setRankProgress( float value )
 // scaled and rounded, clamped to 0..100 and 100 when absent. The owner arrives in EAX
 // through MSVC's private static convention; owner and value types are address-named.
 extern float g_bfmeScaleBC;
-extern const float g_bfmeK1253;
+extern const float g_rva0107533C;
 
 class Rva00588890Value
 {
@@ -76,7 +76,7 @@ static int rva00588890(const Rva00588890Owner *owner)
 	Rva00588890Value *value = owner->m_value200;
 	if (value)
 	{
-		int percent = (int)(value->slot14() * g_bfmeScaleBC + g_bfmeK1253);
+		int percent = (int)(value->slot14() * g_bfmeScaleBC + g_rva0107533C);
 		if (percent > 100)
 			percent = 100;
 		else if (percent < 0)

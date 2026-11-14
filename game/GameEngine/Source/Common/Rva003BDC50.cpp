@@ -51,7 +51,7 @@ public:
 	void * m_at10;
 };
 
-extern BfmeCallJ378F8 * volatile Glo012F7048;
+extern class Rva006092D0State *g_rva012F7048LivingWorld;
 
 struct Rva003BDC50Locals
 {
@@ -79,10 +79,10 @@ void Rva003BDC50::run()
 	if( m_at28 )
 		m_at28->fill( &m_at30, &locals.result );
 
-	if( !Glo012F7048 )
+	if( !reinterpret_cast<BfmeCallJ378F8 *>(*static_cast<Rva006092D0State * volatile *>(&g_rva012F7048LivingWorld)) )
 		return;
 
-	Glo012F7048->invoke(
+	reinterpret_cast<BfmeCallJ378F8 *>(*static_cast<Rva006092D0State * volatile *>(&g_rva012F7048LivingWorld))->invoke(
 		*(Gen003BDC50CallPair *)&locals.result, 0 );
 
 	// MSVC 7.1 does not reproduce this temporary's post-call stack schedule.
@@ -93,9 +93,9 @@ void Rva003BDC50::run()
 		mov ecx, dword ptr [esp + 0Ch]
 		mov edx, eax
 		mov dword ptr [esp], eax
-		mov eax, dword ptr Glo012F7048
+		mov eax, dword ptr g_rva012F7048LivingWorld
 		mov dword ptr [eax + 0Ch], edx
-		mov edx, dword ptr Glo012F7048
+		mov edx, dword ptr g_rva012F7048LivingWorld
 		mov dword ptr [esp + 4], ecx
 		mov dword ptr [edx + 10h], ecx
 	}

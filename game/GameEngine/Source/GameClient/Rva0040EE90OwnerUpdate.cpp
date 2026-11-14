@@ -1,8 +1,8 @@
 // Address-derived view of the display update and its six-word drawing state.
-extern const float Rva00C75350Zero;
-#define Rva01075350Zero Rva00C75350Zero
-extern const float Rva00C75334One;
-#define Rva01075334One Rva00C75334One
+extern const float g_rva01075350;
+#define Rva01075350Zero g_rva01075350
+extern float g_bfmeDefaultBU;
+#define Rva01075334One g_bfmeDefaultBU
 #define Rva01084068Scale 255.0f
 
 typedef int Int;

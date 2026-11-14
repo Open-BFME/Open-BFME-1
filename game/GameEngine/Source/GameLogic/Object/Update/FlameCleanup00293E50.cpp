@@ -19,7 +19,7 @@ class BfmeDelayedLuaEvent { public: ~BfmeDelayedLuaEvent(); char data[0x18]; };
 class BfmeSnapshotBase { public: virtual ~BfmeSnapshotBase() {} };
 class __declspec(novtable) DelayedLuaEventList : public BfmeSnapshotBase { public: DelayedLuaEventList(); __forceinline ~DelayedLuaEventList() {} BfmeDelayedLuaEvent events[3]; };
 class BfmeOwnerBR { public: void bfmeGo939B(int,Object*,DelayedLuaEventList*); };
-extern BfmeOwnerBR* g_script00293E50;
+extern class LuaScriptEngine *TheLuaScriptEngine;
 enum UpdateSleepTime { SLEEP1=1 };
 class UpdateModule { protected: void setWakeFrame(Object*,UpdateSleepTime); };
 struct Config00293E50 { char pad00[0x31]; bool at31; char at32; bool at33; };
@@ -43,7 +43,7 @@ void FlameCleanup00293E50::apply() {
  if(config->at33 && (other&0x200000)) { other&=~0x200000; object->notifyModelConditionChanged(); }
  if(config->at31 || config->at33) object->getDrawable()->applyPendingModelConditionFlags(true);
  DelayedLuaEventList events;
- g_script00293E50->bfmeGo939B(11,object,&events);
+ reinterpret_cast<BfmeOwnerBR *>(TheLuaScriptEngine)->bfmeGo939B(11,object,&events);
 }
 
 

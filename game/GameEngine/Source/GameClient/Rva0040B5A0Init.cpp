@@ -14,7 +14,7 @@ extern AsciiString g_s0C;
 extern CloudEffect g_rva0040b7d0_dst;	// 0x012F1198, CloudEffect's first member
 extern AsciiString g_s10;
 extern float g_f14;
-extern float g_msToSec;
+extern float g_millisecondsToSeconds;
 extern int g_i18;
 extern const float g_01075954;
 extern AsciiString g_s20;
@@ -93,7 +93,7 @@ void Rva0040B5A0::init()
 	m_08.StringBase<char>::set(*reinterpret_cast<const AsciiString *>(&g_rva0040b7d0_dst));
 	m_0C.StringBase<char>::set(g_s0C);
 	m_10.StringBase<char>::set(g_s10);
-	m_14 = g_msToSec * g_f14;
+	m_14 = g_millisecondsToSeconds * g_f14;
 	m_18 = (float)g_i18 * g_01075954;
 	m_20.StringBase<char>::set(g_s20);
 	m_24 = g_i24;

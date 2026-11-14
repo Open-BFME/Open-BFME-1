@@ -90,7 +90,7 @@ public:
 	unsigned m_bfme00[10];
 };
 
-extern const float g_bfmeK1254;
+extern const float g_bfmeDirectionWeight1285;
 
 template <int N> class BitFlags
 {
@@ -190,7 +190,7 @@ UpdateSleepTime AimWeaponBehavior::update()
 			m_aimPos.y -= obj->m_cachedPos.y;
 			m_aimPos.z -= obj->m_cachedPos.z;
 			float len = (float)sqrt(m_aimPos.y * m_aimPos.y + m_aimPos.x * m_aimPos.x);
-			float *chosen = (g_bfmeK1254 > len) ? &ten : &len;
+			float *chosen = (g_bfmeDirectionWeight1285 > len) ? &ten : &len;
 			float denom = *chosen;
 			AimWeaponBehaviorModuleData *data = m_moduleData;
 			float pitch = m_aimPos.z / denom;

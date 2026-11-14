@@ -41,7 +41,7 @@ void Gen_0035EFF0::bfmeArm(int a, int b, int c, int d, int e)
 	m_bfmeE = e;
 }
 
-extern int g_bfmeGateGN;
+extern class NetworkInterface *TheNetwork;
 
 class Gen_00383610
 {
@@ -59,7 +59,7 @@ private:
 bool Gen_00383610::bfmeReady(void) const
 {
 	int kind = m_bfmeKind;
-	if ((kind == 1 || kind == 5) && g_bfmeGateGN != 0 && !m_bfmeSkip)
+	if ((kind == 1 || kind == 5) && TheNetwork != 0 && !m_bfmeSkip)
 	{
 		for (int index = 0; index < 8; ++index)
 		{
