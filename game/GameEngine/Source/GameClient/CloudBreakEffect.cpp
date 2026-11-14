@@ -61,7 +61,7 @@ public:
 
 extern CloudBreakEffect TheCloudBreakEffectSaved;		// 0x012F10F4
 extern CloudBreakEffect TheCloudBreakEffectActive;		// 0x012F10F8
-extern CloudSystem *TheCloudSystem;						// 0x012F10F0
+CloudSystem *TheCloudSystem = 0;						// 0x012F10F0
 
 void parseCloudBreakEffect( INI *ini )
 {
