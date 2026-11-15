@@ -10,33 +10,8 @@ template<class T> struct StringData
 	T text[1];
 };
 
-template<class T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringData<T> *data;
-	StringBase() : data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase &text);
-	~StringBase() { releaseBuffer(); }
-
-public:
-	void concat(const T *text, int length);
-	void set(const StringBase &text);
-
-private:
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
 
 class UnicodeString : private StringBase<unsigned short>
 {

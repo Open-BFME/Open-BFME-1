@@ -11,12 +11,7 @@ class UnicodeString;
 #include "string_base.h"
 
 // Retail copies each string through its matching narrow or wide StringBase body.
-class AsciiString : private StringBase<char>
-{
-public:
-    __forceinline AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-    ~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

@@ -3,28 +3,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-template <typename T> class StringBase
-{
-private:
-    StringBase() : m_data(0) {}
-    StringBase(const StringBase &other);
-    ~StringBase() { releaseBuffer(); }
-    void releaseBuffer();
-public:
-    void set(const StringBase &other);
-private:
-    void *m_data;
-    friend class AsciiString;
-    friend class UnicodeString;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString() {}
-    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString() {}
-};
 
 class UnicodeString : private StringBase<unsigned short>
 {

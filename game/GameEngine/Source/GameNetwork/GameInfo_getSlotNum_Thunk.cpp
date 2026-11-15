@@ -12,37 +12,10 @@ template <typename T> struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-public:
-	int compareNoCase( const StringBase<T> &other ) const throw();
-
-private:
-	StringInlineData<T> *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern void j_0001609f();
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
-};
 
 class UnicodeString : private StringBase<unsigned short>
 {

@@ -13,19 +13,7 @@ class UnicodeString;
 // symbol. Spelling UnicodeString with an out-of-line copy constructor emits
 // ??0UnicodeString@@QAE@ABV0@@Z and no pin can bridge that: the two addresses
 // are different functions.
-template <typename T> class StringBase
-{
-public:
-	StringBase();
-	~StringBase();
-
-private:
-	StringBase(const StringBase &);
-	friend class AsciiString;
-	friend class UnicodeString;
-
-	T *m_string;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>
@@ -52,13 +40,6 @@ inline UnicodeString DisplayString::getText()
 }
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString();
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
-};
 
 // The seven other 32-byte copies of this shape are NOT copies of getText: they
 // encode 0x00887B60 (??0?$StringBase@D@@AAE@ABV0@@Z), the single-byte string
