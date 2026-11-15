@@ -5,19 +5,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-    Real x;
-    Real y;
-    Real z;
-
-    void zero()
-    {
-        x = 0;
-        y = 0;
-        z = 0;
-    }
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 Real Cos(Real value);
@@ -124,7 +112,7 @@ void SlavedUpdate::doGuardLogic(Coord3D *pinnedPosition)
             "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\SlavedUpdate.cpp",
             0x1a7);
 
-        m_guardPointOffset.zero();
+        { Coord3D *const position = &m_guardPointOffset; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
         m_guardPointOffset.x += Cos(randomDirection) * data->m_guardWanderRange;
         m_guardPointOffset.y += Sin(randomDirection) * data->m_guardWanderRange;
 
