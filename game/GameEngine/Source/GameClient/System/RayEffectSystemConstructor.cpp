@@ -8,19 +8,7 @@ private:
 	char m_name[ 4 ];
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-
-	void zero( void )
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct RayEffectData
 {
@@ -48,7 +36,7 @@ RayEffectSystem::RayEffectSystem( void )
 	for ( int i = 0; i < 128; ++i )
 	{
 		m_effectData[ i ].draw = 0;
-		m_effectData[ i ].startLoc.zero();
-		m_effectData[ i ].endLoc.zero();
+		{ Coord3D *const position = &m_effectData[ i ].startLoc; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
+		{ Coord3D *const position = &m_effectData[ i ].endLoc; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	}
 }
