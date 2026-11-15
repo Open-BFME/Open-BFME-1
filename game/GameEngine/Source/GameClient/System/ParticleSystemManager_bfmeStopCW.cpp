@@ -8,7 +8,7 @@
 #define _STLP_USE_OWN_NAMESPACE 1
 #include <hash_map>
 
-#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class AsciiStringCompareShim
 {
@@ -18,21 +18,6 @@ public:
 private:
 	void *m_data;
 };
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-
-	int compare(const AsciiString &other) const;
-
-	~AsciiString() {}
-};
-
-inline bool operator==(const AsciiString &left, const AsciiString &right)
-{
-	return left.compare(right) == 0;
-}
 
 namespace rts
 {
