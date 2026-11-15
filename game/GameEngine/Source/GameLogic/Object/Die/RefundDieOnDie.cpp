@@ -90,15 +90,7 @@ public:
 	}
 };
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &that );
-private:
-	void releaseBuffer(void);
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString

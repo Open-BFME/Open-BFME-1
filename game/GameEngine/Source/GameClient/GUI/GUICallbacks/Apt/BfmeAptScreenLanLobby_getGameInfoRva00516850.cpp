@@ -27,18 +27,7 @@
 // declared the frame is 0x18 (14 B off). Handoff:
 // targets/game/reverse/attempt_support/20261106-00519150-lanlobby-update-visible-callee.md.
 
-template <typename T> class StringBase
-{
-    friend class UnicodeString;
-
-private:
-    StringBase() : m_data(0) {}
-    StringBase(const T *text);
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-
-    void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

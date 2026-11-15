@@ -31,16 +31,7 @@
 // reach its progress bar at +0x10. All three statements are in the one layout
 // below, and none of the six bodies moved a byte.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>
