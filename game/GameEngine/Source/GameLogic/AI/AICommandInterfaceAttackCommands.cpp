@@ -44,17 +44,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x, y, z;
-
-	void zero()
-	{
-		x = 0;
-		y = 0;
-		z = 0;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 class Team;
@@ -216,7 +206,7 @@ AICommandParms::AICommandParms(AICommandType commandType, CommandSourceType comm
 	  m_commandButton(0),
 	  m_path(0)
 {
-	m_pos.zero();
+	{ Coord3D *const position = &m_pos; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	m_coords.clear();
 }
 
