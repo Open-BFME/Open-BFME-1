@@ -9,19 +9,7 @@ class Object;
 #include "../../../../../Libraries/Include/Lib/Coord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-    float x;
-    float y;
-    float z;
-
-    void zero()
-    {
-        x = 0.0f;
-        y = 0.0f;
-        z = 0.0f;
-    }
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo
@@ -106,7 +94,7 @@ private:
 StructureToppleUpdate::StructureToppleUpdate(Thing *thing, const ModuleData *moduleData)
     : UpdateModule(thing, moduleData)
 {
-    m_delayBurstLocation.zero();
+    { Coord3D *const position = &m_delayBurstLocation; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
     m_structuralIntegrity = 0.0f;
     m_toppleDirection.x = m_toppleDirection.y = 0;
     m_toppleFrame = 0;
