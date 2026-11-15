@@ -3,22 +3,7 @@
 
 typedef bool Bool;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase &);
-	~StringBase();
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Parameter
 {
