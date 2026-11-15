@@ -61,7 +61,8 @@ public:
 };
 #undef GAMESPY_SLOT
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail 0x012F7194: use the existing data owner; retain the local pointee view.
+extern class GameSpyInfoInterface *TheGameSpyInfo;
 
 class GameSpyStagingRoom
 {
@@ -238,7 +239,7 @@ void BfmeAptScreenOnlineCustomMatch::rva0053E870()
 		int selectedID = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
 		if( selectedID > 0 )
 		{
-			StagingRoomMap *srm = TheGameSpyInfo->getStagingRoomList();
+			StagingRoomMap *srm = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getStagingRoomList();
 			StagingRoomMap::iterator srmIt = srm->find( selectedID );
 			if( srmIt != srm->end() )
 			{
@@ -278,7 +279,7 @@ void BfmeAptScreenOnlineCustomMatch::rva0053E870()
 				}
 				else
 				{
-					TheGameSpyInfo->markAsStagingRoomJoiner( selectedID );
+					reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->markAsStagingRoomJoiner( selectedID );
 					( (Gen004D4880 *)TheGameSpyGame )->bfmeSet( ((const Rva00385F20Room *)roomToJoin)->getGameName() );
 					TheGameSpyGame->setLadderIP( roomToJoin->getLadderIP() );
 					TheGameSpyGame->setLadderPort( roomToJoin->getLadderPort() );

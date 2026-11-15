@@ -23,9 +23,10 @@ struct Rva006D2A00State { int value; unsigned char changed; char pad5[3]; };
 struct Rva006D2A00Map { char pad[0x120e8]; int field_120e8,field_120ec; };
 struct Rva006D2A00Global { char pad[0xecc]; int field_ecc; };
 extern bool g_aiTargetDispatchSuppressed;
-extern void *Rva012ED5C8;
+// Retail 0x012ED5C8: use the existing data owner; retain the local pointee view.
+extern class GlobalData *TheWritableGlobalData;
 #define Rva00EF08A0 g_aiTargetDispatchSuppressed
-#define Rva00EED5C8 ((Rva006D2A00Global*)Rva012ED5C8)
+#define Rva00EED5C8 ((Rva006D2A00Global*)reinterpret_cast<void *>(TheWritableGlobalData))
 extern int g_Va012F8018,g_Va012F8010,g_Va012F8014;
 class FlatHeightMapRenderObjClass {
 public:

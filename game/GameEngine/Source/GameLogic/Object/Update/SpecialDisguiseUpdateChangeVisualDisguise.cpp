@@ -194,7 +194,8 @@ public:
 	Drawable *newDrawable( const ThingTemplate *tmplate, DrawableStatus status, Int playerIndex );
 };
 
-extern BFMEThingFactory *TheThingFactory;
+// Retail 0x012EF1D8: use the existing data owner; retain the local pointee view.
+extern class ThingFactory *TheThingFactory;
 
 class GameLogic
 {
@@ -254,7 +255,7 @@ private:
 	const ThingTemplate *getDisguiseTemplate() const
 	{
 		const SpecialDisguiseUpdateModuleData *data = m_moduleData;
-		return TheThingFactory->findTemplate( data->m_disguiseAsTemplate );
+		return reinterpret_cast<BFMEThingFactory *>(TheThingFactory)->findTemplate( data->m_disguiseAsTemplate );
 	}
 
 	void *m_vptr;
@@ -286,9 +287,9 @@ void SpecialDisguiseUpdate::changeVisualDisguise( Bool useOwnTemplate )
 	TheGameClient->destroyDrawable( draw );
 
 	if( useOwnTemplate )
-		draw = TheThingFactory->newDrawable( obj->getTemplate(), DRAWABLE_STATUS_NONE, -1 );
+		draw = reinterpret_cast<BFMEThingFactory *>(TheThingFactory)->newDrawable( obj->getTemplate(), DRAWABLE_STATUS_NONE, -1 );
 	else
-		draw = TheThingFactory->newDrawable( getDisguiseTemplate(), DRAWABLE_STATUS_NONE, -1 );
+		draw = reinterpret_cast<BFMEThingFactory *>(TheThingFactory)->newDrawable( getDisguiseTemplate(), DRAWABLE_STATUS_NONE, -1 );
 
 	if( !draw )
 		return;

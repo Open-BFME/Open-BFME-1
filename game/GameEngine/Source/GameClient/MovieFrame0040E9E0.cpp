@@ -49,12 +49,13 @@ struct MovieControl0040F780 { virtual void v00(); virtual void v04();virtual voi
 // global changes.
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
-// Retail 0x012ED524 is recorded as EngineGlobal007629F0 (dir32_addresses.csv).
+// Retail 0x012ED524 is owned by GameEngine *TheGameEngine (data_rows.csv).
 // This TU's vtable-ABI view of it is Engine0040E9E0; the active() virtual slot
 // is identical, so the cast is free and bytes match.
 struct Engine007629F0;
-extern Engine007629F0 *EngineGlobal007629F0;
-static inline Engine0040E9E0 *engineGlobal() { return (Engine0040E9E0 *)EngineGlobal007629F0; }
+// Retail 0x012ED524: use the existing data owner; retain the local pointee view.
+extern class GameEngine *TheGameEngine;
+static inline Engine0040E9E0 *engineGlobal() { return (Engine0040E9E0 *)reinterpret_cast<Engine007629F0 *>(TheGameEngine); }
 // ?Previous0040E9E0@@3_JA: eight retail initial bytes are zero.
 __int64 Previous0040E9E0 = 0;
 // ?Elapsed0040E9E0@@3_JA: eight retail initial bytes are zero.

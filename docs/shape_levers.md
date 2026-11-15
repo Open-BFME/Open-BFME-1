@@ -4228,3 +4228,23 @@ and relocation graph are unchanged except for the global symbol binding.
 This is a measured preservation of the existing solution, not a new
 claim about the original class layout or a general instruction-order rule.
 See `targets/game/reverse/identity_evidence/20261115-twenty-singleton-consumers.md`.
+
+### Typed global adoption can shift ambiguous cleanup-label pins
+
+In `game/Libraries/Source/EA/Apt/ArrayProperties008BA0B0.cpp`, declaring the
+existing fallback cell as `AptValue *g_bfmeFallbackDB` and retaining its
+explicit conversion to `void *` shifted the twelve cleanup-label hints by
+two. An implicit return conversion shifted them by one. The native reader
+refused both variants because multiple cleanup bodies were identical.
+
+Keep the explicit pointer-value conversion and remove the TU's unused
+`void *Rva00897640(unsigned);` declaration. This retained every original
+cleanup anchor, all consumer bytes and the whole ordered non-debug section
+and relocation graph. The main jump-table label names can differ, but their
+actual section/offset targets remain identical. No dummy declaration, pin
+edit, alias or verifier exception is needed.
+
+Measured only for this TU with MSVC 13.10.3077 and
+`/O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc`; do not infer a general formula
+for the compiler's internal numbering. See task 48 in
+`targets/game/reverse/identity_evidence/20261115-eighty-singleton-consumers-3.md`.

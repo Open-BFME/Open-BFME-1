@@ -263,7 +263,8 @@ public:
     virtual void slot68(); virtual void slot69(); virtual void slot70(); virtual void slot71();
     virtual void bfmeSlot72(int value);
 };
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail 0x012F7194: use the existing data owner; retain the local pointee view.
+extern class GameSpyInfoInterface *TheGameSpyInfo;
 
 // Complete 285-byte acceptance helper at 0x004EF980 (ILT 0x0001E73B).
 void Rva004EF980AcceptBuddyRequest(Int profileID);
@@ -310,7 +311,7 @@ void Glo00EF4988::h00514560()
         int *it = begin;
         if (it != end) {
             do {
-                TheGameSpyInfo->bfmeSlot72(*it);
+                reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->bfmeSlot72(*it);
                 ++it;
             } while (it != end);
         }

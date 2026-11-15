@@ -24,8 +24,10 @@ class PlayerList;
 extern PlayerList *ThePlayerList;	// retail [0x012ED748]
 class Rva003BDF70Owner { public: int combinedSpanCount(); };
 class CampaignManager { public: unsigned char isMissionObjectiveEligible(int); };
-extern CampaignManager *TheLivingWorldLogic;
-extern void *Campaign00598950;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
+// Retail 0x012F1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 extern void *g_obj12F49E4;
 class AptPalantirStore { public: void rva00591b60(); };
 class BfmeThingCDA { public: void bfmeStepCDA(); };
@@ -106,24 +108,24 @@ void Rva00597FC0Client::update()
  bool inactive=TheGameLogic && TheGameLogic->_bfme_isInMultiplayerGame() && (unsigned char)((Rva000DF7F0*)ThePlayerList)->inactive();
  if(inactive!=bits58.b7) {if(inactive) Rva00564F00();else Rva00564F30();bits58.b7=inactive;}
  if(!byte_4c5) {
-  if(TheLivingWorldLogic && (!at00598950<bool>(TheLivingWorldLogic,0x2c) || !at00598950<bool>(TheLivingWorldLogic,0x2d)) &&
+  if(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic) && (!at00598950<bool>(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic),0x2c) || !at00598950<bool>(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic),0x2d)) &&
     !((GameLogicPortraitShim*)TheGameLogic)->isInMultiplayerOrSkirmishGame()) {
-   int count=((Rva003BDF70Owner*)TheLivingWorldLogic)->combinedSpanCount();
+   int count=((Rva003BDF70Owner*)reinterpret_cast<CampaignManager *>(TheLivingWorldLogic))->combinedSpanCount();
    for(int i=0;i<count;++i) {
     bool old=false;
     std::map<int,bool>::iterator it=field_4fc.find(i);
     if(it!=field_4fc.end()) old=it->second;
-    bool value[4]; *(unsigned char*)&value[0]=TheLivingWorldLogic->isMissionObjectiveEligible(i);
+    bool value[4]; *(unsigned char*)&value[0]=reinterpret_cast<CampaignManager *>(TheLivingWorldLogic)->isMissionObjectiveEligible(i);
     if(value[0]!=old) { if(!old && value[0]) byte_4c5=true;field_4fc[i]=value[0]; }
    }
   }
  } else if(g_obj12F49E4) byte_4c5=false;
  if(bits58.b5!=byte_4c5) {Rva00564F60(byte_4c5);bits58.b5=byte_4c5;}
  AsciiString side;
- if(TheLivingWorldLogic && at00598950<bool>(TheLivingWorldLogic,0x2c) && at00598950<bool>(TheLivingWorldLogic,0x2d)) {
-  bool value=at00598950<bool>(Campaign00598950,0x1c);
+ if(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic) && at00598950<bool>(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic),0x2c) && at00598950<bool>(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic),0x2d)) {
+  bool value=at00598950<bool>(reinterpret_cast<void *>(TheLivingWorldCampaignManager),0x1c);
   if(value!=byte_4d4) {Rva00564B00(value);byte_4d4=value;}
-  int n=at00598950<int>(TheLivingWorldLogic,0xa0);
+  int n=at00598950<int>(reinterpret_cast<CampaignManager *>(TheLivingWorldLogic),0xa0);
   n=((Handle00598950*)&field_4cc)->adjust(n);
   if(n!=field_4d0) {bfmePowerCapZB(n);field_4d0=n;}
  } else {

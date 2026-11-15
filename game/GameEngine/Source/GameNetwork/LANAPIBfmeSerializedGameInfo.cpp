@@ -152,7 +152,8 @@ union BfmeGlobalCall
 	void (BfmeObj935C::*asMember)(void);
 };
 
-extern BfmeObj935C *g_bfme935GlobC;
+// Retail 0x012F4998: use the existing data owner; retain the local pointee view.
+extern class BfmeAptScreenLanLobby *g_rva012F4998LanLobby;
 
 extern void j_000329b1(void);
 extern void j_0002a72a(void);
@@ -289,12 +290,12 @@ Bool LANAPI::_bfme_onSerializedGameInfo_00689170(
 	return false;
 
 accepted:
-	if (g_bfme935GlobC)
-		g_bfme935GlobC->m_bfmeFlag = 1;
+	if (reinterpret_cast<BfmeObj935C *>(g_rva012F4998LanLobby))
+		reinterpret_cast<BfmeObj935C *>(g_rva012F4998LanLobby)->m_bfmeFlag = 1;
 	else
 		j_00039202();
 
-	BfmeObj935C *global = g_bfme935GlobC;
+	BfmeObj935C *global = reinterpret_cast<BfmeObj935C *>(g_rva012F4998LanLobby);
 	if (!global)
 		j_0001c9d6();
 	else

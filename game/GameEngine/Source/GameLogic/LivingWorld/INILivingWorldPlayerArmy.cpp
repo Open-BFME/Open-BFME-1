@@ -204,7 +204,8 @@ private:
 	std::vector<LivingWorldPlayerArmy> m_playerArmies;
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;	// 0x012F1024
+// Retail 0x012F1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;	// 0x012F1024
 
 void BfmeLivingWorldCampaignManager::addPlayerArmy( LivingWorldPlayerArmy *army )
 {
@@ -244,12 +245,12 @@ LivingWorldArmy *BfmeLivingWorldCampaignManager::findArmy( const AsciiString &na
 // ?parseLivingWorldPlayerArmy@@YAXPAVINI@@@Z
 void parseLivingWorldPlayerArmy( INI *ini )
 {
-	if( !TheLivingWorldCampaignManager )
+	if( !reinterpret_cast<BfmeLivingWorldCampaignManager *>(TheLivingWorldCampaignManager) )
 		return;
 
 	LivingWorldPlayerArmy army;
 
 	ini->initFromINI( &army, LivingWorldPlayerArmy::m_fieldParseTable );
 
-	TheLivingWorldCampaignManager->addPlayerArmy( &army );
+	reinterpret_cast<BfmeLivingWorldCampaignManager *>(TheLivingWorldCampaignManager)->addPlayerArmy( &army );
 }

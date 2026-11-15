@@ -317,7 +317,8 @@ extern InGameUI *TheInGameUI;
 extern GameLogic *TheGameLogic;
 extern Keyboard *TheKeyboard;
 extern GlobalData *TheWritableGlobalData;
-extern CampaignManager *TheLivingWorldLogic;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 // Retail 0x012F7048 is ?g_rva012F7048LivingWorld@@3PAVRva006092D0State@@A (data_rows.csv,
 // GameClient/LivingWorld.cpp); g_bfmeStateDF was only a pin.
 extern Rva006092D0State *g_rva012F7048LivingWorld;
@@ -417,7 +418,7 @@ bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
 		owner->getRegionManager()->m_selectedRegion = value;
 		owner->getRegionManager()->m_enabled = false;
 
-		((Rva006092D0State *)g_bfmeStateDF)->rva00609360((char *)TheLivingWorldLogic + 0x20);
+		((Rva006092D0State *)g_bfmeStateDF)->rva00609360((char *)reinterpret_cast<CampaignManager *>(TheLivingWorldLogic) + 0x20);
 		return true;
 	}
 	return false;

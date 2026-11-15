@@ -135,7 +135,8 @@ public:
 };
 
 class BfmeR1078;
-extern BfmeR1078 *g_bfmeR1078;
+// Retail 0x012F19E8: use the existing data owner; retain the local pointee view.
+extern class WindowManager *g_rva012F19E8WindowManager;
 
 // The state object at +0x25C is one class that the ledger knows under two
 // placeholder names: its pending-update dispatcher 0x0052AD00 is matched as
@@ -254,7 +255,7 @@ int BfmeAptScreenLanLobby::rva00519150()
             break;
         {
             unsigned int actionOwner = (unsigned int)m_actionOwner;
-            ((BfmeLevelAN *)g_bfmeR1078)->bfmeBuildAN(actionOwner,
+            ((BfmeLevelAN *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeBuildAN(actionOwner,
             (int)"StartLobby", 0, 0, 0, 0, 0, 0);
         }
         m_3a8 = 1;
@@ -285,7 +286,7 @@ int BfmeAptScreenLanLobby::rva00519150()
         {
             unsigned int actionOwner = (unsigned int)m_actionOwner;
             m_3a8 = 4;
-            ((BfmeLevelAN *)g_bfmeR1078)->bfmeBuildAN(actionOwner,
+            ((BfmeLevelAN *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeBuildAN(actionOwner,
                 (int)"EnablePlayGame", 0, 0, 0, 0, 0, 0);
         }
         break;
@@ -345,7 +346,7 @@ int BfmeAptScreenLanLobby::rva00519150()
             TheGameText->fetch("GUI:NetworkError", 0),
             TheGameText->fetch("GUI:SocketError", 0), 0);
         if (g_rva012F4998LanLobby)
-            ((BfmeGlobal_012f19e8 *)g_bfmeR1078)->bfmeCall_000290d2();
+            ((BfmeGlobal_012f19e8 *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeCall_000290d2();
     }
 
     m_state.flushPendingUpdates();
@@ -380,20 +381,20 @@ bool BfmeAptScreenLanLobby::getGameInfoRva00516850(int index, void **game)
         {
             if (!(m_tail.m_kind & 2))
             {
-                ((BfmeLevelAN *)g_bfmeR1078)->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
+                ((BfmeLevelAN *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmt1078, 0, 0, 0, 0, 0, 0);
                 m_tail.m_kind |= 2;
             }
             ok = true;
         }
         else if (m_tail.m_kind & 2)
         {
-            ((BfmeLevelAN *)g_bfmeR1078)->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
+            ((BfmeLevelAN *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
             m_tail.m_kind &= ~2;
         }
     }
     else if (m_tail.m_kind & 2)
     {
-        ((BfmeLevelAN *)g_bfmeR1078)->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
+        ((BfmeLevelAN *)reinterpret_cast<BfmeR1078 *>(g_rva012F19E8WindowManager))->bfmeBuildAN((unsigned int)m_actionOwner, (int)g_bfmeFmtB1073, 0, 0, 0, 0, 0, 0);
         m_tail.m_kind &= ~2;
     }
     return ok;

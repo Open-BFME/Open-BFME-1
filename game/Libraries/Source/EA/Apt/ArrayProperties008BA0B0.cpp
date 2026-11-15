@@ -51,7 +51,7 @@ static __forceinline Rva008A1110Value *pooledInteger(int value) {
 
 struct R4Word { const char *name; int id; };
 const R4Word *Rva008B8AD0(const char *, unsigned);
-void *Rva00897640(unsigned);
+// Drop the unused prototype here to retain the original numbered EH anchors.
 class Rva00897670HeaderedDelete { public: static void operator delete(void *, unsigned); };
 class Rva00899FC0 : public Rva00897670HeaderedDelete {
 public:
@@ -79,7 +79,8 @@ public:
     void *lookup(ArrayProperties008BA0B0 *, String008BA0B0 *);
 };
 extern "C" long __cdecl strtol(const char *, char **, int);
-extern void *g_bfmeResult1233;
+// Retail 0x013379BC: use the existing data owner; retain the local pointee view.
+extern class AptValue *g_bfmeFallbackDB;
 extern Rva008B8B80Releasable *g_rva008B8B80_0;
 extern char Va00CB9CC0[];
 extern Rva008B8B80Releasable *g_rva008B8B80_1;
@@ -203,7 +204,7 @@ void *ArrayProperties008BA0B0::lookup(ArrayProperties008BA0B0 *owner, String008B
             void *value = (void *)(owner->field20[index] & ~1u);
             if (value) return value;
         }
-        return g_bfmeResult1233;
+        return reinterpret_cast<void *>(g_bfmeFallbackDB);
     }
     return (void *)((BfmeTab1024 *)(field00 + 8))->bfmeFind1024((int)key);
 }

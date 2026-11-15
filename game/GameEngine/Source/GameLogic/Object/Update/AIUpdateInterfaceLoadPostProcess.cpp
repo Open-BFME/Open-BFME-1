@@ -84,7 +84,8 @@ class Owner002E4030
 {
 };
 
-extern Owner002E4030 *g_owner002E4030;
+// Retail 0x012F060C: use the existing data owner; retain the local pointee view.
+extern class LuaScriptEngine *TheLuaScriptEngine;
 extern void j_000143d0();
 
 struct PostLoadFields0027A5E0
@@ -218,5 +219,5 @@ void AIUpdateInterface::loadPostProcess()
 	typedef void (Owner002E4030::*OwnerCall)(Object *);
 	union { void (*function)(); OwnerCall member; } ownerRoute;
 	ownerRoute.function = j_000143d0;
-	(g_owner002E4030->*ownerRoute.member)(object);
+	(reinterpret_cast<Owner002E4030 *>(TheLuaScriptEngine)->*ownerRoute.member)(object);
 }

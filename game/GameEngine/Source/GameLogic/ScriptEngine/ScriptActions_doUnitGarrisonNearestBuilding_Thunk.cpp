@@ -234,7 +234,8 @@ class BfmeWideForwardC
 public:
 	BfmeWideResult bfmeForwardWideC(int, int, int, int, int);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail 0x012ED5B8: use the existing data owner; retain the local pointee view.
+extern class PartitionManager *ThePartitionManager;
 
 class ScriptEngine
 {
@@ -269,7 +270,7 @@ void ScriptActions::doUnitGarrisonNearestBuilding(const AsciiString &unitName)
 	if (!ai)
 		return;
 
-	BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC(
+	BfmeWideResult iter = reinterpret_cast<BfmeWideForwardC *>(ThePartitionManager)->bfmeForwardWideC(
 		(int)theUnit->getPosition(), *(const int *)&REALLY_FAR, 2,
 		(int)PartitionFilterAcceptByKindOf(KindOfMaskType(KindOfMaskType::kInit, 7, 117), KINDOFMASK_NONE).link(
 			&Rva0025ED50ObjectFilter(theUnit)),

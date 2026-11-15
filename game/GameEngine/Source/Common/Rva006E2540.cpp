@@ -43,12 +43,13 @@ public:
     virtual void p50(); virtual void p54(); virtual void p58(); virtual void p5c();
     virtual void p60(); virtual void p64(); virtual unsigned slot68();
 };
-// Retail 0x012F1464 is recorded as ClientAt012F1464 (dir32_addresses.csv).
+// Retail 0x012F1464 is owned by GameClient *TheGameClient (data_rows.csv).
 // This TU's vtable-ABI view of it is Client006E2540; the slot68() virtual
 // slot is identical, so the cast is free and bytes match.
 class Client0009A580;
-extern Client0009A580 *ClientAt012F1464;
-static inline Client006E2540 *clientAt() { return (Client006E2540 *)ClientAt012F1464; }
+// Retail 0x012F1464: use the existing data owner; retain the local pointee view.
+extern class GameClient *TheGameClient;
+static inline Client006E2540 *clientAt() { return (Client006E2540 *)reinterpret_cast<Client0009A580 *>(TheGameClient); }
 class Display006E2540 {
 public:
     virtual void pad0();

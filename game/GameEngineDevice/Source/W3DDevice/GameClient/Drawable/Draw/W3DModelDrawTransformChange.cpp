@@ -73,7 +73,8 @@
 #include "Common/BitFlagsIO.h"
 
 class HeightMapRenderObjClass;
-extern HeightMapRenderObjClass *TheTerrainRenderObject;
+// Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 class BFMERopeDrawableGetPositionShim { public: const Coord3D *get() const; };
 class BfmeCalc919G { public: int bfmeCalc919G(); };
 // The existing address-named ILT is used because the canonical WorldHeightMap
@@ -101,8 +102,8 @@ void W3DModelDraw::reactToTransformChange(const Matrix3D* oldMtx, const Coord3D*
     const ThingTemplate *tm = *(const OVERRIDE<ThingTemplate> *)((const char *)draw + 4);
     const Coord3D *pos = ((BFMERopeDrawableGetPositionShim *)draw)->get();
     if (*(const float *)((const char *)tm + 0x3a0) > 1.0f) {
-        ((Rva00763620Map *)*(void **)((char *)TheTerrainRenderObject + 0x2ff4))->update(oldPos, *(const float *)((const char *)tm + 0x3a0), true);
-        ((Rva00763620Map *)*(void **)((char *)TheTerrainRenderObject + 0x2ff4))->update(pos, *(const float *)((const char *)tm + 0x3a0), false);
+        ((Rva00763620Map *)*(void **)((char *)reinterpret_cast<HeightMapRenderObjClass *>(TheTerrainRenderObject) + 0x2ff4))->update(oldPos, *(const float *)((const char *)tm + 0x3a0), true);
+        ((Rva00763620Map *)*(void **)((char *)reinterpret_cast<HeightMapRenderObjClass *>(TheTerrainRenderObject) + 0x2ff4))->update(pos, *(const float *)((const char *)tm + 0x3a0), false);
     }
     if (*(RenderObjClass **)((char *)this + 0x34)) {
         Matrix3D mtx(true);

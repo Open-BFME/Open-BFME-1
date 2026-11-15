@@ -160,7 +160,8 @@ struct TerrainDispatch007B6D30 {
  virtual void slot141();
  virtual void bounds238(Rect007B6D30 *);
 };
-extern TerrainDispatch007B6D30 *terrain012F7FE0;
+// Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 static int drawStartX, drawStartY, drawEdgeX, drawEdgeY;
 class W3DProjectedShadowManager { public:
  void *vptr;
@@ -215,9 +216,9 @@ int W3DProjectedShadowManager::render007B6520(RenderInfoClass &)
  static AABoxClass aaBox;
  static SphereClass sphere;
  int projectionCount=0;
- if (!m_1c || !DX8Wrapper::D3DDevice || !terrain012F7FE0) return 0;
+ if (!m_1c || !DX8Wrapper::D3DDevice || !reinterpret_cast<TerrainDispatch007B6D30 *>(TheTerrainRenderObject)) return 0;
   Rect007B6D30 rect;
-  terrain012F7FE0->bounds238(&rect);
+  reinterpret_cast<TerrainDispatch007B6D30 *>(TheTerrainRenderObject)->bounds238(&rect);
   drawStartX=rect.x0-4;
   drawStartY=rect.y0-4;
   drawEdgeY=rect.x1+4;

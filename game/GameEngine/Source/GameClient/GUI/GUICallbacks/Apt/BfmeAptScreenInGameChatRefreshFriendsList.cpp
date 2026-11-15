@@ -143,7 +143,8 @@ public:
 	virtual void winSetLoneWindow( GameWindow *window ) = 0;
 };
 
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail 0x012F7194: use the existing data owner; retain the local pointee view.
+extern class GameSpyInfoInterface *TheGameSpyInfo;
 extern GameWindowManager *TheWindowManager;
 extern Color GameSpyColor[];
 
@@ -190,7 +191,7 @@ private:
 
 void AptInGameChat::Rva00515810()
 {
-	if ( m_friendsList == 0 || TheGameSpyInfo == 0 )
+	if ( m_friendsList == 0 || reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo) == 0 )
 		return;
 
 	Int maxSelectedItems = GadgetListBoxGetNumEntries( m_friendsList );
@@ -211,14 +212,14 @@ void AptInGameChat::Rva00515810()
 	previousTopIndex = GadgetListBoxGetTopVisibleEntry( m_friendsList );
 	GadgetListBoxReset( m_friendsList );
 	std::vector<Gen_t_00513940_m4pod> records;
-	BuddyInfoMap *buddyMap = TheGameSpyInfo->getBuddyMap();
+	BuddyInfoMap *buddyMap = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyMap();
 	for ( BuddyInfoMap::iterator it = buddyMap->begin(); it != buddyMap->end(); ++it )
 	{
 		Gen_t_00513940_m4pod record = { (Int)&it->second };
 		records.push_back( record );
 	}
 
-	buddyMap = TheGameSpyInfo->getBuddyRequestMap();
+	buddyMap = reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getBuddyRequestMap();
 	for ( BuddyInfoMap::iterator it = buddyMap->begin(); it != buddyMap->end(); ++it )
 	{
 		Gen_t_00513940_m4pod record = { (Int)&it->second };

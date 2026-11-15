@@ -146,7 +146,8 @@ class BfmeWideForwardC
 public:
 	BfmeWideResult bfmeForwardWideC(Int pos, Int range, Int distCalc, Int filters, Int order);
 };
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail 0x012ED5B8: use the existing data owner; retain the local pointee view.
+extern class PartitionManager *ThePartitionManager;
 
 class GeometryInfo
 {
@@ -288,7 +289,7 @@ UpdateSleepTime HeightDieUpdate::update( void )
 
 				// scan all objects in the radius of our extent and find the tallest height among them
 				Real range = getObject()->getGeometryInfo().m_boundingCircleRadius;
-				BfmeWideResult iter = ThePartitionManager->bfmeForwardWideC( (Int)getObject()->getPosition(),
+				BfmeWideResult iter = reinterpret_cast<BfmeWideForwardC *>(ThePartitionManager)->bfmeForwardWideC( (Int)getObject()->getPosition(),
 					*(Int *)&range, FROM_BOUNDINGSPHERE_3D,
 					(Int)&Rva000C3DD0VptrZeroBlockObject( *(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK( 7 ),
 						*(const VptrZeroBlock24 *)&KINDOFMASK_NONE ),

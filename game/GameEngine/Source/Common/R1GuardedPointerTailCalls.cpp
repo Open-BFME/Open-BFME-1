@@ -153,8 +153,9 @@ public:
 	void h00489410();
 	void h004893E0();
 };
-extern Glo00EF3330 *g_Glo00EF3330;
-void Rva00382980() { if( g_Glo00EF3330 ) g_Glo00EF3330->h00489410(); }
+// Retail 0x012F3330: use the existing data owner; retain the local pointee view.
+extern class GameWindowTransitionsHandler *TheTransitionHandler;
+void Rva00382980() { if( reinterpret_cast<Glo00EF3330 *>(TheTransitionHandler) ) reinterpret_cast<Glo00EF3330 *>(TheTransitionHandler)->h00489410(); }
 
 BFME_GUARDED_GLOBAL_CALL( Rva0050D3B0, Gen005847F0, g_Glo00EF4B70 )
 class TerrainTracksRenderObjClassSystem;
