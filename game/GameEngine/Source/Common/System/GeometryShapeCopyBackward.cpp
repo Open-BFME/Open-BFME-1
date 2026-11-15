@@ -7,21 +7,7 @@
 // assignment below identify this as the out-of-line __copy_backward body for
 // vector<GeometryShape>.
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase &operator=(const StringBase &other)
-	{
-		set(other);
-		return *this;
-	}
-
-	void set(const StringBase &other); // retail 0x00887C90
-
-private:
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 typedef bool Bool;
 

@@ -15,19 +15,7 @@
 // externally-linked definition of the same body places the slot 53 bytes
 // apart. Static plus a TU-local absent-from-retail caller reproduces it.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

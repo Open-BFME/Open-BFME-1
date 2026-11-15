@@ -11,13 +11,7 @@ class ArchiveFile;
 
 // The thin string view follows ArchiveFileSystem.cpp. A potentially throwing
 // StringBase copy preserves the compiler's placement-delete cleanup envelope.
-template <class T> class StringBase
-{
-    friend class AsciiString;
-private:
-    StringBase(const StringBase<T> &src);
-    void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 inline AsciiString::AsciiString(const AsciiString &src)
 {
