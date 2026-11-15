@@ -3,17 +3,8 @@
 
 #include <map>
 
-class AsciiString;
-
-#include "string_base.h"
-
 // Retail inlines AsciiString's forwarding constructor and calls its StringBase body.
-class AsciiString : private StringBase<char>
-{
-public:
-    __forceinline AsciiString(const AsciiString &src) : StringBase<char>(src) {}
-    ~AsciiString();
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class DetailedArchivedDirectoryInfo;
 class ArchivedFileInfo
