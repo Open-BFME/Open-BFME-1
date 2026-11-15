@@ -3,17 +3,7 @@
 // BFME has three one-word strings and a list at +0xF4 that are absent from
 // the later Zero Hour header, so this TU describes the retail layout locally.
 
-template <class T> class StringBase
-{
-public:
-    ~StringBase() { releaseBuffer(); }
-
-private:
-    void releaseBuffer();
-    T *m_text;
-};
-
-class AsciiString : public StringBase<char> {};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Xfer;
 
