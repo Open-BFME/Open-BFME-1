@@ -60,34 +60,9 @@ typedef float Real;
 
 class Xfer;
 
-template <typename T> class StringBase
-{
-friend class AsciiString;
-private:
-	StringBase( void );
-	StringBase( const StringBase<T> &that );
-	StringBase( const T *text );
-	void releaseBuffer( void );
-public:
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( text );
-	}
-	AsciiString( const AsciiString &that )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that );
-	}
-	~AsciiString( void );
-private:
-	char *m_text;
-};
 
 enum INILoadType
 {

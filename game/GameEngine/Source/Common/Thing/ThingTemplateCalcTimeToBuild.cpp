@@ -12,7 +12,7 @@
 #include "PreRTS.h"
 #include <vector>
 class Player; class ThingTemplate;
-class AsciiString { public: void *data; };
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class Overridable {
 public:
     void *vptr;

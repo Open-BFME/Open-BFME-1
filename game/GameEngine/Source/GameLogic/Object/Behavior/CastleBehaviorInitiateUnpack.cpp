@@ -27,18 +27,7 @@ private:
 	void *m_data;
 };
 
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? (const char *)((unsigned char *)m_data + 8) :
-			g_bfmeEmptyAscii;
-	}
-
-private:
-	void *m_data;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Player
 {

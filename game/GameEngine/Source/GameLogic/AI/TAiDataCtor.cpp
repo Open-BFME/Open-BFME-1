@@ -13,27 +13,9 @@ typedef unsigned char Bool;
 
 class Xfer;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( text );
-	}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot
