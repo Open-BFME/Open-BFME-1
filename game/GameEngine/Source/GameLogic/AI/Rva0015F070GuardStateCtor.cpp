@@ -20,13 +20,7 @@
 class StateMachine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-	void zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class State
@@ -50,7 +44,7 @@ public:
 		m_attackGiveUpFrame( 0 ),
 		m_radiusSqr( 0.0f )
 	{
-		m_center.zero();
+		{ Coord3D *const position = &m_center; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	}
 
 	virtual bool shouldExit( const StateMachine *machine ) const;
