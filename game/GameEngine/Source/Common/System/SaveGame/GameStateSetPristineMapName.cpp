@@ -8,17 +8,7 @@ class AsciiString;
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-    ~AsciiString() {}
-
-    AsciiString &operator=(const AsciiString &source)
-    {
-        StringBase<char>::set(source);
-        return *this;
-    }
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class GameState
 {

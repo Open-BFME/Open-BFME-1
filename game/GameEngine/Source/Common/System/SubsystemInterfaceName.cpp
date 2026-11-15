@@ -3,17 +3,7 @@
 #include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	AsciiString &operator=(const AsciiString &other)
-	{
-		StringBase<char>::set(other);
-		return *this;
-	}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // GameLogic::init names TheLargeGroupAudio through ILT 0x0001CE9A;
 // the by-value argument and member at +4 both use narrow string bodies.

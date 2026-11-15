@@ -1,13 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString() {}
-    static const AsciiString TheEmptyString;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 enum NameKeyType
 {

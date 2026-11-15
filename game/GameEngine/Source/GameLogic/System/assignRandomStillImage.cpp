@@ -4,16 +4,8 @@
 typedef int Int;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-template <typename T>
-class StringBase
-{
-public:
-	void set(const T *text, Int length);
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : public StringBase<char>
-{
-};
 
 extern Int GetGameClientRandomValue(Int low, Int high, char *file, Int line);
 extern "C" __declspec(dllimport) Int __cdecl sprintf(char *buffer, const char *format, ...);
@@ -33,5 +25,5 @@ void assignRandomStillImage(AsciiString *result, Int, Int)
 		image = 21;
 
 	sprintf(buffer, "StillImage_Film%02d", image);
-	result->set(buffer, strlen(buffer));
+	result->StringBase<char>::set(buffer, strlen(buffer));
 }

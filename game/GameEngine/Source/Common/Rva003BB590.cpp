@@ -9,13 +9,7 @@
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	~AsciiString() {}
-	void set(const AsciiString &other) { StringBase<char>::set(other); }
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 
 struct Rva003BB590Tree

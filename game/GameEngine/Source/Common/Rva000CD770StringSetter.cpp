@@ -3,17 +3,7 @@
 #include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	AsciiString &operator=(const AsciiString &other)
-	{
-		StringBase<char>::set(other);
-		return *this;
-	}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // The owner is unknown: only unused ILT 0x00003DB4 reaches this body.
 // Assignment at +8 calls narrow set/release bodies 0x00887C90/0x00887940,
