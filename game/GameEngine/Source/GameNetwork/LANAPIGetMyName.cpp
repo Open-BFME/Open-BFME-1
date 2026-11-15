@@ -3,13 +3,7 @@
 // points through ILT15D4D to this body. It copies the Unicode name at+10
 // through StringBase<unsigned short>888400. Former canonical4C7970 belongs
 // to DownloadManager::getErrorString; its caller establishes that separate owner.
-template<class T> class StringBase {
-    friend class UnicodeString;
-private:
-    StringBase(const StringBase<T>&);
-    ~StringBase();
-    void *data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 class UnicodeString : private StringBase<unsigned short> {
 public:
     UnicodeString(const UnicodeString& other) : StringBase<unsigned short>(other) {}

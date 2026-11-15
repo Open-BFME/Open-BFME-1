@@ -12,14 +12,7 @@ private:
 
 // callees.py 0x4F0D30: the five string-member assignments call 0x00887C90,
 // the ledger row set@?$StringBase@D@@QAEXABV1@@Z.
-template <class T> class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class Rva004F0D30 : public GameSlot
 {

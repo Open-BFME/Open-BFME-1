@@ -2,14 +2,7 @@
 
 typedef unsigned short wchar_t;
 
-template <typename Character> class StringBase
-{
-public:
-	int compare(const StringBase &other) const;
-
-private:
-	Character *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 struct Rva005933A0Value
 {

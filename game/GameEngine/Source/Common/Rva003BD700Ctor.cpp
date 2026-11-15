@@ -5,18 +5,7 @@
 // the string copy unwind into the base destructor, which is what emits the
 // EH3 frame.
 
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase();
-	StringBase(const StringBase<T> &);
-	~StringBase();
-
-	int *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

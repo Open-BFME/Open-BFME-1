@@ -2,22 +2,7 @@
 // Retail 0x00579790: copy slot zero's current skirmish name into the
 // by-reference UnicodeString supplied by the Skirmish APT callback.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {
