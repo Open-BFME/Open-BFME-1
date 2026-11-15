@@ -9,28 +9,8 @@ typedef bool Bool;
 extern "C" void __cdecl __identifier("?d_0032c090@@YAXXZ")();
 class PolygonTrigger;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const StringBase &);
-	~StringBase();
-};
-
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
 
 class Parameter
 {

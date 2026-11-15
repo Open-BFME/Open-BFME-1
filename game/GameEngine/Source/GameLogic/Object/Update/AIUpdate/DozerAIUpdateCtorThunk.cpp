@@ -37,7 +37,7 @@ public:
 	AnimalAIUpdateBase(Thing *, const ModuleData *);
 };
 
-class AsciiString {};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 extern const AsciiString Rva01336E50Str;
 
 class AudioEventRTS

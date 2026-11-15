@@ -15,10 +15,7 @@ private:
 	void *m_data;
 };
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva003C1C50Coord
 {

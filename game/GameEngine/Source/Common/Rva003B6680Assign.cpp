@@ -21,11 +21,7 @@ private:
 	void *m_data;
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 namespace ModelConditionInfo { struct HideShowSubObjInfo; }
 struct Gen_t_003b5310_p40cd;
