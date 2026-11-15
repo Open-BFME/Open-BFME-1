@@ -54,19 +54,7 @@ void *operator new[](unsigned int bytes);
 void operator delete[](void *pointer);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
@@ -340,8 +328,8 @@ ShroudManagerImpl::ShroudManagerImpl()
 	  enabled(true),
 	  refreshCallback(0)
 {
-	region.lo.zero();
-	region.hi.zero();
+	{ Coord3D *const position = &region.lo; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
+	{ Coord3D *const position = &region.hi; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	configure(region, 1.0f);
 }
 
@@ -418,8 +406,8 @@ void ShroudManagerImpl::updatePlayerCells008FB060(int playerIndex)
 void ShroudManagerImpl::reset()
 {
 	Region3D emptyRegion;
-	emptyRegion.lo.zero();
-	emptyRegion.hi.zero();
+	{ Coord3D *const position = &emptyRegion.lo; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
+	{ Coord3D *const position = &emptyRegion.hi; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	setRegion(&emptyRegion, 0.0f);
 
 	delete[] elements;
