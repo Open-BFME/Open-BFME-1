@@ -19,13 +19,7 @@ struct StringInlineData
 
 // Same four-byte StringBase-backed view as the matched Script copy
 // constructor.  The string-record table stores this header at record +0x08.
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Xfer;
 

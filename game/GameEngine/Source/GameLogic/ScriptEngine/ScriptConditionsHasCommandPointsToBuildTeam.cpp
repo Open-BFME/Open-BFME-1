@@ -19,25 +19,8 @@ typedef unsigned short UnsignedShort;
 // The copy constructor and destructor forward inline to StringBase<char>, whose
 // bodies the ledger names at retail 0x00887B60 and 0x00887940.  A copy
 // constructor declared on AsciiString itself resolves to a different thunk.
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class Parameter
 {

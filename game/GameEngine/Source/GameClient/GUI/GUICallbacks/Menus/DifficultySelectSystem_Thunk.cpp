@@ -34,13 +34,7 @@ enum GameDifficulty
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	static const AsciiString TheEmptyString;
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	~AsciiString() {}
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class WindowLayout
 {

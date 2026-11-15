@@ -70,33 +70,8 @@ public:
 // character buffer, not an unrelated empty overlay.  The AsciiString wrapper
 // privately inherits that base so MSVC constructs the by-value argument in
 // the outgoing stack slot, as the target does.
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	struct Header
-	{
-		int refCount;
-		unsigned short length;
-		unsigned short capacity;
-		char data[1];
-	};
-
-	StringBase(const T *text);
-	void releaseBuffer(void);
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
-	}
-};
 
 class SubsystemInterface
 {
