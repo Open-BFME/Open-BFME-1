@@ -13,38 +13,9 @@
 typedef bool Bool;
 typedef unsigned short PlayerMaskType;
 
-template <typename Char>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	int compare(const Char *) const;
-
-private:
-	StringBase(const StringBase<Char> &src);
-	void releaseBuffer();
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	// Retail's AsciiString adds no members to StringBase<char>: a copy of one
-	// encodes the base copy ctor at 0x00887B60 directly, so the delegation has
-	// to be visible here.
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	// Retail's ~AsciiString (0x0005EE90) is a bare jmp to releaseBuffer
-	// (0x00887940); scope exits call that body directly.
-	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-
-private:
-	void *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

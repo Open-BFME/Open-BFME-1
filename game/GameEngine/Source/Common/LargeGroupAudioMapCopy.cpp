@@ -16,26 +16,8 @@ extern void j_00023a74(void);
 
 class AsciiString;
 
-template <class Char>
-class StringBase
-{
-public:
-	void set(const StringBase<Char> &source);
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &source)
-	{
-		((StringBase<char> *)this)->set(
-			*(const StringBase<char> *)&source);
-		return *this;
-	}
-
-private:
-	char *m_data;
-};
 
 class SoundKeyPair
 {

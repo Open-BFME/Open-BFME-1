@@ -26,37 +26,9 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-template <class Type>
-class StringBase
-{
-private:
-	// Private so the symbol comes out AAE, which is how the ledger already names
-	// this body; a public declaration would spell QAE and need a pin.
-	StringBase(const char *s);
-	friend class AsciiString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-
-	// The delegation has to be visible: a declared-only constructor leaves the
-	// by-value temporary opaque and MSVC schedules its frame store after the
-	// this-pointer load instead of before.
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	AsciiString(const AsciiString &that);
-	~AsciiString();
-
-private:
-
-	void *m_text;
-
-};
 
 class Object;
 

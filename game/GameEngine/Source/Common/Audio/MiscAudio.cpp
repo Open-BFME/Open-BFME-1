@@ -8,11 +8,7 @@
 // additions.  Each entry is an embedded 0x70-byte AudioEventRTS and is
 // initialized with the shared empty name and extra value zero.
 
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // This embedded-member view stores the vptr explicitly and uses the scalar
 // destructor spelling owned at RVA 0x000B31F0 (ILT 0x00026F35). Its complete

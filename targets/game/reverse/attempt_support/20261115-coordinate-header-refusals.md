@@ -53,3 +53,27 @@ extent, no relocations and exact initial bytes. It does not accept function
 identity from a candidate pin. The earlier refused string specimens still had
 other failures after this data evidence was considered; they were not counted
 or blindly retried.
+
+## Subsequent bounded helper investigation
+
+Later existing private compiler specimens showed `_STL::_Destroy<AsciiString>`
+as the same9B instruction stream in both controls, with a tail jump changing
+from StringBase<char>::releaseBuffer to AsciiString::~AsciiString. The original
+PE independently shows that destructor as a bare5B jump to the same release
+entry. This isolated edge has equivalent machine-state forwarding; it does
+not prove the whole candidate or its retained/native linking closure.
+
+A diagnostic prototype checked that edge for existing unowned helpers while
+still comparing their ordinary graph. None of17 refused specimens became
+acceptable: other bodies remained wrong/unknown, or other targets changed.
+The prototype was therefore isolated as
+`diagnostics/continue-20261115-twohundred/semantic-tail-prototype.py`; the
+active acceptance method continues to require native retail ownership/proof
+for changed callable implementations. No task was counted from this study.
+
+Explicit two-argument StringBase<char>::set/concat qualification is a separate
+supported adaptation, demonstrated by the earlier assignRandomStillImage fix
+and the concurrently landed AI_crc/DataChunkOutputDestructor sources. It is
+tried only after a compiler arity refusal and still needs all ordinary byte,
+target, layout, provider and linking gates. Most refused specimens retain
+additional independent blockers; a fixed compile is not a completed task.
