@@ -9,31 +9,8 @@
 // returns the matching template.  Its direct-body pin lets the resolver
 // derive the retail ILT 0x0004881A without adding an ILT identity claim.
 
-template <typename T> class StringBase
-{
-friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const StringBase<T> &other );
-	void releaseBuffer( void );
-};
-
-class AsciiString
-{
-public:
-	AsciiString( const AsciiString &other )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
 
 class GameFont;
 

@@ -2,9 +2,7 @@
 // The three callers use this incremental-link thunk for the set<AsciiString>
 // upper-bound specialization already matched at retail 0x000804D0.
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 namespace _STL
 {

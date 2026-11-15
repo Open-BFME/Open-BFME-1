@@ -7,14 +7,7 @@ struct lua_State;
 extern "C" int lua_gettop(lua_State *state);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const char *text);
-
-private:
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct LuaTargetOwner;
 

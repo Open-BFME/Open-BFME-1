@@ -15,38 +15,8 @@
 // trivial forwarder at 0x0005EE50, so a call site that copies one encodes the
 // base body at 0x00887B60 directly. The delegation has to be visible here for
 // this TU to encode the same call.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const StringBase<T> &src);
-
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString
-{
-private:
-	void *m_data;
-
-public:
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString();
-};
 
 struct GeometryRecord
 {

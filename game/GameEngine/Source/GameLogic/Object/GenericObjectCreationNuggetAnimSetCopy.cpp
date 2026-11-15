@@ -1,34 +1,8 @@
 // cl: /EHsc
 // Open-BFME: the BFME2 three-string AnimSet copy constructor and destructor.
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-    StringBase(const StringBase<T> &source);
-    void releaseBuffer();
-    void *m_data;
-};
-
-class AsciiString
-{
-public:
-    AsciiString(const AsciiString &source)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(
-            *(const StringBase<char> *)&source);
-    }
-
-    ~AsciiString()
-    {
-        ((StringBase<char> *)this)->releaseBuffer();
-    }
-
-private:
-    void *m_text;
-};
 
 class GenericObjectCreationNugget
 {

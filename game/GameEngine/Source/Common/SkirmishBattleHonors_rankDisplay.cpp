@@ -1,37 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-template <class Type>
-class StringBase
-{
-private:
-	StringBase( const char *text );
-	StringBase( const StringBase &that );
-	~StringBase();
-	void releaseBuffer();
-	friend class AsciiString;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString
-{
-public:
-	AsciiString() { m_text = 0; }
-	AsciiString( const char *text )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( text );
-	}
-	AsciiString( const AsciiString &that )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( *(const StringBase<char> *)&that );
-	}
-	// Retail releases the string by calling StringBase<char>::releaseBuffer
-	// (0x00887940) directly, not the out-of-line ~StringBase<char> at 0x0005E490.
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-private:
-	void *m_text;
-};
 
 class UserPreferences
 {
