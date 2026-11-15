@@ -34,8 +34,10 @@ static inline AptStringBlock *rva012D5298Block()
 {
 	return (AptStringBlock *)&g_rva012D5298Empty;
 }
-extern AptStringPool *g_pool01337A30;
-extern AptValueRegistry *g_bfmeRegistryVNF;
+// Retail 0x01337A30: use the existing data owner; retain the local pointee view.
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;
+// Retail 0x01337810: use the existing data owner; retain the local pointee view.
+extern struct Rva00899560Pool *g_rva01337810GcRoots;
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int);
 
 class BfmeUtf8String008A00C0
@@ -51,7 +53,7 @@ public:
 	{
 		AptStringBlock *block = m_data;
 		if (--block->m_refs == 0)
-			g_pool01337A30->m_free(block);
+			reinterpret_cast<AptStringPool *>(g_rva01337A30AllocPair)->m_free(block);
 	}
 
 	BfmeUtf8String008A00C0 &map();
@@ -92,7 +94,8 @@ inline void *operator new(unsigned int, void *p)
 	return p;
 }
 
-extern Rva008A9B00 *g_aptStringFreeList;
+// Retail 0x01338478: use the existing data owner; retain the local pointee view.
+extern struct Rva008C3B60Node *g_rva01338478NodeHead;
 
 
 struct AptValueRegistry
@@ -120,11 +123,11 @@ Rva008A9B00 *rva8AAEC0MakeString(BfmeE1233 *source)
 	((Rva8CD130Value *)source)->getName((Rva8CD130String *)&name);
 	name.map();
 
-	Rva008A9B00 *object = g_aptStringFreeList;
+	Rva008A9B00 *object = reinterpret_cast<Rva008A9B00 *>(g_rva01338478NodeHead);
 	if (object)
 	{
-		g_aptStringFreeList = object->m_next;
-		g_bfmeRegistryVNF->addOrClear(object);
+		g_rva01338478NodeHead = reinterpret_cast<Rva008C3B60Node *>(static_cast<Rva008A9B00 *>(object->m_next));
+		reinterpret_cast<AptValueRegistry *>(g_rva01337810GcRoots)->addOrClear(object);
 		if (object->m_string != rva012D5298Block())
 			((BfmeStrVKK *)&object->m_string)->bfmeTruncVKK(0);
 	}
@@ -142,7 +145,7 @@ Rva008A9B00 *rva8AAEC0MakeString(BfmeE1233 *source)
 	++name.m_data->m_refs;
 	AptStringBlock *old = object->m_string;
 	if (--old->m_refs == 0)
-		g_pool01337A30->m_free(old);
+		reinterpret_cast<AptStringPool *>(g_rva01337A30AllocPair)->m_free(old);
 	object->m_string = name.m_data;
 	return object;
 }

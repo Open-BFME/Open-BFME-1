@@ -192,20 +192,22 @@ public:
 	BfmeSubF1038 m_bfmeSub;
 };
 
-extern BfmeAObj1038 *g_bfmeA1038;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 extern int g_bfmeB1038;
-extern int g_bfmeC1038;
+// Retail 0x013378D4: use the existing data owner; retain the local pointee view.
+extern char *g_bfmeArenaCursor;
 void bfmeFlush1038(void);
 
 void bfmeGo1038F(void)
 {
-	if (g_bfmeA1038 == 0)
+	if (reinterpret_cast<BfmeAObj1038 *>(g_bfmeHolderBU) == 0)
 		return;
 
-	g_bfmeA1038->bfmeStop1038F();
+	reinterpret_cast<BfmeAObj1038 *>(g_bfmeHolderBU)->bfmeStop1038F();
 	bfmeFlush1038();
-	g_bfmeA1038->m_bfmeSub.bfmeAdd1038(g_bfmeB1038, 0);
-	g_bfmeC1038 -= 0x60;
+	reinterpret_cast<BfmeAObj1038 *>(g_bfmeHolderBU)->m_bfmeSub.bfmeAdd1038(g_bfmeB1038, 0);
+	g_bfmeArenaCursor -= 0x60;
 }
 
 class BfmeA1236;

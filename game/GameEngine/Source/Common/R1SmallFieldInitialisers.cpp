@@ -136,7 +136,8 @@ void Rva003BDAB0::reset()
 // ---------------------------------------------------------------- 0x00490280
 
 class Rva00490280;
-extern Rva00490280 *g_Glo00EF3350;
+// Retail 0x012F3350: use the existing data owner; retain the local pointee view.
+extern class Gen_004902A0 *g_bfmeHeadCA;
 
 class Rva00490280
 {
@@ -147,8 +148,8 @@ public:
 };
 Rva00490280::Rva00490280()
 {
-	m_next = g_Glo00EF3350;
-	g_Glo00EF3350 = this;
+	m_next = reinterpret_cast<Rva00490280 *>(g_bfmeHeadCA);
+	g_bfmeHeadCA = reinterpret_cast<Gen_004902A0 *>(static_cast<Rva00490280 *>(this));
 }
 
 // ---------------------------------------------------------------- 0x0071CF10

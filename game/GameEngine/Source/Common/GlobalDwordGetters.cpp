@@ -66,7 +66,8 @@ extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 extern void *g_rva012F49D0;
 class SkirmishScreenState;
 extern SkirmishScreenState *TheSkirmishScreenState;
-extern int g_Va012F49E4;
+// Retail 0x012F49E4: use the existing data owner; retain the local pointee view.
+extern void *g_obj12F49E4;
 class BfmeAptScreenOnlineCustomMatch;
 extern BfmeAptScreenOnlineCustomMatch *TheBfmeOnlineCustomMatch;
 extern int g_Va012F4AAC;
@@ -103,7 +104,8 @@ class ServiceHubImpl
 public:
 	static ServiceHubImpl *gInstance;
 };
-extern int g_Va0130A5A0;
+// Retail 0x0130A5A0: use the existing data owner; retain the local pointee view.
+extern struct Rva007EB810Diag *g_Va0130A5A0;
 extern int g_Va0130B198;
 extern int g_Va01336E80;
 class Rva00892360
@@ -233,7 +235,7 @@ int Rva00570170Get( void )
 
 int Rva00588800Get( void )
 {
-	return g_Va012F49E4;
+	return reinterpret_cast<int>(g_obj12F49E4);
 }
 
 int Rva005F08E0Get( void )
@@ -309,7 +311,7 @@ int Rva007EB260Get( void )
 struct Rva007EB810Diag;
 Rva007EB810Diag *Rva007EB810Get( void )
 {
-	return reinterpret_cast<Rva007EB810Diag *>(g_Va0130A5A0);
+	return reinterpret_cast<Rva007EB810Diag *>( g_Va0130A5A0 );
 }
 
 int Rva0081C390Get( void )

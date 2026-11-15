@@ -9,7 +9,8 @@
 
 class Rva00490350Base;
 
-extern Rva00490350Base *g_bfmeListVX;			// retail 0x012F3350
+// Retail 0x012F3350: use the existing data owner; retain the local pointee view.
+extern class Gen_004902A0 *g_bfmeHeadCA;			// retail 0x012F3350
 
 // Retail copies and destroys each string member through StringBase<char>'s
 // own bodies: the copy constructor 0x00887B60 and releaseBuffer 0x00887940.
@@ -81,9 +82,9 @@ class Rva00490350Base
 public:
 	__forceinline Rva00490350Base(void)
 	{
-		m_bfmeNext = g_bfmeListVX;
+		m_bfmeNext = reinterpret_cast<Rva00490350Base *>(g_bfmeHeadCA);
 
-		g_bfmeListVX = this;
+		g_bfmeHeadCA = reinterpret_cast<Gen_004902A0 *>(static_cast<Rva00490350Base *>(this));
 
 		m_bfmeCount = 0;
 		m_bfmeArmed = true;

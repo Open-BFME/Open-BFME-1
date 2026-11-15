@@ -20,13 +20,15 @@ class GameLogic { public: char pad00[0x3c]; unsigned frame; char pad40[0x12c]; u
 extern GameLogic *TheGameLogic;
 class AI { public: char pad00[0xc]; void *pathfinder; };
 extern AI *TheAI;
-extern void *TheTerrainLogic;
+// Retail 0x012EF4CC: use the existing data owner; retain the local pointee view.
+extern class TerrainLogic *TheTerrainLogic;
 extern "C" PolygonTrigger **g_bfmePolygonTriggerTable;
 class ScriptEngine { public: void AppendDebugMessage(const AsciiString &,bool); };
 extern ScriptEngine *TheScriptEngine;
 class DelayedLuaEventList;
 class BfmeOwnerBR { public: void bfmeGo939B(int,Object *,DelayedLuaEventList *); };
-extern "C" BfmeOwnerBR *g_bfmeOwnerBR;
+// Retail 0x012F060C: use the existing data owner; retain the local pointee view.
+extern class LuaScriptEngine *TheLuaScriptEngine;
 struct BfmeDelayedLuaEventList { BfmeDelayedLuaEventList(); ~BfmeDelayedLuaEventList(); char bytes[0x4c]; };
 class BfmeDelayedLuaEvent { public: BfmeDelayedLuaEvent(); ~BfmeDelayedLuaEvent(); char pad00[0x10]; AsciiString text; int type; };
 // The exit branch calls the out-of-line DelayedLuaEventList ctor/dtor (0x000EDBB0/0x000EDC40);
@@ -58,7 +60,7 @@ void Object::setTriggerAreaFlagsForChangeInPosition()
     iPos.x=(int)pos.x; iPos.y=(int)pos.y; iPos.z=0;
     if(lastPos(this).x==iPos.x && lastPos(this).y==iPos.y) return;
     if(!isKindOf((KindOfType)2)) {
-        if(isKindOf((KindOfType)8)||isKindOf((KindOfType)9)||isKindOf((KindOfType)11)||isKindOf((KindOfType)10)) terrainMoved(TheTerrainLogic,this);
+        if(isKindOf((KindOfType)8)||isKindOf((KindOfType)9)||isKindOf((KindOfType)11)||isKindOf((KindOfType)10)) terrainMoved(reinterpret_cast<void *>(TheTerrainLogic),this);
     }
     if(pathMoved(TheAI->pathfinder,this,&m_cachedPos) && TheGameLogic->frame>3) TheGameLogic->sendObjectDestroyed(this);
     unsigned now=TheGameLogic->frame;
@@ -72,7 +74,7 @@ void Object::setTriggerAreaFlagsForChangeInPosition()
             BfmeDelayedLuaEventList list;
             ((AsciiString *)(list.bytes+0x14))->set(records(this)[i].trigger->name);
             *(int *)(list.bytes+0x18)=4;
-            g_bfmeOwnerBR->bfmeGo939B(5,this,(DelayedLuaEventList *)&list);
+            reinterpret_cast<BfmeOwnerBR *>(TheLuaScriptEngine)->bfmeGo939B(5,this,(DelayedLuaEventList *)&list);
             ((Rva0018F050TriggerArea *)records(this)[i].trigger)->notifyObjectExited(this);
         }
     }
@@ -94,7 +96,7 @@ void Object::setTriggerAreaFlagsForChangeInPosition()
                 Rva001C8D80EntryList list;
                 list.events[0].text.set(records(this)[i].trigger->name);
                 list.events[0].type=4;
-                g_bfmeOwnerBR->bfmeGo939B(3,this,&list.head);
+                reinterpret_cast<BfmeOwnerBR *>(TheLuaScriptEngine)->bfmeGo939B(3,this,&list.head);
                 ((Rva0018F050TriggerArea *)trigger)->notifyObjectEntered(this);
             } else {
                 static bool didWarn=false;

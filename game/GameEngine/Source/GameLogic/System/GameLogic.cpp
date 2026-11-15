@@ -6435,12 +6435,12 @@ public:
     void rva0038B430(unsigned a0,int a1,unsigned a2,Rva0038DA10Message* a3,bool a4,BfmeByteStream* a5) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(unsigned,int,unsigned,Rva0038DA10Message*,bool,BfmeByteStream*); } fn; fn.entry=&j_00038361; (this->*fn.method)(a0,a1,a2,a3,a4,a5); }
     void rva00397540(Rva0038DA10Message* a0,void* a1) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(Rva0038DA10Message*,void*); } fn; fn.entry=&j_0003ff67; (this->*fn.method)(a0,a1); } void rva0038A6F0() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_0003004e; (this->*fn.method)(); } void rva0038AE90() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_00015028; (this->*fn.method)(); }
 };
-extern Rva0038DA10Script* g012F076C;
+extern class ScriptEngine *TheScriptEngine;
 // 012F1600 is EA's tactical view singleton; GameClient/View.h declares TheTacticalView.
 extern Rva0038DA10CommandList *g012ED5F0, *g012ED5EC;
 class GameClient;
 extern GameClient *TheGameClient;
-extern Rva0038DA10Network* g012F7714;
+extern class NetworkInterface *TheNetwork;
 extern Rva0038C1E0 g012F08A0;
 class LivingWorldManager;
 extern LivingWorldManager *TheLivingWorldManager;
@@ -6456,7 +6456,7 @@ extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,
 extern WeaponStore *TheWeaponStore;
 extern LocomotorStore *TheLocomotorStore;
 extern BuildAssistant *TheBuildAssistant;
-extern Rva0038DA10Recorder* g012ED62C;
+extern class RecorderClass *TheRecorder;
 extern GameInfo *TheGameInfo;
 extern int forcedCRCFrame;
 // Retail's writable GlobalData global lives at 0x012ED5C8 and is declared as
@@ -6467,7 +6467,7 @@ extern PlayerList *ThePlayerList;
 extern bool g_deepCRC,g_liteCRC;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
-extern Rva000A2E60* g012ED63C;
+extern class StatsCollector *TheStatsCollector;
 void setFPMode();
 class BfmeMade_009CB5F0;
 BfmeMade_009CB5F0* bfmeMake_009CB5F0(void*);
@@ -6485,10 +6485,10 @@ void Rva0038DA10GameLogic::update(int phase) {
     if (depth==0) setFPMode();
     ++depth;
     if (phase==1) {
-        g012F076C->rva00339B10();
-        bool freeze=(((Rva0038DA10View*)TheTacticalView)->slotD4() && !((Rva0038DA10View*)TheTacticalView)->slot74()) || g012F076C->rva00336F20();
+        reinterpret_cast<Rva0038DA10Script*>(TheScriptEngine)->rva00339B10();
+        bool freeze=(((Rva0038DA10View*)TheTacticalView)->slotD4() && !((Rva0038DA10View*)TheTacticalView)->slot74()) || reinterpret_cast<Rva0038DA10Script*>(TheScriptEngine)->rva00336F20();
         if (freeze) {
-            if (g012ED5F0->slot30(0x1d)) g012F076C->rva00337040();
+            if (g012ED5F0->slot30(0x1d)) reinterpret_cast<Rva0038DA10Script*>(TheScriptEngine)->rva00337040();
             else { reinterpret_cast<Rva0038DA10Client *>(TheGameClient)->rvaC4=false; --depth; return; }
         }
     }
@@ -6497,7 +6497,7 @@ void Rva0038DA10GameLogic::update(int phase) {
         if (phase==1) { rva00383050(); reinterpret_cast<Rva0038DA10Client *>(TheGameClient)->rvaC4=true; }
         --depth; return;
     }
-    if (g012F7714 && phase==1) g012F7714->slot8C();
+    if (reinterpret_cast<Rva0038DA10Network*>(TheNetwork) && phase==1) reinterpret_cast<Rva0038DA10Network*>(TheNetwork)->slot8C();
     rva168=phase;
     bool first=(phase==1);
     LatchRestore<bool> latch(inUpdate,true);
@@ -6511,12 +6511,12 @@ void Rva0038DA10GameLogic::update(int phase) {
     ((Rva0038DA10AI *)TheAI)->rva0C->rva003DC190();
     setFPMode();
     if (first) {
-        g012F076C->slot14(); g012F060C->slot14(); reinterpret_cast<Rva0038DA10Terrain *>(TheTerrainLogic)->system.slot14();
+        reinterpret_cast<Rva0038DA10Script*>(TheScriptEngine)->slot14(); g012F060C->slot14(); reinterpret_cast<Rva0038DA10Terrain *>(TheTerrainLogic)->system.slot14();
         if (g012EF734) g012EF734->slot14();
     }
-    if (mode!=4 && mode!=8 && g012ED62C && first) {
+    if (mode!=4 && mode!=8 && reinterpret_cast<Rva0038DA10Recorder*>(TheRecorder) && first) {
         bool generate=false;
-        if (g012ED62C->rva00097800()) {
+        if (reinterpret_cast<Rva0038DA10Recorder*>(TheRecorder)->rva00097800()) {
             unsigned interval=reinterpret_cast<Rva0038DA10GameInfo *>(TheGameInfo)->rva08;
             generate=(frame%interval)==0;
             if (mode==2) generate=false;
@@ -6535,15 +6535,15 @@ void Rva0038DA10GameLogic::update(int phase) {
                 crc=getCRC(text);
             }
             Rva0038DA10Message* m=g012ED5EC->slot34(0x449);
-            m->rva0008AB50(crc); m->rva0008ACE0(frame); ((GameMessage*)m)->appendBooleanArgument(g012ED62C->rva000977F0()==1);
+            m->rva0008AB50(crc); m->rva0008ACE0(frame); ((GameMessage*)m)->appendBooleanArgument(reinterpret_cast<Rva0038DA10Recorder*>(TheRecorder)->rva000977F0()==1);
             if (!g_deepCRC && !g_liteCRC) ((GameMessage*)m)->appendBooleanArgument(false);
             else rva0038B430(crc,player,frame,m,false,text);
         }
         if (TheCRCParameterCheck) reinterpret_cast<Rva00065A40 *>(TheCRCParameterCheck)->rva00065A40();
     }
-    if (g012ED63C && first) g012ED63C->rva000A2E60();
+    if (reinterpret_cast<Rva000A2E60*>(TheStatsCollector) && first) reinterpret_cast<Rva000A2E60*>(TheStatsCollector)->rva000A2E60();
     if (first) {
-        g012ED62C->slot14();
+        reinterpret_cast<Rva0038DA10Recorder*>(TheRecorder)->slot14();
         for (Rva0038DA10Message* m=g012ED5F0->first;m;m=m->next) rva00397540(m,0);
         g012ED5F0->slot10();
         for (Rva0038DA10Object* o=objects;o;o=o->next) if (o->slot28()) o->slot28()->bfmeRebuild(0);

@@ -6,7 +6,8 @@ extern int g_bfmeVtableDQb[];					// retail 0x010F9B0C
 
 class BfmeBaseDQ;
 
-extern BfmeBaseDQ *g_bfmeListDQ;				// retail 0x012F3350
+// Retail 0x012F3350: use the existing data owner; retain the local pointee view.
+extern class Gen_004902A0 *g_bfmeHeadCA;				// retail 0x012F3350
 
 class BfmeBaseDQ
 {
@@ -16,9 +17,9 @@ public:
 	{
 		m_bfmeVtable = g_bfmeVtableDQa;
 
-		m_bfmeNext = g_bfmeListDQ;
+		m_bfmeNext = reinterpret_cast<BfmeBaseDQ *>(g_bfmeHeadCA);
 
-		g_bfmeListDQ = this;
+		g_bfmeHeadCA = reinterpret_cast<Gen_004902A0 *>(static_cast<BfmeBaseDQ *>(this));
 
 		m_bfmeCount = 0;
 		m_bfmeArmed = true;

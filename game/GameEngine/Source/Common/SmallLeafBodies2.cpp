@@ -130,7 +130,8 @@ BFME_CHAIN_FLOAT_GETTER( Rva007E4940ChainedFloat, 0x2C, 0x20 )
 
 // mov al,[<address>] / ret -- one byte read from a .data global.
 extern unsigned char g_aptPalantirClosed;
-extern unsigned char g_Va012F13FC;
+// Retail 0x012F13FC: use the existing data owner; retain the local pointee view.
+extern bool g_bfmeDirtyCU;
 extern unsigned char g_aptLivingWorldVisible;
 extern unsigned char g_aptLivingWorldInitialized;
 extern unsigned char g_Va0130E9F8;
@@ -191,7 +192,7 @@ unsigned char Rva0078AE10GetFlag( void )
 
 unsigned char Rva007D6BE0GetFlag( void )
 {
-	return g_Va012F13FC;
+	return (*reinterpret_cast<unsigned char *>(&g_bfmeDirtyCU));
 }
 
 unsigned char Rva00882F40GetFlag( void )

@@ -3217,7 +3217,8 @@ public:
 	virtual BFMEIndexBufferDebugStream *Get_Stream(void *owner, void *context);
 };
 
-extern Rva00889690Obj *g_rva00889690;
+// Retail 0x01336E5C: use the existing data owner; retain the local pointee view.
+extern void *g_Rva00F36E5C;
 extern void _bfme_debugRecordCallsite(int kind);
 extern void Rva008FCE00SurfaceOperation(void);
 
@@ -3225,8 +3226,8 @@ static __forceinline void W3DRoadBufferReportDX8Error(unsigned result)
 {
 	if (result != 0) {
 		_bfme_debugRecordCallsite(1);
-		g_rva00889690->Begin_Report();
-		BFMEIndexBufferDebugStream *stream = g_rva00889690->Get_Stream(0, 0);
+		reinterpret_cast<Rva00889690Obj *>(g_Rva00F36E5C)->Begin_Report();
+		BFMEIndexBufferDebugStream *stream = reinterpret_cast<Rva00889690Obj *>(g_Rva00F36E5C)->Get_Stream(0, 0);
 		stream->Put_String("DX8 error ")->Put_Unsigned(result)->Finish(1);
 	}
 }
@@ -3577,10 +3578,11 @@ void W3DRoadBuffer::drawRoads(CameraClass * camera, TextureClass *cloudTexture, 
 // BFME-1 24-byte vertex stride and map+2FF4 border+10 are retail facts.
 // Read border independently for each coordinate, preserving ftol query lifetime.
 class BfmeA1087 {public: int getStaticDiffuse(int,int);};
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 static const char *rva007040D0Map()
 {
-    return *(const char **)((const char *)g_bfmeA1087 + 0x2ff4);
+    return *(const char **)((const char *)reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject) + 0x2ff4);
 }
 void RoadSegment::updateSegLighting(void)
 {
@@ -3589,6 +3591,6 @@ void RoadSegment::updateSegLighting(void)
         float vy=m_vb[i].y;
         int x=(int)(vx/MAP_XY_FACTOR+0.5)+*(const int*)(rva007040D0Map()+0x10);
         int y=(int)(vy/MAP_XY_FACTOR+0.5)+*(const int*)(rva007040D0Map()+0x10);
-        m_vb[i].diffuse=(255<<24)|g_bfmeA1087->getStaticDiffuse(x,y);
+        m_vb[i].diffuse=(255<<24)|reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->getStaticDiffuse(x,y);
     }
 }

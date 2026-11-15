@@ -52,7 +52,8 @@ void *Rva004581C0Address::address()
 // global with no arguments at all.  Two members write the same global.
 extern unsigned char g_Va012D6DFC;
 extern unsigned char g_Va012EF1DC;
-extern unsigned char g_Va012F13FC;
+// Retail 0x012F13FC: use the existing data owner; retain the local pointee view.
+extern bool g_bfmeDirtyCU;
 extern unsigned char g_Va012F1B23;
 extern unsigned char g_Va012F4125;
 extern unsigned char g_Va012F4126;
@@ -111,7 +112,7 @@ void Rva006C5410SetFlag( void )
 
 void Rva007D6BD0SetFlag( void )
 {
-	g_Va012F13FC = 0x00;
+	(*reinterpret_cast<unsigned char *>(&g_bfmeDirtyCU)) = 0x00;
 }
 
 void Rva00882F20SetFlag( void )
@@ -297,19 +298,21 @@ BFME_SMALL_BACK_CHAIN_BYTE( Rva002C8520BackChain, 0x340, 0x80 )
 // mov al,[esp+4] / mov [<address>],al / ret -- one byte argument stored to a
 // .data global, caller cleanup.
 extern unsigned char g_Va012D6D84;
-extern unsigned char g_Va012D6DA8;
-extern unsigned char g_Va012ED611;
+// Retail 0x012D6DA8: use the existing data owner; retain the local pointee view.
+extern bool g_flag12D6DA8;
+// Retail 0x012ED611: use the existing data owner; retain the local pointee view.
+extern bool TheBfmeOverrideCopyInProgress;
 extern unsigned char g_Va0133F42B;
 extern unsigned char g_Va0133F42D;
 
 void Rva00060840StoreFlag( unsigned char value )
 {
-	g_Va012D6DA8 = value;
+	(*reinterpret_cast<unsigned char *>(&g_flag12D6DA8)) = value;
 }
 
 void Rva000EB270StoreFlag( unsigned char value )
 {
-	g_Va012ED611 = value;
+	(*reinterpret_cast<unsigned char *>(&TheBfmeOverrideCopyInProgress)) = value;
 }
 
 void Rva006E7020StoreFlag( unsigned char value )

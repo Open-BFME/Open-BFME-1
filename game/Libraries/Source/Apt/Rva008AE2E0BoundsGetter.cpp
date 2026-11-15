@@ -71,7 +71,8 @@ private:
 	BfmeNode008AE2E0 *m_node;
 };
 
-extern BfmeA1236 *g_bfmeStack008AE2E0;
+// Retail 0x01337A04: use the existing data owner; retain the local pointee view.
+extern int g_bfmeB1038;
 extern int g_bfmeB1038;
 
 void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
@@ -93,8 +94,8 @@ void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
 	for (BfmeNode008AE2E0 *node = m_node; node; node = node->m_next)
 		bfmeMul1208((BfmeM1208 *)&local, (BfmeM1208 *)&node->m_transform, (BfmeM1208 *)&local);
 
-	((Gen_008D2C80 *)g_bfmeStack008AE2E0)->bfmePush();
-	g_bfmeStack008AE2E0->bfmeSet1236(&local);
+	((Gen_008D2C80 *)reinterpret_cast<BfmeA1236 *>(g_bfmeB1038))->bfmePush();
+	reinterpret_cast<BfmeA1236 *>(g_bfmeB1038)->bfmeSet1236(&local);
 
 	unsigned *u = (unsigned *)bounds;
 	u[2] = 0xCE6E6B28;
@@ -103,5 +104,5 @@ void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
 	u[1] = 0x4E6E6B28;
 
 	((BfmeN1235 *)this)->bfmeDo1235((void *)g_bfmeB1038, bounds);
-	g_bfmeStack008AE2E0->bfmePop1236();
+	reinterpret_cast<BfmeA1236 *>(g_bfmeB1038)->bfmePop1236();
 }

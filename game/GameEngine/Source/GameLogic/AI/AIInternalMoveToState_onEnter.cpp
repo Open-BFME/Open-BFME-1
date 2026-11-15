@@ -204,7 +204,8 @@ extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 class AudioManager;
 extern AudioManager *TheAudio;
-extern unsigned char g_012F0239;
+// Retail 0x012F0239: use the existing data owner; retain the local pointee view.
+extern bool Glo012F0239;
 // Retail 0x012ED4FC is ?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A
 // (data_rows.csv); g_012ED4FC was only a pin nothing defines.
 class CRCParameterCheck;
@@ -285,7 +286,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	Rva00172600AIUpdate *aiObject = ai;
 	m_waitingForPath = ai->m_waitingForPath;
 
-	if (g_012F0239 && g_012ED4FC)
+	if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 	{
 		Rva00172600Template *templateForLog = owner->m_template;
 		UnsignedInt objectId = owner->m_id;
@@ -306,7 +307,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 
 	if ((owner->m_status & 0x10000) != 0)
 	{
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() immobile, returning STATE_FAILURE");
@@ -331,7 +332,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	startMovingCall.asVoid = (void *)j_0001246d;
 	(((Rva00172600Calls *)ai)->*startMovingCall.asMember)();
 
-	if (g_012F0239 && g_012ED4FC)
+	if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: AIInternalMoveToState::onEnter() pre-adjustDestination. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -344,7 +345,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		(((Rva00172600Calls *)this)->*adjustsDestinationCall.asMember)();
 	if (adjustsDestination)
 	{
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() will adjustDestination");
@@ -366,7 +367,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				owner, (void *)ai->m_locomotorSet, &m_goalPosition, 0);
 		if (!adjusted)
 		{
-			if (g_012F0239 && g_012ED4FC)
+			if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: AIInternalMoveToState::onEnter() AdjustDestination failed, snap pos. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -376,14 +377,14 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			snapGoalCall.asVoid = (void *)j_00034c16;
 			(((Rva00172600Calls *)pathfinder)->*snapGoalCall.asMember)(
 				owner, &m_goalPosition);
-			if (g_012F0239 && g_012ED4FC)
+			if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: AIInternalMoveToState::onEnter() post-SnapClosestGoalPosition. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
 		}
-		else if (g_012F0239 && g_012ED4FC)
+		else if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() AdjustDestination succeeded. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -399,7 +400,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			(((Rva00172600Calls *)TheTerrainLogic)
 				->*getLayerCall.asMember)(owner, &m_goalPosition),
 			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x909);
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() post-UpdateGoalPosition. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -407,7 +408,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		}
 		(((Rva00172600Calls *)pathfinder)->*setPathStateCall.asMember)(0);
 	}
-	else if (g_012F0239 && g_012ED4FC)
+	else if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: AIInternalMoveToState::onEnter() NOT adjustingDestination!!!");
@@ -422,7 +423,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	if (lengthEstimate > 2.5f)
 	{
 		startSound = 1;
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() getLengthEstimate2D succeeds. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -439,7 +440,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			(m_waitingForPath ||
 			 queryFloat > *(Real *)((unsigned char *)currentLocomotor + 0x38)))
 		{
-			if (g_012F0239 && g_012ED4FC)
+			if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: AIInternalMoveToState::onEnter() blah1. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -462,7 +463,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			(((Rva00172600Calls *)owner)->*kindQueryCall.asMember)(0xe) &&
 			(((Rva00172600Calls *)owner)->*kindQueryCall.asMember)(0x10))
 		{
-			if (g_012F0239 && g_012ED4FC)
+			if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: AIInternalMoveToState::onEnter() blah2. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -472,7 +473,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		}
 		else
 		{
-			if (g_012F0239 && g_012ED4FC)
+			if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 					"CritterDesync: AIInternalMoveToState::onEnter() blah3. m_goalPosition=%g,%g,%g", m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
@@ -481,7 +482,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	else
 	{
 		startSound = 0;
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() getLengthEstimate2D fails. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -489,7 +490,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		}
 	}
 
-	if (g_012F0239 && g_012ED4FC)
+	if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: AIInternalMoveToState::onEnter() calling ComputePath1. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -501,7 +502,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 	// Match the retail EDX vtable temporary on this register-only virtual call.
 	if (!stateVtable->slot17(stateObject, stateVtable))
 	{
-		if (g_012F0239 && g_012ED4FC)
+		if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				"CritterDesync: AIInternalMoveToState::onEnter() ComputePath1 failed. m_goalPosition=%g,%g,%g", m_goalPosition.x,
@@ -513,7 +514,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		return STATE_FAILURE;
 	}
 
-	if (g_012F0239 && g_012ED4FC)
+	if ((*reinterpret_cast<unsigned char *>(&Glo012F0239)) && g_012ED4FC)
 	{
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 			"CritterDesync: AIInternalMoveToState::onEnter() ComputePath1 succeeded. m_goalPosition=%g,%g,%g", m_goalPosition.x,

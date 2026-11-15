@@ -69,18 +69,20 @@ static inline AptStringBlock *rva012D5298Block()
 {
 	return (AptStringBlock *)&g_rva012D5298Empty;
 }
-extern AptValueRegistry *g_bfmeRegistryVNF;
-extern Rva008A9B00 *g_aptStringFreeList;
+// Retail 0x01337810: use the existing data owner; retain the local pointee view.
+extern struct Rva00899560Pool *g_rva01337810GcRoots;
+// Retail 0x01338478: use the existing data owner; retain the local pointee view.
+extern struct Rva008C3B60Node *g_rva01338478NodeHead;
 
 class Rva008B2EA0Node;
 
 Rva008B2EA0Node *rva008B2EA0Create()
 {
-	Rva008A9B00 *object = g_aptStringFreeList;
+	Rva008A9B00 *object = reinterpret_cast<Rva008A9B00 *>(g_rva01338478NodeHead);
 	if (object)
 	{
-		g_aptStringFreeList = object->m_next;
-		g_bfmeRegistryVNF->addOrClear(object);
+		g_rva01338478NodeHead = reinterpret_cast<Rva008C3B60Node *>(static_cast<Rva008A9B00 *>(object->m_next));
+		reinterpret_cast<AptValueRegistry *>(g_rva01337810GcRoots)->addOrClear(object);
 		if (object->m_string != rva012D5298Block())
 			((BfmeStrVKK *)&object->m_string)->bfmeTruncVKK(0);
 	}

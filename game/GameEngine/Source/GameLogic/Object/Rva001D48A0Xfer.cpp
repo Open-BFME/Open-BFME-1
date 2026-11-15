@@ -175,13 +175,15 @@ public:
     AsciiString getName() const;
 };
 
-extern void *TheGameLogic;
+// Retail 0x012F0898: use the existing data owner; retain the local pointee view.
+extern class GameLogic *TheGameLogic;
 class TeamFactory;
 class Radar;
 extern TeamFactory *TheTeamFactory;
 extern Radar *TheRadar;
 extern void *TheAI;
-extern void *TheTerrainLogic;
+// Retail 0x012EF4CC: use the existing data owner; retain the local pointee view.
+extern class TerrainLogic *TheTerrainLogic;
 extern NameKeyGenerator *g_theNameKeyGenerator;
 
 __forceinline void rva001D48A0SetID(void *owner, unsigned int id)
@@ -189,10 +191,10 @@ __forceinline void rva001D48A0SetID(void *owner, unsigned int id)
     if (rva001D48A0Field<unsigned int>(owner, 0x74) == id)
         return;
     if (rva001D48A0Field<unsigned int>(owner, 0x74))
-        rva001D48A0Call<void, void *>(j_00031656, TheGameLogic, owner);
+        rva001D48A0Call<void, void *>(j_00031656, reinterpret_cast<void *>(TheGameLogic), owner);
     rva001D48A0Field<unsigned int>(owner, 0x74) = id;
     if (id)
-        rva001D48A0Call<void, void *>(j_00033fcd, TheGameLogic, owner);
+        rva001D48A0Call<void, void *>(j_00033fcd, reinterpret_cast<void *>(TheGameLogic), owner);
 }
 __forceinline unsigned int rva001D48A0StateID(void *ai)
 {
@@ -488,7 +490,7 @@ void Object::DoXfer(Xfer &xfer)
         if (trigger.trigger) triggerName = rva001D48A0Field<AsciiString>(trigger.trigger, 8);
         receiver->text(&triggerName);
         if (receiver->IsLoading())
-            trigger.trigger = reinterpret_cast<Rva001D48A0Terrain *>(TheTerrainLogic)->findTrigger(triggerName);
+            trigger.trigger = reinterpret_cast<Rva001D48A0Terrain *>( TheTerrainLogic )->findTrigger(triggerName);
         *receiver == trigger.entered;
         *receiver == trigger.exited;
         *receiver == trigger.inside;

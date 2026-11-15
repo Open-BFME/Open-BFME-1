@@ -22,7 +22,8 @@ private:
 
 class BfmeBaseVW;
 
-extern BfmeBaseVW *g_bfmeListVW;				// retail 0x012F3350
+// Retail 0x012F3350: use the existing data owner; retain the local pointee view.
+extern class Gen_004902A0 *g_bfmeHeadCA;				// retail 0x012F3350
 
 class BfmeBaseVW
 {
@@ -31,9 +32,9 @@ public:
 	{
 		m_bfmeVtable = g_bfmeVtableVWa;
 
-		m_bfmeNext = g_bfmeListVW;
+		m_bfmeNext = reinterpret_cast<BfmeBaseVW *>(g_bfmeHeadCA);
 
-		g_bfmeListVW = this;
+		g_bfmeHeadCA = reinterpret_cast<Gen_004902A0 *>(static_cast<BfmeBaseVW *>(this));
 
 		m_bfmeCount = 0;
 		m_bfmeArmed = true;

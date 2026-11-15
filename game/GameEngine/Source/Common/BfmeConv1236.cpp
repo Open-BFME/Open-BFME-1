@@ -89,7 +89,8 @@ struct BfmeTransform1236
 	BfmeVec4_1236 m_bfme50;
 };
 
-extern BfmeTransform1236 *g_bfmeArenaCursor;
+// Retail 0x013378D4: use the existing data owner; retain the local pointee view.
+extern char *g_bfmeArenaCursor;
 void bfmeCombine1236(BfmeTransform1236 *result, BfmeTransform1236 *left, BfmeTransform1236 *right);
 
 void bfmeTransform1236(void *context, BfmeB1236 *b, void *tail)
@@ -97,8 +98,8 @@ void bfmeTransform1236(void *context, BfmeB1236 *b, void *tail)
 	if ((b->m_bfme04 & 0x3f) == 0xf && !((unsigned char)(~(b->m_bfme04 >> 15)) & 1))
 		reinterpret_cast<Rva008AD8F0 *>(b)->method(b->m_bfme4c);
 
-	BfmeTransform1236 *previous = g_bfmeArenaCursor;
-	BfmeTransform1236 *current = ++g_bfmeArenaCursor;
+	BfmeTransform1236 *previous = reinterpret_cast<BfmeTransform1236 *>(g_bfmeArenaCursor);
+	BfmeTransform1236 *current = reinterpret_cast<BfmeTransform1236 *>(g_bfmeArenaCursor += sizeof(BfmeTransform1236));
 	current->m_bfme00 = b->m_bfme10;
 	current->m_bfme04 = b->m_bfme14;
 	current->m_bfme08 = 0;
@@ -128,7 +129,7 @@ void bfmeTransform1236(void *context, BfmeB1236 *b, void *tail)
 	current->m_bfme50.z += previous->m_bfme50.z;
 	current->m_bfme50.w += previous->m_bfme50.w;
 	b->bfmeEmit1236(context, (int)current, tail);
-	--g_bfmeArenaCursor;
+	(g_bfmeArenaCursor -= sizeof(BfmeTransform1236));
 }
 
 class BfmeZero1236

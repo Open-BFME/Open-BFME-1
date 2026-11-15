@@ -286,19 +286,20 @@ struct BfmeObjELH
 	BfmeVtblELH *m_bfmeVtbl;
 };
 
-extern int g_bfmeCountELH;
+// Retail 0x01340594: use the existing data owner; retain the local pointee view.
+extern unsigned int number_of_DX8_calls;
 
 void bfmeGoELHa(void *a)
 {
 	BfmeObjELH *o = reinterpret_cast<BfmeObjELH *>(DX8Wrapper::_Get_D3D_Device8());
 	o->m_bfmeVtbl->m_bfmeF89(o, a);
-	++g_bfmeCountELH;
+	++number_of_DX8_calls;
 }
 
 void bfmeGoELHb(void *a)
 {
 	BfmeObjELH *o = reinterpret_cast<BfmeObjELH *>(DX8Wrapper::_Get_D3D_Device8());
 	o->m_bfmeVtbl->m_bfmeF92(o, a);
-	++g_bfmeCountELH;
+	++number_of_DX8_calls;
 }
 

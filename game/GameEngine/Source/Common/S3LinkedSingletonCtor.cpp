@@ -8,16 +8,17 @@
 
 class BfmeLinkedSingleton;
 
-extern BfmeLinkedSingleton *TheBfmeSingletonHead;			// 0x012F3350
+// Retail 0x012F3350: use the existing data owner; retain the local pointee view.
+extern class Gen_004902A0 *g_bfmeHeadCA;			// 0x012F3350
 
 class BfmeLinkedSingleton
 {
 public:
 	BfmeLinkedSingleton(void)
 	{
-		m_bfmeNext = TheBfmeSingletonHead;
+		m_bfmeNext = reinterpret_cast<BfmeLinkedSingleton *>(g_bfmeHeadCA);
 
-		TheBfmeSingletonHead = this;
+		g_bfmeHeadCA = reinterpret_cast<Gen_004902A0 *>(static_cast<BfmeLinkedSingleton *>(this));
 	}
 
 	virtual void bfmeSlot00(void);

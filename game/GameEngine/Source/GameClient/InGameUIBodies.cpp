@@ -276,7 +276,8 @@ public:
 
 extern GameTextInterface *TheGameText;
 extern class InGameUI *TheInGameUI;
-extern BfmeStateDO *g_bfmeStateDO;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
@@ -826,7 +827,7 @@ void InGameUI::setMouseCursor(Mouse::MouseCursor cursor)
 // does the work; the two message texts are the only thing this body adds.
 int InGameUI::selectMatchingAcrossScreen( void )
 {
-	BfmeStateDO *state = g_bfmeStateDO;
+	BfmeStateDO *state = reinterpret_cast<BfmeStateDO *>(TheLivingWorldLogic);
 	if (state != 0 && state->m_bfmeFirst != 0 && state->m_bfmeSecond != 0)
 		return 0;
 
@@ -859,7 +860,7 @@ int InGameUI::selectMatchingAcrossScreen( void )
 // function includes those 41 bytes.
 int InGameUI::rva00448700( void )
 {
-	BfmeStateDO *state = g_bfmeStateDO;
+	BfmeStateDO *state = reinterpret_cast<BfmeStateDO *>(TheLivingWorldLogic);
 	if (state != 0 && state->m_bfmeFirst != 0 && state->m_bfmeSecond != 0)
 		return 0;
 
