@@ -9,28 +9,8 @@
 // const char * and copy constructors and releaseBuffer (the inline
 // destructor), plus AsciiString::operator=(const char *) through its ILT.
 
-template <class T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const T *s);
-	StringBase(const StringBase &other);
-	void releaseBuffer();
-
-	T *m_data;
-};
-
-class AsciiString : public StringBase<char>
-{
-public:
-	AsciiString(const char *s) : StringBase<char>(s) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() { releaseBuffer(); }
-
-	AsciiString &operator=(const char *s);
-};
 
 enum Rva00517720ClientState
 {

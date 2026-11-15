@@ -4,26 +4,9 @@
 // Named by AptOnlineHome::InitGadgets / OnlineHome gadget string xrefs and
 // vtable 0x01107B70 (installed by ctor 0x005484E0 / S4Guarded0055BAA0).
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	~AsciiString() {}
-};
 
 class BfmeAptGameWindow
 {

@@ -16,23 +16,8 @@ struct AsciiStringData
 
 class AsciiString;
 
-template <typename T> class StringBase
-{
-private:
-	friend class AsciiString;
-	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	AsciiStringData *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	~AsciiString() {}
-};
 
 class Transition
 {

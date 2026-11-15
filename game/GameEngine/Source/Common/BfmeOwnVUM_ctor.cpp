@@ -4,31 +4,8 @@
 // mirrored here because the existing save/destructor TUs deliberately keep
 // their own ABI views.
 
-template <typename T> class StringBase
-{
-friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const StringBase<T> &other);
-
-	struct Header
-	{
-		int refCount;
-		int length;
-		T text[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	static const AsciiString TheEmptyString;
-};
 
 extern "C" void * __cdecl memset(void *destination, int value, unsigned int count);
 

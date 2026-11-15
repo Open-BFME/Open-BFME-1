@@ -4,30 +4,8 @@
 // dump: format APT:ConnectingPlayer%dName with index+1 and write the supplied
 // UnicodeString through g_theWindowManager->bfme_setAptText.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	// Retail inlines the dtor: temporaries call releaseBuffer (0x00887940) directly.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	void __cdecl format( AsciiString fmt, ... );
-};
 
 class UnicodeString;
 

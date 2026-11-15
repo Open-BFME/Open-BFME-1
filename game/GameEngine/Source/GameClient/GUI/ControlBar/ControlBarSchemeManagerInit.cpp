@@ -2,23 +2,8 @@
 // BFME's compact INI view used by the ControlBar scheme loader.
 
 
-template <typename T> class StringBase
-{
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	void *m_data;
-	friend class AsciiString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
-};
 
 enum INILoadType { INI_LOAD_OVERWRITE = 1 };
 class Xfer;
