@@ -3,15 +3,7 @@
 
 // Retail inlines this wrapper into StringBase<unsigned short> directly; declare just the
 // StringBase<unsigned short> members it reaches (see build/whatif/wrapfix.py).
-template <class T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-public:
-	void set(const StringBase<T> &other);
-private:
-	void releaseBuffer();
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 class UnicodeString
 {
 public:

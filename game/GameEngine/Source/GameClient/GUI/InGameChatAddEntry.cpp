@@ -4,18 +4,7 @@
 // windows at +0x260/+0x264/+0x268; adds the by-value line through
 // GadgetListBoxAddEntryText then the follow-up at ILT 0x00049F30.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

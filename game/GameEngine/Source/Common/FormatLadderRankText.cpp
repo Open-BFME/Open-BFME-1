@@ -4,19 +4,7 @@
 // convention which lets MSVC reuse the dead rank argument slot for a
 // UnicodeString temporary.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

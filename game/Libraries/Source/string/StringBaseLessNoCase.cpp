@@ -6,12 +6,7 @@
 // __stdcall is what makes the epilogue (ret 8) and size (26 B);
 // the cdecl template operator< at 0x0054EB50 ends in a bare ret.
 
-template <typename T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase &src) const;
-};
+#include "../WWVegas/WWLib/string_base.h"
 
 bool __stdcall Rva00887920LessNoCase(const StringBase<unsigned short> &left, const StringBase<unsigned short> &right)
 {

@@ -1,21 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-public:
-	void set( const StringBase<T> &other );
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>
