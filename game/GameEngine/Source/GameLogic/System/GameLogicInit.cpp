@@ -18,16 +18,12 @@ typedef float Real;
 typedef bool Bool;
 typedef int Int;
 
-struct Coord3D
-{
-	Real x, y, z;
-	void zero(void) { x = 0.0f; y = 0.0f; z = 0.0f; }
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Region3D
 {
 	Coord3D lo, hi;
-	void zero(void) { lo.zero(); hi.zero(); }
+	void zero(void) { { Coord3D *const position = &lo; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; } { Coord3D *const position = &hi; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; } }
 };
 
 extern void __cdecl setFPMode(void);                                     // 0x008FC4C0
