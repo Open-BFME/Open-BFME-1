@@ -84,7 +84,8 @@ extern VictorySystem *TheVictorySystem;
 class TaintManager;
 extern TaintManager *TheTaintManager;
 
-extern WeatherSystem *TheWeatherSystem;
+// Retail 0x012F0FE0: use the existing data owner; retain the local pointee view.
+extern struct RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 void GameState::init()
 {
     addSnapshotBlock("CHUNK_LivingWorldLogic", (CampaignObject *)TheLivingWorldLogic, SNAPSHOT_SAVELOAD);
@@ -111,7 +112,7 @@ void GameState::init()
     addSnapshotBlock("CHUNK_GhostObject", TheGhostObjectManager, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_VictorySystem", TheVictorySystem, SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_TaintManager", (*reinterpret_cast<BfmeTaintManager **>(&TheTaintManager)), SNAPSHOT_SAVELOAD);
-    addSnapshotBlock("CHUNK_WeatherSystem", TheWeatherSystem, SNAPSHOT_SAVELOAD);
+    addSnapshotBlock("CHUNK_WeatherSystem", reinterpret_cast<WeatherSystem *>(TheGlobalWeatherSystem), SNAPSHOT_SAVELOAD);
     addSnapshotBlock("CHUNK_TeamFactory", TheTeamFactory, SNAPSHOT_DEEPCRC_LOGICONLY);
     addSnapshotBlock("CHUNK_Players", ThePlayerList, SNAPSHOT_DEEPCRC_LOGICONLY);
     addSnapshotBlock("CHUNK_GameLogic", TheGameLogic, SNAPSHOT_DEEPCRC_LOGICONLY);

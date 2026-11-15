@@ -156,7 +156,8 @@ public:
 class AudioManager;
 
 extern AudioManager *TheAudio;
-extern CampaignManager *TheLivingWorldLogic;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 class BfmeAptScreenMainMenu;
 extern BfmeAptScreenMainMenu *g_rva012F49B4MainMenu;
 // Retail 0x012F19E8 is ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A
@@ -188,7 +189,7 @@ void _bfme_leaveScoreScreen()
 	((ClientSubsystem *)TheAudio)->slot6c( 2, 1, 0 );
 	if ( Rva012F4B50ScoreScreen->m_gameType == 0 )
 	{
-		if ( TheLivingWorldLogic->hasFollowUp() )
+		if ( reinterpret_cast<CampaignManager *>(TheLivingWorldLogic)->hasFollowUp() )
 		{
 			if ( reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu) != 0 )
 				reinterpret_cast<Rva012F49B4Thing * &>(g_rva012F49B4MainMenu)->returnToShell();

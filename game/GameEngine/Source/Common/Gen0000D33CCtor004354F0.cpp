@@ -71,7 +71,8 @@ public:
 	virtual void getSize(Int *height, Int *width) = 0;
 };
 
-extern Rva0048EC80Manager *Rva0048EC80TheManager;
+// Retail 0x012F12CC: use the existing data owner; retain the local pointee view.
+extern class DisplayStringManager *TheDisplayStringManager;
 extern BfmeItemKA **g_bfmeBegKA;
 extern const WideChar BFMEEmptyString[];
 
@@ -174,7 +175,7 @@ Gen0000D33C::Gen0000D33C(GameFont *font, float width, float height,
 
 	for (Int i = 0; i < m_24; ++i)
 	{
-		m_34[i] = Rva0048EC80TheManager->newDisplayString();
+		m_34[i] = reinterpret_cast<Rva0048EC80Manager *>(TheDisplayStringManager)->newDisplayString();
 		m_34[i]->setFont(m_04);
 	}
 
@@ -201,6 +202,6 @@ Gen0000D33C::Gen0000D33C(GameFont *font, float width, float height,
 
 	((_STL::vector<BfmeItemKA *> *)&g_bfmeBegKA)->push_back(this);
 
-	m_00 = Rva0048EC80TheManager->newDisplayString();
+	m_00 = reinterpret_cast<Rva0048EC80Manager *>(TheDisplayStringManager)->newDisplayString();
 	m_00->setFont(font);
 }

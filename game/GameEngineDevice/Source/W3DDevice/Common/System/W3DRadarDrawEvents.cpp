@@ -125,7 +125,8 @@ public:
 	Rva0058C2B0RefPtr rva006C1CA0();
 	Rva0058C2B0RefPtr rva006C1CD0();
 };
-extern Glo012F4B98Type *Glo012F4B98;
+// Retail 0x012F4B98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 
 struct Rva006C3170Cell
 {
@@ -204,15 +205,15 @@ void W3DRadar::drawEvents(Int pixelX, Int pixelY, Int width, Int height, Int unu
 			if (m_event[i].ping.m_ptr == 0)
 			{
 				if (type == RADAR_EVENT_BEACON_PULSE)
-					m_event[i].ping = Glo012F4B98->rva006C1C40();
+					m_event[i].ping = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->rva006C1C40();
 				else if (type == RADAR_EVENT_UNDER_ATTACK)
-					m_event[i].ping = Glo012F4B98->rva006C1C10();
+					m_event[i].ping = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->rva006C1C10();
 				else if (type == RADAR_EVENT_GENERIC)
-					m_event[i].ping = Glo012F4B98->rva006C1C70();
+					m_event[i].ping = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->rva006C1C70();
 				else if (type == RADAR_EVENT_INFORMATION)
-					m_event[i].ping = Glo012F4B98->rva006C1CA0();
+					m_event[i].ping = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->rva006C1CA0();
 				else if (type == RADAR_EVENT_UPGRADE)
-					m_event[i].ping = Glo012F4B98->rva006C1CD0();
+					m_event[i].ping = reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->rva006C1CD0();
 			}
 
 			if (m_event[i].ping.m_ptr)

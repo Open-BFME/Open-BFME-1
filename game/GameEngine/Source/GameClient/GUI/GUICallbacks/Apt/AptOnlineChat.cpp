@@ -32,7 +32,8 @@ public:
 };
 extern Mouse *TheMouse;
 extern GameTextInterface *TheGameText;
-extern GameSpyInfo *TheGameSpyInfo;
+// Retail 0x012F7194: use the existing data owner; retain the local pointee view.
+extern class GameSpyInfoInterface *TheGameSpyInfo;
 int GadgetListBoxGetEntryBasedOnXY(GameWindow *, int, int, int &, int &);
 void *GadgetListBoxGetItemData(GameWindow *, int, int);
 UnicodeString GadgetListBoxGetText(GameWindow *, int, int);
@@ -103,9 +104,9 @@ int BfmeAptScreenOnlineChat::rva005369A0(GameWindow *window, unsigned message, u
   GadgetComboBoxGetSelectedPos(m_chatLobbies,&selected);
   if(selected >= 0) {
    int room = (int)GadgetComboBoxGetItemData(m_chatLobbies,selected);
-   if(room && room != TheGameSpyInfo->getCurrentGroupRoom()) {
-    TheGameSpyInfo->leaveGroupRoom();
-    TheGameSpyInfo->joinGroupRoom(room);
+   if(room && room != reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->getCurrentGroupRoom()) {
+    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->leaveGroupRoom();
+    reinterpret_cast<GameSpyInfo *>(TheGameSpyInfo)->joinGroupRoom(room);
     break;
    }
   }

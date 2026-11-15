@@ -36,7 +36,8 @@ struct Manager008C3F10 {
     char gap14[0x125c-0x14]; Rva008C3F10Value *field125C,*field1260;
     void remove008A1C20(Rva008C3F10Value *);
 };
-extern Manager008C3F10 *g_manager013377D8;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 extern unsigned char g_bfmeDispatchEnabled1281;
@@ -66,22 +67,22 @@ public:
 };
 void Rva008C3F10Value::cleanup(char mode) {
     if ((field60&0xc0000)==0x40000 || invalid()) return;
-    ((Rva008A0E00Owner *)((char *)g_manager013377D8+0x14))->remove(this);
-    ((Rva008A0E00Owner *)((char *)g_manager013377D8+0xa28))->remove(this);
-    if (g_manager013377D8->field125C==this) g_manager013377D8->field125C=(Rva008C3F10Value *)g_bfmeFallbackDB;
-    if (g_manager013377D8->field1260==this) g_manager013377D8->field1260=(Rva008C3F10Value *)g_bfmeFallbackDB;
-    ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x820))->remove((BfmeRef008A4B20 *)this);
+    ((Rva008A0E00Owner *)((char *)reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)+0x14))->remove(this);
+    ((Rva008A0E00Owner *)((char *)reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)+0xa28))->remove(this);
+    if (reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field125C==this) reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field125C=(Rva008C3F10Value *)g_bfmeFallbackDB;
+    if (reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field1260==this) reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field1260=(Rva008C3F10Value *)g_bfmeFallbackDB;
+    ((BfmePtrTable64_008A4B20 *)((char *)reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)+0x820))->remove((BfmeRef008A4B20 *)this);
     if (g_bfmeDispatchEnabled1281)
-        ((BfmePtrTable64_008A4B20 *)((char *)g_manager013377D8+0x924))->remove((BfmeRef008A4B20 *)this);
-    ((AptAnimationPoolData *)g_manager013377D8)->removeFromBIL((BfmeItemHH *)this);
-    for (int i=0;i<g_manager013377D8->field10;++i) {
-        if (g_manager013377D8->field0C[i]==this) {
-            g_manager013377D8->field0C[i]->slot04();
-            g_manager013377D8->field0C[i]=g_manager013377D8->field0C[g_manager013377D8->field10-1];
-            --g_manager013377D8->field10;
+        ((BfmePtrTable64_008A4B20 *)((char *)reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)+0x924))->remove((BfmeRef008A4B20 *)this);
+    ((AptAnimationPoolData *)reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU))->removeFromBIL((BfmeItemHH *)this);
+    for (int i=0;i<reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field10;++i) {
+        if (reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field0C[i]==this) {
+            reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field0C[i]->slot04();
+            reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field0C[i]=reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field0C[reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field10-1];
+            --reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->field10;
         }
     }
-    if (isKind(18)) g_manager013377D8->remove008A1C20(this);
+    if (isKind(18)) reinterpret_cast<Manager008C3F10 *>(g_bfmeHolderBU)->remove008A1C20(this);
     if (field50) {
         if (mode==1) {
             if (isKind(13)) {

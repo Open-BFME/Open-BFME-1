@@ -154,7 +154,8 @@ public:
 };
 
 class BFMEActionManager;
-extern class BFMEActionManager *TheActionManager;
+// Retail 0x012ED700: use the existing data owner; retain the local pointee view.
+extern class ActionManager *TheActionManager;
 
 class SpecialPowerModule
 {
@@ -199,7 +200,7 @@ void GrabPassengerSpecialPower::doSpecialPowerAtObject(const Object *target, Uns
 				if (module == 0)
 					return;
 				Object *ownerObject = *reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 8);
-				if (!reinterpret_cast<ActionManager *>(TheActionManager)->canDoSpecialPowerAtObject(ownerObject, target, static_cast<CommandSourceType>((commandOptions >> 18) & 1), module->getSpecialPowerTemplate(), commandOptions, true))
+				if (!reinterpret_cast<ActionManager *>( TheActionManager )->canDoSpecialPowerAtObject(ownerObject, target, static_cast<CommandSourceType>((commandOptions >> 18) & 1), module->getSpecialPowerTemplate(), commandOptions, true))
 					return;
 			}
 			const_cast<Object *>(candidate)->setStatusBit(0x3e, true);
@@ -215,7 +216,7 @@ void GrabPassengerSpecialPower::doSpecialPowerAtObject(const Object *target, Uns
 			if (module == 0)
 				return;
 			Object *ownerObject = *reinterpret_cast<Object **>(reinterpret_cast<char *>(this) - 8);
-			if (!reinterpret_cast<ActionManager *>(TheActionManager)->canDoSpecialPowerAtObject(ownerObject, target, static_cast<CommandSourceType>((commandOptions >> 18) & 1), module->getSpecialPowerTemplate(), commandOptions, true))
+			if (!reinterpret_cast<ActionManager *>( TheActionManager )->canDoSpecialPowerAtObject(ownerObject, target, static_cast<CommandSourceType>((commandOptions >> 18) & 1), module->getSpecialPowerTemplate(), commandOptions, true))
 				return;
 		}
 		candidate = target;

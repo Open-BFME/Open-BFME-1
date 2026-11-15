@@ -73,7 +73,8 @@ public:
 extern ControlBar *TheControlBar;
 #define RVA00590480_CONTROL_BAR ((Rva004A0B20 *)TheControlBar)
 
-extern void *g_obj12F4C38;
+// Retail 0x012F4C38: use the existing data owner; retain the local pointee view.
+extern class BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 extern void Rva00564340( Bool on );
 extern void Rva00564750( Bool on );
@@ -168,7 +169,7 @@ void Rva00590480GameClient::rva00590480( void )
 	}
 	else
 	{
-		unsigned char *spellStore = (unsigned char *)g_obj12F4C38;
+		unsigned char *spellStore = (unsigned char *)reinterpret_cast<void *>(g_purchaseScienceWindow);
 		if ( spellStore == (unsigned char *)zero ||
 			spellStore[ 0x259 ] == (unsigned char)zero )
 		{

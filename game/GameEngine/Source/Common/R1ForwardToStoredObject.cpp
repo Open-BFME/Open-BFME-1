@@ -168,6 +168,7 @@ public:
 	BFME_VSLOT4( a )
 	virtual void slot( int value );
 };
-extern Glo00EF7048 *g_Glo00EF7048;
+// Retail 0x012F7048: use the existing data owner; retain the local pointee view.
+extern class Rva006092D0State *g_rva012F7048LivingWorld;
 
-void Rva002F0930() { g_Glo00EF7048->slot( 1 ); }
+void Rva002F0930() { reinterpret_cast<Glo00EF7048 *>(g_rva012F7048LivingWorld)->slot( 1 ); }

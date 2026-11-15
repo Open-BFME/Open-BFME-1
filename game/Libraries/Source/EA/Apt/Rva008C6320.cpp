@@ -47,7 +47,8 @@ class BfmeNode1220 { public: int bfmeTest1220(int *,int); };
 struct Root8C4DA0 { char pad[0x58]; BfmeNode1220 *root; };
 struct Owner8C4DA0 { Root8C4DA0 *root; };
 struct State8C4DA0 { char pad[0x122c]; Owner8C4DA0 *owner; };
-extern State8C4DA0 *g_bfmeHolderBU;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 
 // ?ParsePath8C4DA0@@YA_NPAVBfmeNode1220@@0PBVBfmeStrVKI@@PAPAV1@PAD@Z
 bool ParsePath8C4DA0(BfmeNode1220 *inputScope,BfmeNode1220 *context,const BfmeStrVKI *path,BfmeNode1220 **out,char *name)
@@ -57,7 +58,7 @@ bool ParsePath8C4DA0(BfmeNode1220 *inputScope,BfmeNode1220 *context,const BfmeSt
  *name=0;
  bool absolute=false;
  if (*src=='/') {
-  scope=g_bfmeHolderBU->owner->root->root;
+  scope=reinterpret_cast<State8C4DA0 *>(g_bfmeHolderBU)->owner->root->root;
   ++src;
   *out=scope;
   absolute=true;

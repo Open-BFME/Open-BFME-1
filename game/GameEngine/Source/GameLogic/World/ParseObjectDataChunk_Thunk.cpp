@@ -81,7 +81,8 @@ public:
 };
 
 class BfmeThingFactory;
-extern BfmeThingFactory *TheThingFactory;
+// Retail 0x012EF1D8: use the existing data owner; retain the local pointee view.
+extern class ThingFactory *TheThingFactory;
 
 // Retail MapObject::getThingTemplate body 0x00087E80 (opaque ledger name).
 struct BfmeSlotJA;
@@ -278,11 +279,11 @@ Bool ParseObjectDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userD
 		d = file.readDict();
 	}
 
-	Rva0088B70ThingRegistry *factory = reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory);
+	Rva0088B70ThingRegistry *factory = reinterpret_cast<Rva0088B70ThingRegistry *>( TheThingFactory );
 	Rva0041230aMapObject *pThisOne;
 	if (factory->acceptsThingTemplateName(name))
 		pThisOne = new Rva0041230aMapObject(reinterpret_cast<const Vector3 &>(loc), name, angle, flags, &d,
-			reinterpret_cast<Rva0088B70ThingRegistry *>(TheThingFactory)->findTemplate(name));
+			reinterpret_cast<Rva0088B70ThingRegistry *>( TheThingFactory )->findTemplate(name));
 	else
 		pThisOne = new Rva0041230aMapObject(reinterpret_cast<const Vector3 &>(loc), name, angle, flags, &d, 0);
 

@@ -79,7 +79,8 @@ struct Entry367470 {
 };
 // Gate debt ?Campaign@@3PAUCampaign367470@@A: reference Glo012F1028.
 class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 struct Campaign367470 {
     char field00[0x74];
     int field74;
@@ -89,7 +90,7 @@ struct Campaign367470 {
     int fielda4;
     _STL::bitset<192> fielda8;
 };
-#define Campaign ((Campaign367470 *)Glo012F1028)
+#define Campaign ((Campaign367470 *)reinterpret_cast<Glo012F1028Type *>(TheLivingWorldLogic))
 class UpgradeCenter;
 extern UpgradeCenter *TheUpgradeCenter;
 class Rva000C9870DwordSlot {

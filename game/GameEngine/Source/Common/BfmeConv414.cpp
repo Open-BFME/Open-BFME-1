@@ -19,7 +19,8 @@ public:
 	void bfmeDrop(int handle);
 };
 
-extern BfmeSinkAM *g_bfmeSinkAM;
+// Retail 0x012F706C: use the existing data owner; retain the local pointee view.
+extern class LivingWorldManager *TheLivingWorldManager;
 
 class BfmeW1105
 {
@@ -205,7 +206,8 @@ public:
 	BfmeSubAQA *m_bfmeSub;
 };
 
-extern BfmeOneAQA *g_bfmeOneAQA;
+// Retail 0x012F7048: use the existing data owner; retain the local pointee view.
+extern class Rva006092D0State *g_rva012F7048LivingWorld;
 
 // The canonical global at 0x012F1028 (EA's "TheLivingWorldLogic", defined in
 // game/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogic.cpp). This TU
@@ -221,7 +223,7 @@ static __forceinline BfmeTwoAQA *glo012F1028()
 void BfmeSubAQA::bfmeStopTwoAQA(void)
 {
 	for (unsigned int index = 0; index < m_bfmeElements.bfmeSize(); ++index)
-		g_bfmeSinkAM->bfmeDrop(m_bfmeElements.bfmeAt(index)->m_bfmeHandle);
+		reinterpret_cast<BfmeSinkAM *>(TheLivingWorldManager)->bfmeDrop(m_bfmeElements.bfmeAt(index)->m_bfmeHandle);
 
 	m_bfmeOther.m_bfmeStart = 0;
 	m_bfmeOther.m_bfmeFinish = 0;
@@ -257,8 +259,8 @@ void BfmeSubAQA::bfmeStopTwoAQA(void)
 
 void __stdcall bfmeGoAQA(void *what)
 {
-	if (g_bfmeOneAQA != 0)
-		g_bfmeOneAQA->bfmeStopAQA();
+	if (reinterpret_cast<BfmeOneAQA *>(g_rva012F7048LivingWorld) != 0)
+		reinterpret_cast<BfmeOneAQA *>(g_rva012F7048LivingWorld)->bfmeStopAQA();
 	if (glo012F1028()->m_bfmeSub != 0)
 		glo012F1028()->m_bfmeSub->bfmeStopTwoAQA();
 	glo012F1028()->bfmeSendAQA(what);

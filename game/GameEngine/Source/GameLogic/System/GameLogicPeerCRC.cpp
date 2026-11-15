@@ -75,7 +75,8 @@ struct Rva012ED5C8GlobalData
 };
 extern GlobalData *TheWritableGlobalData;
 extern MessageStream *TheMessageStream;
-extern Network *TheNetwork;
+// Retail 0x012F7714: use the existing data owner; retain the local pointee view.
+extern class NetworkInterface *TheNetwork;
 extern RecorderClass *TheRecorder;
 
 // VA 0x012A6F38: -1 disables the forced diagnostic frame.
@@ -160,11 +161,11 @@ void GameLogic::bfme_processLogicCRC(unsigned crc,int player,unsigned frame,Game
 			streamIt=streams.begin();
 			if (streamIt!=streams.end())
 			{
-				if (TheNetwork)
+				if (reinterpret_cast<Network *>(TheNetwork))
 				{
-					if (!sawMismatch && (!forced || TheNetwork->isPacketRouter()))
+					if (!sawMismatch && (!forced || reinterpret_cast<Network *>(TheNetwork)->isPacketRouter()))
 					{
-						if (TheNetwork->isPacketRouter() && forced)
+						if (reinterpret_cast<Network *>(TheNetwork)->isPacketRouter() && forced)
 						{
 							GameMessage *out=TheMessageStream->appendMessage(0x449);
 							out->appendIntegerArgument(crc);
@@ -175,7 +176,7 @@ void GameLogic::bfme_processLogicCRC(unsigned crc,int player,unsigned frame,Game
 						else if (message && !forced)message->appendBooleanArgument(true);
 					}
 					TheMessageStream->propagateMessages();
-					if (TheNetwork)TheNetwork->liteupdate(false);
+					if (reinterpret_cast<Network *>(TheNetwork))reinterpret_cast<Network *>(TheNetwork)->liteupdate(false);
 				}
 				for (;streamIt!=streams.end();++streamIt)
 				{
@@ -188,11 +189,11 @@ void GameLogic::bfme_processLogicCRC(unsigned crc,int player,unsigned frame,Game
 						out->appendBooleanArgument(TheRecorder->getMode()==1);
 						out->appendBooleanArgument(true);
 						TheMessageStream->propagateMessages();
-						if (TheNetwork)TheNetwork->liteupdate(false);
+						if (reinterpret_cast<Network *>(TheNetwork))reinterpret_cast<Network *>(TheNetwork)->liteupdate(false);
 					}
 				}
 				streams.clear();
-				if (!TheRecorder || TheRecorder->getMode()!=1)if (TheNetwork)TheNetwork->quitGame();
+				if (!TheRecorder || TheRecorder->getMode()!=1)if (reinterpret_cast<Network *>(TheNetwork))reinterpret_cast<Network *>(TheNetwork)->quitGame();
 			}
 			else bfme_reportDesync(entry->stream,0,player);
 			return;
@@ -213,7 +214,7 @@ void GameLogic::bfme_processLogicCRC(unsigned crc,int player,unsigned frame,Game
 			delete entry;
 		}
 	}
-	else if (entry->count==TheNetwork->getNumPlayers())
+	else if (entry->count==reinterpret_cast<Network *>(TheNetwork)->getNumPlayers())
 	{
 		if (previous)previous->next=entry->next;
 		else first=entry->next;

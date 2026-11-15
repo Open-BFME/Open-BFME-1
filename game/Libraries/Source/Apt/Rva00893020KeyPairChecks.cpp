@@ -63,7 +63,8 @@ struct BfmeStringPool3AF0
 	void *m_slot0;
 	void (__cdecl *m_release)(BfmeStringData3AF0 *);
 };
-extern BfmeStringPool3AF0 *g_bfmeStringPool1284;	// retail 0x01337A30
+// Retail 0x01337A30: use the existing data owner; retain the local pointee view.
+extern struct BfmeStringPool3AF0 *g_rva01337A30AllocPair;	// retail 0x01337A30
 
 class BfmeStrVKI
 {
@@ -73,7 +74,7 @@ public:
 	{
 		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->m_release(data);
+			g_rva01337A30AllocPair->m_release(data);
 	}
 
 	int length() const { return m_data->m_length; }

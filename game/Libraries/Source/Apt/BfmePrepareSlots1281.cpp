@@ -86,7 +86,8 @@ public:
 
 class AptValue;
 
-extern Gen_008A0C30 *g_bfmeHolderBU;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 extern AptValue *g_bfmeFallbackDB;
 extern unsigned char g_bfmeDispatchEnabled1281;
 extern void *g_bfmeExtra1282;
@@ -133,7 +134,7 @@ void BfmeSlotDispatcher1281::bfmePrepare1281(int group, int slot, unsigned int e
 		if (visited == m_secondaryCount)
 			break;
 		BfmeNodeDX *entry = m_secondary[index];
-		if (entry == 0 || g_bfmeHolderBU->bfmeAllows(entry))
+		if (entry == 0 || reinterpret_cast<Gen_008A0C30 *>(g_bfmeHolderBU)->bfmeAllows(entry))
 			continue;
 		if (g_bfmeDispatchEnabled1281 != 0 &&
 			reinterpret_cast<Gen_008D1EB0 *>(entry)->bfmeIdle()) {
@@ -199,7 +200,7 @@ void BfmeSlotDispatcher1281::bfmePrepare1281(int group, int slot, unsigned int e
 		if (visited == m_count14)
 			return;
 		BfmeNodeDX *entry = m_entries18[index];
-		if (entry == 0 || g_bfmeHolderBU->bfmeAllows(entry))
+		if (entry == 0 || reinterpret_cast<Gen_008A0C30 *>(g_bfmeHolderBU)->bfmeAllows(entry))
 			continue;
 		BfmeDescriptor1281 *descriptor = entry->m_info50->m_descriptor0c;
 		for (int record = 0; record < descriptor->m_count34; ++record) {

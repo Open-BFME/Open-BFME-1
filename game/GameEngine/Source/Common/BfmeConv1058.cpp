@@ -75,7 +75,8 @@ public:
 	void bfmeSet1058J(int a, bool on);
 };
 
-extern BfmeJ1058 *g_bfmeJ1058;
+// Retail 0x012F0888: use the existing data owner; retain the local pointee view.
+extern class ExperienceLevelSystem *TheExperienceLevelSystem;
 
 class BfmeC1058
 {
@@ -103,7 +104,7 @@ void BfmeC1058::bfmeGo1058C(void)
 	m_bfme1c = 1.0f;
 	m_bfmeStr.bfmeSet1058(g_bfmeLit1058, 0);
 	m_bfme24 = (char)z;
-	g_bfmeJ1058->bfmeSet1058J(m_bfme04, true);
+	reinterpret_cast<BfmeJ1058 *>(TheExperienceLevelSystem)->bfmeSet1058J(m_bfme04, true);
 }
 
 class BfmeK1058

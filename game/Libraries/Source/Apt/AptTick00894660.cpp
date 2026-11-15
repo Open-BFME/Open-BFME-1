@@ -16,7 +16,8 @@ public:
 class Rva00893030Manager { public: void rva00892F00(BfmeElemCU *, int); };
 extern Rva00893030Manager *g_rva00893030Manager;
 extern int g_bfme1017I;
-extern char *g_bfmeHolderBU;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 extern int g_rva00891FA0Ready;
 extern int g_rva00891FA0Value;
 extern unsigned char g_rva0133780C;
@@ -57,7 +58,7 @@ struct Rva00894660Value
 };
 struct Rva00894660Node { char pad[0x58]; Rva00894660Value *value; };
 struct Rva00894660Root { char pad[0x122c]; Rva00894660Node **nodes; char pad1230[8]; int count; };
-__forceinline Rva00894660Value *currentRva00894660Value() { return (*((Rva00894660Root *)g_bfmeHolderBU)->nodes)->value; }
+__forceinline Rva00894660Value *currentRva00894660Value() { return (*((Rva00894660Root *)reinterpret_cast<char *>(g_bfmeHolderBU))->nodes)->value; }
 __forceinline bool isTickAnimation(Rva00894660Value *value) { return value->kind == 0x12 && !value->isUndefined(); }
 // ?Rva00892A70@@YAHI@Z
 // Open BFME 2: Code/Libraries/Source/Apt/Apt.cpp.
@@ -70,10 +71,10 @@ static int Rva00892A70(unsigned elapsed)
     unsigned interval = state->movie->interval;
     while (elapsed >= interval)
     {
-        (((Rva008A15F0Call *)g_bfmeHolderBU)->*memberCall<TimerCall>(d_008a15f0))(interval);
-        ((BfmeFilterWalk1236 *)&((Rva00894660Root *)g_bfmeHolderBU)->nodes)->bfmeFilterWalk1236();
-        ((Rva008A1940Queue *)g_bfmeHolderBU)->flush();
-        ((BfmeSlotDispatcher1281 *)g_bfmeHolderBU)->bfmeFlushSlots1289();
+        (((Rva008A15F0Call *)reinterpret_cast<char *>(g_bfmeHolderBU))->*memberCall<TimerCall>(d_008a15f0))(interval);
+        ((BfmeFilterWalk1236 *)&((Rva00894660Root *)reinterpret_cast<char *>(g_bfmeHolderBU))->nodes)->bfmeFilterWalk1236();
+        ((Rva008A1940Queue *)reinterpret_cast<char *>(g_bfmeHolderBU))->flush();
+        ((BfmeSlotDispatcher1281 *)reinterpret_cast<char *>(g_bfmeHolderBU))->bfmeFlushSlots1289();
         (((Rva00896710Call *)g_bfmeTracker4310)->*memberCall<TrackerCall>(d_00896710))();
         elapsed -= interval;
         g_rva00891FA0Value += interval;
@@ -102,7 +103,7 @@ void bfmeRva00894660(unsigned elapsed)
         else
         {
             (((Rva00896710Call *)g_bfmeTracker4310)->*memberCall<TrackerCall>(d_00896710))();
-            ((Rva00894660Root *)g_bfmeHolderBU)->count = 0;
+            ((Rva00894660Root *)reinterpret_cast<char *>(g_bfmeHolderBU))->count = 0;
         }
     }
     ((Gen_008C6BC0 *)&g_stack01338748)->bfmeReset();
