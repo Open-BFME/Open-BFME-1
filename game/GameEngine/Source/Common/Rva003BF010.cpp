@@ -6,18 +6,9 @@
 // from 15 then notifyTarget on Glo012F4B98; else isOpen+allowed then hold
 // the arg at +0xC4 until count 0x2D and a non-empty name at arg+0x34.
 
-#include "string_base.h"
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other)
-		: StringBase<char>(other)
-	{
-	}
-	~AsciiString() {}
-	using StringBase<char>::isEmpty; // link: ?isEmpty@AsciiString is only a pin; retail 0x5E4C0 is the defined StringBase<char> row
-};
+// link: ?isEmpty@AsciiString is only a pin; retail 0x5E4C0 is the defined
+// StringBase<char> row, which the canonical AsciiString::isEmpty forwards to.
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Gen_00609320
 {
