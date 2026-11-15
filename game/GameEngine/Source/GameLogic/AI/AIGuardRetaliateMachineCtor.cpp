@@ -74,19 +74,7 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // The base of the return state: retail ctor 0x0014F280, matched in
 // game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateCtor.cpp.
@@ -160,7 +148,7 @@ AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner )
 {
 	*(volatile void **)this = (void *)__identifier("??_7Rva0015E730TailDtor@@6B@");
 	m_nemesisToAttack = 0;
-	m_positionToGuard.zero();
+	{ Coord3D *const position = &m_positionToGuard; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 
 	static const StateConditionInfo attackAggressors[] =
 	{
