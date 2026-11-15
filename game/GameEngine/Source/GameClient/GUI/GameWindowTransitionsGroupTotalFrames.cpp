@@ -2,35 +2,10 @@
 
 typedef int NameKeyType;
 
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-struct AsciiStringData
-{
-	int m_refCount;
-	int m_length;
-	char m_text[1];
-};
-
 // The inline forwarders over StringBase are what put retail's EH saved-esp
 // store ahead of the in-place ctor `this` (EH transposition).
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	AsciiStringData *m_data;
-};
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
