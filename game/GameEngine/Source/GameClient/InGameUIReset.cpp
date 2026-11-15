@@ -112,11 +112,7 @@ struct BfmeOwnerVOK { void bfmeClearVOK(); };
 struct Gen_0043F5D0 { void bfmeClear(); };
 struct Gen_0043FBB0 { void bfmeClear(); };
 
-struct Coord3D
-{
-	float x, y, z;
-	void zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-};
+#include "../../../Libraries/Include/Lib/Coord3D.h"
 
 struct MoveHint0043AAD0
 {
@@ -295,7 +291,7 @@ void InGameUI::reset()
 
 	for (i = 0; i < 25; i++)
 	{
-		m_moveHint[i].pos.zero();
+		{ Coord3D *const position = &m_moveHint[i].pos; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 		m_moveHint[i].field_0c = 0;
 		m_moveHint[i].field_10 = true;
 	}
