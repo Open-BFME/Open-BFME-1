@@ -109,6 +109,7 @@ template <>
 vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >&
 vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >::operator=(
 	const vector<PairObjectIDAndUInt, allocator<PairObjectIDAndUInt> >&);
+
 }
 
 static Bool greater_than(PairObjectIDAndUInt a, PairObjectIDAndUInt b)
@@ -177,6 +178,87 @@ void PartitionSolver::solve(void)
 	} else {
 		DEBUG_CRASH(("PREFER_CORRECT_SOLUTION @todo impl"));
 	}
+}
+
+
+namespace _STL
+{
+// Retail's SolutionVec overflow body (0x000960A0, 306 bytes) carries no EH
+// frame and spells its element loops inline. The header's own body wraps the
+// loops in _STLP_TRY and emits a 340-byte EH COMDAT here, and a TU-wide
+// _STLP_NO_EXCEPTIONS fixes the overflow only by re-shaping this unit's
+// __uninitialized_copy/__uninitialized_fill_n COMDATs away from the retail
+// keepers other units already provide. So the loops are spelled here against
+// the header's own _Construct for pair<ObjectID, ObjectID> (the out-of-line
+// construction this unit already emits; retail body 0x000952A0 through ILT
+// 0x000267F6), and the allocate/_M_clear/_M_set chain stays the header's own,
+// which inlines to retail's 128-byte alloc split and teardown stores. The
+// range helpers are static so no out-of-line copies of them are emitted.
+template <class Type>
+static __forceinline Type *overflowCopyRange(Type *first, Type *last, Type *result)
+{
+	if (first != last)
+	{
+		do
+		{
+			_Construct(result, *first);
+			++first;
+			++result;
+		}
+		while (first != last);
+	}
+	return result;
+}
+
+template <class Type>
+static __forceinline Type *overflowFillRange(Type *result, unsigned int count, const Type &value)
+{
+	for (; count > 0; --count)
+	{
+		_Construct(result, value);
+		++result;
+	}
+	return result;
+}
+
+template <>
+inline void vector<PairObjectID, allocator<PairObjectID> >::_M_insert_overflow(
+	pointer __position, const PairObjectID &__x, const __false_type &,
+	size_type __fill_len, bool __atend)
+{
+	const size_type __old_size = size();
+	const size_type __len = __old_size + (max)(__old_size, __fill_len);
+
+	pointer __new_start = this->_M_end_of_storage.allocate(__len);
+	pointer __new_finish = overflowCopyRange(this->_M_start, __position, __new_start);
+	if (__fill_len == 1)
+	{
+		_Construct(__new_finish, __x);
+		++__new_finish;
+	}
+	else
+	{
+		__new_finish = overflowFillRange(__new_finish, __fill_len, __x);
+	}
+	if (!__atend)
+	{
+		pointer __last = this->_M_finish;
+		if (__position != __last)
+		{
+			pointer __cur = __position;
+			do
+			{
+				_Construct(__new_finish, *__cur);
+				++__cur;
+				++__new_finish;
+			}
+			while (__cur != __last);
+		}
+	}
+	_M_clear();
+	_M_set(__new_start, __new_finish, __new_start + __len);
+}
+
 }
 
 // ?PartitionSolver::getSolution present-unmatched
