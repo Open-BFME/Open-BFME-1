@@ -215,17 +215,7 @@ private:
 	volatile unsigned int m_field2c;
 };
 
-struct Coord3D
-{
-	float x, y, z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 __declspec(novtable) class AITNGuardMachine : public StateMachine
 {
@@ -246,7 +236,7 @@ AITNGuardMachine::AITNGuardMachine(Object *owner)
 	m_nemesisToAttack = 0;
 	m_guardMode = 0;
 
-	m_positionToGuard.zero();
+	{ Coord3D *const position = &m_positionToGuard; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 
 	static const StateConditionInfo attackAggressors[] =
 	{
