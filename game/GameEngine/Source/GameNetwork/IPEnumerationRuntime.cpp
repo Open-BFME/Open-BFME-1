@@ -23,16 +23,7 @@ void __cdecl operator delete(void *);
 // has to be visible here for this TU to encode the same call.
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	AsciiString(const char *text);
-	~AsciiString();
-
-	static AsciiString TheEmptyString;
-
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // BFME enumeration nodes omit the pooled base word present in Zero Hour;
 // their next pointer is at +0x08.

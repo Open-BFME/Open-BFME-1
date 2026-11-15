@@ -10,36 +10,9 @@
 
 class AsciiString;
 
-template<class T> class StringBase
-{
-private:
-	friend class AsciiString;
-	struct Data
-	{
-		int refs;
-		int length;
-		T data[1];
-	};
-
-	Data *m_data;
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase &other);
-private:
-	void releaseBuffer(void);
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() { m_data = 0; }
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-	void __cdecl format(AsciiString format, ...);
-	const char *str() const { return m_data ? m_data->data : ""; }
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine

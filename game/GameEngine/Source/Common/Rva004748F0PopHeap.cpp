@@ -6,17 +6,7 @@
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString(void) {}
-	AsciiString &operator=(const AsciiString &other)
-	{
-		set(other);
-		return *this;
-	}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva004748F0Element
 {

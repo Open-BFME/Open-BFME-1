@@ -45,22 +45,8 @@ public:
 
 class AsciiString;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const T *text );
-	void releaseBuffer();
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	~AsciiString() { releaseBuffer(); }
-};
 
 class Rva003BB730Record
 {

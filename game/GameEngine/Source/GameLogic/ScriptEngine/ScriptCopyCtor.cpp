@@ -17,13 +17,7 @@ struct StringInlineData
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Retail Script table10E858C: post-load352C00, name352C10, transfer350EF0.
 // The name getter returns "Script"; it is not an Xfer-taking crc slot.

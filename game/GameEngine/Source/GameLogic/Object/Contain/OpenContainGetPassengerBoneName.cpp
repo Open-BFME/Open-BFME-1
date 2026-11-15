@@ -26,13 +26,7 @@ extern const BitFlags<192> KINDOFMASK_NONE;
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Thing
 {

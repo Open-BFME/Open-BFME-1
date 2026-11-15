@@ -1,27 +1,8 @@
 // Retail 0x00527050: MpGameSetup::GadgetInit.
 // The callback is the single-inheritance 16-byte functor wrapper family.
 
-template <typename T> class StringBase
-{
-    friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-    StringBase(const T *text);
-    StringBase(const StringBase<T> &other);
-    ~StringBase() { releaseBuffer(); }
-    private:
-    void releaseBuffer();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(const char *text) : StringBase<char>(text) {}
-    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString() {}
-};
 
 class __single_inheritance FunctorTargetSingle
 {

@@ -9,27 +9,8 @@
 #include <cstring>
 #include <vector>
 
-template <typename T> class StringBase
-{
-    friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-    StringBase( const T *text );
-    StringBase( const StringBase<T> &other );
-    ~StringBase();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    ~AsciiString() {}
-
-    AsciiString &operator=( const char *text );
-};
 
 class _bfme_AptGameWindow
 {

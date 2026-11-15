@@ -11,12 +11,7 @@
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class WindowLayout;
 class WindowLayoutInfo;
