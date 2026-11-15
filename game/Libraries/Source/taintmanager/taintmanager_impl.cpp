@@ -84,19 +84,7 @@ struct BfmePointFC
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region3D
@@ -179,13 +167,13 @@ private:
 // ??0Gen_008812D0@@QAE@XZ
 Gen_008812D0::Gen_008812D0()
 {
-	m_region.lo.zero();
+	{ Coord3D *const position = &m_region.lo; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	m_width = 0;
 	m_height = 0;
 	m_cells = 0;
 	m_bfmeVisitor = 0;
 	m_cellSize = 1.0f;
-	m_region.hi.zero();
+	{ Coord3D *const position = &m_region.hi; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 
 	bfmeConfigure(m_region, 1.0f);
 }
@@ -276,8 +264,8 @@ void BfmeTaintManager::bfmeResetGrid()
 	((Gen_008811a0 *)m_bfmeGrid)->m();
 
 	Region3D region;
-	region.lo.zero();
-	region.hi.zero();
+	{ Coord3D *const position = &region.lo; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
+	{ Coord3D *const position = &region.hi; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	m_bfmeGrid->bfmeSetRegion(&region, 0.0f);
 }
 
