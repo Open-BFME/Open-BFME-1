@@ -28,12 +28,7 @@ class LocomotorSet;
 class Pathfinder;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x, y, z;
-
-	void zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum PathfindLayerEnum { LAYER_INVALID = 0 };
 
@@ -76,7 +71,7 @@ TightenPathStruct::TightenPathStruct( Pathfinder *pathfinder, Object *object,
 	this->requestedDestination.y = destinationPosition->y;
 	this->requestedDestination.z = destinationPosition->z;
 
-	this->adjustedDestination.zero();
+	{ Coord3D *const position = &this->adjustedDestination; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 
 	this->pathfinder->getRadiusAndCenter(this->object, this->radius, reinterpret_cast<bool &>(this->centerInCell));
 
