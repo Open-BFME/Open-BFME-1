@@ -16,16 +16,8 @@ public:
 	virtual void loadPostProcess();
 };
 
-#include "string_base.h"
-
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : public StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	void set(const char *text, int length);
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // Pathfinder's Snapshot subobject follows its service-interface vptr at +4.
 // Only that adjustment is reached by this function.
@@ -128,7 +120,7 @@ void AI::crc(Xfer *xfer)
 		TAiData *aiData = self->m_aiData;
 		while (aiData)
 		{
-			marker.set("MARKER:TAiData", 14);
+			marker.StringBase<char>::set("MARKER:TAiData", 14);
 			(*xfer) == marker;
 			(*xfer) == *aiData;
 			aiData = aiData->m_next;
@@ -139,7 +131,7 @@ void AI::crc(Xfer *xfer)
 		{
 			if (*groupIt)
 			{
-				marker.set("MARKER:AIGroup", 14);
+				marker.StringBase<char>::set("MARKER:AIGroup", 14);
 				(*xfer) == marker;
 				(*xfer) == **groupIt;
 			}
