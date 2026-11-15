@@ -4,48 +4,10 @@
 
 struct BfmeSortTailElement12;
 
-template <class T>
-class StringBase
-{
-    friend class AsciiString;
-private:
-    struct Header
-    {
-        int m_bfmeRefCount;
-        unsigned short m_bfmeLength;
-        unsigned short m_bfmeCapacity;
-        T m_bfmeData[1];
-    };
-
-    Header *m_bfmeHeader;
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-
-public:
-    void set(const StringBase<T> &other);
-    friend struct S4SortElem20;
-};
-
 // Retail S4+0 is the AsciiString wrapper; its destructor is the existing
 // public-QAE AsciiString dtor at RVA 0x005EE90 (ILT 0x0000D828), distinct
 // from the private StringBase<char> dtor at RVA 0x005E490.
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(const AsciiString &other)
-        : StringBase<char>(other) {}
-    ~AsciiString();
-    void set(const AsciiString &other)
-    {
-        StringBase<char>::set(other);
-    }
-    AsciiString &operator=(const AsciiString &other)
-    {
-        set(other);
-        return *this;
-    }
-
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeSortElem20Tail
 {
