@@ -10,37 +10,18 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2,
 	unsigned int count);
 #pragma intrinsic(memcmp)
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
-	~AsciiString();
 
-	int compare(const AsciiString &str) const
-	{
-		const int len = str.m_data.m_data ? str.m_data.m_data->length : 0;
-		const char *data = str.m_data.m_data ?
-			&str.m_data.m_data->data[0] : "";
-		const int myLen = m_data.m_data ? m_data.m_data->length : 0;
-		const char *myData = m_data.m_data ? &m_data.m_data->data[0] : "";
-		const int result = memcmp(myData, data, myLen < len ? myLen : len);
-		if (result != 0)
-			return result;
-		return myLen - len;
-	}
-
-	StringBase<char> m_data;
+namespace _STL {
+template <> struct equal_to<AsciiString> {
+    bool operator()(const AsciiString &left, const AsciiString &right) const
+    { return left.compare(right) == 0; }
 };
-
-inline bool operator==(const AsciiString &left, const AsciiString &right)
-{
-	return left.compare(right) == 0;
 }
 
 class Rva00461A00Counted
