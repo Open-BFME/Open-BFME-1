@@ -293,7 +293,8 @@ public:
 	BfmeWideResult bfmeForwardWideC( int, int, int, int, int );
 };
 
-extern BfmeWideForwardC *ThePartitionManager;
+// Retail 0x012ED5B8: use the existing data owner; retain the local pointee view.
+extern class PartitionManager *ThePartitionManager;
 
 class GameLogic
 {
@@ -379,7 +380,7 @@ UpdateSleepTime LargeGroupBonusUpdate::update()
 			Rva0016A9F0FunctorValueWrapper filterPlayer( obj->getControllingPlayer() );
 			Rva0025ED50RootFilter filterAlive;
 			Rva0025ED50ObjectFilter filterNotThis( obj );
-			BfmeWideResult hits = ThePartitionManager->bfmeForwardWideC(
+			BfmeWideResult hits = reinterpret_cast<BfmeWideForwardC *>(ThePartitionManager)->bfmeForwardWideC(
 				(int)obj->getPosition(), *(const int *)&data->m_radius, 3,
 				(int)filterMember.link( filterPlayer.link( filterAlive.link( &filterNotThis ) ) ), 0 );
 

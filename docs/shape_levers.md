@@ -4248,3 +4248,19 @@ Measured only for this TU with MSVC 13.10.3077 and
 `/O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc`; do not infer a general formula
 for the compiler's internal numbering. See task 48 in
 `targets/game/reverse/identity_evidence/20261115-eighty-singleton-consumers-3.md`.
+
+### Merging singleton aliases can eliminate a required reload
+
+`ActiveBody_attemptDamage.cpp` used TheBfmeGameLogic for the last-damage local
+and TheGameLogic elsewhere, although both name VA 0x012F0898. A straight
+canonical-name merge kept the extent but reused the frame-comparison load
+and changed the saved-register allocation. At the proven reload site, use
+`GameLogic *logic = static_cast<GameLogic *volatile &>(TheGameLogic);`.
+This qualifies the canonical pointer lvalue, then loads its value into the
+existing local. It adds neither a second datum nor an unrelated pointer view.
+
+With MSVC 13.10.3077, `/DNDEBUG /MD /EHsc` and this TU's WWLib include, this
+retains the complete 1,803-byte body and ordered non-debug section/relocation
+graph; the standard provider/consumer gate passes. Apply only where retail
+and the old source establish the separate load. See task 76 in
+`targets/game/reverse/identity_evidence/20261115-eighty-singleton-consumers-4.md`.

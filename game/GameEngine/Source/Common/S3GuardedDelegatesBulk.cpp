@@ -90,7 +90,8 @@ class Gen_002F1290Target
 public:
 	void bfmeForward(void *a0);		// retail 0x00005E25
 };
-extern Gen_002F1290Target *TheBfmeTarget_002F1290;			// 0x12f1028
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;			// 0x12f1028
 class Gen_003C6340Target
 {
 public:
@@ -277,7 +278,8 @@ class Gen_006BE210Target
 public:
 	bool bfmeForward(void *a0, void *a1);		// retail 0x00020923
 };
-extern Gen_006BE210Target *TheBfmeTarget_006BE210;			// 0x12f7fe0
+// Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;			// 0x12f7fe0
 class Gen_006C7690Target
 {
 public:
@@ -497,8 +499,8 @@ void Gen_002DDCC0::bfmeForward(void *a0, void *a1)
 // ?bfmeForward_002F1290@@YGXPAX@Z
 void __stdcall bfmeForward_002F1290(void *a0)
 {
-	if (TheBfmeTarget_002F1290)
-		TheBfmeTarget_002F1290->bfmeForward(a0);
+	if (reinterpret_cast<Gen_002F1290Target *>(TheLivingWorldLogic))
+		reinterpret_cast<Gen_002F1290Target *>(TheLivingWorldLogic)->bfmeForward(a0);
 }
 // ?bfmeForward@Gen_003C6340@@QAEXPAX@Z
 void Gen_003C6340::bfmeForward(void *a0)
@@ -589,8 +591,8 @@ void Gen_006BC890::bfmeForward(void *a0)
 // ?bfmeForward_006BE210@@YG_NPAX0@Z
 bool __stdcall bfmeForward_006BE210(void *a0, void *a1)
 {
-	if (TheBfmeTarget_006BE210)
-		return TheBfmeTarget_006BE210->bfmeForward(a0, a1);
+	if (reinterpret_cast<Gen_006BE210Target *>(TheTerrainRenderObject))
+		return reinterpret_cast<Gen_006BE210Target *>(TheTerrainRenderObject)->bfmeForward(a0, a1);
 
 	return false;
 }

@@ -245,7 +245,8 @@ extern Keyboard *TheKeyboard;
 class Eva;
 extern Eva *TheEva;
 extern Mouse *TheMouse;
-extern GenFallback *GenFallback0012ED5C8;
+// Retail 0x012ED5C8: use the existing data owner; retain the local pointee view.
+extern class GlobalData *TheWritableGlobalData;
 class Display;
 extern Display *TheDisplay;
 class GameWindowManager;
@@ -314,7 +315,7 @@ void ClientUpdate004329D0::update() {
     ((Dispatch004329D0 *)reinterpret_cast<BfmeGlobal_012f142c *>(TheEva))->v14();
     if (TheMouse) { ((Dispatch004329D0 *)TheMouse)->v14(); ((Dispatch004329D0 *)TheMouse)->v2c(); }
     bfmeGo924G();
-    if (at<bool>(GenFallback0012ED5C8,0xbb6) || at<bool>(GenFallback0012ED5C8,0xbb7)) {
+    if (at<bool>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0xbb6) || at<bool>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0xbb7)) {
         ((Dispatch004329D0 *)TheDisplay)->v1c();
         ((Dispatch004329D0 *)TheDisplay)->v14();
         return;
@@ -322,11 +323,11 @@ void ClientUpdate004329D0::update() {
     ((Dispatch004329D0 *)reinterpret_cast<MovieControl0040F780 *>(TheWindowManager))->v14();
     ((Dispatch004329D0 *)((MovieFactory0040E3B0 *&)TheVideoPlayer))->v14();
     Rva0090F050();
-    if (at<int>(GenFallback0012ED5C8,0xd08)>0) {
+    if (at<int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0xd08)>0) {
         unsigned long now = timeGetTime();
         if (now - g_012F1468 > 3000) {
             unsigned long tick;
-            do { tick = timeGetTime(); } while (tick < at<int>(GenFallback0012ED5C8,0xd08) + now);
+            do { tick = timeGetTime(); } while (tick < at<int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0xd08) + now);
             g_012F1468 = timeGetTime();
         }
     }
@@ -381,16 +382,16 @@ void ClientUpdate004329D0::update() {
             TheShell=0;
             m_at00C5=false;
             if (m_at00C8>0 && m_at00CC>0 && m_at00D0>0
-                && (m_at00C8!=at<unsigned int>(GenFallback0012ED5C8,0x2c)
-                    || m_at00CC!=at<unsigned int>(GenFallback0012ED5C8,0x30))) {
+                && (m_at00C8!=at<unsigned int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0x2c)
+                    || m_at00CC!=at<unsigned int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0x30))) {
                 if (m_at00C6) {
                     m_at00D4=((Dispatch004329D0 *)TheDisplay)->v2c();
                     m_at00D8=((Dispatch004329D0 *)TheDisplay)->v30();
                     m_at00DC=((Dispatch004329D0 *)TheDisplay)->v38();
                 }
                 if (((Dispatch004329D0 *)TheDisplay)->v44(m_at00C8,m_at00CC,m_at00D0,((Dispatch004329D0 *)TheDisplay)->v40())) {
-                    at<unsigned int>(GenFallback0012ED5C8,0x2c)=m_at00C8;
-                    at<unsigned int>(GenFallback0012ED5C8,0x30)=m_at00CC;
+                    at<unsigned int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0x2c)=m_at00C8;
+                    at<unsigned int>(reinterpret_cast<GenFallback *>(TheWritableGlobalData),0x30)=m_at00CC;
                     TheHeaderTemplateManager->refreshFonts004329D0();
                     ((Gen_005a4400 *)TheMouse)->m();
                     bfmeRun_004647E0();

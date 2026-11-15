@@ -216,7 +216,8 @@ public:
     void setCachedStats(AsciiString);
 };
 
-extern GameWindow* Rva012F415C;
+// Retail 0x012F415C: use the existing data owner; retain the local pointee view.
+extern class GameWindow *parent;
 extern Bool Rva012F4180;
 extern Int Rva012F4134;
 extern NameKeyGenerator* TheNameKeyGenerator;
@@ -673,7 +674,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	GameWindow *win;
 
 	winName.format("ScoreScreen.wnd:StaticTextPlayer%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	if(Rva012F4180)
 	{
@@ -685,12 +686,12 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winSetEnabledTextColors(color, win->winGetEnabledTextBorderColor());
 
 	winName.format("ScoreScreen.wnd:StaticTextObserver%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	win->winHide(TRUE);
 
 	winName.format("ScoreScreen.wnd:StaticTextUnitsBuilt%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalUnitsBuilt());
 	GadgetStaticTextSetText(win, winValue);
@@ -698,7 +699,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextUnitsLost%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalUnitsLost());
 	GadgetStaticTextSetText(win, winValue);
@@ -706,7 +707,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextUnitsDestroyed%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalUnitsDestroyed());
 	GadgetStaticTextSetText(win, winValue);
@@ -714,7 +715,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextBuildingsBuilt%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalBuildingsBuilt());
 	GadgetStaticTextSetText(win, winValue);
@@ -722,7 +723,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextBuildingsLost%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalBuildingsLost());
 	GadgetStaticTextSetText(win, winValue);
@@ -730,7 +731,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextBuildingsDestroyed%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalBuildingsDestroyed());
 	GadgetStaticTextSetText(win, winValue);
@@ -738,7 +739,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextBuildingsDestroyed%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalBuildingsDestroyed());
 	GadgetStaticTextSetText(win, winValue);
@@ -746,7 +747,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:StaticTextResources%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	winValue.format(UnicodeString(L"%d"), scoreKpr->getTotalMoneyEarned());
 	GadgetStaticTextSetText(win, winValue);
@@ -754,7 +755,7 @@ void populatePlayerInfo( Player *player, Int pos)
 	win->winHide(FALSE);
 
 	winName.format("ScoreScreen.wnd:GameWindowWinner%d", pos);
-	win =  TheWindowManager->winGetWindowFromId( Rva012F415C, TheNameKeyGenerator->nameToKey( winName ) );
+	win =  TheWindowManager->winGetWindowFromId( ::parent, TheNameKeyGenerator->nameToKey( winName ) );
 
 	win->winHide(FALSE);
 

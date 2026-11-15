@@ -264,7 +264,8 @@ extern ShroudManager *TheShroudManager;
                  // 0x012ED5C4
 extern ScriptActionsInterface *TheScriptActions;               // 0x012F0620
 extern ScriptConditionsInterface *TheScriptConditions;         // 0x012F06B0
-extern BfmeJ1023 *g_bfmeJ1023;                                 // 0x012F1044
+// Retail 0x012F1044: use the existing data owner; retain the local pointee view.
+extern class LargeGroupAudio *TheLargeGroupAudio;                                 // 0x012F1044
 extern Manager012EF4F0 *g_012EF4F0;                            // 0x012EF4F0
 class GameLogic;
 extern GameLogic *TheGameLogic;                                 // 0x012F0898
@@ -554,9 +555,9 @@ GameLogic::~GameLogic(void)
 	if (TheScriptConditions)
 		delete TheScriptConditions;
 	TheScriptConditions = 0;
-	if (g_bfmeJ1023)
-		delete g_bfmeJ1023;
-	g_bfmeJ1023 = 0;
+	if (reinterpret_cast<BfmeJ1023 *>(TheLargeGroupAudio))
+		delete reinterpret_cast<BfmeJ1023 *>(TheLargeGroupAudio);
+	TheLargeGroupAudio = 0;
 	if (g_012EF4F0)
 		delete g_012EF4F0;
 	g_012EF4F0 = 0;

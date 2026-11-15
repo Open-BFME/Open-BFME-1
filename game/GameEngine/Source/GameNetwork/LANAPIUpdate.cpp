@@ -87,7 +87,8 @@ public:
  virtual UnicodeString fetch(const char *, bool = false);
 };
 typedef BfmeGameText RvaLANGameText;
-extern BfmeGameText *TheGameText;
+// Retail 0x012F147C: use the existing data owner; retain the local pointee view.
+extern class GameTextInterface *TheGameText;
 struct LANMessage;
 struct IPAddr;
 class LANAPI { friend class Rva006870F0State; protected: void removeGame(LANGameInfo *); void handleRequestGameLeave(LANMessage *, const IPAddr &, bool); };
@@ -387,7 +388,7 @@ void Rva006870F0State::step()
    msg.name[12] = 0;
    reinterpret_cast<LANAPI *>(this)->handleRequestGameLeave(reinterpret_cast<LANMessage *>(&msg), reinterpret_cast<const IPAddr &>(m_currentGame->slots[0].address), false);
    UnicodeString text;
-   text = TheGameText->fetch("LAN:HostNotResponding");
+   text = reinterpret_cast<BfmeGameText *>(TheGameText)->fetch("LAN:HostNotResponding");
    OnChat(UnicodeString::TheEmptyString, localAddress(), text, 2);
   } else if (AmIHost()) {
    RvaLANGame *const &cg = m_currentGame;
@@ -397,7 +398,7 @@ void Rva006870F0State::step()
      RvaLANPacket msg;
      fillInLANMessage(&msg);
      UnicodeString text;
-     text.format(TheGameText->fetch("LAN:PlayerDropped"),cg->getPlayerName(p).str());
+     text.format(reinterpret_cast<BfmeGameText *>(TheGameText)->fetch("LAN:PlayerDropped"),cg->getPlayerName(p).str());
      msg.type = 6;
      wcsncpy(msg.name,cg->getPlayerName(p).str(),12);
      msg.name[12]=0;

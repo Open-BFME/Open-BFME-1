@@ -283,7 +283,8 @@ public:
 	void bfmeGoDGE(void *a, void *b);
 };
 
-extern BfmeGlobal_012f706c *g_bfmeGlobal_012f706c;
+// Retail 0x012F706C: use the existing data owner; retain the local pointee view.
+extern class LivingWorldManager *TheLivingWorldManager;
 
 class BfmeGlobal_012f1024
 {
@@ -293,7 +294,8 @@ public:
 	User *getUser(void *key);
 };
 
-extern BfmeGlobal_012f1024 *g_bfmeGlobal_012f1024;
+// Retail 0x012F1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class Gen_003bcb40
 {
@@ -383,7 +385,7 @@ void Glo012F1024Item::j_00040c32(void)
 	for (unsigned int index = 0; index < m_bfmeQueue.bfmeSize(); ++index)
 	{
 		BfmeElem16 *position = m_bfmeQueue.m_bfmeBegin + index;
-		g_bfmeGlobal_012f706c->bfmeGoDGE(position, (char *)position + 4);
+		reinterpret_cast<BfmeGlobal_012f706c *>(TheLivingWorldManager)->bfmeGoDGE(position, (char *)position + 4);
 	}
 }
 
@@ -621,7 +623,7 @@ void Glo012F1024Item::j_0002d3e4(void)
 {
 	for (unsigned int index = 0; index < m_bfmeTable.bfmeSize(); ++index)
 	{
-		g_bfmeGlobal_012f1024->bfmeCall40F39(
+		reinterpret_cast<BfmeGlobal_012f1024 *>(TheLivingWorldCampaignManager)->bfmeCall40F39(
 			(char *)(m_bfmeTable.m_bfmeBegin + index) + 4,
 			(char *)(m_bfmeTable.m_bfmeBegin + index) + 0x0C,
 			(char *)(m_bfmeTable.m_bfmeBegin + index) + 8,
@@ -634,7 +636,7 @@ void Glo012F1024Item::j_00019eca(void)
 {
 	for (unsigned int index = 0; index < m_bfmeNames.bfmeSize(); ++index)
 	{
-		User *user = g_bfmeGlobal_012f1024->getUser(m_bfmeNames.bfmeBegin() + index);
+		User *user = reinterpret_cast<BfmeGlobal_012f1024 *>(TheLivingWorldCampaignManager)->getUser(m_bfmeNames.bfmeBegin() + index);
 		if (user != 0)
 		{
 			((Gen_003bcb40 *)TheLivingWorldLogic)->m(user->GetName());
@@ -649,7 +651,7 @@ void Glo012F1024Item::j_00010bcc(void)
 	for (unsigned int index = 0; index < m_bfmeLate.bfmeSize(); ++index)
 	{
 		BfmeElem12Rec *position = m_bfmeLate.m_bfmeBegin + index;
-		g_bfmeGlobal_012f1024->bfmeCall3426b(position, (char *)position + 4, (char *)position + 8);
+		reinterpret_cast<BfmeGlobal_012f1024 *>(TheLivingWorldCampaignManager)->bfmeCall3426b(position, (char *)position + 4, (char *)position + 8);
 	}
 }
 

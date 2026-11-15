@@ -157,7 +157,8 @@ virtual void slot48();
 virtual void *getMiscAudio();
 
 };
-extern Rva0041D290Audio *Rva012ed668;
+// Retail 0x012ED668: use the existing data owner; retain the local pointee view.
+extern class AudioManager *TheAudio;
 
 struct Rva002AB690Data {
  char pad00[8]; unsigned m_updateRate; float m_detectionRange; bool m_initiallyDisabled; char pad11[3];
@@ -415,14 +416,14 @@ UpdateSleepTime StealthDetectorUpdate::update()
    if(!them->status(0x20000)){
     if(Rva002EE330ThePlayers->local()==self->getControllingPlayer() && self->getRelationship(them)!=2){
      TheRadar->createEvent(them->position(),(RadarEventType)8,4.0f);
-     static AudioEventRTS discoveredSound=sdField<AudioEventRTS>(Rva012ed668->getMiscAudio(),0x460);
-     discoveredSound.setPlayerIndex(self->getControllingPlayer()->index());Rva012ed668->addAudioEvent(&discoveredSound);
+     static AudioEventRTS discoveredSound=sdField<AudioEventRTS>(reinterpret_cast<Rva0041D290Audio *>(TheAudio)->getMiscAudio(),0x460);
+     discoveredSound.setPlayerIndex(self->getControllingPlayer()->index());reinterpret_cast<Rva0041D290Audio *>(TheAudio)->addAudioEvent(&discoveredSound);
      TheInGameUI->message(TheGameText->fetch("MESSAGE:StealthDiscovered",0));
     }
     if(Rva002EE330ThePlayers->local()==them->getControllingPlayer() && self->getRelationship(them)!=2){
      TheRadar->createEvent(them->position(),(RadarEventType)9,4.0f);
-     static AudioEventRTS neutralizedSound=sdField<AudioEventRTS>(Rva012ed668->getMiscAudio(),0x4d0);
-     neutralizedSound.setPlayerIndex(them->getControllingPlayer()->index());Rva012ed668->addAudioEvent(&neutralizedSound);
+     static AudioEventRTS neutralizedSound=sdField<AudioEventRTS>(reinterpret_cast<Rva0041D290Audio *>(TheAudio)->getMiscAudio(),0x4d0);
+     neutralizedSound.setPlayerIndex(them->getControllingPlayer()->index());reinterpret_cast<Rva0041D290Audio *>(TheAudio)->addAudioEvent(&neutralizedSound);
      TheInGameUI->message(TheGameText->fetch("MESSAGE:StealthNeutralized",0));
     }
     Drawable *theirDraw=them->getDrawable();if(theirDraw)sdField<float>(theirDraw,0x2e4)=1.0f;
@@ -450,7 +451,7 @@ UpdateSleepTime StealthDetectorUpdate::update()
   if(beaconTemplate){BfmeVec3 sys=((Rva005C3A30*)TheParticleSystemManager)->make(beaconTemplate,(void*)1);if(sys.value){if(myDraw)sys->attachToDrawable(myDraw);else sys->attachToObject(self);sys->setPosition(&bonePosition);}}
   AudioEventRTS IRPingSound(Rva01336E50EmptyAscii,0);
   if(foundSomeone)IRPingSound.assign(data->m_loudPingSound);else IRPingSound.assign(data->m_pingSound);
-  IRPingSound.setObjectID((ObjectID)self->id());Rva012ed668->addAudioEvent(&IRPingSound);
+  IRPingSound.setObjectID((ObjectID)self->id());reinterpret_cast<Rva0041D290Audio *>(TheAudio)->addAudioEvent(&IRPingSound);
  }
  return (UpdateSleepTime)data->m_updateRate;
 }

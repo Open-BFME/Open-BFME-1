@@ -150,7 +150,8 @@ static __forceinline BfmeStringData1285 *localEmptyString1285()
 extern const float g_bfmeDirectionWeight1285;
 extern float g_bfmeInvalidScore1285;
 // AptInput reaches the same singleton through two independently witnessed class slices.
-extern void *g_bfmeHolderBU;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 extern const float g_rva01075350;
 extern void *g_bfmeExtra1282;
 extern BfmeRoute1285 g_bfmeRouteTable1282[7];
@@ -257,7 +258,7 @@ BfmeNode1285 *bfmeFindDirectional1285(
 				&candidateFirst, &candidateSecond)) {
 				continue;
 			}
-			if (reinterpret_cast<BfmeRouteManager1285 *>(g_bfmeHolderBU)
+			if (reinterpret_cast<BfmeRouteManager1285 *>( g_bfmeHolderBU )
 				->bfmeAllows1285(candidate))
 				continue;
 			if (reference == 0) {
@@ -322,7 +323,7 @@ void BfmeBroadcast1285::bfmeAdvance1285()
 								(int)&g_bfmeRouteKeys1282[route[0]]);
 					if (node != 0) {
 						int encoded = ((route[1] & 0x7f) << 10) | 5;
-						reinterpret_cast<BfmeRouteManager1285 *>(g_bfmeHolderBU)
+						reinterpret_cast<BfmeRouteManager1285 *>( g_bfmeHolderBU )
 							->bfmeSubmit1285(entry, node, 0, encoded);
 					}
 				}
@@ -452,7 +453,7 @@ void BfmeBroadcast1282::bfmeBroadcast1282(BfmeEntry1282 *entry, int mode)
 					(int)&g_bfmeRouteKeys1282[route[0]]);
 				if (node != 0) {
 					int encoded = ((route[1] & 0x7f) << 10) | 5;
-					reinterpret_cast<BfmeRouteManager1282 *>(g_bfmeHolderBU)
+					reinterpret_cast<BfmeRouteManager1282 *>( g_bfmeHolderBU )
 						->bfmeSubmit1282(entry, node, 0, encoded);
 				}
 			}

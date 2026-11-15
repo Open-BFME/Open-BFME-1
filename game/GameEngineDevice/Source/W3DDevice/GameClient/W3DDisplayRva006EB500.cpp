@@ -314,7 +314,8 @@ extern ScriptEngine *TheScriptEngine;
 
 class Rva003968A0 { public: Bool test(void); };
 class Glo012F1028Type;
-extern Glo012F1028Type *Glo012F1028;
+// Retail 0x012F1028: use the existing data owner; retain the local pointee view.
+extern class LivingWorldLogic *TheLivingWorldLogic;
 
 class BfmeGlobPB
 {
@@ -340,7 +341,8 @@ public:
 	W3DShroud *m_shroud;
 	Rva00727E00 *m_taint;
 };
-extern BfmeA1087 *g_bfmeA1087;
+// Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 
 class View
 {
@@ -535,23 +537,23 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 	Int numRenderTargetPolygons = Rva00937260Get();
 	Int numRenderTargetVertices = Rva00937270Get();
 
-	if (g_bfmeA1087 && g_bfmeA1087->m_terrainMap)
+	if (reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject) && reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->m_terrainMap)
 	{
 		View *view = getFirstView();
-		if (g_bfmeA1087->m_shroud)
+		if (reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->m_shroud)
 		{
 			CameraClass *camera = view->m_3DCamera;
-			g_bfmeA1087->m_shroud->render(camera);
+			reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->m_shroud->render(camera);
 		}
-		if (g_bfmeA1087->m_taint)
+		if (reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->m_taint)
 		{
 			CameraClass *camera = view->m_3DCamera;
-			g_bfmeA1087->m_taint->update(camera);
+			reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->m_taint->update(camera);
 		}
 	}
 
 	if (!((Rva006C9270GlobalData *)TheWritableGlobalData)->m_dbf && !((Rva006C9270GlobalData *)TheWritableGlobalData)->m_c0b &&
-		WW3D::Begin_Render(true, true, m_1c, g_bfmeA1087->getWaterTransparency(), 0) == WW3D_ERROR_OK)
+		WW3D::Begin_Render(true, true, m_1c, reinterpret_cast<BfmeA1087 *>(TheTerrainRenderObject)->getWaterTransparency(), 0) == WW3D_ERROR_OK)
 	{
 		if (((Rva006C9270GlobalData *)TheWritableGlobalData)->m_bb9 == 1)
 		{
@@ -628,7 +630,7 @@ Bool W3DDisplay::rva006EB500(UnsignedInt now)
 			TheInGameUI->slot130();
 		if (!TheInGameUI->slot154())
 		{
-			if (((Rva003968A0 *)Glo012F1028)->test() || TheGameLogic->rva000652A0())
+			if (((Rva003968A0 *)reinterpret_cast<Glo012F1028Type *>(TheLivingWorldLogic))->test() || TheGameLogic->rva000652A0())
 			{
 				if (m_13c)
 				{

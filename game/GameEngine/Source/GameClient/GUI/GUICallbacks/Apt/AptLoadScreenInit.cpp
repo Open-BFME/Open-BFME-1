@@ -201,7 +201,8 @@ public:
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 struct Rva00579160Current;
-extern Rva00579160Current *Rva00579160TheCurrent;
+// Retail 0x012F7094: use the existing data owner; retain the local pointee view.
+extern class SkirmishGameInfo *TheSkirmishGameInfo;
 extern const unsigned short BFMEEmptyString;
 extern const char Rva006A16B0Empty;
 
@@ -418,7 +419,7 @@ void AptLoadScreen::init(GameInfo *game)
 		int rankImage = 0;
 		AsciiString side = armyName;
 		Rva004D8EE0 rankValues;
-		if (slot->isAI() && (Rva00579160TheCurrent != 0 || TheGameSpyInfo != 0) && !online)
+		if (slot->isAI() && (reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo) != 0 || TheGameSpyInfo != 0) && !online)
 		{
 			switch (slot->m_state)
 			{
@@ -473,7 +474,7 @@ void AptLoadScreen::init(GameInfo *game)
 				g_theWindowManager->bfme_setAptText(rankKey, UnicodeString(rankText));
 			}
 		}
-		else if (Rva00579160TheCurrent)
+		else if (reinterpret_cast<Rva00579160Current *>(TheSkirmishGameInfo))
 		{
 			const PlayerTemplate *pt = ThePlayerTemplateStore->getNthPlayerTemplate(slot->getPlayerTemplate());
 			if (pt)

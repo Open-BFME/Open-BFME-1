@@ -44,8 +44,8 @@ The source requests the existing owner's decorated symbol and pointer type;
 the receiver/layout views remain the prior local types through pointer-value
 conversions. Providers, method identities, arguments and field offsets are
 retained. No new data definition, symbol pin, linker alias, header or compiler
-flag is introduced. No pointer cell is accessed through an unrelated pointer
-reference. A null store, where present, writes zero to the canonical lvalue.
+flag is introduced. These repairs introduce no pointer-cell access through
+an unrelated pointer reference. A null store writes zero to the canonical lvalue.
 
 Whole-object checks compare ordered non-debug sections, their sizes, flags,
 bytes, relocation graphs, and the section/value/type of every defined external.
@@ -88,7 +88,7 @@ campaign allocation sizes/layouts also differ. No donor address or layout is
 copied, and no BFME 2 development or test-server change is made.
 
 The selection excludes unused declarations, already identical emitted symbols,
-ambiguous bare names, and twenty-five more complex initial candidates.
+ambiguous bare names, and twenty-five other initial candidates.
 All selected mappings have an actual reference in a retained matched row.
 
 ## Link measurements and limits

@@ -59,7 +59,8 @@ public:
  virtual bool Begin_Report(); virtual void Slot64(); virtual void Slot68();
  virtual Debug &Get_Stream(const char *, int);
 };
-extern DebugView00409E20 *DebugGlobal00409E20;
+// Retail 0x01336E5C: use the existing data owner; retain the local pointee view.
+extern void *g_Rva00F36E5C;
 bool _bfme_debugReportingEnabled();
 void _bfme_debugRecordCallsite(int);
 class ScopedMutex {
@@ -126,8 +127,8 @@ void Gen0002857EOwner::Rva00694230(Gen0002857E *value)
    mut.release();
    if (_bfme_debugReportingEnabled()) {
     _bfme_debugRecordCallsite(1);
-    DebugGlobal00409E20->Begin_Report();
-    ((DebugGlobal00409E20->Get_Stream(0,0) << "Missing Audio File: '") << value->m_name << "'\n").finish(2);
+    reinterpret_cast<DebugView00409E20 *>(g_Rva00F36E5C)->Begin_Report();
+    ((reinterpret_cast<DebugView00409E20 *>(g_Rva00F36E5C)->Get_Stream(0,0) << "Missing Audio File: '") << value->m_name << "'\n").finish(2);
    }
    return;
   }
@@ -153,8 +154,8 @@ void Gen0002857EOwner::Rva00694230(Gen0002857E *value)
    mut.release();
    if (_bfme_debugReportingEnabled()) {
     _bfme_debugRecordCallsite(1);
-    DebugGlobal00409E20->Begin_Report();
-    ((DebugGlobal00409E20->Get_Stream(0,0) << "Unexpected compression type in '") << value->m_name << "'\n").finish(2);
+    reinterpret_cast<DebugView00409E20 *>(g_Rva00F36E5C)->Begin_Report();
+    ((reinterpret_cast<DebugView00409E20 *>(g_Rva00F36E5C)->Get_Stream(0,0) << "Unexpected compression type in '") << value->m_name << "'\n").finish(2);
    }
    // prevent leaks
    delete [] buffer;

@@ -194,12 +194,13 @@ int Rva00971B50::call()
 	return 0;
 }
 
-extern Gen00049FDA *R2Ptr012F0FE0;
+// Retail 0x012F0FE0: use the existing data owner; retain the local pointee view.
+extern struct RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 bool Rva006E17A0()
 {
-	if ( R2Ptr012F0FE0 )
+	if ( reinterpret_cast<Gen00049FDA *>(TheGlobalWeatherSystem) )
 	{
-		return R2Ptr012F0FE0->handle();
+		return reinterpret_cast<Gen00049FDA *>(TheGlobalWeatherSystem)->handle();
 	}
 	return false;
 }

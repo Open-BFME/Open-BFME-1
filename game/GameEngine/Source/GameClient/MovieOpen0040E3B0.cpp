@@ -22,11 +22,12 @@ public:
  void setGroup(AsciiString,bool);
 };
 class Rva004893C0ByteSetter {public: void set();};
-extern GameWindowTransitionsHandler *Transitions0040E3B0;
+// Retail 0x012F3330: use the existing data owner; retain the local pointee view.
+extern class GameWindowTransitionsHandler *TheTransitionHandler;
 class Rva00382960 {
 public:
- Rva00382960() { if(Transitions0040E3B0) ((Glo00EF3330*)Transitions0040E3B0)->h004893E0(); }
- ~Rva00382960() { if(Transitions0040E3B0) ((Glo00EF3330*)Transitions0040E3B0)->h00489410(); }
+ Rva00382960() { if(TheTransitionHandler) ((Glo00EF3330*)TheTransitionHandler)->h004893E0(); }
+ ~Rva00382960() { if(TheTransitionHandler) ((Glo00EF3330*)TheTransitionHandler)->h00489410(); }
 };
 extern "C" unsigned __stdcall bfme_timeGetTime();
 struct MovieStream0040E3B0 {
@@ -215,7 +216,8 @@ bool __cdecl _bfme_debugReportingEnabled(void);
 extern "C" __declspec(dllimport) long __stdcall SendMessageA(void*,unsigned,unsigned,long);
 extern "C" __declspec(dllimport) void *__stdcall GetCurrentThread();
 extern "C" __declspec(dllimport) int __stdcall SetThreadPriority(void*,int);
-extern void *Window0040F780;
+// Retail 0x012ED238: use the existing data owner; retain the local pointee view.
+extern void *ApplicationHWnd;
 extern __int64 Counter0040F780;
 extern double Interval0040F780;
 class GameLogic;
@@ -354,21 +356,21 @@ bool MovieOpen0040E3B0::open(AsciiString name,int flags,int a,int b) {
  if(flags38&0x400000) stream34->rate(0.05f);
  else if(flags38&0x10) {
   Rva00382960 guard;
-  Transitions0040E3B0->reset();
-  Transitions0040E3B0->reverse(AsciiString("FadeInGameMovie"));
+  TheTransitionHandler->reset();
+  TheTransitionHandler->reverse(AsciiString("FadeInGameMovie"));
   field50=0;
  } else if(flags38&0x100) {
   Rva00382960 guard;
-  Transitions0040E3B0->reset();
-  Transitions0040E3B0->reverse(AsciiString("FadeScreenToWhite"));
+  TheTransitionHandler->reset();
+  TheTransitionHandler->reverse(AsciiString("FadeScreenToWhite"));
   field50=0;
- } else {Transitions0040E3B0->reset(); field50=1;}
+ } else {TheTransitionHandler->reset(); field50=1;}
  unsigned count=stream34->frames();
  if(flags38&0x200000) {
   field10c=10;
   if(flags38&0x80) field54=count; else field54=count-20;
- } else if(flags38&0x20) field54=count-Transitions0040E3B0->bfmeGetGroupTotalFrames(AsciiString("FadeInGameMovie"));
- else if(flags38&0x200) field54=count-Transitions0040E3B0->bfmeGetGroupTotalFrames(AsciiString("FadeScreenToWhite"));
+ } else if(flags38&0x20) field54=count-TheTransitionHandler->bfmeGetGroupTotalFrames(AsciiString("FadeInGameMovie"));
+ else if(flags38&0x200) field54=count-TheTransitionHandler->bfmeGetGroupTotalFrames(AsciiString("FadeScreenToWhite"));
  else field54=stream34->frames();
  return true;
 }
@@ -382,9 +384,9 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
    float rate=stream34->getRate()+0.05f;
    if(rate>1.0f) {rate=1.0f; field50=1;}
    stream34->rate(rate);
-  } else if(Transitions0040E3B0->isFinished()) {
+  } else if(TheTransitionHandler->isFinished()) {
    field50=1;
-   Transitions0040E3B0->reset();
+   TheTransitionHandler->reset();
   }
   break;
  case 1:
@@ -393,13 +395,13 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
    if(flags38&0x200000) {field50=2;}
    else if(flags38&0x20) {
     field50=2;
-    Transitions0040E3B0->setGroup(AsciiString("FadeInGameMovie"),false);
-    ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
+    TheTransitionHandler->setGroup(AsciiString("FadeInGameMovie"),false);
+    ((Rva004893C0ByteSetter*)TheTransitionHandler)->set();
     reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
    } else if(flags38&0x200) {
     field50=2;
-    Transitions0040E3B0->setGroup(AsciiString("FadeScreenToWhite"),false);
-    ((Rva004893C0ByteSetter*)Transitions0040E3B0)->set();
+    TheTransitionHandler->setGroup(AsciiString("FadeScreenToWhite"),false);
+    ((Rva004893C0ByteSetter*)TheTransitionHandler)->set();
     reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
    } else if(skip) done=true;
   }
@@ -412,7 +414,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
     if(rate<0.0f) {rate=0.0f;finished=true;}
     stream34->rate(rate);
    } else {--field10c; break;}
-  } else if(Transitions0040E3B0->isFinished()) finished=true;
+  } else if(TheTransitionHandler->isFinished()) finished=true;
   if(finished) { if(skip || finished0040E680(stream34)) done=true; }
   break;
  }
@@ -422,7 +424,7 @@ bool MovieOpen0040E3B0::update0040E680(bool skip) {
 }
 
 bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) {
- SendMessageA(Window0040F780,15,0,0);
+ SendMessageA(ApplicationHWnd,15,0,0);
  Interval0040F780=(1.0/30.0)/(double)Counter0040F780*1000.0;
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(true,0,false);
  bool active=bfmeGoEMEa(0);
@@ -454,7 +456,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
     drawFrame=false;pending&=~1U;
     ((BfmeObjDC*)this)->bfmeGoDC();
     render(true);
-    ((MovieControl0040F780*)Transitions0040E3B0)->update();
+    ((MovieControl0040F780*)TheTransitionHandler)->update();
     (*reinterpret_cast<Renderer0040F780 **>(&TheGameEngine))->update();
     if(alternateAudio) {((Audio0040F780 *)TheAudio)->update();alternateAudio=false;}
     else alternateAudio=true;
@@ -470,7 +472,7 @@ bool MovieOpen0040E3B0::play0040F780(AsciiString name,bool allowSkip,int flags) 
  if(!SetThreadPriority(thread,0)) priorityFailure0040F780();
  if(!((Settings0040F780 *)TheWritableGlobalData)->field1278 && active) Rva009EBBE0(0);
  ((BfmeGameLogicPause *)TheGameLogic)->setGamePaused(false,0,false);
- if(flags&0x100000) {Transitions0040E3B0->reset(); TheMouse->_bfme_setEngineVisibility(true);}
+ if(flags&0x100000) {TheTransitionHandler->reset(); TheMouse->_bfme_setEngineVisibility(true);}
  reinterpret_cast<MovieControl0040F780 *>(TheWindowManager)->update();
  return true;
 }

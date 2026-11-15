@@ -17,9 +17,9 @@
 //
 // Shape notes (all read off the bytes): the last-damage else branch is Zero
 // Hour's nested srcObj2/srcObj1 form, whose three copies the compiler merges
-// into one tail; it reloads the GameLogic singleton into a local rather than
-// reusing the frame compare's load, which the TheBfmeGameLogic spelling of the
-// same 0x012F0898 global reproduces. The RespawnUpdate test is one condition
+// into one tail. The last-damage local reads the canonical GameLogic pointer
+// through a volatile-qualified lvalue to retain retail's separate reload;
+// otherwise MSVC reuses the frame compare's load. The RespawnUpdate test is one condition
 // (findModule && health <= 1.01 && prev > 1.01) whose failure falls into the
 // death test. Zero Hour's inline accessors (getFrame, getID, getPlayerIndex,
 // getContainedBy/getContain) are kept: they decide the scratch registers.
@@ -265,7 +265,6 @@ public:
 	UnsignedInt m_frame;					// +0x3C
 };
 extern GameLogic *TheGameLogic;
-extern GameLogic *TheBfmeGameLogic;			// same retail global as TheGameLogic
 
 struct AIData { char m_pad[0x64]; Bool m_flag64; };
 class AI { public: char m_pad[0x14]; AIData *m_data; };
@@ -393,7 +392,7 @@ void ActiveBody::attemptDamage(DamageInfo *damageInfo)
 			m_lastDamageCleared = false;
 			m_lastDamageTimestamp = TheGameLogic->getFrame();
 		} else {
-			GameLogic *logic = TheBfmeGameLogic;
+			GameLogic *logic = static_cast<GameLogic *volatile &>(TheGameLogic);
 			Object *srcObj1 = logic->findObjectByID(m_lastDamageInfo.m_sourceID);
 			Object *srcObj2 = logic->findObjectByID(damageInfo->m_sourceID);
 			if (srcObj2) {

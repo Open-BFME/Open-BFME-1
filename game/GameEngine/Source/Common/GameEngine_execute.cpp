@@ -199,7 +199,8 @@ class View;
 extern View *TheTacticalView;
 extern GameClient *TheGameClient;
 extern GlobalData *TheWritableGlobalData;
-extern BfmeDebugManager *TheGen001336E5C;
+// Retail 0x01336E5C: use the existing data owner; retain the local pointee view.
+extern void *g_Rva00F36E5C;
 
 extern int *g_Va012A7244;
 extern int BfmeSavedClientFrame;
@@ -211,7 +212,7 @@ extern bool g_deepCRC;
 extern bool g_liteCRC;
 
 #define TheGlobalData ((GlobalDataLayout *)TheWritableGlobalData)
-#define TheDebugManager ((DebugManager *)TheGen001336E5C)
+#define TheDebugManager ((DebugManager *)reinterpret_cast<BfmeDebugManager *>(g_Rva00F36E5C))
 
 // These five stay literal: a named extern (Watchdog0040F780, TheGlobalLanguageData, g_012A72A4,
 // g_012ED50C, g_012ED520) changes this body's generated code, so the object would no longer match.

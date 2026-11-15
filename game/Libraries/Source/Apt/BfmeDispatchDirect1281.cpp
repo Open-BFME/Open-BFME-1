@@ -199,7 +199,8 @@ typedef BfmeRoute1285 BfmeRoute1281;
 
 class AptValue;
 
-extern Gen_008A0C30 *g_bfmeHolderBU;
+// Retail 0x013377D8: use the existing data owner; retain the local pointee view.
+extern struct BfmePickWorld1284 *g_bfmeHolderBU;
 extern AptValue *g_bfmeFallbackDB;
 extern void *g_bfmeExtra1282;
 extern BfmeRoute1285 g_bfmeRouteTable1282[7];
@@ -241,7 +242,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 		if (visited == m_secondaryCount)
 			break;
 		BfmeNodeDX *entry = m_secondary[index];
-		if (entry == 0 || g_bfmeHolderBU->bfmeAllows(entry))
+		if (entry == 0 || reinterpret_cast<Gen_008A0C30 *>(g_bfmeHolderBU)->bfmeAllows(entry))
 			continue;
 		unsigned int flags = entry->m_flags04;
 		if ((flags & 0x3f) != 0xf || (static_cast<unsigned char>(~(flags >> 15)) & 1) != 0)
@@ -290,7 +291,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 	m_slot1278 = (encoded >> 2) & 0x7fff;
 	BfmeNodeDX *picked = reinterpret_cast<BfmeNodeDX *>(
 		reinterpret_cast<BfmePicker1284 *>(this)->bfmePick1284(m_group1274, m_slot1278));
-	if (g_bfmeHolderBU->bfmeAllows(picked))
+	if (reinterpret_cast<Gen_008A0C30 *>(g_bfmeHolderBU)->bfmeAllows(picked))
 		picked = 0;
 	else if (picked != 0)
 		picked->bfmeAttach1281();
@@ -319,7 +320,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 									(int)&g_bfmeRouteKeys1282[route[0]]);
 								if (node != 0) {
 									int code = ((route[1] & 0x7f) << 10) | 5;
-									reinterpret_cast<BfmeRouteManager1282 *>(g_bfmeHolderBU)
+									reinterpret_cast<BfmeRouteManager1282 *>( g_bfmeHolderBU )
 										->bfmeSubmit1282(entry, node, 0, code);
 								}
 							}
@@ -347,7 +348,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 								(int)&g_bfmeRouteKeys1282[route[0]]);
 							if (node != 0) {
 								int code = ((route[1] & 0x7f) << 10) | 5;
-								reinterpret_cast<BfmeRouteManager1282 *>(g_bfmeHolderBU)
+								reinterpret_cast<BfmeRouteManager1282 *>( g_bfmeHolderBU )
 									->bfmeSubmit1282(entry, node, 0, code);
 							}
 						}
@@ -377,7 +378,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 								(int)&g_bfmeRouteKeys1282[route[0]]);
 							if (node != 0) {
 								int code = ((route[1] & 0x7f) << 10) | 5;
-								reinterpret_cast<BfmeRouteManager1282 *>(g_bfmeHolderBU)
+								reinterpret_cast<BfmeRouteManager1282 *>( g_bfmeHolderBU )
 									->bfmeSubmit1282(entry, node, 0, code);
 							}
 						}
@@ -407,7 +408,7 @@ void BfmeSlotDispatcher1281::bfmeDispatchDirect1281(unsigned int encoded)
 							(int)&g_bfmeRouteKeys1282[route[0]]);
 						if (node != 0) {
 							int code = ((route[1] & 0x7f) << 10) | 5;
-							reinterpret_cast<BfmeRouteManager1282 *>(g_bfmeHolderBU)
+							reinterpret_cast<BfmeRouteManager1282 *>( g_bfmeHolderBU )
 								->bfmeSubmit1282(entry, node, 0, code);
 						}
 					}

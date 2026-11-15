@@ -245,7 +245,8 @@ protected:
 
 extern AI *TheAI;
 extern Bool Glo012F0239;
-extern void *TheCRCParameterCheck;
+// Retail 0x012ED4FC: use the existing data owner; retain the local pointee view.
+extern class CRCParameterCheck *TheCRCParameterCheck;
 // 0x0109A028 is the readonly float used for the comparison and numerator.
 // Former COFF reference ?g_bfmeRva0109A028@@3MB: retail 0x0109A028 is
 // __real@43160000 (150.0f), checked through the literal operands below.
@@ -332,17 +333,17 @@ StateReturnType AIFollowWaypointPathState::onEnter() {
   (((Rva0017A8E0Calls *)ai)->*distanceCall.member)(calcExtraPathDistance());
 
   if (m_currentWaypoint->getNumLinks() > 0) {
-    if (Glo012F0239 && TheCRCParameterCheck)
+    if (Glo012F0239 && reinterpret_cast<void *>(TheCRCParameterCheck))
       ((DebugLogCall)j_0003a17a)(
-          TheCRCParameterCheck,
+          reinterpret_cast<void *>(TheCRCParameterCheck),
           "CritterDesync: setAdjustDestination(FALSE) 54");
     m_adjustDestinations = 0;
   } else {
     // Retail evaluates isDoingGroundMovement() once for the log and again
     // for the store, in that order.
-    if (Glo012F0239 && TheCRCParameterCheck)
+    if (Glo012F0239 && reinterpret_cast<void *>(TheCRCParameterCheck))
       ((DebugLogCall)j_0003a17a)(
-          TheCRCParameterCheck,
+          reinterpret_cast<void *>(TheCRCParameterCheck),
           "CritterDesync: setAdjustDestination(ai->isDoingGroundMovement()=%s) "
           "55",
           ai->isDoingGroundMovement() ? "TRUE" : "FALSE");

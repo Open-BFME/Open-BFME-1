@@ -118,7 +118,8 @@ public:
 
 typedef void ( Rva0046DEF0::*Rva0046DEF0TakeName )( const AsciiString &name );
 
-extern S4Holder0046DBB0 *g_s4Holder;
+// Retail 0x012F19E8: use the existing data owner; retain the local pointee view.
+extern class WindowManager *g_rva012F19E8WindowManager;
 
 // The gadget callback witnesses windows at +04/+08/+0C/+10 and children at
 // +14..+30. AptMapPreviewImages.cpp witnesses the Image at +34 and owned flag
@@ -160,7 +161,7 @@ void AptMapPreview::bfmeReset(void)
 {
 	{
 		AsciiString name("AptMapPreview::Picture");
-		( reinterpret_cast<Rva0046DEF0 *>( g_s4Holder )->*
+		( reinterpret_cast<Rva0046DEF0 *>( g_rva012F19E8WindowManager )->*
 			reinterpret_cast<Rva0046DEF0TakeName>( &Rva0046DEF0::invoke ) )( name );
 	}
 	{

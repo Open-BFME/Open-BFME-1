@@ -799,7 +799,8 @@ class ExperienceLevelSystem { public:
  void rva0037F190(Rva0037F190Result*,Object*);
  bool rva0037E810(Rva0037F190Result); int rva0037D810(Rva0037F190Result);
 };
-extern ExperienceLevelSystem* g_va012F0888;
+// Retail 0x012F0888: use the existing data owner; retain the local pointee view.
+extern class ExperienceLevelSystem *TheExperienceLevelSystem;
 class Rva00098E50 { public: __forceinline const ThingTemplate* getTemplate() const {
  typedef const ThingTemplate* (Rva00098E50::*Function)() const;
  return (this->*reinterpret_cast<Function>(&Thing::getTemplate))();
@@ -1275,8 +1276,8 @@ bool pickAndPlayUnitVoiceResponse(const DrawableList* list,GameMessage::Type msg
   Rva005AA450Rank rank; rank.field08=INT_MIN; rank.field00=0; rank.field0c=ordinal; rank.field10=draw->rva00417060();
   rank.field04=(obj->getTemplate()->m_kindOf[2]&0x02000000)!=0;
   if(rank.field04) {
-   Rva0037F190Result level;g_va012F0888->rva0037F190(&level,obj);
-   if((g_va012F0888->*Rva0037E810Binding())(level)) rank.field08=(g_va012F0888->*Rva0037D810Binding())(level);
+   Rva0037F190Result level;TheExperienceLevelSystem->rva0037F190(&level,obj);
+   if((TheExperienceLevelSystem->*Rva0037E810Binding())(level)) rank.field08=(TheExperienceLevelSystem->*Rva0037D810Binding())(level);
   }
   switch(msgType) {
   case 0x42c: case 0x42d:
