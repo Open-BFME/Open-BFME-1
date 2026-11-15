@@ -13,18 +13,7 @@ typedef int Color;
 typedef unsigned short WCHAR;
 typedef float Real;
 
-template <typename T> class StringBase
-{
-friend class UnicodeString;
-
-private:
-	StringBase( void );
-	StringBase( const StringBase<T> &that );
-	StringBase( const T *text );
-	void releaseBuffer( void );
-
-public:
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString
 {

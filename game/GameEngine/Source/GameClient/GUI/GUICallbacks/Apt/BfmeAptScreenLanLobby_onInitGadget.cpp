@@ -74,17 +74,7 @@ public:
 	GameWindow *m_owner;
 };
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

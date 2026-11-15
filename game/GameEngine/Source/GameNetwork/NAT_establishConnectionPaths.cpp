@@ -11,13 +11,7 @@
 // Retail leaves the null-slot behavior of the final menu loop unchanged.
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 class Transport;
-template <class T> class StringBase {
-    friend class UnicodeString;
-private:
-    StringBase(const StringBase &);
-    ~StringBase();
-    void *data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 class UnicodeString : private StringBase<unsigned short> {
 public:
     UnicodeString(const UnicodeString &s) : StringBase<unsigned short>(s) {}

@@ -1,15 +1,6 @@
 void __cdecl bfmeReleaseXC(void *item);
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

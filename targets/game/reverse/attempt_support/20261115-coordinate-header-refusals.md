@@ -77,3 +77,23 @@ and the concurrently landed AI_crc/DataChunkOutputDestructor sources. It is
 tried only after a compiler arity refusal and still needs all ordinary byte,
 target, layout, provider and linking gates. Most refused specimens retain
 additional independent blockers; a fixed compile is not a completed task.
+
+## LANAPI cleanup-anchor refusal during a later private batch
+
+At BFME1 `8d8f829de4f433da934bf4dd6de7b007d25b42ec`, an isolated StringBase
+adoption trial of `game/GameEngine/Source/GameNetwork/LANAPIOnGameStartTimer.cpp`
+was refused by the native reader: row `0x00C46A10` points to `$L532`, but the
+candidate's parent group contains no corresponding body. The ledger also maps
+the separately state-anchored cleanup `0x00C46748` to that same local label
+(parent `?OnGameStartTimer@LANAPI@@UAEXH@Z`, retail parent `0x00689050`). Equal
+small cleanup bytes do not establish the first row's parent or identity.
+
+No substitute pin, row deletion or source change was applied. The attempt is
+excluded until its original parent/address identity is independently resolved.
+The private batch stopped before applying any source edits. Its complete trial
+snapshots and native refusal are retained in the round's
+`batch-21-private-refusal` diagnostics/build directories; trial reservations are
+released before continuing. A native reader `SystemExit` is treated as a blocked
+private candidate; a refusal during the ordinary after-check restores owned
+source edits before propagation. This changes no repository verifier or native
+reader behavior and counts as no completed task.

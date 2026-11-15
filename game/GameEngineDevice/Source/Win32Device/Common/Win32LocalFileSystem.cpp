@@ -70,12 +70,7 @@ static inline const char *bfmeStr( const AsciiString &str )
 	return d ? d + 8 : "";
 }
 
-template <class T> class StringBase
-{
-public:
-	void set( const T *s, int len );
-	void concat( const T *s, int len );
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 static inline void bfmeSet( AsciiString &str, const char *v )
 {

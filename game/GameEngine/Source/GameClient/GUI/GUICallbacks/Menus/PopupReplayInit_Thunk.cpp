@@ -2,17 +2,7 @@
 // Retail 0x004DE270. This clean callback keeps PopupReplay's name-key, window,
 // and replay-list setup while using the inline UnicodeString shape from retail.
 
-template <typename T> class StringBase
-{
-    friend class UnicodeString;
-
-private:
-    StringBase() : m_data(0) {}
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-
-    void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

@@ -24,11 +24,7 @@ static inline const char *bfmeStr( const AsciiString &string )
 	return d ? d + 8 : "";
 }
 
-template <class T> class StringBase
-{
-public:
-	void concat( const T *s, int len );
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 static inline void bfmeConcat( AsciiString &s, const AsciiString &v )
 {

@@ -17,18 +17,7 @@
 
 #define BFME_VSLOT(n) virtual void slot##n();
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>

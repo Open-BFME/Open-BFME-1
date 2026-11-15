@@ -5,20 +5,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/online_quick_match.cod
 typedef int Color;
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase<T> &other );
-	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

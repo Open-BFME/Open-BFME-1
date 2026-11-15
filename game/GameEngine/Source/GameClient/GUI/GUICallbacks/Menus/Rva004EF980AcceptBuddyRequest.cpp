@@ -13,13 +13,7 @@
 #include "GameNetwork/GameSpy/PeerDefs.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
 
-template <typename T> class StringBase
-{
-public:
-    void set(const StringBase<T> &source);
-private:
-    void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 static __forceinline void bfmeUnicodeStringSet(UnicodeString &dest, const UnicodeString &source)
 {

@@ -77,26 +77,7 @@ extern BfmeItemKA **g_bfmeBegKA;
 extern const WideChar BFMEEmptyString[];
 
 // The constructor passes the sample string by value through DisplayString.
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-
-protected:
-	struct Header
-	{
-		Int refCount;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<WideChar>
 {
