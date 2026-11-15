@@ -126,11 +126,7 @@ public:
 
 // vector elements: retail copies them 12 bytes at a time (__copy instantiates on
 // Coord3D*), so only the size reaches the bytes.
-struct Coord3D
-{
-	Real x, y, z;
-	void zero() { x = 0.0f; y = 0.0f; z = 0.0f; }
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class BezierProjectileBehavior
 	: public UpdateModule,
@@ -165,15 +161,15 @@ BezierProjectileBehavior::BezierProjectileBehavior(Thing *thing, const ModuleDat
 	: UpdateModule(thing, data)
 {
 	m_launcherID = 0;
-	m_at2C.zero();
+	{ Coord3D *const position = &m_at2C; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	m_victimID = 0;
 	m_at3C = 0;
 	m_at40 = 0;
 	m_flightPath.clear();
 	m_flightPathSegments = 0;
 	m_flightPathSpeed = 0;
-	m_flightPathStart.zero();
-	m_flightPathEnd.zero();
+	{ Coord3D *const position = &m_flightPathStart; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
+	{ Coord3D *const position = &m_flightPathEnd; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 	m_currentFlightPathStep = 0;
 	m_extraBonusFlags = 0;
 	m_hasDetonated = false;
