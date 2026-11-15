@@ -4264,3 +4264,8 @@ retains the complete 1,803-byte body and ordered non-debug section/relocation
 graph; the standard provider/consumer gate passes. Apply only where retail
 and the old source establish the separate load. See task 76 in
 `targets/game/reverse/identity_evidence/20261115-eighty-singleton-consumers-4.md`.
+
+
+### Preserve the coordinate receiver when expanding inline zero stores
+
+In `AIMoveAndEvacuateStateCtorThunk.cpp` (retail 0x0017FD10, 57 bytes), replacing `m_origin.zero()` with direct `m_origin.x/y/z = 0.0f` stores moves all three coordinate stores ahead of the constructor vptr store. With the existing canonical POD Coord3D header, bind `Coord3D *const position = &m_origin` and perform the same three stores through `position`: the native vptr-before-coordinate order returns, and the normal scoped gate passes all 57 bytes and relocations. Measured with the BFME 1 default MSVC 13.10.3077, existing `/DNDEBUG /MD /EHsc` TU flags and original includes; no flag changes. The changed receiver expression is observed; alias-analysis scheduling is an explanation, not a general compiler guarantee. Evidence: `targets/game/reverse/identity_evidence/20261115-queue21-task02.md`.
