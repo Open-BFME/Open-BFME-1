@@ -59,9 +59,7 @@ public:
 
 typedef BitFlags<DISABLED_COUNT> DisabledMaskType;
 
-class AsciiString
-{
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva002E5FF0Str
 {
