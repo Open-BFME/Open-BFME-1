@@ -25,25 +25,8 @@ private:
 	const char *m_msg;
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const StringBase<T> &source );
-	void releaseBuffer();
-	void *m_data;
-};
-
-class AsciiString
-{
-public:
-	AsciiString() : m_text( 0 ) {}
-	~AsciiString() { ( (StringBase<char> *)this )->releaseBuffer(); }
-
-private:
-	void *m_text;
-};
 
 class INI
 {

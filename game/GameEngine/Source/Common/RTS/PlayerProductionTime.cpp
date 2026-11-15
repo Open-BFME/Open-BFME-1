@@ -7,9 +7,7 @@
 
 typedef float Real;
 
-class AsciiString
-{
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern const float g_rva01075350;
 

@@ -5,11 +5,7 @@ typedef int Int;
 typedef bool Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	static const AsciiString TheEmptyString;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 namespace _STL
 {

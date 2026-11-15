@@ -16,40 +16,9 @@
 
 typedef bool Bool;
 
-template <class Type>
-class StringBase
-{
-private:
-	// Private so the symbol is AAE, which is how the ledger names this body.
-	StringBase(const char *s);
-	void releaseBuffer();
-	friend class AsciiString;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-
-	// Visible delegation, not a bare declaration: see
-	// this tree has hit the by-value temporary transposition before.
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	AsciiString(const AsciiString &that);
-	// Retail inlines the release: the call binds 0x00887940 directly.
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-
-	void *m_text;
-
-};
 
 class Player;
 

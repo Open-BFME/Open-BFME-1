@@ -12,31 +12,9 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const char *s);				// retail 0x00888BC0
-	~StringBase();
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	// Delegating, and visibly so: it is what puts the __$SEHRec$ store ahead of
-	// `mov ecx, esp` when the leaf name is built in the outgoing argument slot.
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	~AsciiString();
-
-private:
-	char *m_text;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences

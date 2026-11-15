@@ -5,17 +5,8 @@
 // bodies at 0x00359330/0x00359530: table +0x0C, records +0x18, and the
 // released byte at record +0x0C.
 
-class AsciiString
-{
-public:
-    void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-template <class T> class StringBase
-{
-public:
-    int compare(const StringBase<T> &other) const throw();
-};
 
 bool rvaLookupReleased00359fe0(void *owner, AsciiString *name);
 
