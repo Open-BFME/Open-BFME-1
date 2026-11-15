@@ -4,18 +4,9 @@
 #include <stdio.h>
 
 typedef int Int;
-#include "string_base.h"
-
 // The retail call sites inline str() and call the StringBase<char> destructor
-// directly; the header's AsciiString declares both out of line.
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString() {}
-    using StringBase<char>::concat;
-    const char *str() const { return m_data ? m_data->data : ""; }
-};
+// directly; the canonical header's inline forwarders provide both.
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // The canonical global at 0x012ED5C8 lives in game/GameEngine/Source/Common/GlobalData.cpp
 // as ?TheWritableGlobalData@@3PAVGlobalData@@A (upstream's TheGlobalData is a macro over it).
@@ -87,7 +78,7 @@ DataChunkOutput::~DataChunkOutput()
     ::fclose(m_tmp_file);
 
     AsciiString tmpFileName = TheWritableGlobalData->getPath_UserData();
-    tmpFileName.concat("_tmpChunk.dat", 13);
+    tmpFileName.StringBase<char>::concat("_tmpChunk.dat", 13);
 
     m_tmp_file = ::fopen(tmpFileName.str(), "rb");
     ::fseek(m_tmp_file, 0, SEEK_SET);
