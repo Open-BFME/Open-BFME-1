@@ -6,32 +6,8 @@
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	void set(const StringBase<T> &src);
-
-private:
-	StringBase(const StringBase<T> &src);
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() { releaseBuffer(); }
-	AsciiString &operator=(const AsciiString &src)
-	{
-		set(src);
-		return *this;
-	}
-};
 
 struct Coord3D
 {

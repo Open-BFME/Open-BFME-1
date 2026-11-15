@@ -10,32 +10,8 @@ class INI;
 void parseBannerCarrierExpLevelDraw(INI *ini, void *instance, void *store,
 	const void *userData);
 
-template <typename T> class StringBase
-{
-protected:
-	StringBase() : m_data( 0 ) {}
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const T *text );
-	friend class AsciiString;
-	friend void parseBannerCarrierExpLevelDraw(INI *ini, void *instance,
-		void *store, const void *userData);
-
-protected:
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	AsciiString &operator=( const char *text );
-};
 
 extern "C" int __cdecl strcmp( const char *left, const char *right );
 

@@ -7,27 +7,8 @@
 typedef int Int;
 typedef bool Bool;
 
-template <typename T> class StringBase
-{
-friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(void) : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(void) : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString(void) {}
-
-	static AsciiString TheEmptyString;
-};
 
 class GameInfo
 {
