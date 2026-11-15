@@ -1,26 +1,8 @@
 #include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // Retail 0x00579480: BfmeAptScreenSkirmish destructor.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const T *text );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	~AsciiString() {}
-};
 
 class UnicodeString : private StringBase<unsigned short>
 {
