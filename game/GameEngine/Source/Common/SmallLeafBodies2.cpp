@@ -146,7 +146,7 @@ private:
 	static bool IsInitted;
 	static bool IsScreenUVBiased;
 };
-extern unsigned char g_Va0133F42C;
+extern bool HighlightRendering;
 extern unsigned char g_006fc8d0;
 extern unsigned char g_Va0133F451;
 
@@ -172,7 +172,7 @@ unsigned char Rva006C5230GetFlag( void )
 
 unsigned char Rva006D1C10GetFlag( void )
 {
-	return g_Va0133F42C;
+	return HighlightRendering;
 }
 
 unsigned char Rva006E7010GetFlag( void )

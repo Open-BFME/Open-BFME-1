@@ -132835,7 +132835,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?set_006fc8d0@@YAXE@Z,,0x006FC8D0,10,game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_006fc8d0_SetGlobal.cpp,matched,Open-BFME5 store a global byte
 ?set_00710e10@@YAXE@Z,,0x00710E10,10,game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00710e10_SetGlobal.cpp,matched,Open-BFME5 store a global byte
 ?set_00710e20@@YAXE@Z,,0x00710E20,10,game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00710e20_SetGlobal.cpp,matched,Open-BFME5 store a global byte
-?set_00710e30@@YAXE@Z,,0x00710E30,10,game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00710e30_SetGlobal.cpp,matched,Open-BFME5 store a global byte
 ?set_bottom_pointers@D3DX@@YGXPAUjpeg_decompress_struct@1@@Z,,0x00AC1A80,164,inputs/vendor/d3dx9/d3dx9.lib,matched,vendored=d3dx9-summer2003;member=obj\i386\jdmainct.obj
 ?set_identity@MotionChannelClass@@ABEXPAM@Z,,0x00952520,39,game/Libraries/Source/WWVegas/WW3D2/htree.cpp,matched,
 ?set_identity@TimeCodedMotionChannelClass@@AAEXPAM@Z,,0x00977AC0,39,game/Libraries/Source/WWVegas/WW3D2/motchan.cpp,matched,
@@ -173474,3 +173473,4 @@ dup_3828c0,,0x003828C0,16,game/GameEngine/Source/GameClient/FXListStoreClone.cpp
 ??4StreakRendererClass@@QAEAAV0@ABV0@@Z,,0x0095C860,140,game/GameEngine/Source/Common/TextureRefAssignOperators.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/0095c860-streakrenderer-assign.md;StreakRendererClass::operator= named by its matched copy-ctor caller 0x0095FE50; REF_PTR_SET texture then dwords +0x04..+0x40; see identity evidence;model=claude-opus-5-5;host=ymo-workstation
 ?setup@Rva003A1080Owner@@QAEXHHMMH_N@Z,,0x003A1080,119,game/GameEngine/Source/Common/Containers/Rva003A1080Setup.cpp,matched,model=claude-opus-5-5;host=vm
 ?find@NearestTemplate0036FE10@@QAEPAXABVAsciiString@@@Z,,0x0036FE10,279,game/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorNearestTemplate0036FE10.cpp,matched,model=claude-opus-5-5;host=vm
+?set_00710e30@@YAX_N@Z,,0x00710E30,10,game/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00710e30_SetGlobal.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/00710e30-set-highlight-bool-param.md;bool param proven by codegen: retail 10B body is a plain byte move with no test/setne normalization which an unsigned char param emits; datum is the dir32-recorded bool ?HighlightRendering@@3_NA at 0x0133F42C;model=glm-5-3;host=ymo-workstation

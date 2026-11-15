@@ -317,7 +317,7 @@ public:
 	static bool Is_Snapshot_Activated() { return SnapshotActivated; }
 };
 
-extern unsigned char g_00710e30;
+extern bool HighlightRendering;
 extern unsigned number_of_DX8_calls;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
@@ -623,7 +623,7 @@ void DX8Wrapper::Draw(
 	// When this material filter is enabled, skip a missing material or one
 	// whose three emissive components are all below the retail 0.1f threshold.
 	// Preserve the short-circuit comparisons, including their NaN behavior.
-	if (g_00710e30) {
+	if (HighlightRendering) {
 		VertexMaterialClass *material = render_state.material;
 		if (!material) return;
 		Vector3 emissive;

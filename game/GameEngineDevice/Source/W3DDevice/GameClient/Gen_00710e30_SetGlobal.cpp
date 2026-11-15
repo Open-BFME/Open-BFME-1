@@ -2,10 +2,14 @@
 
 // Retail 0x00710E30. Store a byte into a global. cdecl (ret not ret 4).
 
-unsigned char g_00710e30;
+// dir32_addresses.csv records this datum as ?HighlightRendering@@3_NA at
+// VA 0x0133F42C (retail zero-filled .data); the byte-true setter, getter and
+// filter consumers all reference that recorded name.
 
-// ?set_00710e30@@YAXE@Z
-void set_00710e30(unsigned char v)
+bool HighlightRendering;
+
+// ?set_00710e30@@YAX_N@Z
+void set_00710e30(bool v)
 {
-	g_00710e30 = v;
+	HighlightRendering = v;
 }
