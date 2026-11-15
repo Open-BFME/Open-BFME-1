@@ -12,34 +12,9 @@ template <class T> struct StringData
 	T m_text[1];
 };
 
-template <class T> class StringBase
-{
-protected:
-	StringBase(const StringBase &other);
-	~StringBase();
-	StringData<T> *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	int compare(const AsciiString &other) const
-	{
-		int otherLength = other.m_data ? other.m_data->m_length : 0;
-		const char *otherText = other.m_data ? other.m_data->m_text : "";
-		int thisLength = m_data ? m_data->m_length : 0;
-		const char *thisText = m_data ? m_data->m_text : "";
-		int length = thisLength < otherLength ? thisLength : otherLength;
-		int result = memcmp(thisText, otherText, length);
-		if (result != 0)
-			return result;
-		return thisLength - otherLength;
-	}
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter

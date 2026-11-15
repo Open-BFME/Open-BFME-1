@@ -7,33 +7,8 @@
 
 #include <hash_map>
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	void concat( const T *text, int length );
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	void format( AsciiString format, ... );
-};
 
 AsciiString operator+( AsciiString left, const AsciiString &right );
 

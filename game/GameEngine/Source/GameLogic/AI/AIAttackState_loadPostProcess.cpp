@@ -11,19 +11,7 @@ enum WeaponSlotType { WEAPON_SLOT_TYPE_UNSPECIFIED = 0 };
 #include "string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-
-	AsciiString &operator=( const AsciiString &other )
-	{
-		StringBase<char>::set( other );
-		return *this;
-	}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Rva0016F9E0SourceLockShim
 {

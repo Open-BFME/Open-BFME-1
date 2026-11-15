@@ -9,28 +9,8 @@
 
 // stlport
 
-template <typename T> class StringBase
-{
-    friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-    StringBase( const T *text );
-    StringBase( const StringBase<T> &other );
-    // Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-    // <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-    ~StringBase() { releaseBuffer(); }
-    void releaseBuffer();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    ~AsciiString() {}
-};
 
 class _bfme_AptGameWindow
 {

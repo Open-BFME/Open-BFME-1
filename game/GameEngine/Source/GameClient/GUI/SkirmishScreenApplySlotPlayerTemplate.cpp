@@ -3,26 +3,8 @@
 // player-template callback.  The body updates the slot and the local honors
 // profile, then refreshes the profile display and writes the new slot list.
 
-template <typename T> class StringBase
-{
-    friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-    StringBase( const StringBase<T> &other );
-    ~StringBase();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    static AsciiString TheEmptyString;
-
-    AsciiString( const AsciiString &other )
-        : StringBase<char>( other ) {}
-    ~AsciiString();
-};
 
 class GameSlot
 {

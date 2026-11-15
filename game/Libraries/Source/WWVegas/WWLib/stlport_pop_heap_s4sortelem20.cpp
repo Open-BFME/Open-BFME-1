@@ -4,61 +4,13 @@ extern "C" int memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 extern void j_00033640();
 
-template <class T>
-class StringBase
-{
-    friend class AsciiString;
-private:
-	struct Header
-	{
-		int m_bfmeRefCount;
-		unsigned short m_bfmeLength;
-		unsigned short m_bfmeCapacity;
-		T m_bfmeData[1];
-	};
-
-	Header *m_bfmeHeader;
-
-public:
-	StringBase<T> &operator=(const StringBase<T> &other)
-	{
-		set(other);
-		return *this;
-	}
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-public:
-	void set(const StringBase<T> &other);
-	friend struct S4SortElem20;
-};
+#include "ascii_string.h"
 
 
 // Retail S4+0 is the AsciiString wrapper. Its four-byte StringBase subobject
 // keeps the 20-byte record layout, while cleanup resolves the distinct QAE
 // AsciiString destructor (RVA 0x005EE90 / ILT 0x0000D828), not the private
 // StringBase<char> destructor.
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(const AsciiString &other)
-        : StringBase<char>(other) {}
-    ~AsciiString() {}
-    __declspec(dllimport) __forceinline void set(const AsciiString &other)
-    {
-        StringBase<char>::set(other);
-    }
-    AsciiString &operator=(const AsciiString &other)
-    {
-        set(other);
-        return *this;
-    }
-
-};
 
 struct BfmeSortTailElement12;
 

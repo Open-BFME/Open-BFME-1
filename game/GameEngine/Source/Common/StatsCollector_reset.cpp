@@ -7,14 +7,7 @@
 // field offsets, and GameLogic frame read identify this as StatsCollector::reset.
 #include "string_base.h"
 
-class AsciiString : public StringBase<char>
-{
-public:
-    AsciiString() : StringBase<char>() {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    ~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class FileSystem
 {

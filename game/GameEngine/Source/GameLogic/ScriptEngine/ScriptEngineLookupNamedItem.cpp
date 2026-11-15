@@ -12,41 +12,8 @@
 
 class AsciiString;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	void set(const StringBase &other);
-
-private:
-	struct Data
-	{
-		int refs;
-		int length;
-		T data[1];
-	};
-
-	Data *m_data;
-	StringBase();
-	StringBase(const StringBase &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() { m_data = 0; }
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	void set(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::set(
-			*(const StringBase<char> *)&other);
-	}
-};
 
 class BfmeNamedItem0033c340;
 
