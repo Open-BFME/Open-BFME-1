@@ -24,19 +24,7 @@ public:
 	virtual void notifyFired() = 0;
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-
-	void zero()
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream source: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // The four tail fields are BFME additions absent from the later Generals header;
@@ -91,5 +79,5 @@ AIAttackState::AIAttackState(
 	m_bfmeAttackState4D(false),
 	m_attackMachineType(3)
 {
-	m_originalVictimPos.zero();
+	{ Coord3D *const position = &m_originalVictimPos; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 }
