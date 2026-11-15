@@ -68,3 +68,12 @@ symbol-table or debug byte is excluded.
 The normal build regenerated its creation timestamp for: `game/GameEngine/Source/GameLogic/Object/Weapon.cpp`.
 Weapon.cpp is deliberately not dependency-cached because a macro/parent-traversing
 include lies outside the snapshotted search roots; its normal recompile is retained.
+
+Publication follow-up: the normal pre-push gate for the last 58 cleanup repairs
+passed at `e1e3445b84`. It recorded 56 successful verification receipts; the two
+Weapon actions `uw_00c0a5e0` and `uw_00c0a650` were not recordable because their
+evidence cannot be keyed with the existing unsnapshotted include paths. Direct
+normal compilation, complete-object comparison excluding only the COFF timestamp,
+byte checks and retail unwind-state checks passed for both. Automatic receipt
+coverage remains incomplete for these two actions; this is not a complete cached
+receipt package or a full-link/runtime result.
