@@ -7,28 +7,8 @@ template <typename T> struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-protected:
-	StringInlineData<T> *m_data;
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	StringBase() : m_data( 0 ) {}
-
-private:
-	StringBase( const StringBase<T> &other );
-	friend class AsciiString;
-
-protected:
-	~StringBase();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-};
 
 class Rva006CCCA0Owner
 {

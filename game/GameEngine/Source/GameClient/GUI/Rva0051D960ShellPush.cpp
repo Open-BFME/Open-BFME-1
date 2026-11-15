@@ -5,28 +5,8 @@
 //   0x0051D9D0 51B  if (TheGameState->doesSaveGameExist("00000000.sav")) this+0x264 = 1
 // Same in-place StringBase<char> by-value slot as ShowLanLobby / ShowSkirmish.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	// Retail's ~AsciiString (0x0005EE90) is a bare jmp to releaseBuffer.
-	~StringBase() { releaseBuffer(); }
-
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-};
 
 class Shell
 {

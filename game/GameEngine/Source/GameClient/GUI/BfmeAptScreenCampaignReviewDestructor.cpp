@@ -5,27 +5,8 @@
 // The CampaignReview constructor and callback name identify this cleanup
 // body, which resets both interface vtables before it closes the screen.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class _bfme_AptGameWindow
 {

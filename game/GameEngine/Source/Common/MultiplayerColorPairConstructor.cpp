@@ -19,12 +19,7 @@ class AsciiString;
 #include "string_base.h"
 
 // Retail inlines the forwarding copy and calls the narrow StringBase body.
-class AsciiString : private StringBase<char>
-{
-public:
-    __forceinline AsciiString(const AsciiString &source) : StringBase<char>(source) {}
-    ~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct RGBColor
 {

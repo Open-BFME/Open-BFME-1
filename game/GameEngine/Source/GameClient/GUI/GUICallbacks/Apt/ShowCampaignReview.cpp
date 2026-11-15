@@ -5,28 +5,9 @@
 // otherwise Shell::push("CampaignReview.apt", false).  No /EHsc: retail
 // carries the by-value stash without a registered handler.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Shell.h
 class Shell

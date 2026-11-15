@@ -11,13 +11,7 @@ void __cdecl operator delete[](void *block);
 
 #include "string_base.h"
 
-class AsciiString : public StringBase<char>
-{
-public:
-	~AsciiString()
-	{
-	}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BfmeOwnVVBNode
 {
