@@ -27,39 +27,9 @@
 
 typedef int Int;
 
-template <class Type>
-class StringBase
-{
-private:
-	StringBase(const char *s);
-	StringBase(const StringBase &that);
-	friend class AsciiString;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-
-	AsciiString() { m_text = 0; }
-
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-	}
-
-	~AsciiString();
-
-private:
-
-	void *m_text;
-
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UserPreferences.h
 class UserPreferences

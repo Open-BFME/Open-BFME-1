@@ -9,25 +9,7 @@ typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	__forceinline AsciiString() : m_data(0) {}
-	~AsciiString();
-
-	__forceinline void set(const char *text, Int length)
-	{
-		((StringBase<char> *)this)->set(text, length);
-	}
-
-	__forceinline void clear()
-	{
-		((StringBase<char> *)this)->clear();
-	}
-
-private:
-	char *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString
@@ -117,7 +99,7 @@ GameSpyStagingRoom::GameSpyStagingRoom()
 		setSlotPointer(i, &m_slots[i]);
 
 	m_transport = 0;
-	m_localName.set("localhost", 9);
+	m_localName.StringBase<char>::set("localhost", 9);
 	m_ladderIP.clear();
 	m_ladderPort = 0;
 	m_reportedMaxPlayers = 0;

@@ -9,37 +9,9 @@ class AIGroup;
 class Object;
 class Team;
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
-
-public:
-	int compare(const char *) const;
-
-private:
-	StringBase(const StringBase &);
-	~StringBase();
-	struct Header;
-	Header *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-	}
-	~AsciiString();
-	int compare(const char *str) const
-	{
-		return ((const StringBase<char> *)this)->compare(str);
-	}
-
-private:
-	char *m_text;
-};
 
 #include "../command_source_type.h"
 

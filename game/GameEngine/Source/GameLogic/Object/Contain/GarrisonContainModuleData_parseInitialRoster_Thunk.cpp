@@ -19,14 +19,7 @@ typedef int Int;
 extern "C" unsigned int __cdecl strlen(const char *s);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set(const char *s, Int len);					///< ILT thunk at 0x00887D20
-
-private:
-	void *m_data;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI
@@ -58,6 +51,6 @@ void GarrisonContainModuleData::parseInitialRoster(INI *ini, void *instance, voi
 	Int count = countToken ? INI::scanInt(countToken) : 1;
 
 	GarrisonContainModuleData *self = (GarrisonContainModuleData *)instance;
-	self->m_initialRosterName.set(name, name ? (Int)strlen(name) : 0);
+	self->m_initialRosterName.StringBase<char>::set(name, name ? (Int)strlen(name) : 0);
 	self->m_initialRosterCount = count;
 }
