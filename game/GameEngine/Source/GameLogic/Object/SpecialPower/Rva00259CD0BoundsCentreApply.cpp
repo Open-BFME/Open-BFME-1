@@ -23,7 +23,8 @@ struct BfmeModeAZC
 	void bfmeStopAZC(int value);
 };
 
-extern BfmeModeAZC *g_bfmeModeAZC;
+// Retail 0x012f0fe0: use the existing data owner; retain the local pointee view.
+extern struct RetailGlobalWeatherSystem *TheGlobalWeatherSystem;
 extern const Real g_rva0107533C;
 
 class BfmeThingCOF
@@ -99,11 +100,11 @@ private:
 // ?apply@Rva00259CD0Dispatch@@QAEXPAUCoord3D_259CD0@@@Z
 void Rva00259CD0Dispatch::apply(Coord3D_259CD0 *subject)
 {
-	if (g_bfmeModeAZC->mode == 1)
+	if (reinterpret_cast<BfmeModeAZC *>(TheGlobalWeatherSystem)->mode == 1)
 		return;
 
 	BfmeThingCOF *object = thing;
-	g_bfmeModeAZC->bfmeStopAZC(1);
+	reinterpret_cast<BfmeModeAZC *>(TheGlobalWeatherSystem)->bfmeStopAZC(1);
 	if (object->containedBy != 0)
 	{
 		Region3D_259CD0 extent;

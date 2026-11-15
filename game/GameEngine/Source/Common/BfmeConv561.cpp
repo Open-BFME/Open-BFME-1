@@ -48,7 +48,8 @@ public:
 	LivingWorldArmy *findArmy(const AsciiString &name);
 };
 
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
+// Retail 0x012f1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
 
 class LivingWorldPlayerArmy
 {
@@ -99,7 +100,7 @@ void BfmeSubBZF::bfmeOneBZF()
 			!playerArmy->m_replenishArmyName.isEmpty())
 		{
 			LivingWorldArmy *army =
-				TheLivingWorldCampaignManager->findArmy(playerArmy->m_replenishArmyName);
+				reinterpret_cast<BfmeLivingWorldCampaignManager *>(TheLivingWorldCampaignManager)->findArmy(playerArmy->m_replenishArmyName);
 			if (army)
 				army->replenish(playerArmy);
 		}

@@ -75,7 +75,8 @@ public:
 	std::vector<Rva00369860StatePointer> m_states;
 };
 
-extern Rva00369860Registry *TheRva00369860Registry;
+// Retail 0x012f07e4: use the existing data owner; retain the local pointee view.
+extern class AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
 
 void parseModifierListDefinition( INI *ini )
 {
@@ -93,5 +94,5 @@ void parseModifierListDefinition( INI *ini )
 	}
 
 	ini->initFromINI( state, fields );
-	TheRva00369860Registry->m_states.push_back( state );
+	reinterpret_cast<Rva00369860Registry *>(TheAttributeModifierDefinitionStore)->m_states.push_back( state );
 }

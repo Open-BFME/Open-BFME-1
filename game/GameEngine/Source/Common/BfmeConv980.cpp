@@ -41,8 +41,8 @@ public:
 	BfmeUseB980 *bfmeFind980B(BfmeRecB980 *r);
 };
 
-extern BfmeFindA980 *g_bfmeFindA980;
-extern BfmeFindB980 *g_bfmeFindB980;
+// Retail 0x012ef1d8: use the existing data owner; retain the local pointee view.
+extern class ThingFactory *TheThingFactory;
 
 class BfmeA980
 {
@@ -60,7 +60,7 @@ void *BfmeA980::bfmeGo980A(int a)
 
 	if (r) {
 		int slot = m_bfmeSlot;
-		BfmeUseA980 *u = g_bfmeFindA980->bfmeFind980A(r);
+		BfmeUseA980 *u = reinterpret_cast<BfmeFindA980 *>(TheThingFactory)->bfmeFind980A(r);
 
 		if (u)
 			return u->bfmeApply980A(slot, r->m_bfmeVal);
@@ -85,7 +85,7 @@ void *BfmeB980::bfmeGo980B(int a)
 
 	if (r) {
 		int slot = m_bfmeSlot;
-		BfmeUseB980 *u = g_bfmeFindB980->bfmeFind980B(r);
+		BfmeUseB980 *u = reinterpret_cast<BfmeFindB980 *>(TheThingFactory)->bfmeFind980B(r);
 
 		if (u)
 			return u->bfmeApply980B(slot, r->m_bfmeVal);

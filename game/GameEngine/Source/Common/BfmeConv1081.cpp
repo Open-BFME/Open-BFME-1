@@ -67,7 +67,8 @@ public:
 	void bfmeAdd1081(BfmeF1081 *a, BfmeE1081 *b, int c, int d);
 };
 
-extern ExperienceLevelSystem *g_bfmeJ1081;
+// Retail 0x012f0888: use the existing data owner; retain the local pointee view.
+extern class ExperienceLevelSystem *TheExperienceLevelSystem;
 
 void __stdcall bfmeGo1081A(int a, int b)
 {
@@ -76,10 +77,10 @@ void __stdcall bfmeGo1081A(int a, int b)
 
 	if (!e)
 		return;
-	f = g_bfmeJ1081->bfmeFind1081(b);
+	f = TheExperienceLevelSystem->bfmeFind1081(b);
 	if (!f)
 		return;
-	g_bfmeJ1081->bfmeAdd1081(f, e, 0, 1);
+	TheExperienceLevelSystem->bfmeAdd1081(f, e, 0, 1);
 	e->m_experienceTracker->m_bfme24 = 0;
 }
 

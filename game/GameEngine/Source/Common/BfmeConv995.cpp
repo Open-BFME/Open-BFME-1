@@ -78,7 +78,8 @@ public:
 // this TU's view of the same object, so the uses cast.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
-extern BfmeDrop995 *g_bfmeDrop995;
+// Retail 0x012f12cc: use the existing data owner; retain the local pointee view.
+extern class DisplayStringManager *TheDisplayStringManager;
 extern int g_guiFxWindowHandle;
 class Rva00510DC0DisplayView;
 extern Rva00510DC0DisplayView *Rva00510DC0Display;
@@ -88,7 +89,7 @@ void bfmeGo995B(void)
 	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_guiFxWindowHandle, "HideToolTip", 0, 0, 0, 0, 0, 0);
 
 	if (reinterpret_cast<void * &>(Rva00510DC0Display)) {
-		g_bfmeDrop995->bfmeRelease995(reinterpret_cast<void * &>(Rva00510DC0Display));
+		reinterpret_cast<BfmeDrop995 *>(TheDisplayStringManager)->bfmeRelease995(reinterpret_cast<void * &>(Rva00510DC0Display));
 		reinterpret_cast<void * &>(Rva00510DC0Display) = 0;
 	}
 }

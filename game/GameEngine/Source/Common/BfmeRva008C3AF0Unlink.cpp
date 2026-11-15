@@ -54,7 +54,8 @@ public:
 	void bfmeStep1211C(void);
 };
 
-extern BfmeG1211 *g_bfme1211;
+// Retail 0x01337810: use the existing data owner; retain the local pointee view.
+extern struct Rva00899560Pool *g_rva01337810GcRoots;
 extern void (__cdecl *g_bfmeFreeDWF)(void *);
 
 struct BfmeStringData3AF0
@@ -113,7 +114,7 @@ void __cdecl bfmeClearHash3AF0(void)
 					node = next;
 				} while (node != 0);
 
-				g_bfme1211->bfmeStep1211C();
+				reinterpret_cast<BfmeG1211 *>(g_rva01337810GcRoots)->bfmeStep1211C();
 			}
 
 			count = g_bfmeHashCount3AF0;

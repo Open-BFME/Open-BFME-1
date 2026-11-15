@@ -11,7 +11,8 @@ public:
 	BfmeObjF62* find(int id);
 };
 
-extern BfmeMgrF62 *g_bfmeMgr12F0898;
+// Retail 0x012f0898: use the existing data owner; retain the local pointee view.
+extern class GameLogic *TheGameLogic;
 
 class BfmeBaseF62
 {
@@ -35,7 +36,7 @@ void BfmeSubF62::doAction(int dummy)
 {
 	BfmeParentF62 *p = (BfmeParentF62*)((char*)this - 4);
 	int id = p->base.getId();
-	BfmeObjF62 *obj = g_bfmeMgr12F0898->find(id);
+	BfmeObjF62 *obj = reinterpret_cast<BfmeMgrF62 *>(TheGameLogic)->find(id);
 	if (obj)
 		obj->trigger(8, 0);
 }
@@ -158,7 +159,8 @@ struct BfmeListNode404
 	BfmeItemVfn404 *item;
 };
 
-extern void *g_global12EF1D8;
+// Retail 0x012ef1d8: use the existing data owner; retain the local pointee view.
+extern class ThingFactory *TheThingFactory;
 
 struct BfmeThing404
 {
@@ -169,7 +171,7 @@ struct BfmeThing404
 
 void BfmeThing404::notifyAll()
 {
-	if (g_global12EF1D8) {
+	if (reinterpret_cast<void *>(TheThingFactory)) {
 		for (BfmeListNode404 *curr = m_listHead->next; curr != m_listHead; curr = curr->next) {
 			curr->item->vfn8();
 		}

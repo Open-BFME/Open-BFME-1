@@ -76,7 +76,8 @@ public:
 	virtual void *bfmeMakeAOA(int flag, void *what);
 };
 
-extern BfmeOneAOA *g_bfmeOneAOA;
+// Retail 0x012f4b98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 extern NameKeyGenerator *TheNameKeyGenerator;
 class GameWindowManager;
 extern GameWindowManager *TheWindowManager;
@@ -92,9 +93,9 @@ public:
 
 void BfmeThingAOA::bfmeGoAOA()
 {
-	if (g_bfmeOneAOA != 0 && bfmeAskAOA())
+	if (reinterpret_cast<BfmeOneAOA *>(TheAptPalantir) != 0 && bfmeAskAOA())
 	{
-		m_bfmeWhat = g_bfmeOneAOA->m_bfmeValue;
+		m_bfmeWhat = reinterpret_cast<BfmeOneAOA *>(TheAptPalantir)->m_bfmeValue;
 		return;
 	}
 	// The key is stored through a void* hand-off; the retail body returns the

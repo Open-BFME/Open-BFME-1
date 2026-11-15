@@ -40,14 +40,15 @@ inline Coord3D::~Coord3D() {}
 inline Coord3D &Coord3D::operator-=(const Coord3DBase &that) { x-=that.x; y-=that.y; z-=that.z; return *this; }
 class Overridable { public: const Overridable *getFinalOverride() const; };
 struct Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+// Retail 0x012f0898: use the existing data owner; retain the local pointee view.
+extern class GameLogic *TheGameLogic;
 class Gen_00383090 { public: int m(); };
 class NearestTemplate0036FE10 {
 public:
  void *find(const AsciiString &name);
 };
 void *NearestTemplate0036FE10::find(const AsciiString &name) {
- void *object=(void*)((Gen_00383090 *)TheBfmeGameLogic)->m();
+ void *object=(void*)((Gen_00383090 *)reinterpret_cast<Rva00367E30Logic *>(TheGameLogic))->m();
  void *best=0;
  float distance=99999.0f;
  if(object) {

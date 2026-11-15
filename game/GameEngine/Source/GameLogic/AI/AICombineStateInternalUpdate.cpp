@@ -80,7 +80,8 @@ class BFMEActionManager
 public:
 	bool rva000C4080(const Object *obj, const Object *target, CommandSourceType source);
 };
-extern BFMEActionManager *TheActionManager;
+// Retail 0x012ed700: use the existing data owner; retain the local pointee view.
+extern class ActionManager *TheActionManager;
 
 class AICombineState
 {
@@ -105,7 +106,7 @@ StateReturnType AICombineState::internalUpdate()
 	{
 		if (goal->cannotCombine())
 			return STATE_FAILURE;
-		if (!TheActionManager->rva000C4080(owner, goal, owner->m_ai->getLastCommandSource()))
+		if (!reinterpret_cast<BFMEActionManager *>(TheActionManager)->rva000C4080(owner, goal, owner->m_ai->getLastCommandSource()))
 			return STATE_FAILURE;
 		m_goalPosition = goal->m_position;
 		float distance = owner->getDistanceSquared(goal);

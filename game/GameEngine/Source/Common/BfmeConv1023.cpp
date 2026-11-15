@@ -69,7 +69,8 @@ public:
 	virtual void bfmeStop1023(int n);
 };
 
-extern BfmeC1023 *g_bfmeC1023;
+// Retail 0x012f7714: use the existing data owner; retain the local pointee view.
+extern class NetworkInterface *TheNetwork;
 
 class BfmeB1023
 {
@@ -80,8 +81,8 @@ public:
 
 void BfmeB1023::bfmeGo1023B(int a)
 {
-	if (g_bfmeC1023 != 0)
-		g_bfmeC1023->bfmeStop1023(0);
+	if (reinterpret_cast<BfmeC1023 *>(TheNetwork) != 0)
+		reinterpret_cast<BfmeC1023 *>(TheNetwork)->bfmeStop1023(0);
 
 	bfmeApply1023(a);
 }
@@ -163,7 +164,8 @@ public:
 	void bfmeNote1023(BfmeH1023 *o);
 };
 
-extern BfmeJ1023 *g_bfmeJ1023;
+// Retail 0x012f1044: use the existing data owner; retain the local pointee view.
+extern class LargeGroupAudio *TheLargeGroupAudio;
 
 class BfmeH1023
 {
@@ -190,7 +192,7 @@ void BfmeS1023::bfmeGo1023H(void)
 	BfmeH1023 *o = (BfmeH1023 *)((char *)this - 0x20);
 
 	if (m_bfmeFlag != 0) {
-		g_bfmeJ1023->bfmeNote1023(o);
+		reinterpret_cast<BfmeJ1023 *>(TheLargeGroupAudio)->bfmeNote1023(o);
 		o->bfmeAdd1023(o->m_bfmeVal, 0x3fffffff);
 		o->m_bfmeFlag = 0;
 	}

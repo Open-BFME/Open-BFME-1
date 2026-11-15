@@ -93,8 +93,9 @@ extern Gen00587600 *g_bfmeSubsystem012F4B78;
 static inline BfmeThingATB *TheThingATBView() { return (BfmeThingATB *)g_bfmeSubsystem012F4B78; }
 static inline BfmeThingAZB *TheThingAZBView() { return (BfmeThingAZB *)g_bfmeSubsystem012F4B78; }
 class BfmeLivingWorldCampaignManager;
-extern BfmeLivingWorldCampaignManager *TheLivingWorldCampaignManager;
-static inline BfmeOneCHF *TheLivingWorldView() { return (BfmeOneCHF *)TheLivingWorldCampaignManager; }
+// Retail 0x012f1024: use the existing data owner; retain the local pointee view.
+extern class LivingWorldCampaignManager *TheLivingWorldCampaignManager;
+static inline BfmeOneCHF *TheLivingWorldView() { return (BfmeOneCHF *)reinterpret_cast<BfmeLivingWorldCampaignManager *>(TheLivingWorldCampaignManager); }
 
 
 class Rva003C1A50Tick

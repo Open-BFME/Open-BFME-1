@@ -10,11 +10,12 @@ struct BfmeMgr112
 	unsigned char pad[0x2b8];
 	BfmeSub2B8_112 m_sub2B8;
 };
-extern BfmeMgr112 *g_mgr12F4B98;
+// Retail 0x012f4b98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 
 void __stdcall bfmeSend112(void *a, int b)
 {
-	g_mgr12F4B98->m_sub2B8.send(a, b * 30);
+	reinterpret_cast<BfmeMgr112 *>(TheAptPalantir)->m_sub2B8.send(a, b * 30);
 }
 
 class BfmeMgrF07

@@ -160,7 +160,8 @@ public:
 	void bfmeReg1052(int *p, void (*fn)(void));
 };
 
-extern BfmeN1052 *g_bfmeN1052;
+// Retail 0x012f4b98: use the existing data owner; retain the local pointee view.
+extern class AptPalantir *TheAptPalantir;
 
 class BfmeL1052
 {
@@ -174,7 +175,7 @@ public:
 
 void BfmeL1052::bfmeGo1052L(BfmeM1052 *p)
 {
-	g_bfmeN1052->bfmeReg1052(&p->m_bfmeVal, bfmeHook1052);
+	reinterpret_cast<BfmeN1052 *>(TheAptPalantir)->bfmeReg1052(&p->m_bfmeVal, bfmeHook1052);
 	m_bfmeFlag = p->m_bfmeFlag;
 	bfmeTail1052(p);
 }

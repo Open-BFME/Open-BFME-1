@@ -11,13 +11,14 @@ public:
 	float bfmeCallUDB(int a, int b);
 };
 
-extern BfmeSrcUDB *g_bfmeObjUDB;
+// Retail 0x012f7fe0: use the existing data owner; retain the local pointee view.
+extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 extern const float g_rva01075350;
 
 float __stdcall bfmeGoUDB(int a, int b)
 {
-	if (g_bfmeObjUDB)
-		return g_bfmeObjUDB->bfmeCallUDB(a, b);
+	if (reinterpret_cast<BfmeSrcUDB *>(TheTerrainRenderObject))
+		return reinterpret_cast<BfmeSrcUDB *>(TheTerrainRenderObject)->bfmeCallUDB(a, b);
 	return g_rva01075350;
 }
 

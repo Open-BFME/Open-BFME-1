@@ -12,7 +12,8 @@ public:
 	BfmeRec1014 *bfmeFind1014(int id);
 };
 
-extern BfmeStore1014 *g_bfmeStore1014;
+// Retail 0x012f0898: use the existing data owner; retain the local pointee view.
+extern class GameLogic *TheGameLogic;
 
 class BfmeD1014
 {
@@ -28,7 +29,7 @@ char BfmeD1014::bfmeGo1014D()
 	int id = m_bfmeId;
 
 	if (id != 0) {
-		BfmeRec1014 *r = g_bfmeStore1014->bfmeFind1014(id);
+		BfmeRec1014 *r = reinterpret_cast<BfmeStore1014 *>(TheGameLogic)->bfmeFind1014(id);
 		if (r == 0 || (r->m_bfmeFlags & 1) != 0) {
 			m_bfmeId = 0;
 			return 1;

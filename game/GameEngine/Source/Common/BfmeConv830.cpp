@@ -72,11 +72,12 @@ public:
 	virtual void* vfn26(void *key);
 	int findSomething(void *key, int zero);
 };
-extern BfmeMgrF07 *g_mgr12F076C;
+// Retail 0x012f076c: use the existing data owner; retain the local pointee view.
+extern class ScriptEngine *TheScriptEngine;
 
 void __stdcall bfmeLookupAndSend650(void *key)
 {
-	BfmeObjE65 *obj = (BfmeObjE65*)g_mgr12F076C->vfn26(key);
+	BfmeObjE65 *obj = (BfmeObjE65*)reinterpret_cast<BfmeMgrF07 *>(TheScriptEngine)->vfn26(key);
 	if (obj) {
 		obj->sendSignal(8, 0);
 	}
@@ -84,7 +85,7 @@ void __stdcall bfmeLookupAndSend650(void *key)
 
 void __stdcall bfmeLookupAndForward5E0(void *key)
 {
-	void *obj = g_mgr12F076C->vfn26(key);
+	void *obj = reinterpret_cast<BfmeMgrF07 *>(TheScriptEngine)->vfn26(key);
 	if (obj) {
 		((BfmeMgr089_E5E *)TheGameLogic)->forwardObj(obj);
 	}
@@ -92,7 +93,7 @@ void __stdcall bfmeLookupAndForward5E0(void *key)
 
 void __stdcall bfmeLookupAndAction610(void *key, void *p2, void *p3, void *p4, void *p5)
 {
-	BfmeObjE61 *obj = (BfmeObjE61*)g_mgr12F076C->vfn26(key);
+	BfmeObjE61 *obj = (BfmeObjE61*)reinterpret_cast<BfmeMgrF07 *>(TheScriptEngine)->vfn26(key);
 	if (obj) {
 		obj->action4(p2, p3, p4, p5);
 	}
@@ -100,7 +101,7 @@ void __stdcall bfmeLookupAndAction610(void *key, void *p2, void *p3, void *p4, v
 
 void __stdcall bfmeIterateAndNotify3F0(void *key, void *param)
 {
-	key = (void*)g_mgr12F076C->findSomething(key, 0);
+	key = (void*)reinterpret_cast<BfmeMgrF07 *>(TheScriptEngine)->findSomething(key, 0);
 	if ((unsigned short)(int)key != 0) {
 		do {
 			BfmeObjNotify3F0 *obj = localThePlayerList()->getNext((short*)&key);
@@ -113,7 +114,7 @@ void __stdcall bfmeIterateAndNotify3F0(void *key, void *param)
 
 void __stdcall bfmeIterateAndNotify510(void *key, void *param)
 {
-	key = (void*)g_mgr12F076C->findSomething(key, 0);
+	key = (void*)reinterpret_cast<BfmeMgrF07 *>(TheScriptEngine)->findSomething(key, 0);
 	if ((unsigned short)(int)key != 0) {
 		do {
 			BfmeObjNotify3F0 *obj = localThePlayerList()->getNext((short*)&key);
