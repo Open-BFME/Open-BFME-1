@@ -8,18 +8,8 @@
 extern "C" __declspec(dllimport) char *__cdecl strncpy( char *dest, const char *src, unsigned int count );
 extern "C" unsigned int __cdecl strlen( const char *str );
 
-template <typename T>
-class StringBase
-{
-public:
-	void set( const T *str, int len );
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : public StringBase<char>
-{
-private:
-	void *m_data;
-};
 
 struct CustomMatchListRow
 {
@@ -64,15 +54,15 @@ void __stdcall copyCustomMatchListRow( const CustomMatchListSource *src, CustomM
 {
 	char buf[ 256 ] = { 0 };
 	strncpy( buf, src->name, 255 );
-	dst->name.set( src->name, src->name ? (int)strlen( src->name ) : 0 );
-	dst->truncatedName.set( buf, (int)strlen( buf ) );
+	dst->name.StringBase<char>::set( src->name, src->name ? (int)strlen( src->name ) : 0 );
+	dst->truncatedName.StringBase<char>::set( buf, (int)strlen( buf ) );
 	dst->field14 = src->fieldF4;
 	dst->field18 = src->field104;
 	dst->field0C = src->fieldF8;
 	dst->field10 = src->fieldFC;
 	const char *extra = src->extra;
 	AsciiString *extraSlot = &dst->extra;
-	extraSlot->set( extra, extra ? (int)strlen( extra ) : 0 );
+	extraSlot->StringBase<char>::set( extra, extra ? (int)strlen( extra ) : 0 );
 	dst->field1C = src->field10C;
 	dst->field2C = src->field110;
 	dst->field30 = src->field114;

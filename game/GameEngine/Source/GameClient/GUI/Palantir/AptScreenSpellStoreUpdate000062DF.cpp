@@ -18,32 +18,8 @@ template <typename T> struct StringData
 	T m_text[ 1 ];
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	StringData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	void format( AsciiString format, ... );
-};
 
 class UnicodeString : private StringBase<unsigned short>
 {
