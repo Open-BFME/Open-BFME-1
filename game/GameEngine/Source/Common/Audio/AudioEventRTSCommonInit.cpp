@@ -6,17 +6,7 @@
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
-struct Coord3D
-{
-	float x, y, z;
-
-	void zero(void)
-	{
-		x = 0.0f;
-		y = 0.0f;
-		z = 0.0f;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 
 // Retail inlines this wrapper into StringBase<char> directly; declare just the
@@ -124,7 +114,7 @@ void AudioEventRTS::commonInit(void)
 
 	m_pitchShift = -1.0f;
 	m_volume = m_pitchShift;
-	m_position.zero();
+	{ Coord3D *const position = &m_position; position->x = 0.0f; position->y = 0.0f; position->z = 0.0f; }
 
 	m_shouldFade = 0;
 	m_ownerType = 4;
