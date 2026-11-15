@@ -1,9 +1,15 @@
-// ?draw@W3DDisplay@@UAEXXZ
-// partial score=1.0 date=2026-11-11
+// W3DDisplay::draw, retail 0x006F3FC0 (1184 B), with the 30-byte clamp_006eab10
+// (0x006EAB10) and the static frame counter draw shares with it. The two bodies
+// are one unit because clamp_006eab10's body is a load/dec/store of a file
+// static that only draw and clamp reference, and an extern spelling of that
+// counter emits `dec dword ptr [mem]` (1174 B, 146 diffs) instead of the native
+// load/dec/store. Zero Hour's W3DDisplay.cpp has draw; BFME's split TUs each
+// own one W3DDisplay method, so this one owns draw + clamp.
+//
+// Identity: ?draw@W3DDisplay@@UAEXXZ is vtable 0x0111EDD0 slot 7 reached through
+// ILT 0x000093EF (tools/ilt_oracle.py check CONFIRMED). Handoff and trials:
+// targets/game/reverse/attempt_support/20261111-006f3fc0-w3ddisplay-draw.md
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/sweep
-// W3DDisplay::draw, retail 0x006F3FC0 (1184 B); ilt_oracle confirms the name. The 30-byte
-// clamp_006eab10 (0x006EAB10) lives here with the static frame counter it shares with draw.
-// Handoff: targets/game/reverse/attempt_support/20261111-006f3fc0-w3ddisplay-draw.md
 #include <windows.h>
 void * __cdecl operator new[](unsigned);
 void __cdecl operator delete[](void *);
@@ -240,9 +246,11 @@ static int Rva012BAA5C = 1;
 #define Rva012F076C TheScriptEngine
 #define Rva012F1600 reinterpret_cast<Rva006F3FC0Tactical *>(TheTacticalView)
 #define Rva012F9D98 TheTerrainTracksRenderObjClassSystem
-#define Rva012BAA2C (*reinterpret_cast<unsigned *>(&g_bfmeY1058))
+// The recorded int at 0x012BAA2C (g_bfmeY1058) read as the unsigned counter draw owns.
+#define bfmeY1058Unsigned (*reinterpret_cast<unsigned *>(&g_bfmeY1058))
 #define Rva012F8064 g_rva0075b2e0_value
-#define Rva012BB1CC (*reinterpret_cast<unsigned *>(&TheW3DFrameLengthInMsec))
+// The recorded int at 0x012BB1CC (TheW3DFrameLengthInMsec) read as unsigned.
+#define bfmeFrameLengthUnsigned (*reinterpret_cast<unsigned *>(&TheW3DFrameLengthInMsec))
 #define Rva012F804C g_006eab10
 extern HWND ApplicationHWnd;
 
@@ -251,7 +259,7 @@ extern HWND ApplicationHWnd;
 /** Draw the entire W3D Display */
 //=============================================================================
 //DECLARE_PERF_TIMER(W3DDisplay_draw)
-// ?draw@W3DDisplay@@UAEXXZ present-unmatched
+// ?draw@W3DDisplay@@UAEXXZ
 void W3DDisplay::draw()
 {
     //USE_PERF_TIMER(W3DDisplay_draw)
@@ -266,15 +274,15 @@ void W3DDisplay::draw()
     /// @todo: I'm assuming the first view is our main 3D view.
     W3DView *view = reinterpret_cast<RvaDrawSlots *>(this)->slot74();
     // hack to let client spin fast in network games but still do effects at the same pace. -MDC
-    unsigned delta = Rva012F1464->slot68() - Rva012BAA2C;
+    unsigned delta = Rva012F1464->slot68() - bfmeY1058Unsigned;
     if (frozen) delta=0;
-    else Rva012BAA2C = Rva012F1464->slot68();
+    else bfmeY1058Unsigned = Rva012F1464->slot68();
     bool fast=false;
     if (!Rva012F0898->isGamePaused() && Rva012ED5C8->fieldc59) fast=true;
     if (Rva012F076C->isTimeFast()) fast=true;
     if (!frozen && fast && !Rva012F0898->field11d && (Rva012F1464->slot68()%30)!=0) {
         view->updateCameraMovements();  // Update camera motion effects.
-        Rva012F8064 += Rva012BB1CC;
+        Rva012F8064 += bfmeFrameLengthUnsigned;
         WW3D::Sync(Rva012F8064);
         return;
     }
@@ -284,7 +292,7 @@ void W3DDisplay::draw()
     if (Rva012ED5C8->fieldbb9!=1 && Rva012F9D98) Rva012F9D98->update();
     /// @todo Decouple framerate from timestep
     // for now, use constant time steps to avoid animations running independent of framerate
-    Rva012F8064 += Rva012BB1CC*delta;
+    Rva012F8064 += bfmeFrameLengthUnsigned*delta;
     // allow W3D to update its internals
     //	WW3D::Sync( GetTickCount() );
     WW3D::Sync(Rva012F8064);

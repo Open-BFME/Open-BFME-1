@@ -412,3 +412,15 @@ __real@c47a0000
 # caller reads the 0x0111F874 copy at +0x23D/+0x325/+0x364/+0x375/+0x39B. Same
 # per-TU COMDAT class as __real@3f800000 above.
 __real@40490fdb
+
+# __real@40c90fdb is 6.28318548f (2*pi): retail holds it at 0x01087B10 (the copy
+# dir32_addresses.csv records) and at 0x0111E36C, and W3DDisplay::draw (0x006F3FC0)
+# reads the 0x0111E36C copy at +0x270. Both addresses hold the same four bytes
+# (db 0f c9 40, checked 2026-11-15), and only W3DDisplay code reads the second copy --
+# the four in-.text references are 0x6EBDC0, 0x6ECB1B, 0x6ECBEF and 0x6F4230 (inside
+# draw) -- so this is the same per-TU literal-COMDAT class as __real@40490fdb (pi)
+# above, whose recorded 0x01087B14 copy sits next to this one in the same pool.
+# Every named spelling of the constant inside draw costs 9 bytes of unrelated
+# register reallocation (21 trials, attempt_support/20261111-006f3fc0-w3ddisplay-draw.md),
+# so the literal spelling is the only byte-exact one.
+__real@40c90fdb
