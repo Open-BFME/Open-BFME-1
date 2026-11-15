@@ -6,16 +6,7 @@
 // the LanLobby interpretation agrees with the matched sibling methods and
 // the +0x25C BfmeE976 subobject. The address-derived owner preserves uncertainty.
 
-template <typename T> class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

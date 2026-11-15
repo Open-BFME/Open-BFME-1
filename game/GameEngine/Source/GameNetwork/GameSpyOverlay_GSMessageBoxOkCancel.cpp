@@ -16,12 +16,7 @@
 
 #include "GameClient/MessageBox.h"
 
-template <typename T> class StringBase
-{
-private:
-	StringBase( const StringBase<T> &other );
-	friend class UnicodeString;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 inline UnicodeString::UnicodeString( const UnicodeString &other )
 {

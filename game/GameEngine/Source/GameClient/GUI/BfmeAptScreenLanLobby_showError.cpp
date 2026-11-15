@@ -16,19 +16,7 @@ template <typename T> struct StringData
     T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-    friend class UnicodeString;
-
-private:
-    StringBase() : m_data(0) {}
-    StringBase(const T *text);
-    StringBase(const StringBase<T> &other) throw();
-    ~StringBase() { releaseBuffer(); }
-    void releaseBuffer();
-
-    StringData<T> *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

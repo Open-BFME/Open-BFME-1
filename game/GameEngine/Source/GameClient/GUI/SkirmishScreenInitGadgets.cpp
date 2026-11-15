@@ -2,18 +2,7 @@
 //
 // Retail 0x0057D110: AptSkirmish::InitGadgets.
 
-template <typename T> class StringBase
-{
-friend class UnicodeString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {
