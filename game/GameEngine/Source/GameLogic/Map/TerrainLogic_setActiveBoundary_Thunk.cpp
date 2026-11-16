@@ -13,11 +13,7 @@
 typedef float Real;
 typedef int Int;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct Region3D
 {

@@ -4,7 +4,7 @@
 // Tables at 0x005B9FD0/0x005B9FE8 end at 0x005B9FFC.
 // This BFME translator adds input phases and Palantir/pause guards to the
 // WindowXlat reference algorithm. Local views preserve witnessed ABI slots.
-struct ICoord2D { int x,y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 union GameMessageArgumentType { int integer; ICoord2D pixel; };
 class GameMessage { public: const GameMessageArgumentType *getArgument(int) const; char pad00[0x10]; int type; };
 enum GameWindowMessage { GWM_NONE };

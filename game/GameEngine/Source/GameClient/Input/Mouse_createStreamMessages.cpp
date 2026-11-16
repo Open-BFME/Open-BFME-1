@@ -7,11 +7,7 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class GameMessage
 {

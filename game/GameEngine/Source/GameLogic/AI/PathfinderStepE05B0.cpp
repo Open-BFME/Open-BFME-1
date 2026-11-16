@@ -19,7 +19,7 @@ enum CrushSquishTestType { CRUSH_SQUISH_INVALID = 0 };
 	Relationship getRelationship(const Object *other) const;
 #include "object.h"
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell
 {

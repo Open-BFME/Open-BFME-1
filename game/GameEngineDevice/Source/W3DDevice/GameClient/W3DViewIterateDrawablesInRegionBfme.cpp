@@ -35,11 +35,7 @@ typedef bool Bool;
 #define TRUE true
 #define FALSE false
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Vector3
 {

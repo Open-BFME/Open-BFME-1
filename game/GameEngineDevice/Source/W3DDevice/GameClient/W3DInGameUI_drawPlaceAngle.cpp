@@ -19,11 +19,7 @@ class View {};
 class Matrix3D {};
 class SceneClass;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct Coord3D
 {

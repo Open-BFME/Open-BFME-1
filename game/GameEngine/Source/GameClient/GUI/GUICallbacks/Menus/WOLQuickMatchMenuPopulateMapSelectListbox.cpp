@@ -46,11 +46,7 @@ class GameWindow;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 // Image+0x24 m_imageSize is the layout witness (name_oracle).
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Image
 {

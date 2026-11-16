@@ -5,7 +5,7 @@
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
-struct ICoord2D {int x,y;};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 class Object;
 extern void j_00042ccb();
 extern void j_0003ed60();

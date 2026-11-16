@@ -119,11 +119,7 @@ public:
 
 extern Radar *TheRadar;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // ?W3DLeftHUDDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
 void __cdecl W3DLeftHUDDraw(GameWindow *window, WinInstanceData *instData)

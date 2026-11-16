@@ -103,11 +103,7 @@ union BfmeTooltipDispatchThunk
 	BfmeTooltipDispatch typed;
 };
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // Leading field of the 0x3C-byte MouseIO record; the rest is not read here.
 struct MouseIO

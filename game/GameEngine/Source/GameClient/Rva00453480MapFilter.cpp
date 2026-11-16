@@ -9,7 +9,7 @@
 #include "unicode_string.h"
 #include <algorithm>
 class GameWindow;
-struct ICoord2D {int x,y;};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 class Image {public:char field00[0x24];ICoord2D m_imageSize;int getImageWidth()const{return m_imageSize.x;}};
 class ImageCollection {public:const Image *findImageByName(const AsciiString&);};extern ImageCollection *TheMappedImageCollection;
 class SkirmishPreferences {public:SkirmishPreferences();virtual ~SkirmishPreferences();UnicodeString getUserName();private:char field04[0x14];};
