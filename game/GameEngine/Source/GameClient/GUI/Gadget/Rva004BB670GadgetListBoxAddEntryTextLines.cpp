@@ -21,14 +21,11 @@ template <typename T> inline void StringBase<T>::concat( T c )
 	concat( &c, 1 );
 }
 
-class UnicodeString : public StringBase<unsigned short>
-{
-public:
-	UnicodeString() {}
-	UnicodeString( const UnicodeString &source )
-		: StringBase<unsigned short>( source ) {}
-	~UnicodeString() {}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 
 class GameWindow;
 int GadgetListBoxAddEntryText( GameWindow *listbox, UnicodeString text,
@@ -37,25 +34,25 @@ int GadgetListBoxAddEntryText( GameWindow *listbox, UnicodeString text,
 int Rva004BB670GadgetListBoxAddEntryTextLines( GameWindow *listbox,
 	UnicodeString text, int color, int row, int column, bool overwrite )
 {
-	int length = text.getLength();
+	int length = ((StringBase<unsigned short>*)(&(text)))->getLength();
 	UnicodeString line;
 	int rowsAdded = 0;
 
 	for ( int i = 0; i <= length; ++i )
 	{
-		unsigned short character = ( i < length ) ? text.getCharAt( i ) : 0;
+		unsigned short character = ( i < length ) ? ((StringBase<unsigned short>*)(&(text)))->getCharAt( i ) : 0;
 		if ( character == 0x000A || character == 0 )
 		{
-			if ( line.isEmpty() )
-				line.concat( (unsigned short)' ' );
+			if ( ((StringBase<unsigned short>*)(&(line)))->isEmpty() )
+				((StringBase<unsigned short>*)(&(line)))->concat( (unsigned short)' ' );
 
 			GadgetListBoxAddEntryText( listbox, line, color, row++, column, overwrite );
 			++rowsAdded;
-			line.clear();
+			((StringBase<unsigned short>*)(&(line)))->clear();
 		}
 		else
 		{
-			line.concat( character );
+			((StringBase<unsigned short>*)(&(line)))->concat( character );
 		}
 	}
 

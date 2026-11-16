@@ -16,14 +16,11 @@
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const unsigned short *text);
 
-class UnicodeString : public StringBase<unsigned short>
-{
-public:
-	UnicodeString() {}
-	UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-	~UnicodeString() {}
-	void translate(const AsciiString &that);
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 
 class AsciiStringAI : public AsciiString {};
 
@@ -49,8 +46,8 @@ void BfmeTableAI::rva00573C20(int territory, int count, int number)
 	text.translate(bfmeNumberedAI(number));
 	if (count == 1) {
 		UnicodeString bonus(text);
-		text.set(L"x ", wcslen(L"x "));
-		text.concat(bonus.str(), bonus.getLength());
+		((StringBase<unsigned short>*)(&(text)))->set(L"x ", wcslen(L"x "));
+		((StringBase<unsigned short>*)(&(text)))->concat(((StringBase<unsigned short>*)(&(bonus)))->str(), ((StringBase<unsigned short>*)(&(bonus)))->getLength());
 	}
 	g_rva012F19E8WindowManager->bfme_setAptText(key, text);
 }

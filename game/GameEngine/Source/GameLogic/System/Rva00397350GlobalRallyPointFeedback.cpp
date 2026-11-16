@@ -11,24 +11,11 @@ typedef float Real;
 #include "ascii_string.h"
 
 // unicode_string.h declares the default ctor out of line; retail inlines it.
-class UnicodeString
-{
-public:
-	UnicodeString() : m_data(0) {}
-	UnicodeString(const UnicodeString &other)
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&other);
-	}
-	~UnicodeString()
-	{
-		((StringBase<unsigned short> *)this)->releaseBuffer();
-	}
-	void __cdecl format(UnicodeString format, ...);
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-private:
-	void *m_data;
-};
 
 class Drawable;
 class Player;
