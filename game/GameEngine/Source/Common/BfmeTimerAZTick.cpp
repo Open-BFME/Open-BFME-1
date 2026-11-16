@@ -4,10 +4,12 @@
 // ticker: if the global kind is 4 and this copy is not, arm a 0xFF countdown
 // that calls the stop helper and clears the copy.
 
+class GlobalWeatherSystem { public: void setWeather(int which); };
+
 class BfmeModeGF
 {
 public:
-	void bfmeStopGF(int flag);
+	// Field-access view only; the call below uses its existing native owner.
 
 	unsigned char m_bfmeHeadGF[0xc];
 	int m_bfmeKindGF;
@@ -51,7 +53,7 @@ void BfmeTimerAZ::bfmeTickAZ(void)
 				self->m_bfmeStateAZ = 0;
 
 				if (reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->m_bfmeKindGF == four)
-					reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->bfmeStopGF(0);
+					reinterpret_cast<GlobalWeatherSystem *>(TheGlobalWeatherSystem)->setWeather(0);
 
 				self->m_bfmeOtherAZ = 0;
 			}

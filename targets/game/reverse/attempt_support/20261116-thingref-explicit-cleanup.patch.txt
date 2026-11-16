@@ -1,0 +1,21 @@
+DIAGNOSTIC ONLY: incomplete candidate, not applied or counted. See the companion handoff.
+
+--- game/GameEngine/Source/Common/Rva0039B560Destructor.cpp
++++ game/GameEngine/Source/Common/Rva0039B560Destructor.cpp.private-diagnostic
+@@ -44,0 +45,13 @@
++extern "C" void __cdecl __identifier("??1Rva0039B560Element@@QAE@XZ")(void *);
++// The fourth stack slot carries a raw callback address. The existing MSVC
++// helper invokes it with thiscall; this declaration never calls that callback.
++extern "C" void __stdcall __identifier("??_M@YGXPAXIHP6EX0@Z@Z")(void *, unsigned, int, void *) throw(...);
++struct Rva0039B560ArrayStorage
++{
++ unsigned int m_words[10];
++ __forceinline ~Rva0039B560ArrayStorage()
++ {
++  __identifier("??_M@YGXPAXIHP6EX0@Z@Z")(this, 8, 5, reinterpret_cast<void *>(&__identifier("??1Rva0039B560Element@@QAE@XZ")));
++ }
++};
++
+@@ -55 +68 @@
+-	ThingRef m_array[5];                                       ///< +0x28, eight-byte stride
++	Rva0039B560ArrayStorage m_array;                                       ///< +0x28, eight-byte stride

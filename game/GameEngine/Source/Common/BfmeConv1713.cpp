@@ -1,7 +1,9 @@
+class GlobalWeatherSystem { public: void setWeather(int which); };
+
 class BfmeModeGF
 {
 public:
-	void bfmeStopGF(int flag);
+	// Field-access view only; the call below uses its existing native owner.
 
 	unsigned char m_bfmeHeadGF[0xc];
 	int m_bfmeKindGF;
@@ -35,7 +37,7 @@ void BfmeTimerGF::bfmeTickGF(void)
 	m_bfmeStateGF = 0;
 
 	if (reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->m_bfmeKindGF == 4)
-		reinterpret_cast<BfmeModeGF *>(TheGlobalWeatherSystem)->bfmeStopGF(0);
+		reinterpret_cast<GlobalWeatherSystem *>(TheGlobalWeatherSystem)->setWeather(0);
 
 	m_bfmeOtherGF = 0;
 }
