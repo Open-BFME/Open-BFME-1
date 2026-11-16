@@ -455,7 +455,7 @@ void AudioManager::update()
 // ?addAudioEvent@AudioManager@@ present-unmatched
 AudioHandle AudioManager::addAudioEvent(const AudioEventRTS *eventToAdd)
 {
-	if (eventToAdd->getEventName().isEmpty() || eventToAdd->getEventName() == AsciiString("NoSound")) {
+	if (((eventToAdd->getEventName()).str()[0] == 0) || eventToAdd->getEventName() == AsciiString("NoSound")) {
 		return AHSV_NoSound;
 	}
 
@@ -548,7 +548,7 @@ AudioHandle AudioManager::addAudioEvent(const AudioEventRTS *eventToAdd)
 // ?isValidAudioEvent@AudioManager@@ present-unmatched
 Bool AudioManager::isValidAudioEvent( AudioEventRTS *eventToCheck ) const
 {
-	if( eventToCheck->getEventName().isEmpty() ) 
+	if( ((eventToCheck->getEventName()).str()[0] == 0) )
 	{
 		return false;
 	}

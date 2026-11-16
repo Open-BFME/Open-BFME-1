@@ -1,0 +1,11 @@
+# Task116 /500: retire GameAudio's unreferenced wrong shared isEmpty copy
+
+Two existing expressions use getEventName().str()[0] ==0. This preserves the legacy source's inline character test without emitting its incompatible shared AsciiString::isEmpty body. No source class/header/flag/alias/pin/verifier/baseline/function-row change. No new helper body, guessed identity or authored-byte coverage.
+
+The normal source/provider gate verifies3248/3248 functions across8 sources. All3,030 retained rows (3009 unique RVAs/43384B) compare unchanged in the actual ordinary before/after objects. The complete ordered runtime proof preserves1005 other sections, all bytes/extents/flags/relocations/local targets, SafeSEH, weak/alias contracts and external definitions. It removes exactly one22B wrong predicate, with zero runtime references before or after. Its old byte test at+4 differs from the original22B Base word test at+4 (original export1656, ILT C752 ->5E4C0). All other code, including unowned emitted functions, is unchanged. Preservation of unowned code is not a claim that those functions already match retail.
+
+A direct Base forwarding experiment changed an emitted47B function to52B and was rejected. A static forceinline helper left an extra body; a raw expression changed branch placement. Three existing public-str expression forms passed the full private projection; the simplest index test was chosen, then checked in actual ordinary objects. This is specific to the legacy four-byte-buffer-header source context, not a replacement for the canonical length-based Base predicate or a claim to unify heap representations. No runtime, memory or crash-fix claim.
+
+BFME2's strings reference and native BFME1 compatibility shims were inspected. The BFME1 existing source, original export and native RetailTruth establish the scope; no donor address/layout/flag is imported. The global post-change selection still needs a current preview and eventual full census. Frozen per-file before/after previews retain all other blockers.
+
+Local controls, useful failed variants and positive proof: diagnostics/continue-20261116-fivehundred/gameaudio-* and batch-19. Native verifiers remain unchanged.
