@@ -5,10 +5,7 @@
 
 typedef int Int;
 
-struct ICoord2D
-{
-	Int x, y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 template _STL::vector<ICoord2D> &_STL::vector<ICoord2D>::operator=(
 	const _STL::vector<ICoord2D> &);

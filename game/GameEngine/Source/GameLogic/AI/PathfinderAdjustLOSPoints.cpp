@@ -8,10 +8,7 @@ typedef int Int;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 
-struct ICoord2D
-{
-	Int x, y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct BfmePair1181
 {

@@ -1,11 +1,7 @@
 // cl: /O2
 // BFME Image size accessor, retail 0x005BA130.
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Image
 {

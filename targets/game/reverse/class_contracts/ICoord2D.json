@@ -1,0 +1,143 @@
+{
+ "bases": [],
+ "bases_by": "zh",
+ "class": "ICoord2D",
+ "evidence": {
+  "census": 236,
+  "retail_access": {},
+  "retail_member_rows": 0,
+  "retail_vtables": {},
+  "view_errors": 10,
+  "view_sizes": {
+   "4": 1,
+   "8": 224,
+   "52": 1
+  },
+  "views": 226,
+  "witness_offsets": [],
+  "zh": {
+   "header": "CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h"
+  }
+ },
+ "fields": [
+  {
+   "decided_by": "bytes",
+   "kind": "i4",
+   "name": "x",
+   "name_by": "zh",
+   "offset": 0,
+   "retail_widths": {},
+   "size": 4,
+   "type": "int",
+   "views": 226,
+   "witness": null
+  },
+  {
+   "decided_by": "bytes",
+   "kind": "i4",
+   "name": "y",
+   "name_by": "zh",
+   "offset": 4,
+   "retail_widths": {},
+   "size": 4,
+   "type": "int",
+   "views": 225,
+   "witness": null
+  }
+ ],
+ "key": "struct",
+ "key_by": "bytes",
+ "ledger_keys": {
+  "struct": 208
+ },
+ "outliers": [
+  {
+   "offset": 8,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 12,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 16,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 17,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 20,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 24,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 28,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 40,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 44,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 45,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 46,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  },
+  {
+   "offset": 48,
+   "sources": [
+    "game/GameEngine/Source/GameLogic/AI/PathfinderStepE0370.cpp"
+   ],
+   "views": 1
+  }
+ ],
+ "queue": [],
+ "size": 8,
+ "size_by": "zh",
+ "vslots": {}
+}
