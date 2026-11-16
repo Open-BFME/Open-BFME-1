@@ -531,7 +531,7 @@ Bool MapCache::addMap( AsciiString dirName, AsciiString fname, FileInfo *fileInf
 				(md.m_CRC != 0))
 		{
 			// Force a lookup so that we don't display the English localization in all builds.
-			if (md.m_nameLookupTag.isEmpty())
+			if (((md.m_nameLookupTag).str()[0] == 0))
 			{
 				// unofficial maps or maps without names
 				AsciiString tempdisplayname;
@@ -587,7 +587,7 @@ Bool MapCache::addMap( AsciiString dirName, AsciiString fname, FileInfo *fileInf
 	Bool exists = false;
 	AsciiString munkee = worldDict.getAsciiString(TheKey_mapName, &exists);
 	md.m_nameLookupTag = munkee;
-	if (!exists || munkee.isEmpty())
+	if (!exists || ((munkee).str()[0] == 0))
 	{
 		DEBUG_LOG(("Missing TheKey_mapName!\n"));
 		AsciiString tempdisplayname;
@@ -910,7 +910,7 @@ AsciiString getDefaultOfficialMap()
 
 Bool isOfficialMap( AsciiString mapName )
 {
-	if(!TheMapCache || mapName.isEmpty())
+	if(!TheMapCache || ((mapName).str()[0] == 0))
 		return FALSE;
 	TheMapCache->updateCache();
 	mapName.toLower();

@@ -158,7 +158,7 @@ void INI::parseMapCacheDefinition( INI* ini )
 // this string is never to be used, but we'll leave it in to allow people with an old mapcache.ini to parse it
 	md.m_nameLookupTag = QuotedPrintableToAsciiString(mdr.m_asciiNameLookupTag);
 
-	if (md.m_nameLookupTag.isEmpty())
+	if (((md.m_nameLookupTag).str()[0] == 0))
 	{
 		// maps without localized name tags
 		AsciiString tempdisplayname;

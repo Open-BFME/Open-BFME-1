@@ -2545,7 +2545,7 @@ void LocomotorSet::xferSelfAndCurLocoPtr(Xfer *xfer, Locomotor** loco)
 		AsciiString name;
 		xfer->xferAsciiString(&name);
 
-		if (name.isEmpty())
+		if (((name).str()[0] == 0))
 		{
 			*loco = NULL;
 		}
