@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // PointGroupClass shader-prep, retail 0x00912E60. The 153-byte block that
 // ZH inlines at the top of PointGroupClass::Render: disable the extra cull
@@ -7,11 +7,7 @@
 // ctor at 0x00912580 (PointDiffuse +8, Texture +0x24, ShaderBits +0x28,
 // DefaultPointColor +0x38).
 
-class Vector3
-{
-public:
-	float X, Y, Z;
-};
+#include "../WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/pointgr.h
 class PointGroupClass

@@ -1,16 +1,11 @@
-// cl: /DNDEBUG /MD /GR-
+// cl: /DNDEBUG /MD /GR- /Igame/Libraries/Source/WWVegas/WWLib
 // ?Render_And_Flush@SimpleSceneClass@@QAEXAAVRenderInfoClass@@@Z
 // Retail 0x0079DE40 size 127. Apply_Render_State_Changes, Clear(false,true,true,
 // Vector3(0,0,0), 0, 1.0f, 0), iterate the RefMultiList whose Head sits at
 // this+0x60 (SimpleSceneClass first list; Add_Render_Object thunk) calling
 // Render at vtable+0x30, then TheDX8MeshRenderer->Flush().
 
-class Vector3
-{
-public:
-	float X, Y, Z;
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-};
+#include "../WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper

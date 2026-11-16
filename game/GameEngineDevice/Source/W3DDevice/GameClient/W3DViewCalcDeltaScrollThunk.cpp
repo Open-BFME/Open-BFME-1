@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Project two world points and take the screen-space difference. Either
 // projection failing leaves the output at the zero written on entry, which is
@@ -11,17 +11,7 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-class Vector3
-{
-public:
-	Vector3(void) {}
-
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/camera.h
 class CameraClass

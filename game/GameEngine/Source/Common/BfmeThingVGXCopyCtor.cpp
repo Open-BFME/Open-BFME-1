@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // BfmeThingVGX copy ctor, retail 0x00975090, 103 bytes.
 // Sibling of matched bfmeAssignVGX @ 0x00974FB0. TextureRef at +0 owns the
@@ -23,12 +23,7 @@ public:
 	static ShaderClass _PresetAdditiveSpriteShader;
 };
 
-class Vector3
-{
-public:
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-	float X, Y, Z;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class BfmeThingVGX
 {

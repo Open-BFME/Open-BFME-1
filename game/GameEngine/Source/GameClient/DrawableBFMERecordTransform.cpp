@@ -1,20 +1,10 @@
 // Byte-matched BFME Drawable transform-history update.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-class Vector3
-{
-public:
-	Vector3() {}
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Vector4
 {

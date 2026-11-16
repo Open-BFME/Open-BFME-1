@@ -1,10 +1,5 @@
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
+#include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class RenderObjClass
 {

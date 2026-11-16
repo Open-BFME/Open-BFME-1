@@ -1,16 +1,6 @@
-// cl: /O2
+// cl: /O2 /Igame/Libraries/Source/WWVegas/WWLib
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3(void) {};
-	Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3 &operator = (const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Rva00412FC0
 {

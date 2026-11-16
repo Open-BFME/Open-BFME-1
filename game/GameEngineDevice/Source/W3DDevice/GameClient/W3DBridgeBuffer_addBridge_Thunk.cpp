@@ -1,23 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: byte-exact C++ reconstruction of W3DBridgeBuffer::addBridge.
 
 #include "StringInline.h"
 
-class Vector3
-{
-	public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3() {}
-	Vector3(const Vector3 &v)
-	{
-		X = v.X;
-		Y = v.Y;
-		Z = v.Z;
-	}
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Dict;
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the DynamicVectorClass<VehicleCurveClass::_ArcInfoStruct>::Add raw
 // machine-code dump to clean C++ (packet 009347c0).
 //
@@ -25,15 +25,7 @@
 // GrowthStep at this+0x14 -- the standard VectorClass/DynamicVectorClass
 // layout from WWLib's vector.h, unchanged here.
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-};
+#include "vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vehiclecurve.h
 class VehicleCurveClass

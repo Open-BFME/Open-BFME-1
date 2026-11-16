@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Initialise every member to its default, take one field from the source, then
 // assign. That is the reference's copy constructor unchanged -- the whole body
@@ -40,15 +40,7 @@ public:
 	static ShaderClass _PresetAdditiveSpriteShader;
 };
 
-class Vector3
-{
-public:
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-
-	float X;
-	float Y;
-	float Z;
-};
+#include "../WWMath/vector3.h"
 
 class Vector2
 {

@@ -1,15 +1,9 @@
 // Retail 0x009330C0: BFME camera frustum box cull.
 // The cursor is initialized at N.Y so the retail loop uses N.X at p[-1].
 // The volatile stores preserve the retail x87 spill and reload schedule.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class PlaneClass
 {

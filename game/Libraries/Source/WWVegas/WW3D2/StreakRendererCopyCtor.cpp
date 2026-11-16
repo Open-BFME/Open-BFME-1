@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 class TextureClass;
 
@@ -27,14 +27,7 @@ public:
 	float Y;
 };
 
-class Vector3
-{
-public:
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-	float X;
-	float Y;
-	float Z;
-};
+#include "../WWMath/vector3.h"
 
 class VertexFormatXYZUV1;
 

@@ -1,12 +1,6 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
 struct AABoxClass

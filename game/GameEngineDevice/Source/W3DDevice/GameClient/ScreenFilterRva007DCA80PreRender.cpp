@@ -1,7 +1,7 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 // Retail0x007DB890: vtable0x01128C5C slot2; matched Rva007DCA80 constructor.
 struct IDirect3DSurface8;
-class Vector3{public:float X,Y,Z;};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 class DX8Wrapper{public:static void Set_Render_Target(IDirect3DSurface8*,bool);static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned);};
 // The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData
 // (defined in Common/GlobalData.cpp). This TU reads/writes its +0xDBD flag

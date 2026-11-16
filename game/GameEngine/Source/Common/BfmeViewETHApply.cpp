@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x0073B8E0 (152 bytes).  Identity: the matched caller
 // BfmeViewETH::bfmeSetAngleETH (BfmeConv1985.cpp) calls it through ILT
 // 0x00030846 with &m_bfmeSubETH, the x/y pair at +0x0C.  Guarded by the byte
@@ -11,27 +12,7 @@
 // operand order.
 extern const float g_bfmeScaleEW;
 
-class Vector3
-{
-public:
-	Vector3() {}
-	Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-	Vector3 &operator*=(float k) { X *= k; Y *= k; Z *= k; return *this; }
-	friend Vector3 operator-(const Vector3 &a, const Vector3 &b)
-	{
-		return Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
-	}
-	friend Vector3 operator*(const Vector3 &a, float k)
-	{
-		return Vector3(a.X * k, a.Y * k, a.Z * k);
-	}
-
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class RenderObjClass
 {

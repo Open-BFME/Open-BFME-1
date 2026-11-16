@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x006FD180 (277 bytes, thiscall, ret 8): a W3DMouse vtable slot
 // (rdata 0x00D207E4 via ILT 0x0002A18A).  Projects a world point through the
@@ -16,16 +16,7 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-class Vector3
-{
-public:
-	Vector3() {}
-	Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
-
-	Real X;
-	Real Y;
-	Real Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class CameraClass
 {

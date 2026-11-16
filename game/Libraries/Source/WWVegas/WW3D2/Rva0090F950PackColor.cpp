@@ -1,16 +1,10 @@
 // ?Rva0090F950PackColor@@YAXPAIPBVVector4@@@Z, retail 0x0090F950.
 // The owner remains address-qualified because no caller or vtable evidence names it.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "../WWLib/cpudetect.h"
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../WWMath/vector3.h"
 
 class Vector4
 {

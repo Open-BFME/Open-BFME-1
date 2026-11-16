@@ -1,20 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Zero Hour twin: W3DBridge::init.
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class Vector3
-{
-public:
-	float X, Y, Z;
-	Vector3 &operator=(const Vector3 &other)
-	{
-		X = other.X;
-		Y = other.Y;
-		Z = other.Z;
-		return *this;
-	}
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class W3DBridge
 {
