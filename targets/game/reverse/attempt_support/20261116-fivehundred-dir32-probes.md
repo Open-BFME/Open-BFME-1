@@ -29,8 +29,8 @@ They are ruled out. A separate diagnostic changes the local destructor view
 to ParticleInfo with a virtual destructor. All eight retained rows then match
 byte-for-byte, and its extra30B scalar-deleting copy independently passes
 native RetailTruth for the existing owner. However it emits an8B two-slot
-table where the old incomplete view emitted4B; the actual table has three
-known slots. An old placeholder slot also becomes ParticleInfo::slot. The
+table where the old incomplete view emitted4B; the actual table has four entries; the initial probe identified three roles.
+The fourth entry is ILT0002D27C; a zero separator follows atVA0110FE88. An old placeholder slot also becomes ParticleInfo::slot. The
 entire object inventory therefore fails. Do not land this patch or merely
 record its wrong virtual surface. Resolve the original interface/base and
 all emitted data/providers before trying the identity reconciliation.
@@ -70,3 +70,12 @@ established names. Re-run native byte, naming, DIR32 and linking checks.
 The BFME2 reference remains read-only ataa505f34c898e6fb7c9a1f1632e75ce232f4829a.
 The previously reviewed U1Zero/ParticleInfo table evidence is not a license
 to copy another engine's layout or guess missing slots.
+
+## Table extent clarification after publication
+
+Direct retail reads show the ParticleInfo table's four entries:
+VA004446F2,0040614F,00421DAA,0042D27C, followed by zero atVA0110FE88.
+The initial probe established three slot roles, not a three-entry extent.
+The earlier attempt-log wording "three-slot interface" is superseded by
+this direct-byte extent check. Its rejected candidate remains rejected;
+no game source or verification verdict is changed by this clarification.
