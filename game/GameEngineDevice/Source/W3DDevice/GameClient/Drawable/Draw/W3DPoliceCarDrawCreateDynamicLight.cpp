@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // W3DPoliceCarDraw::createDynamicLight -- the Zero Hour body compiles to
 // retail's exact instruction sequence, `lea ecx,[esp+4]` between the Ambient
@@ -18,19 +18,7 @@
 // Vector3 verbatim from WWMath/vector3.h, ABI slice: the assignment-body
 // constructors and the explicit operator= are load-bearing, a member-init
 // list here reorders the temporary against `this`.
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3(void) { }
-	Vector3(const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-
-	Vector3 & operator = (const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDynamicLight.h
 class W3DDynamicLight

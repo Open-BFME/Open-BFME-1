@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // W3DWaypointBuffer constructor at retail RVA 0x007468B0 (297 bytes).
 //
 // IDENTITY.  The lift carried the truncated decoration ??0W3DWaypointBuffer@@;
@@ -115,16 +115,7 @@ public:
 	static ShaderClass _PresetAdditiveShader;
 };
 
-class Vector3
-{
-public:
-	Vector3(void) {}
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class SegLineRendererClass
 {

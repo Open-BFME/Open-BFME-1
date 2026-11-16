@@ -34,12 +34,7 @@ public:
 	void __cdecl format(UnicodeString fmt, ...);
 };
 
-class Vector3
-{
-public:
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-	float X, Y, Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class WW3D
 {

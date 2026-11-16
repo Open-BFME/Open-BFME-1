@@ -16,16 +16,7 @@ public:
 	float y;
 };
 
-class Vector3
-{
-public:
-	Vector3(float xValue, float yValue, float zValue)
-		: x(xValue), y(yValue), z(zValue) {}
-
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class CameraClass
 {

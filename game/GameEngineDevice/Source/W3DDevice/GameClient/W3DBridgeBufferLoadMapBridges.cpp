@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline /Igame/Libraries/Source/WWVegas/WWLib
 // BFME loadBridges at 0x006DA8A0. Map nodes retain their authored Z offset
 // above the terrain; both height queries dispatch through retail slot 0x248.
 #include "StringInline.h"
@@ -6,14 +6,7 @@
 typedef float Real;
 typedef bool Bool;
 
-class Vector3
-{
-public:
-	Real X, Y, Z;
-	Vector3() {}
-	Vector3(const Vector3 &v) : X(v.X), Y(v.Y), Z(v.Z) {}
-	void Set(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Dict;

@@ -1,5 +1,5 @@
 // ?start@W3DShaderManagerStartRenderToTextureShim@@SAXXZ
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x007171F0, 445 bytes, RET at +0x1BC followed by INT3 padding. Body of
 // W3DShaderManager::startRenderToTexture: the named static entry at ILT
@@ -25,12 +25,7 @@ struct IDirect3DDevice8
 	virtual long __stdcall TestCooperativeLevel() = 0;
 };
 
-class Vector3
-{
-public:
-	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
-	float X, Y, Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

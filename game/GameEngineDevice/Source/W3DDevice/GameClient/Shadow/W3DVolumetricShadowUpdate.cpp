@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // W3DVolumetricShadow::Update(Bool) (retail 0x007BF7D0, 758 bytes, ret 4).
 //
 // Identity: tools/ilt_oracle.py CONFIRMS ?Update@W3DVolumetricShadow@@IAEX_N@Z
@@ -28,14 +28,7 @@ typedef bool Bool;
 
 #include <math.h>
 
-class Vector3
-{
-public:
-	Vector3(void) {}
-	Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
-	__forceinline Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-	Real X, Y, Z;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 static __forceinline float shadowFabs(float val)
 {

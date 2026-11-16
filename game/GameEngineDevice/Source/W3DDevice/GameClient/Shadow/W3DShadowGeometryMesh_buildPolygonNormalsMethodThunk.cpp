@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Reconstructed from the canonical W3D shadow mesh source and the BFME
 // terrain-shadow layout.  The pool and normal-builder declarations preserve
 // the retail helper ABIs; the body is ordinary C++ rather than a lifted dump.
@@ -6,14 +6,7 @@
 extern void *__cdecl operator new[]( unsigned int size );
 extern void __cdecl operator delete[]( void *pointer ) throw();
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-	Vector3();
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 struct ShadowPool
 {

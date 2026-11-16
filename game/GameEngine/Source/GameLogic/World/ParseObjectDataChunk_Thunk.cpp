@@ -92,25 +92,7 @@ public:
 	BfmeSlotJA *bfmeGo932A();
 };
 
-class Vector3
-{
-public:
-	Vector3(Real x, Real y, Real z)
-	{
-		X = x;
-		Y = y;
-		Z = z;
-	}
-	Vector3(const Vector3 &v)
-	{
-		X = v.X;
-		Y = v.Y;
-		Z = v.Z;
-	}
-	Real X;
-	Real Y;
-	Real Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class MapObject
 {

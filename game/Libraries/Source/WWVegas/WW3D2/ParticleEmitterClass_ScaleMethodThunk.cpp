@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the ParticleEmitterClass::Scale naked dump to clean C++.
 //
 // Zero Hour's part_emt.cpp body. Retail reads the layout out plainly: PosRand
@@ -13,20 +13,7 @@
 // an equivalent-looking class makes MSVC route
 // the temporaries through memory.
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3(void) {};
-	Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-
-	Vector3 &operator = (const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-	Vector3 &operator *= (float k) { X = X * k; Y = Y * k; Z = Z * k; return *this; }
-};
+#include "../WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/v3_rnd.h
 class Vector3Randomizer

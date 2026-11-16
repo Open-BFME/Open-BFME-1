@@ -1,27 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: retail aligned ShareBufferClass<Vector3> copy constructor.
 
 void *operator new[](unsigned int size);
 void operator delete[](void *block);
 inline void *operator new(unsigned int, void *place) { return place; }
 
-class Vector3
-{
-public:
-	Vector3();
-	Vector3 &operator=(const Vector3 &that)
-	{
-		X = that.X;
-		Y = that.Y;
-		Z = that.Z;
-		return *this;
-	}
-
-private:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

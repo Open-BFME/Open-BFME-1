@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // W3DPoliceCarDraw::doDrawModule, retail 0x00758EF0, 663 bytes. Identity: slot 9
 // of the W3DPoliceCarDraw vtable 0x01122EA8 (thunk 0x0002E956), the class the
@@ -32,19 +32,7 @@ struct Coord3D
 
 // Vector3 verbatim from WWMath/vector3.h, as the createDynamicLight sibling
 // restates it.
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3(void) { }
-	Vector3(const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-
-	Vector3 & operator = (const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/hanim.h
 class HAnimClass

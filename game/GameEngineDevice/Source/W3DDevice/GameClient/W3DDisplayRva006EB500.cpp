@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x006EB500 (1215 B, ret 4): the per-frame render pass of BFME's
 // W3DDisplay::draw.  Its only caller is W3DDisplay::draw (0x006F3FC0, vtable
@@ -30,13 +30,7 @@ typedef unsigned char UnsignedByte;
 class CameraClass;
 class Image;
 
-class Vector3
-{
-public:
-	Real X;
-	Real Y;
-	Real Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 enum WW3DErrorType
 {

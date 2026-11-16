@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Bridge::getBridgeHeight, retail 0x001A7520 (664 B: ret 8 at +0x295, int3 from +0x298).
 //
 // Callers reach it through the Bridge member thunk at ILT 0x0000B802
@@ -29,16 +29,7 @@ public:
 	void scaleInlined(Real s) { x *= s; y *= s; z *= s; }
 };
 
-class Vector3
-{
-public:
-	Vector3() {}
-	Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
-
-	Real X;
-	Real Y;
-	Real Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class PlaneClass
 {

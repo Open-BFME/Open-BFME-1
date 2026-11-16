@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?calculateTerrainLOD@W3DDisplay@@IAEXXZ: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // TU-local layouts because the real W3DDisplay/GlobalData headers carry ZH
 // vtable/field offsets that drift from BFME's compiled layout for this body.
@@ -9,7 +9,7 @@ typedef __int64 Int64;
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(Int64 *counter);
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(Int64 *freq);
 
-class Vector3 { public: float X, Y, Z; Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {} };
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 enum WW3DErrorType { WW3D_ERROR_OK };
 
