@@ -21,7 +21,7 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D { Coord2D lo, hi; };

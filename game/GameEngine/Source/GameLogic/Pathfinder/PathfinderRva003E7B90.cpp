@@ -23,11 +23,7 @@ typedef char Rva003E7B90CoordCopySize[(sizeof(Rva003E7B90CoordCopy) == 12) ? 1 :
 extern void j_000441cf();
 extern void j_00042249();
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 enum PathfindLayerEnum
 {

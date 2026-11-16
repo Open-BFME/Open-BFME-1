@@ -20,7 +20,7 @@ struct Coord2D
 	void normalize();
 };
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Glo012F1028Type
 {

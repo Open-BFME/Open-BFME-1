@@ -47,7 +47,7 @@ extern float g_Rva01095F98;
 static __forceinline void copyCoord3D(Coord3D &point, const Coord3D *other)
 { point.x=other->x; point.y=other->y; point.z=other->z; }
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };

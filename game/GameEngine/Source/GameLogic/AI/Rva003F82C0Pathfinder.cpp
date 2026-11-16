@@ -33,7 +33,7 @@ typedef unsigned int UnsignedInt;
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D { Coord2D lo, hi; };
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 // Same declaration as the matched caller's TU (Rva003F8820Pathfinder.cpp).

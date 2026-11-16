@@ -20,11 +20,7 @@ enum PathfindLayerEnum
 	LAYER_WALL = 15
 };
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 #include "Lib/Coord2D.h"
 

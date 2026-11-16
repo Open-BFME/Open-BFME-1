@@ -47,11 +47,7 @@ extern "C" __declspec(dllimport) int __cdecl sscanf( const char *, const char *,
 extern "C" __declspec(dllimport) char * __cdecl strtok( char *, const char * );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D

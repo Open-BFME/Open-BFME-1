@@ -18,7 +18,7 @@ typedef int Int;
 typedef float Real;
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"

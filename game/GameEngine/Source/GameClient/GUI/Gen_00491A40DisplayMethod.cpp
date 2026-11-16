@@ -29,11 +29,7 @@ inline UnicodeString::UnicodeString(const UnicodeString &that)
 }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // name_oracle: Image+0x28 is m_imageSize.y (layout witness).
 class Image

@@ -42,7 +42,7 @@ enum GameMessageArgumentDataType
 };
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
-struct ICoord2D { Int x, y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { Int loX, loY, hiX, hiY; };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
