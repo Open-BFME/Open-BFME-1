@@ -48,35 +48,14 @@ class ThingTemplate;
 class ThingTemplatePortraitShim;
 class OpenContain;
 
-template <class Type>
-class StringBase
-{
-private:
-	StringBase(const char *s);
-	StringBase(const StringBase &that);
-	void releaseBuffer(void);
-	friend class UnicodeString;
-	friend class AsciiString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	AsciiString(const AsciiString &that);
-	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-
-private:
-
-	void *m_data;
-
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
@@ -435,30 +414,6 @@ extern NameKeyGenerator *TheNameKeyGenerator;			// 0x012ED600
 #define NAMEKEY(x) (TheNameKeyGenerator->nameToKey(x))
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-
-	UnicodeString() { m_data = 0; }
-
-	// Visible delegation, so the by-value temporary is scheduled retail's way.
-	UnicodeString(const UnicodeString &that)
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&that);
-	}
-
-	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-
-	// Variadic member: MSVC compiles these __cdecl with this pushed first, and
-	// the format string is a UnicodeString BY VALUE.
-	void __cdecl format(UnicodeString fmt, ...);
-
-private:
-
-	void *m_data;
-
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindowManager.h
 class GameWindowManager
