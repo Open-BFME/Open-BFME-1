@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 // readable body of ?Add_Tri@Render2DClass@@: game/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // BFME Render2DClass triangle overload, retail 0x006EB070.
 //
@@ -8,12 +8,7 @@
 // four, one shared color instead of per-vertex colors, and 16-bit indices
 // written individually instead of packed as dword pairs.
 
-class Vector2
-{
-public:
-	float X;
-	float Y;
-};
+#include "../WWMath/vector2.h"
 
 typedef unsigned long BfmeUInt32;
 

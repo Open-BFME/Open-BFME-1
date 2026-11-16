@@ -5,17 +5,11 @@
 // Original W3DDisplay.cpp drawRectClock geometry; BFME takes float coordinates.
 // Keep product parentheses: MSVC 7.1 uses them to constrain x87 reassociation.
 // Retail helper ILTs 0x19D67 -> 0x6E73C0 (rect), 0x24BCC -> 0x6EB070 (tri).
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
 typedef unsigned long UnsignedInt;
 
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-	float X;
-	float Y;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 
 typedef Vector2 BfmeVector2;
 

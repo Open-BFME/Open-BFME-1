@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
 typedef unsigned long UnsignedInt;
 
@@ -15,14 +15,7 @@ struct IRegion2D
 extern bool ClipLine2D(ICoord2D *p1, ICoord2D *p2, ICoord2D *c1,
 	ICoord2D *c2, IRegion2D *clipRegion);
 
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-
-	float X;
-	float Y;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/render2d.h
 class Render2DClass

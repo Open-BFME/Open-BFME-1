@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x007AFF90: W3DProjectedShadow::updateTexture, the BFME decal-only
 // form of the Zero Hour body (W3DTextureShadow.cpp). The projection branch and
 // the directional-light branch are gone, so the decal light direction is the
@@ -11,14 +11,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vector2.h
-class Vector2
-{
-public:
-	Vector2(float x, float y) { X = x; Y = y; }
-
-	float X;
-	float Y;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/vector3.h
 class Vector3

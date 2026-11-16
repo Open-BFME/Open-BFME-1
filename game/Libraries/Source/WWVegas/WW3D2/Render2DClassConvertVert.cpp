@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWMath
 // readable body of ?Convert_Vert@Render2DClass@@: game/Libraries/Source/WWVegas/WW3D2/render2d.cpp
 // BFME Render2DClass::Convert_Vert, retail 0x006E7190 (42 B) and 0x006E71D0 (41 B).
 //
@@ -7,12 +7,7 @@
 // from g_BfmeRender2DZ, the same global Add_Quad stores into each vertex.
 // Layout: CoordinateScale at +0x04, CoordinateOffset at +0x0C.
 
-class Vector2
-{
-public:
-	float X;
-	float Y;
-};
+#include "../WWMath/vector2.h"
 
 #include "vector3.h"
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME's Render2D layout predates the later vendored class. Keep the retail
 // layout and its 0x74-byte batch element local to this translation unit.
 
@@ -9,13 +9,7 @@ public:
 	int Value;
 };
 
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-	float X;
-	float Y;
-};
+#include "../WWMath/vector2.h"
 
 class Render2DRawArray
 {
