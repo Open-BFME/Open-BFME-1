@@ -23,23 +23,9 @@ enum SlotState
 // releaseBuffer<G>. unsigned short not wchar_t because this TU compiles with
 // /Zc:wchar_t- and pulls no header declaring wchar_t; G is unsigned short.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString() { m_data = 0; }
-	~UnicodeString();
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
 
-	void translate(const AsciiString& stringSrc);
-
-	int compareNoCase(const UnicodeString& that) const
-	{
-		return ((const StringBase<unsigned short> *)this)->compareNoCase(
-			*(const StringBase<unsigned short> *)&that);
-	}
-
-private:
-	unsigned short *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot

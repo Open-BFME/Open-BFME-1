@@ -17,21 +17,11 @@ struct RGBColor;
 #include <stddef.h>
 #include "string_base.h"
 
-class UnicodeString
-{
-public:
-	UnicodeString(const UnicodeString &other)
-	{
-		((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
-			*(const StringBase<wchar_t> *)&other );
-	}
-	~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-	static UnicodeString TheEmptyString;
-
-private:
-	wchar_t *m_text;
-};
 
 class Mouse
 {
