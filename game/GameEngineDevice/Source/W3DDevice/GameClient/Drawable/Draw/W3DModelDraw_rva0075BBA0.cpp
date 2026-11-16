@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc /O2
 // Retail 0x0075BBA0, 154 bytes.  The sole direct caller is
 // W3DModelDraw::setAnimationFrame through ObjectDrawInterface slot 18 at
 // 0x00760600.  It passes an Int and the validated RenderObjClass transform at
@@ -6,23 +6,7 @@
 
 typedef int Int;
 
-class Vector4
-{
-public:
-	float x;
-	float y;
-	float z;
-	float w;
-
-	Vector4 &operator=(const Vector4 &other)
-	{
-		x = other.x;
-		y = other.y;
-		z = other.z;
-		w = other.w;
-		return *this;
-	}
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/vector4.h"
 
 class Matrix3D
 {

@@ -1,20 +1,10 @@
-// cl: /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath
 // ?Convert_Color_Clamp@Rva0090F460@@SAIVVector4@@@Z, retail 0x0090F460.
 
 #include "vector3.h"
 #include "cpudetect.h"
 
-class Vector4
-{
-public:
-	float X;
-	float Y;
-	float Z;
-	float W;
-
-	float &operator[](int index) { return (&X)[index]; }
-	const float &operator[](int index) const { return (&X)[index]; }
-};
+#include "../WWMath/vector4.h"
 
 class Rva0090F460
 {

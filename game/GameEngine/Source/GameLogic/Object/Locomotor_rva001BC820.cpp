@@ -1,4 +1,4 @@
-// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 // Retail 0x001BC820 is a second locomotor movement dispatcher.  Its named
 // callees and the appearance jump table distinguish it from the already
 // claimed Locomotor::locoUpdate_moveTowardsPosition at 0x002BAFB8. Its caller
@@ -31,23 +31,7 @@ struct Coord3D
 
 // Retail copies the saved transform row by row, as WWMath's Matrix3D
 // assignment does; the member names follow WWMath's Vector4/Matrix3D.
-class Vector4
-{
-public:
-	__forceinline Vector4 &operator=(const Vector4 &v)
-	{
-		X = v.X;
-		Y = v.Y;
-		Z = v.Z;
-		W = v.W;
-		return *this;
-	}
-
-	Real X;
-	Real Y;
-	Real Z;
-	Real W;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector4.h"
 
 class Matrix3D
 {

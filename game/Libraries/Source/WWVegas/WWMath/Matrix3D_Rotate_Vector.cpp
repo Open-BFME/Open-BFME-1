@@ -1,16 +1,9 @@
-// cl: /DNDEBUG /MD /G6 /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /G6 /EHsc /Igame/Libraries/Source/WWVegas/WWMath
 // BFME's matrix rotation array helper at retail 0x00924480.
 
 #include "vector3.h"
 
-class Vector4
-{
-	public:
-	float X;
-	float Y;
-	float Z;
-	float W;
-};
+#include "vector4.h"
 
 class Matrix3D
 {

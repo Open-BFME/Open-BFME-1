@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 //
 // Open-BFME5 near-twin conversion.
 // Twin: ?Set_Vertex_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z @ 0x0071BEB0
@@ -130,11 +130,7 @@ struct IDirect3DDevice8
 	virtual long __stdcall SetPixelShaderConstant(unsigned reg, const void *data, unsigned count) = 0;
 };
 
-class Vector4
-{
-public:
-	float X, Y, Z, W;
-};
+#include "../WWMath/vector4.h"
 
 extern unsigned number_of_DX8_calls;
 

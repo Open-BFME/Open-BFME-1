@@ -1,29 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 // Open-BFME5: retail ShareBufferClass<Vector4> copy constructor.
 
 void *operator new[](unsigned int size);
 void operator delete[](void *ptr);
 inline void *operator new( unsigned int, void *place ) { return place; }
 
-class Vector4
-{
-public:
-	Vector4();
-	Vector4 &operator=( const Vector4 &that )
-	{
-		X = that.X;
-		Y = that.Y;
-		Z = that.Z;
-		W = that.W;
-		return *this;
-	}
-
-private:
-	float X;
-	float Y;
-	float Z;
-	float W;
-};
+#include "../WWMath/vector4.h"
 
 class RefCountClass
 {

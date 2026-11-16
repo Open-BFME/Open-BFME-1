@@ -1,16 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
-class Vector4
-{
-public:
-	const float &operator[](int index) const { return (&X)[index]; }
-
-private:
-	float X;
-	float Y;
-	float Z;
-	float W;
-};
+#include "vector4.h"
 
 class Matrix3D
 {
