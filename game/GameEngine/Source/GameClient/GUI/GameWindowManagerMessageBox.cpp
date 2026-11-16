@@ -67,7 +67,7 @@ inline UnicodeString::~UnicodeString()
     ((StringBase<unsigned short> *)this)->releaseBuffer();
 }
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 typedef void (*GameWinMsgBoxFunc)( void );
 

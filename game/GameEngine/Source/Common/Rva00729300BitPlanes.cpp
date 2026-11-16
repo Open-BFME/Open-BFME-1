@@ -131,11 +131,7 @@ void Rva00729D30Terrain::checkEdges( int xOffset, int yOffset, int width,
 		*left = true;
 }
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Rva00729570Terrain
 {

@@ -1,4 +1,4 @@
-﻿// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc
 // readable body of ?reverseAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z: game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 //
 // Retail 0x00497760, 260 bytes. SlideFromRightFast reverse animation;
@@ -10,11 +10,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct Coord2D
 {

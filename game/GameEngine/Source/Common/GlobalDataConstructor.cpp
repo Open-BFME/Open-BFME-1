@@ -59,11 +59,7 @@ struct BfmeGdCoord3D
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 // BFME's GameClientRandomVariable zeroes itself: retail clears all seven
 // ParticleCursor* variables (+0xdd8..+0xe30) during member construction.

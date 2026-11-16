@@ -7,12 +7,7 @@ typedef int Color;
 
 class Image;
 
-struct ICoord2D
-{
-    Int x;
-    Int y;
-    ICoord2D() {}
-};
+#include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // ?imageWidth@@YAHPBVImage@@@Z absent-from-retail
 inline Int imageWidth(const Image *image)
