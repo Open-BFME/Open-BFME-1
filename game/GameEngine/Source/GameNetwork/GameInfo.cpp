@@ -752,7 +752,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 		if (valPtr)
 			val = valPtr;
 
-		if (val.isEmpty())
+		if (val.StringBase<char>::isEmpty())
 		{
 			optionsOk = false;
 			DEBUG_LOG(("ParseAsciiStringToGameInfo - saw empty value, quitting\n"));
@@ -856,7 +856,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 							char *slotPos = NULL;
 							//Parse out the Name																
 							AsciiString slotValue(strtok_r((char *)rawSlot.str(),",",&slotPos));
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue name is empty, quitting\n"));
@@ -869,7 +869,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 							
 							//Parse out the IP
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue IP address is empty, quitting\n"));
@@ -885,7 +885,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							// parse out the port
 							slotValue = strtok_r(NULL, ",", &slotPos);
-							if (slotValue.isEmpty())
+							if (slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue port is empty, quitting\n"));
@@ -923,7 +923,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read color index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue color is empty, quitting\n"));
@@ -941,7 +941,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read playerTemplate index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue player template is empty, quitting\n"));
@@ -959,7 +959,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read start position index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue start position is empty, quitting\n"));
@@ -977,7 +977,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read team index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue team number is empty, quitting\n"));
@@ -995,7 +995,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							// Read the NAT behavior
 							slotValue = strtok_r(NULL, ",",&slotPos);
-							if (slotValue.isEmpty())
+							if (slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - NAT behavior is empty, quitting\n"));
@@ -1018,7 +1018,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 							char *slotPos = NULL;
 							//Parse out the Name																
 							AsciiString slotValue(strtok_r((char *)rawSlot.str(),",",&slotPos));
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue AI Type is empty, quitting\n"));
@@ -1055,7 +1055,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
               
 							//Read color index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue color is empty, quitting\n"));
@@ -1073,7 +1073,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read playerTemplate index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue player template is empty, quitting\n"));
@@ -1091,7 +1091,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read start pos
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue start pos is empty, quitting\n"));
@@ -1121,7 +1121,7 @@ Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options)
 
 							//Read team index
 							slotValue = strtok_r(NULL,",",&slotPos);
-							if(slotValue.isEmpty())
+							if(slotValue.StringBase<char>::isEmpty())
 							{
 								optionsOk = false;
 								DEBUG_LOG(("ParseAsciiStringToGameInfo - slotValue team number is empty, quitting\n"));

@@ -146,7 +146,7 @@ void PlayerList::newGame()
 	{
 		Dict *d = TheSidesList->getSideInfo(i)->getDict();
 		AsciiString pname = d->getAsciiString(TheKey_playerName);
-		if (pname.isEmpty())
+		if (pname.StringBase<char>::isEmpty())
 			continue;	// it's neutral, which we've already done, so skip it.
 
 		/// @todo The Player class should have a reset() method, instead of directly calling initFromDict() (MSB)

@@ -787,7 +787,7 @@ void AIPlayer::processBaseBuilding( void )
 		for( BuildListInfo *info = m_player->getBuildList(); info; info = bfmeBuildListNext(info) )
 		{
 			AsciiString name = info->getTemplateName();
-			if (name.isEmpty()) continue;
+			if (name.StringBase<char>::isEmpty()) continue;
 			const ThingTemplate *bldgPlan = TheThingFactory->findTemplate( name );
 			if (!bldgPlan) {																											 
 				DEBUG_LOG(("*** ERROR - Build list building '%s' doesn't exist.\n", name.str()));
@@ -2749,7 +2749,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 	for( info = m_player->getBuildList(); info; info = bfmeBuildListNext(info) )
 	{
 		AsciiString name = info->getTemplateName();
-		if (name.isEmpty()) continue;
+		if (name.StringBase<char>::isEmpty()) continue;
 		const ThingTemplate *bldgPlan = TheThingFactory->findTemplate( name );
 		if (!bldgPlan) {																											 
 			continue;
@@ -2773,7 +2773,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 	for( info = m_player->getBuildList(); info; info = bfmeBuildListNext(info) )
 	{
 		AsciiString name = info->getTemplateName();
-		if (name.isEmpty()) continue;
+		if (name.StringBase<char>::isEmpty()) continue;
 		const ThingTemplate *bldgPlan = TheThingFactory->findTemplate( name );
 		if (!bldgPlan) {																											 
 			continue;

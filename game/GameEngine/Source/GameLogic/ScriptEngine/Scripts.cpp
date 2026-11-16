@@ -1906,7 +1906,7 @@ AsciiString Parameter::getUiText(void) const
 {
 	AsciiString uiText;
 	AsciiString uiString = m_string;
-	if (uiString.isEmpty()) {
+	if (uiString.StringBase<char>::isEmpty()) {
 		uiString = "???";
 	}
 
@@ -2133,7 +2133,7 @@ AsciiString Parameter::getUiText(void) const
 		
 		case OBJECT_STATUS:
 		{
-			if (m_string.isEmpty()) {
+			if (m_string.StringBase<char>::isEmpty()) {
 				uiText.format("Object Status is '???'");
 			} else {
 				uiText.format("Object Status is '%s'", m_string.str());
@@ -2408,7 +2408,7 @@ ScriptAction *ScriptAction::ParseAction(DataChunkInput &file, DataChunkInfo *inf
 	}
 #if defined(_DEBUG) || defined(_INTERNAL)
 	Script *pScript = (Script *)userData;
-	if (at && (at->getName().isEmpty() || (at->getName().compareNoCase("(placeholder)") == 0))) {
+	if (at && (at->getName().StringBase<char>::isEmpty() || (at->getName().compareNoCase("(placeholder)") == 0))) {
 		DEBUG_CRASH(("Invalid Script Action found in script '%s'\n", pScript->getName().str()));
 	}
 #endif

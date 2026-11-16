@@ -797,7 +797,7 @@ AsciiString CustomMatchPreferences::getPreferredMap(void)
 
 	ret = QuotedPrintableToAsciiString(it->second);
 	ret.trim();
-	if (ret.isEmpty() || !isValidMap(ret, TRUE))
+	if (ret.StringBase<char>::isEmpty() || !isValidMap(ret, TRUE))
 	{	//map is invalid, use default instead
 		ret = getDefaultOfficialMap();
 		return ret;

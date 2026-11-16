@@ -211,7 +211,7 @@ void JetSlowDeathBehavior::beginSlowDeath( const DamageInfo *damageInfo )
 
 	// start audio loop playing
 	m_deathLoopSound = modData->m_deathLoopSound;
-	if( m_deathLoopSound.getEventName().isEmpty() == FALSE )
+	if( m_deathLoopSound.getEventName().StringBase<char>::isEmpty() == FALSE )
 	{
 
 		m_deathLoopSound.setObjectID( us->getID() );

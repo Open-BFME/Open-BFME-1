@@ -581,7 +581,7 @@ UpdateSleepTime AutoHealBehavior::update()
 				if (TheAnim2DCollection)
 				{
 					const AsciiString &animName = TheGlobalData->m_getHealedAnimationName;
-					if (animName.isEmpty() == false)
+					if (animName.StringBase<char>::isEmpty() == false)
 					{
 						Anim2DTemplate *animTemplate = TheAnim2DCollection->findTemplate(animName);
 						if (animTemplate)

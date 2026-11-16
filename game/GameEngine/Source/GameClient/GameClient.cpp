@@ -866,7 +866,7 @@ Bool GameClient::loadMap( AsciiString mapName )
 {
 
 	// sanity
-	if( mapName.isEmpty() )
+	if( mapName.StringBase<char>::isEmpty() )
 		return false;
 
 	assert( 0 );  // who calls this?

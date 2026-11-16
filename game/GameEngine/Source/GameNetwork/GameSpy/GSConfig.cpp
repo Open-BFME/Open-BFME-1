@@ -205,7 +205,7 @@ m_qmChannel(0)
 
 		line.trim();
 
-		if (line.isEmpty())
+		if (line.StringBase<char>::isEmpty())
 			continue;
 
 		if (!sections.isInSection() && line.compare("<PingServers>") == 0)

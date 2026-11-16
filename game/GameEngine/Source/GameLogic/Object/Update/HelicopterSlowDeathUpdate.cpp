@@ -207,7 +207,7 @@ void HelicopterSlowDeathBehavior::beginSlowDeath( const DamageInfo *damageInfo )
 
 	m_deathSound = modData->m_deathSound;
 	
-	if (m_deathSound.getEventName().isEmpty() == false)
+	if (m_deathSound.getEventName().StringBase<char>::isEmpty() == false)
 	{
 		m_deathSound.setObjectID(getObject()->getID());
 		m_deathSound.setPlayingHandle(TheAudio->addAudioEvent(&m_deathSound));
@@ -253,7 +253,7 @@ void HelicopterSlowDeathBehavior::beginSlowDeath( const DamageInfo *damageInfo )
 		{
 			
 			// where do the offset attachment to
-			if( modData->m_attachParticleBone.isEmpty() == FALSE )
+			if( modData->m_attachParticleBone.StringBase<char>::isEmpty() == FALSE )
 			{
 				Drawable *draw = getObject()->getDrawable();
 

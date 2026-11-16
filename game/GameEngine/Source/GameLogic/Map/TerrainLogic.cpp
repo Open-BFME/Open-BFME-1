@@ -990,7 +990,7 @@ Bool TerrainLogic::loadMap( AsciiString filename, Bool query )
 {
 
 	// sanity
-	if( filename.isEmpty() )
+	if( filename.StringBase<char>::isEmpty() )
 		return FALSE;
 
 	// copy filename
@@ -1409,7 +1409,7 @@ Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiStrin
 {
 	Real distSqr = 0;
 	Waypoint *pClosestWay = NULL;
-	if (label.isEmpty()) {
+	if (label.StringBase<char>::isEmpty()) {
 		DEBUG_LOG(("***Warning - asking for empty path label.\n"));
 		return NULL;
 	}
@@ -1442,7 +1442,7 @@ Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiStrin
 // ?isPurposeOfPath@TerrainLogic@@UAE_NPAVWaypoint@@VAsciiString@@@Z present-unmatched
 Bool TerrainLogic::isPurposeOfPath( Waypoint *pWay, AsciiString label )
 {
-	if (label.isEmpty() || pWay==NULL) {
+	if (label.StringBase<char>::isEmpty() || pWay==NULL) {
 		DEBUG_LOG(("***Warning - asking for empth path label.\n"));
 		return false;
 	}

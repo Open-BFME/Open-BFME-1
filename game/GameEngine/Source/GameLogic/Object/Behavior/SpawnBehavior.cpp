@@ -476,7 +476,7 @@ void SpawnBehavior::xfer( Xfer *xfer )
 	{
 
 		m_spawnTemplate = NULL;
-		if( name.isEmpty() == FALSE )
+		if( name.StringBase<char>::isEmpty() == FALSE )
 		{
 		
 			m_spawnTemplate = TheThingFactory->findTemplate( name );

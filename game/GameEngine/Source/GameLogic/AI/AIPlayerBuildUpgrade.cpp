@@ -292,7 +292,7 @@ void AIPlayer::buildUpgrade(const AsciiString &upgrade)
 			//Get the command button.
 			const CommandButton *commandButton = commandSet->getCommandButton(j);
 			if (commandButton==NULL) continue;
-			if (commandButton->getName().isEmpty() )	continue;
+			if (commandButton->getName().StringBase<char>::isEmpty() )	continue;
 			if (commandButton->getUpgradeTemplate() == NULL )	continue;
  			if (commandButton->getUpgradeTemplate()->getUpgradeName() == curUpgrade->getUpgradeName()) {
 				canUpgradeHere = true;

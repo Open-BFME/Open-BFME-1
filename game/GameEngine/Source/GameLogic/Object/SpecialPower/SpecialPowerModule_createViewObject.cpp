@@ -159,7 +159,7 @@ void SpecialPowerModule::createViewObject(const Coord3D *location)
 		return;
 
 	AsciiString objectName = TheWritableGlobalData->m_specialPowerViewObjectName;
-	if (objectName.isEmpty())
+	if (objectName.StringBase<char>::isEmpty())
 		return;
 
 	const ThingTemplate *viewObjectTemplate = TheThingFactory->findTemplate(objectName);

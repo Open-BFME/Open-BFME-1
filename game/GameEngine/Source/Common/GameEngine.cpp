@@ -654,7 +654,7 @@ void GameEngine::init( int argc, char *argv[] )
 		//TheShell->push( AsciiString("Menus/MainMenu.wnd") );
 		
 		// This allows us to run a map/reply from the command line
-		if (TheGlobalData->m_initialFile.isEmpty() == FALSE)
+		if (TheGlobalData->m_initialFile.StringBase<char>::isEmpty() == FALSE)
 		{
 			AsciiString fname = TheGlobalData->m_initialFile;
 			fname.toLower();

@@ -229,7 +229,7 @@ Mission *CampaignManager::gotoNextMission( void )
 // ?setCampaignAndMission@CampaignManager@@QAEXVAsciiString@@0@Z present-unmatched
 void CampaignManager::setCampaignAndMission( AsciiString campaign, AsciiString mission )
 {
-	if(mission.isEmpty())
+	if(mission.StringBase<char>::isEmpty())
 	{
 		setCampaign(campaign);
 		return;

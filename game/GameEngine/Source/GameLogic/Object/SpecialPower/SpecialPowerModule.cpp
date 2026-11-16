@@ -405,7 +405,7 @@ void SpecialPowerModule::createViewObject( const Coord3D *location )
 		return; // We don't want a view object at all.
 
 	AsciiString objectName = TheGlobalData->m_specialPowerViewObjectName;
-	if( objectName.isEmpty() )
+	if( objectName.StringBase<char>::isEmpty() )
 		return;
 
 	const ThingTemplate *viewObjectTemplate = TheThingFactory->findTemplate( objectName );

@@ -482,7 +482,7 @@ void RailroadBehavior::playImpactSound(Object *victim, const Coord3D *impactPosi
 	}
 
 
-	if (impact.getEventName().isEmpty())
+	if (impact.getEventName().StringBase<char>::isEmpty())
 		return;
 
 	Real vel = NORMAL_VEL_Z; //the max
