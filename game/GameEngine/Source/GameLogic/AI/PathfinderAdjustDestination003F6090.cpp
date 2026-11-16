@@ -16,6 +16,7 @@
 // The included radius body and recursive override walker preserve the helper
 // effects that shape this body; the radius call resolves through its body pin.
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 #include <math.h>
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
@@ -35,7 +36,7 @@ inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &p) {x=p.x; y=p.y; z=p.z;}
 inline Coord3D &Coord3D::operator=(const Coord3D &p) {x=p.x; y=p.y; z=p.z;return *this;}
-#include "../../../../Libraries/Include/Lib/ICoord2D.h"
+
 enum PathfindLayerEnum { LAYER_INVALID=0 };
 class LocomotorSet;
 class CRCParameterCheck;

@@ -26,11 +26,7 @@ public:
     bool isDrawableEffectivelyHidden() const;
 };
 
-struct ICoord2D
-{
-    int x;
-    int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 #define V(n) virtual void slot##n();
 class TerrainLogic

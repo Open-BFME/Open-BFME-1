@@ -106,7 +106,7 @@ private:
     char padding[0x44];
 };
 
-struct ICoord2D { Int x; Int y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Pathfinder
 {

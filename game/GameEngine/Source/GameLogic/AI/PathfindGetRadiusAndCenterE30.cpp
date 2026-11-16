@@ -76,7 +76,7 @@ public:
 };
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
-struct ICoord2D { int x,y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 enum PathfindLayerEnum { LAYER_INVALID=0 };
 
 class Overridable { public: const Overridable *getFinalOverride() const; int m_00; const Overridable *m_nextOverride; };

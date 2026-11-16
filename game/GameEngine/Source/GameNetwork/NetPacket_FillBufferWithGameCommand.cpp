@@ -26,7 +26,7 @@ typedef float Real;
 typedef unsigned short WideChar;
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
-struct ICoord2D { Int x, y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { Int loX, loY, hiX, hiY; };
 
 enum GameMessageArgumentDataType

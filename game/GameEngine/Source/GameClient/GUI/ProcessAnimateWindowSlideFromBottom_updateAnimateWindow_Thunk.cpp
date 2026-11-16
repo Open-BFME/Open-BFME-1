@@ -14,11 +14,7 @@ typedef float Real;
 typedef bool Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // Coord2D is a two-float value in the upstream BaseType.h.  The explicit
 // special members preserve the BFME caller's return-value lifetime shape.

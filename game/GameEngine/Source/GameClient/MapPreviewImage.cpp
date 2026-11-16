@@ -56,7 +56,7 @@ private: TextureClass *ptr;
 };
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D {Coord2D lo,hi;};
-struct ICoord2D {int x,y;};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 class Image {
 public:
  virtual void slot0();

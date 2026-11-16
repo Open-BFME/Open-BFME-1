@@ -42,11 +42,7 @@ __forceinline long fast_float2long_round(float f)
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell;
 
