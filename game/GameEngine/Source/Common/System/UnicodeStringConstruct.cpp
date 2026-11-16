@@ -11,11 +11,9 @@ class UnicodeString;
 
 #include "string_base.h"
 
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-    UnicodeString(const UnicodeString &source)
-        : StringBase<unsigned short>(source) {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->~StringBase(); }
+
 
 template void _STL::_Construct(UnicodeString *, const UnicodeString &);

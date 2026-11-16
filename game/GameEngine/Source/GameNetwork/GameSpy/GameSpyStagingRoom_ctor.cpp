@@ -12,15 +12,9 @@ typedef bool Bool;
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	__forceinline UnicodeString() : m_data(0) {}
-	~UnicodeString();
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
 
-private:
-	unsigned short *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot

@@ -13,27 +13,12 @@ extern "C" __declspec(dllimport) void * __stdcall ShellExecuteA(
 	HWND window, const char *operation, const char *file, const char *parameters,
 	const char *directory, int showCommand );
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-private:
-	StringBase() : m_data( 0 ) {}
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-protected:
-	void *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	~UnicodeString() {}
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

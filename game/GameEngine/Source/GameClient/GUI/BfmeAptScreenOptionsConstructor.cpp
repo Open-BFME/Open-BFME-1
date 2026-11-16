@@ -7,25 +7,11 @@
 // The tail resets the observed global at 12F4AE4 after destroying the label
 // and its argument copy, while the returned version string remains alive.
 // stlport
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-public:
-	void set( const StringBase<T> &other );
-	void trim();
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 struct UnicodeStringData
@@ -35,36 +21,6 @@ struct UnicodeStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	static UnicodeString TheEmptyString;
-
-	UnicodeString() : m_data( 0 ) {}
-	UnicodeString( const unsigned short *text );
-	UnicodeString( const UnicodeString &other )
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&other );
-	}
-	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-	void format( UnicodeString format, ... );
-	void format( const unsigned short *format, ... );
-	void concat( const unsigned short *text, int length );
-	void set( const UnicodeString &other )
-	{
-		((StringBase<unsigned short> *)this)->set(
-			*(const StringBase<unsigned short> *)&other );
-	}
-	void trim()
-	{
-		((StringBase<unsigned short> *)this)->trim();
-	}
-	bool isEmpty() const { return !m_data || m_data->m_length == 0; }
-
-private:
-	UnicodeStringData *m_data;
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>
