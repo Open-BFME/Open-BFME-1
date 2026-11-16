@@ -1536,49 +1536,49 @@ void InGameUI::init( void )
 	//override INI values with language localized values:
 	if (TheGlobalLanguageData)
 	{
-		if (TheGlobalLanguageData->m_drawableCaptionFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_drawableCaptionFont.name).str()[0] != 0))
 		{	m_drawableCaptionFont = TheGlobalLanguageData->m_drawableCaptionFont.name;
 			m_drawableCaptionPointSize = TheGlobalLanguageData->m_drawableCaptionFont.size;
 			m_drawableCaptionBold = TheGlobalLanguageData->m_drawableCaptionFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_messageFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_messageFont.name).str()[0] != 0))
 		{	m_messageFont = TheGlobalLanguageData->m_messageFont.name;
 			m_messagePointSize = TheGlobalLanguageData->m_messageFont.size;
 			m_messageBold = TheGlobalLanguageData->m_messageFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_militaryCaptionTitleFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_militaryCaptionTitleFont.name).str()[0] != 0))
 		{	m_militaryCaptionTitleFont = TheGlobalLanguageData->m_militaryCaptionTitleFont.name;
 			m_militaryCaptionTitlePointSize = TheGlobalLanguageData->m_militaryCaptionTitleFont.size;
 			m_militaryCaptionTitleBold = TheGlobalLanguageData->m_militaryCaptionTitleFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_militaryCaptionFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_militaryCaptionFont.name).str()[0] != 0))
 		{	m_militaryCaptionFont = TheGlobalLanguageData->m_militaryCaptionFont.name;
 			m_militaryCaptionPointSize = TheGlobalLanguageData->m_militaryCaptionFont.size;
 			m_militaryCaptionBold = TheGlobalLanguageData->m_militaryCaptionFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_superweaponCountdownNormalFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_superweaponCountdownNormalFont.name).str()[0] != 0))
 		{	m_superweaponNormalFont = TheGlobalLanguageData->m_superweaponCountdownNormalFont.name;
 			m_superweaponNormalPointSize = TheGlobalLanguageData->m_superweaponCountdownNormalFont.size;
 			m_superweaponNormalBold = TheGlobalLanguageData->m_superweaponCountdownNormalFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_superweaponCountdownReadyFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_superweaponCountdownReadyFont.name).str()[0] != 0))
 		{	m_superweaponReadyFont = TheGlobalLanguageData->m_superweaponCountdownReadyFont.name;
 			m_superweaponReadyPointSize = TheGlobalLanguageData->m_superweaponCountdownReadyFont.size;
 			m_superweaponReadyBold = TheGlobalLanguageData->m_superweaponCountdownReadyFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_namedTimerCountdownNormalFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_namedTimerCountdownNormalFont.name).str()[0] != 0))
 		{	m_namedTimerNormalFont = TheGlobalLanguageData->m_namedTimerCountdownNormalFont.name;
 			m_namedTimerNormalPointSize = TheGlobalLanguageData->m_namedTimerCountdownNormalFont.size;
 			m_namedTimerNormalBold = TheGlobalLanguageData->m_namedTimerCountdownNormalFont.bold;
 		}
 
-		if (TheGlobalLanguageData->m_namedTimerCountdownReadyFont.name.isNotEmpty())
+		if (((TheGlobalLanguageData->m_namedTimerCountdownReadyFont.name).str()[0] != 0))
 		{	m_namedTimerReadyFont = TheGlobalLanguageData->m_namedTimerCountdownReadyFont.name;
 			m_namedTimerReadyPointSize = TheGlobalLanguageData->m_namedTimerCountdownReadyFont.size;
 			m_namedTimerReadyBold = TheGlobalLanguageData->m_namedTimerCountdownReadyFont.bold;
@@ -7418,7 +7418,7 @@ void InGameUI::stopMovie( void )
 		m_videoStream = NULL;
 	}
 
-	if (!m_currentlyPlayingMovie.isEmpty()) {
+	if (!((m_currentlyPlayingMovie).str()[0] == 0)) {
 		//TheScriptEngine->notifyOfCompletedVideo(m_currentlyPlayingMovie); // removing sync error source -MDC
 		m_currentlyPlayingMovie = AsciiString::TheEmptyString;
 	}
