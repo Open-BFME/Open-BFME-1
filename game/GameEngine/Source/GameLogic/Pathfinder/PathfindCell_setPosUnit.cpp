@@ -4,11 +4,7 @@
 // at +0x14. Same packed flag nibble as setGoalUnit.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell;
 class PathfindCellInfo;

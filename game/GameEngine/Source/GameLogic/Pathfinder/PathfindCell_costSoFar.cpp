@@ -4,11 +4,7 @@
 typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell;
 

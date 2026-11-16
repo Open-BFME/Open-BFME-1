@@ -12,7 +12,7 @@
 // advances with ++it.
 #include <list>
 
-struct ICoord2D { int x, y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 class InGameUI

@@ -3,11 +3,7 @@
 
 typedef unsigned int UnsignedInt;
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct Region2D
 {

@@ -4,11 +4,7 @@
 // at +0x18. Packed flags live in bits 3-5 of the dword at cell+0x0C.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell;
 class PathfindCellInfo;

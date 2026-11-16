@@ -2,10 +2,7 @@
 // Open-BFME5: STLport vector member-template _M_allocate_and_copy for const ICoord2D*.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	int x, y;
-};
+#include "../../../Include/Lib/ICoord2D.h"
 
 namespace _STL
 {
