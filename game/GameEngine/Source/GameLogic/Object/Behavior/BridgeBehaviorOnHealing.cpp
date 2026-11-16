@@ -25,14 +25,7 @@ enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	Real length() const { return (Real)sqrt(x * x + y * y + z * z); }
-
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 class DamageInfo;
 class Xfer;
