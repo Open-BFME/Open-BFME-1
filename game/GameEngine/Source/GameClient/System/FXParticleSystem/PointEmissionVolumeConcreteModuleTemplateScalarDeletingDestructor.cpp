@@ -9,7 +9,9 @@ struct PointEmissionVolumeModuleTag;
 template<class Tag> class ConcreteModuleTemplate
 {
 public:
-	virtual ~ConcreteModuleTemplate();
+	// Keep helper construction inline without emitting a second native constructor.
+    __declspec(dllimport) __forceinline ConcreteModuleTemplate() {}
+    virtual ~ConcreteModuleTemplate();
 private:
 	unsigned char m_data[0x0C];
 };
