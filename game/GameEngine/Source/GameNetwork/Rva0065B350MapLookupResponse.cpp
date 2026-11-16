@@ -53,7 +53,7 @@ int Rva0065B350::handle(void *key, int status, const char *text, int, int)
         return 1;
     }
     AsciiString value(text);
-    value.trim();
+    value.StringBase<char>::trim();
     int parsed = atoi(value.str());
     if (parsed != -2) {
         int type = static_cast<Rva0065B350Payload *>(found->second)->word4;
@@ -109,7 +109,7 @@ int Rva0065B350::method0065B100(void *key, int status,
     }
 
     AsciiString value(text);
-    value.trim();
+    value.StringBase<char>::trim();
     char *delimiter = const_cast<char *>(strstr(value.str(), ","));
     if (!delimiter || !delimiter[1]) {
         reinterpret_cast<Gen_00654130 *>(this)->bfmeErase(key);

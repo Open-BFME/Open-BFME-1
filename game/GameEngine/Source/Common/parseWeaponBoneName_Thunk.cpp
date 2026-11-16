@@ -28,7 +28,7 @@ void parseWeaponBoneName(INI *ini, void *instance, void *store, const void *)
 	AsciiString *bones = (AsciiString *)store;
 	int slot = INI::scanIndexList(ini->getNextToken(), TheWeaponSlotTypeNames);
 	bones[slot] = ini->getNextAsciiString();
-	bones[slot].toLower();
+	bones[slot].StringBase<char>::toLower();
 	if (bones[slot].isNone())
 		bones[slot].clear();
 

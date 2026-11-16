@@ -234,7 +234,7 @@ m_qmChannel(0)
 		if (line.getCharAt(line.getLength()-1) == '\r')
 			line.removeLastChar();	// there is a trailing '\r'
 
-		line.trim();
+		line.StringBase<char>::trim();
 
 		if (line.isEmpty())
 			continue;
@@ -305,7 +305,7 @@ m_qmChannel(0)
 		}
 		else if (inVIP)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			if (line.getLength())
 			{
 				Int val = atoi(line.str());
@@ -315,12 +315,12 @@ m_qmChannel(0)
 		}
 		else if (inPingServers)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			m_pingServers.push_back(line);
 		}
 		else if (inPingDuration)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			AsciiString key, val;
 			if (line.nextToken(&key, " ="))
 			{
@@ -356,8 +356,8 @@ m_qmChannel(0)
 		}
 		else if (inManglers)
 		{
-			line.trim();
-			line.toLower();
+			line.StringBase<char>::trim();
+			line.StringBase<char>::toLower();
 			AsciiString hostStr;
 			AsciiString portStr;
 			line.nextToken(&hostStr, ":");
@@ -370,11 +370,11 @@ m_qmChannel(0)
 		}
 		else if (inQMMaps)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			AsciiString mapName;
 			mapName.format("%s\\%s\\%s.map", TheMapCache->getMapDir().str(), line.str(), line.str());
 			mapName = TheGameState->portableMapPathToRealMapPath(TheGameState->realMapPathToPortableMapPath(mapName));
-			mapName.toLower();
+			mapName.StringBase<char>::toLower();
 
 			const MapMetaData *md = TheMapCache->findMap(mapName);
 			if (md)
@@ -384,7 +384,7 @@ m_qmChannel(0)
 		}
 		else if (inQMBot)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			AsciiString key, val;
 			if (line.nextToken(&key, " ="))
 			{
@@ -399,7 +399,7 @@ m_qmChannel(0)
 		}
 		else if (inNAT)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			AsciiString key, val;
 			if (line.nextToken(&key, " ="))
 			{
@@ -457,7 +457,7 @@ m_qmChannel(0)
 		}
 		else if (inCustom)
 		{
-			line.toLower();
+			line.StringBase<char>::toLower();
 			AsciiString key, val;
 			if (line.nextToken(&key, " =") && line.nextToken(&val, " ="))
 			{

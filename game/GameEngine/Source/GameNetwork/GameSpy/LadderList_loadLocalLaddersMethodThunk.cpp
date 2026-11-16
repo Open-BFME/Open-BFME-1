@@ -36,7 +36,7 @@ public:
 
 	void toLower()
 	{
-		((StringBase<char> *)this)->toLower();
+		((StringBase<char> *)this)->StringBase<char>::toLower();
 	}
 
 	const char *str() const
@@ -125,7 +125,7 @@ void LadderList::loadLocalLadders()
 	while (it != filenameList.end())
 	{
 		AsciiString filename = *it;
-		filename.toLower();
+		filename.StringBase<char>::toLower();
 		(this->*check.call)(filename, index--);
 		++it;
 	}

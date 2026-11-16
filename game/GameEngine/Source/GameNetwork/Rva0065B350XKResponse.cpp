@@ -68,8 +68,8 @@ int Rva0065B350::handleXKResponse(void *key, int status, const char *text, int, 
         AsciiString line;
         FactionCounters0065B500 *current = 0;
         while (input.nextToken(&line, "\n")) {
-            line.trim();
-            line.toLower();
+            line.StringBase<char>::trim();
+            line.StringBase<char>::toLower();
             if (strstr(line.str(), "today")) period = 0;
             else if (strstr(line.str(), "yesterday")) period = 1;
             else if (strstr(line.str(), "all time")) period = 2;

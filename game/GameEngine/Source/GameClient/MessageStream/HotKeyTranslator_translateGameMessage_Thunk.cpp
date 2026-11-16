@@ -285,7 +285,7 @@ Bool BfmeTransitionMD::dispatch(AsciiString *key, Bool shiftOnly)
         return false;
 
     AsciiString keyCopy = *key;
-    keyCopy.toLower();
+    keyCopy.StringBase<char>::toLower();
     Bool disabled = false;
     GameWindow *window = 0;
     Rva005B3AD0HotKeyMap::iterator it = ((Rva005B3AD0HotKeyMap *)((char *)this + 8))->find(keyCopy);

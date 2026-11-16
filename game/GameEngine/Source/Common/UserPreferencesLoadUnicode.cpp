@@ -110,14 +110,14 @@ Bool UserPreferences::load(const UnicodeString &fname)
 		while (fgets(buf, LINE_LEN, fp) != NULL)
 		{
 			AsciiString line = buf;
-			line.trim();
+			line.StringBase<char>::trim();
 
 			AsciiString key, val;
 			line.nextToken(&key, "=");
 			val = line.str() + 1;
 
-			key.trim();
-			val.trim();
+			key.StringBase<char>::trim();
+			val.StringBase<char>::trim();
 
 			if (key.isEmpty() || val.isEmpty())
 				continue;

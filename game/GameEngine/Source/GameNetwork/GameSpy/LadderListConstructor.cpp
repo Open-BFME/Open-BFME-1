@@ -88,7 +88,7 @@ LadderList::LadderList()
 		if (line.getCharAt(line.getLength()-1) == '\r')
 			line.removeLastChar();	// there is a trailing '\r'
 
-		line.trim();
+		line.StringBase<char>::trim();
 
 		if (line.isEmpty())
 			continue;

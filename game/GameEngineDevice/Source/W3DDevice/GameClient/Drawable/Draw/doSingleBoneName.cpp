@@ -146,7 +146,7 @@ static __declspec(noinline) Bool doSingleBoneName(RenderObjClass *robj, const As
 	AsciiString tmp;
 
 	AsciiString boneNameTmp = boneName;
-	boneNameTmp.toLower();
+	boneNameTmp.StringBase<char>::toLower();
 
 	setFPMode();
 

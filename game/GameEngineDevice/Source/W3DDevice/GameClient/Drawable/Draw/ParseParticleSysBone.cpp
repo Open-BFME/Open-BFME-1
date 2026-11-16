@@ -69,7 +69,7 @@ void __cdecl bfmeCallEMA( void *a, BfmeThingEMA *b, BfmeSubEMA *s )
 	Rva0076CEE0Element info;
 	info.at18 = 0;
 	info.at00 = ini->getNextAsciiString();
-	info.at00.toLower();
+	info.at00.StringBase<char>::toLower();
 	INI::parseParticleSystemTemplate( ini, b, &info.at1c, 0 );
 	info.at04 = false;
 	info.at20 = false;

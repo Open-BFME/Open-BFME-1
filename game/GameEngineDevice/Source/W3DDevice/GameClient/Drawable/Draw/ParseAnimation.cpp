@@ -61,7 +61,7 @@ public:
 
     void toLower()
     {
-        ((StringBase<char> *)this)->toLower();
+        ((StringBase<char> *)this)->StringBase<char>::toLower();
     }
 
     void set(const AsciiString &source)
@@ -164,7 +164,7 @@ __declspec(noinline) static void parseAnimation(INI *ini, void *instance, void *
     AsciiString animationName = ini->getNextAsciiString();
     AsciiString originalAnimationName = animationName;
 
-    animationName.toLower();
+    animationName.StringBase<char>::toLower();
     Rva00774090Element animation(animationName);
 
     animation.m_secondName =

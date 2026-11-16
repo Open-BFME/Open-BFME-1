@@ -73,7 +73,7 @@ public:
 void W3DModelDrawModuleData::parseLodOptions(INI *ini, void *object, void *, const void *)
 {
 	AsciiString token = ini->getNextAsciiString();
-	token.toLower();
+	token.StringBase<char>::toLower();
 	int idx;
 	if (strcmp(token.str(), "low") == 0)
 		idx = 0;

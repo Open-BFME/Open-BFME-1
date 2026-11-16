@@ -64,7 +64,7 @@ const ArchivedFileInfo *ArchiveFile::getArchivedFileInfo(const AsciiString& file
 {
 	AsciiString path;
 	path = filename;
-	path.toLower();
+	path.StringBase<char>::toLower();
 	AsciiString token;
 
 	const DetailedArchivedDirectoryInfo *dirInfo = &m_rootDirectory;

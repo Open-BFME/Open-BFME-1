@@ -87,13 +87,13 @@ LadderInfo *parseLadder(AsciiString raw)
 		if (line.getCharAt(line.getLength()-1) == '\r')
 			line.removeLastChar();	// there is a trailing '\r'
 
-		line.trim();
+		line.StringBase<char>::trim();
 
 		if (line.isEmpty())
 			continue;
 
 		// woohoo!  got a line!
-		line.trim();
+		line.StringBase<char>::trim();
 		if ( !lad && ((const StringBase<char>&)line).startsWith("<Ladder ") )
 		{
 			// start of a ladder def
@@ -235,12 +235,12 @@ LadderInfo *parseLadder(AsciiString raw)
 		{
 			// valid map
 			AsciiString mapName = line.str() + 4;
-			mapName.trim();
+			mapName.StringBase<char>::trim();
 			if (mapName.isNotEmpty())
 			{
 				mapName.format("%s\\%s\\%s.map", TheMapCache->getMapDir().str(), mapName.str(), mapName.str());
 				mapName = TheGameState->portableMapPathToRealMapPath(TheGameState->realMapPathToPortableMapPath(mapName));
-				mapName.toLower();
+				mapName.StringBase<char>::toLower();
 				std::list<AsciiString> qmMaps = TheGameSpyConfig->getQMMaps();
 				if (std::Rva00080590Find(qmMaps.begin(), qmMaps.end(), mapName) != qmMaps.end())
 				{

@@ -773,7 +773,7 @@ static GHTTPBool numPlayersOnlineCallback( GHTTPRequest request, GHTTPResult res
 	}
 
 	AsciiString message = buffer;
-	message.trim();
+	message.StringBase<char>::trim();
 	const char *s = message.reverseFind('\\');
 	if (!s)
 	{

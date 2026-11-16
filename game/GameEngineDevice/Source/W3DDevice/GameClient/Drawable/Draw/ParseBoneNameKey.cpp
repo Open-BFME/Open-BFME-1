@@ -95,7 +95,7 @@ void parseBoneNameKey( INI *ini, void *instance, void *store, const void *userDa
 	NameKeyType *key = (NameKeyType *)store;
 
 	AsciiString tmp = ini->getNextToken();
-	tmp.toLower();
+	tmp.StringBase<char>::toLower();
 
 	if( self )
 		self->addPublicBone( tmp );
