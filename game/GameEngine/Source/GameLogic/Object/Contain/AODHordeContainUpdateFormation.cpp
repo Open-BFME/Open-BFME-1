@@ -6,28 +6,7 @@ typedef unsigned int ObjectID;
 typedef unsigned int UnsignedInt;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct Coord3D
-{
-	float x, y, z;
-
-	void sub(const Coord3D *other)
-	{
-		x -= other->x;
-		y -= other->y;
-		z -= other->z;
-	}
-
-	float length() const { return static_cast<float>(sqrt(x * x + y * y + z * z)); }
-	void set(const Coord3D *other)
-	{
-		unsigned int otherX = *(volatile const unsigned int *)&other->x;
-		unsigned int otherY = *(volatile const unsigned int *)&other->y;
-		unsigned int otherZ = *(volatile const unsigned int *)&other->z;
-		*(unsigned int *)&x = otherX;
-		*(unsigned int *)&y = otherY;
-		*(unsigned int *)&z = otherZ;
-	}
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo

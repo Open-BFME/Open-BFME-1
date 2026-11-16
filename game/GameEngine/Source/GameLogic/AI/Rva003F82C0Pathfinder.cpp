@@ -37,13 +37,7 @@ struct Region2D { Coord2D lo, hi; };
 struct IRegion2D { ICoord2D lo, hi; };
 
 // Same declaration as the matched caller's TU (Rva003F8820Pathfinder.cpp).
-struct Coord3D
-{
-	Real x, y, z;
-	Coord3D() {}
-	Coord3D(const Coord3D &o) : x(o.x), y(o.y), z(o.z) {}
-	~Coord3D() {}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 extern "C" double __cdecl fabs(double);
 #pragma intrinsic(fabs)
