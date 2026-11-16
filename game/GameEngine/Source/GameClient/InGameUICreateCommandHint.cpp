@@ -49,7 +49,7 @@ char pad000[0xc]; bool m_radarHidden; bool m_radarForceOn;
 bool isRadarWindow(GameWindow *);
 };
 extern Radar *TheRadar;
-struct ICoord2D { int x,y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 class Mouse { public:
 enum MouseCursor { ARROW=2, SCROLL=3, CROSS=4 };
 SLOT(0) SLOT(1) SLOT(2) SLOT(3) SLOT(4) SLOT(5) SLOT(6) SLOT(7) SLOT(8) SLOT(9) SLOT(10) SLOT(11) SLOT(12) SLOT(13) 

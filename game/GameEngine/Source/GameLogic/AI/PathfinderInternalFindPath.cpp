@@ -32,7 +32,7 @@ class Player;
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const; int getLayer() const; Bool bfmeIsComputerControlled() const;
 #include "object.h"
 
-struct ICoord2D { int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 enum PathfindLayerEnum { LAYER_GROUND = 1 };
 class Path;

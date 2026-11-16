@@ -60,7 +60,7 @@ struct Coord3D
 	Coord3D() {}
 	Coord3D( const Coord3D &o ) : x(o.x), y(o.y), z(o.z) {}
 };
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { LAYER_GROUND = 0 };

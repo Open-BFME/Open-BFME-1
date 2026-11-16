@@ -12,11 +12,7 @@ void __cdecl operator delete[](void *) throw();
 void __cdecl operator delete(void *) throw();
 #include <vector>
 
-struct ICoord2D
-{
-    int x;
-    int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 template void _STL::vector<ICoord2D, _STL::allocator<ICoord2D> >::_M_fill_insert(
     ICoord2D *, unsigned int, const ICoord2D &);

@@ -42,7 +42,7 @@ const ObjectID INVALID_ID = 0;
 #define PATHFIND_CELL_SIZE_F 10.0f
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };

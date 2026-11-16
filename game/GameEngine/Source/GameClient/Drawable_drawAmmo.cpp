@@ -30,11 +30,7 @@ typedef float Real;
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 // class, not struct: retail decorates every Image-typed name with PBVImage, so
 // the two static members below must mangle ?s_fullAmmo@Drawable@@0PBVImage@@B.

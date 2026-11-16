@@ -158284,7 +158284,7 @@ uw_00c1ff40,,0x00C1FF40,8,game/gen_small/uw_gen_016.cpp,matched,gen-funclet;obje
 uw_00c1ff60,,0x00C1FF60,8,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L14218
 uw_00c1ff80,,0x00C1FF80,8,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;object-symbol=$L9519
 uw_00c1ff88,,0x00C1FF88,8,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;object-symbol=$L8418
-uw_00c1ffa0,,0x00C1FFA0,11,game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp,matched,gen-funclet;parent=?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z;object-symbol=$L85465;model=claude-sonnet-5-5;host=GreatFaram
+uw_00c1ffa0,,0x00C1FFA0,11,game/GameEngine/Source/GameLogic/AI/PathfindZoneManager_allocateBlocks_Thunk.cpp,matched,gen-funclet;parent=?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z;object-symbol=$L362;model=claude-sonnet-5-5;host=GreatFaram;eh-state-pin $L85465->$L362: retail unwind map (?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z states [0]) binds this address to $L362;repin-model=codex
 uw_00c1ffc0,,0x00C1FFC0,8,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L12611
 uw_00c1ffe0,,0x00C1FFE0,14,game/gen_small/uw_gen_015.cpp,matched,gen-funclet;object-symbol=$L16598
 uw_00c1ffee,,0x00C1FFEE,14,game/gen_small/uw_gen_015.cpp,matched,gen-funclet;object-symbol=$L14485

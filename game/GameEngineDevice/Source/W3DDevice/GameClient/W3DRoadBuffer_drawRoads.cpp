@@ -283,11 +283,7 @@ struct Rva00710620AssetList
 	bool m_changed;
 };
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct IRegion2D
 {

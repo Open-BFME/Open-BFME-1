@@ -2,11 +2,7 @@
 // readable body of ?allocateBlocks@PathfindZoneManager@@QAEXABUIRegion2D@@@Z: game/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D

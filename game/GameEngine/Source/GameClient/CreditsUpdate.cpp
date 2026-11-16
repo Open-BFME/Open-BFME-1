@@ -29,7 +29,7 @@
 #include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 typedef int Int; const int CREDIT_SPACE_OFFSET=2; const int TRUE=1;
 enum { CREDIT_STYLE_TITLE, CREDIT_STYLE_POSITION, CREDIT_STYLE_NORMAL, CREDIT_STYLE_COLUMN, CREDIT_STYLE_BLANK };
-struct ICoord2D { int x,y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 class GameFont;
 class DisplayString {
 public:
