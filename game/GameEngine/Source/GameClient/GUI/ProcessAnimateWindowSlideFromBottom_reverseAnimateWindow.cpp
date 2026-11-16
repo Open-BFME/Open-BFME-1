@@ -1,4 +1,4 @@
-﻿// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc
 // readable body of ?reverseAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z: game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 
 typedef unsigned int UnsignedInt;
@@ -7,11 +7,7 @@ typedef float Real;
 typedef bool Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord2D

@@ -4,11 +4,7 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class Vector3
 {

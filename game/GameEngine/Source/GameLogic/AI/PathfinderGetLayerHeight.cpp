@@ -13,11 +13,7 @@ enum PathfindLayerEnum
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell
 {

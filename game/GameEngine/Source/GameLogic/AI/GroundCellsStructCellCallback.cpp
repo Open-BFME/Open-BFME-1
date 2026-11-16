@@ -17,7 +17,7 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
 

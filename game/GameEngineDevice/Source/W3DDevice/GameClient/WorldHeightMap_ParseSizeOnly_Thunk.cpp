@@ -30,11 +30,7 @@ struct DataChunkInfo
 	UnsignedShort version;
 };
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 namespace _STL
 {
