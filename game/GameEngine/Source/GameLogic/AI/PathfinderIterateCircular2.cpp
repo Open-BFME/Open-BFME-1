@@ -8,11 +8,7 @@
 typedef int Int;
 typedef bool Bool;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

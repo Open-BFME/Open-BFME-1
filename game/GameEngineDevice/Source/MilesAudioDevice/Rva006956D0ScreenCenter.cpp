@@ -2,11 +2,7 @@
 // Screen-center to world for the Miles audio owner that already has
 // Rva00696040Checker at +0x604 mode. Address-derived name.
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

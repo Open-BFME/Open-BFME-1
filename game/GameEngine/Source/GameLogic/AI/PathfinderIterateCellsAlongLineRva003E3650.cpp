@@ -13,11 +13,7 @@ typedef int ObjectID;
 extern "C" int __cdecl abs( Int n );
 #pragma intrinsic(abs)
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct IRegion2D
 {

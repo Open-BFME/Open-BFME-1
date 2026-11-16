@@ -22,11 +22,7 @@ class NotifyWeaponFiredInterface;
 
 // Xfer slot 19 (operator==(ICoord2D &)) transfers the 8-byte field at +0x68.
 // Three headers define ICoord2D, so this TU keeps the plain two-int layout.
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 // Retail passes the state pointer unadjusted to Xfer slot 12

@@ -66,11 +66,7 @@ struct RGBAColorInt
 	Int component[4];
 };
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // CursorInfo's field order and 0x54 stride are from the named upstream
 // Mouse.h.  Only textureName (+0x28) and numDirections (+0x50) are consumed by

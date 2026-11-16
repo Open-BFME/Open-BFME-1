@@ -14,10 +14,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-struct ICoord2D
-{
-	Int x, y;
-};
+#include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 #include <list>
 

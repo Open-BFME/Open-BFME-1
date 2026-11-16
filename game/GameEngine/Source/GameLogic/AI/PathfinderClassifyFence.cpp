@@ -13,10 +13,7 @@ extern "C" __declspec(dllimport) double ceil(double x);
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-struct ICoord2D
-{
-	Int x, y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct IRegion2D
 {

@@ -78,11 +78,7 @@ static inline DrawableIconInfo *getIconInfo(Drawable *drawable)
 		reinterpret_cast<Rva00410F10Owner *>(drawable)->ensure());
 }
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct IRegion2D
 {

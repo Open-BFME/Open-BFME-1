@@ -3,11 +3,7 @@
 typedef int Color;
 typedef bool Bool;
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 #define FALSE 0
 #define TRUE 1
