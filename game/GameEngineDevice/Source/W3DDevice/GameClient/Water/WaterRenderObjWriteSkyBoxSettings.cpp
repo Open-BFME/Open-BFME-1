@@ -6,13 +6,7 @@
 #include "ascii_string.h"
 
 // Retail's accessor row returns the class-keyed Vector3 (?AVVector3@@).
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DataChunk.h
 class DataChunkOutput

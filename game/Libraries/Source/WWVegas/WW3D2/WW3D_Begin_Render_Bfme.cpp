@@ -5,12 +5,7 @@
 
 typedef unsigned int UnsignedInt;
 
-class Vector3
-{
-	float X;
-	float Y;
-	float Z;
-};
+#include "../WWMath/vector3.h"
 
 struct _D3DVIEWPORT8
 {
