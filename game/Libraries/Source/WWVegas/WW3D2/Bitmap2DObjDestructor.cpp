@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep
 
 class RefCountClass
 {
@@ -36,12 +36,7 @@ void __cdecl operator delete[](void *) throw();
 void __cdecl operator delete(void *) throw();
 #include "simplevec.h"
 
-class Vector3
-{
-public:
-	Vector3() {}
-	float X, Y, Z;
-};
+#include "../WWMath/vector3.h"
 
 class BfmeTexVGX;
 

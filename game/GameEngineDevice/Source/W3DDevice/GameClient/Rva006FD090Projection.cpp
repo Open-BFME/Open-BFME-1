@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Raw-ABI reconstruction of the proven slot-8 body at retail 0x006FD090.
 //
 // The constructor at 0x006FC970 and scalar destructor at 0x006FD550 install
@@ -7,13 +8,7 @@
 // existing RenderObjClass::Get_Position body and the existing game singleton
 // data at 0x012F706C.
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class RenderObjClass
 {

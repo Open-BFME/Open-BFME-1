@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 // Open-BFME5: RenderObjClass's default constructor, lifted out of the byte dump
 // into real C++.
 //
@@ -26,16 +26,7 @@
 // is the scheduler reacting to that exact expression shape, and hand-written
 // field assignments schedule differently.
 
-class Vector3
-{
-public:
-	float X, Y, Z;
-
-	Vector3(void) {}
-	Vector3(const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-	Vector3 & operator = (const Vector3 & v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
-};
+#include "../WWMath/vector3.h"
 
 class Vector4
 {

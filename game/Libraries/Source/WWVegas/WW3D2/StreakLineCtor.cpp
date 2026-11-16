@@ -1,5 +1,5 @@
 // ??0StreakLineClass@@QAE@XZ
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/sweep
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc /Iinputs/reference/shims/sweep
 // readable body of ??0StreakLineClass@@QAE@XZ: game/Libraries/Source/WWVegas/WW3D2/streak.cpp
 //
 // Retail 0x0091A730, 207 bytes. Named by the S4 ctor-then-publish caller as
@@ -46,12 +46,7 @@ protected:
 
 #include "simplevec.h"
 
-class Vector3
-{
-public:
- Vector3() {}
-	float X, Y, Z;
-};
+#include "../WWMath/vector3.h"
 
 class Vector4
 {

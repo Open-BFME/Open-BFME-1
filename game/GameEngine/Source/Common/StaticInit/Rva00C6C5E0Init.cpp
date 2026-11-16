@@ -1,5 +1,5 @@
-// cl: /O2 /MD
-class Vector3 { public: float x, y, z; };
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /O2 /MD
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 struct ShadowPool
 {
     char m_prefix[4];

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
 // W3DLightDraw's constructor, retail 0x007583A0.
 
@@ -18,24 +18,7 @@ protected:
 	Drawable *m_drawable;
 };
 
-class Vector3
-{
-public:
-	float X;
-	float Y;
-	float Z;
-
-	Vector3(void) { }
-	Vector3(const Vector3 &value) { X = value.X; Y = value.Y; Z = value.Z; }
-	Vector3(float x, float y, float z) { X = x; Y = y; Z = z; }
-	Vector3 &operator=(const Vector3 &value)
-	{
-		X = value.X;
-		Y = value.Y;
-		Z = value.Z;
-		return *this;
-	}
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class W3DDynamicLightPulseShim
 {
@@ -109,11 +92,6 @@ public:
 	static RTS3DScene *m_3DScene;
 };
 
-class WWMath
-{
-public:
-	static float Random_Float(void);
-};
 
 class W3DLightDrawModuleData
 {

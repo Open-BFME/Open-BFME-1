@@ -1,14 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 // Open-BFME5: lift DoShadows free function to clean C++.
 
 class FrustumClass;
 
-class Vector3
-{
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class RenderObjClass
 {

@@ -1,16 +1,10 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHs-c-
 // Bridge::isPointOnBridge, retail 0x001A5F40.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Vector3
-{
-	public:
-	float X;
-	float Y;
-	float Z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Region2D

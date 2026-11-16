@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc- /Oy
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc- /Oy
 // readable body of ?Draw_Strip@DX8Wrapper@@: game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp
 
 // DX8Wrapper::Draw (0x00906B40), Draw_Triangles (0x00906DF0), and Draw_Strip
@@ -72,11 +72,7 @@ struct IDirect3DDevice8
 };
 #undef DX8_DRAW_DUMMY
 
-class Vector3
-{
-	public:
-	float X, Y, Z;
-};
+#include "../WWMath/vector3.h"
 
 class ShaderClass
 {

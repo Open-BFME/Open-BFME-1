@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHs-c-
 // readable body of ?Render@WW3D@@: game/Libraries/Source/WWVegas/WW3D2/ww3d.cpp
 // Open-BFME5: WW3D::Render(const LayerClass &), retail 0x008FE7D0,
 // zh_sweep packet 008fe7d0.
@@ -29,11 +29,7 @@ typedef float Real;
 class SceneClass;
 class CameraClass;
 
-class Vector3
-{
-public:
-	Real X, Y, Z;
-};
+#include "../WWMath/vector3.h"
 
 // LISTNODE.H unchanged, and the list overload below dates every offset in it:
 // Last() is one load from [list+0x18], which is LastNode.PrevNode once the

@@ -1,14 +1,9 @@
-// cl: /O2 /DNDEBUG /MD /EHsc-
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /O2 /DNDEBUG /MD /EHsc-
 
 typedef float Real;
 typedef int Int;
 
 
-class WWMath
-{
-public:
-    static Real __fastcall Inv_Sqrt(Real value);
-};
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
@@ -21,61 +16,7 @@ public:
     Vector2(Real x, Real y) : X(x), Y(y) {}
 };
 
-class Vector3
-{
-public:
-    Real X;
-    Real Y;
-    Real Z;
-
-    __forceinline Vector3 &operator=(const Vector3 &other)
-    {
-        X = other.X;
-        Y = other.Y;
-        Z = other.Z;
-        return *this;
-    }
-
-    __forceinline Vector3 &operator-=(const Vector3 &other)
-    {
-        X -= other.X;
-        Y -= other.Y;
-        Z -= other.Z;
-        return *this;
-    }
-
-    __forceinline Vector3 &operator*=(Real scale)
-    {
-        X = X * scale;
-        Y = Y * scale;
-        Z = Z * scale;
-        return *this;
-    }
-
-    __forceinline Vector3 &operator+=(const Vector3 &other)
-    {
-        X += other.X;
-        Y += other.Y;
-        Z += other.Z;
-        return *this;
-    }
-
-    __forceinline Real Length2() const
-    {
-        return X * X + Y * Y + Z * Z;
-    }
-
-    __forceinline void Normalize()
-    {
-        Real lengthSquared = Length2();
-        if (lengthSquared != 0.0f) {
-            Real inverseLength = WWMath::Inv_Sqrt(lengthSquared);
-            X *= inverseLength;
-            Y *= inverseLength;
-            Z *= inverseLength;
-        }
-    }
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class RenderObjClass
 {

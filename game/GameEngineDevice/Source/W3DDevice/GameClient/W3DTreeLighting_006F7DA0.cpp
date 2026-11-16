@@ -1,3 +1,4 @@
+// cl: /Igame/Libraries/Source/WWVegas/WWLib
 typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -11,33 +12,10 @@ typedef unsigned int UnsignedInt;
 
 class Vector3;
 
-class WWMath {
-public:
-    static Real __fastcall Inv_Sqrt(Real value);
-};
 
 extern "C" long __ftol2(double value);
 
-class Vector3 {
-public:
-    Real X;
-    Real Y;
-    Real Z;
-
-    Vector3(Real x, Real y, Real z) : X(x), Y(y), Z(z) {}
-
-    void Normalize(void)
-    {
-        Real lengthSquared = X * X + Y * Y + Z * Z;
-
-        if (lengthSquared != 0.0f) {
-            Real inverseLength = WWMath::Inv_Sqrt(lengthSquared);
-            X *= inverseLength;
-            Y *= inverseLength;
-            Z *= inverseLength;
-        }
-    }
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 namespace GlobalData {
 struct TerrainLighting {

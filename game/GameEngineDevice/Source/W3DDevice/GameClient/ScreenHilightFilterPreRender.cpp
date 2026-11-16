@@ -1,5 +1,5 @@
 #include <string.h>
-// cl: /DNDEBUG /MD
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD
 // Retail 0x007D6E40: highlight filter vtable 0x01128B88 slot 2.
 struct IDirect3DSurface8;
 struct Desc {unsigned Format,Type,Usage,Pool,MultiSampleType,MultiSampleQuality,Width,Height;};
@@ -11,7 +11,7 @@ struct DeviceVtable{char pad[0x88];long (__stdcall *StretchRect)(Device*,IDirect
 struct Device{DeviceVtable*v;};
 class W3DRadarResetSurface{public:IDirect3DSurface8*p;~W3DRadarResetSurface();};
 W3DRadarResetSurface getBackBufferSurface006e(int);
-class Vector3{public:float X,Y,Z;};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 class DX8Wrapper{public:static void Set_Render_Target(IDirect3DSurface8*,bool);static void Clear(bool,bool,bool,const Vector3&,float,float,unsigned);};
 extern Device *HighlightDevice;
 extern bool g_bfmeDirtyCU;
