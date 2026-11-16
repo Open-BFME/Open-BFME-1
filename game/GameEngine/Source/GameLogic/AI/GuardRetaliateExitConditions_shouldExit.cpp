@@ -5,14 +5,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-
-	Real lengthSqr() const { return x * x + y * y + z * z; }
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 struct Coord2D
 {

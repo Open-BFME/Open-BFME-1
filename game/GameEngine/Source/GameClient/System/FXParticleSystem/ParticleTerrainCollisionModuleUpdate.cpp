@@ -7,16 +7,7 @@
 typedef bool Bool;
 typedef float Real;
 
-struct Coord3D
-{
-	__forceinline Coord3D() {}
-	__forceinline Coord3D(Real xValue, Real yValue, Real zValue)
-		: x(xValue), y(yValue), z(zValue) {}
-
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
 extern const Real g_rva01075350;
 
