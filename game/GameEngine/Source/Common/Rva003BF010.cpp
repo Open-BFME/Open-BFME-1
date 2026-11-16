@@ -7,7 +7,8 @@
 // the arg at +0xC4 until count 0x2D and a non-empty name at arg+0x34.
 
 // link: ?isEmpty@AsciiString is only a pin; retail 0x5E4C0 is the defined
-// StringBase<char> row, which the canonical AsciiString::isEmpty forwards to.
+// StringBase<char> row. Qualify that inherited member: the canonical
+// AsciiString wrapper otherwise shadows the earlier using-declaration repair.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Gen_00609320
@@ -127,7 +128,7 @@ void Rva003BF540::run(Rva003BF010Arg *arg)
 			return;
 		{
 			AsciiString copy(arg->m_name);
-			if (!copy.isEmpty())
+			if (!copy.StringBase<char>::isEmpty())
 				reinterpret_cast<Rva00592D60Owner *>(TheAptPalantir)->update(reinterpret_cast<int>(&arg->m_name), 0);
 			m_at4C = 1;
 		}
