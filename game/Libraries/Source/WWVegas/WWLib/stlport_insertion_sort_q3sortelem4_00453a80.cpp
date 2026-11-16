@@ -18,17 +18,10 @@ struct Q3SortCompare
 
 #include "string_base.h"
 
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	~UnicodeString() {}
+#include "unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-	__declspec(nothrow) int compareNoCase(const UnicodeString &other) const
-	{
-		return ((const StringBase<unsigned short> *)this)->compareNoCase(
-			*(const StringBase<unsigned short> *)&other);
-	}
-};
 
 class MapMetaData
 {
