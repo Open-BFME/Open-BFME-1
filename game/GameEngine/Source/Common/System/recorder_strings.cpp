@@ -41,10 +41,7 @@ extern MessageStream *TheMessageStream;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D {
-    int x;
-    int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct IRegion2D {
