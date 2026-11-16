@@ -389,7 +389,7 @@ Object::Object( const ThingTemplate *tt, const ObjectStatusMaskType &objectStatu
 	for( Int infoIndex = 0; infoIndex < mi.getCount(); ++infoIndex )
 	{
 		modName = mi.getNthName(infoIndex);
-		if (modName.isEmpty())
+		if (modName.StringBase<char>::isEmpty())
 			continue;
 
 		if( modName.compare("InactiveBody") == 0 )
@@ -468,7 +468,7 @@ Object::Object( const ThingTemplate *tt, const ObjectStatusMaskType &objectStatu
 	for (modIdx = 0; modIdx < mi.getCount(); ++modIdx)
 	{
 		modName = mi.getNthName(modIdx);
-		if (modName.isEmpty())
+		if (modName.StringBase<char>::isEmpty())
 			continue;
 
 		BehaviorModule* newMod = (BehaviorModule*)TheModuleFactory->newModule(this, modName, mi.getNthData(modIdx), MODULETYPE_BEHAVIOR);
@@ -3116,7 +3116,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 		}
 
 		++upgradeNum;
-	} while (!valStr.isEmpty());
+	} while (!valStr.StringBase<char>::isEmpty());
 	
 	Drawable	*drawable = getDrawable();
   if ( drawable )
@@ -3162,7 +3162,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
     valStr = properties->getAsciiString( TheKey_objectSoundAmbient, &exists );
     if ( exists )
     {
-      if ( valStr.isEmpty() )
+      if ( valStr.StringBase<char>::isEmpty() )
       {
         drawable->setCustomSoundAmbientOff();
         soundEnabledExists = true;
@@ -3181,7 +3181,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
     }
 
     // Don't do anything more to audio if we forced the ambient sound off
-    if ( !( exists && valStr.isEmpty() ) )
+    if ( !( exists && valStr.StringBase<char>::isEmpty() ) )
     {
       valBool = properties->getBool( TheKey_objectSoundAmbientCustomized, &exists );
       if ( exists && valBool )
