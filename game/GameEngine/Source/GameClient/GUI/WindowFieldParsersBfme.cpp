@@ -112,14 +112,7 @@ Bool parseTooltipCallback(char *token, WinInstanceData *instData, char *buffer, 
 
 // BFME adds the HEADERTEMPLATE field; the name lands in the instance data at
 // +0x194.
-class UnicodeString
-{
-public:
-	UnicodeString(const UnicodeString &other);
-	~UnicodeString();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
 class GameTextInterface
 {
