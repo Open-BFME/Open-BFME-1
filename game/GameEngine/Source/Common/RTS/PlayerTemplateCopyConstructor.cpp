@@ -20,20 +20,10 @@
 extern "C" __declspec(dllimport) __declspec(nothrow) long __stdcall
 	InterlockedIncrement(long volatile *addend);
 
-class UnicodeString
-{
-public:
-	UnicodeString() : m_text(0) {}
-	UnicodeString(const UnicodeString &source)
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&source);
-	}
-	~UnicodeString();
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
 
-private:
-	unsigned short *m_text;
-};
 
 typedef int NameKeyType;
 
