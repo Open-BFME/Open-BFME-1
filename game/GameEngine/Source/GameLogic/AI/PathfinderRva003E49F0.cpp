@@ -16,7 +16,7 @@ const ObjectID INVALID_ID = 0;
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 
 #include "coord3d.h"
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };

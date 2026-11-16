@@ -26,7 +26,7 @@ enum GameWindowMessage
 };
 enum { KEY_TAB = 15, KEY_STATE_DOWN = 2, GWS_MOUSE_TRACK = 0x400, GGM_LEFT_DRAG = 0x4000 };
 #include "Lib/Coord3D.h"
-struct ICoord2D { int x, y; };
+#include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // The complete constructor and destructor own the opaque event storage.
 class AudioEventRTS

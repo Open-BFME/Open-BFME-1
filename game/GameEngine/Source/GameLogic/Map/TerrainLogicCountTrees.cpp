@@ -20,11 +20,7 @@ inline const Int &maxExtent(const Int &a, const Int &b)
 class PolygonTrigger;
 struct Coord3D;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct IRegion2D
 {

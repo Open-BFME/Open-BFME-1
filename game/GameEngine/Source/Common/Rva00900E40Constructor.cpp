@@ -44,11 +44,7 @@ static __forceinline void destroyVec00900E40(Rva00900FF0VecOfVec &value)
 
 #pragma comment(linker, "/alternatename:??0Rva00900FF0VecOfVec@@QAE@ABV0@@Z=?d_008ffb80@@YAXXZ")
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 typedef _STL::vector<ICoord2D> Rva00900E40InnerVector;
 typedef _STL::vector<Rva00900E40InnerVector> Rva00900E40VecOfVec;

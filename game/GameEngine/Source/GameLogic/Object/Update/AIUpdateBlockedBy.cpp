@@ -11,7 +11,7 @@
 #include <math.h>
 struct Coord3D{Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){}float x,y,z;};
 #include "../../../../../Libraries/Include/Lib/Coord2D.h"
-struct ICoord2D{int x,y;};
+#include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 enum CrushSquishTestType{TEST_CRUSH_OR_SQUISH=2};
 // Numeric BFME-only kinds retain their decoded ordinals pending the name table.
 enum KindOfType{INFANTRY=8, BFME108=108,BFME115=115,BFME124=124};

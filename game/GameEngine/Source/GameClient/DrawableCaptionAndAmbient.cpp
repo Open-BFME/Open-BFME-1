@@ -40,11 +40,7 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement( long volat
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct Rva0087DC00Vec
 {
