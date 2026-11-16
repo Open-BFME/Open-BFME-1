@@ -15,11 +15,7 @@ struct AptChatFriendLogInDispatchReceiver
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
 class WindowManager
 {
