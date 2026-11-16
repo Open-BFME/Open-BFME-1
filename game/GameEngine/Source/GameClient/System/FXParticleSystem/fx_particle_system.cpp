@@ -197,6 +197,9 @@ template<> CategoryModuleTemplate<8>::~CategoryModuleTemplate();
 // The verified CategoryModuleTemplateBase<7> destructor is owned by CategoryModuleTemplateBase06DestructorThunk.cpp.
 template<> CategoryModuleTemplateBase<7>::~CategoryModuleTemplateBase();
 
+// The verified CategoryModuleTemplateBase<0> destructor is owned by CategoryModuleTemplateBase0ADestructorThunk.cpp.
+template<> CategoryModuleTemplateBase<0>::~CategoryModuleTemplateBase();
+
 template class CategoryModuleInfo<0>;
 template class CategoryModuleInfo<1>;
 template class CategoryModuleInfo<2>;
