@@ -79,3 +79,11 @@ The initial probe established three slot roles, not a three-entry extent.
 The earlier attempt-log wording "three-slot interface" is superseded by
 this direct-byte extent check. Its rejected candidate remains rejected;
 no game source or verification verdict is changed by this clarification.
+
+## Additional weather-array identity probe, not landed
+
+GlobalWeatherSystemConstructor.cpp constructs5 x8B elements at+0x28 using ILT3C0BA ->39B050 (13B) and ILT48D42 ->39B060 (35B). The existing167B WeatherData parser supports a4B sound reference at+0 and a lightning byte at+4. BFME2 GlobalWeatherSystemCtorDeferred.cpp has a related array at+0x30, not BFME1's+0x28.
+
+The13B entry at39B050 is already owned by IPEnumeration, with identical13B retail twins624B90 and6915D0. The35B entry at39B060 is already ThingRef's destructor and has other35B twins. An8B array plus a prefix-member destructor callback does not refute either protected descriptive identity. Matching new WeatherData ctor/dtor bodies is insufficient original-name evidence. No identity or ledger change was applied.
+
+A first local-pointer destructor candidate optimized out a null check. A member-access candidate emitted13B+35B with matching code outside the recorded DIR32 issue, but the complete graph check still refused an unmapped section13. The parent candidates were preserved but not applied after that refusal. All leases were released. Useful isolated candidates/controls remain in diagnostics/continue-20261116-fivehundred/weather-lifetime-identity and its member-probe log. No typed array, constructor, runtime or memory/crash improvement is claimed.
