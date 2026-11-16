@@ -18,7 +18,7 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
 #include <bitset>
-struct Coord3D { float x,y,z; void set(const Coord3D *a) { x=a->x; y=a->y; z=a->z; } };
+#include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 enum IterOrderType {};
 template<int N> class BitFlags { public: _STL::bitset<N> bits; };
 extern const BitFlags<192> KINDOFMASK_NONE;

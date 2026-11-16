@@ -37,20 +37,7 @@ public:
 	void __cdecl format(AsciiString format, ...);
 };
 
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-
-	Coord3D &operator+=(const Coord3D &that)
-	{
-		x += that.x;
-		y += that.y;
-		z += that.z;
-		return *this;
-	}
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
 
