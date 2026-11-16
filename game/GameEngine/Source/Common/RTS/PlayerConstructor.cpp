@@ -17,11 +17,10 @@ public:
     AsciiString(const char *text) : StringBase<char>(text) {}
     ~AsciiString() {}
 };
-class UnicodeString : private StringBase<unsigned short> {
-public:
-    UnicodeString() {}
-    ~UnicodeString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 class BfmeBaseVUQ { public: virtual ~BfmeBaseVUQ() {} };
 class Handicap { public: Handicap(); float m_handicaps[2][2]; };
 class Rva000CBAF0 : public BfmeBaseVUQ {

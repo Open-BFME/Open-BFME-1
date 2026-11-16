@@ -26,21 +26,11 @@
 
 #include <map>
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase<T> &other );
-	// Retail releases through StringBase::releaseBuffer (<char> 0x00887940,
-	// <unsigned short> 0x008881D0) directly, not an out-of-line ~StringBase.
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
 
 class AsciiString : private StringBase<char>
 {
@@ -50,13 +40,6 @@ public:
 	~AsciiString() {}
 };
 
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString() : StringBase<unsigned short>() {}
-	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
-	~UnicodeString() {}
-};
 
 // The 0x20-byte group-room record, proven by the independently matched copy
 // constructor at 0x004F97B0 (AsciiUnicodePairCopyCtor.cpp).

@@ -17,19 +17,11 @@
 class GameWindow;
 class GameFont;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-private:
-	StringBase();
-	StringBase(const StringBase<T> &that);
-	void releaseBuffer();
-
-protected:
-	void *data;
-};
 
 class AsciiString : private StringBase<char>
 {
@@ -37,18 +29,6 @@ public:
 	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
 };
 
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString();
-	UnicodeString(const UnicodeString &that) : StringBase<unsigned short>(that) {}
-	~UnicodeString() { releaseBuffer(); }
-
-	int getLength() const
-	{
-		return data ? *(unsigned short *)((char *)data + 4) : 0;
-	}
-};
 
 class WinInstanceData
 {
