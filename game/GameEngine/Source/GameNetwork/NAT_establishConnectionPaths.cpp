@@ -12,11 +12,11 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 class Transport;
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
-class UnicodeString : private StringBase<unsigned short> {
-public:
-    UnicodeString(const UnicodeString &s) : StringBase<unsigned short>(s) {}
-    ~UnicodeString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 class GameSlot {
 public:
     bool isHuman() const;

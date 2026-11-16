@@ -52,28 +52,11 @@ private:
 // Copies and releases through StringBase<unsigned short> directly, as the
 // by-value arguments in retail do.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	static UnicodeString TheEmptyString;
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-	UnicodeString() { m_data = 0; }
-	UnicodeString( const wchar_t *s )
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase( s );
-	}
-	UnicodeString( const UnicodeString &that )
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&that );
-	}
-	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-
-	void __cdecl format( UnicodeString fmt, ... );
-
-private:
-	unsigned short *m_data;
-};
 
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };

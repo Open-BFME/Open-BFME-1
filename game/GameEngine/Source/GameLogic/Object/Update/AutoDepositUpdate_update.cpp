@@ -4,13 +4,11 @@
 #include <bitset>
 #include "string_base.h"
 #include "Lib/Coord3D.h"
-class UnicodeString : private StringBase<unsigned short> {
-public:
- UnicodeString() : StringBase<unsigned short>() {}
- UnicodeString(const UnicodeString &stringSrc) : StringBase<unsigned short>(stringSrc) {}
- ~UnicodeString() {}
- void __cdecl format(UnicodeString, ...);
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;

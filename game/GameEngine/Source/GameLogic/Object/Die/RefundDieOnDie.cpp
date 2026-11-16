@@ -93,21 +93,11 @@ public:
 #include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString() : m_data(0) {}
-	UnicodeString( const UnicodeString &that )
-	{
-		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase(
-			*(const StringBase<WCHAR> *)&that );
-	}
-	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-	void format( UnicodeString format, ... );
+#include "../../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-private:
-	void *m_data;
-};
 
 class GameTextInterface
 {
