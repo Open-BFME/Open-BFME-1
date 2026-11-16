@@ -21,11 +21,7 @@
 // the ledger already names that.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../Include/Lib/ICoord2D.h"
 
 namespace _STL
 {

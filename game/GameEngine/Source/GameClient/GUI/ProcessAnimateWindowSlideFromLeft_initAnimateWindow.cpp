@@ -8,11 +8,7 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 struct BFMECoord2D
 {

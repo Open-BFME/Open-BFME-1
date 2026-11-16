@@ -13,7 +13,7 @@ public:
  virtual unsigned getWidth(); virtual unsigned getHeight();
 };
 extern Display* TheDisplay;
-struct ICoord2D { int x,y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 class Rva006FE3C0CameraRay {
 public:
  void build(const ICoord2D* screen, Vector3* origin, Vector3* direction);

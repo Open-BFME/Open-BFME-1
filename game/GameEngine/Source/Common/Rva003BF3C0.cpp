@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 003BF3C0: gated map selection, two coordinate lookups, then owner lookup.
 // Conditional expression reproduces the retail null-result path.
-struct ICoord2D { int x; int y; };
+#include "../../../Libraries/Include/Lib/ICoord2D.h"
 struct Rva00615D50Object { char pad[8]; int id; };
 class Gen_00609320 { public: int bfmeDisabled() const; };
 

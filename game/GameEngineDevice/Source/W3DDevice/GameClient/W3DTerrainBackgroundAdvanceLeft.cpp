@@ -6,11 +6,7 @@
 typedef unsigned char Byte;
 typedef bool Bool;
 
-struct ICoord2D
-{
-	int x;
-	int y;
-};
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // Keep the inline view local; the out-of-line retail test is owned by
 // Rva00729300BitPlanes.cpp.
