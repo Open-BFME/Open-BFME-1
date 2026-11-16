@@ -46,7 +46,7 @@ class GameWindow;
 class GameFont;
 class VideoBuffer;
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData

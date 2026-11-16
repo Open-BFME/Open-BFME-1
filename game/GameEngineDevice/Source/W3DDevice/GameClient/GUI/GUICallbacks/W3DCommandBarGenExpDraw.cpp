@@ -6,9 +6,7 @@
 // at +268/+26c; Image size at +24; manager draw slot +f4 and Display +88/+90.
 // These compact views expose only offsets and virtual slots read by this body.
 #include "ascii_string.h"
-struct ICoord2D {
-    int x, y;
-};
+#include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D {
     ICoord2D lo, hi;
 };

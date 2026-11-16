@@ -26,7 +26,7 @@ typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;
 
-struct ICoord2D { Int x, y; };
+#include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
 enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };

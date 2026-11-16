@@ -33,11 +33,7 @@ enum { WIN_STATE_HILITED = 0x00000002 };
 enum { WIN_COLOR_UNDEFINED = 0x00FFFFFF };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct ICoord2D
-{
-	Int x;
-	Int y;
-};
+#include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WinInstanceData.h
 struct WinDrawData
