@@ -363,7 +363,7 @@ Bool SupplyTruckAIUpdate::gainOneBox( Int remainingStock )
 		else
 			playDepleted = TRUE;
 
-		if (playDepleted && m_suppliesDepletedVoice.getEventName().isEmpty() == false)
+		if (playDepleted && m_suppliesDepletedVoice.getEventName().StringBase<char>::isEmpty() == false)
 		{
 			m_suppliesDepletedVoice.setObjectID(getObject()->getID());
 			m_suppliesDepletedVoice.setPlayingHandle(TheAudio->addAudioEvent(&m_suppliesDepletedVoice));

@@ -384,7 +384,7 @@ void DeliverPayloadAIUpdate::deliverPayloadViaModuleData( const Coord3D *moveToP
 const ThingTemplate* DeliverPayloadAIUpdate::getPutInContainerTemplateViaModuleData() const
 {
 	AsciiString name = getDeliverPayloadAIUpdateModuleData()->m_putInContainerName;
-	return name.isEmpty() ? NULL : TheThingFactory->findTemplate( name );
+	return name.StringBase<char>::isEmpty() ? NULL : TheThingFactory->findTemplate( name );
 }
 
 //-------------------------------------------------------------------------------------------------

@@ -496,7 +496,7 @@ void Display::stopMovie( void )
 		m_videoStream = NULL;
 	}
 
-	if (!m_currentlyPlayingMovie.isEmpty()) {
+	if (!m_currentlyPlayingMovie.StringBase<char>::isEmpty()) {
 		//TheScriptEngine->notifyOfCompletedVideo(m_currentlyPlayingMovie); // Removing this sync-error cause MDC
 		m_currentlyPlayingMovie = AsciiString::TheEmptyString;
 	}

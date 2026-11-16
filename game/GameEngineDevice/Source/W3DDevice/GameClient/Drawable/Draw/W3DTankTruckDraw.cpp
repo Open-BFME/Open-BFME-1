@@ -243,7 +243,7 @@ void W3DTankTruckDraw::updateBones( void ) {
 	if( getW3DTankTruckDrawModuleData() ) 
 	{
 		//Front tires
-		if( !getW3DTankTruckDrawModuleData()->m_frontLeftTireBoneName.isEmpty() ) 
+		if( !getW3DTankTruckDrawModuleData()->m_frontLeftTireBoneName.StringBase<char>::isEmpty() )
 		{
 			m_frontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTankTruckDrawModuleData()->m_frontLeftTireBoneName.str());
 			DEBUG_ASSERTCRASH(m_frontLeftTireBone, ("Missing front-left tire bone %s in model %s\n", getW3DTankTruckDrawModuleData()->m_frontLeftTireBoneName.str(), getRenderObject()->Get_Name()));
@@ -257,7 +257,7 @@ void W3DTankTruckDraw::updateBones( void ) {
 			}
 		}
 		//Rear tires
-		if( !getW3DTankTruckDrawModuleData()->m_rearLeftTireBoneName.isEmpty() ) 
+		if( !getW3DTankTruckDrawModuleData()->m_rearLeftTireBoneName.StringBase<char>::isEmpty() )
 		{
 			m_rearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTankTruckDrawModuleData()->m_rearLeftTireBoneName.str());
 			DEBUG_ASSERTCRASH(m_rearLeftTireBone, ("Missing rear-left tire bone %s in model %s\n", getW3DTankTruckDrawModuleData()->m_rearLeftTireBoneName.str(), getRenderObject()->Get_Name()));
@@ -272,7 +272,7 @@ void W3DTankTruckDraw::updateBones( void ) {
 		}
 
 		//midFront tires
-		if( !getW3DTankTruckDrawModuleData()->m_midFrontLeftTireBoneName.isEmpty() ) 
+		if( !getW3DTankTruckDrawModuleData()->m_midFrontLeftTireBoneName.StringBase<char>::isEmpty() )
 		{
 			m_midFrontLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTankTruckDrawModuleData()->m_midFrontLeftTireBoneName.str());
 			DEBUG_ASSERTCRASH(m_midFrontLeftTireBone, ("Missing mid-front-left tire bone %s in model %s\n", getW3DTankTruckDrawModuleData()->m_midFrontLeftTireBoneName.str(), getRenderObject()->Get_Name()));
@@ -287,7 +287,7 @@ void W3DTankTruckDraw::updateBones( void ) {
 		}
 
 		//midRear tires
-		if( !getW3DTankTruckDrawModuleData()->m_midRearLeftTireBoneName.isEmpty() ) 
+		if( !getW3DTankTruckDrawModuleData()->m_midRearLeftTireBoneName.StringBase<char>::isEmpty() )
 		{
 			m_midRearLeftTireBone = getRenderObject()->Get_Bone_Index(getW3DTankTruckDrawModuleData()->m_midRearLeftTireBoneName.str());
 			DEBUG_ASSERTCRASH(m_midRearLeftTireBone, ("Missing mid-rear-left tire bone %s in model %s\n", getW3DTankTruckDrawModuleData()->m_midRearLeftTireBoneName.str(), getRenderObject()->Get_Name()));

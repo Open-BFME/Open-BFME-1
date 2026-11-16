@@ -61,7 +61,7 @@ W3DDefaultDraw::W3DDefaultDraw(Thing *thing, const ModuleData* moduleData) : Dra
 #ifdef LOAD_TEST_ASSETS
 	m_renderObject = NULL;
 	m_shadow = NULL;
-	if (!getDrawable()->getTemplate()->getLTAName().isEmpty())
+	if (!getDrawable()->getTemplate()->getLTAName().StringBase<char>::isEmpty())
 	{
 		m_renderObject = W3DDisplay::m_assetManager->Create_Render_Obj(getDrawable()->getTemplate()->getLTAName().str(), getDrawable()->getScale(), 0);
 

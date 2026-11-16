@@ -763,7 +763,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 //=============================================================================
 // ??0LightMapTerrainTextureClass@@ present-unmatched
 LightMapTerrainTextureClass::LightMapTerrainTextureClass(AsciiString name, MipCountType mipLevelCount) :
-TextureClass(name.isEmpty()?"TSNoiseUrb.tga":name.str(),name.isEmpty()?"TSNoiseUrb.tga":name.str(), mipLevelCount )
+TextureClass(name.StringBase<char>::isEmpty()?"TSNoiseUrb.tga":name.str(),name.StringBase<char>::isEmpty()?"TSNoiseUrb.tga":name.str(), mipLevelCount )
 { 
 	Get_Filter().Set_Min_Filter(TextureFilterClass::FILTER_TYPE_BEST);
 	Get_Filter().Set_Mag_Filter(TextureFilterClass::FILTER_TYPE_BEST);

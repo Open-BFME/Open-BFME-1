@@ -236,7 +236,7 @@ AsciiString Parameter::getUiText() const {
   else uiText.format("Shake Intensity: ???");
   break;
  case OBJECT_STATUS:
-  if(m_string.isEmpty()) uiText.format("Object Status is '?^");
+  if(m_string.StringBase<char>::isEmpty()) uiText.format("Object Status is '?^");
   else uiText.format("Object Status is '%s'",m_string.str());
   break;
  case FACTION_NAME: uiText.format("Faction Name: %s",uiString.str()); break;

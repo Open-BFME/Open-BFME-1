@@ -181,7 +181,7 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 		label += "Army";
 
 	UnicodeString text;
-	if (!label.isEmpty())
+	if (!label.StringBase<char>::isEmpty())
 		text = TheGameText->fetch(label);
 
 	TheControlBar->bfmeShowDN((BfmeMsgDN *)&static_cast<const Rva003BD700 &>(

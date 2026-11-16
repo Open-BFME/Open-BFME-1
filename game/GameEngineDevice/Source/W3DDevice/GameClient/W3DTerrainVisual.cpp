@@ -1206,7 +1206,7 @@ void W3DTerrainVisual::replaceSkyboxTextures(const AsciiString *oldTexName[5], c
 		for (Int i=0; i<5; i++)
 		{
 			//check if this texture was never changed before and is still using the default art.
-			if (m_initialSkyboxTexNames[i].isEmpty())
+			if (m_initialSkyboxTexNames[i].StringBase<char>::isEmpty())
 			{	m_initialSkyboxTexNames[i]=*oldTexName[i];
 				m_currentSkyboxTexNames[i]=*oldTexName[i];
 			}
