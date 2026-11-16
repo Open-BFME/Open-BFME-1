@@ -88,7 +88,7 @@ static __forceinline GameWindow *rva00463850Resolve(void *ctx,const char *params
    p.field00=ctx;
    window=((Rva00463850Manager *)TheWindowManager)->slot29(&p);
   } else {
-   filename.toLower();
+   filename.StringBase<char>::toLower();
    Rva00463850Node *entry=(Rva00463850Node *)Rva00463850Tree.find(filename)._M_node;
    if(entry==*(Rva00463850Node **)&Rva00463850Tree) {
     WindowLayoutInfo layout;

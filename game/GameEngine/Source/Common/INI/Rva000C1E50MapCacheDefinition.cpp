@@ -45,7 +45,7 @@ public:
 	~AsciiString() {}
 	AsciiString &operator=( const AsciiString &other ) { ((StringBase<char> *)this)->set( *(const StringBase<char> *)&other ); return *this; }
 	void set( const char *text, int length ) { ((StringBase<char> *)this)->set( text, length ); }
-	void toLower() { ((StringBase<char> *)this)->toLower(); }
+	void toLower() { ((StringBase<char> *)this)->StringBase<char>::toLower(); }
 	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
 	static AsciiString TheEmptyString;
 	void format( AsciiString format, ... );
@@ -290,7 +290,7 @@ void Rva000C1E50::parseMapCacheDefinition( INI *ini )
 	if(TheMapCache && !md.m_displayName.isEmpty())
 	{
 		AsciiString lowerName = name;
-		lowerName.toLower();
+		lowerName.StringBase<char>::toLower();
 		md.m_fileName = lowerName;
 		typedef MapMetaData & (Rva000C1D10MapCache::*Fn)(const AsciiString &);
 		union { void (*fn)(); Fn call; } u = { j_00031e99 };

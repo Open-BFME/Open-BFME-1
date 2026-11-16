@@ -341,7 +341,7 @@ Int GameInfo::getMaxPlayers( void ) const
 		return -1;
 
 	AsciiString lowerMap = m_mapName;
-	lowerMap.toLower();
+	lowerMap.StringBase<char>::toLower();
 	MapCache::iterator it = TheMapCache->find(lowerMap);
 	if (it == TheMapCache->end())
 		return -1;

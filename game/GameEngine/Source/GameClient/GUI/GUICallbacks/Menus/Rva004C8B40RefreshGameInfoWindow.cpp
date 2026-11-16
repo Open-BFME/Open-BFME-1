@@ -34,7 +34,7 @@ public:
     AsciiString(const AsciiString &src) : StringBase<char>(src) {}
     ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-    void toLower() { ((StringBase<char> *)this)->toLower(); }
+    void toLower() { ((StringBase<char> *)this)->StringBase<char>::toLower(); }
     const char *reverseFind(char c) const { return ((const StringBase<char> *)this)->reverseFind(c); }
     const char *str() const { return m_data ? &m_data->data[0] : ""; }
 };
@@ -216,7 +216,7 @@ void Rva004C8B40GameInfoWindowRefresh(GameInfo *gameInfo, UnicodeString gameName
 
     UnicodeString map;
     AsciiString asciiMap = gameInfo->getMap();
-    asciiMap.toLower();
+    asciiMap.StringBase<char>::toLower();
     MapCache *mapCache = TheMapCache;
     MapCacheNode *it = mapCache->bfmeFind(asciiMap);
     if (it != mapCache->m_head)

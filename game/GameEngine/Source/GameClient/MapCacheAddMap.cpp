@@ -66,7 +66,7 @@ private:
 bool MapCache::addMap(AsciiString dirName,AsciiString fname,FileInfo *fileInfo,bool isOfficial)
 {
  if(!fileInfo) return false;
- AsciiString lowerFname; lowerFname = fname; lowerFname.toLower();
+ AsciiString lowerFname; lowerFname = fname; lowerFname.StringBase<char>::toLower();
  typedef Rva004570F0Node *(MapCache::*Find)(const AsciiString &);
  Rva004570F0Node *it = (this->*rvaCall<Find>(j_000263d7))(lowerFname);
  MapMetaData md;

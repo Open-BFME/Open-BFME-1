@@ -163,7 +163,7 @@ Mission *Campaign::newMission( AsciiString name )
 {
 	MissionListIt it;
 	it = m_missions.begin();
-	name.toLower();
+	name.StringBase<char>::toLower();
 	while(it != m_missions.end())
 	{
 		Mission *mission = *it;
@@ -236,7 +236,7 @@ void CampaignManager::setCampaignAndMission( AsciiString campaign, AsciiString m
 	}
 	CampaignListIt it;
 	it = m_campaignList.begin();
-	campaign.toLower();
+	campaign.StringBase<char>::toLower();
 	while	( it != m_campaignList.end())
 	{
 		Campaign *camp = *it;
@@ -255,7 +255,7 @@ void CampaignManager::setCampaign( AsciiString campaign )
 {
 	CampaignListIt it;
 	it = m_campaignList.begin();
-	campaign.toLower();
+	campaign.StringBase<char>::toLower();
 	while	( it != m_campaignList.end())
 	{
 		Campaign *camp = *it;
@@ -323,7 +323,7 @@ Campaign *CampaignManager::newCampaign(AsciiString name)
 {
 	CampaignListIt it;
 	it = m_campaignList.begin();
-	name.toLower();
+	name.StringBase<char>::toLower();
 	while(it != m_campaignList.end())
 	{
 		Campaign *campaign = *it;

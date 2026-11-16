@@ -74,7 +74,7 @@ public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
 	void format( AsciiString format, ... );
-	void toLower() { ((StringBase<char>*)this)->toLower(); }
+	void toLower() { ((StringBase<char>*)this)->StringBase<char>::toLower(); }
 	const char *str() const
 	{
 		return m_data ? (const char *)m_data + 8 : "";
@@ -239,7 +239,7 @@ bool BfmeAptScreenLanLobby::refreshLanGameRva00519CB0()
    slot->m_type=1;
    game->setMapForwarder(m_preferences.getPreferredMap());
    AsciiString mapName=m_preferences.getPreferredMap();
-   mapName.toLower();
+   mapName.StringBase<char>::toLower();
    MapCache *cache=TheMapCache;
    MapNode *node=cache->find(mapName);
    if(node!=cache->m_head)

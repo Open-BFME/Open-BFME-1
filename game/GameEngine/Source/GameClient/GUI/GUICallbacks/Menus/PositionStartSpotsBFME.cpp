@@ -216,7 +216,7 @@ void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions
 		GadgetListBoxReset(errorListBox);
 
 	AsciiString lowerMap = mapName;
-	lowerMap.toLower();
+	lowerMap.StringBase<char>::toLower();
 	MapCache *cache = TheMapCache;
 	std::map<AsciiString, MapMetaData>::iterator it = cache->find(lowerMap);
 	if (it == cache->end())

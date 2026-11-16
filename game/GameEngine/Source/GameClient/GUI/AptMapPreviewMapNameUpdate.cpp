@@ -141,7 +141,7 @@ void AptMapPreview::rva005217A0(const AsciiString &mapName)
 	}
 
 	AsciiString lowerMap(mapName);
-	lowerMap.toLower();
+	lowerMap.StringBase<char>::toLower();
 	MapCache *cache = TheMapCache;
 	MapCacheNode *it = cache->find(lowerMap);
 	if (it != cache->m_end)

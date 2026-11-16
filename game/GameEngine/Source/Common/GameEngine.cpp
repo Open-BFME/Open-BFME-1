@@ -657,7 +657,7 @@ void GameEngine::init( int argc, char *argv[] )
 		if (TheGlobalData->m_initialFile.StringBase<char>::isEmpty() == FALSE)
 		{
 			AsciiString fname = TheGlobalData->m_initialFile;
-			fname.toLower();
+			fname.StringBase<char>::toLower();
 
 			if (fname.endsWithNoCase(".map"))
 			{
@@ -685,7 +685,7 @@ void GameEngine::init( int argc, char *argv[] )
 		if (TheMapCache && TheGlobalData->m_shellMapOn)
 		{
 			AsciiString lowerName = TheGlobalData->m_shellMapName;
-			lowerName.toLower();
+			lowerName.StringBase<char>::toLower();
 
 			MapCache::const_iterator it = TheMapCache->find(lowerName);
 			if (it == TheMapCache->end())
@@ -932,7 +932,7 @@ void updateTGAtoDDS()
 		TheLocalFileSystem->getFileInfo(filenameTGA, &infoTGA);
 
 		// skip the water textures, since they need to be NOT compressed
-		filenameTGA.toLower();
+		filenameTGA.StringBase<char>::toLower();
 		if (strstr(filenameTGA.str(), "caust"))
 		{
 			continue;

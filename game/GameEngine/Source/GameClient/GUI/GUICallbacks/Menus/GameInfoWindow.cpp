@@ -117,7 +117,7 @@ void RefreshGameInfoWindow(GameInfo *gameInfo, UnicodeString gameName)
 	// set the map name
 	UnicodeString map;
 	AsciiString asciiMap = gameInfo->getMap();
-	asciiMap.toLower();
+	asciiMap.StringBase<char>::toLower();
 	std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(asciiMap);
 	if (it != TheMapCache->end())
 	{

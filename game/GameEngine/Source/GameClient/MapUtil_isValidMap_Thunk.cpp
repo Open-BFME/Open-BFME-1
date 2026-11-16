@@ -32,7 +32,7 @@ bool isValidMap(AsciiString mapName, bool isMultiplayer)
 		return false;
 
 	TheMapCache->updateCache();
-	mapName.toLower();
+	mapName.StringBase<char>::toLower();
 	MapCache *cache = TheMapCache;
 	MapCacheNode *it = cache->find(mapName);
 	if (it != cache->m_end && isMultiplayer == it->m_isMultiplayer)

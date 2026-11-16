@@ -690,7 +690,7 @@ void Rva00559840QuickMatch::handleMatched(PeerResponse &resp) {
   for (std::list<AsciiString>::const_iterator it = maps.begin();
        it != maps.end(); ++it) {
     AsciiString theMap = *it;
-    theMap.toLower();
+    theMap.StringBase<char>::toLower();
     const MapMetaData *md = TheMapCache->findMap(theMap);
     if (md && md->m_numPlayers == numPlayers) {
       TheGameSpyGame->setMap(*it);

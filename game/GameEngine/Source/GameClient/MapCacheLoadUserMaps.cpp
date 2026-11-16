@@ -172,7 +172,7 @@ Bool MapCache::loadUserMaps()
 		FileInfo fileInfo;
 		AsciiString tempfilename;
 		tempfilename = (*iter);
-		tempfilename.toLower();
+		tempfilename.StringBase<char>::toLower();
 
 		const char *s = ((const Rva004577C0StringView &)tempfilename).reverseFind('\\');
 		if (!s)

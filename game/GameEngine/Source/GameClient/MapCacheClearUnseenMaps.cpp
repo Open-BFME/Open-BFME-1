@@ -50,7 +50,7 @@ public:
 
 	void toLower()
 	{
-		((StringBase<char> *)this)->toLower();
+		((StringBase<char> *)this)->StringBase<char>::toLower();
 	}
 
 	const char *str() const
@@ -85,7 +85,7 @@ private:
 // ?clearUnseenMaps@MapCache@@AAE_NVAsciiString@@@Z
 Bool MapCache::clearUnseenMaps(AsciiString dirName)
 {
-	dirName.toLower();
+	dirName.StringBase<char>::toLower();
 	Bool erasedSomething = false;
 	std::map<AsciiString, Bool>::iterator it = m_seen.begin();
 	while (it != m_seen.end())

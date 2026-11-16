@@ -483,7 +483,7 @@ WindowMsgHandledType SkirmishMapSelectMenuSystem( GameWindow *window, UnsignedIn
 						asciiMap = mapFname;
 					else
 						asciiMap.translate( map );
-					asciiMap.toLower();
+					asciiMap.StringBase<char>::toLower();
 					Image *image = getMapPreviewImage(asciiMap);
 					winMapPreview->winSetUserData((void *)TheMapCache->findMap(asciiMap));
 					if(image)
