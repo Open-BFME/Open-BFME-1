@@ -9,3 +9,6 @@
 - Landed: DynamicPortalBehaviour Rva001F8E20Owner::method local d -> moduleData (agreed with sol).
 - Dead end: AIRootR0015C7A0 -> AI rejected (collides with `class AI;` forward decl in same TU).
 - Weak/skipped: FlightDeckBehaviorModuleData +C4/C8/CC (BFME layout differs from ZH), CrossFadeImage m_image2, Rider/HordeSiege/HordeContain module data offsets.
+## agent h round 2 (wave 48)
+- 3 batches x5 served; all keys skipped (nothing submitted, all-skip is rejected anyway). Keys: FESL request fns Rva007FAF90.. (FourCC DISC/EPGT/RLST/RGAM/PING, no EA names), ObjectGeometry m_helper3b4/3b8, BfmeDebugDisplayVTable, Triple member copy types (Rva00138BA0*), GateOpenAndCloseBehaviorModuleData m_byte08/m_dword0C.. (no ZH twin, values 50/50 ambiguous), FXEventParser at08..at1c, drawMoveHints byte_10.
+- Dead end: Rva-typed helper/copy classes and BFME-only module data ctor members.
