@@ -28,14 +28,7 @@
 
 #include "../WWMath/vector3.h"
 
-class Vector4
-{
-public:
-	float X, Y, Z, W;
-
-	Vector4(void) {}
-	void Set(float x, float y, float z, float w) { X = x; Y = y; Z = z; W = w; }
-};
+#include "../WWMath/vector4.h"
 
 class Matrix3D
 {

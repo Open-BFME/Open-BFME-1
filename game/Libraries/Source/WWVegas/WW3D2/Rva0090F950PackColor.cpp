@@ -1,24 +1,12 @@
 // ?Rva0090F950PackColor@@YAXPAIPBVVector4@@@Z, retail 0x0090F950.
 // The owner remains address-qualified because no caller or vtable evidence names it.
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
 #include "../WWLib/cpudetect.h"
 
 #include "../WWMath/vector3.h"
 
-class Vector4
-{
-public:
-	float X;
-	float Y;
-	float Z;
-	float W;
-	Vector4(const Vector4 &other)
-		: X(other.X), Y(other.Y), Z(other.Z), W(other.W) {}
-
-	const float &operator[](int index) const { return (&X)[index]; }
-	float &operator[](int index) { return (&X)[index]; }
-};
+#include "../WWMath/vector4.h"
 
 // TU-local: the DX8Wrapper::Clamp_Color symbol is owned by DX8WrapperClampColor.cpp
 static __forceinline void PackColorClamp(Vector4 &color)

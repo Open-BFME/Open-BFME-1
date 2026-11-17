@@ -48,12 +48,7 @@ protected:
 
 #include "../WWMath/vector3.h"
 
-class Vector4
-{
-public:
- Vector4() {}
-	float X, Y, Z, W;
-};
+#include "../WWMath/vector4.h"
 
 // upstream layout: game/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
