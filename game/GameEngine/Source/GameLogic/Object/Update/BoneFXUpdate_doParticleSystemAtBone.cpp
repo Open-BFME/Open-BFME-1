@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /Iinputs/vendor/stlport
 // stlport
 // Open-BFME: BoneFXUpdate::doParticleSystemAtBone, retail 0x00289190 / 323B.
 // ZH twin: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate.cpp
