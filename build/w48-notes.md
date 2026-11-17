@@ -165,3 +165,5 @@
 
 ## w41-i round 29 (claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: Rva00800B70Owner bfmeGo, CastleBehavior m_unmodelledD8/m_flagA5, Bezier x0..z3 (ZH-identical), RadiusDecalTemplate m_unmodelled_20..2C (no ZH twin), PhysicsBehavior m_f18/m_f1c/m_flag5c/5e/5f, DebugDisplay setCursorPos x/y (ZH-identical), Rva004155A0Notify, BfmeConv664/827, Bfme5TinyThree, StructureCollapse m_dieData*. Same dead ends.
+## agent h round 24 (wave 48, claude-sonnet-5-5)
+- 2 short batches viewed (late), nothing submitted. Keys: BfmeConv1379 (Fesl blob/TXN message builders, BfmeMsgVIW, opaque), Rva009A2350Node/Link (again), RankInfo _bfme_14..24, BfmeConv1778 BfmeValDB, GateOpenAndCloseBehaviorModuleData ctor m_dword/m_ref (no ZH twin), Small03hRefCopy Rva0094C* (again). Same dead ends.
