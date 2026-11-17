@@ -59,9 +59,12 @@ All metric CSVs came from their native writers. No Qwen or local model was used.
 All 62 captured reservation keys have no remaining exact session lease.
 
 No crash, leak, RAM, 64-bit, multicore, FPS or game-start improvement is established.
-The fresh native queue nominates AICommandInterface::aiMoveToPosition: a selected
-non-retail definition blocks six sources totaling 2,067 bytes at this census.
-That is a measured blocker and a potential repair scope, not an achieved gain.
+The fresh native queue nominates AICommandInterface::aiMoveToPosition under its
+wrong_selected category: the selected ScriptActions copy has verdict `unknown`,
+and all seven inventoried COMDAT copies have the same digest and remain unproven.
+Six sources totaling 2,067 bytes are blocked at this census. This does not prove
+that the selected body is wrong, and it does not justify deleting a provider.
+It is a measured verification gap and a potential work scope, not an achieved gain.
 The GameLOD findStaticLODLevel duplicate is another documented lead. Neither is
 counted as a completed task; provider, caller and complete-object preservation
 proof is still required before retiring either emitter.
