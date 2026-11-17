@@ -12,12 +12,7 @@ public:
 	float D;
 };
 
-class AABoxClass
-{
-public:
-	Vector3 Center;
-	Vector3 Extent;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/aabox.h"
 
 inline bool Fast_Is_Float_Positive(const float &val)
 {

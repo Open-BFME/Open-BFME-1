@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME Coord3D copy constructor (retail 0x0005BC20) copies scalar fields.
 // Keeping that constructor visible reproduces the otherwise elusive x87
 // schedule around the two local position copies and Vector3 normalization.
@@ -8,7 +8,7 @@ struct Coord3D {
     Coord3D(const Coord3D &v) { x=v.x; y=v.y; z=v.z; }
 };
 class Matrix3D;
-class WWMath {public:static float __fastcall Inv_Sqrt(float);};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/wwmath.h"
 class Vector3 {public:
  float X,Y,Z;
  Vector3(float x,float y,float z){X=x;Y=y;Z=z;}

@@ -1,7 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // WorkerAIUpdate::findGoodBuildOrRepairPosition, retail RVA 0x002C8A20 (1154 bytes).
 struct Coord3D {float x,y,z; Coord3D(){} Coord3D(const Coord3D&v){x=v.x;y=v.y;z=v.z;}};
-class WWMath {public:static float __fastcall Inv_Sqrt(float);};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/wwmath.h"
 struct Vector3 {
  float X,Y,Z;
  Vector3(float x,float y,float z):X(x),Y(y),Z(z){}

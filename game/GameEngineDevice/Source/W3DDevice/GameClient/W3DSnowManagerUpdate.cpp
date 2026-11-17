@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?update@W3DSnowManager@@: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnow.cpp
 
 // Retail 0x00725AC0. W3DSnowManager::update -- ZH's
@@ -64,11 +64,7 @@ extern "C" float g_bfmeK1121004;
 extern "C" float g_bfmeK075C6C;
 extern "C" float g_bfmeK07533C;
 
-class WWMath
-{
-public:
-	static float Random_Float();
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/wwmath.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/ww3d.h
 class WW3D

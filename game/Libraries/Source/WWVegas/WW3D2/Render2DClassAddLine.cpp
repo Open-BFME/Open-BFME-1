@@ -1,15 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Render2DClass::Add_Line(const Vector2&, const Vector2&, float, unsigned long)
 // Retail body at RVA 0x006E7530, with the BFME vertex batch layout.
 
 extern "C" void __cdecl _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class WWMath
-{
-public:
-	static float __fastcall Inv_Sqrt(float a);
-};
+#include "../WWMath/wwmath.h"
 
 class Vector2
 {
