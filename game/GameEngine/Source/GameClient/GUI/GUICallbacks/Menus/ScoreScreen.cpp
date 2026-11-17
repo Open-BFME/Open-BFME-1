@@ -2058,63 +2058,10 @@ winName.format("ScoreScreen.wnd:StaticTextScore%d", pos);
 /** We Grab information about the players differently in Multiplayer.  We only want the players
 		listed in the slots */
 //-------------------------------------------------------------------------------------------------
-void grabMultiPlayerInfo( void )
-{
-	typedef std::map<Int, Player *> ScoreMap;
-	typedef ScoreMap::iterator ScoreMapIt;
-	typedef ScoreMap::reverse_iterator RevScoreMapIt;
+// The independently verified BFME 1 body at RVA 0x004E8050 (568 bytes)
+// is owned by ScoreScreenGrabMultiPlayerInfo.cpp. BFME 2 aa505f34 has no
+// corresponding provider or menu unit; no donor identity or layout used.
 
-	Int playerCount = 0;
-	AsciiString playerName;
-	Player *player;
-	ScoreMap scores;
-	ScoreMapIt it;
-	scores.clear();
-	Int adder = 1; // Varible used to add on an offset to the score to make sure we don't add people to the same map
-
-	player = ThePlayerList->getLocalPlayer();
-	if (player)
-	{
-		const Image *image = TheMappedImageCollection->findImageByName("MutiPlayer_ScoreScreen");
-		if(image)
-		{
-			parent->winSetEnabledImage(0, image);
-			parent->winSetStatus(parent->winGetStatus() | WIN_STATUS_IMAGE );
-		}
-	}
-
-	// Add each player and score to the map. THis allows us to sort the players based on score.
-	for( Int i = 0; i < MAX_SLOTS; ++i)
-	{
-		playerName.format("player%d",i);
-		player = ThePlayerList->findPlayerWithNameKey(TheNameKeyGenerator->nameToKey(playerName));
-		if(player)
-		{
-			Int score = player->getScoreKeeper()->calculateScore();
-			it = scores.find( score );
-			if (it != scores.end())
-			score += adder++;			
-			scores[score] = player;
-			++playerCount;
-		}
-	}
-	hideWindows(playerCount);
-	Int count =0;
-	RevScoreMapIt revIt;
-	// display the players based on Score
-	for ( revIt = scores.rbegin(); revIt != scores.rend(); ++revIt) 
-	{
-		Player *p = revIt->second;
-		if(p->isPlayerObserver())
-			setObserverWindows( p, count );
-		else
-			populatePlayerInfo( p, count);	
-		count ++;
-	}
-	
-	DEBUG_ASSERTCRASH(count == playerCount, ("For some reason we added %d players to the scores map, but only read %d", playerCount, count));
-	
-}
 
 enum
 {
