@@ -139,3 +139,11 @@
 
 ## w41-i round 25 (claude-sonnet-5-5)
 3 batches served, all skipped. Keys: Rva005222A0NoteCalls m_34/38/3C/40, Rva0020DEE0VirtualMode, Bfme5ThirtyThree, Rva0018F660 transformPoints A/R0/tmp/v (ZH Matrix3D-identical), GloriousCharge/SiegeDeploy ctor m_NNN, Rva001515C0Xfer, WeaponTemplate bfmeRangeBase, Rva00477E60Walk, Rva002BC870, HordeContainConstructor m_1e4.., BfmeConv1279, BfmeOptionsDispatchYV. Same dead ends.
+# w48 lane d (duplicates/wrong_selected) notes
+- r1: startMoveSound@AIInternalMoveToState (0x16E6C0): AIStates.cpp held ZH present-unmatched copy; removed body -> landed 907c71686. Pattern: ZH-ported TUs (AIStates.cpp etc.) keep 'present-unmatched' strong copies of matched symbols; delete body, leave comment.
+- Push contention: pre-push takes ~1-2 min, loses race to others; loop `git push || git pull --rebase` many times (took ~50 min).
+- Submodule inputs/reference/open-bfme-2 pointer moved upstream (aa505f3, object absent locally): worktree shows ' M'; used `git update-index --assume-unchanged inputs/reference/open-bfme-2` to let verification-cache pass.
+- link_check on AIStates.cpp lists many other duplicates (AIAttack*State::update, xfer@Squad etc.) = more present-unmatched copies in same file.
+- r1: AIStates.cpp ZH copies (59 duplicates incl. ctor/onEnter/update of AI*State): dead end, re_attempts shows dropping fails rows (AIStateMachine ctor 36/106 rows; reconstitute etc.). Don't retry.
+- r1: PopulateReplayFileListbox (ReplayMenu.cpp:114 ZH copy): only blocker is uw_00c3318d/uw_00c3f63e funclet rows (parent= unproven; not in retail unwind map of Populate). Re-identify their real parent first. Same shape as AI::crc false-reject.
+- r1: AI::crc (ai.cpp) recorded false-reject uw_00c04530; BridgeBehavior update is partial (not dup in same file) - skip.
