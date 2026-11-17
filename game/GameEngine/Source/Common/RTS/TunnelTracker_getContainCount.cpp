@@ -127,17 +127,19 @@ class Overridable
 public:
 	const Overridable *getFinalOverride() const;
 
-	const Overridable *friend_getFinalOverride() const
-	{
-		if (m_nextOverride)
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
 
-private:
 	void *m_vtbl;
 	Overridable *m_nextOverride;			// +0x04
 };
+
+// Inline first level of the override walk, as a free helper: a member would
+// make cl emit its own friend_getFinalOverride COMDAT that is not retail's.
+static __forceinline const Overridable *friendGetFinalOverride( const Overridable *o )
+{
+	if( o->m_nextOverride )
+		return o->m_nextOverride->getFinalOverride();
+	return o;
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate : public Overridable
@@ -160,7 +162,7 @@ public:
 	{
 		const ThingTemplate *tmpl = m_template;
 		if (tmpl)
-			tmpl = (const ThingTemplate *)tmpl->friend_getFinalOverride();
+			tmpl = (const ThingTemplate *)friendGetFinalOverride( tmpl );
 		return tmpl->getKindOfWord0(mask);
 	}
 

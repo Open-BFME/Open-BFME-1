@@ -62,16 +62,19 @@ class Overridable
 {
 public:
 	const Overridable *getFinalOverride() const;
-	const Overridable *friend_getFinalOverride() const
-	{
-		if( m_nextOverride )
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
 
 	unsigned char m_unmodelled_00[ 4 ];
 	Overridable *m_nextOverride;			// +0x04
 };
+
+// Inline first level of the override walk, as a free helper: a member would
+// make cl emit its own friend_getFinalOverride COMDAT that is not retail's.
+static __forceinline const Overridable *friendGetFinalOverride( const Overridable *o )
+{
+	if( o->m_nextOverride )
+		return o->m_nextOverride->getFinalOverride();
+	return o;
+}
 
 class ThingTemplate : public Overridable
 {
@@ -86,7 +89,7 @@ public:
 	Bool isKindOf( KindOfType t ) const;
 	const ThingTemplate *getTemplate() const
 	{
-		return !m_template ? 0 : (const ThingTemplate *)m_template->friend_getFinalOverride();
+		return !m_template ? 0 : (const ThingTemplate *)friendGetFinalOverride( m_template );
 	}
 
 protected:

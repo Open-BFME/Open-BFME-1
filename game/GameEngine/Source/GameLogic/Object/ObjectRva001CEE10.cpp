@@ -28,16 +28,19 @@ class Overridable
 {
 public:
 	const Overridable *getFinalOverride() const;
-	const Overridable *friend_getFinalOverride() const
-	{
-		if (m_nextOverride)
-			return m_nextOverride->getFinalOverride();
-		return this;
-	}
 
 	void *_vptr;
 	Overridable *m_nextOverride;
 };
+
+// Inline first level of the override walk, as a free helper: a member would
+// make cl emit its own friend_getFinalOverride COMDAT that is not retail's.
+static __forceinline const Overridable *friendGetFinalOverride( const Overridable *o )
+{
+	if( o->m_nextOverride )
+		return o->m_nextOverride->getFinalOverride();
+	return o;
+}
 
 class ThingTemplate : public Overridable
 {
@@ -183,7 +186,7 @@ void Object::rva001CEE10()
 		TheAI->pathfinder()->Rva003E4190(obj);
 
 	const ThingTemplate *tmpl = m_template == NULL ? NULL :
-		static_cast<const ThingTemplate *>(m_template->friend_getFinalOverride());
+		static_cast<const ThingTemplate *>(friendGetFinalOverride( m_template ));
 	if ((tmpl->getKindOfWord1() & KINDOF_WORD1_BIT27_MASK) == 0)
 		TheAI->pathfinder()->addObjectToPathfindMap(this);
 }
