@@ -238,3 +238,6 @@
 
 ## agent h round 36 (wave 48, claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: Bfme5TinyThree bfme* (no ZH twin), MemberVision002434D0 atNNN, S5Parse005A0720 m_04.., Q3Introsort, PathfinderFindSafePath m_bfme*, BannerCarrier dtor m_field08.., Rva007F61E0, CastleMember ctor, Rva007F0210Set, Rva00409F40Loop, Rva008A4540, HordeAIUpdate ctor, RadiusDecalTemplateEquals m_unmodelled_*. Same dead ends.
+
+## agent h round 37 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: BfmeConv1000/1115/2064, W3DTerrainBackground reset m_78.. (set to 1; no ZH twin), W3DLaserDraw Envelope m_bfme00.. (parser separate), TransportAIUpdate/RiderChange/Devastate/W3DFloorDraw ModuleData ctors, ToppleUpdate m_20/m_f18/m_f1c/m_bfmeState, AttackMeleeEngage m_field50.., U1SmallStateProbes, Rva009A2350Init, Y2Fesl Rva00800E50. Same dead ends.
