@@ -87,3 +87,6 @@
 
 ## w41-i round 17 (claude-sonnet-5-5)
 3 batches served, nothing submitted. Keys: Rva0041F070 value2c/valuea8, BezierProjectile ctor m_value34/m_value84/m_flag88, RiderChangeContain ctor m_word/m_byte, BfmeConv1115, Rva008B7040Build, Gen001FE050 m_bfmeItem*, Create_Render_Obj field1..5, Rva0029C380, BfmeScriptCondAreaGate a0..a2 (arg semantics unknown), BfmeThreeHundredThirtyFour, S5Parse005A0720, Rva00800B70FeslDtor. Same dead ends.
+
+## w41-i round 18 (claude-sonnet-5-5)
+3 batches served, nothing submitted. Keys: SiegeDeploySpecialPowerModuleData ctor m_1d0..m_1e0 (500/200 floats, no ZH twin), BfmeConv1115, HordeContain ctor Rva0023EAF0TenWords/m_1e4.., WanderAIUpdate/CollideModule ctor thunk m_unknown*, Pathfinder iterateCellsAlongLine Bresenham locals (ZH-identical, known placeholder dead end). Same dead ends.
