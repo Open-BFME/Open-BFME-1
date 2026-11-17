@@ -131,7 +131,7 @@ typedef char Rva004FF2E0StlStrSize[(sizeof(StlStr) == 12) ? 1 : -1];
 
 struct Rva004FF2E0PSRequest : PSRequest
 {
-	Int bfmeExtra;
+	// the retail stride's trailing Int is PSRequest::_bfme_extra in the shim
 };
 
 typedef char Rva004FF2E0PSRequestSize[(sizeof(Rva004FF2E0PSRequest) == 0x210) ? 1 : -1];

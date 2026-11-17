@@ -144,6 +144,8 @@ public:
 
 	// for GameRes
 	std::string results;
+
+	Int _bfme_extra;	// retail stride 0x210 (WOLLocaleSelectPopup/PeerThread append this Int after results)
 };
 
 //-------------------------------------------------------------------------
