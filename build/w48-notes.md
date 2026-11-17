@@ -325,3 +325,8 @@
 - Claims gotcha: `release --landed e599927f1` stays "waiting" because round 2's queued landing (build/claims/landed_pending.jsonl, old source blob, submodule dep recorded as '') can never settle; used plain `claims.py release 0x00AFD388` after confirming the commit is on origin/master.
 - PROVENANCE.txt step NOT applied: a full gate needs ~22,000 compiles under the host lock in these worktrees (sibling measured); apply the banked patch in a commit that pays the full gate anyway.
 - Lane is dry: no DXTrace target left. The only other EBP-bias blocker in re_attempts.log was DXTraceA itself.
+## agent f round 3 (wave 48, claude-sonnet-5-5)
+- Landed 067caa01d (g_bfmeTableABF .data table at 0x012AC188 via add_data_match; token literals need symbols.csv ??_C@ pins at VA-0x400000, names from `strings obj | grep _C@`) and 6fbf539d3 (MapCache::find -> ILT j_000263d7 via member-pointer union, isValidMap).
+- Stale in queue (already defined/fixed, only census stale): TheBfmeOnlineLogin, g_bfmeExtra1282/Tag1227, g_bfmeScaleBC, g_Va012A86A8. Running link_check on all 107 unresolved files takes ~40 min (first 72 done in 1500 s timeout).
+- Dead end: decalsys Set_Texture_Transform (present-unmatched Set_Mesh_Transform, logged blocked).
+- Untried unresolved: Bit_Blit (xsurface), WindowLayoutInfoLoad StringBase::set, Rva003BF540_applyOwner rva00383890, AptScreenSetRef findOrInsert, MapUtil done.
