@@ -220,3 +220,6 @@
 
 ## agent h round 33 (wave 48, claude-sonnet-5-5)
 3 batches served, nothing landed. Keys: Gen001FE050 BfmeSeed m_bfmeItem*, CivilianSpawn ctor m_value1/m_field18/1C, BfmeConv2064 GG, ReflectDamage ctor m_unmodelled_*, BfmeConv792/1907/1379, Rva00800B70FeslDtor, BfmeOneHundredThirty, BfmeScriptCondAreaGate. DebugDisplay setCursorPos x/y: submit rejected ("x"/"y" single-letter = still placeholder), so don't try. Same dead ends.
+
+## agent h round 34 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: HordeSiegeEngineContain ModuleData ctor m_224..m_248, Rva1FC330 hierarchy, Y4FeslSimpleRequests Rva007F* (FourCC DISC/EPGT/PING/RLST/RGAM; no ZH twin, names unguessable), Glo012F1028Sub bfmeFinish, AIGuardOuterState AIRootR0015C7A0, StructureCollapse dieData, MeleeEngage m_field50.., Rva004262F0Copy m_field0.., BfmeConv1838/2064/664, U2AllocatedRangeCopies Duplicate, Gen003BF540Owner consume, DeployStyle ctor. Same dead ends.
