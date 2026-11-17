@@ -180,3 +180,5 @@
 
 ## agent h round 27 (wave 48, claude-sonnet-5-5)
 - 3 batches served, all skipped (nothing submitted). Keys: Rva008AE2E0BoundsGetter (2x3 matrix BfmeQ1206 m_bfme00..14, Apt), BfmeConv1379 BfmeMsgVIW, Rva004488B0FourBlockCopy, BfmeConv1279, ParseFXEvent BfmeAnimationStateFXE, W3DStreakDraw ctor, Rva005222A0NoteCalls, Rva004262F0Copy, BfmeConv792, FadeAndDieOrnament/WanderAIUpdate ctor thunks, INIMapCache (ZH-identical), Bfme5TinyThree, BfmeConv2064/1901. Same dead ends.
+## w41-i round 32 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: BezierProjectile ModuleData ctor m_value34/84/flag88, UnpauseSpecialPowerUpgrade Rva002D9910* views, EnragedBehavior ctor m_unmodelled_*, RvaTreeBoundsAsciiStringLocale, CollideModule ctor m_unknown*, Rva006A5870Case4 audio, BfmeConv1401 VKH, U1SmallStateProbes, RankInfo _bfme_14.., BfmeSeed37A750, Rva003C1EE0Select, Gen_t_00776240 CopyConstructor. Same dead ends.
