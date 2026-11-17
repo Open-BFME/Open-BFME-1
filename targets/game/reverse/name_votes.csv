@@ -8066,3 +8066,6 @@ game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_200,2649a74320d4cfb2
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_204,8bca922d8e3b2eedf4698f16,claude-sonnet,20261117193738-957e0a,2026-11-17
 game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp|member||m_vector70,d35679b33408a2e87e2ef3ac,claude-sonnet,20261117194436-ce6bdb,2026-11-17
 game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp|member||m_vector7C,5a75fe93184be692b4aa1a92,claude-sonnet,20261117194436-ce6bdb,2026-11-17
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp|member||f29c,6fc3cfdd62a7d8cb137be12a,claude-sonnet,20261117194247-29976c,2026-11-17
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp|member||a2a0,df7a2ddec0890d4b9a76688b,claude-sonnet,20261117194247-29976c,2026-11-17
+game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp|member||a2a4,f0ee91fa5e599b7411a606c7,claude-sonnet,20261117194247-29976c,2026-11-17
