@@ -72,3 +72,5 @@
 
 ## w41-i round 14 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: BfmeConv1778 BfmeValDB/m_bfmeHeadDB (idle worker list node), W3DLaserDraw BfmeEnvelope m_bfme00..24 (again), BattlePlanUpdateSetStatus, V4GuardedTailCalls, BfmeConv1907 Bfme*BA slots, GettingBuilt/Enraged/TransportAI ctor thunks, BfmeConv808 EFC..EFH types/functions, WeaponTemplate bfmeRangeBase, LivingWorldArmyAssign. Same dead ends.
+## agent h round 12 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: CritterEmitterUpdate ModuleData ctor offsets, drawMoveHints byte_10/tmp, SlaughterHorde/SiegeDeploy ctor offsets, Rva009F4070DistanceSquared a/b, S5Parse005A0720, Bezier params, BloodthirstyUpdate Bfme*, Rva00889720, Rva00903470 slot77, GettingBuilt m_name0/f0.., Rva005F6B60. All opaque/no ZH twin, same dead ends.
