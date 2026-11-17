@@ -150,3 +150,5 @@
 
 ## w41-i round 26 (claude-sonnet-5-5)
 3 batches served, nothing landed. Keys: BattlePlanUpdateSetStatus clearCondition/setCondition param o ("obj" rejected as too generic), Small03hRefCopy Rva0094C* Box/Head/Tail (opaque), P6MemberVectorCopyConstructor m_at00.. (again), Small03hWordSwap Rva009CC2C0Box/v/a. Same dead ends.
+## agent h round 21 (wave 48, claude-sonnet-5-5)
+- 6 batches served (late session), submitted skips for 3, one name proposal rejected ("byteSwap32" for Rva009CC290Swap: address-derived names stay placeholders). Keys: RvaTreeBoundsAsciiStringLocale value/keyofvalue types (pair of AsciiString+2 pad ints, no real class), Rva003C7B60 Create_Render_Obj views, Small03hWordSwap (full 32-bit byte swap, rejected as placeholder), AIGroup m_unmodelled00, UpdateModuleModuleData_ctor_Thunk m_unknown20.., ParseAudioEventBlock Rva003B7740, U4Blend00609600 blend3, FreeLifeBody ctor m_unmodelled_*. Same dead ends. Note: worktree started mid-rebase on build/w48-notes.md; resolved by keeping both sections.
