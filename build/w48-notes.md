@@ -201,3 +201,6 @@
 
 ## w41-i round 38 (claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: TransportAIUpdate/HordeWorkerAIUpdate ModuleData ctor m_unknown*/m_flag*, BfmeConv792/1000, CastleMemberBehavior ctor m_08..m_29, V4GuardedTailCallsWithArgs Rva003BCA70, Rva00903470DeviceSlot77, Rva000941D0 ParseNamedInt, Create_Render_Obj field1..5, Rva004155A0NotifyArrays, MemberTurnAndGoal0024E310, ShadowRva00459960 m_value3C (-1-sentinel frame, no ZH twin), S2ZeroFillCtors, ParseFXEvent. Same dead ends.
+
+## w41-i round 39 (claude-sonnet-5-5)
+3 batches served. Submitted Gen_t_00776240CopyConstructor (ModelConditionInfo copy ctor): m_vector7C -> m_weaponBarrelInfoVec AGREED+landed (WeaponBarrelInfo vector assign callee); m_vector70 -> m_pristineBones (_Rb_tree NameKeyType/PristineBoneInfo callee) not agreed yet. Others skipped: GarrisonContain ctor, GetLoadScreen at078.., Bezier ctor, BfmeOneHundredThirty m_bfme*, BFMEFactory ctor, StructureCollapse dieData, MeleeEngageState fields, Bfme5ThirtyThree, RadarConstructor, INIMapCache, Pathfinder. Tip: look at callee names in EVIDENCE for container members.
