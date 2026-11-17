@@ -134,7 +134,7 @@ extern "C" bool __identifier("?m_needUpdate@W3DStatusCircle@@1_NA");
 extern float g_worldMatrix[16];
 extern unsigned char g_rva007A2330Flag;
 extern float g_bfmeDefaultBU;
-extern const float g_bfmeScaleB3;
+
 // Retail 0x01075350 is ?g_rva01075350@@3MB (data_rows.csv,
 // Common/BfmeAngleWrap0079D0.cpp); BfmeBoundaryZero3D was only a pin.
 extern const float g_rva01075350;
@@ -325,7 +325,7 @@ void Rva00726290W3DStatusCircle::Render(RenderInfoClass &)
 	} else {
 		intensity = previousIntensity;
 	}
-	intensity *= g_bfmeScaleB3;
+	intensity *= 255.0f;
 	Int clr = (Int)intensity;
 	Int diffuse = (0xff << 24) | (clr << 16) | (clr << 8) | clr;
 	((W3DStatusCircle *)this)->updateScreenVB(diffuse);

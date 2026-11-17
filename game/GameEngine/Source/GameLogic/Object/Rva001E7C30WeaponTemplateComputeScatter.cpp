@@ -230,7 +230,7 @@ public:
 };
 
 extern const Real g_rva01075350;
-extern const Real g_bfmeDefaultEG;
+
 extern TerrainLogic *TheTerrainLogic;
 extern Real GetGameLogicRandomValueReal(Real low, Real high, char *file,
 	Int line);
@@ -284,7 +284,7 @@ Coord3D WeaponTemplate::rva001e7c30(const Object *source,
 			normalizedY = inverseLength * temporary.y;
 		}
 		Real baseAngle = (Real)atan2(normalizedY, temporary.x);
-		angle = GetGameLogicRandomValueReal(baseAngle - g_bfmeDefaultEG, baseAngle + g_bfmeDefaultEG, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1482);
+		angle = GetGameLogicRandomValueReal(baseAngle - 1.57079637f, baseAngle + 1.57079637f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1482);
 	}
 	else
 		angle = GetGameLogicRandomValueReal(0.0f, 6.28318530717958647692f, "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp", 1486);

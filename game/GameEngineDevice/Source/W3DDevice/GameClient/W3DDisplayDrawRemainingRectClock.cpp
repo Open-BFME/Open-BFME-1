@@ -52,7 +52,7 @@ extern const float g_rva01075350;
 extern float g_bfmeScaleBC;
 extern const float g_rva0107533C;
 extern float g_bfmeDefaultBU;
-extern const float g_bfmeK1266B;
+
 extern const float g_01076C24;
 extern const float g_bfmeDisplayTwoPi;
 
@@ -91,7 +91,7 @@ void W3DDisplay::drawRemainingRectClock(float startX, float startY, float width,
 	float maxHalf = (halfWidth > halfHeight) ? halfWidth : halfHeight;
 	float countValue = maxHalf;
 	countValue *= fraction;
-	float countAsFloat = (float)ceil((double)(countValue * g_bfmeK1266B));
+	float countAsFloat = (float)ceil((double)(countValue * 4.0f));
 	int count = floatToLong(countAsFloat);
 	float angleStep = angleRange / (float)count;
 	float angle = 0.0f;

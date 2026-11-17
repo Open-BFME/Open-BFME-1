@@ -17,7 +17,7 @@ class Rva003D2B80Source;
 
 extern void j_00020af4(void);
 extern void j_0004afcf(void);
-extern const float g_rva003D2B80NegHalf;
+
 extern void rva003D2B80ReleaseRaw(void);
 
 struct Gen003D1380Elem
@@ -87,12 +87,12 @@ void Rva003D2E00ElementCall::apply(const Rva003D2E00Region *)
 		if (i == 0 || i == 2)
 			corner[0] = 0.0f;
 		else
- 			corner[0] = g_rva003D2B80NegHalf * m_source->m_step;
+			corner[0] = -0.5f * m_source->m_step;
 
 		if (i == 0 || i == 1)
 			corner[1] = 0.0f;
 		else
- 			corner[1] = g_rva003D2B80NegHalf * m_source->m_step;
+			corner[1] = -0.5f * m_source->m_step;
 
 		m_children[i] = new Rva003D2B80Child(m_source, corner);
 	}

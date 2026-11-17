@@ -58,9 +58,9 @@ class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
 extern const float g_rva01075350;
-extern float R3FieldSampleScale010F653C;
-extern float R3FieldSlope1096CF4;
-extern float R3FieldDiagonal10861AC;
+
+
+
 extern float g_bfmeDefaultBU;
 extern const float g_bfmeDirectionWeight1285;
 extern "C" __declspec(dllimport) double __cdecl floor( double value );
@@ -134,7 +134,7 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 					if( x < sourceWidth && y < sourceHeight )
 					{
 						float sample = source[ y * sourceWidth + x ] *
-							R3FieldSampleScale010F653C;
+							0.0390625f;
 						if( sample < low )
 							sample = low;
 						else if( sample > high )
@@ -173,9 +173,9 @@ void Rva0045A000::initialize( const R3HeightSample *source, int unused,
 						{
 							float delta = setting;
 							delta *= m_scale;
-							delta *= R3FieldSlope1096CF4;
+							delta *= 0.600000024f;
 							if( x != outputX2 && y != outputY2 )
-								delta *= R3FieldDiagonal10861AC;
+								delta *= 1.39999998f;
 							float candidate = m_data[ y * m_width + x ] - delta;
 							float *current = &m_data[ outputY2 * m_width + outputX2 ];
 							if( candidate > *current )

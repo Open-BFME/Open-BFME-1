@@ -458,7 +458,7 @@ public:
 };
 
 extern ThingFactory *TheThingFactory;
-extern float g_bfmeOffsetDF;
+
 extern const char g_Rva0107301CEmptyString[];
 extern void j_0000b848();
 extern void j_0001214d();
@@ -650,8 +650,8 @@ Object *CreateCrateDie::createCrate( CrateTemplate const *currentCrateData )
 			union { void (*raw)(); DrawableSetDecalSizeCall member; } decalSizeCall;
 			decalSizeCall.raw = j_0000b848;
 			( crateDrawable->*decalSizeCall.member )(
-				newCrate->getMajorRadius() * g_bfmeOffsetDF,
-				newCrate->getMajorRadius() * g_bfmeOffsetDF );
+				newCrate->getMajorRadius() * 2.5f,
+				newCrate->getMajorRadius() * 2.5f );
 			createCrateSetDecalFade( crateDrawable, 1.0f, 0.03f );
 		}
 

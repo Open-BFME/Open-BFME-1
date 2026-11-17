@@ -65,7 +65,7 @@ public:
     Object *findObjectByID(int);
 };
 extern GameLogic *TheGameLogic;
-extern const float g_bfmeK1266C;
+
 extern const float g_bfmeAttackMoveThreshold001885B0;
 
 class AIMoveToState {
@@ -163,7 +163,7 @@ StateReturnType AIAttackMoveToState::update()
     newGoal.x -= oldGoal.x;
     newGoal.y -= oldGoal.y;
     newGoal.z -= oldGoal.z;
-    if (newGoal.GetLengthEstimate() > g_bfmeK1266C) {
+    if (newGoal.GetLengthEstimate() > 5.0f) {
         if (goal)
             machine->setGoalObject(goal);
         else

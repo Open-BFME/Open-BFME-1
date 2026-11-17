@@ -95,7 +95,7 @@ void forceProcessAnimateWindowSlideFromBottomDeletingDestructor(const ProcessAni
 }
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
-extern const Real BfmeShadowScale;
+
 
 // ?updateAnimateWindow@ProcessAnimateWindowSlideFromBottom@@UAE_NPAVAnimateWindow@@@Z
 Bool ProcessAnimateWindowSlideFromBottom::updateAnimateWindow(AnimateWindow *animWin)
@@ -132,8 +132,8 @@ Bool ProcessAnimateWindowSlideFromBottom::updateAnimateWindow(AnimateWindow *ani
 
 	if (curPos.y - endPos.y <= m_slowDownThreshold)
 		velocityY *= m_slowDownRatio;
-	if (velocityY >= BfmeShadowScale)
-		velocityY = BfmeShadowScale;
+	if (velocityY >= -1.0f)
+		velocityY = -1.0f;
 	animWin->setVel(velocity);
 	return false;
 }

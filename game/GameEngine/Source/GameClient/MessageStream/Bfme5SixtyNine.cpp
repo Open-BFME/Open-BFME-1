@@ -64,14 +64,14 @@ extern "C" double __cdecl atan(double value);
 #pragma intrinsic(atan)
 
 extern const float g_rva01075350;					// retail 0x01075350
-extern float g_bfmeScaleEG;					// retail 0x010F693C
-extern float g_bfmeDefaultEG;					// retail 0x01097114
+					// retail 0x010F693C
+					// retail 0x01097114
 
 // ?bfmeAngle@@YGMM@Z
 float __stdcall bfmeAngle(float value)
 {
 	if (value > g_rva01075350)
-		return (float)(atan(g_bfmeScaleEG / value) * 2);
+		return (float)(atan(12.0f / value) * 2);
 
-	return g_bfmeDefaultEG;
+	return 1.57079637f;
 }

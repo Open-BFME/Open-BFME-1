@@ -82,8 +82,8 @@ private:
 };
 
 extern Int TheW3DFrameLengthInMsec;
-extern Real g_bfmeScaleBK;
-extern Real g_bfmePiOverTwo;
+
+
 extern void __fastcall normAngle(Real &angle);	// 0x0073A900
 
 void W3DView::rotateCameraTowardPosition(const Coord3D *pLoc, Int milliseconds,
@@ -104,7 +104,7 @@ void W3DView::rotateCameraTowardPosition(const Coord3D *pLoc, Int milliseconds,
 	dir.X = pLoc->x - dir.X;
 	dir.Y = pLoc->y - dir.Y;
 	const Real dirLength = dir.Length();
-	if (dirLength < g_bfmeScaleBK) {
+	if (dirLength < 0.100000001f) {
 		return;
 	}
 
@@ -113,7 +113,7 @@ void W3DView::rotateCameraTowardPosition(const Coord3D *pLoc, Int milliseconds,
 		if (dir.Y < 0.0f) {
 			angle = -angle;
 		}
-		angle -= g_bfmePiOverTwo;
+		angle -= 1.57079637f;
 		normAngle(angle);
 
 		m_rcEndAngle = reverseRotation ? (m_angle < angle ? angle - 6.2831855f : angle + 6.2831855f) : angle;

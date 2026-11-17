@@ -5,7 +5,7 @@ extern "C" double __cdecl tan(double a);
 extern const float g_rva0107533C;
 extern const float g_rva01075350;
 extern const float g_bfmeK1258C;
-extern const float g_bfmeK1258D;
+
 
 float __stdcall bfmeCot1258(float x)
 {
@@ -13,6 +13,6 @@ float __stdcall bfmeCot1258(float x)
 
 	t = (float)tan(*(volatile float *)&x * g_rva0107533C);
 	if (t != g_rva01075350)
-		return g_bfmeK1258D / t;
+		return 12.0f / t;
 	return g_bfmeK1258C;
 }

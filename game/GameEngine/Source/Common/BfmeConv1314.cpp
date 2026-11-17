@@ -15,7 +15,7 @@ BfmeThingTHB::BfmeThingTHB(void *p)
 	bfmeInitTHB(this, this, p);
 }
 
-extern float g_bfmeKTHE;
+
 
 class BfmeThingTHE
 {
@@ -161,5 +161,5 @@ public:
 
 float BfmeThingTHE::bfmeGoTHE(int a)
 {
-	return bfmeGetTHE(a) * g_bfmeKTHE;
+	return bfmeGetTHE(a) * 57.2957764f;
 }

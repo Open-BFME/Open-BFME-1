@@ -103,7 +103,7 @@ public:
 bool Point_In_Triangle_2D(const Vector3 &tri_point0, const Vector3 &tri_point1,
 	const Vector3 &tri_point2, const Vector3 &test_point, int axis_1, int axis_2,
 	unsigned char &flags);
-extern Real g_bfmeDirectionWeight1285;
+
 
 class FootprintIterator001A1460
 {
@@ -197,8 +197,8 @@ Bool FootprintIterator001A1460::next(Coord2D *out)
 		}
 
 		pt.Z = 0.0f;
-		pt.X = (Real)m_curX * g_bfmeDirectionWeight1285;
-		pt.Y = (Real)m_curY * g_bfmeDirectionWeight1285;
+		pt.X = (Real)m_curX * 10.0f;
+		pt.Y = (Real)m_curY * 10.0f;
 
 		if (((BfmeThingTemplateShadowSelector &)m_geom).usePluralShadowName())
 		{

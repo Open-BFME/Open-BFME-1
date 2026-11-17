@@ -8,7 +8,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-extern const Real BfmeShadowScale;
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
@@ -117,8 +117,8 @@ Bool Rva00495850ProcessAnimateWindowSlideFromRight::updateAnimateWindow(
 
 	if (curPos.x - endPos.x <= m_slowDownThreshold)
 		vel.x *= m_slowDownRatio;
-	if (vel.x >= BfmeShadowScale)
-		vel.x = BfmeShadowScale;
+	if (vel.x >= -1.0f)
+		vel.x = -1.0f;
 	animWin->setVel(vel);
 	return false;
 }

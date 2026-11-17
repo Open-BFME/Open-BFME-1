@@ -6,7 +6,7 @@ struct BfmeColorAdjust_00783070 {
 
 extern BfmeColorAdjust_00783070 g_bfmeColorAdjust_00783070;
 extern const float g_0107C64C;
-extern float g_bfmeColorScale_00783070;
+
 
 extern "C" long __ftol2(double value);
 
@@ -16,7 +16,7 @@ static int bfmeColorComponent_00783070(unsigned int value, int index) {
     result = result * g_0107C64C;
     result = result * g_bfmeColorAdjust_00783070.mult[index];
     result = result + g_bfmeColorAdjust_00783070.add[index];
-    result = result * g_bfmeColorScale_00783070;
+    result = result * 255.0f;
     return (int)result;
 }
 

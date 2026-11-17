@@ -93,7 +93,7 @@ inline UnsignedInt GameMakeColor(unsigned char red, unsigned char green,
 }
 
 extern Display *TheDisplay;
-extern Real g_bfmeScaleB3;
+
 
 class Transition
 {
@@ -141,9 +141,9 @@ void FullFadeTransition::draw()
 {
 	Int alpha;
 	if (m_drawState > m_endFrame / 2)
-		alpha = m_percent * (m_endFrame - m_drawState) * g_bfmeScaleB3;
+		alpha = m_percent * (m_endFrame - m_drawState) * 255.0f;
 	else
-		alpha = m_percent * m_drawState * g_bfmeScaleB3;
+		alpha = m_percent * m_drawState * 255.0f;
 	if (alpha > 255)
 		alpha = 255;
 	drawFillRect(TheDisplay, (Real)m_pos.x, (Real)m_pos.y,

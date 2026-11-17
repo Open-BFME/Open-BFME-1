@@ -105,7 +105,7 @@ extern const Real g_bfmeDirectionWeight1285;		// VA 0x01075C74, 10.0f
 extern Mouse *TheMouse;
 
 void __fastcall normAngle(Real &angle);
-extern const Real g_bfmeDefaultEG;			// VA 0x01097114, pi/2
+			// VA 0x01097114, pi/2
 
 // The view saved on entering the mode; read back by the W3DView body at
 // 0x0073D4C0. Only the two vectors are extern here: file-static scalars give
@@ -355,7 +355,7 @@ void W3DView::rva00743CE0(Int unused, ObjectID id, Bool enable, Bool repitch)
 			m_pitch = pitch;
 			slot060(pitch, 1, 0, 0);
 			if (m_2483)
-				m_angle = obj->m_orientation - g_bfmeDefaultEG;
+				m_angle = obj->m_orientation - 1.57079637f;
 			else if (m_2481)
 				m_angle = 0.0f;
 			else

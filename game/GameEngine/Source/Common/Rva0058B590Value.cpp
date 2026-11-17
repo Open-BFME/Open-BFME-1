@@ -2,7 +2,7 @@
 
 extern "C" __declspec(dllimport) double __cdecl floor( double );
 
-extern float g_rva0058B590Scale;
+
 extern const float g_rva0107533C;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
@@ -47,7 +47,7 @@ long Rva0058B590Value::get( Player *player ) const
 	Player *valueOwner = player;
 	if( scaled )
 	{
-		float value = valueOwner->getUpgradeCostChange() * g_rva0058B590Scale + g_rva0107533C;
+		float value = valueOwner->getUpgradeCostChange() * 100.0f + g_rva0107533C;
 		return rva0058B590FloatToLong( (float)floor( (double)value ) );
 	}
 
