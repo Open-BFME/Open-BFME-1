@@ -1,24 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail establishes the 36-byte layout; list helper names and unknown field types remain descriptive.
 
-template<class T> class StringBase
-{
-	friend class AsciiString;
-private:
-	StringBase(const StringBase &);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-private:
-	void *m_data;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class FXNugget
 {

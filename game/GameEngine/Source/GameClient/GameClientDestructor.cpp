@@ -35,24 +35,8 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const T *text);
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
 
 // Slot view for 0x012F19E8's own class: that global's ledgered type
 // (?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, data_rows.csv) and its
