@@ -50,11 +50,14 @@ void BfmeA995::bfmeGo995A(BfmeArg995 *a)
 	AIL_set_stream_reverb_levels(a->m_bfmeX->m_bfmeHandle, 1.0f, 0.0f);
 }
 
+// Retail calls ILT 0x00015235 (-> 0x004675F0) from both callers: spell the
+// callee as the ledgered ?j_00015235 thunk through a member-pointer call.
+extern void j_00015235();
+
 class BfmeLog995
 {
-public:
-	void bfmeLog995(int a, char *fmt, int n, char *s, int p, int q, int r, int t);
 };
+typedef void (BfmeLog995::*BfmeLog995Fn)(int a, char *fmt, int n, char *s, int p, int q, int r, int t);
 
 class BfmeDrop995
 {
@@ -86,7 +89,8 @@ extern Rva00510DC0DisplayView *Rva00510DC0Display;
 
 void bfmeGo995B(void)
 {
-	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(g_guiFxWindowHandle, "HideToolTip", 0, 0, 0, 0, 0, 0);
+	union { void (*fn)(); BfmeLog995Fn call; } target = { j_00015235 };
+	(((BfmeLog995 *)g_rva012F19E8WindowManager)->*target.call)(g_guiFxWindowHandle, "HideToolTip", 0, 0, 0, 0, 0, 0);
 
 	if (reinterpret_cast<void * &>(Rva00510DC0Display)) {
 		reinterpret_cast<BfmeDrop995 *>(TheDisplayStringManager)->bfmeRelease995(reinterpret_cast<void * &>(Rva00510DC0Display));
@@ -119,7 +123,8 @@ void BfmeC995::bfmeGo995C(int unused)
 	if (m_bfmeState != 0xa)
 		return;
 
-	((BfmeLog995 *)g_rva012F19E8WindowManager)->bfmeLog995(m_bfmeOwner->m_bfmeId, "CallChild", 1,
+	union { void (*fn)(); BfmeLog995Fn call; } target = { j_00015235 };
+	(((BfmeLog995 *)g_rva012F19E8WindowManager)->*target.call)(m_bfmeOwner->m_bfmeId, "CallChild", 1,
 			"ClosePassword", 0, 0, 0, 0);
 
 	m_bfmeState = 1;

@@ -45,22 +45,21 @@ extern LANAPI *TheLAN;
 class GameEngine;
 extern GameEngine *TheGameEngine;
 extern void j_00010f8c();
+extern void j_00015235();
 
 class BfmeX1070;
 
 class BfmeR1070
 {
-public:
-	void bfmeRun1070( BfmeX1070 *owner, char *name, int count, char *value,
-		char *a, char *b, char *c, char *d );
 };
+typedef void (BfmeR1070::*BfmeR1070Fn)( BfmeX1070 *owner, char *name, int count, char *value,
+	char *a, char *b, char *c, char *d );
 
 // retail 0x012F19E8: the canonical spelling is
 // ?g_rva012F19E8WindowManager@@3PAVWindowManager@@A, defined once in
 // game/GameEngine/Source/GameClient/GUI/WindowManager.cpp. This TU reaches the
 // same address through its own BfmeR1070 view, so it casts at the use; the
-// view keeps the callee's mangled spelling
-// ?bfmeRun1070@BfmeR1070@@QAEXPAVBfmeX1070@@PADH11111@Z.
+// view is only a receiver type for the ILT 0x00015235 member-pointer call.
 class WindowManager;
 extern WindowManager *g_rva012F19E8WindowManager;
 
@@ -98,7 +97,9 @@ void Rva00517450LanLobby::rva00517450()
 	((void (__fastcall *)( GameEngine * ))j_00010f8c)( TheGameEngine );
 	self->m_state = 0;
 	BfmeX1070 *owner = self->m_actionOwner;
-	((BfmeR1070 *)g_rva012F19E8WindowManager)->bfmeRun1070( owner, "CancelGame", 0, 0, 0, 0, 0, 0 );
+	// Retail calls ILT 0x00015235 (-> 0x004675F0); member-pointer call keeps ECX.
+	union { void (*fn)(); BfmeR1070Fn call; } target = { j_00015235 };
+	( ((BfmeR1070 *)g_rva012F19E8WindowManager)->*target.call )( owner, "CancelGame", 0, 0, 0, 0, 0, 0 );
 	MessageBoxOk( TheGameText->fetch( "GUI:HostLeftTitle" ),
 		TheGameText->fetch( "GUI:HostLeft" ), 0 );
 }
