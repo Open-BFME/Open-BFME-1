@@ -37,6 +37,19 @@ public:
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
+class BfmeColourABK
+{
+public:
+	void bfmeSetABK(int packed);
+
+	unsigned char m_bfmeHeadABK[0x24];
+	unsigned int m_bfme24ABK;
+	unsigned int m_bfme28ABK;
+	unsigned int m_bfme2CABK;
+	unsigned char m_bfmeGapABK[4];
+	unsigned int m_bfme34ABK;
+};
+
 class Shadow
 {
 public:
@@ -160,7 +173,7 @@ void BfmeSubZF::bfmeGoZF(void *a, void *b, void *c, BfmeStateZF *state)
 		return;
 
 	result->m_decal->m_localAngleBits = reinterpret_cast<unsigned int>(b);
-	result->m_decal->setColor(*reinterpret_cast<const int *>(c));
+	reinterpret_cast<BfmeColourABK *>(result->m_decal)->bfmeSetABK(*reinterpret_cast<const int *>(c));
 	position.x = reinterpret_cast<const Coord3D *>(a)->x + decalInfo.m_offsetX;
 	position.y = reinterpret_cast<const Coord3D *>(a)->y + decalInfo.m_offsetY;
 	position.z = reinterpret_cast<const Coord3D *>(a)->z;

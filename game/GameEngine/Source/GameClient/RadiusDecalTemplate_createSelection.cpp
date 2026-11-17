@@ -22,6 +22,19 @@ public:
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
+class BfmeColourABK
+{
+public:
+	void bfmeSetABK(int packed);
+
+	unsigned char m_bfmeHeadABK[0x24];
+	unsigned int m_bfme24ABK;
+	unsigned int m_bfme28ABK;
+	unsigned int m_bfme2CABK;
+	unsigned char m_bfmeGapABK[4];
+	unsigned int m_bfme34ABK;
+};
+
 class Shadow
 {
 public:
@@ -143,7 +156,7 @@ void RadiusDecalTemplate::createRadiusDecal(
 		return;
 
 	result.m_decal->m_localAngleBits = 0;
-	result.m_decal->setColor(color);
+	reinterpret_cast<BfmeColourABK *>(result.m_decal)->bfmeSetABK(color);
 	*(Coord3D *)&result.m_decal->m_position = *(const Coord3D *)&x;
 	result.m_template = this;
 }
