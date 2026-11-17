@@ -12,10 +12,15 @@
 
 #include <list>
 
+class Object;
+
 // The three cleanup calls use the existing retail list-base destructor.
 namespace _STL
 {
 	template <> _List_base<int, allocator<int> >::~_List_base();
+	// Retail's second copy of the list-base destructor (ILT 0xE68D -> 0xCEBD0)
+	// is the ledger's pointer-list one; the middle member uses that view.
+	template <> _List_base<Object*, allocator<Object*> >::~_List_base();
 }
 
 class BfmeBaseE
@@ -31,7 +36,7 @@ public:
 
 private:
 	_STL::list<int> m_bfmeFirst;				// +0x04
-	_STL::list<int> m_bfmeSecond;				// +0x08
+	_STL::list<Object*> m_bfmeSecond;				// +0x08
 	_STL::list<int> m_bfmeThird;				// +0x0C
 };
 
