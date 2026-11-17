@@ -17,6 +17,8 @@ enum ObjectID
 {
 };
 
+void j_000060cd();
+
 namespace _STL
 {
 template <class First, class Second>
@@ -57,6 +59,14 @@ static inline void vectorSmallDeallocate(void *block, unsigned int bytes) { __no
 void __cdecl BfmeElementConstruct(pair<ObjectID, unsigned int> *destination,
 	const pair<ObjectID, unsigned int> &value);
 
+// Retail reaches the element copy through its incremental-link thunk, whose
+// ledger row is j_000060cd; BfmeElementConstruct above only keeps the old contract.
+static __forceinline void ConstructViaIlt(pair<ObjectID, unsigned int> *destination, const pair<ObjectID, unsigned int> &value)
+{
+	typedef void (__cdecl *Fn)(pair<ObjectID, unsigned int> *, const pair<ObjectID, unsigned int> &);
+	((Fn)::j_000060cd)(destination, value);
+}
+
 template <class Type>
 __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 {
@@ -64,7 +74,7 @@ __forceinline Type *uninitialized_copy(Type *first, Type *last, Type *result)
 	{
 		do
 		{
-			BfmeElementConstruct(result, *first);
+			ConstructViaIlt(result, *first);
 			++first;
 			++result;
 		}
@@ -78,7 +88,7 @@ __forceinline Type *uninitialized_fill_n(Type *result, unsigned int count, const
 {
 	for (; count > 0; --count)
 	{
-		BfmeElementConstruct(result, value);
+		ConstructViaIlt(result, value);
 		++result;
 	}
 	return result;
@@ -123,7 +133,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 	if (fillLength == 1)
 	{
-		BfmeElementConstruct(newFinish, value);
+		ConstructViaIlt(newFinish, value);
 		++newFinish;
 	}
 	else
@@ -139,7 +149,7 @@ void vector<Type, Allocator>::_M_insert_overflow(
 			Type *cur = position;
 			do
 			{
-				BfmeElementConstruct(newFinish, *cur);
+				ConstructViaIlt(newFinish, *cur);
 				++cur;
 				++newFinish;
 			}
