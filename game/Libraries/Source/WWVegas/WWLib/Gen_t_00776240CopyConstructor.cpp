@@ -146,7 +146,7 @@ struct Gen_t_00776240_p128pod : public StringBase<char>
 	unsigned char m_byte6C;
 	char m_padding6D[ 3 ];
 	Rva00776240Vector70Holder m_vector70;
-	Rva00776240Field7C m_vector7C[ 4 ];
+	Rva00776240Field7C m_weaponBarrelInfoVec[ 4 ];
 	Rva00776240ByteAC m_byteAC;
 	Rva00776240FieldB0 m_fieldB0;
 };
@@ -172,7 +172,7 @@ Gen_t_00776240_p128pod::Gen_t_00776240_p128pod(
 {
 	for ( int i = 0; i < 4; ++i )
 	{
-		m_vector7C[ i ] = other.m_vector7C[ i ];
+		m_weaponBarrelInfoVec[ i ] = other.m_weaponBarrelInfoVec[ i ];
 	}
 }
 
