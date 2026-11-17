@@ -72,6 +72,9 @@
 #include "GameClient/Snow.h"
 #include "Common/WellKnownKeys.h"
 #include "Common/Xfer.h"
+
+// Use the separately verified retail provider (BuildableStatusHashResize.cpp); suppress this competing copy.
+namespace _STL { template <> void hashtable<pair<const AsciiString, BuildableStatus>, AsciiString, rts::hash<AsciiString>, _Select1st<pair<const AsciiString, BuildableStatus> >, rts::equal_to<AsciiString>, allocator<pair<const AsciiString, BuildableStatus> > >::resize(unsigned int); }
 // Retail records this key non-const (?TheKey_multiplayerIsLocal@@3VStaticNameKey@@A
 // at 0x012A7978); the Zero Hour header declares it const (@@B). Spell the recorded
 // name exactly; the address is identical so the emitted bytes match.

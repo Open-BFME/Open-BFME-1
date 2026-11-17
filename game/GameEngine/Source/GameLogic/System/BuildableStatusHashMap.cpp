@@ -34,4 +34,7 @@ namespace rts
 
 typedef std::hash_map<AsciiString, BuildableStatus, rts::hash<AsciiString>, rts::equal_to<AsciiString> > BuildableStatusMap;
 
+// Use the separately verified retail provider (BuildableStatusHashResize.cpp); suppress this competing copy.
+namespace _STL { template <> void hashtable<pair<const AsciiString, BuildableStatus>, AsciiString, rts::hash<AsciiString>, _Select1st<pair<const AsciiString, BuildableStatus> >, rts::equal_to<AsciiString>, allocator<pair<const AsciiString, BuildableStatus> > >::resize(unsigned int); }
+
 template BuildableStatus &BuildableStatusMap::operator[](const AsciiString &key);
