@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 // BFME W3DView::init, retail 0x00742700.
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
@@ -7,14 +7,7 @@
 
 #include "ascii_string.h"
 
-class Vector2
-{
-public:
-	Vector2(float xValue, float yValue) : x(xValue), y(yValue) {}
-
-	float x;
-	float y;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

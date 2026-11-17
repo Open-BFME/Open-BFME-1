@@ -7,14 +7,7 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-class Vector2
-{
-public:
-    Real X;
-    Real Y;
-
-    Vector2(Real x, Real y) : X(x), Y(y) {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector2.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

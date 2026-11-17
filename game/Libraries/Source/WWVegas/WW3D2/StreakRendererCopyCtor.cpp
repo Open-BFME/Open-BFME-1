@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 class TextureClass;
 
@@ -19,13 +19,7 @@ public:
 	static ShaderClass _PresetAdditiveSpriteShader;
 };
 
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-	float X;
-	float Y;
-};
+#include "../WWMath/vector2.h"
 
 #include "../WWMath/vector3.h"
 

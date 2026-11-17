@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
 // Initialise every member to its default, take one field from the source, then
 // assign. That is the reference's copy constructor unchanged -- the whole body
@@ -42,14 +42,7 @@ public:
 
 #include "../WWMath/vector3.h"
 
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-
-	float X;
-	float Y;
-};
+#include "../WWMath/vector2.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.h
 class SegLineRendererClass
