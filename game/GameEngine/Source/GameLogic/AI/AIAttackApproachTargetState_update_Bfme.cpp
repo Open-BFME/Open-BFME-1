@@ -33,11 +33,10 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 };
 
-class Thing
-{
-public:
-	const ThingTemplate *getTemplate() const;
-};
+#define THING_TU_MEMBERS \
+public: const ThingTemplate *getTemplate() const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 struct StateMachine
 {

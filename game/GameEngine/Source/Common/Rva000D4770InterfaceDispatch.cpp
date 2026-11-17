@@ -34,11 +34,10 @@ public:
 
 enum KindOfType;
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType kind) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType kind) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {

@@ -38,11 +38,10 @@ typedef KindOfMask KindOfMaskType;
 template <int N>
 class BitFlags;
 
-class Thing
-{
-public:
-	bool isAnyKindOf(const BitFlags<116> &mask) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isAnyKindOf(const BitFlags<116> &mask) const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class GameLogic;
 // Retail VA 0x012F0898 is the canonical pointer defined in GameLogic.cpp.

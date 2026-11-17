@@ -16,11 +16,10 @@ public:
 // (Common/Thing/Thing.cpp).
 struct Coord3D;
 
-class Thing
-{
-public:
-	void transformPoint(const Coord3D *in, Coord3D *out);
-};
+#define THING_TU_MEMBERS \
+public: void transformPoint(const Coord3D *in, Coord3D *out);
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class BfmeOwnerFV
 {

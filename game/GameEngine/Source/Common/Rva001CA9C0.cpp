@@ -42,11 +42,10 @@ enum KindOfType
 	KINDOF_B2 = 0xB2
 };
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 struct Rva001CA9C0
 {

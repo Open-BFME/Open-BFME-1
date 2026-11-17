@@ -17,11 +17,10 @@
 
 class Matrix3D;
 
-class Thing
-{
-public:
-	void rva00132200( const Matrix3D *transform );
-};
+#define THING_TU_MEMBERS \
+public: void rva00132200( const Matrix3D *transform );
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 struct Rva002157C0Data
 {

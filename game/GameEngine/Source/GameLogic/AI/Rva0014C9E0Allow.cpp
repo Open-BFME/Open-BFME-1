@@ -10,11 +10,10 @@ enum KindOfType
 	KindOfType_Thunk
 };
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 enum Relationship
 {

@@ -26,11 +26,10 @@ public:
 typedef BitFlags<116> KindOfMaskType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	bool isKindOfMulti(const KindOfMaskType &mustBeSet, const KindOfMaskType &mustBeClear) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOfMulti(const KindOfMaskType &mustBeSet, const KindOfMaskType &mustBeClear) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Gen_001dcc80
 {

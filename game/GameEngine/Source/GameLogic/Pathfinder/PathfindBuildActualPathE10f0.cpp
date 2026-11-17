@@ -35,11 +35,10 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	const Coord3D *getUnitDirectionVector2D( void ) const;
-};
+#define THING_TU_MEMBERS \
+public: const Coord3D *getUnitDirectionVector2D( void ) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 Path *Pathfinder::buildActualPath( const Object *object, LocomotorSurfaceTypeMask acceptableSurfaces,
 	const Coord3D *startPosition, PathfindCell *goalCell, Bool centerInCell, Bool blocked )

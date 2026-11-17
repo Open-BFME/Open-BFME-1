@@ -3,12 +3,11 @@
 // The shipped Thing header defines this inline check as a height comparison.
 // Retail reaches getHeightAboveTerrainOrWater through its ILT thunk at
 // 0x00001C30 (the body is the matched 0x001324A0), so route the call the same way.
-class Thing
-{
-public:
-    float getHeightAboveTerrainOrWater() const;
-    bool isAboveTerrainOrWater() const;
-};
+#define THING_TU_MEMBERS \
+public: float getHeightAboveTerrainOrWater() const; \
+public: bool isAboveTerrainOrWater() const;
+#include "thing.h"
+#undef THING_TU_MEMBERS
 
 extern void j_00001c30();
 

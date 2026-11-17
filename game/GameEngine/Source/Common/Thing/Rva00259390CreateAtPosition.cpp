@@ -5,7 +5,10 @@ class AsciiString;
 class ThingTemplate;
 class Team;
 struct Coord3D;
-class Thing { public: void setPosition(const Coord3D *); };
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *);
+#include "thing.h"
+#undef THING_TU_MEMBERS
 class Object;
 #include <bitset>
 

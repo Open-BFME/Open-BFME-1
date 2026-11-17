@@ -41,13 +41,10 @@ private:
 template <int N>
 class BitFlags;
 
-class Thing
-{
-public:
-	// Retail spelling of the kind-of test; the argument is the BfmeKindOfMask
-	// local below, passed by address.
-	Bool isAnyKindOf(const BitFlags<116> &mask) const;
-};
+#define THING_TU_MEMBERS \
+public: Bool isAnyKindOf(const BitFlags<116> &mask) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class BfmeGroupAI
 {

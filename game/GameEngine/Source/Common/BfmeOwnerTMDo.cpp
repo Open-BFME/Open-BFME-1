@@ -32,11 +32,10 @@ public:
 // Retail's kind-of test (row ?isKindOf@Thing@@QBE_NW4KindOfType@@@Z, 0x000A2CF0, ILT 0x0003251F).
 enum KindOfType { KindOfTypeValue59 = 0x59 };
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType kind) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType kind) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class BfmeActorTM
 {

@@ -80,12 +80,11 @@ static inline Rva00367E30Logic *theBfmeGameLogic()
 enum KindOfType { KINDOF_ZE_7 = 7 };
 class ThingTemplate;
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType t) const;
-	const ThingTemplate *getTemplate(void) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType t) const; \
+public: const ThingTemplate *getTemplate(void) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Rva002DF120
 {

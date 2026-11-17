@@ -43,11 +43,10 @@ union IntegerBackedBoolResult
 	Bool boolean;
 };
 
-class Thing
-{
-public:
-	const Coord3D *getUnitDirectionVector2D() const;
-};
+#define THING_TU_MEMBERS \
+public: const Coord3D *getUnitDirectionVector2D() const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 struct RvaC4390First;
 
