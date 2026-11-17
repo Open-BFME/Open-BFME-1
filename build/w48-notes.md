@@ -116,3 +116,5 @@
 - Gotcha: a /Zi probe writes vc70.pdb into the worktree root; delete it.
 ## w41-i round 21 (claude-sonnet-5-5)
 3 batches served (1 file each seen), nothing submitted. Keys: HorseHordeContainModuleData dtor Rva002469D0* entries/m_00..m_2bc (opaque), Rva003B9AD0 pair copy ctor, Rva009F4070DistanceSquared a/b. Same dead ends.
+## agent h round 16 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: BfmeConv792 DWH/DWJ/DWL (tiny, no semantics), AIUpdateComputeQuickPath m_unmodelled_08/00 + ZH-identical params, Rva003B9AD0PairCopyCtor m_at04, INIMapCache locals (ZH-identical), Rva00409F40Loop, BfmeConv2137, InitializeAudioSlot006ACB90 floats, BfmeConv1226, Q3SortElem16Median a/b/c, ObjectCreationUpgrade m_9c, BfmeConv1778/1838, ParseMoveCameraBlock Rva003B7650Record. Same dead ends.
