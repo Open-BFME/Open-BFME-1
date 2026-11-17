@@ -24,9 +24,12 @@ class Rva00788290Object
 class Rva00788290Allocation
 {
 public:
-	Rva00788290Allocation *bfmeConstruct00788290(Rva00788290Object *source);
 	char m_storage[0x30];
 };
+
+// Retail reaches the constructor body 0x00787710 (ledger object-symbol
+// ??0Rva00788290Allocation@@QAE@PAVRva00788290Object@@@Z) through ILT 0x0003097C.
+extern void j_0003097c();
 
 
 // @?bfmeSetup00788290@@YAPAXPAVRva00788290Object@@@Z 0x00788290
@@ -46,6 +49,10 @@ void *__cdecl bfmeSetup00788290(Rva00788290Object *object)
 
 	void *memory = ::operator new(sizeof(Rva00788290Allocation));
 	if (memory != 0)
-		return ((Rva00788290Allocation *)memory)->bfmeConstruct00788290(object);
+	{
+		typedef Rva00788290Allocation *(Rva00788290Allocation::*ConstructFn)(Rva00788290Object *source);
+		union { void (*fn)(); ConstructFn call; } construct = { j_0003097c };
+		return (((Rva00788290Allocation *)memory)->*construct.call)(object);
+	}
 	return 0;
 }
