@@ -33,10 +33,10 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleInterface
+class BehaviorModuleInterface
 {
 public:
-	virtual void updateModuleInterfaceAnchor();
+	virtual void behaviorModuleInterfaceAnchor();
 };
 
 class ModuleInterface
@@ -49,7 +49,7 @@ public:
 // the members from +0x14 to +0x25.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public BehaviorModule,
-	public UpdateModuleInterface,
+	public BehaviorModuleInterface,
 	public ModuleInterface
 {
 public:

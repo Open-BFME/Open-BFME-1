@@ -31,10 +31,10 @@ protected:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
-class UpdateModuleInterface
+class BehaviorModuleInterface
 {
 public:
-    virtual void updateModuleInterfaceAnchor();
+    virtual void behaviorModuleInterfaceAnchor();
 };
 
 class ModuleInterface
@@ -45,7 +45,7 @@ public:
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule : public ObjectModule,
-    public UpdateModuleInterface,
+    public BehaviorModuleInterface,
     public ModuleInterface
 {
 public:
