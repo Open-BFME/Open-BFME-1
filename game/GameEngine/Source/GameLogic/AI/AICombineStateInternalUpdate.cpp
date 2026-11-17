@@ -20,6 +20,18 @@ enum CommandSourceType { CMD_FROM_PLAYER = 0 };
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
+class Gen_000ED3B0
+{
+public:
+	float bfmeGapSq(const Gen_000ED3B0 *other) const;
+private:
+	int m_bfmeGap[14];							// +0x00
+	float m_bfmeX;								// +0x38
+	float m_bfmeY;								// +0x3c
+	int m_bfmeGap2[31];							// +0x40
+	float m_bfmeRadius;							// +0xbc
+};
+
 class Object;
 
 template <int N> class Slots : public Slots<N - 1> { public: virtual void gap(char (*)[N]); };
@@ -109,7 +121,7 @@ StateReturnType AICombineState::internalUpdate()
 		if (!reinterpret_cast<BFMEActionManager *>(TheActionManager)->rva000C4080(owner, goal, owner->m_ai->getLastCommandSource()))
 			return STATE_FAILURE;
 		m_goalPosition = goal->m_position;
-		float distance = owner->getDistanceSquared(goal);
+		float distance = reinterpret_cast<const Gen_000ED3B0 *>(owner)->bfmeGapSq(reinterpret_cast<const Gen_000ED3B0 *>(goal));
 		if (2500.0f > distance)
 		{
 			float height = (float)fabs(goal->m_position.z - owner->m_position.z);

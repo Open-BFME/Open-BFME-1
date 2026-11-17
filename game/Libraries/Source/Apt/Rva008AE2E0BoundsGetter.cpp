@@ -40,6 +40,39 @@ public:
 	void bfmePush(void);
 };
 
+struct BfmeQ1210
+{
+	int m_bfme00, m_bfme04, m_bfme08, m_bfme0c, m_bfme10, m_bfme14;
+};
+
+
+class BfmeA1210
+{
+public:
+	void bfmePop1210();
+	char m_bfmePad00[0x20];
+	BfmeQ1210 m_bfme20;
+	char m_bfmePad38[0x238 - 0x38];
+	BfmeQ1210 m_bfme238[16];
+	int m_bfme3b8;
+	int m_bfme3bc;
+};
+
+
+class BfmeSubDXH
+{
+	unsigned char m_bfmeHead[4];
+};
+
+
+struct BfmeThingDXH
+{
+	void bfmeGoDXH(void *a);
+	unsigned char m_bfmeHead[0x20];
+	BfmeSubDXH m_bfmeSub;
+};
+
+
 class BfmeA1236
 {
 public:
@@ -95,7 +128,7 @@ void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
 		bfmeMul1208((BfmeM1208 *)&local, (BfmeM1208 *)&node->m_transform, (BfmeM1208 *)&local);
 
 	((Gen_008D2C80 *)reinterpret_cast<BfmeA1236 *>(g_bfmeB1038))->bfmePush();
-	reinterpret_cast<BfmeA1236 *>(g_bfmeB1038)->bfmeSet1236(&local);
+	reinterpret_cast<BfmeThingDXH *>(g_bfmeB1038)->bfmeGoDXH(&local);
 
 	unsigned *u = (unsigned *)bounds;
 	u[2] = 0xCE6E6B28;
@@ -104,5 +137,5 @@ void Rva8BB1A0BoundsSource::getBounds(Rva8BB1A0Bounds *bounds)
 	u[1] = 0x4E6E6B28;
 
 	((BfmeN1235 *)this)->bfmeDo1235((void *)g_bfmeB1038, bounds);
-	reinterpret_cast<BfmeA1236 *>(g_bfmeB1038)->bfmePop1236();
+	reinterpret_cast<BfmeA1210 *>(g_bfmeB1038)->bfmePop1210();
 }
