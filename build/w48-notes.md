@@ -118,3 +118,6 @@
 3 batches served (1 file each seen), nothing submitted. Keys: HorseHordeContainModuleData dtor Rva002469D0* entries/m_00..m_2bc (opaque), Rva003B9AD0 pair copy ctor, Rva009F4070DistanceSquared a/b. Same dead ends.
 ## agent h round 16 (wave 48)
 - 3 batches x5 served, nothing submitted. Keys: BfmeConv792 DWH/DWJ/DWL (tiny, no semantics), AIUpdateComputeQuickPath m_unmodelled_08/00 + ZH-identical params, Rva003B9AD0PairCopyCtor m_at04, INIMapCache locals (ZH-identical), Rva00409F40Loop, BfmeConv2137, InitializeAudioSlot006ACB90 floats, BfmeConv1226, Q3SortElem16Median a/b/c, ObjectCreationUpgrade m_9c, BfmeConv1778/1838, ParseMoveCameraBlock Rva003B7650Record. Same dead ends.
+
+## w41-i round 22 (claude-sonnet-5-5)
+3 batches served, nothing submitted. Keys: LivingWorldManagerDestructor Rva0060EBB0/Rva00614820 types, MemberTurnAndGoal0024E310, GettingBuilt/drawMoveHints, CrossFadeImage m_image2, BfmeScriptCondAreaGate, W3DLightDraw m_unmodelled_*, RiderChangeContain ctor, BfmeConv664/962, FlightDeck m_bfmeC4.. All opaque/no ZH twin.
