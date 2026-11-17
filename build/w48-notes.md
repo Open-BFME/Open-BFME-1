@@ -233,3 +233,5 @@
 - GOTCHA claims.py: `claim` settles queued landings by (name,rva,size,source,status) + source blob, so a notes-only add_match landing (gen_small row) is "released as landed" before you push. Re-claim it.
 - GOTCHA push starvation: pre-push with ledger rows takes 70-100 s; naming lanes push notes every ~50-70 s. Plain retry lost 10 races, aligned retry (build/w48/scripts/push_aligned2.sh) lost 4 more. Batch commits into one push.
 - GOTCHA: build/w48-notes.md is tracked now (other lanes force-added it); an untracked copy is silently overwritten by `git pull --rebase` (build/* is ignored).
+## agent h round 35 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: Rva0049A100Set m_00/v (move-and-null), W3DLightDraw ctor m_unmodelled_* (no ZH twin), Rva008BDD70ResetList m_at*, Firestorm ctor m_64.. (ZH layout does not match), BFMEFactory ctor, GiantBird SlowDeath ctor, BfmeConv1401/1279, DebugDisplay x/y, ToggleMounted ctor, CollideModuleData ctor, Rva002BC310, MemberTurnAndGoal0024E310, Rva00903470DeviceSlot77, CastleMember ctor. Same dead ends.
