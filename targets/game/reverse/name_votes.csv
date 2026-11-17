@@ -8051,3 +8051,8 @@ game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p
 game/GameEngine/Source/Common/BfmeConv1541.cpp|local|BfmeThingVOQ::bfmeResetVOQ|v,b3a53f870ef6362947ba6f41,claude-sonnet,20261110115054-8ac8ac,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourRva001F8E20.cpp|type||Rva001F8E20Data,2ee4d760489ead78db0cf6fb,claude-sonnet,20261117182140-e7aeb9,2026-11-17
 game/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourRva001F8E20.cpp|local|Rva001F8E20Owner::method|d,ef96681ac63f77fa0b294c6b,claude-sonnet,20261117182140-e7aeb9,2026-11-17
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ee5a0,21138c3561668b2c8fa9764a,claude-sonnet,20261117182345-1224b2,2026-11-17
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ef8b0,90f2a336b0e70eb3c829a7e9,claude-sonnet,20261117182345-1224b2,2026-11-17
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005fe880,cc34a0857c998d20193c17e4,claude-sonnet,20261117182345-1224b2,2026-11-17
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ff8d0,803b5e14f85ec26020bf97af,claude-sonnet,20261117182345-1224b2,2026-11-17
+game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_00600710,51fb36b371b4910b2616cadb,claude-sonnet,20261117182345-1224b2,2026-11-17
