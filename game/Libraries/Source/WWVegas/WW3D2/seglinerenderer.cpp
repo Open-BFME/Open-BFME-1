@@ -67,17 +67,7 @@ class CameraClass;
 #define W3D_ELINE_UNIFORM_LENGTH_TEXTURE_MAP 	0x00000001
 #define W3D_ELINE_TILED_TEXTURE_MAP					0x00000002
 #define W3D_ELINE_DEFAULT_BITS	(W3D_ELINE_MERGE_INTERSECTIONS | (W3D_ELINE_UNIFORM_WIDTH_TEXTURE_MAP << W3D_ELINE_TEXTURE_MAP_MODE_OFFSET))
-struct W3dEmitterLinePropertiesStruct
-{
-	uint32			Flags;
-	uint32			SubdivisionLevel;
-	float32			NoiseAmplitude;
-	float32			MergeAbortFactor;
-	float32			TextureTileFactor;
-	float32			UPerSec;
-	float32			VPerSec;
-	uint32			Reserved[9];
-};
+#include "w3d_file.h"
 #endif
 
 

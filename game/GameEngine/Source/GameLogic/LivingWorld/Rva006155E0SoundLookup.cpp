@@ -16,14 +16,7 @@ namespace rts { template<class T> struct hash { unsigned operator()(T value) con
 bool operator==(const AsciiString &, const AsciiString &);
 class Xfer;
 
-struct Coord3DBase
-{
-	Coord3DBase() : x( 0.0f ), y( 0.0f ), z( 0.0f ) {}
-
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 
 struct Region2DBase
 {
