@@ -29,3 +29,6 @@
 
 ## w41-i round 6 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: Rva0077C390 parse Model/Owner (brief leaks a BFME2 EA-name hint line; ignored for blind voting), ParseMoveCameraBlock Rva003B7650Record m_04..m_18, BfmeConv2022/1000/1778/1115 Bfme* types, Rva004155A0 notifyArrays types (Drawable.cpp, ZH-less), BFMEFactoryModuleData m_unmodelled_*, AIAttackSwoop Rva002BC870, Q3 sort median a/b/c, WaterRenderObj ctor offset members m_d0..m_400, InitializeAudioSlot offsets, calculateTerrainLOD freq64 locals (known placeholder dead end). All opaque/no ZH twin.
+## agent h round 5 (wave 48)
+- 3 batches x5 served. Submitted: ArchiveFileGetFileList.cpp (3 locals tempDirInfo/tempdirname/tempfilename with ZH names rejected "still a placeholder"; set/concat/compare/compareNoCase param s -> str and compare n -> minLen recorded as hashes). MapObjectFastAssignUniqueIDs AsciiString ctor param p -> s / c rejected as placeholder.
+- Skipped: ToppleUpdate m_20/m_f18/m_f1c, HorseHorde/HordeSiege/FadeAndDie module data offsets, Rva-typed dump classes, LivingWorldArmyAssign m_08.., Apt bounds getter Bfme* members, Rva0010F100 call2 helper.
