@@ -40,6 +40,10 @@ private:
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
+// Use the separately verified retail provider (GameLogicProcessDestroyList.cpp); suppress this competing erase copy.
+namespace _STL { template <> hashtable<pair<const int, Object *>, int, hash<int>, _Select1st<pair<const int, Object *> >, equal_to<int>, allocator<pair<const int, Object *> > >::size_type hashtable<pair<const int, Object *>, int, hash<int>, _Select1st<pair<const int, Object *> >, equal_to<int>, allocator<pair<const int, Object *> > >::erase(const int &); }
+
+
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {

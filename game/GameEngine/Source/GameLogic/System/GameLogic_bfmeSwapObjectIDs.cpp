@@ -33,6 +33,9 @@ public:
 typedef _STL::hash_map<ObjectMapID, Object *, _STL::hash<ObjectMapID>,
 	_STL::equal_to<ObjectMapID> > ObjectPtrHash;
 
+// Use the separately verified retail provider (GameLogicProcessDestroyList.cpp); suppress this competing erase copy.
+namespace _STL { template <> hashtable<pair<const ObjectMapID, Object *>, ObjectMapID, hash<ObjectMapID>, _Select1st<pair<const ObjectMapID, Object *> >, equal_to<ObjectMapID>, allocator<pair<const ObjectMapID, Object *> > >::size_type hashtable<pair<const ObjectMapID, Object *>, ObjectMapID, hash<ObjectMapID>, _Select1st<pair<const ObjectMapID, Object *> >, equal_to<ObjectMapID>, allocator<pair<const ObjectMapID, Object *> > >::erase(const ObjectMapID &); }
+
 class GameLogic
 {
 public:
