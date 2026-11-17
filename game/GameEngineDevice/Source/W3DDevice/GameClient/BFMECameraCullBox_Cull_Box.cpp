@@ -5,12 +5,7 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
-class PlaneClass
-{
-public:
-	Vector3 N;
-	float D;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/plane.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/aabox.h"
 
