@@ -1,0 +1,2 @@
+## w41-i round 1 (claude-sonnet-5-5)
+3 batches x5 files served (Rva001F9C20Unknown, BezierSegment ctor dup, Rva0034FE00Assign, HordeSiegeEngineContain data ctor, CritterEmitterUpdate data ctor, DelayedLuaEventUpdate ctor, SpawnUnitBehavior data ctor, StructureCollapse data ctor, UnicodeString...). Keys were mostly opaque offset members (m_flagC4, m_f70, m_dieData0) with no header/caller evidence; all skipped. Bezier params x0..z3/cp0..cp3 are rejected as "still a placeholder" even with ZH names. Dead end: submitting ZH-identical param names.
