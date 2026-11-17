@@ -3244,3 +3244,4 @@ game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_204,m_child,claude-s
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_1F8,m_next,claude-sonnet+gpt-6.1-sol,applied,2026-11-17
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_200,m_parent,claude-sonnet+gpt-6.1-sol,applied,2026-11-17
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_204,m_child,claude-sonnet+gpt-6.1-sol,applied,2026-11-17
+game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp|member||m_vector7C,m_weaponBarrelInfoVec,claude-sonnet+gpt-6.1-sol,agreed,2026-11-17

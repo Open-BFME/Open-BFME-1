@@ -8064,3 +8064,5 @@ game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|param|compareNoC
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_1F8,7ff30c454124ecde59f6a0a0,claude-sonnet,20261117193738-957e0a,2026-11-17
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_200,2649a74320d4cfb254071964,claude-sonnet,20261117193738-957e0a,2026-11-17
 game/GameEngine/Source/Common/Rva00477E60Walk.cpp|member||m_204,8bca922d8e3b2eedf4698f16,claude-sonnet,20261117193738-957e0a,2026-11-17
+game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp|member||m_vector70,d35679b33408a2e87e2ef3ac,claude-sonnet,20261117194436-ce6bdb,2026-11-17
+game/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp|member||m_vector7C,5a75fe93184be692b4aa1a92,claude-sonnet,20261117194436-ce6bdb,2026-11-17
