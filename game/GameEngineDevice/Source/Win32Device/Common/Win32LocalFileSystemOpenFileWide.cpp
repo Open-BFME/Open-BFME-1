@@ -17,40 +17,8 @@ template <class T> struct StringInlineData
 	T text[1];
 };
 
-template <class T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	void set(const T *text, int length);
-	void set(const StringBase<T> &other);
-	void concat(const T *text, int length);
-	Bool nextToken(StringBase<T> *token, const char *separators);
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	StringInlineData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-
-	AsciiString &operator=(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->set(*((const StringBase<char> *)&other));
-		return *this;
-	}
-};
 
 static inline Int bfmeLength(const AsciiString &str)
 {
