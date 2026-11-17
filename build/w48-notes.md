@@ -18,3 +18,6 @@
 ## agent h round 3 (wave 48)
 - 3 batches x5 served; nothing valid to submit. Keys: BezierSegment ctor params (again), CastleMember/Enraged/ShareExperience/SlaughterHorde/Garrison/W3DFloor module data ctor offsets (no ZH twin, BFME layout differs), Rva-typed dump classes, MemberTurnAndGoal offset flags.
 - Dead end confirmed: Pathfinder::iterateCellsAlongLine locals xinc2/yinc2/x/y submitted as identical ZH names -> "still a placeholder" (the key is a placeholder only because of declaration-line grouping).
+
+## w41-i round 4 (claude-sonnet-5-5)
+3 batches x5 served, all skipped (nothing submitted). Keys: FESL simple requests Rva007FAF90.. (again; FourCC only, no EA names), RainOfFire/CastleMember/Spawn/Wander/Animal/BannerCarrier ModuleData ctor offset members, Open2Elem247180 stand-in, Rva005222A0 AptMessageBox members, BfmeMsgVIW/BfmeSeed, W3DLaser BfmeEnvelope (parser not shown, ZH has no Envelope), LivingWorldManager dtor Rva types + Release_Ref local n. Still no ZH twin or FieldParse evidence.
