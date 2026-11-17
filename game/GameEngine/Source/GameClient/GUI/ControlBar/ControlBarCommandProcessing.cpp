@@ -47,7 +47,13 @@
 #include "Common/PlayerTemplate.h"
 
 #include "GameClient/CommandXlat.h"
+// Retail's CommandButton::getButtonImage is the lazy out-of-line body in
+// CommandButton_cacheButtonImage.cpp; the ZH header's one-line inline would emit
+// a non-retail COMDAT. Keep only a declaration for the real member and rename the
+// inline body to a never-called member.
+#define getButtonImage() getButtonImage() const; const Image* getButtonImageZhInline_unused()
 #include "GameClient/ControlBar.h"
+#undef getButtonImage
 #include "GameClient/Drawable.h"
 #include "GameClient/Eva.h"
 #include "GameClient/GameClient.h"
