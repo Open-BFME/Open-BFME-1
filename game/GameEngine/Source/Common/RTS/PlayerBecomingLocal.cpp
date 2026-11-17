@@ -31,15 +31,11 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
 enum { TIME_OF_DAY_NIGHT = 4 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 #define NAMEKEY(x) TheNameKeyGenerator->nameToKey(x)
 

@@ -58,8 +58,8 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
-class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
+#include "../../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
+
 class Player { public: bool isPlayerObserver() const; };
 class PlayerList { public: Player *findPlayerWithNameKey(NameKeyType); };
 class GameSlot {

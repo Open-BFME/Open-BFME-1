@@ -50,18 +50,11 @@ enum KindOfType
 	KINDOF_8B = 0x8B
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../ScriptEngine/game_logic_dispatch.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

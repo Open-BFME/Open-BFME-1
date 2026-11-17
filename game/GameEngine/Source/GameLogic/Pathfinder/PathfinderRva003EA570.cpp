@@ -15,10 +15,7 @@ typedef float Real;
 extern "C" double fabs(double);
 #pragma intrinsic(fabs)
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../ScriptEngine/game_logic_dispatch.h"
 
 enum KindOfType
 {
@@ -137,11 +134,7 @@ public:
 	Real m_unreconstructed_0BC;
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

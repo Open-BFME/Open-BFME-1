@@ -22,21 +22,14 @@ enum KindOfType
 	KINDOF_DISGUISER = 0x57
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../ScriptEngine/game_logic_dispatch.h"
 
 class Object;
 class Team;
 class Player;
 class Module;
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

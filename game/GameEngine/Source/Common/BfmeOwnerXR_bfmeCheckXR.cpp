@@ -6,16 +6,9 @@ typedef unsigned char Bool;
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

@@ -34,7 +34,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../ScriptEngine/game_logic_dispatch.h"
 
 class AttributeModifierPoolUpdate;
 class ContainModuleInterface;
@@ -239,11 +239,7 @@ public:
 	void gainLevels( Object *object, int levels, Bool provideFeedback );
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
+
 
 struct Rva00367E30Logic
 {

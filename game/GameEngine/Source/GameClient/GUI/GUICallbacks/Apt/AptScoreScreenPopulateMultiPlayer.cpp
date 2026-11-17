@@ -71,10 +71,7 @@ static __forceinline Bool asciiIsNotEmpty(const StringBase<char> &string)
 	return data != 0 && *reinterpret_cast<const unsigned short *>(data + 4) != 0;
 }
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 enum Relationship
 {
@@ -128,11 +125,7 @@ public:
 	Player *findPlayerWithNameKey(NameKeyType key);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern GameInfo *TheGameInfo;
 extern PlayerList *ThePlayerList;

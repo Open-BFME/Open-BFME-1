@@ -31,10 +31,7 @@ enum Relationship
 {
 	ALLIES = 2
 };
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../ScriptEngine/game_logic_dispatch.h"
 enum SpecialPowerType
 {
 	SPECIAL_POWER_19 = 0x19
@@ -56,11 +53,7 @@ class Weapon;
 class Object;
 class SpecialAbilityUpdate;
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 class StateMachine

@@ -6,7 +6,7 @@
 typedef bool Bool;
 typedef float Real;
 enum KindOfType { KINDOF_5C = 0x5c };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../ScriptEngine/game_logic_dispatch.h"
 enum WeaponSlotType { WEAPONSLOT_DUMMY = 0 };
 enum ObjectID { INVALID_ID = 0 };
 enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
@@ -101,11 +101,7 @@ public:
     AIData *m_data14;
 };
 
-class NameKeyGenerator
-{
-public:
-    NameKeyType nameToKey(const char *name);
-};
+
 
 class TerrainLogic;
 

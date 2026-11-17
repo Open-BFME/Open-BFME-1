@@ -22,16 +22,12 @@
 #include "Common/AsciiString.h"
 
 typedef int Int;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 class GameWindow;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
+
 
 class BfmeWindowLayout
 {

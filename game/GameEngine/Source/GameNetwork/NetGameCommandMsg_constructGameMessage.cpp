@@ -20,10 +20,7 @@ typedef float Real;
 
 #define NULL 0
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 enum GameMessageArgumentDataType
 {
@@ -66,11 +63,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);		// ILT 0x0003ADD7
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

@@ -11,7 +11,7 @@
 #include <bitset>
 #include "ascii_string.h"
 #include "coord3d.h"
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "game_logic_dispatch.h"
 class Module; class PolygonTrigger;
 #define BFME_HAVE_COORD3D
 #define OBJECT_TU_MEMBERS Module *findModule(NameKeyType) const; bool didEnter(const PolygonTrigger*) const; bool didExit(const PolygonTrigger*) const;
@@ -56,7 +56,7 @@ class PartitionFilterPlayer:public PartitionFilter { public: PartitionFilterPlay
 class PartitionFilterAcceptByKindOf:public PartitionFilter { public: PartitionFilterAcceptByKindOf(const BitFlags<192>&,const BitFlags<192>&); virtual bool allow(Object*); private: BitFlags<192> setBits,clearBits; };
 class PartitionManager { public: Object *getClosestObject(const Coord3D*,float,int,PartitionFilter*); };
 // WWMath defines Coord3D as a class; the existing engine pin spells the same 12-byte type as struct.
-class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
+
 class Rva0036DB90Item;
 class Rva0036DB90Collection { public: Rva0036DB90Item *itemAt(unsigned int) const; };
 extern ScriptEngine *TheScriptEngine;

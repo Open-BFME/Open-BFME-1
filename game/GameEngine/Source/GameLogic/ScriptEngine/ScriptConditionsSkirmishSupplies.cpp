@@ -25,7 +25,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef unsigned short PlayerMaskType;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "game_logic_dispatch.h"
 enum KindOfType { KINDOF_STRUCTURE = 7 };
 enum AllowPlayerRelationship { ALLOW_NEUTRAL = 8 };
 enum DistanceCalculationType { FROM_CENTER_2D = 0 };
@@ -126,10 +126,7 @@ public:
 	}
 };
 
-class NameKeyGenerator {
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 #define NAMEKEY(name) (TheNameKeyGenerator->nameToKey(name))
 

@@ -8,11 +8,11 @@
 template<> inline bool StringBase<char>::isEmpty() const
 { return m_data == 0 || m_data->length == 0; }
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 enum Relationship { ENEMIES, NEUTRAL, ALLIES };
 enum PlayerType { PLAYER_HUMAN = 0 };
 class StaticNameKey { public: NameKeyType key() const; };
-class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 // Retail's defining decoration for 0x012A7918 is
 // The const key object has a writable cache and a retail name pointer in .data.

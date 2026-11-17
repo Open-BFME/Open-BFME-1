@@ -9,8 +9,8 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 // ??1UnicodeString@@QAE@XZ
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
-class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
+#include "../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Object;
 class Player;
