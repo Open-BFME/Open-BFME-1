@@ -241,3 +241,6 @@
 
 ## agent h round 37 (wave 48, claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: BfmeConv1000/1115/2064, W3DTerrainBackground reset m_78.. (set to 1; no ZH twin), W3DLaserDraw Envelope m_bfme00.. (parser separate), TransportAIUpdate/RiderChange/Devastate/W3DFloorDraw ModuleData ctors, ToppleUpdate m_20/m_f18/m_f1c/m_bfmeState, AttackMeleeEngage m_field50.., U1SmallStateProbes, Rva009A2350Init, Y2Fesl Rva00800E50. Same dead ends.
+
+## agent h round 38 (wave 48, claude-sonnet-5-5)
+3 batches served. Submitted BfmeConv902 bfmeGoKE -> updateProperties (+locals kb, prop): matches ZH IMEManager::updateProperties (GetKeyboardLayout/ImmGetProperty, bits 18/19 -> m_indexBase/m_unicodeIME); not agreed yet. Skipped: FreeLifeBody ctor m_unmodelled_*, Rva003C7B60, RadiusDecal, Create_Render_Obj, DeployStyle/HordeWorker/ToggleMounted ctors, BfmeConv808, Rva0010F100, Rva002BC310, GetLoadScreen, Pathfinder, AIGuardOuter, Rva1FC330. Tip: grep ZH for the imported Win32 API name (GetKeyboardLayout) to find the twin.
