@@ -121,3 +121,5 @@
 
 ## w41-i round 22 (claude-sonnet-5-5)
 3 batches served, nothing submitted. Keys: LivingWorldManagerDestructor Rva0060EBB0/Rva00614820 types, MemberTurnAndGoal0024E310, GettingBuilt/drawMoveHints, CrossFadeImage m_image2, BfmeScriptCondAreaGate, W3DLightDraw m_unmodelled_*, RiderChangeContain ctor, BfmeConv664/962, FlightDeck m_bfmeC4.. All opaque/no ZH twin.
+## agent h round 17 (wave 48, claude-sonnet-5-5)
+3 batches x5 served, nothing submitted (all skips). Keys: Rva00063F90Blend, EnragedBehavior m_f1c/m_f20 (ZH UpdateModule has only 2 fields), HordeUpdateModuleData m_f0..f3/m_name0/1 (no ZH twin), LivingWorldArmyAssign m_08.., BfmeConv1901, ParseFXEvent BfmeAnimationStateFXE, W3DStreakDrawModuleData m_unmodelled_*, bfmeMax/Min a,b, Rva0049A100Set, Rva00477E60Walk m_1F8/200/204 (tree links, weak), Rva8CDA60, V4GuardedTailCalls. Same dead ends.
