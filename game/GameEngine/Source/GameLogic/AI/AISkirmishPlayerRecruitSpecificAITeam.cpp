@@ -216,7 +216,7 @@ public:
 class TeamInQueue
 {
 public:
-	TeamInQueue() :
+	__declspec(dllimport) __forceinline TeamInQueue() :
 		m_buildPrevious(0),
 		m_buildNext(0),
 		m_readyPrevious(0),

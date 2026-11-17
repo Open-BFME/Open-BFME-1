@@ -256,7 +256,7 @@ class WorkOrder;
 class TeamInQueue
 {
 public:
-	TeamInQueue()
+	__declspec(dllimport) __forceinline TeamInQueue()
 		: m_dlink_TeamBuildQueue_prev(NULL), m_dlink_TeamBuildQueue_next(NULL),
 		  m_dlink_TeamReadyQueue_prev(NULL), m_dlink_TeamReadyQueue_next(NULL),
 		  m_workOrders(NULL), m_priorityBuild(false), m_team(NULL),
