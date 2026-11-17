@@ -265,3 +265,11 @@
 - Untried but real dup in link_check batch: Reset_All_Texture_Mappers, SparseMatchFinder MapHelper operator(), Draw_Triangles, pubimbue, _bstr_t ctor, W3DBridge::init, BuddyMessage copy ctor, W3DShadowTexture ctor, CashHack dtor, AIPlayer ctor (BfmeConv2070), BfmeA1189, Rva007C2E50Collector insert_overflow.
 - Tip: link_check accepts many paths in one background run (~10 min for 45 files).
 - Never `pkill -f` a pattern that appears in your own command line (killed my shell).
+
+## agent f round 2 (wave 48, claude-sonnet-5-5)
+- Landed 4 commits on UNRESOLVED rows (all callee respells; link_check shows no `unresolved` line, previews UNKNOWN): winSetStatus (-> _bfme_winSetStatus row), findModule (protected IBE + friend), Palantir selectHero/selectCommand, bfmeLog995/bfmeRun1070 (ILT 0x15235), bfmeSet1020/bfmeApplyERD.
+- Recipe for ILT-only callees: confirm with tools/callees.py, then `extern void j_XXXXXXXX();` + `union { void (*fn)(); PmfType call; } t = { j_XXXXXXXX };` member-pointer call (AptMapPreviewEnabledImage idiom); free cdecl: cast j_ ptr.
+- Many queue rows are stale (fixed by other agents after census): TheBfmeOnlineLogin, findGroup, closePortrait, TheLodOptions..., g_01124420. Check `git log --since=2026-11-17 -- <file>` first.
+- Dead ends: finishSpecialPower (0x269C50 still unmatched dump, blocked), getDistanceSquared (ilt_oracle false-reject history), STLport alloc_proxy gen-alias (stlport family), Debug::IsWindowed (no ledger row, comment references nonexistent DebugIsWindowedThunk.cpp).
+- Submodule inputs/reference/open-bfme-2 drifts after pull --rebase; `git checkout --detach 0630f0ef` inside it before push (pre-push verification-cache complains otherwise).
+- Remaining ILT-pinned candidates: 0x15C44 Devastate/Darkness ModuleDataBase ctors, 0x1871E/0x3C51 dtors, 0x22A70 Team::_bfme_nextInInstanceList (const spelling), 0x18782 Rva003B9AD0Inner copy ctor.
