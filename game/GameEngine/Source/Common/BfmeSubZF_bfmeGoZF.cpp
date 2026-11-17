@@ -61,8 +61,6 @@ public:
 	Coord3D m_position;
 	unsigned char m_pad14[0x0c];
 	unsigned int m_localAngleBits;
-
-	void setColor(int value);
 };
 
 struct ShadowTypeInfo
