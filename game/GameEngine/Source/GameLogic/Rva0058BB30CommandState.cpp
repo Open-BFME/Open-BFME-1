@@ -54,11 +54,7 @@ class AsciiString;
 
 class CommandSet;
 
-class ControlBar
-{
-public:
-	const CommandSet *findCommandSet(const AsciiString &name);
-};
+#include "ScriptEngine/game_logic_dispatch.h"
 
 extern ControlBar *TheControlBar;
 
