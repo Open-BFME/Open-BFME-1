@@ -4,6 +4,8 @@
 // State names come from constructor literals plus their own virtual-name slots;
 // inherited name slots are checked against the original class hierarchy.
 // The local classes are constructor/layout views, not replacement vtable definitions.
+// Constructors tagged `__declspec(dllimport) __forceinline` are inlined into 0x00185A20 as in
+// retail and leave no out-of-line COMDAT: retail's own copies live in the *CtorThunk.cpp units.
 // Proof: targets/game/reverse/identity_evidence/00185A20-ai-state-machine-constructor.md
 // stlport
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
@@ -78,7 +80,7 @@ class AIIdleState : public State
 class AIMoveToState : public AIInternalMoveToState
 {
   public:
-    AIMoveToState(StateMachine *m) : AIInternalMoveToState(m, AsciiString("AIMoveToState"))
+    __declspec(dllimport) __forceinline AIMoveToState(StateMachine *m) : AIInternalMoveToState(m, AsciiString("AIMoveToState"))
     {
         m_50 = true;
     }
@@ -100,7 +102,7 @@ class AIMoveToStateSA : public AIInternalMoveToState
 class AIMoveOutOfTheWayState : public AIInternalMoveToState
 {
   public:
-    AIMoveOutOfTheWayState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveOutOfTheWayState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIMoveOutOfTheWayState"))
     {
     }
@@ -109,7 +111,7 @@ class AIMoveOutOfTheWayState : public AIInternalMoveToState
 class AIMoveAndTightenState : public AIInternalMoveToState
 {
   public:
-    AIMoveAndTightenState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveAndTightenState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIMoveAndTightenState"))
     {
         m_54 = false;
@@ -124,7 +126,7 @@ class AIMoveAndTightenState : public AIInternalMoveToState
 class Rva00185C80MovePrefix : public AIInternalMoveToState
 {
   public:
-    Rva00185C80MovePrefix(StateMachine *m, const char *name)
+    __declspec(dllimport) __forceinline Rva00185C80MovePrefix(StateMachine *m, const char *name)
         : AIInternalMoveToState(m, AsciiString(name))
     {
         m_54 = false;
@@ -136,7 +138,7 @@ class Rva00185C80MovePrefix : public AIInternalMoveToState
 class AIMoveAwayFromRepulsorsState : public Rva00185C80MovePrefix
 {
   public:
-    AIMoveAwayFromRepulsorsState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveAwayFromRepulsorsState(StateMachine *m)
         : Rva00185C80MovePrefix(m, "AIMoveAwayFromRepulsors")
     {
     }
@@ -145,7 +147,7 @@ class AIMoveAwayFromRepulsorsState : public Rva00185C80MovePrefix
 class AIWanderInPlaceState : public AIInternalMoveToState
 {
   public:
-    AIWanderInPlaceState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIWanderInPlaceState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIWanderInPlaceState"))
     {
         m_50 = 0;
@@ -178,7 +180,7 @@ class AIFollowWaypointPathState : public State
 class AIFollowWaypointPathExactState : public AIInternalMoveToState
 {
   public:
-    AIFollowWaypointPathExactState(StateMachine *m, bool b)
+    __declspec(dllimport) __forceinline AIFollowWaypointPathExactState(StateMachine *m, bool b)
         : AIInternalMoveToState(m, AsciiString("AIFollowWaypointPathExactState"))
     {
         m_50 = 0;
@@ -204,7 +206,7 @@ class AIFollowPathAsTeamState : public State
 class AIMoveAndEvacuateState : public AIInternalMoveToState
 {
   public:
-    AIMoveAndEvacuateState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveAndEvacuateState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIMoveAndEvacuateState"))
     {
         m_50 = 0;
@@ -217,7 +219,7 @@ class AIMoveAndEvacuateState : public AIInternalMoveToState
 class AIMoveAndDeleteState : public AIInternalMoveToState
 {
   public:
-    AIMoveAndDeleteState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveAndDeleteState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIMoveAndDeleteState"))
     {
         m_50 = false;
@@ -228,7 +230,7 @@ class AIMoveAndDeleteState : public AIInternalMoveToState
 class AIWaitState : public State
 {
   public:
-    AIWaitState(StateMachine *m) : State(m, AsciiString("AIWaitState")) {}
+    __declspec(dllimport) __forceinline AIWaitState(StateMachine *m) : State(m, AsciiString("AIWaitState")) {}
     virtual ~AIWaitState();
 };
 class AttackExitConditionsInterface;
@@ -333,13 +335,13 @@ class AIBackAwayAndCowerState : public State
 class AIDeadState : public State
 {
   public:
-    AIDeadState(StateMachine *m) : State(m, AsciiString("AIDeadState")) {}
+    __declspec(dllimport) __forceinline AIDeadState(StateMachine *m) : State(m, AsciiString("AIDeadState")) {}
     virtual ~AIDeadState();
 };
 class AIDockState : public State
 {
   public:
-    AIDockState(StateMachine *m) : State(m, AsciiString("AIDockState"))
+    __declspec(dllimport) __forceinline AIDockState(StateMachine *m) : State(m, AsciiString("AIDockState"))
     {
         m_24 = 0;
         m_28 = false;
@@ -363,7 +365,7 @@ class AIHarvestState : public State
 class AIEnterState : public AIInternalMoveToState
 {
   public:
-    AIEnterState(StateMachine *m) : AIInternalMoveToState(m, AsciiString("AIEnterState"))
+    __declspec(dllimport) __forceinline AIEnterState(StateMachine *m) : AIInternalMoveToState(m, AsciiString("AIEnterState"))
     {
         m_50 = 0;
     }
@@ -423,7 +425,7 @@ class AIGuardState : public State
 class AIGuardRetaliateState : public State
 {
   public:
-    AIGuardRetaliateState(StateMachine *m) : State(m, AsciiString("AIGuardRetaliateState"))
+    __declspec(dllimport) __forceinline AIGuardRetaliateState(StateMachine *m) : State(m, AsciiString("AIGuardRetaliateState"))
     {
         m_24 = 0;
     }
@@ -433,7 +435,7 @@ class AIGuardRetaliateState : public State
 class AITunnelNetworkGuardState : public State
 {
   public:
-    AITunnelNetworkGuardState(StateMachine *m) : State(m, AsciiString("AITunnelNetworkGuardState"))
+    __declspec(dllimport) __forceinline AITunnelNetworkGuardState(StateMachine *m) : State(m, AsciiString("AITunnelNetworkGuardState"))
     {
         m_24 = 0;
     }
@@ -454,7 +456,7 @@ class AIHuntState : public State
 class AIAttackAreaState : public State
 {
   public:
-    AIAttackAreaState(StateMachine *m) : State(m, AsciiString("AIAttackAreaState"))
+    __declspec(dllimport) __forceinline AIAttackAreaState(StateMachine *m) : State(m, AsciiString("AIAttackAreaState"))
     {
         m_24 = 0;
         m_28 = 0;
@@ -477,7 +479,7 @@ class AIFaceState : public AIIdleState
 class AIPickUpCrateState : public AIInternalMoveToState
 {
   public:
-    AIPickUpCrateState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIPickUpCrateState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIAttackPickUpCrateState"))
     {
         m_50 = 0;
@@ -488,7 +490,7 @@ class AIPickUpCrateState : public AIInternalMoveToState
 class AIBusyState : public State
 {
   public:
-    AIBusyState(StateMachine *m) : State(m, AsciiString("AIBusyState")) {}
+    __declspec(dllimport) __forceinline AIBusyState(StateMachine *m) : State(m, AsciiString("AIBusyState")) {}
     virtual ~AIBusyState();
 };
 class AIRampageState : public State
@@ -507,7 +509,7 @@ class AIRampageState : public State
 class AIMoveToPositionAndDieState : public AIInternalMoveToState
 {
   public:
-    AIMoveToPositionAndDieState(StateMachine *m)
+    __declspec(dllimport) __forceinline AIMoveToPositionAndDieState(StateMachine *m)
         : AIInternalMoveToState(m, AsciiString("AIMoveToPositionAndDieState"))
     {
         m_50 = false;
