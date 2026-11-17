@@ -34,6 +34,15 @@ public:
 	Int m_lower26C;
 };
 
+class BfmeMemberRV;
+class BfmeThingRV
+{
+public:
+	BfmeMemberRV *bfmePickRV();
+	unsigned char m_bfmeHead[0xc];
+	BfmeMemberRV *m_bfmeMine;
+};
+
 class Rva002EE330PlayerList
 {
 public:
@@ -107,7 +116,7 @@ private:
 // ?rva00590480@Rva00590480GameClient@@QAEXXZ
 void Rva00590480GameClient::rva00590480( void )
 {
-	Rva00589320Player *player = RVA00590480_PLAYER_LIST->getLocalPlayer();
+	Rva00589320Player *player = reinterpret_cast<Rva00589320Player *>(reinterpret_cast<BfmeThingRV *>(RVA00590480_PLAYER_LIST)->bfmePickRV());
 	Int playerRank = player->m_rank258;
 	Int oldRank = m_rank5C;
 	Int zero = 0;
