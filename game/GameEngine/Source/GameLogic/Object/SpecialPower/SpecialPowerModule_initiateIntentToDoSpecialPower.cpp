@@ -224,11 +224,13 @@ private:
 // address-derived: retail 0x000E5B30, stdcall (object, out position)
 bool __stdcall rva000E5B30(BfmeE5B30Object *object, Coord3D *pos);
 
-// address-derived global at 0x012F4B98 and its 0x00592D60 method (ILT 0x00043E4B)
-class Glo012F4B98Type
+// address-derived global at 0x012F4B98 viewed as the owner of the ledger row
+// ?update@Rva00592D60Owner@@QAEXHH@Z (retail 0x00592D60, ILT 0x00043E4B): the
+// movie name is passed by address, the second argument is zero.
+class Rva00592D60Owner
 {
 public:
-	void show00592D60(AsciiString *movie, void (*callback)(bool));
+	void update(int value, int state);
 };
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;
@@ -321,7 +323,7 @@ void SpecialPowerModule::initiateIntentToDoSpecialPower(const Object *targetObj,
 		const SpecialPowerTemplate *specialPowerTemplate = getSpecialPowerModuleData()->m_specialPowerTemplate;
 		AsciiString movie = specialPowerTemplate->getPalantirMovie();
 		if (!movie.isEmpty())
-			reinterpret_cast<Glo012F4B98Type *>(TheAptPalantir)->show00592D60(&movie, 0);
+			reinterpret_cast<Rva00592D60Owner *>(TheAptPalantir)->update(reinterpret_cast<int>(&movie), 0);
 
 		if (commandOptions & 0x40000)	// BFME CommandOption name table: "---DO-NOT-USE---"
 			m_byte24 = true;
