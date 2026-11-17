@@ -217,3 +217,6 @@
 
 ## agent h round 32 (wave 48, claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: GettingBuilt ctor m_name0/1,m_f0..3, DelayedLuaEventUpdate ctor m_f20/70/74/75, ClipLine2D (ZH-identical), Rva003B2000Assign, W3DStreakDraw ctor, RankInfo _bfme_14.., Y4Fesl Rva007F*, U4Blend, Pathfinder, Rva8CDA60, InGamePopupMessage, Rva004488B0 copy a-d, EnragedBehavior ctor, CastleBehavior Rva00371B00, Rva001515C0Xfer. Same dead ends.
+
+## agent h round 33 (wave 48, claude-sonnet-5-5)
+3 batches served, nothing landed. Keys: Gen001FE050 BfmeSeed m_bfmeItem*, CivilianSpawn ctor m_value1/m_field18/1C, BfmeConv2064 GG, ReflectDamage ctor m_unmodelled_*, BfmeConv792/1907/1379, Rva00800B70FeslDtor, BfmeOneHundredThirty, BfmeScriptCondAreaGate. DebugDisplay setCursorPos x/y: submit rejected ("x"/"y" single-letter = still placeholder), so don't try. Same dead ends.
