@@ -117,11 +117,10 @@ enum KindOfType
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	Bool isKindOf(KindOfType kind) const;
-};
+#define THING_TU_MEMBERS \
+public: Bool isKindOf(KindOfType kind) const;
+#include "../Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class HordeContainInterface
 {
