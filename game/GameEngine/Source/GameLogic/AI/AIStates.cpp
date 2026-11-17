@@ -307,10 +307,10 @@ void emitAttackStateMachineDependencies()
 		0, AIAttackAimAtTargetState::AIAttackAimAtTargetState_GLUE_NOT_IMPLEMENTED);
 	AIAttackFireWeaponState::operator delete(
 		0, AIAttackFireWeaponState::AIAttackFireWeaponState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIAttackPursueTargetState)(machine, FALSE, FALSE, FALSE);
-	(void)newInstance(AIAttackApproachTargetState)(machine, FALSE, FALSE, FALSE);
+	AIAttackPursueTargetState::operator delete(0, AIAttackPursueTargetState::AIAttackPursueTargetState_GLUE_NOT_IMPLEMENTED);
+	AIAttackApproachTargetState::operator delete(0, AIAttackApproachTargetState::AIAttackApproachTargetState_GLUE_NOT_IMPLEMENTED);
 	(void)newInstance(ContinueState)(machine);
-	(void)newInstance(FailureState)(machine);
+	FailureState::operator delete(0, FailureState::FailureState_GLUE_NOT_IMPLEMENTED);
 }
 
 //----------------------------------------------------------------------------------------------------------
@@ -604,37 +604,37 @@ void emitAIStateMachineDependencies()
 	// anchor pattern as emitAttackStateMachineDependencies above.
 	// Classes whose inline constructor retail keeps in a *CtorThunk.cpp unit only retain
 	// their placement-delete wrapper here (no constructor COMDAT competing with retail's).
-	(void)newInstance(AIIdleState)(machine, AIIdleState::LOOK_FOR_TARGETS);
+	AIIdleState::operator delete(machine, AIIdleState::AIIdleState_GLUE_NOT_IMPLEMENTED);
 	AIMoveToState::operator delete(machine, AIMoveToState::AIMoveToState_GLUE_NOT_IMPLEMENTED);
 	AIMoveOutOfTheWayState::operator delete(machine, AIMoveOutOfTheWayState::AIMoveOutOfTheWayState_GLUE_NOT_IMPLEMENTED);
 	AIMoveAndTightenState::operator delete(machine, AIMoveAndTightenState::AIMoveAndTightenState_GLUE_NOT_IMPLEMENTED);
 	AIMoveAwayFromRepulsorsState::operator delete(machine, AIMoveAwayFromRepulsorsState::AIMoveAwayFromRepulsorsState_GLUE_NOT_IMPLEMENTED);
 	AIWanderInPlaceState::operator delete(machine, AIWanderInPlaceState::AIWanderInPlaceState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIAttackMoveToState)(machine);
-	(void)newInstance(AIAttackFollowWaypointPathState)(machine, true);
-	(void)newInstance(AIFollowWaypointPathState)(machine, true);
+	AIAttackMoveToState::operator delete(machine, AIAttackMoveToState::AIAttackMoveToState_GLUE_NOT_IMPLEMENTED);
+	AIAttackFollowWaypointPathState::operator delete(machine, AIAttackFollowWaypointPathState::AIAttackFollowWaypointPathState_GLUE_NOT_IMPLEMENTED);
+	AIFollowWaypointPathState::operator delete(machine, AIFollowWaypointPathState::AIFollowWaypointPathState_GLUE_NOT_IMPLEMENTED);
 	AIFollowWaypointPathExactState::operator delete(machine, AIFollowWaypointPathExactState::AIFollowWaypointPathExactState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIFollowPathState)(machine);
+	AIFollowPathState::operator delete(machine, AIFollowPathState::AIFollowPathState_GLUE_NOT_IMPLEMENTED);
 	AIMoveAndEvacuateState::operator delete(machine, AIMoveAndEvacuateState::AIMoveAndEvacuateState_GLUE_NOT_IMPLEMENTED);
 	AIMoveAndDeleteState::operator delete(machine, AIMoveAndDeleteState::AIMoveAndDeleteState_GLUE_NOT_IMPLEMENTED);
 	AIWaitState::operator delete(machine, AIWaitState::AIWaitState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIAttackState)(machine, false, false, false, NULL);
-	(void)newInstance(AIAttackSquadState)(machine, NULL);
-	(void)newInstance(AIWanderState)(machine);
-	(void)newInstance(AIPanicState)(machine);
+	AIAttackState::operator delete(machine, AIAttackState::AIAttackState_GLUE_NOT_IMPLEMENTED);
+	AIAttackSquadState::operator delete(machine, AIAttackSquadState::AIAttackSquadState_GLUE_NOT_IMPLEMENTED);
+	AIWanderState::operator delete(machine, AIWanderState::AIWanderState_GLUE_NOT_IMPLEMENTED);
+	AIPanicState::operator delete(machine, AIPanicState::AIPanicState_GLUE_NOT_IMPLEMENTED);
 	AIDeadState::operator delete(machine, AIDeadState::AIDeadState_GLUE_NOT_IMPLEMENTED);
 	AIDockState::operator delete(machine, AIDockState::AIDockState_GLUE_NOT_IMPLEMENTED);
 	AIEnterState::operator delete(machine, AIEnterState::AIEnterState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIExitState)(machine);
-	(void)newInstance(AIExitInstantlyState)(machine);
-	(void)newInstance(AIGuardState)(machine);
+	AIExitState::operator delete(machine, AIExitState::AIExitState_GLUE_NOT_IMPLEMENTED);
+	AIExitInstantlyState::operator delete(machine, AIExitInstantlyState::AIExitInstantlyState_GLUE_NOT_IMPLEMENTED);
+	AIGuardState::operator delete(machine, AIGuardState::AIGuardState_GLUE_NOT_IMPLEMENTED);
 	AITunnelNetworkGuardState::operator delete(machine, AITunnelNetworkGuardState::AITunnelNetworkGuardState_GLUE_NOT_IMPLEMENTED);
 	AIGuardRetaliateState::operator delete(machine, AIGuardRetaliateState::AIGuardRetaliateState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIHuntState)(machine);
+	AIHuntState::operator delete(machine, AIHuntState::AIHuntState_GLUE_NOT_IMPLEMENTED);
 	AIAttackAreaState::operator delete(machine, AIAttackAreaState::AIAttackAreaState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIFaceState)(machine, true);
+	AIFaceState::operator delete(machine, AIFaceState::AIFaceState_GLUE_NOT_IMPLEMENTED);
 	AIPickUpCrateState::operator delete(machine, AIPickUpCrateState::AIPickUpCrateState_GLUE_NOT_IMPLEMENTED);
-	(void)newInstance(AIRappelState)(machine);
+	AIRappelState::operator delete(machine, AIRappelState::AIRappelState_GLUE_NOT_IMPLEMENTED);
 	(void)newInstance(AIBusyState)(machine);
 }
 
