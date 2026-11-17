@@ -4,21 +4,7 @@
 // __cdecl so this is a stack argument (add esp, 0xc).
 typedef char Bool;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct UnicodeStringData
 {
@@ -58,23 +44,6 @@ struct AsciiStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-	void __cdecl format(AsciiString fmt, ...);
-	const char *str() const
-	{
-		return m_data == 0 ? 0 : (const char *)m_data + 8;
-	}
-	bool isNotEmpty() const
-	{
-		return m_data != 0 && ((const AsciiStringData *)m_data)->length != 0;
-	}
-};
 
 class WindowManager
 {

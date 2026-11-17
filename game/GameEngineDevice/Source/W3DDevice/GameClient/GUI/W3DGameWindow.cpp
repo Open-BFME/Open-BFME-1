@@ -107,23 +107,8 @@ protected:
 // The enum order is the vendored Gadget.h order: right pieces precede top
 // pieces in the static pointer array, despite the lookup-call order below.
 class Image;
-template <class T> class StringBase
-{
-private:
-	void *m_data;
-	StringBase(const T *text);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	friend class AsciiString;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
 class ImageCollection
 {
 public:
