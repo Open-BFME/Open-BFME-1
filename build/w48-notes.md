@@ -247,3 +247,6 @@
 
 ## agent h round 39 (wave 48, claude-sonnet-5-5)
 3 batches served. Submitted INIMapCache.cpp only (weak: locals coord3d->position x2, c->token; these are ZH-identical names, so probably pointless). Skipped: ParseFXEvent BfmeAnimationStateFXE, MemberVision002434D0 atNNN, Rva006A5870Case4, RvaTreeBounds, BfmeThingSF, DebugDisplay, Bfme5SmallAccessors, BfmeScriptCondAreaGate, Pathfinder adjust, Taint ctor, Rva0033F5A0 rbtree. Same dead ends.
+
+## agent h round 40 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: RainOfFireUpdateModuleData ctor m_28/m_2c, Lerp a/b (ZH-identical), Glo012F1028Sub bfmeFinish, BfmeSeed37A750, Rva004488B0 copy a-d, W3DStreakDraw ctor, BfmeConv2022/827, Y2Fesl Rva00800E50, MemberVision002434D0, Rva001F9C20, Rva003C1EE0Select. Same dead ends.
