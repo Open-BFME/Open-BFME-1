@@ -1,0 +1,33 @@
+// cl: /O1 /G6 /MT /DNDEBUG
+// MSVC 13.10.3077 EBP-bias boundary repro (w48, 2026-11-17). Compile privately
+// and read each function's prologue: N=128 puts x at exactly [ebp-0x80] and is
+// NOT biased; N=129..132 put x at -0x84 and get `lea ebp,[esp-0x64]`.
+void __stdcall use(void*);
+void __stdcall usei(int);
+#define BOUNDARY(N) \
+extern "C" int __stdcall b_##N(int a, int b, int c, int d, int e) \
+{ char x[N]; char y[3000]; use(x); use(x); use(x); \
+  usei(a); usei(b); usei(c); usei(d); usei(e); use(y); use(y); return 0; }
+BOUNDARY(128)
+BOUNDARY(129)
+BOUNDARY(132)
+// DXTraceA geometry (x 128 @-0x80, y 260, z 256, w 1024, v 3000, all args
+// referenced): never biased by 13.10, whatever y's reference count.
+extern "C" int __stdcall geo(int a, int b, int c, int d, int e)
+{
+    char x[128]; char y[260]; char z[256]; char w[1024]; char v[3000];
+    use(x); use(x); use(x); use(x);
+    usei(a); usei(b); usei(c); usei(d); usei(e);
+    use(y); use(y); use(y); use(z); use(z); use(z); use(w); use(w); use(w);
+    use(v); use(v); use(v); use(v); use(v); use(v);
+    return 0;
+}
+// When 13.10 does bias a __chkstk frame it emits retail's exact shape:
+// push ebp; mov eax,N; lea ebp,[esp-0x64]; call __chkstk ... add ebp,0x64; leave
+struct S { int f0, f1, f2, f3; char buf[200]; };
+extern "C" int __stdcall chk(int a, int b, int c, int d, int e)
+{
+    S s; char big[4000];
+    use(&s); use(big);
+    return s.f0 + s.f1 + s.f2 + a + b;
+}

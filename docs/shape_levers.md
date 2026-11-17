@@ -1,5 +1,20 @@
 # Shape levers: the checklist for "everything matches except..."
 
+## Biased EBP frames: `lea ebp,[esp-X]` is a layout decision, not a flag (2026-11-17)
+
+Symptom: retail opens `push ebp; [mov eax,N;] lea ebp,[esp-X]` and closes
+`add ebp,X; leave`; ours has `mov ebp,esp` and every EBP displacement is off by
+X. Measured on MSVC 13.10.3077 `/O1 /G6` (micro-benchmarks in
+`attempt_support/dxerr9-summer2003/tracea-bias-micro.cpp.txt`): X is always
+0x80-8-4*args, and the compiler biases only when about three or more references
+to locals whose base lies below -0x80 come into disp8 range. A local based at
+exactly -0x80 counts as already reachable (128-byte array: unbiased; 129-132
+bytes: biased). No flag, pragma or declaration order changed this for DXTraceA
+(about 60 variants). When the gain is zero for retail's own layout, check the
+object's `@comp.id`: dxerr9/d3dx9 members are 13.00.9178, whose heuristic biased
+such frames. Biased `__chkstk` frames from 13.10 already have retail's prologue
+order. Evidence: `attempt_support/dxerr9-summer2003/tracea-bias-heuristic-20261117.md`.
+
 ## TU declaration lines can be real diagnostic-argument codegen (2026-11-12)
 
 Adding10 declaration lines in ParticleSys changed29 actual PUSH `__LINE__`
