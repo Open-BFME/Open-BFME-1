@@ -37,9 +37,11 @@ class Gen003C8A50Result;
 
 class Gen003C8A50
 {
-public:
-	void updateConqueredEffects003C7130(Gen003C8A50Result *found);
 };
+
+// Retail reaches 0x003C7130 (ledger Glo012F1028Sub::bfmeConquered) through
+// ILT 0x000461A0; nothing defines a Gen003C8A50::updateConqueredEffects003C7130.
+extern void j_000461a0();
 
 class Gen_003C63A0
 {
@@ -160,8 +162,11 @@ void Rva003C1A50Tick::tick()
 	m_at78 = 0;
 	LivingWorldRegion *found = m_at28->rva003C8A50(m_at30);
 	if (found)
-		((Gen003C8A50 *)m_at28)->updateConqueredEffects003C7130(
-			(Gen003C8A50Result *)found);
+	{
+		typedef void (Gen003C8A50::*ConqueredFn)(Gen003C8A50Result *found);
+		union { void (*fn)(); ConqueredFn call; } conquered = { j_000461a0 };
+		(((Gen003C8A50 *)m_at28)->*conquered.call)((Gen003C8A50Result *)found);
+	}
 
 	if (m_at80)
 	{
