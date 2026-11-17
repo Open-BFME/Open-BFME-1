@@ -28,10 +28,19 @@ public:
 	~Rva003B9AD0First() {}
 };
 
+// Retail reaches the 8-byte member copy constructor through ILT 0x00018782
+// (ledger row ?j_00018782@@YAXXZ); the call goes through the thunk's address.
+extern void j_00018782();
+
 class Rva003B9AD0Inner
 {
 public:
-	Rva003B9AD0Inner(const Rva003B9AD0Inner &);
+	__declspec(dllimport) __forceinline Rva003B9AD0Inner(const Rva003B9AD0Inner &other)
+	{
+		typedef void (Rva003B9AD0Inner::*CopyFn)(const Rva003B9AD0Inner &);
+		union { void (*fn)(); CopyFn call; } copy = { j_00018782 };
+		(this->*copy.call)(other);
+	}
 	~Rva003B9AD0Inner();
 
 private:
