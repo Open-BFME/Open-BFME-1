@@ -6,12 +6,35 @@ void operator delete[](void *block);
 
 namespace FXParticleSystem
 {
-template<int N> class CategoryModuleTemplateBase
+// Same base layout as DefaultModuleTemplate0ACtorThunk.cpp: ModuleTemplate at
+// +0 and CategoryModuleInfo at +4, so the array-new constructor loop emits the
+// retail-identical default constructor COMDAT instead of a one-vptr view's.
+class ModuleTemplate
 {
 public:
+	ModuleTemplate() {}
+	virtual ~ModuleTemplate() {}
+};
+
+template <int Category>
+class CategoryModuleInfo
+{
+public:
+	CategoryModuleInfo() {}
+	virtual void unusedVirtual();
+
+protected:
+	~CategoryModuleInfo() {}
+};
+
+template <int N>
+class CategoryModuleTemplateBase
+	: public ModuleTemplate,
+	  public CategoryModuleInfo<N>
+{
+public:
+	CategoryModuleTemplateBase() {}
 	virtual ~CategoryModuleTemplateBase();
-private:
-	unsigned char m_data[0x04];
 };
 
 CategoryModuleTemplateBase<0> *MakeCategoryModuleTemplateBase0Array()
