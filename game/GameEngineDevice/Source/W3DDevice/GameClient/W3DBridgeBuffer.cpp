@@ -159,14 +159,9 @@ Bool W3DBridge::cullBridge(CameraClass * camera)
 //=============================================================================
 /** Inits a bridges location & type so it can be load'ed.  */
 //=============================================================================
-// ?init@W3DBridge@@QAEXVVector3@@0VAsciiString@@@Z present-unmatched
-void W3DBridge::init(Vector3 fromLoc, Vector3 toLoc, AsciiString bridgeTemplateName)
-{
-	m_start = fromLoc;
-	m_end = toLoc;
-	m_templateName = bridgeTemplateName;
-	m_enabled = true;
-}
+// ?init@W3DBridge@@QAEXVVector3@@0VAsciiString@@@Z: retail's body is the
+// matched one in W3DBridgeInit.cpp (0x006D8920); the ZH copy that lived here
+// emitted a second definition and is removed.
 
 // W3DBridge::load: clean conversion lives in W3DBridgeLoad.cpp.
 
