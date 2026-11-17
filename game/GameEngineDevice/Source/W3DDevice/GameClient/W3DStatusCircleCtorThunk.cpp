@@ -1,15 +1,11 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME constructor at RVA 0x00726000, 90 bytes. Narrow RenderObjClass
 // view follows RTS2DScene_Ctor_Thunk.cpp. Both vptrs are compiler-generated;
 // retail installs the primary table at VA 0x01121018 and secondary at 0x01121010.
 // The shader word is at DC; the two preceding floats initialize to -1.
 typedef bool Bool;
 class SceneClass;
-class Vector3
-{
-public:
-	float m_x, m_y, m_z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Vector4
 {

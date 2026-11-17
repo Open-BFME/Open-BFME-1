@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 // Real C++ reconstruction of ??0RTS2DScene@@QAE@XZ (retail 0x00712590,
 // 209 bytes).
 //
@@ -57,11 +57,7 @@ class SceneClass;
 // constructor only needs their object size here, but keeping the proven field
 // declarations makes the W3DStatusCircle allocation a normal C++ lifetime
 // operation instead of a raw buffer/placement-new substitute.
-class Vector3
-{
-public:
-	float m_x, m_y, m_z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
 class Vector4
 {
