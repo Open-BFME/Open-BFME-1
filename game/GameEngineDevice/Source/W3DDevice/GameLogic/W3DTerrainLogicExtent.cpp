@@ -30,13 +30,7 @@ typedef int Int;
 #define MAP_XY_FACTOR 10.0f
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-class Coord3D
-{
-public:
-	Real x;
-	Real y;
-	Real z;
-};
+#include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 // A struct, not a class: the mangled name spells it PAURegion3D@@.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
