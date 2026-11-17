@@ -101,3 +101,5 @@
 
 ## w41-i round 19 (claude-sonnet-5-5)
 3 batches served, nothing submitted. Keys: AutoPickUpUpdateModuleData ctor m_flag3C/3D/m_value40/m_flag44, DelayedLuaEventUpdate ctor m_f20/f70.., T3SmallLeafBodies Rva*Key/Less, TaintSpecialPower m_unmodelled_214.., BfmeScriptCondAreaGate, CritterEmitter ctor, EnragedBehavior m_f1c/f20, DevastateSpecialPower m_210.., U1SmallStateProbes, Rva00889720, Rva008A4540. Same dead ends.
+## agent h round 15 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: BFMEFactoryModuleData LaserUpdate ctor m_unmodelled/flagPair, Rva0034FE00Assign (Scripts.cpp, opaque), calculateTerrainLOD freq64/startTime64/time64 (dead end), FreeLifeBody ctor m_unmodelled_*, drawMoveHints byte_10/tmp, HordeContain ctor m_1e4.., MpGameSetupSetMap m_flag10..15, ToggleMountedSpecialAbility ctor m_field254.., S2ZeroFillCtors, BfmeConv1279/970, BannerCarrier dtors m_fieldNN. Same dead ends.
