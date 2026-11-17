@@ -5,7 +5,9 @@ extern float g_bfmeDefaultBU;
 
 struct BfmeObjectERD;
 
-void __cdecl bfmeApplyERD(BfmeObjectERD *object, Real amount);
+// Retail calls ILT 0x000246A4 (-> 0x00739900); spell the callee as the
+// ledgered ?j_000246a4 thunk, cdecl (object, amount).
+extern void j_000246a4();
 
 class BfmeHelperERD
 {
@@ -22,7 +24,7 @@ void BfmeHelperERD::bfmeNotifyERD(Real amount)
 {
 	if (amount > g_rva01075350 && amount <= g_bfmeDefaultBU)
 	{
-		bfmeApplyERD(m_bfmeObjectERD, amount);
+		((void (__cdecl *)(BfmeObjectERD *, Real))j_000246a4)(m_bfmeObjectERD, amount);
 		m_bfmeLastERD = amount;
 	}
 }

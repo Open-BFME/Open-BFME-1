@@ -107,18 +107,23 @@ void BfmeH1020::bfmeGo1020H(void)
 	m_bfmeVal = z;
 }
 
+// Retail calls ILT 0x00027237 (-> ExperienceLevelSystem::gainLevel at
+// 0x00381050); spell the callee as the ledgered ?j_00027237 thunk through a
+// member-pointer call.
+extern void j_00027237();
+
 class BfmeJ1020
 {
-public:
-	void bfmeSet1020(int a, bool on);
 };
+typedef void (BfmeJ1020::*BfmeJ1020Fn)(int a, bool on);
 
 // Retail 0x012F0888: use the existing data owner; retain the local pointee view.
 extern class ExperienceLevelSystem *TheExperienceLevelSystem;
 
 int bfmeGo1020I(int a, void *b)
 {
-	reinterpret_cast<BfmeJ1020 *>(TheExperienceLevelSystem)->bfmeSet1020(a, b != 0);
+	union { void (*fn)(); BfmeJ1020Fn call; } target = { j_00027237 };
+	(reinterpret_cast<BfmeJ1020 *>(TheExperienceLevelSystem)->*target.call)(a, b != 0);
 	return 1;
 }
 
