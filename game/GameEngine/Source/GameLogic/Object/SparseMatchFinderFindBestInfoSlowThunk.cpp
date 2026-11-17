@@ -8,10 +8,9 @@ typedef int Int;
 template <size_t NUMBITS>
 class BitFlags
 {
-private:
+public:
 	std::bitset<29> m_bits;
 
-public:
 	inline Int count() const { return m_bits.count(); }
 
 	inline Int countIntersection(const BitFlags &that) const
@@ -20,15 +19,18 @@ public:
 		tmp.m_bits &= that.m_bits;
 		return tmp.m_bits.count();
 	}
-
-	inline Int countInverseIntersection(const BitFlags &that) const
-	{
-		BitFlags tmp = *this;
-		tmp.m_bits.flip();
-		tmp.m_bits &= that.m_bits;
-		return tmp.m_bits.count();
-	}
 };
+
+// Retail inlines this arithmetic into the caller. A member would be emitted as
+// a select-any COMDAT that the link may keep ahead of retail's own copy
+// (BitFlagsBBCountInverseIntersectionThunk.cpp), so keep it TU-local.
+static __forceinline Int inverseIntersection(const BitFlags<17> &self, const BitFlags<17> &that)
+{
+	BitFlags<17> tmp = self;
+	tmp.m_bits.flip();
+	tmp.m_bits &= that.m_bits;
+	return tmp.m_bits.count();
+}
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponSet.h
 class WeaponTemplateSet
@@ -66,7 +68,7 @@ const WeaponTemplateSet *WeaponFindBestInfoSlowShim::findBestInfoSlow(
 		{
 			const BitFlags<17> &yesFlags = it->getNthConditionsYes(i);
 			Int yesMatch = bits.countIntersection(yesFlags);
-			Int yesExtraneousBits = bits.countInverseIntersection(yesFlags);
+			Int yesExtraneousBits = inverseIntersection(bits, yesFlags);
 
 			if ((yesMatch > bestYesMatch) ||
 				(yesMatch >= bestYesMatch && yesExtraneousBits < bestYesExtraneousBits))
