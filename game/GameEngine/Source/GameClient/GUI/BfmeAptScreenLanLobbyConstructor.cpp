@@ -6,25 +6,7 @@
 // The opaque state extent is 0x134 from both enclosing objects; its matched
 // constructor writes through +128 and leaves the final eight bytes untouched.
 // stlport
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-public:
-	void set( const StringBase<T> &other );
-	void trim();
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 struct UnicodeStringData
@@ -66,20 +48,6 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	void format( AsciiString format, ... );
-	const char *str() const
-	{
-		static const char TheNullChr = 0;
-		return m_data ? (const char *)m_data + 8 : &TheNullChr;
-	}
-};
 
 class GameTextInterface
 {

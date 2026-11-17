@@ -30,20 +30,7 @@ template <typename T> struct BfmeStartStringData
 	T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase(void) : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	StringBase(const T *text);
-	~StringBase(void) { releaseBuffer(); }
-	void releaseBuffer(void);
-
-	BfmeStartStringData<T> *m_data;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BFMERetailAsciiString
 {
@@ -51,24 +38,6 @@ public:
 	void releaseBuffer(void);
 };
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(void) : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-	const char *str(void) const
-	{
-		void *data = *(void *const *)this;
-		return data ? (const char *)data + 8 : "";
-	}
-	Int getLength(void) const
-	{
-		void *data = *(void *const *)this;
-		return data ? *(const UnsignedShort *)((const char *)data + 4) : 0;
-	}
-};
 
 class UnicodeString : private StringBase<WCHAR>
 {

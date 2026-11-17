@@ -17,13 +17,7 @@
 // StringBase<char>/AsciiString pair reproduces retail's inlined string ABI at 0x00689170
 // (build.sh exact 480/480); adopting the canonical ascii_string.h is a separate
 // reconciliation, not a drop-in for this body.
-class AsciiString : private StringBase<char>
-{
-	public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString(void) {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class UnicodeString
 {

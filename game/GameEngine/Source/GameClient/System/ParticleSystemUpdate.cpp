@@ -112,30 +112,8 @@ public:
 	Vector4 Row[ 3 ];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	Bool isNotEmpty() const;
-	const T *str() const { return m_data ? m_data->data : (const T *)""; }
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[ 1 ];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : public StringBase<char>
-{
-};
 
 // Retail's global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData, defined
 // once in Common/GlobalData.cpp. Only the fields this body reads are described on a
@@ -345,10 +323,10 @@ Bool ParticleSystem::update( Int localPlayerIndex )
 				Vector3 translation = parentXfrm->Get_Translation();
 				m_pos.set( translation.X, translation.Y, translation.Z );
 
-				if( m_attachedBoneName.isNotEmpty() )
+				if( ((StringBase<char>*)(&(m_attachedBoneName)))->isNotEmpty() )
 				{
 					Matrix3D boneTransform;
-					if( attachedTo->getPristineBonePositions( m_attachedBoneName.str(), 0, 0, &boneTransform, 1 ) )
+					if( attachedTo->getPristineBonePositions( ((StringBase<char>*)(&(m_attachedBoneName)))->str(), 0, 0, &boneTransform, 1 ) )
 						setLocalTransform( &boneTransform );
 				}
 			}
@@ -373,10 +351,10 @@ Bool ParticleSystem::update( Int localPlayerIndex )
 
 					parentXfrm = drawableTransform( draw );
 
-					if( m_attachedBoneName.isNotEmpty() )
+					if( ((StringBase<char>*)(&(m_attachedBoneName)))->isNotEmpty() )
 					{
 						Matrix3D boneTransform;
-						if( draw->getPristineBonePositions( m_attachedBoneName.str(), 0, 0, &boneTransform, 1 ) )
+						if( draw->getPristineBonePositions( ((StringBase<char>*)(&(m_attachedBoneName)))->str(), 0, 0, &boneTransform, 1 ) )
 							setLocalTransform( &boneTransform );
 					}
 				}

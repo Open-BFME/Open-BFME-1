@@ -51,22 +51,7 @@ private:
 
 #include "string_base.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString(void) : StringBase<char>() {}
-    AsciiString(const char *text) : StringBase<char>(text) {}
-    AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-    ~AsciiString(void) {}
-
-    void format(AsciiString format, ...);
-
-    AsciiString &operator=(const AsciiString &other)
-    {
-        StringBase<char>::set(other);
-        return *this;
-    }
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class UnicodeString : private StringBase<WideChar>
 {

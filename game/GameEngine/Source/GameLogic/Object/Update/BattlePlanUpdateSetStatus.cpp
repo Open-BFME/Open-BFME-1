@@ -17,20 +17,7 @@ template <typename T> bool StringBase<T>::isNotEmpty() const
 // saved-ESP/ECX ordering at +0x285 and selects the StringBase constructor.
 // Keep the canonical base and the same derived layout, with this one ctor
 // declared out of line. The emitted AsciiStringNative.cpp body proves the ABI.
-class AsciiString : public StringBase<char>
-{
-  public:
-    AsciiString(const AsciiString &);
-    ~AsciiString();
-    bool isEmpty() const
-    {
-        return StringBase<char>::isEmpty();
-    }
-    bool isNotEmpty() const
-    {
-        return StringBase<char>::isNotEmpty();
-    }
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "unicode_string.h"
 #include <bitset>
 
