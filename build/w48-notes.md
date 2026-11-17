@@ -62,3 +62,10 @@
 3 batches x5 served, nothing submitted. Keys: EnragedBehaviorModuleData ctor m_unmodelled_18..28 (no ZH twin), BfmeConv961 Reset/Gate/Flag types, calculateTerrainLOD freq64 locals (known placeholder dead end), WanderAI/HordeWorkerAI ctor offsets, BfmeConv1054 (huge opaque), ScreenCrossFade postRender locals (dead end), Apt NativeStringSlots008B3AA0, W3DLightDrawModuleData ctor m_unmodelled_08..44, Rva007F0210Set, Rva002D9910*, BfmeConv1401, Rva00800B70FeslDtor. All opaque/no ZH twin.
 ## agent h round 11 (wave 48)
 - 3 batches x5 served, nothing submitted. Keys: UpdateModuleModuleData ctor thunk m_unknown20.., BfmeConv1054 Bfme* (FXParticleSystem, opaque), line2_d.cpp ClipLine2D/IntersectLine2D params+locals (ZH-identical -> known placeholder dead end), GameLogicGetLoadScreen at078.. / Gen000290D2, DebugDisplay setCursorPos x/y, Rva009F4070DistanceSquared, BfmeConv1226, GarrisonContain ctor m_2F4.., Rva002CFC80TinyBodies, BfmeConv792, Rva00627AA0Obj. All opaque/no ZH twin.
+# w48 lane c (stlport) notes
+- Rank 6/1 (deque Gen_t_00593270 reallocate_map), 11/12 list insert, 131 vector<void*>::erase: frozen gen_small holders, out of scope.
+- Landed: list<Object*> ctor 0xCFFB0 (rank 14): TransportContainOnRemoving.cpp defined it with _STLP_USE_NEWALLOC -> operator new reloc; removing the define fixed it.
+  Technique: comdat_families.py ranked --index ... --limit 20000 > json gives wrong_emitters/proven_copies per name; lc._comdat_sections(obj) shows relocs of an emitted copy.
+- Rank 24 vector<bool>::reserve (RvaVectorBoolAssignment.cpp): link_check UNKNOWN, not analysed. Rank 13 find<void*> Rb_tree: wrong emitters are 3 GameNetwork Rva00654130/65B350 TUs sharing digest dc1e3f8bd848, owner-held, not analysed.
+- Worktree: submodule pointer drift (master records aa505f34, checkout at 0630f0ef) blocks pre-push; used git update-index --assume-unchanged inputs/reference/open-bfme-2.
+- link_check on a provider with many changed names takes ~3 min on a loaded host.
