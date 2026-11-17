@@ -15,12 +15,7 @@ class BfmeThingBXF
 public:
 };
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 extern void j_0001c864();
 extern void j_0004067e();

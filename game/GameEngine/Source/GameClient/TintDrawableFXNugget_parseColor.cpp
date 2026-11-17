@@ -4,12 +4,7 @@
 typedef float Real;
 typedef int Int;
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class INI
 {

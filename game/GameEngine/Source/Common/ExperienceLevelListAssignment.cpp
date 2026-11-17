@@ -72,12 +72,7 @@ struct ModelConditionFlags
 	UnsignedInt m_bits[10];
 };
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 struct LevelUpFXInfo
 {

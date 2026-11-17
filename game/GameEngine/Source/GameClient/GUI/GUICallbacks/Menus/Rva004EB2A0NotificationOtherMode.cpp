@@ -78,14 +78,7 @@ public:
 	Player *findPlayerWithNameKey(NameKeyType key);
 };
 
-struct RGBColor
-{
-	float red;
-	float green;
-	float blue;
-
-	void setFromInt(Int color);
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class InGameUI
 {

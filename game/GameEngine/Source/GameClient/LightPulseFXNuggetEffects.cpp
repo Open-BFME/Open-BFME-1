@@ -6,12 +6,7 @@ typedef unsigned int UnsignedInt;
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class Matrix3D;
 

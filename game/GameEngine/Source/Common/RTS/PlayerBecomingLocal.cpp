@@ -43,11 +43,7 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;
 #define NAMEKEY(x) TheNameKeyGenerator->nameToKey(x)
 
-struct RGBColor
-{
-	Real red, green, blue;
-	void setFromInt(Int color);
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 // Pads a class's virtual table to N leading slots.
 template <int N> class PlayerLocalSlots : public PlayerLocalSlots<N - 1>

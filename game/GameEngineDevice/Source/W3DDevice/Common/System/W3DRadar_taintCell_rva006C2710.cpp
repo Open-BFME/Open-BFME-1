@@ -21,12 +21,7 @@ typedef Int Color;
 
 #include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 // INI FieldParse table 0x00C77018 (targets/game/reverse/field_names.csv): TaintColor +0xC88,
 // ElvenWoodColor +0xC94, TaintOn +0xCF5.

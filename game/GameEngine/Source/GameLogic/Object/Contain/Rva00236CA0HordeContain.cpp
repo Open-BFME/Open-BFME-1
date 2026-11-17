@@ -20,12 +20,7 @@ typedef bool Bool;
 
 class UpgradeTemplate;
 
-struct RGBColor
-{
-	float red;
-	float green;
-	float blue;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class Drawable
 {

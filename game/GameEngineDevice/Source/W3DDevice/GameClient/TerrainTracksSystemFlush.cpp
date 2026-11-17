@@ -141,10 +141,7 @@ struct edgeInfo
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct RGBColor
-{
-	Real red, green, blue;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 // Retail's GlobalData at 0x012ED5C8; keep only the members this file reads.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h

@@ -54,14 +54,7 @@ struct Coord3D
 	}
 };
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-
-	void setFromInt(Int color);
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class Matrix3D
 {

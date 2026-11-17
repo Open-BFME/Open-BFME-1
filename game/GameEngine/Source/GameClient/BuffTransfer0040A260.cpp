@@ -29,7 +29,7 @@ struct BuffLogic { Snapshot0040A260 *addBuff(const ThingTemplate*,void*); };
 struct EffectFactory0040A260;
 extern EffectFactory0040A260 *Effects0040A260;
 void *Owner0040A260 = 0;
-struct RGBColor { float red,green,blue; };
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 struct BuffTransfer0040A260 {
  int field00; bool field04; char bytes05[3]; int field08,field0c,field10,field14;
  Snapshot0040A260 *field18; const ThingTemplate *field1c; RGBColor field20; float field2c;

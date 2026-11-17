@@ -15,12 +15,7 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
 
-struct RGBColor
-{
-	float red;
-	float green;
-	float blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class Drawable;
 

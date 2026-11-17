@@ -12,12 +12,7 @@
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class Drawable
 {
