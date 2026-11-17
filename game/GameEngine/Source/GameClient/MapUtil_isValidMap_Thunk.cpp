@@ -20,11 +20,14 @@ class MapCache
 {
 public:
 	void updateCache();
-	MapCacheNode *find(const AsciiString &name);
 	MapCacheNode *m_end;
 };
 
 extern MapCache *TheMapCache;
+
+// Retail calls MapCache::find through ILT 0x000263D7 (jumps to the map's
+// _Rb_tree find body 0x000773E0); nothing defines a MapCache::find symbol.
+extern void j_000263d7();
 
 bool isValidMap(AsciiString mapName, bool isMultiplayer)
 {
@@ -34,7 +37,9 @@ bool isValidMap(AsciiString mapName, bool isMultiplayer)
 	TheMapCache->updateCache();
 	mapName.StringBase<char>::toLower();
 	MapCache *cache = TheMapCache;
-	MapCacheNode *it = cache->find(mapName);
+	typedef MapCacheNode *(MapCache::*FindFn)(const AsciiString &);
+	union { void (*fn)(); FindFn call; } find = { j_000263d7 };
+	MapCacheNode *it = (cache->*find.call)(mapName);
 	if (it != cache->m_end && isMultiplayer == it->m_isMultiplayer)
 		return true;
 
