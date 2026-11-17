@@ -11,12 +11,7 @@
 
 class BfmeItemXB;
 
-struct Coord3DBase
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 
 class Snapshot
 {

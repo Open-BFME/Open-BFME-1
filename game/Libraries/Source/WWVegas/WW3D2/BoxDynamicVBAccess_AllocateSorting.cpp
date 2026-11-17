@@ -11,9 +11,7 @@
 // 0x0091F730 names this callee, and the 274B body is instruction-identical
 // to the IB twin aside from those offsets and the allocation size.
 
-class W3DMPO
-{
-};
+#include "../WWLib/always.h"
 
 class RefCountClass
 {

@@ -29,7 +29,7 @@ private:
 	void *ListNode;
 };
 
-class W3DMPO {};
+#include "../WWLib/always.h"
 
 class MeshGeometryClass : public W3DMPO, public RefCountClass, public MultiListObjectClass
 {
