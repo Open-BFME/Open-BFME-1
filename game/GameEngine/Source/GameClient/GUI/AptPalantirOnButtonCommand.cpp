@@ -1,8 +1,11 @@
 class AptPalantirCommandHandler
 {
-public:
-	void selectCommand( int index );
 };
+
+// Retail calls ILT 0x0002B706 (tail thunk 0x005896F0), not a named member body;
+// spell the call through the ledgered ?j_0002b706 thunk as a member-pointer call.
+extern void j_0002b706();
+typedef void (AptPalantirCommandHandler::*SelectCommandFn)( int );
 
 // Retail 0x012F4B98: use the existing data owner; retain the local pointee view.
 extern class AptPalantir *TheAptPalantir;
@@ -17,5 +20,6 @@ void aptPalantirOnButtonCommand( char *command )
 	if( strncmp( command, "Command", 7 ) != 0 )
 		return;
 
-	reinterpret_cast<AptPalantirCommandHandler *>(TheAptPalantir)->selectCommand( command[ 7 ] - '1' );
+	union { void (*fn)(); SelectCommandFn call; } target = { j_0002b706 };
+	( reinterpret_cast<AptPalantirCommandHandler *>(TheAptPalantir)->*target.call )( command[ 7 ] - '1' );
 }
