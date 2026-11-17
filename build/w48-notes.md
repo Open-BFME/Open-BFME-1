@@ -136,3 +136,6 @@
 3 batches served, all skipped (nothing justifiable). Keys: Rva009A2350Node/Link (collision manager link), Rva8CDA60 stack dispatch, Rva0010F100Receiver, S2ZeroFillCtors, Rva0049A100, RubbleRise dword B4/C4, Lerp a/b, Bfme5TinyTwentySeven, Rva00063F90Blend, WanderAI ctor, Rva002CFC80TinyBodies, ToggleMounted, Rva0029C380, EnragedBehavior, BfmeConv2022. Same dead ends.
 ## agent h round 20 (wave 48, claude-sonnet-5-5)
 - 3 batches served (1 file each), nothing submitted. Keys: BfmeConv808 (BfmeAEFC/BEFC/NodeEFE/GoEFx, tiny, no ZH twin), Rva008B7040Build m_value20..60 (Apt stack builder, opaque), FlightDeckBehaviorModuleData ctor m_bfmeC4/C8/CC (again, no ZH twin). Same dead ends.
+
+## w41-i round 25 (claude-sonnet-5-5)
+3 batches served, all skipped. Keys: Rva005222A0NoteCalls m_34/38/3C/40, Rva0020DEE0VirtualMode, Bfme5ThirtyThree, Rva0018F660 transformPoints A/R0/tmp/v (ZH Matrix3D-identical), GloriousCharge/SiegeDeploy ctor m_NNN, Rva001515C0Xfer, WeaponTemplate bfmeRangeBase, Rva00477E60Walk, Rva002BC870, HordeContainConstructor m_1e4.., BfmeConv1279, BfmeOptionsDispatchYV. Same dead ends.
