@@ -21,3 +21,5 @@
 
 ## w41-i round 4 (claude-sonnet-5-5)
 3 batches x5 served, all skipped (nothing submitted). Keys: FESL simple requests Rva007FAF90.. (again; FourCC only, no EA names), RainOfFire/CastleMember/Spawn/Wander/Animal/BannerCarrier ModuleData ctor offset members, Open2Elem247180 stand-in, Rva005222A0 AptMessageBox members, BfmeMsgVIW/BfmeSeed, W3DLaser BfmeEnvelope (parser not shown, ZH has no Envelope), LivingWorldManager dtor Rva types + Release_Ref local n. Still no ZH twin or FieldParse evidence.
+## agent h round 4 (wave 48)
+- 3 batches x5 served; nothing submitted. Keys: Bezier/Devastate/FadeAndDieOrnament/W3DStreakDraw module data ctor members (no ZH twin), Rva-typed helper classes, Bfme* offset members, ScreenCrossFade postRender locals p/u/v/u1/v1 and calculateTerrainLOD freq64/startTime64/time64 (ZH-identical names are rejected as placeholders; dead end already known).
