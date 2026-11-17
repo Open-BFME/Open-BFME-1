@@ -235,3 +235,6 @@
 - GOTCHA: build/w48-notes.md is tracked now (other lanes force-added it); an untracked copy is silently overwritten by `git pull --rebase` (build/* is ignored).
 ## agent h round 35 (wave 48, claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: Rva0049A100Set m_00/v (move-and-null), W3DLightDraw ctor m_unmodelled_* (no ZH twin), Rva008BDD70ResetList m_at*, Firestorm ctor m_64.. (ZH layout does not match), BFMEFactory ctor, GiantBird SlowDeath ctor, BfmeConv1401/1279, DebugDisplay x/y, ToggleMounted ctor, CollideModuleData ctor, Rva002BC310, MemberTurnAndGoal0024E310, Rva00903470DeviceSlot77, CastleMember ctor. Same dead ends.
+
+## agent h round 36 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: Bfme5TinyThree bfme* (no ZH twin), MemberVision002434D0 atNNN, S5Parse005A0720 m_04.., Q3Introsort, PathfinderFindSafePath m_bfme*, BannerCarrier dtor m_field08.., Rva007F61E0, CastleMember ctor, Rva007F0210Set, Rva00409F40Loop, Rva008A4540, HordeAIUpdate ctor, RadiusDecalTemplateEquals m_unmodelled_*. Same dead ends.
