@@ -170,3 +170,5 @@
 
 ## agent h round 25 (wave 48, claude-sonnet-5-5)
 - 2 batches viewed, nothing submitted (late). Keys: GarrisonContainModuleData ctor m_2F4/m_31C..m_338 (no ZH twin), GettingBuilt ModuleData m_name0/1,m_f0..3, Rva009A2350Node/Link, Recorder.cpp, BfmeThreeHundredFifty, BezierProjectile m_value34/84, NativeStringSlots008B3AA0. Same dead ends.
+## w41-i round 30 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted; all-skip answers are "no valid names to record"). Keys: ParseMoveCameraBlock Rva003B7650Record m_04..m_18, BFMEFactoryModuleData LaserUpdate ctor m_unmodelled_*, DamageModuleModuleDataCtorThunk m_unknown*, BfmeConv1901/902, Rva008A4540, HordeSiegeEngineContain ctor m_22c.., ReflectDamage ctor m_unmodelled_08..10. Same dead ends.
