@@ -1774,50 +1774,9 @@ void AIInternalMoveToState::loadPostProcess( void )
  * Start playing the object's move sound.
  */
 // byte-exact reconstruction: game/GameEngine/Source/Common/AIInternalMoveToState_startMoveSoundMethodThunk.cpp
-// ?startMoveSound@AIInternalMoveToState@@AAEXXZ present-unmatched
-void AIInternalMoveToState::startMoveSound(void)
-{
-	Object *obj = getMachineOwner();
-	const BodyModuleInterface *objBody = obj->getBodyModule();
-	if (objBody && IS_CONDITION_WORSE(objBody->getDamageState(), BODY_DAMAGED))
-	{
-		AudioEventRTS soundEventMoveDamaged = *obj->getTemplate()->getSoundMoveStartDamaged();
-		if (!soundEventMoveDamaged.getEventName().isEmpty()) 
-		{
-			soundEventMoveDamaged.setObjectID(obj->getID());
-			TheAudio->addAudioEvent( &soundEventMoveDamaged );
-		} 
-		else 
-		{
-			soundEventMoveDamaged = *obj->getTemplate()->getSoundMoveLoopDamaged();
-			if (!soundEventMoveDamaged.getEventName().isEmpty())
-			{
-				soundEventMoveDamaged.setObjectID(obj->getID());
-				m_ambientPlayingHandle = TheAudio->addAudioEvent( &soundEventMoveDamaged );
-			}
-		}
-	} 
-	else 
-	{
-		AudioEventRTS soundEventMove = *obj->getTemplate()->getSoundMoveStart();
-		soundEventMove.setObjectID(obj->getID());
-
-		if (!soundEventMove.getEventName().isEmpty()) 
-		{
-			TheAudio->addAudioEvent( &soundEventMove );
-		} 
-		else 
-		{
-			soundEventMove = *obj->getTemplate()->getSoundMoveLoop();
-			soundEventMove.setObjectID(obj->getID());
-			if (!soundEventMove.getEventName().isEmpty())
-			{
-				m_ambientPlayingHandle = TheAudio->addAudioEvent( &soundEventMove );
-			}
-		}
-	}
-
-}
+// ?startMoveSound@AIInternalMoveToState@@AAEXXZ
+// Defined by the matched body in AIInternalMoveToStateStartMoveSound.cpp.
+// Keep calls bound to that owner instead of a Zero Hour implementation.
 
 // ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z
 // Defined by the matched ILT at 0x00029311 in AIInternalMoveToStateOnExitShim.cpp.
