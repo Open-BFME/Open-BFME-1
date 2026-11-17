@@ -91337,3 +91337,8 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?gatherDebugStats@W3DDisplay@@IAEXXZ,0x006F0300,W3DDisplay::draw's debug-stats callback; ilt_oracle check CONFIRMED (p_false 2.61e-04); the same body's ledger row carries the truncated spelling ?gatherDebugStats@W3DDisplay@@
 ?rva006EE800@W3DDisplay@@QAEXXZ,0x006EE800,W3DDisplay::draw callee reached through ILT 0x0000A03D; address-derived method name; the body's only ledger row is the gen-dump ?d_006ee800@@YAXXZ
 ?rva006F2CC0@W3DDisplay@@QAEXXZ,0x006F2CC0,W3DDisplay::draw callee reached through ILT 0x00048216; address-derived method name; the body's only ledger row is the gen-dump ?d_006f2cc0@@YAXXZ
+??_C@_0BE@KKGBHAFC@AllowMultipleModels?$AA@,0x00D22678,TheLodOptionsFieldParse VA 0x011226B8 entry 0 token; compiler string literal AllowMultipleModels equals retail at VA 0x01122678
+??_C@_0BC@MEMGCDBB@MaxRandomTextures?$AA@,0x00D22660,TheLodOptionsFieldParse VA 0x011226B8 entry 1 token; compiler string literal MaxRandomTextures equals retail at VA 0x01122660
+??_C@_0BE@NCBMOLBB@MaxRandomAnimations?$AA@,0x00D22648,TheLodOptionsFieldParse VA 0x011226B8 entry 2 token; compiler string literal MaxRandomAnimations equals retail at VA 0x01122648
+??_C@_0BC@MOFFPBO@MaxAnimFrameDelta?$AA@,0x00D22630,TheLodOptionsFieldParse VA 0x011226B8 entry 3 token; compiler string literal MaxAnimFrameDelta equals retail at VA 0x01122630
+??_C@_0BI@HDNJMECK@RandomStartFramePercent?$AA@,0x00D22614,TheLodOptionsFieldParse VA 0x011226B8 entry 4 token; compiler string literal RandomStartFramePercent equals retail at VA 0x01122614

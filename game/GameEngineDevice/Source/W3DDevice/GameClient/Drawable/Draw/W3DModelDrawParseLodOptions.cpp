@@ -45,10 +45,12 @@ public:
 	const char *str(void) const { return m_data ? m_data->m_text : ""; }
 };
 
+class INI;
+
 struct FieldParse
 {
 	const char *token;
-	void (*parse)();
+	void (*parse)(INI *, void *, void *, const void *);
 	const void *userData;
 	unsigned int offset;
 };
@@ -58,11 +60,26 @@ class INI
 public:
 	AsciiString getNextAsciiString();
 	void initFromINI(void *store, const FieldParse *fields);
+	static void parseBool(INI *ini, void *instance, void *store, const void *userData);
+	static void parseInt(INI *ini, void *instance, void *store, const void *userData);
+	static void parseReal(INI *ini, void *instance, void *store, const void *userData);
 };
 
 #include "Common/INIException.h"
 
+// Retail .rdata VA 0x011226B8 (80 B + 16 B terminator): the five-entry table
+// parseLodOptions hands INI::initFromINI. Slots hold the real parser bodies
+// (parseBool 0x00852E00, parseInt 0x00852A60, parseReal 0x00852B20).
 extern const FieldParse TheLodOptionsFieldParse[];
+const FieldParse TheLodOptionsFieldParse[] =
+{
+	{ "AllowMultipleModels", INI::parseBool, 0, 0x0 },
+	{ "MaxRandomTextures", INI::parseInt, 0, 0x4 },
+	{ "MaxRandomAnimations", INI::parseInt, 0, 0x8 },
+	{ "MaxAnimFrameDelta", INI::parseReal, 0, 0xC },
+	{ "RandomStartFramePercent", INI::parseInt, 0, 0x10 },
+	{ 0, 0, 0, 0 }
+};
 
 class W3DModelDrawModuleData
 {
