@@ -37,8 +37,11 @@ class Team
 {
 public:
 	void healAllObjects();
-	Team *_bfme_nextInInstanceList() const;
 };
+
+// Retail reaches the team instance-list advance through ILT 0x00022A70
+// (ledger row ?j_00022a70@@YAXXZ); the PMF value is that thunk's address.
+extern void j_00022a70();
 
 class TeamPrototype
 {
@@ -47,7 +50,8 @@ public:
 
 	DLINK_ITERATOR<Team> iterate_TeamInstanceList() const
 	{
-		return DLINK_ITERATOR<Team>(m_firstInstance, Team::_bfme_nextInInstanceList);
+		union { void (*fn)(); DLINK_ITERATOR<Team>::GetNextFunc call; } u = { j_00022a70 };
+		return DLINK_ITERATOR<Team>(m_firstInstance, u.call);
 	}
 
 private:
