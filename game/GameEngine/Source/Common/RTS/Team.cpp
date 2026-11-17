@@ -2150,32 +2150,7 @@ Bool Team::removeOverridePlayerRelationship( Int playerIndex )
 }
 
 // ------------------------------------------------------------------------
-// ?countObjectsByThingTemplate@Team@@QBEXHPBQBVThingTemplate@@_NPAH1@Z present-unmatched
-void Team::countObjectsByThingTemplate(Int numTmplates, const ThingTemplate* const* things, Bool ignoreDead, Int *counts, Bool ignoreUnderConstruction) const
-{
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		const ThingTemplate *objtmpl = iter.cur()->getTemplate();
-		for (Int i = 0; i < numTmplates; ++i)
-		{
-			//Kris: Compare
-			if( !objtmpl->isEquivalentTo( things[i] ) )
-			{
-				continue;
-			}
-
-			if (ignoreDead && iter.cur()->isEffectivelyDead())
-				continue;
-
-			if( ignoreUnderConstruction && iter.cur()->getStatusBits().test( OBJECT_STATUS_UNDER_CONSTRUCTION ) )
-				continue;
-
-			counts[i] += 1;
-			break;	// from 'next i', NOT 'next object'
-
-		}
-	}
-}
+// ?countObjectsByThingTemplate@Team@@QBEXHPBQBVThingTemplate@@_NPAH1@Z: retail body (0x000F2670) is in Team_countObjectsByThingTemplate.cpp
 
 // ------------------------------------------------------------------------
 // Team::countBuildings: retail body (0x000F4900) in Team_countBuildings.cpp.
