@@ -78,16 +78,12 @@ enum GuardMode { BFME_GUARD_MODE_NORMAL };
 
 #include "../command_source_type.h"
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../ScriptEngine/game_logic_dispatch.h"
 enum IterOrderType { ITER_FASTEST = 0, ITER_SORTED_NEAR_TO_FAR = 1 };
 enum KindOfType { KINDOF_IMMOBILE = 2, KINDOF_STRUCTURE = 7, KINDOF_AIRCRAFT = 12 };
 enum PathfindLayerEnum { LAYER_GROUND = 1 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);		// ILT 0x0003ADD7
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;			// 0x012ED600
 

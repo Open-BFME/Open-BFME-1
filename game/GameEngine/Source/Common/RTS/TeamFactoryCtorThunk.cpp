@@ -101,13 +101,9 @@ private:
 	void *m_data;
 };
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 class Dict;

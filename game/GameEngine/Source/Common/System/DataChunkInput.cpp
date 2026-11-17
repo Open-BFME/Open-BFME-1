@@ -30,10 +30,7 @@ typedef unsigned short UnsignedShort;
 typedef bool Bool;
 typedef unsigned short DataChunkVersionType;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)
@@ -140,11 +137,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MapReaderWriterInfo.h
