@@ -1332,6 +1332,39 @@ const ArmorTemplateSet* ThingTemplate::findArmorTemplateSet(const ArmorSetFlags&
 }
 
 //=============================================================================
+// Mirror of the armor finder repair: retail's weapon-side finder (0x00146310,
+// inlined into 0x001467E0) stores the slow result through ILT 0x00019155
+// (-> 0x00145100), which the ledger spells as the ARMOR map operator[]; the
+// generic template would call the weapon-spelled 0x001451E0 instead.  The
+// ILT is bound by member-pointer union; see 20261110-armor-finder-provider.md.
+void j_00019155();
+
+template<>
+const WeaponTemplateSet* SparseMatchFinder<WeaponTemplateSet, WeaponSetFlags>::findBestInfo(const std::vector<WeaponTemplateSet>& v, const WeaponSetFlags& bits) const
+{
+	MatchMap::const_iterator it = m_bestMatches.find(bits);
+
+	const WeaponTemplateSet *first = NULL;
+	if (it != m_bestMatches.end())
+	{
+		first = (*it).second;
+	}
+	if (first != NULL) {
+		return first;
+	}
+
+	const WeaponTemplateSet* info = findBestInfoSlow(v, bits);
+	if (info != NULL) {
+		typedef const WeaponTemplateSet *&(MatchMap::*Slot)(const WeaponSetFlags &);
+		union { void (*raw)(); Slot member; } slot;
+		slot.raw = j_00019155;
+		(m_bestMatches.*slot.member)(bits) = info;
+	}
+
+	return info;
+}
+
+//=============================================================================
 const WeaponTemplateSet* ThingTemplate::findWeaponTemplateSet(const WeaponSetFlags& t) const
 {
   struct BFMEThingTemplateWeaponView
@@ -1562,3 +1595,7 @@ template void std::vector<ArmorTemplateSet, std::allocator<ArmorTemplateSet> >::
 
 // Keep the independently ledgered template bodies emitted.
 template const ArmorTemplateSet* SparseMatchFinder<ArmorTemplateSet, ArmorSetFlags>::findBestInfo(const std::vector<ArmorTemplateSet>&, const ArmorSetFlags&) const;
+
+// The weapon finder above no longer calls the map's operator[] by name; keep
+// the independently ledgered template bodies emitted (as for the armor finder).
+template const WeaponTemplateSet*& std::map<const WeaponSetFlags, const WeaponTemplateSet*, SparseMatchFinder<WeaponTemplateSet, WeaponSetFlags>::MapHelper>::operator[](const WeaponSetFlags&);
