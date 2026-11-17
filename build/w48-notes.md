@@ -346,3 +346,8 @@
 - Landed 97e78443a (WindowLayoutInfoLoad: StringBase::set moved to public so mangling is QAE = ledger name) and d259f5054 (Rva003BF540::applyOwner calls rva00383890 via j_00045c87 member-pointer union). Tip: unresolved `AAE` vs ledger `QAE` = just an access-specifier mismatch in a TU-local class copy.
 - Dead: Bit_Blit (no ledger row/pin), findOrInsert AptScreenRefMap (logged blocked, hash_map reconstruction).
 - Not tried: other unresolved rows with TU-local private-vs-public spellings (check mangled AAE/QAE in queue names: ??1?$StringBase etc.).
+
+## w48 agent c round 4 (stlport, claude-sonnet-5-5)
+- LANDED pushBack 0x5C8400 (unresolved _Construct<Rva005C6730Value> -> j_00030549) and list insert 0x9F340 (unresolved _Construct<Rva0009F200Element> specialization -> forceinline body calling j_00026503). Both previews UNKNOWN (stale census).
+- Pitfall: name_regression flags removal of the `_Construct` token ("_Construct -> j_xxxx"); keep an unused `template<class T> void _Construct(T*,const T&);` declaration (or the specialization) in namespace _STL and call through a descriptively named helper. Passes then.
+- Remaining same shape: #62/#74 BfmeRunway/BfmeElementConstruct (not tried). link_check takes ~190 s per file; run in background with `> file`, concurrent runs from other agents slow it.
