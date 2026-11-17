@@ -447,7 +447,8 @@ UnsignedInt DataChunkTableOfContents::allocateID(const AsciiString& name )
 		m = newInstance(Mapping);
 
 		m->id = m_nextID++;
-		m->name =  name ;
+		// retail inlines AsciiString::operator= as a direct StringBase<char>::set call (0x00887C90)
+		reinterpret_cast<StringBase<char> &>(m->name).set( reinterpret_cast<const StringBase<char> &>(name) );
 
 		// prepend to list
 		m->next = m_list;
