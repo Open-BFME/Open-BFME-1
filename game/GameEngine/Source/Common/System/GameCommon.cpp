@@ -31,3 +31,9 @@ Real normalizeAngle(Real angle)
 
 	return angle;
 }
+
+// BFME 1 matched frame-conversion helpers reference this four-byte datum
+// at VA 0x012A86A8. Retail bytes CD CC 4C 3E establish 0.2f.
+// BFME 2 aa505f34 INI_parseVelocityReal.cpp uses its own 0.2 global;
+// its address and spelling are not transferred to BFME 1.
+extern const float g_Va012A86A8 = 0.2f;

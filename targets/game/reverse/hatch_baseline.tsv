@@ -687,10 +687,11 @@ address_global	game/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp	
 address_global	game/GameEngine/Source/Common/StaticInit/Rva00C6BC70BlockInitializers.cpp	g_Va012F48CC	2	allow=d5bbc30acd59e93b9182cf8febc385e07435c0dc
 address_global	game/GameEngine/Source/Common/StaticInit/Rva00C6BC70BlockInitializers.cpp	g_Va012F48EC	2	allow=d5bbc30acd59e93b9182cf8febc385e07435c0dc
 address_global	game/GameEngine/Source/Common/StaticInit/Rva00C6BC70BlockInitializers.cpp	g_Va012F490C	2	allow=d5bbc30acd59e93b9182cf8febc385e07435c0dc
-address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01073A98	2	allow=80a657459f87a3041c532eef7231d26209b057b8
-address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01073AA0	2	allow=80a657459f87a3041c532eef7231d26209b057b8
-address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01087AF8	2	allow=80a657459f87a3041c532eef7231d26209b057b8
-address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01087B00	2	allow=80a657459f87a3041c532eef7231d26209b057b8
+address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01073A98	2
+address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01073AA0	2
+address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01087AF8	2
+address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va01087B00	2
+address_global	game/GameEngine/Source/Common/System/GameCommon.cpp	g_Va012A86A8	1	allow=d35d46345603ade0d11e5469fe9b4401cf390b8b
 address_global	game/GameEngine/Source/Common/System/MemoryPoolFree.cpp	g_Va012D4D0C	2
 address_global	game/GameEngine/Source/Common/System/MemoryPoolFree.cpp	g_Va0130E9B8	1
 address_global	game/GameEngine/Source/Common/System/MemoryPoolFree.cpp	g_Va0130E9C0	1	allow=6ef0ff98fd1bc5c6457f35bdb417be60ab163d54
