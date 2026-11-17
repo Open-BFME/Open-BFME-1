@@ -257,7 +257,9 @@ def decide(name, sources=None, jobs=8, sample=None):
         import random
         sources = sorted(random.Random(20261006).sample(sources, sample))
     got, every = views(name, sources, jobs)
-    good = {s: L for s, L in got.items() if "error" not in L}
+    # A forward reference proves no size, fields, bases or virtual slots. It is
+    # not a compiled layout vote; in particular, never substitute size zero.
+    good = {s: L for s, L in got.items() if "error" not in L and not L.get("fwd")}
     flat = {s: flatten(L, every[s]) for s, L in good.items()}
     zh = zh_layout(name, builder)
     zh_flat = flatten(zh["layout"], zh["every"]) if zh and "layout" in zh else []
