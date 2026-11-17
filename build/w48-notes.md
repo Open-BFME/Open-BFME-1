@@ -195,3 +195,6 @@
 
 ## w41-i round 36 (claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: ScriptConditions bfmeAreaGate/Body a,b,c, Rva007F0210 m_00/04/08, CollideModuleData ctor m_unknown*, FadeAndDieOrnament ctor, BfmeConv1279/1309/1379/808, W3DLaser ctor, HordeSiegeEngine ctor, DeployStyle/GateOpenAndClose ctors, S5Parse005A0720, W3DRopeDraw bfmeMax/Min a,b. Same dead ends.
+
+## w41-i round 37 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: Bfme5ThirtyThree m_bfmeOwner/Flags/Count, GloriousCharge/DevastateSpecialPower ctor m_field254../m_210.., Rva0020DEE0 Apply, BfmeConv1401 VKH, W3DLightDraw m_unmodelled_*, TransportAIUpdate ctor m_unknown*, Rva002D9910*, Rva002BC310Data, BfmeConv970/1279, Rva000941D0 ParseNamedInt. Same dead ends.
