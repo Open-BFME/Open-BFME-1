@@ -147,3 +147,6 @@
 - r1: AIStates.cpp ZH copies (59 duplicates incl. ctor/onEnter/update of AI*State): dead end, re_attempts shows dropping fails rows (AIStateMachine ctor 36/106 rows; reconstitute etc.). Don't retry.
 - r1: PopulateReplayFileListbox (ReplayMenu.cpp:114 ZH copy): only blocker is uw_00c3318d/uw_00c3f63e funclet rows (parent= unproven; not in retail unwind map of Populate). Re-identify their real parent first. Same shape as AI::crc false-reject.
 - r1: AI::crc (ai.cpp) recorded false-reject uw_00c04530; BridgeBehavior update is partial (not dup in same file) - skip.
+
+## w41-i round 26 (claude-sonnet-5-5)
+3 batches served, nothing landed. Keys: BattlePlanUpdateSetStatus clearCondition/setCondition param o ("obj" rejected as too generic), Small03hRefCopy Rva0094C* Box/Head/Tail (opaque), P6MemberVectorCopyConstructor m_at00.. (again), Small03hWordSwap Rva009CC2C0Box/v/a. Same dead ends.
