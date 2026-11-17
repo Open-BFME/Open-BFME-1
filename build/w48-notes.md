@@ -98,3 +98,6 @@
 - MapMetaData::operator= (row 104, rva 0xC1050): INIMapCache/MapUtil use ZH MapUtil.h with implicit operator=; implicit copy COMDAT emitted. Fix needs explicit declaration in a shim header (full gate) -- not done.
 - countInverseIntersection<17> also still emitted by ThingTemplate.obj (real header inline); needs shared header change.
 - Push contention is heavy; loop pull --rebase + push; submodule pointer may need `git submodule update inputs/reference/open-bfme-2` (slow, ~3 min) before pre-push accepts.
+
+## w41-i round 19 (claude-sonnet-5-5)
+3 batches served, nothing submitted. Keys: AutoPickUpUpdateModuleData ctor m_flag3C/3D/m_value40/m_flag44, DelayedLuaEventUpdate ctor m_f20/f70.., T3SmallLeafBodies Rva*Key/Less, TaintSpecialPower m_unmodelled_214.., BfmeScriptCondAreaGate, CritterEmitter ctor, EnragedBehavior m_f1c/f20, DevastateSpecialPower m_210.., U1SmallStateProbes, Rva00889720, Rva008A4540. Same dead ends.
