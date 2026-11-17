@@ -45,6 +45,63 @@ public: Bool isKindOf(KindOfType kind) const;
 #include "../../Common/Thing/thing.h"
 #undef THING_TU_MEMBERS
 
+typedef int Int;
+
+typedef unsigned int UnsignedInt;
+
+class BfmeVisionPartition
+{
+public:
+	void handlePartitionCellMaintenance(void *object);
+};
+
+
+class BfmeBlockVKP
+{
+};
+
+
+class BfmeNotifyVKP
+{
+public:
+	void bfmeNotifyVKP( BfmeBlockVKP *counts, Int unused1, Int unused2 );
+};
+
+
+class Gen001C9A10
+{
+public:
+	void handle( Int player );
+
+private:
+	char m_pad00[0x80];
+	BfmeNotifyVKP *m_drawable;
+	char m_pad84[0x8c];
+	Int m_visionSpiedBy[16];
+	char m_pad150[0x114];
+	BfmeVisionPartition m_partition;
+	char m_pad268[0x34];
+	UnsignedInt m_visionSpiedMask;
+};
+
+
+class Gen001C9AC0
+{
+public:
+	void handle( Int player );
+
+private:
+	char m_pad00[0x80];
+	BfmeNotifyVKP *m_drawable;
+	char m_pad84[0x8c];
+	Int m_visionSpiedBy[16];
+	char m_pad150[0x114];
+	BfmeVisionPartition m_partition;
+	char m_pad268[0x34];
+	UnsignedInt m_visionSpiedMask;
+};
+
+
 class BfmeObjE10
 {
 public:
@@ -270,28 +327,28 @@ void Rva001CEAD0Object::onVeterancyLevelChanged(int oldLevel, int newLevel)
 	switch (newLevel)
 	{
 	case 0:
-		action->actionB(0);
-		action->actionB(1);
-		action->actionB(2);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(0);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(1);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(2);
 		*bonus &= ~0xe00u;
 		doAnimation = 0;
 		break;
 	case 1:
-		action->actionA(0);
-		action->actionB(1);
-		action->actionB(2);
+		reinterpret_cast<Gen001C9A10 *>(action)->handle(0);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(1);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(2);
 		*bonus = (*bonus & ~0xc00u) | 0x200u;
 		break;
 	case 2:
-		action->actionB(0);
-		action->actionA(1);
-		action->actionB(2);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(0);
+		reinterpret_cast<Gen001C9A10 *>(action)->handle(1);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(2);
 		*bonus = (*bonus & ~0xa00u) | 0x400u;
 		break;
 	case 3:
-		action->actionB(0);
-		action->actionB(1);
-		action->actionA(2);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(0);
+		reinterpret_cast<Gen001C9AC0 *>(action)->handle(1);
+		reinterpret_cast<Gen001C9A10 *>(action)->handle(2);
 		*bonus = (*bonus & ~0x600u) | 0x800u;
 		break;
 	}
