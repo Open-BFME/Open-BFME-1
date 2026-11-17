@@ -23,18 +23,14 @@
 
 class TeamPrototype;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 // Spelled locally so that str() is the inlined m_data ? m_data->peek() : ""
 // retail emits, and so that no header pulls in the one-argument overload.
 #include "ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);	///< ILT 0x0003ADD7
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;	///< retail [0x012ED600]
 

@@ -56,8 +56,8 @@ public:
 	virtual Xfer &xferBool(bool &);
 };
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
-class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
+#include "../ScriptEngine/game_logic_dispatch.h"
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Locomotor;
 class LocomotorTemplate;

@@ -17,7 +17,7 @@
 #include <string.h>
 
 enum LocomotorSetType { LOCOMOTORSET_INVALID = -1 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../ScriptEngine/game_logic_dispatch.h"
 class LocomotorTemplate;
 typedef std::vector<const LocomotorTemplate *> LocomotorTemplateVector;
 typedef std::map<LocomotorSetType, LocomotorTemplateVector> LocomotorTemplateMap;
@@ -57,11 +57,7 @@ public:
     AsciiString m_nameString;
 };
 
-class NameKeyGenerator
-{
-public:
-    NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 #define NAMEKEY(s) TheNameKeyGenerator->nameToKey(s)
 

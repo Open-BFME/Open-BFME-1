@@ -17,10 +17,7 @@ inline const unsigned short *UnicodeString::str() const
 	return m_data ? m_data->m_text : L"";
 }
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 // BFME retains the Unicode display name at +0x28 and adds the narrow internal
 // player name at +0x2C.  NetGameCommandMsg::constructGameMessage independently
@@ -51,11 +48,7 @@ public:
 	GameSlot *getSlot(Int slot);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 class Player
 {

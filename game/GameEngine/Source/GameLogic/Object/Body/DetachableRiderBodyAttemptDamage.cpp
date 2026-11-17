@@ -10,7 +10,7 @@
 
 typedef unsigned char Bool;
 typedef float Real;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../ScriptEngine/game_logic_dispatch.h"
 
 class DamageInfo
 {
@@ -39,11 +39,7 @@ public:
 	unsigned char m_disabledMask;
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 float Rva0002CCA5GetGameLogicRandomValueRealThunk(Real lo, Real hi, char *file, int line);

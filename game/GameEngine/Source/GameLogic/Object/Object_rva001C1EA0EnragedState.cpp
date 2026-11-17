@@ -11,7 +11,7 @@
 
 typedef bool Bool;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../ScriptEngine/game_logic_dispatch.h"
 class Module;
 
 class Object
@@ -34,11 +34,7 @@ public:
 	void rva001FAF60();
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

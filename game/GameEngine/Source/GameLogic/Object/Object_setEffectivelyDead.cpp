@@ -11,20 +11,13 @@ enum KindOfType
 	KINDOF_RETAIL_59 = 0x59
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../ScriptEngine/game_logic_dispatch.h"
 
 class Object;
 class Module;
 class DamageInfo;
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

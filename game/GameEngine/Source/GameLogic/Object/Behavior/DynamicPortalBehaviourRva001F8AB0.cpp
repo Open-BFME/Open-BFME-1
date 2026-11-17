@@ -12,8 +12,8 @@
 // virtual, which the body (an object argument read from the stack, ecx never
 // used) refutes. Its EA name is not proven, so it keeps its address.
 // Evidence: targets/game/reverse/identity_evidence/001f8ab0-dynamic-portal-lookup.md
-enum NameKeyType { NAMEKEY_INVALID = 0 };
-class NameKeyGenerator { public: NameKeyType nameToKey(const char *name); };
+#include "../../ScriptEngine/game_logic_dispatch.h"
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 #define NULL 0
 #define NAMEKEY(x) (TheNameKeyGenerator->nameToKey(x))

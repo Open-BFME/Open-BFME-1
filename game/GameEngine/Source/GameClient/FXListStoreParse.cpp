@@ -7,10 +7,7 @@
 
 struct FieldParse;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 class INI
 {
@@ -19,11 +16,7 @@ public:
 	void initFromINI(void *what, const FieldParse *parseTable);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern const FieldParse TheFXListFieldParse[];

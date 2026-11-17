@@ -16,10 +16,7 @@
 // leaves the call unresolved with a zero displacement.
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 enum VeterancyLevel
 {
@@ -59,11 +56,7 @@ private:
 AsciiString getVetUpgradeName(VeterancyLevel level);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
