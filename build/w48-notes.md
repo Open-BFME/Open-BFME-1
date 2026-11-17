@@ -155,3 +155,5 @@
 
 ## w41-i round 27 (claude-sonnet-5-5)
 3 batches served, all skipped. Keys: Recorder.cpp (GameLogic m_unreconstructed_00 stand-in, getReplayDir tmp / writeArgument arg ZH-identical), ShadowRva00459960 m_value3C, ElementPayloadFill003ACD30 m_at00/04/08/0C (opaque). Same dead ends.
+## agent h round 22 (wave 48, claude-sonnet-5-5)
+- 3 batches served, nothing landed. Keys: Rva008B7040Build (Apt stack builder), DamageModuleModuleDataCtorThunk m_unknown*, MemberVision002434D0 at### members, ShadowRva00459960 m_value3C, W3DLightDrawModuleData m_unmodelled_*, PathfinderFindSafePathBfme, Glo012F1028Sub bfmeFinish, MemberTurnAndGoal0024E310, BfmeConv2137/1916, calculateTerrainLOD freq64/time64/startTime64 and line2_d.cpp (verbatim ZH Line2D copy): ZH-identical names are rejected as "still a placeholder" (re-verified), so those can never land.
