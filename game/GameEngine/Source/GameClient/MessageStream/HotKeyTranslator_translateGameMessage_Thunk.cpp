@@ -51,13 +51,10 @@ extern Keyboard *TheKeyboard;
 #include "ascii_string.h"
 #include <map>
 
-class UnicodeString : private StringBase<WideChar>
-{
-public:
-    UnicodeString() : StringBase<WideChar>() {}
-    ~UnicodeString() {}
-    void set(const WideChar *text, Int length);
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 
 class BfmeTransitionMD
 {

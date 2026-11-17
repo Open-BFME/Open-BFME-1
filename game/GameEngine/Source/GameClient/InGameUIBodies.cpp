@@ -177,15 +177,11 @@ extern PlayerList *ThePlayerList;
 // Retail's AsciiString is a one-pointer StringBase<char> view.  Keeping the
 // constructors and release operation out of line leaves the calls at the
 // already matched retail string bodies (0x00888BC0 and 0x00887940).
-template <typename T> class StringBase
-{
-private:
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &that );
-	void releaseBuffer();
-	friend class AsciiString;
-	friend class UnicodeString;
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(*(const StringBase<unsigned short> *)&that); }
+inline UnicodeString::UnicodeString() { m_text = 0; }
+inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
@@ -218,23 +214,6 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString( const UnicodeString &that )
-	{
-		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
-			*(const StringBase<unsigned short> *)&that );
-	}
-
-	~UnicodeString()
-	{
-		((StringBase<unsigned short> *)this)->releaseBuffer();
-	}
-
-private:
-	void *m_data;
-};
 
 // Retail's 0x0043251f ILT is Thing::isKindOf.  Keep this TU-local facade
 // honest about the call shape while preserving the BFME ILT target.

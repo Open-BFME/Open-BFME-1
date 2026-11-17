@@ -12,7 +12,7 @@ template <class T> inline const T *StringBase<T>::reverseFind(T c) const {
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c,1); }
 template <class T> inline void StringBase<T>::concat(const T *s) { concat(s,s ? strlen(s) : 0); }
 #include "ascii_string.h"
-class UnicodeString { public: void translate(const AsciiString &); private: void *m_data; };
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 struct Region3D { Coord3D lo,hi; };
 struct Rva004570F0Node { int color; Rva004570F0Node *parent,*left,*right; };
