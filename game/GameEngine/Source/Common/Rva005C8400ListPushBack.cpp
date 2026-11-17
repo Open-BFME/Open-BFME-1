@@ -14,9 +14,12 @@ namespace _STL
 	};
 	static inline void *nodePoolAllocate(unsigned int bytes) { return __node_alloc<true, 0>::_M_allocate(bytes); }
 
+	// Retail reaches _Construct<Rva005C6730Value> through ILT 0x00030549 only.
 	template <typename T>
 	void _Construct(T *p, const T &val);
 }
+
+extern void j_00030549();
 
 struct Rva005C6730Value
 {
@@ -44,11 +47,17 @@ public:
 	int m_count;
 };
 
+// retail's _Construct<Rva005C6730Value> is only reachable as ILT thunk 0x00030549
+static __forceinline void constructValueCopy(Rva005C6730Value *p, const Rva005C6730Value &v)
+{
+	((void(__cdecl *)(Rva005C6730Value *, const Rva005C6730Value &))j_00030549)(p, v);
+}
+
 void Rva005C6730List::pushBack(const Rva005C6730Value &value)
 {
 	Rva005C6730Node *sentinel = m_sentinel;
 	Rva005C6730Node *node = (Rva005C6730Node *)_STL::nodePoolAllocate(0x14);
-	_STL::_Construct(&node->m_value, value);
+	constructValueCopy(&node->m_value, value);
 
 	Rva005C6730Node *last = sentinel->m_prev;
 	node->m_next = sentinel;
