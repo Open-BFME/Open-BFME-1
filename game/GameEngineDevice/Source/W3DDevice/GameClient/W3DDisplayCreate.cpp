@@ -28,7 +28,7 @@ struct Vector3
 };
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
-struct RGBColor { float red, green, blue; };
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class W3DDynamicLightPulseShim
 {

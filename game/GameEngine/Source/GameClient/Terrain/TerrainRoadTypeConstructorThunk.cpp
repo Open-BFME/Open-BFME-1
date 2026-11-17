@@ -17,12 +17,7 @@ typedef bool Bool;
 enum { BRIDGE_MAX_TOWERS = 4, MAX_BRIDGE_BODY_FX = 3, BODYDAMAGETYPE_COUNT = 4 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameMemory.h
 class MemoryPoolObject

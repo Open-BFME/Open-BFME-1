@@ -21,12 +21,7 @@ class AsciiString;
 // Retail inlines the forwarding copy and calls the narrow StringBase body.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-struct RGBColor
-{
-	float red;
-	float green;
-	float blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 class MultiplayerColorDefinition
 {

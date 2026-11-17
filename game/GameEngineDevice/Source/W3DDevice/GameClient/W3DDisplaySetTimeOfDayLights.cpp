@@ -15,14 +15,7 @@
 
 typedef int Int;
 
-struct RGBColor
-{
-
-    float red;
-    float green;
-    float blue;
-
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

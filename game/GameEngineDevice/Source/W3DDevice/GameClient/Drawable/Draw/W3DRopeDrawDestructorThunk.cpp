@@ -10,12 +10,7 @@
 // secondary interface subobject.  The middle base destructor resets the
 // primary vtable, then calls this root destructor through 0x0002B8C8.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
-struct RGBColor
-{
-	float red;
-	float green;
-	float blue;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 typedef unsigned char XferVersion;
 
