@@ -97,3 +97,25 @@ recommendation: take (b) once the DXTrace lane releases the claim, as one commit
 checklist above; it retires the member and removes the duplicate obstacle from the four
 lookups (162,756 B), strsafe.cpp and dxtracew.cpp. The C++ body stays banked
 (`attempts/0x00afd388.cpp`) for a future 13.00 toolchain.
+
+## Route (b) prerequisite: DXTraceA's literals (measured on census e27899673e)
+
+A MASM body references data by name (`game/masm_dumps/*.asm` use `EXTERN` + `dd <name>`;
+none references a `??_C@` literal). DXTraceA's 8 literal operands and their providers once
+the member is gone:
+
+| site | retail VA | literal | other definers in the census |
+|---|---|---|---|
+| +0x019 | 0x0112F770 | "%ld" | stlport x4 time facets (COMDAT) |
+| +0x04B | 0x011BA158 | "%s(%s): " | none (dxerr9.obj only) |
+| +0x079 | 0x011BA148 | "%s (0x%0.8x)" | none |
+| +0x096 | 0x011BA13C | " (hr=%s)" | none |
+| +0x0B4 | 0x01080294 | "\n" | 51 C++ objects |
+| +0x0C4 | 0x0107301C | "" | 904 objects; data row ?g_Rva0107301CEmptyString@@3QBDB |
+| +0x134 | 0x011BA0E8 | "File: %s\nLine: ..." | none |
+| +0x14B | 0x011BA0C4 | "Unexpected error encountered" | none |
+
+So route (b) also needs the five dxerr9-only narrow literals defined at their retail VAs
+(`tools/add_data_match.py`, one datum each, a data-only TU), while the shared ones keep
+their `??_C@` COMDAT names (an extra name at a literal another TU already provides would be a
+second datum; `tools/duplicate_global.py`). Measure with `link_check` before landing.
