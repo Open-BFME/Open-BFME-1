@@ -148,7 +148,7 @@ static __forceinline BfmeStringData1285 *localEmptyString1285()
 }
 
 extern const float g_bfmeDirectionWeight1285;
-extern float g_bfmeInvalidScore1285;
+
 // AptInput reaches the same singleton through two independently witnessed class slices.
 // Retail 0x013377D8: use the existing data owner; retain the local pointee view.
 extern struct BfmePickWorld1284 *g_bfmeHolderBU;
@@ -174,7 +174,7 @@ static __declspec(noinline) float bfmeDirectionalScore1285(
 	switch (direction) {
 	case 14:
 		if (dx >= 0)
-			return g_bfmeInvalidScore1285;
+			return -1.0f;
 		{
 			int primary = bfmeAbs1285(dx);
 			int perpendicular = bfmeAbs1285(dy);
@@ -182,11 +182,11 @@ static __declspec(noinline) float bfmeDirectionalScore1285(
 		}
 	case 15:
 		if (dx <= 0)
-			return g_bfmeInvalidScore1285;
+			return -1.0f;
 		return (float)bfmeAbs1285(dy) * g_bfmeDirectionWeight1285 + dx;
 	case 1:
 		if (dy >= 0)
-			return g_bfmeInvalidScore1285;
+			return -1.0f;
 		{
 			int primary = bfmeAbs1285(dy);
 			int perpendicular = bfmeAbs1285(dx);
@@ -194,10 +194,10 @@ static __declspec(noinline) float bfmeDirectionalScore1285(
 		}
 	case 2:
 		if (dy <= 0)
-			return g_bfmeInvalidScore1285;
+			return -1.0f;
 		return (float)bfmeAbs1285(dx) * g_bfmeDirectionWeight1285 + dy;
 	}
-	return g_bfmeInvalidScore1285;
+	return -1.0f;
 }
 
 static __declspec(noinline) bool bfmeParseSuffix1285(

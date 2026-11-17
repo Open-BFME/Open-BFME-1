@@ -486,7 +486,7 @@ struct BfmeGuardReturnStateView
 
 extern GameLogic *TheGameLogic;
 extern Int GetGameLogicRandomValue(Int minimum, Int maximum, char *file, Int line);
-extern Real g_bfmeK1266C;
+
 extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
@@ -539,7 +539,7 @@ StateReturnType AIGuardReturnState::onEnter( void )
 			GetLengthEstimateCall asMember;
 		} getLengthEstimateCast;
 		getLengthEstimateCast.asVoid = (void *)j_00036aa2;
-		if (!((delta.*getLengthEstimateCast.asMember)() < g_bfmeK1266C))
+		if (!((delta.*getLengthEstimateCast.asMember)() < 5.0f))
 			goto doEnter;
 	}
 	goto returnSuccess;

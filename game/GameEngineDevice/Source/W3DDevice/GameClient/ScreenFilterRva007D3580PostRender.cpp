@@ -12,7 +12,7 @@ typedef bool Bool;
 
 extern const Real g_rva0107533C;
 extern Real g_bfmeDefaultBU;
-extern Real g_bfmeScaleB3;
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
@@ -185,7 +185,7 @@ Bool Rva007D3580::postRender(FilterModes mode, Coord2D &scrollDelta,
 	v[3].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
 	v[3].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
 	unsigned int currentFade =
-		((Int)((g_bfmeDefaultBU - ZoomFadeValue) * g_bfmeScaleB3) << 24) |
+		((Int)((g_bfmeDefaultBU - ZoomFadeValue) * 255.0f) << 24) |
 		0x00ffffff;
 	v[0].color = currentFade;
 	v[1].color = currentFade;
