@@ -11,12 +11,7 @@
 #include <hash_map>
 #include "string_base.h"
 
-class AsciiString : private StringBase<char> {
-public:
-    AsciiString() {}
-    AsciiString(const char *text) : StringBase<char>(text) {}
-    ~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }

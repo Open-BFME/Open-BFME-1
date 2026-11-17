@@ -15,12 +15,7 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 
-class AsciiString : private StringBase<Char>
-{
-public:
-	AsciiString( const Char *text ) : StringBase<Char>( text ) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 
 class DisplayString
