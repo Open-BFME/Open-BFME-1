@@ -152,10 +152,7 @@ public:
 
 extern LanguageFilter *TheLanguageFilter;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 enum Relationship
 {
@@ -164,11 +161,7 @@ enum Relationship
 	ALLIES
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey( const char *name );
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

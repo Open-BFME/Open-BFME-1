@@ -25,10 +25,7 @@ typedef unsigned int UnsignedInt;
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../ScriptEngine/game_logic_dispatch.h"
 
 enum WeaponSlotType
 {
@@ -79,11 +76,7 @@ public:
 	RvaC4390First *resolve(Int value);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 class UpgradeCenter

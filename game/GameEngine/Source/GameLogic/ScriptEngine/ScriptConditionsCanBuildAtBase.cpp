@@ -33,10 +33,7 @@
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "game_logic_dispatch.h"
 
 #include "ascii_string.h"
 
@@ -73,11 +70,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList

@@ -68,7 +68,7 @@ struct hash
 };
 }
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 enum VeterancyLevel { LEVEL_REGULAR = 0 };
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
 enum Rva000D6C60Mapped { Rva000D6C60MappedZero = 0 };
@@ -103,11 +103,7 @@ typedef _STL::map<NameKeyType, Rva000D63C0Mapped> ProductionChangeMap;
 typedef _STL::map<NameKeyType, VeterancyLevel> ProductionVeterancyMap;
 typedef _STL::hash_map<Int, Relationship> PlayerRelationMap;
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 class GlobalData

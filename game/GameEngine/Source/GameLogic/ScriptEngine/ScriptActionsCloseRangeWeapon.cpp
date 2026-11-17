@@ -13,7 +13,7 @@
 
 typedef bool Bool;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "game_logic_dispatch.h"
 
 class Object;
 class Module;
@@ -172,11 +172,7 @@ extern ScriptEngine *TheScriptEngine;
 extern NameKeyGenerator *TheNameKeyGenerator;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions

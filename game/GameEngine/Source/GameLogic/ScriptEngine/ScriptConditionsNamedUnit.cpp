@@ -121,19 +121,12 @@ public:
 	AsciiString m_string;					// this+0x10
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "game_logic_dispatch.h"
 
 class Module;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 // The thing Object+0x210 points at. Two conditions read it -- one for the name
 // at +0x08, one for the rank level at +0x28 -- and neither proves what it is.

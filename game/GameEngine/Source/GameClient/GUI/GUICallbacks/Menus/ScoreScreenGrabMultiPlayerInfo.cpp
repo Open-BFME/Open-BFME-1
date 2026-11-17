@@ -13,10 +13,7 @@
 typedef int Int;
 typedef bool Bool;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 template <typename T> class StringBase
 {
@@ -73,11 +70,7 @@ public:
 	GameSlot *getSlot(Int slot);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 class ScoreKeeper
 {

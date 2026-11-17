@@ -7,7 +7,7 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../ScriptEngine/game_logic_dispatch.h"
 
 class BfmeE1166
 {
@@ -66,11 +66,7 @@ public:
 	void markAsDetected(UnsignedInt frames, Bool propagate);
 };
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 

@@ -80,16 +80,9 @@ public:
 // its ILT (0x00012D69, the defined row ?j_00012d69@@YAXXZ).
 void __cdecl j_00012d69(void);
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-class NameKeyGenerator
-{
-public:
-	NameKeyType nameToKey(const char *name);
-};
+
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
