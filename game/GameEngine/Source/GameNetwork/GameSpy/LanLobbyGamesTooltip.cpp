@@ -88,6 +88,17 @@ public:
 	const GameSlot *getConstSlot(Int slot) const;
 };
 
+// Retail calls ILT 0x000170BC (-> 0x0061E8E0, the dup copy of getConstSlot),
+// not the 0x0061E900 body that GameInfo::getConstSlot is pinned to.
+extern void j_000170bc();
+
+__forceinline const GameSlot *(GameInfo::*lanTooltipConstSlot())(Int) const
+{
+	union { void (*raw)(); const GameSlot *(GameInfo::*member)(Int) const; } fn;
+	fn.raw = j_000170bc;
+	return fn.member;
+}
+
 class LANGameInfo : public GameInfo
 {
 };
@@ -158,7 +169,7 @@ void Rva00518150LanLobbyTooltip(GameWindow *window, WinInstanceData *,
 	UnicodeString tooltip;
 	for (Int i = 0; i < 8; ++i)
 	{
-		const GameSlot *slot = game->getConstSlot(i);
+		const GameSlot *slot = (game->*lanTooltipConstSlot())(i);
 		if (slot->isHuman())
 		{
 			if (tooltip.getLength() != 0)
