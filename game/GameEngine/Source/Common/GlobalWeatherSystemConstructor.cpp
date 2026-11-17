@@ -40,6 +40,16 @@ public:
 	void *m_data;
 };
 
+
+// These address-only declarations name the existing retail callback ILTs.
+extern "C" void __cdecl __identifier("?j_0003c0ba@@YAXXZ")();
+extern "C" void __cdecl __identifier("?j_00048d42@@YAXXZ")();
+extern "C" void __cdecl __identifier("??_L@YGXPAXIHP6EX0@Z1@Z")(void *,unsigned,int,void *,void *) throw(...);
+extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")(void *,unsigned,int,void *) throw(...);
+// Preserve the CRT helpers' actual stdcall ABI while retaining their exact
+// decorated linker spellings; direct stdcall declarations append an extra @N.
+typedef void (__stdcall *BfmeArrayCtorABI)(void *,unsigned,int,void *,void *);
+typedef void (__stdcall *BfmeArrayDtorABI)(void *,unsigned,int,void *);
 class Rva0039B450Element
 {
 public:
@@ -49,6 +59,7 @@ public:
 private:
 	unsigned int m_words[2];
 };
+
 
 class GlobalWeatherSystem : public SubsystemInterface, public BfmeBaseVUQ
 {
@@ -63,7 +74,32 @@ private:
 	BFMERetailAsciiString m_str;                               ///< +0x1C
 	unsigned int m_at20;
 	unsigned int m_at24;                                       ///< +0x24, untouched
-	Rva0039B450Element m_array[5];                             ///< +0x28
+	    // Preserve the established element type and count while spelling the
+    // original ILT callbacks explicitly. This is a local lifetime adapter,
+    // not a replacement identity for the element class.
+    template<class Element, unsigned Count>
+    struct ElementArrayLifetime
+    {
+        typedef char RetainedElementWidth[(sizeof(Element) == 8 && sizeof(unsigned) == 4) ? 1 : -1];
+        unsigned m_words[(sizeof(Element) * Count) / sizeof(unsigned)];
+
+        __declspec(dllimport) __forceinline ElementArrayLifetime()
+        {
+            reinterpret_cast<BfmeArrayCtorABI>(&__identifier("??_L@YGXPAXIHP6EX0@Z1@Z"))(
+                this, sizeof(Element), Count,
+                reinterpret_cast<void *>(&__identifier("?j_0003c0ba@@YAXXZ")),
+                reinterpret_cast<void *>(&__identifier("?j_00048d42@@YAXXZ")));
+        }
+
+        __declspec(dllimport) __forceinline ~ElementArrayLifetime()
+        {
+            reinterpret_cast<BfmeArrayDtorABI>(&__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
+                this, sizeof(Element), Count,
+                reinterpret_cast<void *>(&__identifier("?j_00048d42@@YAXXZ")));
+        }
+    };
+
+    ElementArrayLifetime<Rva0039B450Element, 5> m_array;                             ///< +0x28
 };
 
 // ??0GlobalWeatherSystem@@QAE@XZ

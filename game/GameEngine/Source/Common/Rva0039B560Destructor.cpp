@@ -33,6 +33,8 @@ private:
 	unsigned int m_body;
 };
 
+// Retain the legacy per-unit identity hint. The array below is represented
+// independently by its measured stride and original ILT callback.
 class ThingRef
 {
 public:
@@ -42,6 +44,12 @@ private:
 	unsigned int m_words[2];
 };
 
+// Address-only ILT declaration. The CRT supplies the callback's original thiscall ABI.
+extern "C" void __cdecl __identifier("?j_00048d42@@YAXXZ")();
+extern "C" void __cdecl __identifier("??_M@YGXPAXIHP6EX0@Z@Z")(void *, unsigned, int, void *) throw(...);
+// Calling through the actual stdcall ABI avoids a spurious @16 linker suffix
+// on VC7.1's already decorated CRT identifier.
+typedef void (__stdcall *BfmeArrayDtorABI)(void *, unsigned, int, void *);
 class Rva0039B560 : public SubsystemInterface, public Snapshot
 {
 public:
@@ -52,7 +60,24 @@ private:
 	AttributeHandleStandIn m_memberC;                          ///< +0x18
 	AsciiString m_str;                                         ///< +0x1C
 	unsigned char m_pad20[0x28 - 0x20];                         ///< +0x20, untouched by this body
-	ThingRef m_array[5];                                       ///< +0x28, eight-byte stride
+	    // Preserve the established element type and count while spelling the
+    // original ILT callbacks explicitly. This is a local lifetime adapter,
+    // not a replacement identity for the element class.
+    template<class Element, unsigned Count>
+    struct ElementArrayLifetime
+    {
+        typedef char RetainedElementWidth[(sizeof(Element) == 8 && sizeof(unsigned) == 4) ? 1 : -1];
+        unsigned m_words[(sizeof(Element) * Count) / sizeof(unsigned)];
+
+        __declspec(dllimport) __forceinline ~ElementArrayLifetime()
+        {
+            reinterpret_cast<BfmeArrayDtorABI>(&__identifier("??_M@YGXPAXIHP6EX0@Z@Z"))(
+                this, sizeof(Element), Count,
+                reinterpret_cast<void *>(&__identifier("?j_00048d42@@YAXXZ")));
+        }
+    };
+
+    ElementArrayLifetime<ThingRef, 5> m_array;                                       ///< +0x28, eight-byte stride
 };
 
 // @??1Rva0039B560@@UAE@XZ 0x0039B560

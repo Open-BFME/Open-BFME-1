@@ -4273,3 +4273,30 @@ In `AIMoveAndEvacuateStateCtorThunk.cpp` (retail 0x0017FD10, 57 bytes), replacin
 ## Avoid an unused incompatible inline-member COMDAT in legacy GameAudio
 
 MSVC7.1, unchanged GameAudio.cpp release/STLport flags: its legacy isEmpty inline tests the first character, but also emits an unreferenced22B shared member copy which conflicts with the canonical Base length predicate. Replacing the two uses with the existing str()[0] ==0 API emits identical inline code while dropping only that unreferenced copy. Direct Base forwarding changed a47B body to52B; a static helper added a body; a raw logical expression moved the return block. The successful public index test preserves all1005 other ordinary runtime sections and3,030 ledger rows. See targets/game/reverse/identity_evidence/20261116-gameaudio-unused-isempty.md. This observed effect is specific to that legacy header and compiler context; do not substitute character emptiness for canonical Base length semantics generally.
+
+
+### VC7.1: exact CRT callback identifiers without outlined storage helpers
+
+In the weather ctor and matching array dtor, manually spelling the already
+decorated `??_L`/`??_M` CRT names in a direct stdcall declaration produced an
+extra `@20`/`@16` linker suffix. A force-inline storage destructor alone also
+left an unwanted16B outlined COMDAT. Neither was a valid repair.
+
+An address-only C-linkage declaration with cdecl spelling, invoked through
+the actual stdcall function-pointer type, retains the exact CRT linker name
+and callee stack cleanup. `__declspec(dllimport) __forceinline` on the local
+storage constructor/destructor suppresses the outlined helper and leaves no
+helper import. This reuses the established imported-inline technique from
+17658e39a3; plain forceinline did not suffice.
+
+VC7.1, original `/DNDEBUG /MD /EHsc /O2`, private controls and separate ordinary
+objects: two consumers retain313B/three rows, complete object inventories
+match under only the original-address-proven callback-to-ILT spellings,
+and1045/1045 provider/consumer rows pass with52 DIR32 references. Physical
+80B parent layouts and the40B storage at+0x28 are independently checked.
+This is target-specific ABI/linker spelling, not a general C++ declaration
+rule or a new claim about the original array element class.
+
+See `targets/game/reverse/identity_evidence/20261116-fivehundred-adoption-50.md`.
+Native ownership-record retirements and the one EH-locator update are part
+of the same verified repair. No linked-byte total or runtime fix is inferred.
