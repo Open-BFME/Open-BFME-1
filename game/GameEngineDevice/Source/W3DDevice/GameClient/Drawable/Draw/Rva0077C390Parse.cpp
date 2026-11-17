@@ -105,13 +105,39 @@ void parseModelConditionFlags(
 	Rva0076A580ModelConditionFlags *all,
 	Rva0076A580ModelConditionFlags *positive);
 
-struct FieldParse;
+class INI;
+
+struct FieldParse
+{
+	const char *token;
+	void (*parse)(INI *, void *, void *, const void *);
+	const void *userData;
+	unsigned int offset;
+};
+
 extern const FieldParse g_01124420[];
 
 class INI
 {
 public:
 	void initFromINI(void *what, const FieldParse *parseTable);
+	static void parseAsciiString(INI *ini, void *instance, void *store, const void *userData);
+	static void parseCoord3D(INI *ini, void *instance, void *store, const void *userData);
+};
+
+// Retail .rdata VA 0x01124420 (48 B + 16 B terminator): the sub-block table
+// handed to INI::initFromINI.  Bone and Offset hold the real parser bodies
+// (parseAsciiString 0x00851EE0, parseCoord3D 0x00853380); Model holds the
+// incremental-link thunk 0x000445A3, which jumps to 0x007752E0, so the thunk
+// row's name is the relocation target.
+extern "C" void __identifier("?j_000445a3@@YAXXZ")(INI *, void *, void *, const void *);
+
+const FieldParse g_01124420[] =
+{
+	{ "Bone", INI::parseAsciiString, 0, 0x0 },
+	{ "Offset", INI::parseCoord3D, 0, 0x4 },
+	{ "Model", __identifier("?j_000445a3@@YAXXZ"), 0, 0x0 },
+	{ 0, 0, 0, 0 }
 };
 
 class INIException

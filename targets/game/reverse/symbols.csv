@@ -91343,3 +91343,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0BE@NCBMOLBB@MaxRandomAnimations?$AA@,0x00D22648,TheLodOptionsFieldParse VA 0x011226B8 entry 2 token; compiler string literal MaxRandomAnimations equals retail at VA 0x01122648
 ??_C@_0BC@MOFFPBO@MaxAnimFrameDelta?$AA@,0x00D22630,TheLodOptionsFieldParse VA 0x011226B8 entry 3 token; compiler string literal MaxAnimFrameDelta equals retail at VA 0x01122630
 ??_C@_0BI@HDNJMECK@RandomStartFramePercent?$AA@,0x00D22614,TheLodOptionsFieldParse VA 0x011226B8 entry 4 token; compiler string literal RandomStartFramePercent equals retail at VA 0x01122614
+??_C@_04CCGIJNFG@Bone?$AA@,0x00CA2628,g_01124420 field-parse table VA 0x01124420 entry 0 token; compiler string literal Bone equals retail at VA 0x010A2628
+??_C@_06GEMKPBPA@Offset?$AA@,0x00C9F2A4,g_01124420 field-parse table VA 0x01124420 entry 1 token; compiler string literal Offset equals retail at VA 0x0109F2A4
