@@ -55,12 +55,7 @@ enum KindOfType { KINDOF_STRUCTURE = 7, KINDOF_INFANTRY = 8, KINDOF_CAVALRY = 9,
 
 // Retail 0x001701A0 / 0x001C2B80: the forty-byte model-condition record the
 // draw module is asked about, built and then cleared.
-class Rva001701A0Record
-{
-public:
-	char m_storage[40];
-	Rva001701A0Record();
-};
+#include "../../Common/Rva001701A0Record.h"
 class Rva001C2B80 { public: void clear(); };
 
 class ModuleData
