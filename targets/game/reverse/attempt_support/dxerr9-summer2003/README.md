@@ -1,5 +1,13 @@
 # DXErr9 Summer 2003: archive-to-source proof packet
 
+**Status 2026-11-17: done, do not reopen.** All 14 `.text` sections of
+`obj\i386\dxerr9.obj` are owned by source rows (twelve in
+`game/Libraries/Source/DirectX/`, the two A workers by d3dx9 `cimage.obj`); the last
+landing, 87bbdd2a2 (`_DXTraceA@20`), retired the member. Outcome, verification and the
+one open docs step (`provenance-coverage-retired.patch`, needs a commit that pays the
+full gate): `member-retirement-plan-20261117.md`. Census queue entries for the four
+lookups predate that commit (census e27899673e); the next census drops them.
+
 This batch replaces four unchanged native `.lib` owners with ordinary C++ lookup
 switches. It is **not** new unclaimed coverage, game-algorithm recovery, a rename,
 or a closure result. Identity/provenance and byte/data distinctions are in
