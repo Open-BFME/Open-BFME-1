@@ -24,9 +24,35 @@ long __stdcall StringCopyWorkerW(wchar_t* destination, unsigned int capacity,
     return result;
 }
 
+// The bounded C++ overload VS2003 stdio.h:376 declares (without _CRTIMP, as /MT
+// spells it): retail's worker calls it directly through the MSVCR71.dll import
+// thunk 0x009F719C (IAT 0x01359228, ?vswprintf@@YAHPAGIPBGPAD@Z).
+int __cdecl vswprintf(wchar_t*, size_t, const wchar_t*, va_list);
+
+long __stdcall StringVPrintfWorkerW(wchar_t* destination, unsigned int capacity,
+                                  const wchar_t* format, va_list arguments)
+{
+    long result = 0;
+    if (capacity == 0)
+        result = (long)0x80070057;
+    else {
+        unsigned int maximum = capacity - 1;
+        int written = vswprintf(destination, maximum, format, arguments);
+        if (written < 0 || (unsigned int)written > maximum) {
+            destination += maximum;
+            *destination = 0;
+            result = (long)0x8007007a;
+        }
+        else if ((unsigned int)written == maximum) {
+            destination += maximum;
+            *destination = 0;
+        }
+    }
+    return result;
+}
+
 long __stdcall StringCopyWorkerA(char*, unsigned int, const char*);
 long __stdcall StringVPrintfWorkerA(char*, unsigned int, const char*, va_list);
-long __stdcall StringVPrintfWorkerW(wchar_t*, unsigned int, const wchar_t*, va_list);
 
 long __stdcall StringCchCopyA(char* destination, unsigned int capacity, const char* source)
 {
