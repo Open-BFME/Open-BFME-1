@@ -213,10 +213,10 @@ struct Boxed
 
 struct ZeroSix29cPair128
 {
-	ZeroSix29cPair128(void) : d284(0), d288(0), d28c(0), d290(0), d294(0), d298(0), f29c(10.0f), a2a0(128), a2a4(128) { }
+	ZeroSix29cPair128(void) : d284(0), d288(0), d28c(0), d290(0), d294(0), d298(0), m_gridCellSize(10.0f), m_gridCellsX(128), m_gridCellsY(128) { }
 	unsigned long d284, d288, d28c, d290, d294, d298;
-	float f29c;
-	int a2a0, a2a4;
+	float m_gridCellSize;
+	int m_gridCellsX, m_gridCellsY;
 };
 
 class WaterRenderObjClass : public BfmeBaseVUQ, public RenderObjClass
