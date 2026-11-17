@@ -13,7 +13,7 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 
 typedef unsigned short WideChar;
 
-extern "C" __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(
+extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(
 	const WideChar *text);
 extern const char g_Rva0107301CEmptyString[];
 
@@ -91,10 +91,11 @@ public:
 		((StringBase<WideChar> *)this)->releaseBuffer();
 	}
 
+	/// @ai-edited: use the retail-proven native wide-length import.
 	UnicodeString &operator=(const WideChar *text)
 	{
 		((StringBase<WideChar> *)this)->set(
-			text, text ? (int)bfmeLenVGI(text) : 0);
+			text, text ? (int)wcslen(text) : 0);
 		return *this;
 	}
 
