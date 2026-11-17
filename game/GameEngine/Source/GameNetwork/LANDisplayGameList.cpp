@@ -25,40 +25,8 @@ typedef Int Color;
 typedef unsigned short UnsignedShort;
 typedef unsigned short WideChar;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-public:
-	void set(const T *text, Int length);			// 0x008885C0 (wide)
-	void concat(const T *text, Int length);			// 0x00888600 (wide)
-
-private:
-	struct Header
-	{
-		Int refCount;
-		UnsignedShort length;
-		UnsignedShort capacity;
-		T data[1];
-	};
-
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &src);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const unsigned short *);
 

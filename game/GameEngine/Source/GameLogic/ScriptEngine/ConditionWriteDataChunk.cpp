@@ -12,63 +12,9 @@
 // shared reference headers remain untouched.
 #define ASCIISTRING_H
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	static AsciiString TheEmptyString;
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	AsciiString() : m_text(0) {}
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
 
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-		return *this;
-	}
-	AsciiString &operator=(const char *text)
-	{
-		((StringBase<char> *)this)->set(text, text ? (int)strlen(text) : 0);
-		return *this;
-	}
-
-	const char *str() const
-	{
-		return m_text ? (const char *)(m_text + 8) : "";
-	}
-	int getLength() const
-	{
-		return m_text ? *(const unsigned short *)(m_text + 4) : 0;
-	}
-	int compareNoCase(const AsciiString &that) const
-	{
-		return ((const StringBase<char> *)this)->compareNoCase(
-			*(const StringBase<char> *)&that);
-	}
-	void concat(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->concat(that.str(), that.getLength());
-	}
-
-private:
-	char *m_text;
-};
-
-inline bool operator==(const AsciiString &left, const AsciiString &right)
-{
-	return strcmp(left.str(), right.str()) == 0;
-}
 
 // The ScriptEngine header includes the game-memory placement-new shim.  Keep
 // the CRT's duplicate inline overloads suppressed in this TU.

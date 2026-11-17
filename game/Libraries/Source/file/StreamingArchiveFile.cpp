@@ -13,34 +13,8 @@ typedef float Real;
 #define TRUE true
 #define NULL 0
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../WWVegas/WWLib/ascii_string.h"
 
-private:
-	struct Header
-	{
-		int refCount;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-
-	StringBase() : m_data(0) {}
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-	const char *str() const
-	{
-		return m_data ? m_data->data : "";
-	}
-};
 
 class File
 {

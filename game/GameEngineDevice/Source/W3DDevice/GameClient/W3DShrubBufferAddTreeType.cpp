@@ -30,22 +30,8 @@ template <typename T> struct TreeStringData
     T m_text[1];
 };
 
-template <typename T> class StringBase
-{
-public:
-    void set(const StringBase<T> &other);
-    void concat(const T *str);
-protected:
-    TreeStringData<T> *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-    void set(const AsciiString &other) { StringBase<char>::set(other); }
-    void concat(const char *s) { StringBase<char>::concat(s); }
-    const char *str(void) const { return m_data ? m_data->m_text : ""; }
-};
 
 class Rva0071EB50TreeType
 {

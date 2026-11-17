@@ -18,7 +18,7 @@ public:
  Overridable* next;
 };
 template<class T>class OVERRIDE {const T*p;public:const T*operator*()const {if(!p)return 0;return(T*)p->getFinalOverride();}operator const T*()const{return operator*();}};
-class AsciiString {public:char*data;const char*str()const{return data?data+8:"";}};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class ThingTemplate:public Overridable {public:char pad08[0x18];AsciiString name;const AsciiString&getName()const{return name;}};
 #include "../../../command_source_type.h"
 class AICommandInterface {public:void aiIdle(CommandSourceType);};
