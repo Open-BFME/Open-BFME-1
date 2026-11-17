@@ -54,6 +54,9 @@
 #include "GameClient/Drawable.h"
 #include "Common/INI.h"
 
+// Use the separately verified retail provider (ThingTemplateHashResize.cpp, 0x00135ED0); suppress this competing copy.
+namespace _STL { template <> void hashtable<pair<const AsciiString, ThingTemplate *>, AsciiString, rts::hash<AsciiString>, _Select1st<pair<const AsciiString, ThingTemplate *> >, rts::equal_to<AsciiString>, allocator<pair<const AsciiString, ThingTemplate *> > >::resize(unsigned int); }
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
