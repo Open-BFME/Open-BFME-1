@@ -3,7 +3,8 @@
 
 
 
-extern const float Rva008AC750Span;
+// Retail VA 0x01136850 .rdata bytes db0f4940 = pi as float; owned here once.
+extern const float Rva008AC750Span = 3.14159274f;
 float wrapAngle(float x)
 {
 	x = (float)fmod((double)x, 3.1415927410125732);
