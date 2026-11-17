@@ -131,3 +131,6 @@
 
 ## agent h round 19 (wave 48, claude-sonnet-5-5)
 - 1 batch x5 viewed, nothing submitted. Keys: BfmeConv961 Reset/Gate/Flag types (tiny, no ZH twin), Rva0041F070 value2c/valuea8/value11c, StructureCollapse/FadeAndDieOrnament ModuleData ctor m_dieData*/m_one*, LivingWorldArmyAssign m_08.., RbTree insert x/y/v/w. Same dead ends; stopped early.
+
+## w41-i round 24 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing justifiable). Keys: Rva009A2350Node/Link (collision manager link), Rva8CDA60 stack dispatch, Rva0010F100Receiver, S2ZeroFillCtors, Rva0049A100, RubbleRise dword B4/C4, Lerp a/b, Bfme5TinyTwentySeven, Rva00063F90Blend, WanderAI ctor, Rva002CFC80TinyBodies, ToggleMounted, Rva0029C380, EnragedBehavior, BfmeConv2022. Same dead ends.
