@@ -8,7 +8,7 @@ class Module;
 enum NameKeyType { KEY_NONE=0 };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
-#define OBJECT_TU_MEMBERS void setStatus(const BitFlags<86>&,bool); void notifyModelConditionChanged(); Module* findModule(NameKeyType) const;
+#define OBJECT_TU_MEMBERS void setStatus(const BitFlags<86>&,bool); void notifyModelConditionChanged(); friend class FlameCleanup00293E50; protected: Module* findModule(NameKeyType) const; public:
 #include "../object.h"
 class Rva001C1EA0Object { public: void rva001C1EA0(bool); };
 class BfmeMarksYE { public: void bfmeSetYE(unsigned char,unsigned char); };
