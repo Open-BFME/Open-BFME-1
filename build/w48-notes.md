@@ -50,3 +50,5 @@
 
 ## w41-i round 11 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: DamageModule/TransportAIUpdate/ReplenishUnits/ReflectDamage ModuleData ctor offsets, Gen003CAE40Hold, Rva0041F070 value2c/valuea8, Rva004488B0 copy params, BfmeConv1000/1401, BattlePlanUpdate set/clearCondition o. Same dead ends.
+## agent h round 9 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: BfmeConv827 BfmeMgr/Sub2B8/lookupAndSend (opaque vtable views), Rva008B7040Build m_value*, BfmeConv1226 BfmeE/P1226, MapObjectFastAssignUniqueIDs AsciiString p/s (known placeholder dead end), Rva008A4540 m_00/m_04, DebugDisplay setCursorPos x/y (known dead end), HitReaction ctor m_field*, U2 Rva0083F2F0Duplicate p, BfmeThreeHundredThirtyTwo BfmeNodeSD.., Rva005F6B60, W3DFloor m_unmodelled_*. All opaque/no ZH twin.
