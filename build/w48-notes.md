@@ -32,3 +32,6 @@
 ## agent h round 5 (wave 48)
 - 3 batches x5 served. Submitted: ArchiveFileGetFileList.cpp (3 locals tempDirInfo/tempdirname/tempfilename with ZH names rejected "still a placeholder"; set/concat/compare/compareNoCase param s -> str and compare n -> minLen recorded as hashes). MapObjectFastAssignUniqueIDs AsciiString ctor param p -> s / c rejected as placeholder.
 - Skipped: ToppleUpdate m_20/m_f18/m_f1c, HorseHorde/HordeSiege/FadeAndDie module data offsets, Rva-typed dump classes, LivingWorldArmyAssign m_08.., Apt bounds getter Bfme* members, Rva0010F100 call2 helper.
+
+## w41-i round 7 (claude-sonnet-5-5)
+3 batches x5 served, nothing submitted. Keys: Y2FeslDemanglerDispatch Rva00800E50Stamp/Owner m_00..m_20 (opaque), Rva8CDA60 Apt stack dispatch types, FadeAndDieOrnament/ShareExperience/Firestorm/BannerCarrier ModuleData ctor offsets, Rva003C7B60 create-render-object views (HolderView m_field08 = z height, BFME-only), BFMEFactoryModuleData m_unmodelled_*, CastleBehavior rva00371b00 (m_flagA5/m_objectIDsB8/ThingTemplate m_unmodelledD8 bit 0x200000: BFME-only, no ZH twin; Thing::getTemplate tmpl local is ZH-identical), Rva8BB1A0 bounds v00..v14, MemberTurnAndGoal offsets, BfmeConv1907/1778 Bfme* slots. Same dead ends as rounds 1-6.
