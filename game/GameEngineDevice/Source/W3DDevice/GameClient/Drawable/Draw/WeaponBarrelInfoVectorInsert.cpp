@@ -16,11 +16,25 @@ public:
 	// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DModelDraw.h
 	struct WeaponBarrelInfo
 	{
-		WeaponBarrelInfo(const WeaponBarrelInfo &other);
+		WeaponBarrelInfo(const WeaponBarrelInfo &other) throw();
 
 		char m_bfmeBody[0x3C];
 	};
 };
+
+// Retail's _Construct COMDAT (0x00761370, 19 bytes) is a bare null-check and
+// call with no unwind frame, and the overflow body keeps calling it out of
+// line; the copy constructor is nothrow and the specialization stays noinline.
+namespace _STL
+{
+template <>
+inline __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(
+	ModelConditionInfo::WeaponBarrelInfo *p, const ModelConditionInfo::WeaponBarrelInfo &value)
+{
+	if (p)
+		new (p) ModelConditionInfo::WeaponBarrelInfo(value);
+}
+}
 
 void BfmeWeaponBarrelInfoVectorAnchor(_STL::vector<ModelConditionInfo::WeaponBarrelInfo> &v, const ModelConditionInfo::WeaponBarrelInfo &value)
 {
