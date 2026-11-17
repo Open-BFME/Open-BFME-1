@@ -1857,7 +1857,7 @@ void TerrainShader2Stage::reset(void)
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|1);
 }
 
-extern const Real g_bfmeK1266B;
+
 extern Real g_millisecondsToSeconds;
 
 #define BFME_DEFAULT_BU (1.0f)
@@ -1895,11 +1895,11 @@ void TerrainShader2Stage::updateNoise1(D3DXMATRIX *destMatrix,D3DXMATRIX *curVie
 	}
 	m_xOffset += (float)delta *
 		(globalData->m_field48 *
-			g_bfmeK1266B + BFME_DEFAULT_BU) * m_xSlidePerSecond *
+			4.0f + BFME_DEFAULT_BU) * m_xSlidePerSecond *
 		g_millisecondsToSeconds;
 	m_yOffset += (float)delta *
 		(((Rva007DCCE0GlobalData *)TheWritableGlobalData)->m_field48 *
-			g_bfmeK1266B + BFME_DEFAULT_BU) * m_ySlidePerSecond *
+			4.0f + BFME_DEFAULT_BU) * m_ySlidePerSecond *
 		g_millisecondsToSeconds;
 
 	while (m_xOffset > 1) m_xOffset -= 1;
