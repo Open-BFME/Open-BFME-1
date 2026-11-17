@@ -175,3 +175,5 @@
 
 ## agent h round 26 (wave 48, claude-sonnet-5-5)
 - 3 batches served, all skipped (nothing justifiable). Keys: BfmeConv1000, AIUpdateComputeQuickPath, Rva0029C380BuildableStatus (ProductionUpdate::getEntryToProcess, opaque), W3DStreakDraw ModuleData ctor m_unmodelled_*, Bfme5ThirtyThree, Rva0010F100Receiver, INIMapCache, MpGameSetupSetMap m_flag10..15, Rva0034FE00Assign, bezier_segment (ZH-identical), GiantBirdSlowDeath/SpawnUnit ModuleData ctors, Bfme5SmallAccessors. Same dead ends. Do not pipe `next` into head (BrokenPipe).
+## w41-i round 31 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: UpdateModuleModuleData ctor m_unknown*/m_flag*, Rva002469D0 audio entry types, Rva002458B0/Rva00242A30 formation types, BfmeSeed37A750, BfmeConv1901, MeshModelInstallMaterials Rva00930070, ParseMoveCameraBlock Rva003B7650Record, Rva0020DEE0Apply, S5Parse005A0720, CritterEmitter ctor thunk, CastleBehavior, Rva8CDA60, Rva1FC330. Same dead ends.
