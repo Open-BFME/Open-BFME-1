@@ -1035,35 +1035,10 @@ void TAiData::loadPostProcess( void )
 }  // end loadPostProcess
 
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/AI_crc_Thunk.cpp
-// ?crc@AI@@UAEXPAVXfer@@@Z present-unmatched
-void AI::crc( Xfer *xfer )
-{
-
-	xfer->xferSnapshot( m_pathfinder );
-	CRCGEN_LOG(("CRC after AI pathfinder for frame %d is 0x%8.8X\n", TheGameLogic->getFrame(), ((XferCRC *)xfer)->getCRC()));
-
-	AsciiString marker;
-	TAiData *aiData = m_aiData;
-	while (aiData)
-	{
-		marker = "MARKER:TAiData";
-		xfer->xferAsciiString(&marker);
-		xfer->xferSnapshot( aiData );
-		aiData = aiData->m_next;
-	}
-
-	for (std::list<AIGroup *>::iterator groupIt = m_groupList.begin(); groupIt != m_groupList.end(); ++groupIt)
-	{
-		if (*groupIt)
-		{
-			marker = "MARKER:AIGroup";
-			xfer->xferAsciiString(&marker);
-			xfer->xferSnapshot( (*groupIt) );
-		}
-	}
-
-}  // end crc
+// The retail CRC implementation is owned by AI_crc_Thunk.cpp (0x0014B8C0).
+// BFME 2 aa505f34 also removes this legacy definition; its combined AI_xfer
+// implementation is version-specific and is not imported into BFME 1.
+  // end crc
 
 //-----------------------------------------------------------------------------
 // ?xfer@AI@@UAEXPAVXfer@@@Z present-unmatched
