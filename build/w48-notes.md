@@ -90,3 +90,11 @@
 
 ## w41-i round 18 (claude-sonnet-5-5)
 3 batches served, nothing submitted. Keys: SiegeDeploySpecialPowerModuleData ctor m_1d0..m_1e0 (500/200 floats, no ZH twin), BfmeConv1115, HordeContain ctor Rva0023EAF0TenWords/m_1e4.., WanderAIUpdate/CollideModule ctor thunk m_unknown*, Pathfinder iterateCellsAlongLine Bresenham locals (ZH-identical, known placeholder dead end). Same dead ends.
+# w48 lane e (non-family LOSERS) notes
+- link_check on one file takes ~4 min (run in background, poll). Index loader snippet: pickle build/link_census/link_index.pkl -> ix['comdat'][name] lists (obj, digest, 'retail'|'wrong'|'unknown').
+- LANDED: SparseMatchFinderFindBestInfoSlowThunk.cpp: inline member BitFlags<17>::countInverseIntersection was emitted as COMDAT even though inlined (cl emits inlined inline-members). Declaring it extern-only breaks bytes (retail inlines). Recipe that works: replace member by a `static __forceinline` free helper (no COMDAT, same bytes).
+- Dead ends: setAnimationLoopDuration@Drawable (Drawable.cpp present-unmatched body; retail body 0x413490 is ledgered as BfmeOwner1158::bfmeSubDAll1158 in BfmeConv1158.cpp, ILT 0x478CA; needs a name_lane rename ripple across 5+ callers; not done).
+- RefHandle008958D0 dtor (row 32): Apt TUs 0x893030/895A00/895D30 need the dtor inlined in the body but funclet references the symbol; forceinline copy still emitted; documented in identity_evidence/00784a70-*. Needs a trick to keep funclet call external while body inlines; untried.
+- MapMetaData::operator= (row 104, rva 0xC1050): INIMapCache/MapUtil use ZH MapUtil.h with implicit operator=; implicit copy COMDAT emitted. Fix needs explicit declaration in a shim header (full gate) -- not done.
+- countInverseIntersection<17> also still emitted by ThingTemplate.obj (real header inline); needs shared header change.
+- Push contention is heavy; loop pull --rebase + push; submodule pointer may need `git submodule update inputs/reference/open-bfme-2` (slow, ~3 min) before pre-push accepts.
