@@ -77,3 +77,5 @@
 
 ## w41-i round 15 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: DeployStyleAIUpdateModuleData ctor thunk (stand-in actually Wander-like layout, ZH DeployStyle fields don't match), Glo012F1028Sub bfmeFinish members, Rva008BDD70 types, Rva001515C0Xfer, PathfinderFindSafePathBfme slots, BfmeOneHundredThirty m_bfmeNN, Small03eListNode, EnragedBehavior m_f1c/f20, Rva002CFC80TinyBodies, BfmeConv2022. Same dead ends.
+## agent h round 13 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: UnicodeString set/concat s, nextToken tmp (ZH-identical, known placeholder dead end), BfmeConv1309 TDA/TDB, Rva005222A0NoteCalls m_34..m_40, AIRootR0015C7A0, W3DLightDraw m_unmodelled_*, Rva001A51F0GridVisit flag2c/2d, RadarConstructor m_bfme000c/d/1454.. (no ZH twin), Rva002CFC80TinyBodies, BfmeConv808, CivilianSpawn ctor thunk, Rva00943DB0Node, BFMEFactory m_unmodelled_*, Rva0041F070. All opaque/no ZH twin.
