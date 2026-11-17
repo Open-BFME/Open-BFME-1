@@ -106,3 +106,11 @@
 
 ## w41-i round 20 (claude-sonnet-5-5)
 2 batches served (late-session, same pool), nothing submitted. Keys: DelayedLuaEventUpdate ctor m_f20/f70/f74/f75, Rva008BDD70 types, Rva00063F90Blend, Rva004155A0 Primary/Secondary/Owner, Rva005222A0NoteCalls m_34.., Rva0041F070, Rva008A4540. Same dead ends.
+
+## w48 DXTRACE lane (wt/w41-a) round 1 (claude-opus-5-5, 2026-11-17)
+- DXTraceA 0x00AFD388 banked partial (commit "Bank DXTraceA: MSVC 13.10 never biases its EBP frame"); handoff attempt_support/dxerr9-summer2003/tracea-bias-heuristic-20261117.md. Body = retail minus the 0x64 EBP bias (probe --shape: 3 structural diffs). Measured stash score 0.246 only because every displacement shifts.
+- Dead ends (do not repeat): every flag family (/O1 /O2 /Ox /Os /Ot /Og /Od, /Oy-, /Ob0-2, /Oi-, /G5-7 /GB, /Gz /Gr, /ML /MD, /Zi /Z7, /Gs0 /Gs8192, /GF- /Gy-, /GA /Ge /J /Zp1 /Gm /Gi /GX /GR /QIfist), all 120 buffer declaration orders, inline StringCchCopyA + nResult, unused locals, scoped/packed strBuffer copies: all 369 B unbiased. /GZ and /RTCs are refused with /O1.
+- Why: 13.10.3077 biases only when >=~3 refs to locals based BELOW -0x80 come into disp8; a local based at exactly -0x80 counts as near (repro attempt_support/dxerr9-summer2003/tracea-bias-micro.cpp.txt: b_128 unbiased, b_129/b_132 biased). DXTraceA's strBufferLine is at exactly -0x80, so zero gain. dxerr9.obj is 13.00.9178 (@comp.id 0x1d23da). Only routes left: a MASM body (policy call for the retirement lane) or none.
+- DXTraceW 0x00AFD20F: same-structure candidate probes EXACT 377/377 (tracew-candidate.cpp.txt). Claimed by the sibling w48 retirement lane (Lomchat/59bfb59e); not landed here. If that claim is gone next round and W is still archive-owned, land it via add_match --replace-existing into game/Libraries/Source/DirectX/dxtracew.cpp.
+- Gotcha: build/w48-notes.md is TRACKED and shared with the naming lanes; an untracked copy is clobbered by git pull. Append, then commit it.
+- Gotcha: a /Zi probe writes vc70.pdb into the worktree root; delete it.
