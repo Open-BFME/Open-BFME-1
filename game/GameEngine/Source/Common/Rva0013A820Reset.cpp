@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /Igame/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /Igame/Libraries/Source/WWVegas/WWLib
 
 // The ten four-byte members are narrow strings: every `call` in this body goes
 // to 0x00887940, the char StringBase release body matched in

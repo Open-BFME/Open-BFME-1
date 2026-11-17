@@ -80,7 +80,7 @@ public:
 	virtual ~LivingWorldEyeTower();
 	virtual void DoXfer(Xfer &xfer);
 
-	void handle()
+	void handleInlined()
 	{
 		Gen0060CBB0Pair *pair = getPair();
 		m_current.x = pair->first;
@@ -138,7 +138,7 @@ void LivingWorldEyeTower::DoXfer(Xfer &xfer)
 			++*depth;
 		}
 
-		handle();
+		handleInlined();
 
 		if (gameLogic())
 			--gameLogic()->m_at1A0;
