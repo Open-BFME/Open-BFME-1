@@ -82,3 +82,5 @@
 
 ## w41-i round 16 (claude-sonnet-5-5)
 3 batches served, nothing submitted. Keys: HordeContainConstructor Rva0023EAF0TenWords/m_1e4..m_221 (opaque), RadiusDecalTemplate m_unmodelled_20..2C (BFME extras beyond ZH fields, no evidence), EnragedBehavior/ReflectDamage ctor offsets, Rva003C7B60, Rva007F0210Set, AIUpdateComputeQuickPath, BfmeConv1000/322, Rva0077C390Parse. Same dead ends.
+## agent h round 14 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: Y2FeslDemanglerDispatch Rva00800E50Stamp/Owner m_00.. t04/t18.., Rva004155A0 notifyArrays (Primary/Secondary callback arrays, EA Drawable.cpp, no evidence), GlobalWeather Rva0039B450Element m_at0C.., ObjectCreationUpgradeModuleData m_9c (custom DeathAnim third field, opaque), RubbleRise m_dwordB4/C4, StructureCollapse m_dieData0..9, HordeSiegeEngine ctor, BfmeConv1901, BfmeSeed37A750, W3DTerrainBackgroundReset m_78.., SiegeDeploy/DeployStyle/RainOfFire ctor offsets, Rva008A4540, InitializeAudioSlot006ACB90. All opaque/no ZH twin.
