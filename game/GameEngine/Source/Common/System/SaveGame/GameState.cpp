@@ -278,27 +278,9 @@ void GameState::reset( void )
 // ------------------------------------------------------------------------------------------------
 /** Add a snapshot and block name pair to the systems used to load and save */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/Common/GameState_addSnapshotBlock_Thunk.cpp
-// ?addSnapshotBlock@GameState@@AAEXVAsciiString@@PAVSnapshot@@W4SnapshotType@@@Z present-unmatched
-void GameState::addSnapshotBlock( AsciiString blockName, Snapshot *snapshot, SnapshotType which )
-{
-
-	// sanity
-	if( blockName.isEmpty() || snapshot == NULL )
-	{
-
-		DEBUG_CRASH(( "addSnapshotBlock: Invalid parameters\n" ));
-		return;
-
-	}  // end if
-
-	// add to the list
-	SnapshotBlock blockInfo;
-	blockInfo.snapshot = snapshot;
-	blockInfo.blockName = blockName;
-	m_snapshotBlockList[which].push_back( blockInfo );
-
-}  // end addSnapshotBlock
+// The retail-verified definition is owned by GameState_addSnapshotBlock_Thunk.cpp.
+// BFME 2 aa505f34 removes its corresponding legacy definition for the same
+// ownership reason; BFME 1 keeps its independently verified 0x001110B0 body.
 
 // ------------------------------------------------------------------------------------------------
 /** Given the filename of a save file, find the highest filename number */
