@@ -43,12 +43,7 @@ typedef bool Bool;
 #define TRUE 1
 #define FALSE 0
 
-struct RGBColor
-{
-	Real red;
-	Real green;
-	Real blue;
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
 struct BfmeGdCoord3D
 {
