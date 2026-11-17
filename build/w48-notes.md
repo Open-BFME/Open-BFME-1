@@ -12,3 +12,6 @@
 ## agent h round 2 (wave 48)
 - 3 batches x5 served; all keys skipped (nothing submitted, all-skip is rejected anyway). Keys: FESL request fns Rva007FAF90.. (FourCC DISC/EPGT/RLST/RGAM/PING, no EA names), ObjectGeometry m_helper3b4/3b8, BfmeDebugDisplayVTable, Triple member copy types (Rva00138BA0*), GateOpenAndCloseBehaviorModuleData m_byte08/m_dword0C.. (no ZH twin, values 50/50 ambiguous), FXEventParser at08..at1c, drawMoveHints byte_10.
 - Dead end: Rva-typed helper/copy classes and BFME-only module data ctor members.
+
+## w41-i round 3 (claude-sonnet-5-5)
+3 batches x5 served, all skipped (nothing submitted). Keys: ModuleData ctor members with only constant stores (ClearanceTestingSlowDeath, Enraged, GateOpenAndClose, HitReaction, DamageModule, Firestorm), Rva-address helper types/params, Envelope/Bfme* offset members, tree-walk Rva00477E60. No ZH twin/field-parse table evidence in the briefs. Dead end again: ctor-only ModuleData batches; prefer files whose brief cites a FieldParse table or ZH header.
