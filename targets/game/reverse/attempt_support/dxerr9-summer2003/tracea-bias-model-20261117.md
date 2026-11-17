@@ -89,3 +89,49 @@ self-copies remove q before the frame decision; `try/catch` adds EH frames.
 | written, address-taken or block-local arguments (micro) | no bias |
 | never-written `q[33]` + file buffer `[256]` + `return hr \| q[32]` | biased, 377 B |
 | same with `return q[37]` | **EXACT 374/374** |
+
+## Round 3 (2026-11-17, claude-opus-5-5): the lever without the out-of-bounds read
+
+Base `9f462073d`, same compiler and flags, private outputs under `build/w48r3/` only.
+The landed lever needed a never-written array, an out-of-bounds read
+(`return frameBiasSlot[37]`) and a short file buffer. Rule 3 above ("only the slot base
+counts") gives a cleaner one: put the line text four bytes into a 132-byte array. The
+slot base is then -0x84, the text is still addressed as `[ebp-0x80]`, and its three
+references bias the frame.
+
+```cpp
+char lineSlot[4 + 128];
+char* const strBufferLine = lineSlot + 4;   // [ebp-0x80], slot based at -0x84
+...
+char strBufferFile[256];                    // still passed 260
+...
+return hr;
+```
+
+`tools/probe.py`: EXACT 374/374, 22 relocations; `./build.sh` OK. The object equals the
+round-2 lever's apart from its embedded path strings and time stamp (same `.text`,
+relocations and symbol table), so the link verdict cannot change. No uninitialised or
+out-of-bounds read is left and C4700 is gone.
+
+Why the short file buffer stays: a slot that reaches the line text at -0x80 and is based
+in the gain window [-0xE4, -0x81] covers at least [-0x84, -0x80), which retail gives to
+the file buffer (-0x184..-0x80). Distinct written C++ objects cannot overlap, a union
+puts every member at its own base, and an array that also holds the file buffer is based
+at -0x184 (outside the window). So every 13.10 lever gives those four bytes to the slot
+and declares the file buffer 256 while the code still passes 260.
+
+| Variant (full body or micro, `/O1 /G6 /MT /DNDEBUG`) | Result |
+|---|---|
+| full body, `struct { char pad[4]; char text[128]; } line` (text at -0x80), file `[256]` | 369 B, unbiased, frame 0x123C |
+| full body, `lineSlot + 4` inline / `char* const` pointer / `&lineSlot[4]` | **EXACT 374/374** (all three) |
+| micro, `char x[132]`, three `use(x+4)` (refs -0x80) | biased 0x64 |
+| micro, `char x[132]`, two `use(x+4)` | unbiased |
+| micro, `char x[136]`, three `use(x+8)` (refs -0x80) | biased |
+| micro, `char x[2][66]`, three `use(x[1])` (refs -0x42) | biased |
+| micro, address-taken struct `{pad[4]; x[128]}`, `use(s.x)` x3 / x4 / x5 | unbiased |
+| same, `use(s.x)` x6 | biased |
+| micro, struct `{x[128]; pad[4]}` (refs at the struct base -0x84) x3 / x4; `use(&s)` x3 | unbiased |
+
+The struct rows refine rule 2's struct note for address-taken structs: three, four or five
+references to such a slot did not bias in the five-argument micro, six did. Arrays need
+three whatever element the references address.

@@ -17,19 +17,23 @@ no such slot, check the object's `@comp.id`: dxerr9/d3dx9 members are 13.00.9178
 which biased such frames. Biased `__chkstk` frames from 13.10 already have
 retail's prologue order.
 
-**Landed lever (DXTraceA, 0x00AFD388, 374 B):** a never-written local array (read
-only, never written or address-taken) packs end-aligned into the hot buffer's
-slot, and the slot's base is the larger member's. `long frameBiasSlot[33]` next to
-the 128-byte line buffer made a 132-byte slot based at -0x84: the line buffer is
-still emitted at `[ebp-0x80]` and its three references bias the frame. The buffer
-below was declared four bytes shorter (`[256]`, still passed 260) so every other
-address stayed retail's, and the slot's one reference is `return
-frameBiasSlot[37];`, which addresses the `hr` argument and emits retail's own
-`mov eax,[ebp+0x74]`. Plain body 369 B unbiased; with the lever EXACT 374/374,
-22 relocations (`game/Libraries/Source/DirectX/dxtracea.cpp`). An extra read of
-the array instead costs its own instruction (377 B). Use it only when the
-`@comp.id` explains the bias and the buffer below the slot can give up the
-slot's extra bytes, and say in the source that it is a layout device.
+**Landed lever (DXTraceA, 0x00AFD388, 374 B):** since only the slot base counts,
+keep the hot buffer's address and lower its slot's base. The 128-byte line text
+lives at `lineSlot + 4` of a `char lineSlot[4 + 128]` (spelled
+`char* const strBufferLine = lineSlot + 4;`): it is still emitted at
+`[ebp-0x80]`, its three references hit a slot based at -0x84, and the frame is
+biased by 0x64. The buffer below was declared four bytes shorter (`[256]`, still
+passed 260) so every other address stayed retail's. Plain body 369 B unbiased;
+with the lever EXACT 374/374, 22 relocations
+(`game/Libraries/Source/DirectX/dxtracea.cpp`, round 3). Equivalent object, worse
+source: a never-written array packs end-aligned into the hot buffer's slot
+(`long q[33]` beside the line buffer), but its one read costs an instruction
+unless it aliases an argument out of bounds (the first landing, 87bbdd2a2,
+returned `q[37]`, the `hr` slot). A struct does not do the same job: references
+to an address-taken struct member needed six, not three, in the round-3 micro.
+Use the lever only when the `@comp.id` explains the bias and the buffer below the
+slot can give up the slot's extra bytes, and say in the source that it is a
+layout device.
 
 ## TU declaration lines can be real diagnostic-argument codegen (2026-11-12)
 

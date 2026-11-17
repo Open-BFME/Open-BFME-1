@@ -1,7 +1,7 @@
 # DXErr9 Summer 2003 `_DXTraceA@20` (0x00AFD388, 374 B)
 
 Source: `game/Libraries/Source/DirectX/dxtracea.cpp`. Lane w48 DXTRACE round 2,
-claude-opus-5-5, 2026-11-17.
+claude-opus-5-5, 2026-11-17; frame lever replaced in round 3 (same object bytes).
 
 ## Identity and extent (BFME 1 target evidence)
 
@@ -35,11 +35,19 @@ claude-opus-5-5, 2026-11-17.
 
 The member's `@comp.id` is 13.00.9178; this unit compiles with BFME 1's MSVC 13.10.3077
 `/O1 /G6 /MT /DNDEBUG`, the flags of the other DirectX units. 13.10 does not bias this
-frame from the plain body (369 B). The unit therefore carries a frame lever: a
-never-written `long frameBiasSlot[33]` that 13.10 packs with the line buffer into one
-132-byte slot, the popup file buffer declared 256 bytes so the other buffers keep their
-retail addresses (the slot's lowest four bytes complete its 260), and the return value
-read as `frameBiasSlot[37]`, which is the HRESULT argument slot. Measured rule, probes and
-the closest variants: `attempt_support/dxerr9-summer2003/tracea-bias-model-20261117.md`.
-The lever is a code-generation device, not a claim about the original source (DXUT,
-like any plain reading of retail, returns `hr` and declares a 260-byte file buffer).
+frame from the plain body (369 B). The unit therefore carries a frame lever: the line
+text starts four bytes into a 132-byte array (`lineSlot + 4`, still addressed as
+`[ebp-0x80]`), so its three references hit a slot based at -0x84 and bias the frame, and
+the popup file buffer is declared 256 bytes (still passed 260) so the other buffers keep
+their retail addresses (the slot's unused four-byte head is where retail's 260-byte buffer
+ends). The function returns `hr` and reads no uninitialised or out-of-bounds storage.
+Measured rule, probes and the closest variants:
+`attempt_support/dxerr9-summer2003/tracea-bias-model-20261117.md` (round 3 section). Any
+13.10 lever has to give up those four bytes of the file buffer: a slot based in
+[-0xE4, -0x81] that reaches the line text at -0x80 overlaps retail's file buffer
+(-0x184..-0x80). The lever is a code-generation device, not a claim about the original
+source (DXUT, like any plain reading of retail, declares a 128-byte line buffer and a
+260-byte file buffer). The first landing (87bbdd2a2) used a never-written
+`long frameBiasSlot[33]` packed with the line buffer and returned `frameBiasSlot[37]`
+(the `hr` argument slot through an out-of-bounds read); the same object bytes now come
+without that read.

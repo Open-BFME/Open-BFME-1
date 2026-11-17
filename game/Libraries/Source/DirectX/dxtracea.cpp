@@ -9,12 +9,11 @@
 // (`lea ebp,[esp-0x64]` ... `add ebp,0x64`). 13.10.3077 biases a frame only when
 // three references hit a frame slot based below -0x80, and the 128-byte line buffer
 // sits at exactly -0x80 (attempt_support/dxerr9-summer2003/tracea-bias-model-20261117.md).
-// frameBiasSlot is never written, so 13.10 packs it with strBufferLine into one
-// 132-byte slot based at -0x84; the line buffer stays at [ebp-0x80] and its three
-// references now bias the frame. The slot's lowest four bytes are the last four of
-// the 260-byte file buffer, declared 256 so that every buffer keeps its retail
-// address, and frameBiasSlot[37] is the hr argument at [ebp+0x10]: returning hr
-// through it is the slot's one reference and costs no instruction.
+// The line text therefore starts four bytes into a 132-byte slot based at -0x84: it is
+// still addressed as [ebp-0x80], and its three references now bias the frame. The
+// popup file buffer is declared 256 bytes (still passed 260, as retail) so that every
+// buffer keeps its retail address; the slot's unused four-byte head is where the
+// 260-byte original's last four bytes were.
 struct HWND__;
 typedef HWND__* HWND;
 extern "C" {
@@ -29,8 +28,8 @@ long __stdcall StringCopyWorkerA(char*, unsigned int, const char*);
 extern "C" long __stdcall DXTraceA(const char* strFile, unsigned long dwLine,
                                     long hr, const char* strMsg, int bPopMsgBox)
 {
-    char strBufferLine[128];
-    long frameBiasSlot[33];
+    char lineSlot[4 + 128];
+    char* const strBufferLine = lineSlot + 4;
     char strBufferError[256];
     char strBuffer[3000];
     StringCchPrintfA(strBufferLine, 128, "%ld", dwLine);
@@ -59,5 +58,5 @@ extern "C" long __stdcall DXTraceA(const char* strFile, unsigned long dwLine,
         if (MessageBoxA(0, strBuffer, "Unexpected error encountered", 0x14) == 6)
             DebugBreak();
     }
-    return frameBiasSlot[37];
+    return hr;
 }
