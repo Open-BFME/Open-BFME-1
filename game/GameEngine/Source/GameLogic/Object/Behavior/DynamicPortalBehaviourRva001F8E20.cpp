@@ -29,7 +29,7 @@ public:
 // ?method@Rva001F8E20Owner@@QAEXPAUCoord3D@@@Z
 void Rva001F8E20Owner::method(Coord3D *out)
 {
-    Rva001F8E20Data *d = data;
+    Rva001F8E20Data *moduleData = data;
     Coord3D in = {1.0f, 0.0f, 0.0f};
     Coord3D delta;
     object->transformPoint(&in, &delta);
@@ -44,7 +44,7 @@ void Rva001F8E20Owner::method(Coord3D *out)
     delta.y *= scale;
     delta.z = 0.0f * scale;
 
-    in = d->pos;
+    in = moduleData->pos;
     double len = sqrt((double)(delta.z * delta.z + delta.x * delta.x) + delta.y * delta.y);
     in.x *= len;
     in.y *= len;

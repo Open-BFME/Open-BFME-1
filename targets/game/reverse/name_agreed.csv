@@ -3237,3 +3237,4 @@ game/GameEngine/Source/Common/BfmeSettingsCopyWW.cpp|type||BfmeStrWW,AsciiString
 game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p,cursor,claude-sonnet+gpt-6.1-sol,agreed,2026-11-10
 game/GameEngine/Source/Common/Rva007861E0ParsePathNumber.cpp|local|reverseFind|p,cursor,claude-sonnet+gpt-6.1-sol,applied,2026-11-10
 game/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourRva001F8E20.cpp|local|Rva001F8E20Owner::method|d,moduleData,claude-sonnet+gpt-6.1-sol,agreed,2026-11-17
+game/GameEngine/Source/GameLogic/Object/Behavior/DynamicPortalBehaviourRva001F8E20.cpp|local|Rva001F8E20Owner::method|d,moduleData,claude-sonnet+gpt-6.1-sol,applied,2026-11-17
