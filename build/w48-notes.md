@@ -26,3 +26,6 @@
 
 ## w41-i round 5 (claude-sonnet-5-5)
 3 batches x5 served, nothing landed. Keys: FESL hosted-game Rva007F61E0 Sender/Notifier, BfmeSrcGG/MaskGG, Gen003CAE40Hold, WanderAIUpdateModuleData/ReplenishUnits ctor offsets, MemberVision002434D0 atNNN fields, Shadow Rva00459960 m_value3C, SpawnUnit ctor offsets. Only one submit: DebugDisplay::setCursorPos x/y (ZH-identical) -> rejected "still a placeholder" (dead end reconfirmed).
+
+## w41-i round 6 (claude-sonnet-5-5)
+3 batches x5 served, nothing submitted. Keys: Rva0077C390 parse Model/Owner (brief leaks a BFME2 EA-name hint line; ignored for blind voting), ParseMoveCameraBlock Rva003B7650Record m_04..m_18, BfmeConv2022/1000/1778/1115 Bfme* types, Rva004155A0 notifyArrays types (Drawable.cpp, ZH-less), BFMEFactoryModuleData m_unmodelled_*, AIAttackSwoop Rva002BC870, Q3 sort median a/b/c, WaterRenderObj ctor offset members m_d0..m_400, InitializeAudioSlot offsets, calculateTerrainLOD freq64 locals (known placeholder dead end). All opaque/no ZH twin.
