@@ -1,0 +1,17 @@
+--- a/game/GameEngine/Source/Common/Q3GuardedMemberDestructors.cpp
++++ b/game/GameEngine/Source/Common/Q3GuardedMemberDestructors.cpp
+@@ -87 +87,13 @@
+-BFME_EH_DTOR_PADDED( Rva005CE890, Q3EhBaseOne, Q3EhMember005CE820, 0x3C )
++extern "C" void *__identifier("??_7ParticleInfo@@6B@");
++struct __declspec(novtable) Rva005CE890Object : public Q3EhBaseOne
++{
++ char m_lead[0x3C - 8];
++ Q3EhMember005CE820 m_sub;
++ virtual void slot();
++ ~Rva005CE890Object();
++};
++Rva005CE890Object::~Rva005CE890Object()
++{
++ *reinterpret_cast<void *  *>(this) = &__identifier("??_7ParticleInfo@@6B@");
++}
++

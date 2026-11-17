@@ -1,0 +1,10 @@
+--- a/game/GameEngine/Source/Common/GlobalWeatherSystemConstructor.cpp
++++ b/game/GameEngine/Source/Common/GlobalWeatherSystemConstructor.cpp
+@@ -23,0 +24,2 @@
++class Gen003A0410 { public: Gen003A0410(); private: unsigned int m_handle; };
++class AttributeHandleStandIn { public: ~AttributeHandleStandIn(); private: unsigned int m_bfmeHandle; };
+@@ -27,2 +29,2 @@
+-	HRBMD_Buffer();                                            ///< pinned 0x0003747A
+-	~HRBMD_Buffer();                                           ///< pinned 0x0001A401
++	__forceinline HRBMD_Buffer() { reinterpret_cast<Gen003A0410 *>(this)->Gen003A0410::Gen003A0410(); }                                            ///< pinned 0x0003747A
++	__forceinline ~HRBMD_Buffer() { reinterpret_cast<AttributeHandleStandIn *>(this)->AttributeHandleStandIn::~AttributeHandleStandIn(); }                                           ///< pinned 0x0001A401
