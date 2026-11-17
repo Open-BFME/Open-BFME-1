@@ -244,3 +244,6 @@
 
 ## agent h round 38 (wave 48, claude-sonnet-5-5)
 3 batches served. Submitted BfmeConv902 bfmeGoKE -> updateProperties (+locals kb, prop): matches ZH IMEManager::updateProperties (GetKeyboardLayout/ImmGetProperty, bits 18/19 -> m_indexBase/m_unicodeIME); not agreed yet. Skipped: FreeLifeBody ctor m_unmodelled_*, Rva003C7B60, RadiusDecal, Create_Render_Obj, DeployStyle/HordeWorker/ToggleMounted ctors, BfmeConv808, Rva0010F100, Rva002BC310, GetLoadScreen, Pathfinder, AIGuardOuter, Rva1FC330. Tip: grep ZH for the imported Win32 API name (GetKeyboardLayout) to find the twin.
+
+## agent h round 39 (wave 48, claude-sonnet-5-5)
+3 batches served. Submitted INIMapCache.cpp only (weak: locals coord3d->position x2, c->token; these are ZH-identical names, so probably pointless). Skipped: ParseFXEvent BfmeAnimationStateFXE, MemberVision002434D0 atNNN, Rva006A5870Case4, RvaTreeBounds, BfmeThingSF, DebugDisplay, Bfme5SmallAccessors, BfmeScriptCondAreaGate, Pathfinder adjust, Taint ctor, Rva0033F5A0 rbtree. Same dead ends.
