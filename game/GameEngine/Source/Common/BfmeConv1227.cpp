@@ -35,7 +35,7 @@ class BfmeThingLP
 public:
 	void bfmePushLP(void *what, BfmeOtherLP *other, int note);
 };
-extern void *g_bfmeTag1227;
+extern void *g_bfmeExtra1282;
 
 class BfmeA1227
 {
@@ -45,6 +45,7 @@ public:
 	BfmeP1227 *m_bfme04;
 };
 
+/// @ai-edited: use the existing canonical global at the same retail address.
 void BfmeA1227::bfmeDump1227(void *a, int k)
 {
 	int i;
@@ -56,6 +57,6 @@ void BfmeA1227::bfmeDump1227(void *a, int k)
 			reinterpret_cast<BfmeThingLP *>(g_bfmeHolderBU)->bfmePushLP(
 				&e->m_bfme04,
 				reinterpret_cast<BfmeOtherLP *>(a),
-				reinterpret_cast<int>(g_bfmeTag1227));
+				reinterpret_cast<int>(g_bfmeExtra1282));
 	}
 }
