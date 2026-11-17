@@ -79,7 +79,6 @@ public:
 
 struct Rva00367E30Logic
 {
-	int rva00383890(const AsciiString &name);
 	AsciiString rva003870f0(const AsciiString &name);
 };
 
@@ -87,6 +86,10 @@ struct Rva00367E30Logic
 // view of the object.
 class GameLogic;
 extern GameLogic *TheGameLogic;
+
+// Retail reaches 0x00383890 (findByField10) through ILT 0x00045C87; nothing
+// defines a Rva00367E30Logic::rva00383890 symbol.
+extern void j_00045c87();
 
 // The ledger claims 0x003BD700 as Rva003BD700's constructor and 0x003BD770 as
 // Rva003BD770's destructor; retail pairs them on one frame slot here, so the
@@ -172,7 +175,9 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 		|| static_cast<unsigned char>(g_bfmeStateDF->bfmeDisabled()) || reinterpret_cast<Rva003BD830Owner *>(this)->anyReady() || TheControlBar == 0)
 		return;
 
-	int id = ((Rva00367E30Logic *)TheGameLogic)->rva00383890(owner->getName());
+	typedef int (Rva00367E30Logic::*FindFn)(const AsciiString &name);
+	union { void (*fn)(); FindFn call; } find = { j_00045c87 };
+	int id = (((Rva00367E30Logic *)TheGameLogic)->*find.call)(owner->getName());
 	if (id < 0)
 		return;
 
