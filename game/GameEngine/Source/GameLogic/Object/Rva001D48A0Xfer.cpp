@@ -244,7 +244,7 @@ public:
     unsigned int m_24;
     unsigned int m_28;
     float m_2c, m_30, m_34, m_38, m_3c, m_40, m_44;
-    DamageInfoInput()
+    __declspec(dllimport) __forceinline DamageInfoInput()
     {
         m_04 = 0; m_08 = 0; m_0c = 0x16; m_10 = 0xf; m_14 = 0;
         m_18 = 0.0f; m_1c = false; m_1d = true; m_20 = 0.0f; m_24 = 0; m_28 = 0;

@@ -147,7 +147,7 @@ public:
 class DamageInfoInput
 {
 public:
-	__forceinline DamageInfoInput()
+	__declspec(dllimport) __forceinline DamageInfoInput()
 	{
 		m_field04 = 0;
 		m_field08 = 0;
