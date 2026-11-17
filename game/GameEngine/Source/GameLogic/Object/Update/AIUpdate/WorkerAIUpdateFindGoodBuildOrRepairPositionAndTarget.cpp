@@ -4,7 +4,7 @@
 
 class Overridable {public: virtual ~Overridable(); const Overridable* getFinalOverride() const {if(next)return next->getFinalOverride();return this;} Overridable* next;};
 template<class T>class OVERRIDE {const T*p;public:const T*operator*()const {if(!p)return 0;return(T*)p->getFinalOverride();}operator const T*()const{return operator*();}};
-class AsciiString {public:char*data;const char*str()const{return data?data+8:"";}};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 enum KindOfType {KINDOF_BRIDGE=22};
 class ThingTemplate:public Overridable {public:char pad08[0x18];AsciiString name;char pad24[0xa4];unsigned kindOf[3];bool isKindOf(KindOfType i)const{return (kindOf[(unsigned)i>>5]&(1u<<((unsigned)i&31)))!=0;}const AsciiString&getName()const{return name;}};
 #include "../../../command_source_type.h" class AICommandInterface {public:void aiIdle(CommandSourceType);};
