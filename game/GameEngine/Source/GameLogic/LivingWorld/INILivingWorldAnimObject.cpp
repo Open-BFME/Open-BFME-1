@@ -48,13 +48,7 @@ public:
 typedef void (*INIFieldParseProc)( INI *ini, void *instance, void *store, const void *userData );
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
-struct FieldParse
-{
-	const char *token;
-	INIFieldParseProc parse;
-	const void *userData;
-	int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 

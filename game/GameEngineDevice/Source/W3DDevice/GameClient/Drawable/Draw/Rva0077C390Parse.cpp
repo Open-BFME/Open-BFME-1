@@ -107,13 +107,7 @@ void parseModelConditionFlags(
 
 class INI;
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	unsigned int offset;
-};
+#include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 
 extern const FieldParse g_01124420[];
 
