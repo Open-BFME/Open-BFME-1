@@ -28,7 +28,12 @@ struct BfmePt951
 
 class BfmeSubYR { public: char bfmeDoYR(void *,void *,void *,void *,int); };
 
-class GeometryInfo {};
+// Ledger row ?bfmeIntersects@GeometryInfo (0x0087F2F0); retail passes the angles as raw bits.
+class GeometryInfo
+{
+public:
+	bool bfmeIntersects(const Coord3D &, Real, const GeometryInfo &, const Coord3D &, Real) const;
+};
 
 class Gen_000ED3B0
 {
@@ -44,7 +49,10 @@ public:
 	{
 		union { Real angle; int bits; } otherAngle;
 		otherAngle.angle = other->m_orientation;
-		return ((BfmeSubYR*)&m_geometryInfo)->bfmeDoYR((void*)&m_position,0,
+		union { bool (GeometryInfo::*real)(const Coord3D &, Real, const GeometryInfo &, const Coord3D &, Real) const;
+			char (BfmeSubYR::*bits)(void *,void *,void *,void *,int); } call;
+		call.real = &GeometryInfo::bfmeIntersects;
+		return (((BfmeSubYR*)&m_geometryInfo)->*call.bits)((void*)&m_position,0,
 			(void*)&other->m_geometryInfo,(void*)&other->m_position,otherAngle.bits);
 	}
 
