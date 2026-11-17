@@ -588,6 +588,7 @@ void PhysicsBehavior::setBounceSound(const AudioEventRTS* bounceSound)
 
 DECLARE_PERF_TIMER(PhysicsBehavior)
 // ?update@PhysicsBehavior@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x0029B760 is PhysicsBehaviorUpdate.cpp
 UpdateSleepTime PhysicsBehavior::update()
 {
 	USE_PERF_TIMER(PhysicsBehavior)
@@ -886,6 +887,10 @@ UpdateSleepTime PhysicsBehavior::update()
 	setFlag(IS_IN_UPDATE, false);
 	return calcSleepTime();
 }
+#endif
+// Keeps the Matrix3D::Adjust_Z_Translation COMDAT (row 0x0077F740) emitted from this TU now that the
+// non-retail update body above is disabled.
+void (Matrix3D::*g_keepAdjustZTranslation)(float) = &Matrix3D::Adjust_Z_Translation;
 
 //-------------------------------------------------------------------------------------------------
 // ?calcSleepTime@PhysicsBehavior@@IBE?AW4UpdateSleepTime@@XZ present-unmatched
