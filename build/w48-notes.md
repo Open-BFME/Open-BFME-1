@@ -128,3 +128,6 @@
 3 batches served, nothing landed. Keys: Create_Render_Obj field1..5, BloodthirstyUpdate BfmeGuard96/Gen_00287130, InGamePopupMessage mData1/2 + tempString and Bezier x0..z3 and line2_d p1/c1/a/b (all ZH-identical already; submitting the same name is rejected "still a placeholder"), BfmeConv1226/1279/2137/1838/334, Rva008B7040Build, CritterEmitter ctor, RbTree insert x/y/v/w. Same dead ends.
 ## agent h round 18 (wave 48, claude-sonnet-5-5)
 - 3 batches x5 served, nothing submitted. Keys: CollideModule/Enraged/Firestorm/BezierProjectile ModuleData ctor offsets, HorseHordeContain dtor Rva002469D0*, P6MemberVectorCopyConstructor m_at00.., BfmeConv1054/2022 (again), Rva0020DEE0 VirtualMode m_08..m_18, Rva008A4540, Rva003B9AD0PairCopyCtor. All opaque/no ZH twin, same dead ends.
+
+## agent h round 19 (wave 48, claude-sonnet-5-5)
+- 1 batch x5 viewed, nothing submitted. Keys: BfmeConv961 Reset/Gate/Flag types (tiny, no ZH twin), Rva0041F070 value2c/valuea8/value11c, StructureCollapse/FadeAndDieOrnament ModuleData ctor m_dieData*/m_one*, LivingWorldArmyAssign m_08.., RbTree insert x/y/v/w. Same dead ends; stopped early.
