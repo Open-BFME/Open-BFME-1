@@ -16,17 +16,7 @@ struct AsciiStringData
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	const char *str(void) const
-	{
-		return m_data ? m_data->m_text : "";
-	}
-
-private:
-	AsciiStringData *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
