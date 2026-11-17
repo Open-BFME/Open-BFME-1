@@ -78,6 +78,14 @@ class ObjectTypes
 public:
 	virtual ~ObjectTypes();
 	void addObjectType(const AsciiString &objectType);
+	// Retail inlines the member-wise assignment here; the out-of-line copy is Rva0034F780Assign.cpp
+	// (0x0034F780), so this one must not become a COMDAT.
+	__declspec(dllimport) __forceinline ObjectTypes &operator=(const ObjectTypes &other)
+	{
+		m_listName = other.m_listName;
+		m_objectTypes = other.m_objectTypes;
+		return *this;
+	}
 
 private:
 	AsciiString m_listName;
