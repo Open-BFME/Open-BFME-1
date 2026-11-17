@@ -198,3 +198,6 @@
 
 ## w41-i round 37 (claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: Bfme5ThirtyThree m_bfmeOwner/Flags/Count, GloriousCharge/DevastateSpecialPower ctor m_field254../m_210.., Rva0020DEE0 Apply, BfmeConv1401 VKH, W3DLightDraw m_unmodelled_*, TransportAIUpdate ctor m_unknown*, Rva002D9910*, Rva002BC310Data, BfmeConv970/1279, Rva000941D0 ParseNamedInt. Same dead ends.
+
+## w41-i round 38 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: TransportAIUpdate/HordeWorkerAIUpdate ModuleData ctor m_unknown*/m_flag*, BfmeConv792/1000, CastleMemberBehavior ctor m_08..m_29, V4GuardedTailCallsWithArgs Rva003BCA70, Rva00903470DeviceSlot77, Rva000941D0 ParseNamedInt, Create_Render_Obj field1..5, Rva004155A0NotifyArrays, MemberTurnAndGoal0024E310, ShadowRva00459960 m_value3C (-1-sentinel frame, no ZH twin), S2ZeroFillCtors, ParseFXEvent. Same dead ends.
