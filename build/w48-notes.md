@@ -351,3 +351,6 @@
 - LANDED pushBack 0x5C8400 (unresolved _Construct<Rva005C6730Value> -> j_00030549) and list insert 0x9F340 (unresolved _Construct<Rva0009F200Element> specialization -> forceinline body calling j_00026503). Both previews UNKNOWN (stale census).
 - Pitfall: name_regression flags removal of the `_Construct` token ("_Construct -> j_xxxx"); keep an unused `template<class T> void _Construct(T*,const T&);` declaration (or the specialization) in namespace _STL and call through a descriptively named helper. Passes then.
 - Remaining same shape: #62/#74 BfmeRunway/BfmeElementConstruct (not tried). link_check takes ~190 s per file; run in background with `> file`, concurrent runs from other agents slow it.
+## agent f round 5 (wave 48, claude-sonnet-5-5)
+- Landed: SpecialPowerModule::initiateIntentToDoSpecialPower callee Glo012F4B98Type::show00592D60 -> Rva00592D60Owner::update(int,int) (ledger row 0x00592D60; pass &movie as int, 0).
+- Dead/stale this round: globals family only has TheBfmeOnlineLogin (already defined, stale); g_01124420, TheLodOptionsFieldParse, g_bfmeTableABF already defined; _TransportAIUpdateFieldParse (identity blocked, opus log), _piChannelUserChangedNickA (dir32 false-reject, attempt_support/peer-callback-owner-retirement.md), g_bfmeVft963 / g_bfmeRva0134FB18Static (logged blocked), IsWindowed/Thread_Function (logged).
