@@ -5,7 +5,7 @@
 
 class Object;
 class PartitionManager;
-class NameKeyGenerator { public: int nameToKey(const char *); };
+#include "game_logic_dispatch.h"
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern void j_000022bb();
 extern void j_0001b185();
