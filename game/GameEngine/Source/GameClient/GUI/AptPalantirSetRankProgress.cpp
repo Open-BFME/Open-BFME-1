@@ -50,7 +50,10 @@ void AptPalantir::setRankProgress( float value )
 // Retail 0x00588890 (50 B): file-static percentage of the value behind owner+0x200,
 // scaled and rounded, clamped to 0..100 and 100 when absent. The owner arrives in EAX
 // through MSVC's private static convention; owner and value types are address-named.
-extern float g_bfmeScaleBC;
+// Retail percentage helper +0x0f multiplies by VA 0x0107FAC4, whose
+// four bytes 00 00 C8 42 establish 100.0f. Own the existing global once.
+// BFME 2 aa505f34 has no matching provider spelling; no donor datum used.
+float g_bfmeScaleBC = 100.0f;
 extern const float g_rva0107533C;
 
 class Rva00588890Value
