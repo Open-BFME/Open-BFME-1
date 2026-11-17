@@ -33,7 +33,7 @@ public:
 	void *winGetUserData();
 	void winSetUserData( void *data );
 	int winSetTooltipFunc( void ( *fn )( GameWindow *, WinInstanceData *, unsigned int ) );
-	void winSetStatus( unsigned int status );
+	unsigned int _bfme_winSetStatus( unsigned int status );
 };
 
 void GadgetListBoxReset( GameWindow *window );
@@ -162,7 +162,7 @@ void BfmeAptScreenOnlineCustomMatch::_bfme_onInitGadget(
 	{
 		m_gameName = window;
 		bfmeGo924F( (BfmeKeyLC *)window, 20 );
-		window->winSetStatus( 2 );
+		window->_bfme_winSetStatus( 2 );
 		return;
 	}
 
@@ -171,7 +171,7 @@ void BfmeAptScreenOnlineCustomMatch::_bfme_onInitGadget(
 		m_gamePassword = window;
 		bfmeGo924D( (BfmeKeyLC *)window, 5 );
 		bfmeGo924F( (BfmeKeyLC *)window, 20 );
-		window->winSetStatus( 2 );
+		window->_bfme_winSetStatus( 2 );
 		return;
 	}
 
