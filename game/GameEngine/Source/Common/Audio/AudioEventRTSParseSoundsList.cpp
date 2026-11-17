@@ -31,10 +31,6 @@ inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer();
 inline AsciiString::AsciiString(const char* str, int len) {
     ((StringBase<char>*)this)->StringBase<char>::StringBase(str,len);
 }
-// Select the existing address-derived _Construct contract.
-namespace _STL {
-    template<class T> void __cdecl _Construct(T* destination, const T& value);
-}
 #include <vector>
 namespace _STL {
 struct Rva000B19F0Element {
@@ -43,6 +39,17 @@ struct Rva000B19F0Element {
     Rva000B19F0Element(const AsciiString& text,int value) : name(text), weight(value) {}
 };
 }
+// Retail reaches the placement copy (0x000B0360) and the overflow insert
+// (0x000B19F0) through their incremental-link thunks; the ledger names the
+// first row after a generated pair placeholder, so route through the thunks.
+extern void j_00039f86();
+extern void j_0001f73f();
+struct Rva000B19F0Vec : _STL::vector<_STL::Rva000B19F0Element,_STL::allocator<_STL::Rva000B19F0Element> > {
+    __forceinline void append(const _STL::Rva000B19F0Element& r,const AsciiString& tagSlot) {
+        if(_M_finish!=_M_end_of_storage._M_data) { typedef void (__cdecl *F)(_STL::Rva000B19F0Element*,const _STL::Rva000B19F0Element&); ((F)j_00039f86)(_M_finish,r); ++_M_finish; }
+        else { typedef void (Rva000B19F0Vec::*M)(_STL::Rva000B19F0Element*,const _STL::Rva000B19F0Element&,const _STL::__false_type&,unsigned int,bool); union { void (*raw)(); M m; } u; u.raw = j_0001f73f; (this->*u.m)(_M_finish,r,(const _STL::__false_type&)tagSlot,1,true); }
+    }
+};
 struct Rva000B1DF0Offset {
     int value;
     int get() const { return value; }
@@ -52,7 +59,7 @@ public: static void parse(INI* ini,void* instance,void* store,const void* userDa
 };
 void INIParseSoundsListShim::parse(INI* ini,void* instance,void* store,const void* userData) {
     int* totalWeight = userData ? (int*)((char*)instance + ((const Rva000B1DF0Offset*)userData)->get()) : 0;
-    _STL::vector<_STL::Rva000B19F0Element>* sounds = (_STL::vector<_STL::Rva000B19F0Element>*)store;
+    Rva000B19F0Vec* sounds = (Rva000B19F0Vec*)store;
     const char* token = ini->getNextTokenOrNull();
     while(token) {
         int tokenLength = strlen(token);
@@ -70,7 +77,7 @@ void INIParseSoundsListShim::parse(INI* ini,void* instance,void* store,const voi
                 name = AsciiString(token,tokenLength);
             }
             if(name.isEmpty()) throw INIException(3,"Sound file has no file name. Sound '%s' for audio event '%s'",token,((AsciiString*)((char*)instance + 8))->str());
-            sounds->push_back(_STL::Rva000B19F0Element(name,weight));
+            sounds->append(_STL::Rva000B19F0Element(name,weight),name);
             if(totalWeight) *totalWeight += weight;
         }
         token = ini->getNextTokenOrNull();
