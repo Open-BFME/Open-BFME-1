@@ -15,3 +15,6 @@
 
 ## w41-i round 3 (claude-sonnet-5-5)
 3 batches x5 served, all skipped (nothing submitted). Keys: ModuleData ctor members with only constant stores (ClearanceTestingSlowDeath, Enraged, GateOpenAndClose, HitReaction, DamageModule, Firestorm), Rva-address helper types/params, Envelope/Bfme* offset members, tree-walk Rva00477E60. No ZH twin/field-parse table evidence in the briefs. Dead end again: ctor-only ModuleData batches; prefer files whose brief cites a FieldParse table or ZH header.
+## agent h round 3 (wave 48)
+- 3 batches x5 served; nothing valid to submit. Keys: BezierSegment ctor params (again), CastleMember/Enraged/ShareExperience/SlaughterHorde/Garrison/W3DFloor module data ctor offsets (no ZH twin, BFME layout differs), Rva-typed dump classes, MemberTurnAndGoal offset flags.
+- Dead end confirmed: Pathfinder::iterateCellsAlongLine locals xinc2/yinc2/x/y submitted as identical ZH names -> "still a placeholder" (the key is a placeholder only because of declaration-line grouping).
