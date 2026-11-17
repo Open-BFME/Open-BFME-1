@@ -162,3 +162,6 @@
 3 batches served, all skipped. Keys: ScreenCrossFadeFilter::postRender vertex p/u/v/u1/v1 (ZH-identical already), Gen_0037A750 seed (opaque), EnragedBehaviorModuleData ctor thunk m_unmodelled_18/1C, RenderObjectDrawModuleInfo copy ctor m_name0..2/m_valueNN (opaque). Same dead ends.
 ## agent h round 23 (wave 48, claude-sonnet-5-5)
 - 3 batches served, nothing submitted. Keys: Rva004155A0 NotifyArrays Primary/Secondary/Owner (Drawable.cpp listener arrays, no solid name), BfmeSeed37A750, BfmeConv1279, BannerCarrier/CivilianSpawn/BezierProjectile ModuleData ctor fields, PathfinderFindSafePathBfme, BfmeConv902, Q3IntrosortLoop, ScreenCrossFadeFilter postRender p/u/v. Same dead ends.
+
+## w41-i round 29 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: Rva00800B70Owner bfmeGo, CastleBehavior m_unmodelledD8/m_flagA5, Bezier x0..z3 (ZH-identical), RadiusDecalTemplate m_unmodelled_20..2C (no ZH twin), PhysicsBehavior m_f18/m_f1c/m_flag5c/5e/5f, DebugDisplay setCursorPos x/y (ZH-identical), Rva004155A0Notify, BfmeConv664/827, Bfme5TinyThree, StructureCollapse m_dieData*. Same dead ends.
