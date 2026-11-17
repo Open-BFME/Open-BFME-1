@@ -43,6 +43,9 @@
 #include "GameClient/GameText.h"
 #include "GameClient/MapUtil.h"
 
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
+
 __declspec(noinline) void reconstructAsciiString(AsciiString *dest, const AsciiString &src)
 {
 	if (dest == NULL)

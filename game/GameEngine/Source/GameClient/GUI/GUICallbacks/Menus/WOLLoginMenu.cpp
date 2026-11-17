@@ -90,6 +90,9 @@ namespace _STL
 
 #include "GameNetwork/WOLBrowser/WebBrowser.h"
 
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
+
 // Retail 0x004DAB40 / 0x004DAC70: the PeerResponse constructor and destructor
 // are out of line (called through ILT 0x42069 / 0x44733 from 59 / 66 sites).
 PeerResponse::PeerResponse()

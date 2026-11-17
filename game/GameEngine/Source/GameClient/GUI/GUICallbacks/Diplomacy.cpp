@@ -67,6 +67,9 @@ bool operator==(const AsciiString &, const AsciiString &);
 #include "GameNetwork/GameSpy/BuddyDefs.h"
 #include "GameNetwork/GameSpy/peerDefs.h"
 
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)

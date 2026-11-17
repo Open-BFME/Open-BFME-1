@@ -33,6 +33,8 @@
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
 
 #include "Common/GameEngine.h"
 #include "Common/QuickmatchPreferences.h"

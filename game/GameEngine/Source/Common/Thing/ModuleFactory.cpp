@@ -46,6 +46,8 @@
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
 
 // BFME defines BitFlags<116>::parseFromINI once, out of line (retail
 // 0x00129810, BitFlagsParseFromINI.cpp); reference that body instead of

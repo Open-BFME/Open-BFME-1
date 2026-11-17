@@ -39,6 +39,9 @@
 #include "GameNetwork/GameSpy/GSConfig.h"
 #include "GameNetwork/RankPointValue.h"
 
+// Use the separately verified retail provider (AsciiStringListClear.cpp); suppress this competing copy.
+namespace _STL { template <> void _List_base<AsciiString, allocator<AsciiString> >::clear(); }
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
