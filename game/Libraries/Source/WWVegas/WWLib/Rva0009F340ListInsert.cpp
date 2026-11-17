@@ -16,8 +16,17 @@ struct Rva0009F200Element
 
 namespace _STL
 {
+}
+
+extern void j_00026503();
+
+namespace _STL
+{
 template <>
-void _Construct(Rva0009F200Element *p, const Rva0009F200Element &val);
+__forceinline void _Construct(Rva0009F200Element *p, const Rva0009F200Element &val)
+{
+	((void(__cdecl *)(Rva0009F200Element *, const Rva0009F200Element &))j_00026503)(p, val);
+}
 }
 
 void Rva0009F340ListInsertAnchor(
