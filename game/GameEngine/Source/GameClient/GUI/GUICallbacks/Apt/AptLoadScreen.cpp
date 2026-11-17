@@ -22,26 +22,7 @@
 // ledger pin; so do its members and the two callback methods.
 
 template<class T> struct StringData { int ref_count; unsigned short length, capacity; T text[1]; };
-template<class T> class StringBase {
-	friend class AsciiString;
-	friend class UnicodeString;
-private:
-	StringData<T> *data;
-	StringBase() : data(0) {}
-	StringBase(const T *);
-	StringBase(const StringBase &);
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-};
-class AsciiString : private StringBase<char> {
-public:
-	AsciiString() {}
-	AsciiString(const char *p) : StringBase<char>(p) {}
-	AsciiString(const AsciiString &p) : StringBase<char>(p) {}
-	~AsciiString() {}
-	void __cdecl format(AsciiString, ...);
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class UnicodeString : private StringBase<unsigned short> {
 public:
 	UnicodeString() {}

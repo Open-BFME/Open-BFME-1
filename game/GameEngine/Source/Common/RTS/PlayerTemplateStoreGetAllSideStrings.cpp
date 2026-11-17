@@ -6,20 +6,7 @@
 #include <list>
 #include <string.h>
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &source);
-	~AsciiString();
-	bool operator==(const AsciiString &other) const
-	{
-		return strcmp(static_cast<const char *>(m_data) + 4,
-			static_cast<const char *>(other.m_data) + 4) == 0;
-	}
-
-private:
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class BFMERetailAsciiString
 {

@@ -18,26 +18,7 @@
 // the EH state numbering jump 0 -> 2 when the TTD member lands.
 
 // by-value string plumbing, same shapes as AptScreenFactories.cpp
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-public:
-	void set( const StringBase<T> &other );
-	void trim();
-	int compare( const T *text ) const;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-	~StringBase() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern const unsigned short BFMEEmptyUnicodeString;
 
@@ -64,14 +45,6 @@ private:
 	UnicodeStringData *m_data;
 };
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-};
 
 extern "C" __declspec(dllimport) unsigned long __stdcall GetModuleFileNameW(
 	void *module, unsigned short *filename, unsigned long size );
