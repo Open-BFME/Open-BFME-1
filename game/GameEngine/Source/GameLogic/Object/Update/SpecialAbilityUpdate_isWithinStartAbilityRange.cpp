@@ -28,7 +28,10 @@ class BfmeObjEQT:public BfmeBaseEQT { public:
 class BfmeVec3HN;
 class BfmeCheckHN { public: bool bfmeTestHN(BfmeVec3HN*); };
 enum KindOfType { DummyKind002A79B0 };
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class BfmeSubYR { public: char bfmeDoYR(void*,void*,void*,void*,int); };
 class Object { public:
  bool getWorldspaceBestContactPoint(Coord3D*,const Coord3D*,const char*,int,int,bool) const;

@@ -29,11 +29,10 @@ struct KindOfMask
 	}
 };
 
-class Thing
-{
-public:
-	bool isAnyKindOf(const KindOfMask &mask) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isAnyKindOf(const KindOfMask &mask) const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class BfmeDrawModuleD
 {

@@ -121,12 +121,11 @@ public:
 	unsigned int m_kindOf1;
 };
 
-class Thing
-{
-public:
-	Bool isKindOfMulti(const KindOfMask116 &mustBeSet,
+#define THING_TU_MEMBERS \
+public: Bool isKindOfMulti(const KindOfMask116 &mustBeSet, \
 		const KindOfMask116 &mustBeClear) const;
-};
+#include "../Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Team
 {

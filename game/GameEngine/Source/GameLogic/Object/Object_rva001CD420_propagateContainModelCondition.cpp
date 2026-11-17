@@ -38,11 +38,7 @@ enum KindOfType
 	KINDOF_UNKNOWN = 0
 };
 
-class Thing
-{
-	// Only the const-ness of the pointer-to-member below is observed by the
-	// generated code; the isKindOf body is not recovered here.
-};
+#include "../../Common/Thing/thing.h"
 
 // Retail routes these two calls through incremental-link thunks.
 extern void j_000022bb();

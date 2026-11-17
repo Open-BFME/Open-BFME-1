@@ -19,11 +19,10 @@
 
 enum KindOfType { KINDOF_INVALID = 0 };
 
-class Thing
-{
-public:
-	bool isKindOf( KindOfType t ) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf( KindOfType t ) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Rva0024ECA0Owner;
 

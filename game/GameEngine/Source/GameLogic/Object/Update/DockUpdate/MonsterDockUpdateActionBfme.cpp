@@ -42,7 +42,10 @@ public:
  }
 
 };
-class Thing { public: void setPosition(const Coord3D*); };
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D*);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class GameLogic {public:char pad[0x3c]; unsigned int frame;};
 extern GameLogic *TheGameLogic;
 class TerrainLogic {public:

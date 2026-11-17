@@ -19,13 +19,12 @@ struct BfmeEffectRecord8030 { int m_values[3]; };
 struct Coord3D;
 class Matrix3D;
 
-class Thing
-{
-public:
-	void convertBonePosToWorldPos( const Coord3D *bonePos,
-		const Matrix3D *boneTransform, Coord3D *worldPos,
+#define THING_TU_MEMBERS \
+public: void convertBonePosToWorldPos( const Coord3D *bonePos, \
+		const Matrix3D *boneTransform, Coord3D *worldPos, \
 		Matrix3D *worldTransform ) const;
-};
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 // Retail's second call out of this body goes through ILT 0x00002A59, whose
 // target is 0x001D67C0. The ledger owns that 57-byte body as

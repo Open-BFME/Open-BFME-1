@@ -5,11 +5,10 @@ class Matrix3DTN;
 // BFMERopeDrawableGetPositionShim::bfmeRebuild 0x0041B200.
 class Matrix3D;
 
-class Thing
-{
-public:
-	void rva00132200(const Matrix3D *m);
-};
+#define THING_TU_MEMBERS \
+public: void rva00132200(const Matrix3D *m);
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Drawable
 {

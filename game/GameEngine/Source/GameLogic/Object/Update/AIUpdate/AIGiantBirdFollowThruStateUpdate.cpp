@@ -83,11 +83,10 @@ public:
 	unsigned char m_privateStatus;
 };
 
-class Thing
-{
-public:
-	void setPosition(const Coord3D *position);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *position);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 typedef int ObjectID;
 

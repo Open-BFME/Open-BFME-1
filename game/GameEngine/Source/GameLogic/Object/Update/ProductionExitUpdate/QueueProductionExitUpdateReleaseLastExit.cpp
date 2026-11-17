@@ -31,11 +31,10 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class Thing
-{
-public:
-	bool isKindOf(KindOfType k) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType k) const;
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class AICommandInterface
 {

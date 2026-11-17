@@ -52,16 +52,14 @@ public:
 	void bfmeSet(Bool value);
 };
 
-class Thing
-{
-public:
-	const Coord3D *getPosition() const
-	{
-		return (const Coord3D *)((const unsigned char *)this + 0x38);
-	}
-
-	void setPosition(const Coord3D *position);
-};
+#define THING_TU_MEMBERS \
+public: const Coord3D *getPosition() const \
+	{ \
+		return (const Coord3D *)((const unsigned char *)this + 0x38); \
+	} \
+public: void setPosition(const Coord3D *position);
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {

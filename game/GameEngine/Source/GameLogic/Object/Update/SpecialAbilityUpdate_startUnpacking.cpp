@@ -36,7 +36,10 @@ class BfmeArg1158;
 class BfmeOwner1158 { public: void bfmeSubEAll1158(BfmeArg1158*); };
 class BfmeInnerCPB { public: void bfmeOneCPB(int,int); };
 class Rva00267D00 { public: void m00267D00(char); };
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Object { public:
  virtual void slot0();
  virtual void slot1();

@@ -21,7 +21,10 @@ class Gen001C9A10 { public: void handle(int); };
 class Gen001C9AC0 { public: void handle(int); };
 class BFMESelectionStatusBits { public: bool test(unsigned int) const; };
 enum KindOfType { KIND_001F8080 = 0x6c };
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Object { public:
 char pad000[0x38]; Coord3DBase position; char pad044[0x110-0x44]; Condition001F8080 flags;
 char pad138[0x204-0x138]; AIUpdateInterface *m_ai; char pad208[0x214-0x208]; Object *m_containedBy;

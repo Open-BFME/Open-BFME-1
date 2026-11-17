@@ -13,7 +13,10 @@ public:
  bool any() const { return m_bits.any(); }
 };
 extern const BitFlags<192> KINDOFMASK_NONE;
-class Thing { public: bool isKindOfMulti(const BitFlags<116>&, const BitFlags<116>&) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOfMulti(const BitFlags<116>&, const BitFlags<116>&) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Object {
 public:
  void notifyModelConditionChanged();

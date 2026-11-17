@@ -31,12 +31,11 @@ public:
 	bool isEquivalentTo(const ThingTemplate *that) const;
 };
 
-class Thing
-{
-public:
-	const ThingTemplate *getTemplate() const;
-	bool isKindOf(KindOfType kind) const;
-};
+#define THING_TU_MEMBERS \
+public: const ThingTemplate *getTemplate() const; \
+public: bool isKindOf(KindOfType kind) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Player;
 

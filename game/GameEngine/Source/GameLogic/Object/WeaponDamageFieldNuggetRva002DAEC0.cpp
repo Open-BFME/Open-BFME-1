@@ -64,11 +64,10 @@ private:
 };
 
 // Retail's Thing::setPosition (row 0x00132CE0, ILT 0x0003A1A7).
-class Thing
-{
-public:
-	void setPosition(const Coord3D *pos);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *pos);
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {

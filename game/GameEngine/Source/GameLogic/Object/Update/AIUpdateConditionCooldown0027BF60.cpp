@@ -24,11 +24,10 @@ public:
  UnsignedInt m_bfmeHalfCountBase;					///< retail this+0x42C
 };
 
-class Thing
-{
-public:
-	const ThingTemplate *getTemplate(void) const;			// ILT 0x000084B8
-};
+#define THING_TU_MEMBERS \
+public: const ThingTemplate *getTemplate(void) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Rva000D3F10
 {

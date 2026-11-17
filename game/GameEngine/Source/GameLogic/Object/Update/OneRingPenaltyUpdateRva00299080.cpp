@@ -85,11 +85,10 @@ private:
 };
 
 // Thing::setPosition is the retail callee (ILT 0x0003A1A7); Object derives from Thing.
-class Thing
-{
-public:
-	void setPosition(const Coord3D *pos);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *pos);
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 // The existing retail lookup owner is BfmeThingFactory at RVA 0x00137E80.
 // This pointer-only declaration models no factory layout or new object.
