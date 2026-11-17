@@ -38,7 +38,7 @@ class Overridable
 {
 public:
 	Overridable *friend_getFinalOverride();
-	Overridable *getFinalOverride()
+	Overridable *finalOverrideLocal()
 	{
 		if (m_nextOverride)
 			return m_nextOverride->friend_getFinalOverride();
@@ -56,7 +56,7 @@ public:
 	int calcCostToBuild(const Player *player, int baseCost) const;
 	unsigned short getBuildCost() const
 	{
-		const ThingTemplate *tmpl = m_nextOverride ? (const ThingTemplate *)m_nextOverride->getFinalOverride() : this;
+		const ThingTemplate *tmpl = m_nextOverride ? (const ThingTemplate *)m_nextOverride->finalOverrideLocal() : this;
 		if (!tmpl)
 			tmpl = this;
 		return tmpl->m_buildCost;
