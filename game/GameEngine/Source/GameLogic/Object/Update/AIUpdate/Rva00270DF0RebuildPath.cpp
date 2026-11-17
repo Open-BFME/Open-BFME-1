@@ -25,11 +25,10 @@ public:
 	}
 };
 
-class Thing
-{
-public:
-	void getUnitDirectionVector2D(Coord3D &direction) const;
-};
+#define THING_TU_MEMBERS \
+public: void getUnitDirectionVector2D(Coord3D &direction) const;
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class PathNode
 {

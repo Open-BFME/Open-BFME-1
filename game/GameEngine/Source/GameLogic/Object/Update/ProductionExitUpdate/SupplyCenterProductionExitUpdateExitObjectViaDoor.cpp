@@ -128,12 +128,11 @@ class Rva002D2790AICommandInterface
 {
 };
 
-class Thing
-{
-public:
-    void setPosition(const Coord3D *position);
-    void setOrientation(Real angle);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *position); \
+public: void setOrientation(Real angle);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Pathfinder
 {
 public:

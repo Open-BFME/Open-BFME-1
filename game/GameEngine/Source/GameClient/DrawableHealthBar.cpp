@@ -50,11 +50,10 @@ struct BfmeBodyVtable
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 // Only the kind-of query is used here; the object passes its own address as
 // the Thing receiver, as in DrawableBFME.cpp.
-class Thing
-{
-public:
-	Bool isKindOf(KindOfType kind) const;
-};
+#define THING_TU_MEMBERS \
+public: Bool isKindOf(KindOfType kind) const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 // This is the vtable slot at +0x28 used by the raw 0x0041CA50 body.  The
 // object fields are the retail +0x200 body and +0x214 contained-by links.

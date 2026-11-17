@@ -99,11 +99,10 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	const Coord3D *getUnitDirectionVector2D() const;
-};
+#define THING_TU_MEMBERS \
+public: const Coord3D *getUnitDirectionVector2D() const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public BFMEVirtualSlots<129>

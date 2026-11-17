@@ -6,11 +6,10 @@ class BfmePosTP;
 // AICommandInterface::aiIdle 0x000D87E0, AIUpdateInterface::destroyPath 0x0026F080.
 struct Coord3D;
 
-class Thing
-{
-public:
-	void setPosition(const Coord3D *pos);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *pos);
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Drawable
 {

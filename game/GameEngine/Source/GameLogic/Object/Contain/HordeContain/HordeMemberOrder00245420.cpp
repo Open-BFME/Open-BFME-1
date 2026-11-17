@@ -14,7 +14,10 @@ inline Coord3D& Coord3D::operator=(const Coord3D &p) {
 
 // Method-only ABI declaration; Thing::setOrientation is independently landed at
 // 00132E40 with the existing 000399A5 ILT pin. No Thing storage is instantiated.
-class Thing { public: void setOrientation(float); };
+#define THING_TU_MEMBERS \
+public: void setOrientation(float);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class MemberCall00245420 {};
 template<class T> __forceinline T member245420(void (*raw)()) {
     union { void (*raw)(); T m; } u; u.raw=raw; return u.m;

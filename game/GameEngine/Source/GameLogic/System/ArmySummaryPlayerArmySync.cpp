@@ -94,11 +94,10 @@ public:
 	Int m_livingWorldIndex;
 };
 
-class Thing
-{
-public:
-	Bool isKindOf( KindOfType kind ) const;
-};
+#define THING_TU_MEMBERS \
+public: Bool isKindOf( KindOfType kind ) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Rva00362670Owner
 {
