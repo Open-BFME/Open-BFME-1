@@ -36,46 +36,11 @@ class CameraClass;
 // vptr, FirstNode and LastNode are laid out in order, and Is_Valid() is the
 // three tests -- this, NextNode, PrevNode -- that retail spells out.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
-class GenericNode
-{
-public:
-	virtual ~GenericNode( void );
+#include "../WWLib/listnode.h"
 
-	GenericNode *Next( void ) const { return NextNode; }		///< +0x04
-	GenericNode *Prev( void ) const { return PrevNode; }		///< +0x08
-	bool Is_Valid( void ) const { return (this != (GenericNode *)0 && NextNode != (GenericNode *)0 && PrevNode != (GenericNode *)0); }
-
-protected:
-	GenericNode *NextNode;
-	GenericNode *PrevNode;
-};
-
-template<class T> class Node : public GenericNode
-{
-public:
-	T Next( void ) const { return (T)GenericNode::Next(); }
-	T Prev( void ) const { return (T)GenericNode::Prev(); }
-	bool Is_Valid( void ) const { return GenericNode::Is_Valid(); }
-};
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
-class GenericList
-{
-public:
-	virtual ~GenericList( void );
 
-	GenericNode *Last( void ) const { return LastNode.Prev(); }
-
-protected:
-	GenericNode FirstNode;									///< +0x04
-	GenericNode LastNode;									///< +0x10
-};
-
-template<class T> class List : public GenericList
-{
-public:
-	T Last( void ) const { return (T)GenericList::Last(); }
-};
 
 // Only the five fields these bodies forward are reconstructed; the spacing
 // between them and the node base is retail's.
