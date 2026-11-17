@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // Retail 0x0018BB10, 282 bytes. Shape-twin of Zero Hour's Squad::getAllObjects
