@@ -218,11 +218,43 @@ template <class T> inline const T &maxOf(const T &a, const T &b)
 	return a > b ? a : b;
 }
 
+class BfmeA1144
+{
+public:
+	void bfmeGo1144(void);
+	char m_bfmePad0000[0xf0];
+	volatile int m_bfme0f0;
+	volatile char m_bfme0f4;
+	volatile char m_bfme0f5;
+	volatile char m_bfme0f6;
+	volatile char m_bfme0f7;
+	volatile char m_bfme0f8;
+	volatile char m_bfme0f9;
+	char m_bfmePad00fa[0x2];
+	volatile int m_bfme0fc;
+	volatile int m_bfme100;
+	volatile int m_bfme104;
+	volatile char m_bfme108;
+	volatile char m_bfme109;
+	char m_bfmePad010a[0x2];
+	volatile int m_bfme10c;
+	volatile char m_bfme110;
+	volatile char m_bfme111;
+	volatile char m_bfme112;
+	volatile char m_bfme113;
+	volatile int m_bfme114;
+	volatile int m_bfme118;
+	volatile int m_bfme11c;
+	char m_bfmePad0120[0x15c4];
+	volatile int m_bfme16e4;
+	volatile int m_bfme16e8;
+};
+
 class GameLODManager
 {
 public:
 	Int rva0007E0F0();
-	void rva0007C1D0();
+
 
 protected:
 	void applyStaticLODLevel(StaticGameLODLevel level);
@@ -270,7 +302,7 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 		prevLodBackup = m_staticGameLODInfo[m_currentStaticLOD];
 
 	if (level == STATIC_GAME_LOD_CUSTOM)
-		rva0007C1D0();
+		reinterpret_cast<BfmeA1144 *>(this)->bfmeGo1144();
 
 	StaticGameLODInfo *lodInfo = &m_staticGameLODInfo[level];
 	Int requestedTextureReduction;
