@@ -1,0 +1,28 @@
+diff --git a/inputs/vendor/dxerr9/PROVENANCE.txt b/inputs/vendor/dxerr9/PROVENANCE.txt
+index e65d8fe5c..1a8a0b48c 100644
+--- a/inputs/vendor/dxerr9/PROVENANCE.txt
++++ b/inputs/vendor/dxerr9/PROVENANCE.txt
+@@ -34,9 +34,20 @@ over. Two of the fourteen (?StringCopyWorkerA, ?StringVPrintfWorkerA) are the
+ same helper also linked into d3dx9 and are already claimed there, so they are
+ not re-claimed here.
+ 
+-Rows sourced here carry `vendored=dxerr9-summer2003` and name the archive
+-member their bytes come from; ./build.sh extracts that member and byte-compares
+-it against retail like any other row.
++Retired as a build input on 2026-11-17 (87bbdd2a2). The other twelve
++sections are recovered C++ under game/Libraries/Source/DirectX/
++(dxerrstring{a,w}.cpp, dxerrdescription{a,w}.cpp, strsafe.cpp, dxtracew.cpp,
++dxtracea.cpp), each byte-verified at its retail RVA. No functions.csv row
++names this archive any more, so ./build.sh and the link census no longer
++extract the member: they reach an archive member only through matched rows
++whose source is the .lib (notes `member=`). Do not point a row back at it:
++the member's NODUP definitions would collide with those sources again, and
++the member is linked whole or not at all.
++
++The archive stays committed as read-only identity evidence:
++targets/game/reverse/attempt_support/dxerr9-summer2003/ (test_strsafe.py,
++physical_member_feasibility.py) and
++targets/game/reverse/identity_evidence/dxerr9-summer2003-*.md read it.
+ 
+ Re-obtaining it
+ ---------------

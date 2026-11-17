@@ -131,3 +131,29 @@ reports a duplicate (previews UNKNOWN on the stale census). Step 6 is still open
 `inputs/vendor/dxerr9/PROVENANCE.txt` "Coverage" still describes the vendored rows, and any
 edit under `inputs/vendor/` sends the commit through the full gate (`header_dependents.py`:
 "toolchain/vendored: full gate"), so refresh it in a commit that pays that gate anyway.
+
+## Verification and the ready step 6 (2026-11-17, w48 route/retirement lane round 2)
+
+Re-checked independently at `8147b9c45` (the retirement is `87bbdd2a2`), model claude-opus-5-5:
+
+- `rg -n 'dxerr9.lib' targets/game/reverse/functions.csv` prints nothing; the twelve rows of
+  the seven DirectX units are the only owners of the member's sections (the A workers stay
+  d3dx9 `cimage.obj` rows 0x00A2A893 / 0x00A2A8CE).
+- `./build.sh` of the seven units: Functions OK 12/12, 8197 literals + 3 empty-string refs,
+  6 DIR32 refs, body guard OK; `tools/import_binding.py check` PASS on `dxtracea.cpp`.
+- `link_check.py` on the seven units at `8147b9c45` (311 s): "Lib members: 178 extracted from 5
+  archive(s)", no duplicate, all seven LINKED PREVIEW UNKNOWN; before, at `b8a568e37`: 179 from
+  6 archives and 12 duplicates over the six existing units. The UNKNOWN is the census index's
+  `unknown_definers` state (22,801 ledger objects changed since census `e27899673e` are not
+  built in a worker tree), so neither `--compile-limit` nor `--refresh` (about 22,000 compiles)
+  is a cheap answer: the next census gives the LINKED figure. In the census index the
+  dropped member's names fall back to single definers (`?StringCopyWorkerA` /
+  `?StringVPrintfWorkerA`: `cimage.obj` only; `"%s(%s): "`-style literals: the new units only),
+  for which `link_census.judge_selected` returns "ok" or no verdict, never "wrong", so nothing in
+  the index predicts a new blocker.
+
+Step 6 is ready as `provenance-coverage-retired.patch` (beside this file; `git apply --check`
+clean at `8147b9c45`). It was not committed here: this worktree holds ~190 built objects, so
+the full gate it forces would recompile ~22,000 units under the host-wide build lock. Apply it
+in the next commit that pays the full gate anyway: `git apply
+targets/game/reverse/attempt_support/dxerr9-summer2003/provenance-coverage-retired.patch`.
