@@ -114,3 +114,5 @@
 - DXTraceW 0x00AFD20F: same-structure candidate probes EXACT 377/377 (tracew-candidate.cpp.txt). Claimed by the sibling w48 retirement lane (Lomchat/59bfb59e); not landed here. If that claim is gone next round and W is still archive-owned, land it via add_match --replace-existing into game/Libraries/Source/DirectX/dxtracew.cpp.
 - Gotcha: build/w48-notes.md is TRACKED and shared with the naming lanes; an untracked copy is clobbered by git pull. Append, then commit it.
 - Gotcha: a /Zi probe writes vc70.pdb into the worktree root; delete it.
+## w41-i round 21 (claude-sonnet-5-5)
+3 batches served (1 file each seen), nothing submitted. Keys: HorseHordeContainModuleData dtor Rva002469D0* entries/m_00..m_2bc (opaque), Rva003B9AD0 pair copy ctor, Rva009F4070DistanceSquared a/b. Same dead ends.
