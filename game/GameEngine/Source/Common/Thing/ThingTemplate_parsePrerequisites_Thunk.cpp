@@ -40,13 +40,7 @@ protected:
 enum { INI_LOAD_CREATE_OVERRIDES = 2 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
-struct FieldParse
-{
-	const char *name;
-	void (__cdecl *parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 void __cdecl parsePrerequisiteUnit(INI *, void *, void *, const void *);
 void __cdecl parsePrerequisiteScience(INI *, void *, void *, const void *);

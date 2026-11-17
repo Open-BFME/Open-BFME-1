@@ -44,5 +44,4 @@ private:
 // name at +0 and taking the value at +4.
 struct LookupListRec { const char* name; int value; };
 
-typedef void (*INIFieldParseProc)(INI*, void*, void*, const void*);
-struct FieldParse { const char* token; INIFieldParseProc parse; const void* userData; int offset; };
+#include "../FieldParse.h"

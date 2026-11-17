@@ -146,13 +146,7 @@ void Rva006077C0ParseSoundState(INI *ini, void *instance, void *, const void *)
 	pushSoundState(states, reinterpret_cast<const Rva00607770Element &>(state));
 }
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	int offset;
-};
+#include "../../../../Include/Common/FieldParse.h"
 
 extern "C" void __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern "C" void __identifier("?u4IniFlag00606890@@YAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);

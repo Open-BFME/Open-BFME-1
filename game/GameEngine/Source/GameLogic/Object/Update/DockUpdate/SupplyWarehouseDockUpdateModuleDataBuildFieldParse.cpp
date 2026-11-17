@@ -1,10 +1,4 @@
-struct FieldParse
-{
-	const char *m_token;
-	void (*m_parse)();
-	const void *m_userData;
-	unsigned int m_offset;
-};
+#include "../../../../../Include/Common/FieldParse.h"
 
 class MultiIniFieldParse
 {

@@ -47,13 +47,7 @@ public:
 
 class INI;
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	unsigned int offset;
-};
+#include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 
 class INI
 {

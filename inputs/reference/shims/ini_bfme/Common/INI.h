@@ -94,7 +94,7 @@ const ErrorCode INI_END_OF_FILE = ERROR_BAD_INI;
 	* store - where to store the data parsed, this is a field in the *instance* 'instance'
 	*/
 //-------------------------------------------------------------------------------------------------
-typedef void (*INIFieldParseProc)( INI *ini, void *instance, void *store, const void* userData );
+#include "../../../../../game/GameEngine/Include/Common/FieldParse.h"
 
 //-------------------------------------------------------------------------------------------------
 typedef const char* ConstCharPtr;
@@ -111,21 +111,21 @@ typedef const LookupListRec *ConstLookupListRecArray;
 //-------------------------------------------------------------------------------------------------
 /** Parse tables for all fields of each data block are created using these */
 //-------------------------------------------------------------------------------------------------
-struct FieldParse
-{
-	const char*					token;						///< token of the field
-	INIFieldParseProc		parse;						///< the parse function
-	const void*					userData;					///< field-specific data
-	Int									offset;						///< offset to data field
 
-	inline void set(const char* t, INIFieldParseProc p, const void* u, Int o)
-	{
-		token = t;
-		parse = p;
-		userData = u;
-		offset = o;
-	}
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //-------------------------------------------------------------------------------------------------
 class MultiIniFieldParse

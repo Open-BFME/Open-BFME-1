@@ -17,13 +17,7 @@ public:
 
 typedef void (__cdecl *INIFieldParseProc)( INI *, void *, void *, const void * );
 
-struct FieldParse
-{
-	const char *token;
-	INIFieldParseProc parse;
-	const void *userData;
-	Int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 class Rva0006AB10Curve
 {

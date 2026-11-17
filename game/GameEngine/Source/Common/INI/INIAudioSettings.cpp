@@ -8,13 +8,7 @@ typedef float Real;
 typedef int Int;
 class INI;
 typedef void (*INIFieldParseProc)(INI *ini, void *instance, void *store, const void *userData);
-struct FieldParse
-{
-	const char *token;
-	INIFieldParseProc parse;
-	const void *userData;
-	Int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 // Field names follow the AudioSettings parse table at VA 0x01081D60; three 0x30-byte rows start at +0xA8.
 struct MicrophoneSettingsRva000B4B70

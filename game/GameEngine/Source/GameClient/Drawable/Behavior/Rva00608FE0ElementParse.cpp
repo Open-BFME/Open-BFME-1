@@ -97,13 +97,7 @@ void Rva00608FE0Element::parse(INI *ini)
 	}
 }
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	int offset;
-};
+#include "../../../../Include/Common/FieldParse.h"
 
 extern "C" void __identifier("?parsePerUnitSounds@ThingTemplate@@KAXPAVINI@@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern "C" void __identifier("?parseAsciiStringVectorAppend@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);

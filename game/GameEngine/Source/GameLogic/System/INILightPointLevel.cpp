@@ -216,13 +216,7 @@ void INI::parseLightPointLevel( INI *ini )
 }
 
 typedef void (*INIFieldParseProc)( INI *, void *, void *, const void * );
-struct FieldParse
-{
-	const char *token;
-	INIFieldParseProc parse;
-	const void *userData;
-	int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 class Rva000BCE80
 {

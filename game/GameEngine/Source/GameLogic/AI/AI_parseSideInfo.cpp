@@ -85,13 +85,7 @@ public:
 	static void parseAsciiString(INI *, void *, void *, const void *);
 };
 
-struct FieldParse
-{
-	const char *name;
-	void (*parse)(INI *, void *, void *, const void *);
-	const void *userData;
-	unsigned int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 class AI;
 

@@ -11,13 +11,7 @@ typedef int Int;
 
 class INI;
 typedef void (*INIFieldParseProc)( INI *, void *, void *, const void * );
-struct FieldParse
-{
-	const char *token;
-	INIFieldParseProc parse;
-	const void *userData;
-	Int offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 class INIException
 {

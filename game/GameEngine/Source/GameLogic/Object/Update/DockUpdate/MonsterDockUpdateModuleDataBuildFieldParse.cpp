@@ -2,13 +2,7 @@ class INI;
 
 typedef void (*INIFieldParseProc)(INI *ini, void *instance, void *store, const void *userData);
 
-struct FieldParse
-{
-	const char *m_token;
-	INIFieldParseProc m_parse;
-	const void *m_userData;
-	unsigned int m_offset;
-};
+#include "../../../../../Include/Common/FieldParse.h"
 
 class MultiIniFieldParse
 {

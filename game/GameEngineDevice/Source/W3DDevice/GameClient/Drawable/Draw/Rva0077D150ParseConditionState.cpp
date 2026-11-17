@@ -22,13 +22,7 @@ typedef unsigned int UnsignedInt;
 class GenItem;
 class INI;
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)(INI *ini, void *instance, void *store, const void *userData);
-	const void *userData;
-	unsigned int offset;
-};
+#include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 
 class INI
 {

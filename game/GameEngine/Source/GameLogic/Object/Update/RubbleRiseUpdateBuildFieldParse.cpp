@@ -27,13 +27,7 @@ public:
 		const void *userData );
 };
 
-struct FieldParse
-{
-	const char *token;
-	void (*parse)( INI *ini, void *instance, void *store, const void *userData );
-	const void *userData;
-	Int offset;
-};
+#include "../../../../Include/Common/FieldParse.h"
 
 class MultiIniFieldParse
 {
