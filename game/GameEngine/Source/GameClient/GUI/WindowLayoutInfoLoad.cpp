@@ -26,10 +26,11 @@ public:
 
 	Data *m_data;
 
+	void set(const StringBase<T> &other);
+
 	private:
 	StringBase(const StringBase<T> &other);
 	~StringBase() { releaseBuffer(); }
-	void set(const StringBase<T> &other);
 	void releaseBuffer();
 };
 
