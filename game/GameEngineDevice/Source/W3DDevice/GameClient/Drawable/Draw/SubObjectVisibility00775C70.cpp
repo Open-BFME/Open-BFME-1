@@ -25,11 +25,18 @@ struct Rva00771B10Element {
  float at14;
 };
 }
-namespace _STL { template<class T> void __cdecl _Construct(T*,const T&); }
 #include <vector>
+extern void j_000334ec();
+extern void j_0002a801();
+struct Rva00771B10Vec : _STL::vector<_STL::Rva00771B10Element,_STL::allocator<_STL::Rva00771B10Element> > {
+ void append(const _STL::Rva00771B10Element& r) {
+  if(_M_finish!=_M_end_of_storage._M_data) { typedef void (__cdecl *F)(_STL::Rva00771B10Element*,const _STL::Rva00771B10Element&); ((F)j_000334ec)(_M_finish,r); ++_M_finish; }
+  else { typedef void (Rva00771B10Vec::*M)(_STL::Rva00771B10Element*,const _STL::Rva00771B10Element&,const _STL::__false_type&,unsigned int,bool); union { void (*raw)(); M m; } u; u.raw = j_0002a801; _STL::__false_type tag; (this->*u.m)(_M_finish,r,tag,1,true); }
+ }
+};
 class SubObjectVisibility00775C70 {
  char at00[0x40];
- _STL::vector<_STL::Rva00771B10Element,_STL::allocator<_STL::Rva00771B10Element> > at40,at4c;
+ Rva00771B10Vec at40,at4c;
  char at58[0x164-0x58];
  bool at164,at165;
 public:
@@ -48,7 +55,7 @@ void SubObjectVisibility00775C70::update(const AsciiString& name,bool show,bool 
     at165=true;
     _STL::Rva00771B10Element info;
     info.name=name; info.hide=!show; info.at08=value08; info.at10=value10; info.at14=1.0f; info.at0c=show?0.9999f:0.0001f;
-    at4c.push_back(info);
+    at4c.append(info);
    }
   } else {
    bool found=false;
@@ -63,7 +70,7 @@ void SubObjectVisibility00775C70::update(const AsciiString& name,bool show,bool 
     at164=true;
     _STL::Rva00771B10Element info;
     info.name=name; info.hide=!show; info.at08=0; info.at0c=1.0f; info.at10=0; info.at14=0;
-    at40.push_back(info);
+    at40.append(info);
    }
   }
  }
