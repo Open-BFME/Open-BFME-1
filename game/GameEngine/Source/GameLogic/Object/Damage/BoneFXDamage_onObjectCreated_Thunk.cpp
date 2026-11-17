@@ -21,11 +21,7 @@ protected:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-class NameKeyGenerator
-{
-public:
-    NameKeyType nameToKey(const char *name);
-};
+#include "../../ScriptEngine/game_logic_dispatch.h"
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
