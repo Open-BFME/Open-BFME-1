@@ -2987,6 +2987,8 @@ void AIPlayer::loadPostProcess( void )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?isAllBuilt@TeamInQueue@@QAE_NXZ present-unmatched
+// Retail body: TeamInQueueBuildPredicates.cpp (0x00160F80); this Zero Hour-layout copy would be a second strong definition.
+#if 0
 Bool TeamInQueue::isAllBuilt()
 {
 	WorkOrder *order;
@@ -3001,6 +3003,7 @@ Bool TeamInQueue::isAllBuilt()
 	}
 	return !stillBuilding;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -3009,6 +3012,8 @@ Bool TeamInQueue::isAllBuilt()
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?isMinimumBuilt@TeamInQueue@@QAE_NXZ present-unmatched
+// Retail body: TeamInQueueBuildPredicates.cpp (0x00160FF0); this Zero Hour-layout copy would be a second strong definition.
+#if 0
 Bool TeamInQueue::isMinimumBuilt()
 {
 	WorkOrder *order;
@@ -3028,6 +3033,7 @@ Bool TeamInQueue::isMinimumBuilt()
 	}
 	return true;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -3049,6 +3055,8 @@ Bool TeamInQueue::includesADozer()
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?areBuildsComplete@TeamInQueue@@QAE_NXZ present-unmatched
+// Retail body: TeamInQueueBuildPredicates.cpp (0x00161030); this Zero Hour-layout copy would be a second strong definition.
+#if 0
 Bool TeamInQueue::areBuildsComplete()
 {
 	WorkOrder *order;
@@ -3061,6 +3069,7 @@ Bool TeamInQueue::areBuildsComplete()
 	}
 	return true;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

@@ -234,7 +234,7 @@ public:
 	}
 	TeamInQueue *dlink_next_TeamBuildQueue() const;
 
-	Bool isBuildTimeExpired()
+	__declspec(dllimport) __forceinline Bool isBuildTimeExpired()
 	{
 		if (m_team->getPrototype()->getTemplateInfo()->m_initialIdleFrames < 1)
 			return false;
@@ -245,7 +245,7 @@ public:
 		return false;
 	}
 
-	Bool isAllBuilt()
+	__declspec(dllimport) __forceinline Bool isAllBuilt()
 	{
 		WorkOrder *order;
 		Bool stillBuilding = false;
@@ -257,7 +257,7 @@ public:
 		return !stillBuilding;
 	}
 
-	Bool isMinimumBuilt()
+	__declspec(dllimport) __forceinline Bool isMinimumBuilt()
 	{
 		WorkOrder *order;
 		for (order = m_workOrders; order; order = order->m_next)
@@ -271,7 +271,7 @@ public:
 		return true;
 	}
 
-	Bool areBuildsComplete()
+	__declspec(dllimport) __forceinline Bool areBuildsComplete()
 	{
 		WorkOrder *order;
 		for (order = m_workOrders; order; order = order->m_next)
