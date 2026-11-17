@@ -60,3 +60,5 @@
 
 ## w41-i round 13 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: EnragedBehaviorModuleData ctor m_unmodelled_18..28 (no ZH twin), BfmeConv961 Reset/Gate/Flag types, calculateTerrainLOD freq64 locals (known placeholder dead end), WanderAI/HordeWorkerAI ctor offsets, BfmeConv1054 (huge opaque), ScreenCrossFade postRender locals (dead end), Apt NativeStringSlots008B3AA0, W3DLightDrawModuleData ctor m_unmodelled_08..44, Rva007F0210Set, Rva002D9910*, BfmeConv1401, Rva00800B70FeslDtor. All opaque/no ZH twin.
+## agent h round 11 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: UpdateModuleModuleData ctor thunk m_unknown20.., BfmeConv1054 Bfme* (FXParticleSystem, opaque), line2_d.cpp ClipLine2D/IntersectLine2D params+locals (ZH-identical -> known placeholder dead end), GameLogicGetLoadScreen at078.. / Gen000290D2, DebugDisplay setCursorPos x/y, Rva009F4070DistanceSquared, BfmeConv1226, GarrisonContain ctor m_2F4.., Rva002CFC80TinyBodies, BfmeConv792, Rva00627AA0Obj. All opaque/no ZH twin.
