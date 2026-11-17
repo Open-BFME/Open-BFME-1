@@ -41,22 +41,8 @@ public:
 
 class AsciiString;
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	~StringBase(void) {}
-	void releaseBuffer(void); // retail 0x00887940
-	T *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : private StringBase<char>
-{
-public:
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-};
 
 class BfmeVectorBool
 {
