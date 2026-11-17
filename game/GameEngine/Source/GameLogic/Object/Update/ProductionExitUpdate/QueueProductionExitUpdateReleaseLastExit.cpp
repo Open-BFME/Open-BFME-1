@@ -39,7 +39,7 @@ public: bool isKindOf(KindOfType k) const;
 class AICommandInterface
 {
 public:
-	void aiMoveToObject(Object *obj, CommandSourceType cmd);
+	void aiBfmeCommand42(Object *obj, CommandSourceType cmd);
 	void aiMoveToPosition(const Coord3D *pos, CommandSourceType cmd);
 };
 
@@ -144,7 +144,7 @@ void QueueProductionExitUpdate::notifyProductionBurstFinished()
 		host->setStatusBit(0x4D, true);
 		host->setStatusBit(3, true);
 		host->unidentified_000F20F0(3, 1);
-		host->getAICommand()->aiMoveToObject(overrideObj, CMD_FROM_AI);
+		host->getAICommand()->aiBfmeCommand42(overrideObj, CMD_FROM_AI);
 	}
 	else
 	{

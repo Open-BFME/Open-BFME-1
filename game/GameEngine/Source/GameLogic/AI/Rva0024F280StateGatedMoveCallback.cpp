@@ -11,8 +11,9 @@
 // INVALID_STATE_ID, returned by StateMachine::getCurrentStateID() when
 // m_currentState (+0x1C) is null, otherwise State::m_ID (+0x04). The call
 // goes through the AICommandInterface base at AIUpdateInterface+0x20 to the
-// ILT 0x0001C26A that the matched QueueProductionExitUpdate::notifyProductionBurstFinished
-// already names aiMoveToObject(Object *, CommandSourceType). State ids 0x38
+// ILT 0x0001C26A, which jumps to 0x00152B20 (callees.py), the ledgered
+// AICommandInterface::aiBfmeCommand42(Object *, CommandSourceType); the twin
+// aiMoveToObject body at 0x002A8060 is a different retail copy. State ids 0x38
 // and 0x0F are left numeric: BFME's AIStateType numbering is not witnessed.
 
 #include "../command_source_type.h"
@@ -43,7 +44,7 @@ public:
 class AICommandInterface
 {
 public:
-	void aiMoveToObject(Object *obj, CommandSourceType cmd);
+	void aiBfmeCommand42(Object *obj, CommandSourceType cmd);
 };
 
 class Rva0024F280UpdateBase
@@ -79,5 +80,5 @@ void Rva0024F280(Object *obj, void *userData)
 	StateID id = ai->getStateMachine()->getCurrentStateID();
 	if (id == 0x38 || id == 0xF)
 		return;
-	ai->aiMoveToObject((Object *)userData, CMD_FROM_AI);
+	ai->aiBfmeCommand42((Object *)userData, CMD_FROM_AI);
 }
