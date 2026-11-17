@@ -9,26 +9,7 @@
 #include "string_base.h"
 #include <map>
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_text;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class UnicodeString
 {
@@ -61,10 +42,7 @@ private:
 template <typename T>
 bool operator<(const StringBase<T> &left, const StringBase<T> &right);
 
-inline bool operator<(const AsciiString &left, const AsciiString &right)
-{
-	return *(const StringBase<char> *)&left < *(const StringBase<char> *)&right;
-}
+
 
 typedef std::map<AsciiString, AsciiString> PreferenceMap;
 
