@@ -48,19 +48,8 @@ public:
 // The narrow string is one pointer wide here and owns an out-of-line
 // releaseBuffer on its base (matched at 0x00887940, private, so the name must
 // be the real one or the call would not resolve).
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class AsciiString : public StringBase<char>
-{
-public:
-	~AsciiString() { releaseBuffer(); }
-};
 
 // One pointer wide, like retail's (this body only calls its out-of-line
 // releaseData, matched at 0x000681C0 through the thunk 0x00014475).
