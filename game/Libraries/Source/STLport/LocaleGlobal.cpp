@@ -43,10 +43,13 @@ inline locale::locale() : _M_impl(0)
 	_M_impl = _bfme_acquire(_Bfme_classic_locale);
 }
 
+// Same statement order as retail's copy constructor (0x00832150, 32 bytes):
+// the exported COMDAT this TU emits must be byte-identical to it.
 inline locale::locale(const locale &L) : _M_impl(0)
 {
-	L._M_impl->incr();
-	_M_impl = L._M_impl;
+	_Locale_impl *impl = L._M_impl;
+	impl->incr();
+	_M_impl = impl;
 }
 
 inline locale::~locale()
