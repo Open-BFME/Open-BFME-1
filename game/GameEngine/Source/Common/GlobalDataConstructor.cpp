@@ -117,7 +117,12 @@ public:
 
 extern Version *TheVersion;
 
-unsigned long CRC_Memory(const unsigned char *data, unsigned long length, unsigned long crc);
+// Retail calls ILT 0x0000A984, whose body is 0x00465250 (the FirewallHelper CRC
+// helper), not the realcrc.cpp CRC_Memory body at 0x009E19C0; reach the ledgered
+// ?j_0000a984 thunk with the same cdecl signature.
+extern void j_0000a984();
+typedef unsigned long (__cdecl *BfmeExeCrcFn)(const unsigned char *data, unsigned long length, unsigned long crc);
+#define CRC_Memory ((BfmeExeCrcFn)j_0000a984)
 
 extern "C" __declspec(dllimport) unsigned long __stdcall GetModuleFileNameA(void *module, char *filename, unsigned long size);
 extern "C" __declspec(dllimport) unsigned int __stdcall GetDoubleClickTime();
