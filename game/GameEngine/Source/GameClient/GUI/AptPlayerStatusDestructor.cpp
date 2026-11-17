@@ -10,7 +10,15 @@ template <typename T> class StringBase
 
 private:
 	StringBase(const T *text);
-	~StringBase();
+	// Retail inlines the destructor: scope exits call releaseBuffer (0x00887940)
+	// directly instead of ILT 0x0005E490 (see string_base.h).
+	~StringBase()
+	{
+		validate();
+		releaseBuffer();
+	}
+	void validate() const {}
+	void releaseBuffer();
 
 	void *m_data;
 };
