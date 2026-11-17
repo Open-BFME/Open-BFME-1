@@ -35,3 +35,5 @@
 
 ## w41-i round 7 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: Y2FeslDemanglerDispatch Rva00800E50Stamp/Owner m_00..m_20 (opaque), Rva8CDA60 Apt stack dispatch types, FadeAndDieOrnament/ShareExperience/Firestorm/BannerCarrier ModuleData ctor offsets, Rva003C7B60 create-render-object views (HolderView m_field08 = z height, BFME-only), BFMEFactoryModuleData m_unmodelled_*, CastleBehavior rva00371b00 (m_flagA5/m_objectIDsB8/ThingTemplate m_unmodelledD8 bit 0x200000: BFME-only, no ZH twin; Thing::getTemplate tmpl local is ZH-identical), Rva8BB1A0 bounds v00..v14, MemberTurnAndGoal offsets, BfmeConv1907/1778 Bfme* slots. Same dead ends as rounds 1-6.
+## agent h round 6 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: WanderAIUpdateModuleData ctor offsets (m_unknown20..m_flag54), Rva003C7B60 CreateRenderObject views, BfmeConv961/1115 Bfme* types, EnragedBehavior m_f1c/f20, DebugDisplay BfmeDebugDisplayVTable/setCursorPos x,y (known placeholder dead end), HorseHordeContain Rva002469D0 types, Rva003C1EE0 views, Rva004488B0 copy a-d, GlobalWeather m_at0C.., BannerCarrier m_field08.., Rva00889720. All opaque, no ZH twin.
