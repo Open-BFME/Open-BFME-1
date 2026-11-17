@@ -175,7 +175,7 @@ int CurDrawablePrevAnimation(lua_State *state)
 
 typedef unsigned char Bool;
 
-extern double g_bfmeSubB3;
+
 
 // The status word this binding tests sits at +0x90 of the target record, inside
 // the run LuaTargetRecord already declares as padding, so reading it through an
@@ -213,7 +213,7 @@ int rva002E7740(lua_State *state)
 				hit = status->isKindOf(bit);
 
 			if (hit) {
-				lua_pushnumber(state, g_bfmeSubB3);
+				lua_pushnumber(state, 1.0);
 				return 1;
 			}
 		}

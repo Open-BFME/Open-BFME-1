@@ -53,7 +53,7 @@ private:
 };
 
 
-extern double Gen01085F58;
+
 static double ZoneResetTime00408AD0;
 
 void PathfindZoneManager::calculateZonesIncremental(PathfindCell **map,
@@ -69,7 +69,7 @@ void PathfindZoneManager::calculateZonesIncremental(PathfindCell **map,
 
     if (m_currentZone == 0 || globalBounds != m_cachedBounds)
     {
-        double resetTime = Gen01085F58;
+        double resetTime = 0.0;
         m_currentZone = 0;
         ZoneResetTime00408AD0 = resetTime;
         m_cachedBounds = globalBounds;

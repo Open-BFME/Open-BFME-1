@@ -494,7 +494,7 @@ extern "C" void _ReadWriteBarrier( void );
 
 class LuaScriptEngine;
 extern LuaScriptEngine *TheLuaScriptEngine;
-extern double g_bfmeSubB3;
+
 
 // ?Rva002E7690LuaValueLookup@@YAHPAUlua_State@@@Z
 int Rva002E7690LuaValueLookup( lua_State *state )
@@ -515,7 +515,7 @@ int Rva002E7690LuaValueLookup( lua_State *state )
 					_ReadWriteBarrier();
 					if( bit != 0 )
 					{
-						lua_pushnumber( state, g_bfmeSubB3 );
+						lua_pushnumber( state, 1.0 );
 						return 1;
 					}
 				}

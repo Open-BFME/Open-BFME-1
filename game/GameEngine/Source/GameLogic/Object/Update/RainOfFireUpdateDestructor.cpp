@@ -81,7 +81,7 @@ public:
 
 extern Display *TheDisplay;
 extern const float g_rva01075350;
-extern double g_bfmeSubB3;
+
 
 class GlobalData
 {
@@ -116,7 +116,7 @@ RainOfFireUpdate::~RainOfFireUpdate()
 
 	if (data != 0 && TheDisplay != 0)
 	{
-		TheDisplay->slot39(g_bfmeSubB3 - data->m_initialDelay * g_rva01075350);
+		TheDisplay->slot39(1.0 - data->m_initialDelay * g_rva01075350);
 	}
 
 	if (TheWritableGlobalData != 0)

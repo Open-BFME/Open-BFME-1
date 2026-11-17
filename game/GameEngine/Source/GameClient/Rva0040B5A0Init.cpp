@@ -20,7 +20,7 @@ extern const float g_01075954;
 extern AsciiString g_s20;
 extern int g_i24;
 extern float g_f28;
-extern double g_dScale;
+
 extern Triple g_t2C;
 extern int g_i38;
 extern int g_i3C;
@@ -97,7 +97,7 @@ void Rva0040B5A0::init()
 	m_18 = (float)g_i18 * g_01075954;
 	m_20.StringBase<char>::set(g_s20);
 	m_24 = g_i24;
-	m_28 = (float)(g_f28 * g_dScale);
+	m_28 = (float)(g_f28 * 0.001);
 	m_2C = g_t2C;
 	m_38 = g_i38;
 	m_3C = g_i3C;

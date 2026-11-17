@@ -17,7 +17,7 @@ extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
 extern const float g_rva01075350;
 extern float g_bfmeDefaultBU;
-extern double Gen01085F58;
+
 
 class ModelConditionFlags
 {
@@ -191,7 +191,7 @@ unsigned int Rva001FAFE0Secondary::rva001FAFE0()
 	if (m_f20 > g_rva01075350)
 	{
 		m_f20 -= g_bfmeDefaultBU;
-		if (m_f20 <= Gen01085F58)
+		if (m_f20 <= 0.0)
 		{
 			Object *object = *reinterpret_cast<Object **>(
 				reinterpret_cast<unsigned char *>(this) - 8);
