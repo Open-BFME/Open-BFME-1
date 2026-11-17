@@ -192,3 +192,6 @@
 
 ## w41-i round 35 (claude-sonnet-5-5)
 3 batches served, all skipped (nothing submitted). Keys: Rva0010F100Receiver, BloodthirstyUpdate Gen_00287130/BfmeGuard96, Rva003C7B60 views, Pathfinder iterateCellsAlongLine locals (ZH-identical), FirestormDynamicGeometry ctor m_64.., Rva00943DB0Node, Rva1FC330 hierarchy, U4Blend blend3, BfmeAreaGate, W3DFloorDrawModuleData ctor m_unmodelled_*, Rva001A51F0Record flag2c/2d, HordeSiegeEngineContain ctor, ElementPayloadFill m_at*, Rva0018F660 transformPoints locals. Same dead ends.
+
+## w41-i round 36 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: ScriptConditions bfmeAreaGate/Body a,b,c, Rva007F0210 m_00/04/08, CollideModuleData ctor m_unknown*, FadeAndDieOrnament ctor, BfmeConv1279/1309/1379/808, W3DLaser ctor, HordeSiegeEngine ctor, DeployStyle/GateOpenAndClose ctors, S5Parse005A0720, W3DRopeDraw bfmeMax/Min a,b. Same dead ends.
