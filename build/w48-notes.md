@@ -211,3 +211,9 @@
 
 ## agent h round 30 (wave 48, claude-sonnet-5-5)
 - 3 batches served, all skipped (nothing submitted). Keys: U4Blend00609600 m_flag90/blend3 locals/Rva00609710Owner, Open2Twins007 (opaque STL elems), Rva8CDA60, Bezier ctor x0.., Rva003B2000Assign m_04.. (LivingWorldCampaignAct, no ZH twin), BfmeConv2137/1054, Rva1FC330, Q3Sort median a/b/c, BfmeThingSF, Rva0034FE00Assign, EnragedBehavior ctor m_unmodelled_*, V4Guarded Rva003BCA70, ParseMoveCameraBlock. name_oracle has no GlobalData+0x90 witness. Same dead ends.
+
+## agent h round 31 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: BfmeConv1401 VKH, Rva003B9AD0 pair copy ctor, BfmeThingSF, Rva005222A0NoteCalls, Rva002BC310, WanderAIUpdate/UpdateModuleModuleData ctors, Rva00889720 m_field9DF8.., Y4Fesl Rva007F*, CrossFadeImage m_image2, RvaTreeBounds, DeployStyle ctor m_3f4.., AIGroup m_unmodelled00, Create_Render_Obj field1.., line2_d (skipped: an rg of ClipLine2D accidentally surfaced name_votes.csv lines, so I abstained there; avoid rg over whole repo for names). Same dead ends.
+
+## agent h round 32 (wave 48, claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: GettingBuilt ctor m_name0/1,m_f0..3, DelayedLuaEventUpdate ctor m_f20/70/74/75, ClipLine2D (ZH-identical), Rva003B2000Assign, W3DStreakDraw ctor, RankInfo _bfme_14.., Y4Fesl Rva007F*, U4Blend, Pathfinder, Rva8CDA60, InGamePopupMessage, Rva004488B0 copy a-d, EnragedBehavior ctor, CastleBehavior Rva00371B00, Rva001515C0Xfer. Same dead ends.
