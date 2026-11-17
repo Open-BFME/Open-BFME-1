@@ -185,7 +185,10 @@ Bool TunnelNetworkExitConditions::shouldExit(const StateMachine* machine) const
 //-- AITNGuardMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/AITNGuardConstructorThunk.cpp
-// ??0AITNGuardMachine@@ present-unmatched
+// ??0AITNGuardMachine@@ is defined by AITNGuardMachine_ctor_Bfme.cpp (retail 0x0018AFB0); this
+// original-source copy would be a second strong definition of the same symbol, so it is kept
+// out of the build.
+#if 0
 AITNGuardMachine::AITNGuardMachine( Object *owner ) : 
 	StateMachine(owner, "AITNGuardMachine"),
 	m_nemesisToAttack(INVALID_ID),
@@ -212,6 +215,7 @@ AITNGuardMachine::AITNGuardMachine( Object *owner ) :
 	setDebugOutput(true);
 #endif
 }
+#endif
 
 //--------------------------------------------------------------------------------------
 // Lifting that constructor out took every newInstance() call in this file with
@@ -223,7 +227,7 @@ AITNGuardMachine::AITNGuardMachine( Object *owner ) :
 void AITNGuardStatePoolGlue( AITNGuardMachine *machine )
 {
 	newInstance(AITNGuardInnerState)( machine );
-	newInstance(AITNGuardReturnState)( machine );
+	AITNGuardReturnState::operator delete( machine, AITNGuardReturnState::AITNGuardReturnState_GLUE_NOT_IMPLEMENTED );
 	newInstance(AITNGuardIdleState)( machine );
 	newInstance(AITNGuardOuterState)( machine );
 	newInstance(AITNGuardPickUpCrateState)( machine );

@@ -277,7 +277,10 @@ static Bool hasAttackedMeAndICanReturnFire( State *thisState, void* /*userData*/
 //--------------------------------------------------------------------------------------
 // Zero Hour-layout source; the BFME byte-exact constructor is in
 // game/GameEngine/Source/GameLogic/AI/AIGuardRetaliateMachineCtor.cpp.
-// ??0AIGuardRetaliateMachine@@ present-unmatched
+// ??0AIGuardRetaliateMachine@@ (retail 0x0015F240) is defined by AIGuardRetaliateMachineCtor.cpp; this
+// Zero Hour-layout copy would be a second strong definition of the same symbol, so it stays out
+// of the build.
+#if 0
 AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner ) : 
 	StateMachine(owner, "AIGuardRetaliateMachine"),
 	m_nemesisToAttack(INVALID_ID)
@@ -300,6 +303,7 @@ AIGuardRetaliateMachine::AIGuardRetaliateMachine( Object *owner ) :
 	defineState( AI_GUARD_RETALIATE_OUTER,						newInstance(AIGuardRetaliateOuterState)( this ), AI_GUARD_RETALIATE_GET_CRATE, AI_GUARD_RETALIATE_GET_CRATE );
 	defineState( AI_GUARD_RETALIATE_GET_CRATE,				newInstance(AIGuardRetaliatePickUpCrateState)( this ), AI_GUARD_RETALIATE_RETURN, AI_GUARD_RETALIATE_RETURN );
 }
+#endif
 
 //--------------------------------------------------------------------------------------
 // ??1AIGuardRetaliateMachine@@ present-unmatched
