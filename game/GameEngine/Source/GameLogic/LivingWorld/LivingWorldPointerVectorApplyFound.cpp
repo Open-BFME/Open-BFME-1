@@ -3,9 +3,11 @@
 
 class BfmeLwcmFindResult
 {
-public:
-	void applyPointer(void **elem);
 };
+
+// Retail reaches 0x003A95D0 (ledger BfmeLwcmFindResult::containsName003A95D0)
+// through ILT 0x00026EA9; nothing defines a BfmeLwcmFindResult::applyPointer.
+extern void j_00026ea9();
 
 class BfmeLivingWorldCampaignManager
 {
@@ -45,5 +47,9 @@ void BfmeLwcmPointerVectorOwner::applyFound(void *key)
 	if (!found)
 		return;
 	for (i = 0; i < self->m_entries.size(); ++i)
-		found->applyPointer(self->m_entries.slot(i));
+	{
+		typedef void (BfmeLwcmFindResult::*ApplyFn)(void **elem);
+		union { void (*fn)(); ApplyFn call; } apply = { j_00026ea9 };
+		(found->*apply.call)(self->m_entries.slot(i));
+	}
 }
