@@ -8,6 +8,7 @@
 class DelayedLuaEventUpdateModuleData
 {
 public:
+	__declspec(dllimport) __forceinline DelayedLuaEventUpdateModuleData() {}
 	virtual ~DelayedLuaEventUpdateModuleData();
 private:
 	friend void forceDelayedLuaEventUpdateModuleDataDeletingDestructor();
