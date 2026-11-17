@@ -12,12 +12,7 @@
 typedef int ObjectID;
 typedef unsigned int UnsignedInt;
 
-struct Coord3DBase
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 
 enum AssaultStateTypes
 {

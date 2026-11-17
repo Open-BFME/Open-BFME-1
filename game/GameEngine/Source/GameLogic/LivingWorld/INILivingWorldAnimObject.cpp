@@ -56,12 +56,7 @@ struct FieldParse
 	int offset;
 };
 
-struct Coord3DBase
-{
-	float x;
-	float y;
-	float z;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot

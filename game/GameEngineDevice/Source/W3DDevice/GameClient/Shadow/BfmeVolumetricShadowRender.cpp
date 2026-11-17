@@ -15,12 +15,7 @@ class FrustumClass
 
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath/aabox.h
-class AABoxClass
-{
-public:
-	Vector3 Center;
-	Vector3 Extent;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWMath/aabox.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
 class BaseHeightMapRenderObjClass

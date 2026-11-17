@@ -185,9 +185,7 @@ private:
 	int m_numRefs;
 };
 
-class W3DMPO
-{
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/always.h"
 
 class VertexMaterialClass : public W3DMPO, public RefCountClass
 {

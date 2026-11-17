@@ -26,9 +26,7 @@ private:
 	void *ListNode;
 };
 
-class W3DMPO
-{
-};
+#include "../WWLib/always.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/meshgeometry.h
 class MeshGeometryClass : public W3DMPO, public RefCountClass, public MultiListObjectClass
