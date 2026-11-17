@@ -167,6 +167,15 @@ public:
 
 typedef Render2DSentenceClass::PendingSurfaceStruct PendingSurfaceStruct;
 
+// Element assignment as a free helper: retail inlines it (the callee at
+// 0x0036DAF0 is a separate copy with another layout view), and a member
+// operator= here would be emitted as a non-retail COMDAT even when inlined.
+static __forceinline void bfmeAssignElement(PendingSurfaceStruct &to, const PendingSurfaceStruct &from)
+{
+	static_cast<W3DRadarResetSurface &>(to) = from;
+	to.Renderers = from.Renderers;
+}
+
 template <class T> class VectorClass
 {
 public:
@@ -226,7 +235,7 @@ bool VectorClass<T>::Resize(int newsize, T const *array)
 		{
 			int copycount = (newsize < VectorMax) ? newsize : VectorMax;
 			for (int index = 0; index < copycount; index++)
-				newptr[index] = Vector[index];
+				bfmeAssignElement(newptr[index], Vector[index]);
 
 			if (IsAllocated)
 			{
@@ -266,7 +275,7 @@ public:
 			}
 		}
 
-		(*this)[ActiveCount++] = object;
+		bfmeAssignElement((*this)[ActiveCount++], object);
 		return true;
 	}
 
