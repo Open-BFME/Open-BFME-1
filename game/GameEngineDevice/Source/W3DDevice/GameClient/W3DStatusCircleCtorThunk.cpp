@@ -7,11 +7,7 @@ typedef bool Bool;
 class SceneClass;
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
-class Vector4
-{
-public:
-	float m_x, m_y, m_z, m_w;
-};
+#include "../../../../Libraries/Source/WWVegas/WWMath/vector4.h"
 
 class Matrix3D
 {
