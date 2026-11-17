@@ -69,3 +69,6 @@
 - Rank 24 vector<bool>::reserve (RvaVectorBoolAssignment.cpp): link_check UNKNOWN, not analysed. Rank 13 find<void*> Rb_tree: wrong emitters are 3 GameNetwork Rva00654130/65B350 TUs sharing digest dc1e3f8bd848, owner-held, not analysed.
 - Worktree: submodule pointer drift (master records aa505f34, checkout at 0630f0ef) blocks pre-push; used git update-index --assume-unchanged inputs/reference/open-bfme-2.
 - link_check on a provider with many changed names takes ~3 min on a loaded host.
+
+## w41-i round 14 (claude-sonnet-5-5)
+3 batches x5 served, nothing submitted. Keys: BfmeConv1778 BfmeValDB/m_bfmeHeadDB (idle worker list node), W3DLaserDraw BfmeEnvelope m_bfme00..24 (again), BattlePlanUpdateSetStatus, V4GuardedTailCalls, BfmeConv1907 Bfme*BA slots, GettingBuilt/Enraged/TransportAI ctor thunks, BfmeConv808 EFC..EFH types/functions, WeaponTemplate bfmeRangeBase, LivingWorldArmyAssign. Same dead ends.
