@@ -57,3 +57,6 @@
 3 batches x5 served, nothing submitted. Keys: HordeUpdateModuleData ctor thunk m_name0/m_f0..f3 (0.25/0.5/0.75/1.0, strings Gravity/DriftVelocity; actually GettingBuilt module data, opaque), ParseAudioEventBlock Rva003B7740/BfmeReleaseHolder, Rva003C7B60 views, DeployStyleAIUpdate ctor offsets, BfmeThingSF, BfmeConv1054, Rva00370730CastleMember, GloriousCharge m_field254.., Open2Elem247180, HordeSiegeEngine m_22c.., FESL Rva007F61E0. Same dead ends.
 ## agent h round 10 (wave 48)
 - 3 batches x5 served, nothing submitted. Keys: Lerp a/b, Bfme5TinyTwentySeven Bfme* types, Rva001F9C20, U1SmallStateProbes, Rva008AE2E0 bounds, Rva005F6B60, Rva008BDD70, U2 Rva0083F2F0Duplicate p, Rva002469D0, BfmeConv2022, ClearanceTestingSlowDeath, Rva0041F070, ToppleUpdate m_20/m_f18, Rva0010F100 call2. All opaque/no ZH twin, same dead ends.
+
+## w41-i round 13 (claude-sonnet-5-5)
+3 batches x5 served, nothing submitted. Keys: EnragedBehaviorModuleData ctor m_unmodelled_18..28 (no ZH twin), BfmeConv961 Reset/Gate/Flag types, calculateTerrainLOD freq64 locals (known placeholder dead end), WanderAI/HordeWorkerAI ctor offsets, BfmeConv1054 (huge opaque), ScreenCrossFade postRender locals (dead end), Apt NativeStringSlots008B3AA0, W3DLightDrawModuleData ctor m_unmodelled_08..44, Rva007F0210Set, Rva002D9910*, BfmeConv1401, Rva00800B70FeslDtor. All opaque/no ZH twin.
