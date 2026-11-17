@@ -23,7 +23,7 @@
 // first as retail does; the orient-on-exit flag is read through an inline
 // accessor, which is what keeps the Object in EDI and the module data in EBP.
 
-#define _STLP_USE_NEWALLOC 1
+// (no _STLP_USE_NEWALLOC: retail list<Object*> COMDATs allocate through __node_alloc)
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include <bitset>
