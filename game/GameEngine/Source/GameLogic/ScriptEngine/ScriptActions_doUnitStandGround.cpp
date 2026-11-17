@@ -68,7 +68,10 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf(KindOfType kind) const
+	// File-local spelling: Thing::isKindOf and ThingTemplate::isKindOf are retail
+	// ILT-reached out-of-line bodies; an in-class COMDAT copy here would be a
+	// second, non-retail strong definition of those names.
+	Bool testKindOf(KindOfType kind) const
 	{
 		return (m_kindOf[(UnsignedInt)kind >> 5]
 			& (1u << ((UnsignedInt)kind & 31))) != 0;
@@ -110,13 +113,13 @@ public:
 class Thing
 {
 public:
-	Bool isKindOf(KindOfType kind) const
+	Bool testKindOf(KindOfType kind) const
 	{
 		const ThingTemplate *thingTemplate = m_template;
 		if (thingTemplate != 0 && thingTemplate->m_nextOverride != 0)
 			thingTemplate = reinterpret_cast<const ThingTemplate *>(
 				thingTemplate->m_nextOverride->getFinalOverride());
-		return thingTemplate->isKindOf(kind);
+		return thingTemplate->testKindOf(kind);
 	}
 
 protected:
@@ -173,7 +176,7 @@ void ScriptActions::doUnitStandGround(ScriptActionParameter *unitParameter,
 	object->setStatus(MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_STAND_GROUND),
 		standGroundParameter->getInt() != 0);
 
-	if (object->isKindOf(KINDOF_HORDE))
+	if (object->testKindOf(KINDOF_HORDE))
 	{
 		HordeContainInterface *horde =
 			reinterpret_cast<HordeContainInterface *>(
