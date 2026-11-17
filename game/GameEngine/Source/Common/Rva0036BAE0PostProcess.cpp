@@ -48,9 +48,14 @@ private:
 	int m_isOnPathfindMap;
 };
 
+// Retail calls ILT 0x0002D600 (-> 0x002B9F40 -> 0x00015E0B), not the 0x00015E0B
+// ILT that ?loadPostProcess@UpdateModule is pinned to; spell the ledgered
+// ?j_0002d600 thunk (nullary thiscall, ECX kept via one-register fastcall).
+extern void j_0002d600();
+
 void Rva0036BAE0Update::loadPostProcess(void)
 {
-	UpdateModule::loadPostProcess();
+	((void (__fastcall *)(Rva0036BAE0Update *))j_0002d600)(this);
 	if( m_isOnPathfindMap )
 	{
 		reinterpret_cast<BfmeAIView *>(TheAI)->pathfinder()->removeObjectFromPathfindMap(m_object);
