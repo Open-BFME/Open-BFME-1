@@ -8056,3 +8056,8 @@ game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ef8b0,90f2a33
 game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005fe880,cc34a0857c998d20193c17e4,claude-sonnet,20261117182345-1224b2,2026-11-17
 game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_005ff8d0,803b5e14f85ec26020bf97af,claude-sonnet,20261117182345-1224b2,2026-11-17
 game/GameEngine/Source/Common/S3FlagPairRefreshes.cpp|type||Gen_00600710,51fb36b371b4910b2616cadb,claude-sonnet,20261117182345-1224b2,2026-11-17
+game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|param|set#2|s,442a82e00d52bb5423613901,claude-sonnet,20261117183247-082ef1,2026-11-17
+game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|param|concat#3|s,48da3000e8956060fe72b1f0,claude-sonnet,20261117183247-082ef1,2026-11-17
+game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|param|compare#2|s,a580cee92bfc45725daa35a4,claude-sonnet,20261117183247-082ef1,2026-11-17
+game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|local|compare#2|n,8c853446f86d3d99b495dada,claude-sonnet,20261117183247-082ef1,2026-11-17
+game/GameEngine/Source/Common/System/ArchiveFileGetFileList.cpp|param|compareNoCase#2|s,f11c0d922247304af579e567,claude-sonnet,20261117183247-082ef1,2026-11-17
