@@ -187,3 +187,5 @@
 
 ## agent h round 28 (wave 48, claude-sonnet-5-5)
 - 3 batches served, all skipped (nothing landed). Keys: GloriousCharge/ToggleMountedSpecialAbility ctor m_field254.., DamageModuleModuleData (=Wander) m_unknown*/m_flag*, ReflectDamage m_unmodelled_*, Rva0010F100Receiver, V2FeslArrayBlocks Rva007F*/m_value*, HordeUpdate m_name0/f0.., Small03hWordSwap, Rva009A2350Node/Link, BfmeThreeHundredThirtyTwo, Bfme5ThirtyThree, GlobalWeatherSystem m_at*, ScreenCrossFade postRender, SpawnUnitBehavior m_bfme10... Same dead ends.
+## w41-i round 34 (claude-sonnet-5-5)
+3 batches served, all skipped (nothing submitted). Keys: PathfinderAdjustToPossibleDestination (fast_float_floor f, Coord3D o, zone1/2: ZH-identical), Rva00800E50Owner t04..t20, Rva0049A100Set, Rva8CDA60StackDispatch, Rva00627AA0Call, GarrisonContain ctor m_2F4.., Rva00409F40Loop BfmeGo9F, RadarConstructor m_bfme*, BfmeConv1907 slots, RiderChangeContain ctor m_word*, S5Parse005A0720, Create_Render_Obj field1..5. Same dead ends.
