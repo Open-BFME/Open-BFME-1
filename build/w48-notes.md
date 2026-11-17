@@ -123,3 +123,6 @@
 3 batches served, nothing submitted. Keys: LivingWorldManagerDestructor Rva0060EBB0/Rva00614820 types, MemberTurnAndGoal0024E310, GettingBuilt/drawMoveHints, CrossFadeImage m_image2, BfmeScriptCondAreaGate, W3DLightDraw m_unmodelled_*, RiderChangeContain ctor, BfmeConv664/962, FlightDeck m_bfmeC4.. All opaque/no ZH twin.
 ## agent h round 17 (wave 48, claude-sonnet-5-5)
 3 batches x5 served, nothing submitted (all skips). Keys: Rva00063F90Blend, EnragedBehavior m_f1c/m_f20 (ZH UpdateModule has only 2 fields), HordeUpdateModuleData m_f0..f3/m_name0/1 (no ZH twin), LivingWorldArmyAssign m_08.., BfmeConv1901, ParseFXEvent BfmeAnimationStateFXE, W3DStreakDrawModuleData m_unmodelled_*, bfmeMax/Min a,b, Rva0049A100Set, Rva00477E60Walk m_1F8/200/204 (tree links, weak), Rva8CDA60, V4GuardedTailCalls. Same dead ends.
+
+## w41-i round 23 (claude-sonnet-5-5)
+3 batches served, nothing landed. Keys: Create_Render_Obj field1..5, BloodthirstyUpdate BfmeGuard96/Gen_00287130, InGamePopupMessage mData1/2 + tempString and Bezier x0..z3 and line2_d p1/c1/a/b (all ZH-identical already; submitting the same name is rejected "still a placeholder"), BfmeConv1226/1279/2137/1838/334, Rva008B7040Build, CritterEmitter ctor, RbTree insert x/y/v/w. Same dead ends.
