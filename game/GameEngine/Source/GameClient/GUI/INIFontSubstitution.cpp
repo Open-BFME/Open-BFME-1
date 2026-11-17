@@ -16,8 +16,8 @@
 // elements. The element type stays address-derived because nothing in this body
 // reads a field of it.
 //
-// The "Size" field parser is still an unconverted dump at 0x008776E0, so the
-// FieldParse row names its ILT thunk j_0001eb4b.
+// The matched512B callback at RVA0x004776E0 takes the four FieldParse arguments.
+// Keep its original ILT address j_0001eb4b in the table; the cast changes no pin.
 //
 // Retail zeroes all four bytes of the comparator before parsing and writes its
 // first byte afterwards, so the comparator is written here as a union of an int
@@ -33,13 +33,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 class FontLibrary;
 extern FontLibrary *TheFontLibrary;
 
-struct FieldParse
-{
-	const char *m_token;
-	void *m_parse;
-	const void *m_userData;
-	int m_offset;
-};
+#include "../../../Include/Common/FieldParse.h"
 
 struct Q3SortElem16 { int m_a, m_b, m_c, m_d; };
 struct Q3SortCompare { union { int m_word; char m_flag; }; };
@@ -104,7 +98,7 @@ void __cdecl parseFontSubstitution( INI *ini )
 
 	const FieldParse fieldParse[ 2 ] =
 	{
-		{ "Size", (void *)j_0001eb4b, 0, 0 },
+		{ "Size", reinterpret_cast<INIFieldParseProc>(j_0001eb4b), 0, 0 },
 		{ 0, 0, 0, 0 }
 	};
 
