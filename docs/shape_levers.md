@@ -4300,3 +4300,28 @@ rule or a new claim about the original array element class.
 See `targets/game/reverse/identity_evidence/20261116-fivehundred-adoption-50.md`.
 Native ownership-record retirements and the one EH-locator update are part
 of the same verified repair. No linked-byte total or runtime fix is inferred.
+
+
+### Identical enum prerequisite during existing-header adoption (VC7.1)
+
+Including game_logic_dispatch.h while retaining a local NameKeyType definition
+fails with C2011 before a layout or byte comparison is possible. When both
+definitions have exactly identical enumerator tokens, remove the local duplicate
+and place the existing header include at its declaration site. Earlier enum uses
+then retain visibility. Do not consolidate differing values or nested definitions.
+The measured effect is successful compilation with identical complete runtime
+objects, not changed code generation. Original flags remain unchanged. Tasks
+354-393 retain 40 source rows; evidence: identity_evidence/20261116-fivehundred-adoption-68.md
+and identity_evidence/20261116-fivehundred-adoption-69.md under targets/game/reverse/.
+The method-only class facade does not establish a complete retail object size.
+
+### Existing vector component names with a member prefix (VC7.1)
+
+The two ctor-thunk views in tasks 346-349 used m_x/m_y/m_z/m_w, while the
+existing canonical Vector3/Vector4 headers use X/Y/Z/W. Exact native float
+offsets and widths, class key, size, bases and virtual state were checked first;
+receiver-specific compiler diagnostics bound each token change. Removing only
+the m_ prefix and adopting the existing component spelling preserves all runtime
+sections, relocations and retained rows under the original flags. This is not a
+general position-based rename. Evidence: targets/game/reverse/identity_evidence/
+20261116-fivehundred-adoption-63.md and 20261116-fivehundred-adoption-64.md.

@@ -26,3 +26,13 @@ The previous rule would report 3,180,624 bytes / 15,967 clean files, versus
 3,179,290 / 15,966. These alternate-rule counters are not substituted for
 the current LINKED result above. No successful executable launch, gameplay,
 memory improvement or crash fix is established by this measurement.
+
+## Source-level blocker differences
+
+Comparing every source status record changes only three entries:
+
+- GlobalWeatherSystemConstructor.cpp: unresolved references 4 to 2.
+- GameStateInit.cpp: COMDAT losers 1 to 0; wrong-selected dependencies 2 to 1.
+- ShowQuitMenu.cpp: COMDAT losers 1 to 0.
+
+All three remain blocked. No gain is inferred from these intermediate counts.
