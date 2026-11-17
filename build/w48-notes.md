@@ -45,3 +45,5 @@
 
 ## w41-i round 9 (claude-sonnet-5-5)
 3 batches x5 served, nothing submitted. Keys: Rva002BC310 height predicate (m_height44/m_heightLimit40, no ZH twin), HordeSiegeEngine ctor offsets, UpdateModule/DamageModule ctor thunks, MemberTurnAndGoal, BfmeConv961, Rva004488B0, ElementPayloadFill m_atNN, GateOpenAndClose, DeployStyleAIUpdate ctor offsets, Rva008BDD70 types, RenderObjectDrawModuleInfo copy-ctor m_nameN/m_valueNN. Same dead ends.
+## agent h round 8 (wave 48)
+- 3 batches x5 served, nothing submitted. Keys: BloodthirstyUpdate Gen_00287130/BfmeGuard96/BfmeFilterHolder, Lerp a/b params, CrossFadeImage m_image2, drawMoveHints byte_10/tmp, EmotionTrackerUpdateModuleData ctor offsets, BfmeConv1054 Bfme* slots, RvaTreeBounds locale comparators, Rva001F9C20 types, W3DStreak m_unmodelled_*, FindSafePath Bfme slots, S2ZeroFillCtors, Rva005F6B60, Rva0010F100, AIRootR0015C7A0. All opaque/no ZH twin: same dead ends.
