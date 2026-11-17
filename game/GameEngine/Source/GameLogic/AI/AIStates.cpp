@@ -1,3 +1,5 @@
+extern class CRCParameterCheck *TheCRCParameterCheck;
+
 // cl: /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /DNDEBUG /DWIN32 /MD /EHsc /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/aicommandoutofline /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // readable body of ?winGetDrawFunc@GameWindow@@QAEP6AXPAV1@PAVWinInstanceData@@@ZXZ: game/GameEngine/Source/GameClient/GUI/GameWindow.cpp
@@ -2038,7 +2040,7 @@ void AIMoveAndTightenState::loadPostProcess( void )
 // are views rather than a header edit, because 157 rows in this file compile
 // against the shared declarations.
 extern unsigned char g_012F0239;
-extern void *g_012ED4FC;
+
 extern void j_0003a17a(void);
 typedef void (__cdecl *BfmeCritterDesyncLog)(void *, const char *);
 
@@ -2080,9 +2082,9 @@ StateReturnType AIMoveAndTightenState::onEnter()
 {
 	BfmeMoveStateFields *self = (BfmeMoveStateFields *)this;
 
-	if (g_012F0239 && g_012ED4FC)
+	if (g_012F0239 && reinterpret_cast<void * >(TheCRCParameterCheck))
 	{
-		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
+		((BfmeCritterDesyncLog)j_0003a17a)(reinterpret_cast<void * >(TheCRCParameterCheck),
 			"CritterDesync: setAdjustDestination(FALSE) 7");
 	}
 	BfmeMoveStateMachineFields *machine = self->m_machine;
