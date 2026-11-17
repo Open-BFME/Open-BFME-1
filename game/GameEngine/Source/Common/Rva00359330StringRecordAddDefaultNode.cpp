@@ -45,7 +45,6 @@ public:
 	void release(int index);
 
 private:
-	int findOrCreateIndex(AsciiString *name);
 
 	int *m_nameIndexesBegin;
 	int *m_nameIndexesEnd;
@@ -57,9 +56,15 @@ private:
 	int m_activeTail;
 };
 
+// Retail reaches body 0x0035C400 (still a gen-dump row, no definition of
+// findOrCreateIndex) through ILT 0x000333C5.
+extern void j_000333c5();
+
 int Rva00359330StringRecordTable::addNode(AsciiString *name)
 {
-	int index = findOrCreateIndex(name);
+	typedef int (Rva00359330StringRecordTable::*FindFn)(AsciiString *name);
+	union { void (*fn)(); FindFn call; } find = { j_000333c5 };
+	int index = (this->*find.call)(name);
 	if (index != -1)
 	{
 		Rva00359330Record *records = m_records;
