@@ -1,10 +1,6 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
-class WWMath
-{
-public:
-	static float Random_Float();
-};
+#include "../../../Libraries/Source/WWVegas/WWMath/wwmath.h"
 
 // Retail ILTs 0x12846 / 0xF880 reach these existing particle helpers.
 class LivingWorldEyeTower

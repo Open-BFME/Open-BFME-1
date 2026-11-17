@@ -1,7 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 class INI;
 typedef void (*INIFieldParseProc)(INI *, void *, void *, const void *);
-struct FieldParse { const char *token; INIFieldParseProc parse; const void *userData; int offset; };
+#include "../../../../Include/Common/INI/INI.h"
 
 extern "C" void __identifier("?parseDurationUnsignedInt@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
 extern "C" void __identifier("?parseReal@INI@@SAXPAV1@PAX1PBX@Z")(INI *, void *, void *, const void *);
