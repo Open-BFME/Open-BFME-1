@@ -3,3 +3,9 @@
 
 ## w41-i round 2 (claude-sonnet-5-5)
 3 batches x5 served. Only submitted: S3FlagPairRefreshes classes (DefaultAlphaModule/DefaultColorModule/WindModule/DefaultUpdateModule/RenderObjectUpdateModule, from FXParticleSystem::*ModuleInfo::DoXfer callees). Everything else skipped: opaque offset members (m_210.., m_value34), address-named dump types (Rva0041F070, Rva1FC330*, BfmeThing*), param names of inline string/Lerp helpers. Dead end: ModuleData ctor members with only zero-stores and no ZH twin.
+## agent h round 1 (wave 48)
+- 4 batches x5 files served. Almost all keys are opaque (ctor offset fields, ICF-shared module data, Rva-typed views) with no ZH twin: skipped.
+- An all-skip answer is rejected by submit ("no valid names"); nothing recorded, harmless.
+- Landed: DynamicPortalBehaviour Rva001F8E20Owner::method local d -> moduleData (agreed with sol).
+- Dead end: AIRootR0015C7A0 -> AI rejected (collides with `class AI;` forward decl in same TU).
+- Weak/skipped: FlightDeckBehaviorModuleData +C4/C8/CC (BFME layout differs from ZH), CrossFadeImage m_image2, Rider/HordeSiege/HordeContain module data offsets.
