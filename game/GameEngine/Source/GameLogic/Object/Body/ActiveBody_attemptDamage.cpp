@@ -122,7 +122,10 @@ public:
 
 class Object;
 class Module;
-class Thing { public: Bool isKindOf(KindOfType t) const; };
+#define THING_TU_MEMBERS \
+public: Bool isKindOf(KindOfType t) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class DamageModuleInterface
 {

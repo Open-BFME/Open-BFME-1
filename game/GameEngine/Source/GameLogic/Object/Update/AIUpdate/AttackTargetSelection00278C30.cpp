@@ -16,7 +16,10 @@ template<class T> T &at(void *p, unsigned n) { return *(T*)((char*)p+n); }
 class Object;
 enum KindOfType {};
 #include "../../../command_source_type.h"
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Overridable { public: const Overridable *getFinalOverride() const { if(at<Overridable*>((void*)this,4)) return at<Overridable*>((void*)this,4)->getFinalOverride(); return this; } };
 inline const Overridable *finalTemplate(Object *o) { const Overridable *p=at<Overridable*>(o,4); if(!p) return 0; return p->getFinalOverride(); }
 class GameLogic { public: Object *findObjectByID(int); };

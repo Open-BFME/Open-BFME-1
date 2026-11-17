@@ -90,11 +90,10 @@ extern TerrainLogic *TheTerrainLogic;
 // name, so it keeps its address (Rva002BCB60GoalRouting.cpp declares the same).
 extern int g_012F02D4;
 
-class Thing
-{
-public:
-	void setPosition(const Coord3D *position);
-};
+#define THING_TU_MEMBERS \
+public: void setPosition(const Coord3D *position);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {

@@ -31,11 +31,10 @@ enum WeaponStatus
 class Object;
 class AIUpdateInterface;
 
-class Thing
-{
-public:
-	Real bfmeRelativeAngleTo(const Coord3D *position) const;
-};
+#define THING_TU_MEMBERS \
+public: Real bfmeRelativeAngleTo(const Coord3D *position) const;
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class StateMachine
 {

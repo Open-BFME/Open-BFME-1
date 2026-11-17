@@ -107,7 +107,10 @@ enum Rva0041D290Decal {RvaDecalZero};
 class Rva00410F10Allocation;
 class Rva00410F10Owner { public: Rva00410F10Allocation *ensure(); };
 class BfmeCalc919G { public: int bfmeCalc919G(); };
-class Thing {public:void rva00132200(const Matrix3D*);};
+#define THING_TU_MEMBERS \
+public: void rva00132200(const Matrix3D*);
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Rva0041D290FullDrawable {public:
  char pad_a8[0xa8];Rva0041D290Decal m_a8;char pad_ac[0xa4];Rva0041D290DrawModule **m_150;
  Rva0041D290DrawModule **getDrawModules()const{return m_150;}

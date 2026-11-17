@@ -35,7 +35,11 @@ class Overridable { public: virtual ~Overridable(); Overridable *next;
 };
 class ThingTemplate : public Overridable { public: char pad08[0xd4-8]; unsigned kindWordD4; };
 template<class T> struct OVERRIDE { const T *value; const T *operator->() const { if(!value) return 0; return (const T*)value->getFinalOverride(); } };
-class Thing { public: bool isKindOf(KindOfType) const; void setPosition(const Coord3D*); };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const; \
+public: void setPosition(const Coord3D*);
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class BfmeObjAS { public: BfmeObjAS *bfmeParentAS(int); };
 class Rva001BEC40DwordSlot { public: void set(int); };
 class AIUpdateInterface { public: void destroyPath(); };

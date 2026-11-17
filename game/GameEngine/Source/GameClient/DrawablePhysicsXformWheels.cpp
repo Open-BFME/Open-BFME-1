@@ -76,7 +76,10 @@ extern TerrainLogic *TheTerrainLogic;
 class BfmeUnitRC; class BfmeHolderRC;
 class BfmeOwnerRC { public: char bfmeSendRC(BfmeUnitRC*,BfmeHolderRC*,void*,void*,void*,void*); };
 class BFMERopeDrawable { public: const Coord3D *getPosition() const; };
-class Thing { public: const Coord3D *getUnitDirectionVector2D() const; };
+#define THING_TU_MEMBERS \
+public: const Coord3D *getUnitDirectionVector2D() const;
+#include "../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 float Sin(float);
 int GetGameClientRandomValue(int,int,char*,int);
 class Drawable { public:

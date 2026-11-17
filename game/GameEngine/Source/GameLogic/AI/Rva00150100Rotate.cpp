@@ -87,12 +87,11 @@ public:
 	void bfmeRunGK();
 };
 
-class Thing
-{
-public:
-	float bfmeRelativeAngleTo(const Coord3D *position) const;
-	void setOrientation(float angle);
-};
+#define THING_TU_MEMBERS \
+public: float bfmeRelativeAngleTo(const Coord3D *position) const; \
+public: void setOrientation(float angle);
+#include "../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 struct BfmeListNodeBase
 {

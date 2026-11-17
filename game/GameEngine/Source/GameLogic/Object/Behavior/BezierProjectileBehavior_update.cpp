@@ -71,11 +71,10 @@ public:
 	Real m_boundingSphereRadius;			// +0x10
 };
 
-class Thing
-{
-public:
-	void rva00132200(const Matrix3D *mtx);	// 0x00132200
-};
+#define THING_TU_MEMBERS \
+public: void rva00132200(const Matrix3D *mtx);
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class Object
 {

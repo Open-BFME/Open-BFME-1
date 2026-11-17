@@ -11,7 +11,10 @@
 class DamageInfo { public: char prefix[0x10]; int damageType; char gap14[0x3c]; float actual,clipped; };
 class Object; class FXList;
 enum KindOfType { KINDOF_HEALING_149=149,KINDOF_HEALING_22=22,KINDOF_HEALING_24=24,KINDOF_HEALING_7=7 };
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Overridable { public: void *vtable; Overridable *next; const Overridable *getFinalOverride() const; };
 struct HealingTemplate0020FBC0 : Overridable { char pad[0x4ca-8]; bool field4CA; };
 struct HealingDamageFacet0020FBC0 { virtual void unused(); virtual void onHealing(DamageInfo*); virtual void onState(DamageInfo*,int,int); };

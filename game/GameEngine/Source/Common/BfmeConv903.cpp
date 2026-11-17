@@ -22,11 +22,10 @@ public:
 template <int N>
 class BitFlags;
 
-class Thing
-{
-public:
-	bool isAnyKindOf(const BitFlags<116> &mask) const;
-};
+#define THING_TU_MEMBERS \
+public: bool isAnyKindOf(const BitFlags<116> &mask) const;
+#include "Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 int bfmeGoLB(BfmeOwnerLB *a, BfmeThingLB *b)
 {

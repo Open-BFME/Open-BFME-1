@@ -72,7 +72,10 @@ public:
 };
 
 
-class Thing { public: void setOrientation(Real); };
+#define THING_TU_MEMBERS \
+public: void setOrientation(Real);
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 class Object {
 public:
     void setPosition(const Coord3D *);

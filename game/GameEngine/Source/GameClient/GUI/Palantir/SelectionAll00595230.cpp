@@ -149,7 +149,10 @@ extern InGameUI *TheInGameUI;
 extern MessageStream *TheMessageStream;
 extern View *TheTacticalView;
 enum KindOfType;
-class Thing { public: bool isKindOf(KindOfType) const; };
+#define THING_TU_MEMBERS \
+public: bool isKindOf(KindOfType) const;
+#include "../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 void j_00001c03();
 void j_00014c6d();
 class BFMERopeDrawable { public: const Coord3D *getPosition() const; };

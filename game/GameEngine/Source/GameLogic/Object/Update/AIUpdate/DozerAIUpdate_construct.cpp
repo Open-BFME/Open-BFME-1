@@ -34,7 +34,10 @@ class Team;
 class ThingTemplate;
 class BuildAssistant;
 class ThingFactory;
-class Thing { public: void setOrientation(Real); };
+#define THING_TU_MEMBERS \
+public: void setOrientation(Real);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 template <Int NUMBITS>
 class Rva002B7C80BitFlags

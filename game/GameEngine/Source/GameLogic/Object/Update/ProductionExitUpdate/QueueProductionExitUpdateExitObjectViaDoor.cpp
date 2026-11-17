@@ -177,13 +177,12 @@ public:
 	}
 };
 
-class Thing
-{
-public:
-	void setOrientation(Real angle);
-	void getUnitDirectionVector3D(Coord3D &direction) const;
-	bool isKindOf(KindOfType k) const;
-};
+#define THING_TU_MEMBERS \
+public: void setOrientation(Real angle); \
+public: void getUnitDirectionVector3D(Coord3D &direction) const; \
+public: bool isKindOf(KindOfType k) const;
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 class PhysicsBehavior
 {

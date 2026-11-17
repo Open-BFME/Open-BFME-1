@@ -38,11 +38,10 @@ class Object;
 class Player;
 class Team;
 class ThingTemplate;
-class Thing
-{
-public:
-	void setOrientation(Real angle);
-};
+#define THING_TU_MEMBERS \
+public: void setOrientation(Real angle);
+#include "../../../../Common/Thing/thing.h"
+#undef THING_TU_MEMBERS
 
 template <Int NUMBITS>
 class Rva002C96D0BitFlags
