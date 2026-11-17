@@ -33,11 +33,9 @@ public:
 	int tag;
 };
 
-class Rva00225960Owner
-{
-public:
-	void rva00225960();
-};
+// Retail route 1727E -> 22CDB0 -> 2ECC1 -> 225960 (Rva00225960Owner list drain);
+// call the first ledger-owned thunk, nullary thiscall ECX kept via one-register fastcall.
+extern void j_0001727e();
 
 class ContainListRestore0022BFF0
 {
@@ -65,7 +63,7 @@ void ContainListRestore0022BFF0::restore()
 {
 	void *owner = m_at08;
 
-	((Rva00225960Owner *)this)->rva00225960();
+	((void (__fastcall *)(ContainListRestore0022BFF0 *))j_0001727e)(this);
 
 	if (!m_atE4.empty()) {
 		throw XferException(5, 0);
