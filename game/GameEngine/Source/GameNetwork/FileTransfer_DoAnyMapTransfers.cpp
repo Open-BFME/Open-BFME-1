@@ -2,36 +2,8 @@
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	StringBase(const T *str);
-	~StringBase() { releaseBuffer(); }
-	void releaseBuffer();
-
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	~AsciiString() {}
-};
 
 class GameSlot
 {
