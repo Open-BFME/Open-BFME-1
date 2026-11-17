@@ -119,3 +119,15 @@ So route (b) also needs the five dxerr9-only narrow literals defined at their re
 (`tools/add_data_match.py`, one datum each, a data-only TU), while the shared ones keep
 their `??_C@` COMDAT names (an extra name at a literal another TU already provides would be a
 second datum; `tools/duplicate_global.py`). Measure with `link_check` before landing.
+
+## Outcome (2026-11-17, w48 DXTRACE lane round 2)
+
+DXTraceA landed as C++ (`game/Libraries/Source/DirectX/dxtracea.cpp`, EXACT 374/374, 22
+relocations) through a frame lever under 13.10.3077 (`tracea-bias-model-20261117.md`), so
+neither route (a) nor (b) was needed and the literals above stay COMDATs emitted by that unit.
+With DXTraceW and StringVPrintfWorkerW already on master, that landing was the retirement: no
+functions.csv row reads dxerr9.lib, and `link_check` on the seven DirectX units no longer
+reports a duplicate (previews UNKNOWN on the stale census). Step 6 is still open:
+`inputs/vendor/dxerr9/PROVENANCE.txt` "Coverage" still describes the vendored rows, and any
+edit under `inputs/vendor/` sends the commit through the full gate (`header_dependents.py`:
+"toolchain/vendored: full gate"), so refresh it in a commit that pays that gate anyway.

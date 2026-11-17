@@ -4,16 +4,32 @@
 
 Symptom: retail opens `push ebp; [mov eax,N;] lea ebp,[esp-X]` and closes
 `add ebp,X; leave`; ours has `mov ebp,esp` and every EBP displacement is off by
-X. Measured on MSVC 13.10.3077 `/O1 /G6` (micro-benchmarks in
-`attempt_support/dxerr9-summer2003/tracea-bias-micro.cpp.txt`): X is always
-0x80-8-4*args, and the compiler biases only when about three or more references
-to locals whose base lies below -0x80 come into disp8 range. A local based at
-exactly -0x80 counts as already reachable (128-byte array: unbiased; 129-132
-bytes: biased). No flag, pragma or declaration order changed this for DXTraceA
-(about 60 variants). When the gain is zero for retail's own layout, check the
-object's `@comp.id`: dxerr9/d3dx9 members are 13.00.9178, whose heuristic biased
-such frames. Biased `__chkstk` frames from 13.10 already have retail's prologue
-order. Evidence: `attempt_support/dxerr9-summer2003/tracea-bias-heuristic-20261117.md`.
+X. Measured on MSVC 13.10.3077 `/O1 /G6`: X is always 0x78-4*declared_args, and
+the frame is biased when at least three references hit frame SLOTS whose base,
+plus 4 per unreferenced argument, lies in [-0x80-X, -0x81]. Only slot bases
+count (element displacements do not), a base of exactly -0x80 is already near,
+and a struct or union slot with exactly three references also needs a fourth or
+two distinct referenced arguments. The rule held for 2330 `/FAsc`-checked micro
+functions (`attempt_support/dxerr9-summer2003/tracea-bias-model-20261117.md`,
+repro `tracea-bias-model-micro.cpp.txt`, checker `tracea-bias-validate.py.txt`).
+No flag, pragma or declaration order changes it. When retail's own layout gives
+no such slot, check the object's `@comp.id`: dxerr9/d3dx9 members are 13.00.9178,
+which biased such frames. Biased `__chkstk` frames from 13.10 already have
+retail's prologue order.
+
+**Landed lever (DXTraceA, 0x00AFD388, 374 B):** a never-written local array (read
+only, never written or address-taken) packs end-aligned into the hot buffer's
+slot, and the slot's base is the larger member's. `long frameBiasSlot[33]` next to
+the 128-byte line buffer made a 132-byte slot based at -0x84: the line buffer is
+still emitted at `[ebp-0x80]` and its three references bias the frame. The buffer
+below was declared four bytes shorter (`[256]`, still passed 260) so every other
+address stayed retail's, and the slot's one reference is `return
+frameBiasSlot[37];`, which addresses the `hr` argument and emits retail's own
+`mov eax,[ebp+0x74]`. Plain body 369 B unbiased; with the lever EXACT 374/374,
+22 relocations (`game/Libraries/Source/DirectX/dxtracea.cpp`). An extra read of
+the array instead costs its own instruction (377 B). Use it only when the
+`@comp.id` explains the bias and the buffer below the slot can give up the
+slot's extra bytes, and say in the source that it is a layout device.
 
 ## TU declaration lines can be real diagnostic-argument codegen (2026-11-12)
 

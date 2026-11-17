@@ -1,0 +1,44 @@
+// cl: /O1 /G6 /MT /DNDEBUG
+// MSVC 13.10.3077 EBP-bias decision, measured model (w48 DXTRACE lane round 2,
+// 2026-11-17). Compile privately and read each prologue (`lea ebp,[esp-X]` =
+// biased). Expected results are in the comment above each function; the model
+// and the DXTraceA consequence are in tracea-bias-model-20261117.md.
+//
+// Model: bias = 0x78 - 4*declared_args. The frame is biased when at least 3
+// references hit frame SLOTS whose adjusted base B' = slot_base + 4*unreferenced_args
+// satisfies B' < -0x80 <= B' + bias. A packed slot (several locals sharing it)
+// counts every member at the slot's lowest address; element displacements inside
+// an array do not count, only the slot base does.
+void __stdcall use(void*);
+void __stdcall usei(int);
+#define A5 int p0, int p1, int p2, int p3, int p4
+#define X3 use(x); use(x); use(x);
+#define U5 usei(p0); usei(p1); usei(p2); usei(p3); usei(p4);
+#define U4 usei(p0); usei(p1); usei(p2); usei(p3);
+
+// 1. Base -0x80 never counts; -0x84 counts when every argument is referenced.
+extern "C" int __stdcall all_128(A5) { char x[128]; X3 U5 return 0; }  // unbiased
+extern "C" int __stdcall all_132(A5) { char x[132]; X3 U5 return 0; }  // biased 0x64
+
+// 2. Each unreferenced argument moves the threshold 4 bytes down.
+extern "C" int __stdcall dead1_132(A5) { char x[132]; X3 U4 return 0; } // unbiased
+extern "C" int __stdcall dead1_136(A5) { char x[136]; X3 U4 return 0; } // biased 0x64
+
+// 3. Only the slot base counts: three element reads that move into disp8 range
+//    (y[61..63] at -0x8C..-0x84) do not bias; y's base is -0x180.
+extern "C" int __stdcall elem(A5)
+{ char x[128]; int y[64]; X3 use(y); usei(y[61]); usei(y[62]); usei(y[63]); U5 return 0; }  // unbiased
+
+// 4. A never-written array (read, never written or address-taken) packs into the
+//    hot buffer's slot, end-aligned. With 132 bytes the slot base is -0x84, so x's
+//    three references count although x is still EMITTED at [ebp-0x80]: biased,
+//    but the frame grows by 4 and the q read stays in the code. 128 bytes: no bias.
+extern "C" int __stdcall nw33(A5) { char x[128]; int q[33]; X3 usei(q[32]); U5 return 0; } // biased, frame 0x84
+extern "C" int __stdcall nw32(A5) { char x[128]; int q[32]; X3 usei(q[31]); U5 return 0; } // unbiased, frame 0x80
+
+// 5. Zero-length intrinsic memcpy from a never-written array: the copy is dropped
+//    after the frame decision but its `xor ecx,ecx; lea esi; lea edi` setup and the
+//    esi/edi saves remain, so it is not a trace-free phantom either.
+#include <string.h>
+#pragma intrinsic(memcpy)
+extern "C" int __stdcall cpy0(A5) { char x[124]; int q[40]; X3 memcpy(x, q, 0); U5 return 0; } // biased, extra code

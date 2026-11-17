@@ -1,0 +1,94 @@
+#!/usr/bin/env python3
+"""Check the MSVC 13.10 EBP-bias rule of tracea-bias-model-20261117.md against
+/FAsc listings (w48 DXTRACE lane round 2). Run from the repository root:
+
+  python3 build/bias-validate/validate.py MICRO.cpp [MICRO.cpp ...]
+
+after copying this file to build/bias-validate/validate.py. Each source is
+recompiled privately with `/O1 /G6 /MT /DNDEBUG /FAsc` (objects and listings
+under build/bias-validate/ only). Rule: bias = 0x78 - 4*declared_args; biased
+when >= 3 references hit slots whose base + 4*unreferenced_args lies in
+[-0x80 - bias, -0x81]; overlapping locals form one slot at the lowest address.
+Measured 2026-11-17: 2330 functions (734 biased), every biased frame satisfies
+the rule; the only misses are 17 unbiased frames with exactly three references
+to a struct or union slot (such a slot also needs a fourth reference or two
+distinct referenced arguments).
+"""
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path.cwd()
+sys.path.insert(0, str(ROOT / "tools"))
+import build  # noqa: E402
+
+OUT = ROOT / "build" / "bias-validate"
+
+
+def listing(src):
+    OUT.mkdir(parents=True, exist_ok=True)
+    name = Path(src).stem
+    body = "\n".join(l for l in Path(src).read_text().splitlines() if not l.startswith("// cl:"))
+    var = OUT / f"{name}.cpp"
+    rel = (OUT / f"{name}.cod").relative_to(ROOT).as_posix()
+    var.write_text(f"// cl: /O1 /G6 /MT /DNDEBUG /FAsc /Fa{rel}\n{body}\n")
+    ok, out, _ = build.try_compile_source(var, OUT / f"{name}.obj")
+    if not ok:
+        print("compile failed", src, out[:400])
+        return None
+    return OUT / f"{name}.cod"
+
+
+def functions(cod):
+    funcs, cur = [], None
+    for line in cod.read_text(errors="replace").splitlines():
+        m = re.match(r"^(_\w+?)\$ = (-?\d+)\s*; size = (\d+)", line)
+        if m:
+            if cur is None or cur.get("proc"):
+                cur = {"syms": {}, "refs": {}, "bias": 0, "proc": None}
+                funcs.append(cur)
+            cur["syms"][m.group(1)] = (int(m.group(2)), int(m.group(3)))
+            continue
+        m = re.match(r"^(\S+) PROC", line)
+        if m:
+            if cur is None or cur.get("proc"):
+                cur = {"syms": {}, "refs": {}, "bias": 0}
+                funcs.append(cur)
+            cur["proc"] = m.group(1)
+            continue
+        if cur is None or not cur.get("proc"):
+            continue
+        m = re.search(r"lea\s+ebp, DWORD PTR \[esp-(\d+)\]", line)
+        if m:
+            cur["bias"] = int(m.group(1))
+        for sym in re.findall(r"(_\w+?)\$\[ebp", line):
+            cur["refs"][sym] = cur["refs"].get(sym, 0) + 1
+    return [f for f in funcs if f.get("proc") and "@" in f["proc"]]
+
+
+def predict(f):
+    nargs = int(f["proc"].split("@")[1]) // 4
+    bias = 0x78 - 4 * nargs
+    syms = {k: (o - f["bias"], s) for k, (o, s) in f["syms"].items()}
+    used_args = {o for k, (o, s) in syms.items() if o >= 8 and f["refs"].get(k)}
+    slack = 4 * (nargs - len(used_args))
+    locals_ = [(k, o, s) for k, (o, s) in syms.items() if o < 0]
+    gain = 0
+    for k, o, s in locals_:
+        base = min(o2 for _, o2, s2 in locals_ if o2 < o + s and o < o2 + s2) + slack
+        if base < -0x80 <= base + bias:
+            gain += f["refs"].get(k, 0)
+    return gain >= 3, gain
+
+
+good = bad = 0
+for src in sys.argv[1:]:
+    cod = listing(src)
+    for f in functions(cod) if cod else []:
+        biased, gain = predict(f)
+        if biased == (f["bias"] != 0):
+            good += 1
+        else:
+            bad += 1
+            print(f"miss {cod.name} {f['proc']} bias={f['bias']:#x} gain={gain}")
+print(f"rule holds for {good} functions, {bad} misses")
