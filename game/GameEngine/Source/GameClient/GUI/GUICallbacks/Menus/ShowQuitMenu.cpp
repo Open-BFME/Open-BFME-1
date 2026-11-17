@@ -2,25 +2,8 @@
 // BFME's quit-menu opener is the null-singleton arm reached by bfmeGo947C.
 // QuitMenu.apt and InGameUI::setQuitMenuVisible identify the screen action.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
+#include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(const char *text) : StringBase<char>(text) {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
 
 class InGameUI
 {

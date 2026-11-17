@@ -5,19 +5,7 @@
 // and /EHsc preserve retail argument-construction cleanup bookkeeping.
 // GameState snapshot registration. BFME adds living-world, shroud, collision,
 // victory, taint and weather blocks to the original save/deep-CRC registries.
-template<class T> class StringBase {
-    friend class AsciiString;
-    T *m_data;
-    StringBase(const T *);
-    void releaseBuffer();
-protected:
-    ~StringBase() { releaseBuffer(); }
-};
-class AsciiString : private StringBase<char> {
-public:
-    AsciiString(const char *text) : StringBase<char>(text) {}
-    ~AsciiString() {}
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class SubsystemInterface { public: virtual ~SubsystemInterface(); private: int m_subsystemData; };
 class Snapshot { public: virtual ~Snapshot(); };
 enum SnapshotType { SNAPSHOT_SAVELOAD, SNAPSHOT_DEEPCRC_LOGICONLY };

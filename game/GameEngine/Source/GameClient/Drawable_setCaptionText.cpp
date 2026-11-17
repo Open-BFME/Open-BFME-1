@@ -50,11 +50,7 @@ public:
 // The font name the caption is drawn with is a StringBase<char> temporary:
 // retail destroys it through ?releaseBuffer@BFMERetailAsciiString@@AAEXXZ
 // (0x00887940) at +0xFC, after the getFont call at +0xEC.
-class AsciiString : private StringBase<char>
-{
-public:
-	~AsciiString() {}
-};
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef unsigned char UnsignedByte;
 typedef int Int;

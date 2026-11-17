@@ -20,12 +20,7 @@
 
 template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 
-class AsciiString : public StringBase<char>
-{
-public:
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class UnicodeString : public StringBase<unsigned short>
 {
@@ -63,11 +58,11 @@ void GadgetTextEntrySetText(GameWindow *window, UnicodeString text);
 // ?setWindowText@@YAXPAVGameWindow@@VAsciiString@@@Z
 static __declspec(noinline) void setWindowText(GameWindow *window, AsciiString textLabel)
 {
-	if (textLabel.isEmpty())
+	if (((StringBase<char>*)(&(textLabel)))->isEmpty())
 		return;
 
 	UnicodeString theText, entryText;
-	theText = TheGameText->fetch(textLabel.str(), 0);
+	theText = TheGameText->fetch(((StringBase<char>*)(&(textLabel)))->str(), 0);
 	if (window->winGetStyle() & 0x00000001)
 		GadgetRadioSetText(window, theText);
 	else if (window->winGetStyle() & 0x00000002)

@@ -18,24 +18,7 @@ template <typename T> struct StringInlineData
 class AsciiString;
 class UnicodeString;
 class BfmeAsciiStringArg;
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-	friend class BfmeAsciiStringArg;
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	StringInlineData<T> *m_data;
-};
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	~AsciiString();
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 typedef bool Bool;
 typedef int Int;
 typedef unsigned short PlayerMaskType;
