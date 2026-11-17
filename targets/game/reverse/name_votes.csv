@@ -8072,3 +8072,6 @@ game/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructo
 game/GameEngine/Source/Common/BfmeConv902.cpp|function|BfmeThingKE@|bfmeGoKE,24cfe309230a8addae6a4850,claude-sonnet,20261117201045-54567d,2026-11-17
 game/GameEngine/Source/Common/BfmeConv902.cpp|local|BfmeThingKE::bfmeGoKE|h,9589042b929e2cc6308501f9,claude-sonnet,20261117201045-54567d,2026-11-17
 game/GameEngine/Source/Common/BfmeConv902.cpp|local|BfmeThingKE::bfmeGoKE|v,3a69a09fc3af5337cfcd37ea,claude-sonnet,20261117201045-54567d,2026-11-17
+game/GameEngine/Source/Common/INI/INIMapCache.cpp|local|parseSupplyPositionCoord3D|coord3d,a8aaefc5392b0d4642bbbffc,claude-sonnet,20261117201259-cec56a,2026-11-17
+game/GameEngine/Source/Common/INI/INIMapCache.cpp|local|parseTechPositionsCoord3D|coord3d,0ded967c4b601953c3695c2b,claude-sonnet,20261117201259-cec56a,2026-11-17
+game/GameEngine/Source/Common/INI/INIMapCache.cpp|local|INI::parseMapCacheDefinition|c,cf9e4d7322a05a20089c2d36,claude-sonnet,20261117201259-cec56a,2026-11-17
