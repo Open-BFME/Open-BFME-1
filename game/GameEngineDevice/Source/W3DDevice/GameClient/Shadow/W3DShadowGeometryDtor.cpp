@@ -18,15 +18,7 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
-class HashableClass
-{
-public:
-	virtual ~HashableClass(void) {}
-	virtual const char *Get_Key(void) = 0;
-
-private:
-	HashableClass *NextHash;
-};
+#include "../../../../../Libraries/Source/WWVegas/WWLib/hash.h"
 
 struct AsciiStringData;
 

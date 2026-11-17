@@ -18,19 +18,7 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 
 enum { MAX_PARMS = 12 };
 
-class Template
-{
-public:
-	AsciiString m_uiName;
-	AsciiString m_uiName2;
-	AsciiString m_internalName;
-	int m_internalNameKey;
-	int m_numUiStrings;
-	AsciiString m_uiStrings[MAX_PARMS];
-	int m_numParameters;
-	int m_parameters[MAX_PARMS];
-	AsciiString m_helpText;
-};
+#include "script_engine.h"
 
 class BfmeScriptEngineTemplates
 {
