@@ -37,6 +37,14 @@ extern class GameSpyInfoInterface *TheGameSpyInfo;
 int GadgetListBoxGetEntryBasedOnXY(GameWindow *, int, int, int &, int &);
 void *GadgetListBoxGetItemData(GameWindow *, int, int);
 UnicodeString GadgetListBoxGetText(GameWindow *, int, int);
+// Retail inlines the temporary's destructor (a bare StringBase<G>::releaseBuffer
+// call at +0x231), where UnicodeString::~UnicodeString is out of line (ILT 0x5EEA0).
+// Same one-pointer layout, inline destructor; reached through a cast call.
+struct BfmeListTextTemp
+{
+ wchar_t *m_text;
+ ~BfmeListTextTemp() { ((StringBase<unsigned short> *)this)->clear(); }
+};
 void GadgetComboBoxGetSelectedPos(GameWindow *, int *);
 void *GadgetComboBoxGetItemData(GameWindow *, int);
 class AptOnlineCustomMatch { public: void MpOwnerUpdatePlayerTooltip(AsciiString name); };
@@ -89,7 +97,7 @@ int BfmeAptScreenOnlineChat::rva005369A0(GameWindow *window, unsigned message, u
    }
    if(column == 1) {
     AsciiString name;
-    name.translate(GadgetListBoxGetText(list,row,2));
+    name.translate(reinterpret_cast<const UnicodeString &>(((BfmeListTextTemp (*)(GameWindow *, int, int))GadgetListBoxGetText)(list,row,2)));
     reinterpret_cast<AptOnlineCustomMatch *>(this)->MpOwnerUpdatePlayerTooltip(name);
    }
   }
