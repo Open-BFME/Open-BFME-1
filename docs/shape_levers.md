@@ -25,7 +25,7 @@ lives at `lineSlot + 4` of a `char lineSlot[4 + 128]` (spelled
 biased by 0x64. The buffer below was declared four bytes shorter (`[256]`, still
 passed 260) so every other address stayed retail's. Plain body 369 B unbiased;
 with the lever EXACT 374/374, 22 relocations
-(`game/Libraries/Source/DirectX/dxtracea.cpp`, round 3). Equivalent object, worse
+(`game/Libraries/Source/DirectX/dxtracea.cpp`, e599927f1). Equivalent object, worse
 source: a never-written array packs end-aligned into the hot buffer's slot
 (`long q[33]` beside the line buffer), but its one read costs an instruction
 unless it aliases an argument out of bounds (the first landing, 87bbdd2a2,

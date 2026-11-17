@@ -1,7 +1,7 @@
 # DXErr9 Summer 2003 `_DXTraceA@20` (0x00AFD388, 374 B)
 
 Source: `game/Libraries/Source/DirectX/dxtracea.cpp`. Lane w48 DXTRACE round 2,
-claude-opus-5-5, 2026-11-17; frame lever replaced in round 3 (same object bytes).
+claude-opus-5-5, 2026-11-17; frame lever replaced in round 3, e599927f1 (same object bytes).
 
 ## Identity and extent (BFME 1 target evidence)
 
