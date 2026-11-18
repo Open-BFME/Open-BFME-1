@@ -52,10 +52,13 @@ class MeshMatDescClass
 public:
 	int PassCount;
 	VertexMaterialClass *Peek_Material(int vidx, int pass) const;
-	unsigned char pad004[0xa4 - 4];
+	ShaderClass Get_Shader(int pidx, int pass) const;
+	unsigned char pad004[0x94 - 4];
+	ShaderClass Shader[4];					// +0x94
 	VertexMaterialClass *Material[4];			// +0xa4
 	unsigned char padb4[0xd4 - 0xb4];
 	void *MaterialArray[4];					// +0xd4
+	void *ShaderArray[4];					// +0xe4
 };
 
 struct TriIndex { unsigned short I, J, K; };
@@ -70,7 +73,9 @@ public:
 class MeshModelClass
 {
 public:
-	unsigned char pad00[0x2c];
+	unsigned char pad00[0x24];
+	unsigned PolyCount;					// +0x24
+	unsigned char pad28[0x2c - 0x28];
 	MeshGeometryClass *PolyArray;				// +0x2c
 	unsigned char pad30[0x9c - 0x30];
 	MeshMatDescClass *CurMatDesc;				// +0x9c
@@ -96,7 +101,24 @@ public:
 			return mmc->Peek_Material(mmc->Get_Polygon_Array()[index].I, pass);
 		return mmc->Peek_Single_Material(pass);
 	}
-	ShaderClass Peek_Shader(unsigned index, unsigned pass);
+	ShaderClass Peek_Shader(unsigned index, unsigned pass)
+	{
+		if (mmc->CurMatDesc->ShaderArray[pass]) {
+			ShaderClass shader;
+			if (index < mmc->PolyCount) {
+				ShaderClass poly_shader = mmc->CurMatDesc->Get_Shader(index, pass);
+				shader = poly_shader;
+			}
+			if (npatch_enable) {
+				shader.ShaderBits |= 0x20000;		// Set_NPatch_Enable(NPATCH_ENABLE)
+			}
+			return shader;
+		}
+		if (!npatch_enable) return mmc->CurMatDesc->Shader[pass];
+		ShaderClass shader = mmc->CurMatDesc->Shader[pass];
+		shader.ShaderBits |= 0x20000;			// Set_NPatch_Enable(NPATCH_ENABLE)
+		return shader;
+	}
 };
 
 class IndexBufferClass

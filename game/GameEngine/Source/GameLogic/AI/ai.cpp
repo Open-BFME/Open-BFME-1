@@ -626,11 +626,6 @@ void AI::destroyGroup( AIGroup *group )
 	group->deleteInstance();
 }
 #endif
-// Keeps the std::find/__find<list<AIGroup*>::iterator> COMDAT rows emitted from this TU now that the non-retail
-// destroyGroup body (their only user) is disabled.
-typedef std::list<AIGroup *>::iterator AIGroupListIterator;
-AIGroupListIterator (*g_keepAIGroupFind)(AIGroupListIterator, AIGroupListIterator, AIGroup * const &) = &std::find<AIGroupListIterator, AIGroup *>;
-AIGroupListIterator (*g_keepAIGroupFindInput)(AIGroupListIterator, AIGroupListIterator, AIGroup * const &, const std::input_iterator_tag &) = &std::__find<AIGroupListIterator, AIGroup *>;
 
 /**
  * Given an ID, return the associated AIGroup

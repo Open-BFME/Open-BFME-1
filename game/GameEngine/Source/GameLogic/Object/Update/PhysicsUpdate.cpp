@@ -888,9 +888,6 @@ UpdateSleepTime PhysicsBehavior::update()
 	return calcSleepTime();
 }
 #endif
-// Keeps the Matrix3D::Adjust_Z_Translation COMDAT (row 0x0077F740) emitted from this TU now that the
-// non-retail update body above is disabled.
-void (Matrix3D::*g_keepAdjustZTranslation)(float) = &Matrix3D::Adjust_Z_Translation;
 
 //-------------------------------------------------------------------------------------------------
 // ?calcSleepTime@PhysicsBehavior@@IBE?AW4UpdateSleepTime@@XZ present-unmatched

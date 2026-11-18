@@ -3475,12 +3475,13 @@ Bool Player::canBuild(const ThingTemplate *tmplate) const
 	return true;
 }
 #endif
-// Keeps the vector<ProductionPrerequisite> size/operator[]/begin COMDAT rows emitted from this TU now that the
-// non-retail canBuild body above (their only user) is disabled.
+// Keeps the vector<ProductionPrerequisite> size/operator[] COMDAT rows (and begin, which operator[] expands)
+// emitted from this TU now that the non-retail canBuild body above (their only user) is disabled: they are this
+// header's 24-byte element copies, which the retail Player_canBuild.cpp (36-byte ProductionPrerequisite) does not
+// reproduce.
 typedef std::vector<ProductionPrerequisite> PlayerCanBuildPrereqVector;
 unsigned int (PlayerCanBuildPrereqVector::*g_keepPrereqVectorSize)() const = &PlayerCanBuildPrereqVector::size;
 const ProductionPrerequisite & (PlayerCanBuildPrereqVector::*g_keepPrereqVectorIndex)(unsigned int) const = &PlayerCanBuildPrereqVector::operator[];
-const ProductionPrerequisite * (PlayerCanBuildPrereqVector::*g_keepPrereqVectorBegin)() const = &PlayerCanBuildPrereqVector::begin;
 
 //=================================================================================================
 // Native canAffordBuild is owned by PlayerProductionCost.cpp.
