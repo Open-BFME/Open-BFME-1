@@ -3,9 +3,9 @@
 // 0x002AC070, reached from deleting destructor0x002ACD50 viaILT0x0003EFC7.
 // TU-local layout views preserve the existing canonical callee ABIs.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

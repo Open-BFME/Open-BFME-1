@@ -22,10 +22,10 @@
 #include <list>
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Thing;
 class ModuleData;

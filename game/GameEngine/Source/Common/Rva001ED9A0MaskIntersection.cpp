@@ -2,8 +2,8 @@
 // The command-mask caller at 0x004A3D50 reaches this body through ILT
 // 0x0003F18E.  It intersects ten mask words and reports whether any remain.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct Rva001ED9A0MaskWords
 {

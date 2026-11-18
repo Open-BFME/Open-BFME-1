@@ -6,8 +6,8 @@
 // StreamingArchiveFile.h with only a DEBUG_CRASH, which leaves nothing in a
 // release build; no ledger row covered it.
 
-typedef char Char;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class StreamingArchiveFile
 {

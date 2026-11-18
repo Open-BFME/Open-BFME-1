@@ -1,8 +1,8 @@
 // cl: /GX
 // Open-BFME: world-coordinate cell lookup for the partition cell table.
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 

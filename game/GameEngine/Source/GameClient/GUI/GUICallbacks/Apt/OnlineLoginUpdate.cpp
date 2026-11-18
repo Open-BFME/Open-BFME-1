@@ -21,9 +21,9 @@
 #include <string>
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { LOC_MIN = 1, LOC_MAX = 37 };
 

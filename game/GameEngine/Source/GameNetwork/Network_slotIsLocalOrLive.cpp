@@ -6,8 +6,8 @@
 // BFMEConnectionManager::isPlayerConnectedDefaultTimeout (native_connection_timing.cpp);
 // this method name still describes the body rather than recovering it.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class BFMEConnectionManager

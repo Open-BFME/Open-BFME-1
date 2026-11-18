@@ -48,9 +48,9 @@
 #define setCurrentWaypoint setCurrentWaypoint_LocalView
 #include <math.h>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

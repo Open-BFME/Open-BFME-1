@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

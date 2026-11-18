@@ -18,9 +18,9 @@ __forceinline long fast_float2long_round(float f)
 	return i;
 }
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h

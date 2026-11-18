@@ -26,9 +26,9 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ModelConditionFlagType
 {

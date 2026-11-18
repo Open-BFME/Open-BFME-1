@@ -7,8 +7,8 @@ public:
 	int m_bfmeArr[10];
 };
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class ModelConditionFlags
 {

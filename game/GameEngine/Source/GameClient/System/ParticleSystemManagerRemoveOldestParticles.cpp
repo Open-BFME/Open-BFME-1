@@ -2,8 +2,8 @@
 // Open-BFME: ParticleSystemManager::removeOldestParticles, retail
 // 0x005BE770 (95 bytes). The public ILT at 0x00008B0C routes here.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/ParticlePriorityType.h"
 

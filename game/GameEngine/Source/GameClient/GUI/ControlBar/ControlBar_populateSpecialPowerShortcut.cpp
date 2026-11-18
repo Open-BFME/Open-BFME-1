@@ -21,9 +21,9 @@
 // (+0x18, the CommandButton FieldParse table at 0x00CFA3B8), which is the same
 // flag Zero Hour spells BitTest( getOptions(), NEED_SPECIAL_POWER_SCIENCE ).
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { FALSE = 0, TRUE = 1 };
 

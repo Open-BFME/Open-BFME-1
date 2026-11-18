@@ -22,9 +22,9 @@
 #define getAction getAction_LocalView
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class ScriptAction;
 class Script;

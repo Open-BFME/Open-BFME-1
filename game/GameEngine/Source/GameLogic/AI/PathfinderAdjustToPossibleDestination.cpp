@@ -25,9 +25,9 @@
 // noinline so the calls still bind to the matched body: with a
 // declaration-only callee the object and destination swap ESI/EDI.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short zoneStorageType;
 
 #define PATHFIND_CELL_SIZE 10

@@ -28,9 +28,9 @@ namespace RadiusContract003DEE30 {
 struct RadiusAccess003DEE30 : RadiusContract003DEE30::Pathfinder {
  using RadiusContract003DEE30::Pathfinder::getRadiusAndCenter;
 };
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 #include "coord3d.h"
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}

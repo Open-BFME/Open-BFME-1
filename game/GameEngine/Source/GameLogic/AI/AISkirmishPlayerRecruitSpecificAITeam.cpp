@@ -28,9 +28,9 @@
 #define getIsSingleton getIsSingleton_LocalView
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Coord3D is spelled with the class key here: retail's ILT slot for this body
 // names the third parameter PBVCoord3D@@, so the defining translation unit saw

@@ -4,8 +4,8 @@
 // +0x1E1CCC. Cursor parks 8 bytes into the row (+0x1550) so the first three
 // dwords land at -8/-4/0.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class W3DShrubBuffer
 {

@@ -5,10 +5,10 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
-typedef bool Bool;
+
 static const Bool FALSE = false;
 class Image;
 class Display

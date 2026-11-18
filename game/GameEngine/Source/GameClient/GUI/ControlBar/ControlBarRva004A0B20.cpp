@@ -6,8 +6,8 @@
 // local button pointer. It returns true when the first two booleans are set and the
 // third is clear. No matched caller names this body, so the name keeps the address.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 class CommandButton;

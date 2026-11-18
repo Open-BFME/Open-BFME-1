@@ -5,9 +5,9 @@
 // Port of GeneralsMD W3DSmudge.cpp render() to BFME's D3D9 device slots,
 // BoxDynamicVBAccessClass and the probe colour member at +0x40.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
 typedef unsigned long ULONG;

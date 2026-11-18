@@ -6,8 +6,8 @@
 // one every frame counter in the image reads -- carries a flag at +0x90, and
 // only while it is set do the points land in the running total at this+0x124.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

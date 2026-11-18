@@ -20,9 +20,9 @@ inline UnicodeString::UnicodeString(const UnicodeString& s) {
 }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->StringBase<unsigned short>::~StringBase(); }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 typedef unsigned int WindowMsgData;
 

@@ -1,8 +1,8 @@
 // cl: /O2 /MD
 // BFME LanguageFilter::readWord with the retail File vtable layout.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class File
 {

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction of the BFME tint-drawable FX nugget constructor.
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor

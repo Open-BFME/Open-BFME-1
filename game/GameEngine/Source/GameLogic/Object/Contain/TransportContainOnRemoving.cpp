@@ -33,9 +33,9 @@ template<> inline bool StringBase<char>::isEmpty()const{return !m_data||!m_data-
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class Matrix3D;
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 // Retail destroys the passenger list through ILT 0x0000E68D (0x000CEBD0).

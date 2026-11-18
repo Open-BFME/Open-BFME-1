@@ -5,8 +5,8 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 template<int Bits>
 class BitFlags

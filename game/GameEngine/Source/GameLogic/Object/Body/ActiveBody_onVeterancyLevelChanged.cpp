@@ -18,9 +18,9 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 #include "../../../../Include/Common/ObjectID.h"
 
 enum VeterancyLevel

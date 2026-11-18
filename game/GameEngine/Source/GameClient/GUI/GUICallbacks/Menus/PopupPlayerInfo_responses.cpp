@@ -29,9 +29,9 @@
 #include <vector>
 #include "Common/AsciiString.h"
 #include "Common/UnicodeString.h"
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef std::map<int,unsigned int> PerGeneralMap;
 class PSPlayerStats { public:
     PSPlayerStats(); PSPlayerStats(const PSPlayerStats&); ~PSPlayerStats();

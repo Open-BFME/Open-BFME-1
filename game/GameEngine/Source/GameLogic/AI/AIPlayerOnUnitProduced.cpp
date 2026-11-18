@@ -7,11 +7,11 @@
 #include <vector>
 #include <hash_map>
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

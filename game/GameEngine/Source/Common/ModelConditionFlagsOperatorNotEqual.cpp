@@ -5,8 +5,8 @@
 // public inequality operator; keeping that helper boundary visible preserves
 // STLport's redundant bool-normalisation tails.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class ModelConditionFlags
 {

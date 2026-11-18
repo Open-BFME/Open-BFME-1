@@ -43,9 +43,9 @@
 #include "ascii_string.h"
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 enum { MAX_SLOTS = 8 };
 
 // BFME's UnicodeString derives from StringBase<unsigned short> and adds no

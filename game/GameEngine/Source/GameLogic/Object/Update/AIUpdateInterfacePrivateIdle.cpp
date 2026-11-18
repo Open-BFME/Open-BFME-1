@@ -7,9 +7,9 @@
 // The visible recursive override walk is significant: MSVC can retain the
 // owning Object across this read-only helper, reproducing retail's registers.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 #include "../../command_source_type.h"

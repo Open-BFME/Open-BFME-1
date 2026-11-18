@@ -20,9 +20,9 @@
 // and cell.x slots to the loop's row offset and first row.
 // With declaration-only callees the frame grows by eight bytes.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;

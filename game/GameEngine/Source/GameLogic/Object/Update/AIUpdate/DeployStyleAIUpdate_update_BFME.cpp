@@ -6,9 +6,9 @@
 #include "ascii_string.h"
 #include "../../../command_source_type.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Weapon;
 enum WeaponSlotType;

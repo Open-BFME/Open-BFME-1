@@ -13,9 +13,9 @@
 
 #include <string>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 template <typename T> struct StringData

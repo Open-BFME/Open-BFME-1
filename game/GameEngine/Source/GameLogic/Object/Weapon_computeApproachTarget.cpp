@@ -22,9 +22,9 @@ extern "C" double __cdecl atan2(double, double);
 extern "C" float __cdecl cosf(float);
 extern "C" float __cdecl sinf(float);
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define PI 3.14159265359f
 

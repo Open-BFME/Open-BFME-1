@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // stlport
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

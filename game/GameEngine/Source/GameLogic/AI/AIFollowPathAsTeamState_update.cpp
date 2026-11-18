@@ -20,9 +20,9 @@ extern void j_000294e2(void);
 #include <math.h>
 #include <vector>
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

@@ -16,10 +16,10 @@
 // Snapshot's defined virtual method makes MSVC emit the secondary vtable store.
 // The members at +0x81C and +0x560 stay plain storage because the body deletes or releases them directly.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
