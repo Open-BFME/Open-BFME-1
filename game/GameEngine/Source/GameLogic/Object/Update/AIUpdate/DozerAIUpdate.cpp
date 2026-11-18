@@ -1290,6 +1290,7 @@ DozerAIUpdate::~DozerAIUpdate( void )
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdateCreateMachinesBfme.cpp
 // ?createMachines@DozerAIUpdate@@AAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x002B7B20 is DozerAIUpdateCreateMachinesBfme.cpp
 void DozerAIUpdate::createMachines( void )
 {
 
@@ -1302,6 +1303,10 @@ void DozerAIUpdate::createMachines( void )
 	}  // end if
 
 }  // end createMachines
+#endif
+// Keeps the matched DozerPrimaryStateMachine placement-delete COMDAT (row 0x007EFFF0) emitted from this TU now
+// that the non-retail createMachines body (the newInstance cleanup path that emitted it) is disabled.
+void (*g_keepDozerPrimaryStateMachineDelete)(void *, DozerPrimaryStateMachine::DozerPrimaryStateMachineMagicEnum) = &DozerPrimaryStateMachine::operator delete;
 
 // ------------------------------------------------------------------------------------------------
 /** Create the bridge scaffolding if necessary for the bridge that is attached to this tower */
