@@ -10,13 +10,13 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(UnsignedInt *freq);
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(UnsignedInt *counter);

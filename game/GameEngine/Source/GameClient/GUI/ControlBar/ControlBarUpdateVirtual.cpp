@@ -85,7 +85,7 @@ class BfmeMemberRV;
 class BfmeThingRV { public: BfmeMemberRV *bfmePickRV(); };
 class BfmeThingZC { public: void bfmeTailZC(); };
 class Gen_004a37d0 { public: void m(); };
-enum ControlBarContext { CB_CONTEXT_NONE = 0 };
+#include "../../../../Include/Common/Enums/ControlBarContext.h"
 
 class ControlBar;
 // Existing ledger symbols. Both calls take only the receiver in ECX and no

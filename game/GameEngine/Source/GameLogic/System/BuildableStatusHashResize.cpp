@@ -77,14 +77,14 @@ struct equal_to<AsciiString>
 };
 }
 
-enum BuildableStatus
-{
-	BSTATUS_YES = 0,
-	BSTATUS_IGNORE_PREREQUISITES,
-	BSTATUS_NO,
-	BSTATUS_ONLY_BY_AI,
-	BSTATUS_NUM_TYPES
-};
+#include "../../../Include/Common/Enums/BuildableStatus.h"
+
+
+
+
+
+
+
 
 typedef _STL::pair<const AsciiString, BuildableStatus> BuildableStatusPair;
 typedef _STL::hashtable<BuildableStatusPair, AsciiString, rts::hash<AsciiString>,

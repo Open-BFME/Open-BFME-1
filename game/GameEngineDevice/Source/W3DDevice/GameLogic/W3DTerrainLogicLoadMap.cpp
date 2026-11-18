@@ -120,18 +120,18 @@ extern MapCache *TheMapCache;
 
 // BFME's TimeOfDay: six names (NONE MORNING AFTERNOON EVENING NIGHT
 // INTERPOLATE, name table 0x012A9FE0).
-enum TimeOfDay
-{
-	TIME_OF_DAY_INVALID = 0,
-	TIME_OF_DAY_FIRST = 1,
-	TIME_OF_DAY_MORNING = TIME_OF_DAY_FIRST,
-	TIME_OF_DAY_AFTERNOON,
-	TIME_OF_DAY_EVENING,
-	TIME_OF_DAY_NIGHT,
-	TIME_OF_DAY_INTERPOLATE,
+#include "../../../../GameEngine/Include/Common/Enums/TimeOfDay.h"
 
-	TIME_OF_DAY_COUNT
-};
+
+
+
+
+
+
+
+
+
+
 
 // GlobalData view: setTimeOfDay is retail 0x00082AA0 (through ILT 0x0000BA64),
 // m_timeOfDay sits at +0x218.

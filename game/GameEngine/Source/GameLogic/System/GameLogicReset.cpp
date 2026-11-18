@@ -18,7 +18,7 @@
 typedef bool Bool;
 #include "subsystem_interface.h"
 #include "snapshot.h"
-enum BuildableStatus {};
+#include "../../../Include/Common/Enums/BuildableStatus.h"
 class CommandButton;
 namespace rts {
  template<class T> struct hash;

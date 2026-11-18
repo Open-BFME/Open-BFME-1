@@ -4,7 +4,7 @@
 // readable body of ?setTimeOfDay@BaseHeightMapRenderObjClass@@QAEXW4TimeOfDay@@@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 // Open-BFME5: clean C++ reconstruction of BFME terrain relighting.
 
-enum TimeOfDay { TIME_OF_DAY_FIRST = 0 };
+#include "../../../../GameEngine/Include/Common/Enums/TimeOfDay.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DRoadBuffer.h
 class W3DRoadBuffer

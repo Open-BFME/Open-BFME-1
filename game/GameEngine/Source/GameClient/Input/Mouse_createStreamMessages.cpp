@@ -52,21 +52,21 @@ extern Keyboard *TheKeyboard;
 // The resolver pin maps this real Mouse::processMouseEvent declaration to its
 // existing retail body; the linker uses its incremental-link thunk at 0x0040673A.
 
-enum GameWindowMessage
-{
-	GWM_LEFT_DOWN = 5,
-	GWM_LEFT_UP = 6,
-	GWM_LEFT_DOUBLE_CLICK = 7,
-	GWM_LEFT_DRAG = 8,
-	GWM_MIDDLE_DOWN = 9,
-	GWM_MIDDLE_UP = 10,
-	GWM_MIDDLE_DOUBLE_CLICK = 11,
-	GWM_MIDDLE_DRAG = 12,
-	GWM_RIGHT_DOWN = 13,
-	GWM_RIGHT_UP = 14,
-	GWM_RIGHT_DOUBLE_CLICK = 15,
-	GWM_RIGHT_DRAG = 16
-};
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 struct MouseIO
 {

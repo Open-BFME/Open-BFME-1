@@ -4,10 +4,10 @@
 // ParticleSystem transfer body independently serializes the priority dword at
 // +0x7C, which is the field this previously unclaimed body returns.
 
-enum ParticlePriorityType
-{
-	PARTICLE_PRIORITY_NONE = 0
-};
+#include "../../../Include/Common/Enums/ParticlePriorityType.h"
+
+
+
 
 class ParticleSystem
 {

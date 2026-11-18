@@ -14,7 +14,7 @@ class DX8Wrapper{public:static void Apply_Render_State_Changes();static void Set
 // setTimeOfDay (retail 0x00082AA0 through ILT 0x0000BA64) is called on it
 // directly, and the local ZoomSettings view below is only how this TU reads
 // mode/highlight, so it is cast at use.
-enum TimeOfDay{TIME_OF_DAY_INVALID,TIME_OF_DAY_MORNING,TIME_OF_DAY_AFTERNOON,TIME_OF_DAY_EVENING,TIME_OF_DAY_NIGHT,TIME_OF_DAY_INTERPOLATE,TIME_OF_DAY_COUNT};
+#include "../../../../GameEngine/Include/Common/Enums/TimeOfDay.h"
 class GlobalData{public:bool setTimeOfDay(TimeOfDay tod);};
 extern GlobalData *TheWritableGlobalData;
 struct ZoomSettings{

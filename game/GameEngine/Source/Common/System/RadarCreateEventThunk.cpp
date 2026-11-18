@@ -4,10 +4,10 @@
 
 struct Coord3D;
 
-enum RadarEventType
-{
-	RadarEventTypeDummy = 0
-};
+#include "../../../Include/Common/Enums/RadarEventType.h"
+
+
+
 
 class Radar
 {

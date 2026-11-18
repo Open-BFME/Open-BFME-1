@@ -46,17 +46,17 @@ enum PEERJoinResult
 	PEERJoinFailed
 };
 
-enum GameSpyBuddyStatus
-{
-	BUDDY_OFFLINE,
-	BUDDY_ONLINE,
-	BUDDY_LOBBY,
-	BUDDY_STAGING,
-	BUDDY_LOADING,
-	BUDDY_PLAYING,
-	BUDDY_MATCHING,
-	BUDDY_MAX
-};
+#include "../../../../Include/Common/Enums/GameSpyBuddyStatus.h"
+
+
+
+
+
+
+
+
+
+
 
 typedef std::map<std::string, int> PlayerStatMap;
 

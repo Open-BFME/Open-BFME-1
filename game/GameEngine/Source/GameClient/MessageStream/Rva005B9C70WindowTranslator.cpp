@@ -7,7 +7,7 @@
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 union GameMessageArgumentType { int integer; ICoord2D pixel; };
 class GameMessage { public: const GameMessageArgumentType *getArgument(int) const; char pad00[0x10]; int type; };
-enum GameWindowMessage { GWM_NONE };
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
 extern GameWindowMessage rawMouseToWindowMessage(const GameMessage *);
 class BfmeGameLogicPause { public: bool isGamePaused(); };
 class GameLogic;

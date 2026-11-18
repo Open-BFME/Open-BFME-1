@@ -10,10 +10,10 @@ typedef int Int;
 typedef bool Bool;
 typedef int Color;
 
-enum ShadowType
-{
-	SHADOW_NONE = 0
-};
+#include "../../../../../../GameEngine/Include/Common/Enums/ShadowType.h"
+
+
+
 
 class FXList;
 

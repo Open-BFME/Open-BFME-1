@@ -10,7 +10,7 @@ typedef bool Bool;
 #define NULL 0
 
 class Drawable;
-enum ControlBarContext { CB_CONTEXT_NONE = 0 };
+#include "../../../../Include/Common/Enums/ControlBarContext.h"
 
 class GameWindow
 {

@@ -8,13 +8,13 @@ typedef void *PEER;
 typedef bool Bool;
 typedef int Int;
 
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 enum DisconnectReason
 {

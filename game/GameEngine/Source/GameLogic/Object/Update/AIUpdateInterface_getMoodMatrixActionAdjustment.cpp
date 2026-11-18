@@ -54,13 +54,13 @@ public:
 	BfmeOverridable *m_template;
 };
 
-enum MoodMatrixAction
-{
-	MM_Action_Idle,
-	MM_Action_Move,
-	MM_Action_Attack,
-	MM_Action_AttackMove
-};
+#include "../../../../Include/Common/Enums/MoodMatrixAction.h"
+
+
+
+
+
+
 
 enum MoodMatrixParameter
 {

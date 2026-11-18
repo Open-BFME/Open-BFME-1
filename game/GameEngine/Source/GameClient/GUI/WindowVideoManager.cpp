@@ -25,10 +25,10 @@ public:
 	virtual int useBuffer();
 };
 
-enum WindowVideoPlayType
-{
-	WINDOW_PLAY_MOVIE_ONCE = 0
-};
+#include "../../../Include/Common/Enums/WindowVideoPlayType.h"
+
+
+
 
 class WindowVideo
 {

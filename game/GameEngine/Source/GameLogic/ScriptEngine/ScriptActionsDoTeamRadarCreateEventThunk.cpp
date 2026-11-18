@@ -3,9 +3,9 @@
 typedef bool Bool;
 typedef float Real;
 
-enum RadarEventType
-{
-};
+#include "../../../Include/Common/Enums/RadarEventType.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

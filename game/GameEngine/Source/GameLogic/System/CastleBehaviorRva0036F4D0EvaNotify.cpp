@@ -18,10 +18,10 @@ enum EvaMessage
 	EVA_INVALID = -1
 };
 
-enum RadarEventType
-{
-	RADAR_EVENT_INVALID = -1
-};
+#include "../../../Include/Common/Enums/RadarEventType.h"
+
+
+
 
 enum Relationship
 {

@@ -30,11 +30,11 @@ enum GadgetGameMessage
 	GGM_NONE = 0
 };
 
-enum CBCommandStatus
-{
-	CBC_COMMAND_NOT_USED = 0,
-	CBC_COMMAND_USED
-};
+#include "../../../../Include/Common/Enums/CBCommandStatus.h"
+
+
+
+
 
 enum ControlBarContext
 {

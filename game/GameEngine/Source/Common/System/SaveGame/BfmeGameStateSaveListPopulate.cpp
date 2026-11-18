@@ -160,11 +160,11 @@ enum SaveLoadLayoutType
 	SLLT_NUM_TYPES
 };
 
-enum SaveFileType
-{
-	SAVE_FILE_TYPE_NORMAL,
-	SAVE_FILE_TYPE_MISSION
-};
+#include "../../../../Include/Common/Enums/SaveFileType.h"
+
+
+
+
 
 struct SaveDate
 {

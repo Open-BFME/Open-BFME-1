@@ -14,13 +14,13 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 enum { BFME_MSG_CLEAR_GAME_DATA = 0x1D };
 

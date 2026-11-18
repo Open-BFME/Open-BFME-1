@@ -5,11 +5,11 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum ParticlePriorityType
-{
-	PARTICLE_PRIORITY_NONE = 0,
-	PARTICLE_PRIORITY_LOWEST = 1
-};
+#include "../../../Include/Common/Enums/ParticlePriorityType.h"
+
+
+
+
 
 class Particle
 {

@@ -29,10 +29,10 @@ class Team;
 class Player;
 class Drawable;
 class AttackPriorityInfo;
-enum AttitudeType
-{
-    ATTITUDE_ZERO = 0
-};
+#include "../../../Include/Common/Enums/AttitudeType.h"
+
+
+
 class Player
 {
   public:

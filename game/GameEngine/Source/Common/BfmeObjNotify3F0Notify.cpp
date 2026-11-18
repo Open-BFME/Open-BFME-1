@@ -21,7 +21,7 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 	return result ? result : length - otherLength;
 }
 typedef bool Bool;
-enum ObjectScriptStatusBit { OBJECT_STATUS_SCRIPT_DISABLED = 0x01 };
+#include "../../Include/Common/Enums/ObjectScriptStatusBit.h"
 #define OBJECT_TU_MEMBERS void setScriptStatus(ObjectScriptStatusBit status, Bool value);
 #include "GameLogic/Object/object.h"
 

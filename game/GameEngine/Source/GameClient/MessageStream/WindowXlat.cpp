@@ -55,24 +55,24 @@ private:
 	Type m_type;											///< +0x10
 };
 
-enum GameWindowMessage
-{
-	GWM_NONE = 0,
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
 
-	GWM_CREATE,									GWM_DESTROY,
-	GWM_ACTIVATE,								GWM_ENABLE,
-	GWM_LEFT_DOWN,								GWM_LEFT_UP,
-	GWM_LEFT_DOUBLE_CLICK,						GWM_LEFT_DRAG,
-	GWM_MIDDLE_DOWN,							GWM_MIDDLE_UP,
-	GWM_MIDDLE_DOUBLE_CLICK,					GWM_MIDDLE_DRAG,
-	GWM_RIGHT_DOWN,								GWM_RIGHT_UP,
-	GWM_RIGHT_DOUBLE_CLICK,						GWM_RIGHT_DRAG,
-	GWM_MOUSE_ENTERING,							GWM_MOUSE_LEAVING,
-	GWM_WHEEL_UP,								GWM_WHEEL_DOWN,
-	GWM_CHAR,									GWM_SCRIPT_CREATE,
-	GWM_INPUT_FOCUS,							GWM_MOUSE_POS,
-	GWM_IME_CHAR,								GWM_IME_STRING
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ?rawMouseToWindowMessage@@YA?AW4GameWindowMessage@@PBVGameMessage@@@Z
 GameWindowMessage rawMouseToWindowMessage( const GameMessage *msg )

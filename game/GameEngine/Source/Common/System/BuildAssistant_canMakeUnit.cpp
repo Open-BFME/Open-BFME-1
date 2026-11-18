@@ -3,7 +3,7 @@
 // Evidence: targets/game/reverse/identity_evidence/000fe3c0-canmakeunit-recovery.md
 class Player;
 class ProductionUpdateInterface;
-enum ObjectScriptStatusBit { OBJECT_STATUS_SCRIPT_DISABLED = 1, OBJECT_STATUS_SCRIPT_UNPOWERED = 2 };
+#include "../../../Include/Common/Enums/ObjectScriptStatusBit.h"
 // ?testScriptStatusBit@Object@@QBE_NW4ObjectScriptStatusBit@@@Z absent-from-retail
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const; ProductionUpdateInterface *getProductionUpdateInterface(); bool testScriptStatusBit(ObjectScriptStatusBit bit) const { return (m_scriptStatus & bit) != 0; }
 #include "object.h"

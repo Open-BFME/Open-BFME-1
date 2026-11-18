@@ -11,13 +11,13 @@
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 class BFMEConnectionManager
 {

@@ -19,13 +19,13 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short UnsignedShort;
 
-enum BuildableStatus
-{
-	BSTATUS_YES,
-	BSTATUS_IGNORE_PREREQUISITES,
-	BSTATUS_NO,
-	BSTATUS_ONLY_BY_AI
-};
+#include "../../../Include/Common/Enums/BuildableStatus.h"
+
+
+
+
+
+
 
 // inputs/reference/shims/bfmekindof/Common/KindOf.h: KINDOF_STRUCTURE is bit 7
 enum KindOfType

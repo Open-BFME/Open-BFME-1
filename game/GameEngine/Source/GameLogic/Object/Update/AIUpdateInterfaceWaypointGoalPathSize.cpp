@@ -28,10 +28,10 @@ enum { INVALID_STATE_ID = 999999 };
 typedef UnsignedInt StateID;
 
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
-enum AIStateType
-{
-	AI_FOLLOW_PATH = 6
-};
+#include "../../../../Include/Common/Enums/AIStateType.h"
+
+
+
 
 class Rva00271AE0Named
 {

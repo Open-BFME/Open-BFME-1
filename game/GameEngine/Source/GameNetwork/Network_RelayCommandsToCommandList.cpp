@@ -10,13 +10,13 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 enum NetCommandType
 {

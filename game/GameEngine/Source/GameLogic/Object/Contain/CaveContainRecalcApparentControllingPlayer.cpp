@@ -26,10 +26,10 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef Int Color;
 
-enum TimeOfDay
-{
-	TIME_OF_DAY_NIGHT = 4
-};
+#include "../../../../Include/Common/Enums/TimeOfDay.h"
+
+
+
 
 class Team;
 class Player;

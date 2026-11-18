@@ -6,14 +6,14 @@ extern "C" __declspec(dllimport) unsigned int __cdecl strlen( const char *text )
 
 typedef int Int;
 
-enum ScienceAvailabilityType
-{
-	SCIENCE_AVAILABILITY_INVALID = -1,
-	SCIENCE_AVAILABLE,
-	SCIENCE_DISABLED,
-	SCIENCE_HIDDEN,
-	SCIENCE_AVAILABILITY_COUNT
-};
+#include "../../../Include/Common/Enums/ScienceAvailabilityType.h"
+
+
+
+
+
+
+
 
 class AsciiString
 {

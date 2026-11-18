@@ -44,9 +44,9 @@ public:
 	}
 };
 
-enum ModuleType
-{
-};
+#include "../../../Include/Common/Enums/ModuleType.h"
+
+
 
 class ModuleFactory
 {

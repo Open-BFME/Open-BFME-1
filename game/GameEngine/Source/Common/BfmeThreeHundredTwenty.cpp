@@ -1,4 +1,4 @@
-enum AttitudeType {};
+#include "../../Include/Common/Enums/AttitudeType.h"
 
 // Retail's call at 0x00030553 is AIUpdateInterface::setAttitude, reached
 // through the 5-byte ILT thunk (body 0x0027DEF0); the body is the one

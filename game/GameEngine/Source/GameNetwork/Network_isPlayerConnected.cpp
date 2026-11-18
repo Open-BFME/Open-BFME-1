@@ -14,13 +14,13 @@ typedef bool Bool;
 
 // BFME's enum: quitGame (0x006822E0) parks 3 in this field, and this body tests
 // it against 1 alone where Zero Hour tests INGAME or LEAVING.
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h
 class ConnectionManager

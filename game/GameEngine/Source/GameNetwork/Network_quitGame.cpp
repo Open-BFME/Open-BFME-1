@@ -18,13 +18,13 @@ typedef unsigned int UnsignedInt;
 
 // Zero Hour's enum; BFME's quitGame parks 3 where Zero Hour parks POSTGAME = 4,
 // and isPlayerConnected (0x00681F30) tests 1 alone. Named for the value.
-enum NetLocalStatus
-{
-	NETLOCALSTATUS_PREGAME = 0,
-	NETLOCALSTATUS_INGAME,
-	NETLOCALSTATUS_LEAVING,
-	NETLOCALSTATUS_LEFT
-};
+#include "../../Include/Common/Enums/NetLocalStatus.h"
+
+
+
+
+
+
 
 // GameMessage::MSG_CLEAR_GAME_DATA in Zero Hour terms. Left as the retail
 // literal: BFME's GameMessage::Type is renumbered and nothing in the tree fixes

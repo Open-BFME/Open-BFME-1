@@ -24,7 +24,7 @@ public:
     void setCursor(int mode) { (this->*(vtable->setCursor))(mode); }
 };
 extern Mouse *TheMouse;
-enum GameWindowMessage { GWM_NONE };
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
 extern GameWindowMessage rawMouseToWindowMessage(const GameMessage *);
 class GameWindow { public: unsigned winGetStatus(); GameWindow *winGetParent(); };
 class GameWindowManager { public: char pad00[0x14]; GameWindow *head; };
