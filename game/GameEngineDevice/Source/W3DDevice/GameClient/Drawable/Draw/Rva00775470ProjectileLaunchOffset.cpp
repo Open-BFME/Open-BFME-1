@@ -27,9 +27,9 @@
 #include "matrix3d.h"
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 

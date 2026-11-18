@@ -8,9 +8,9 @@
 #include <utility>
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 // The released NameKeyGenerator.h and matched KEYNAME at 0x00098B70
 // prove this is the 32-bit enum rather than an int typedef. The enum is
 // only forwarded here to avoid importing the unreconstructed subsystem graph.

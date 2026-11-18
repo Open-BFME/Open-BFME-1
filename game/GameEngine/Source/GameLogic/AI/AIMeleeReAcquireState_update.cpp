@@ -7,9 +7,9 @@ extern "C" void _ReadWriteBarrier(void);
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

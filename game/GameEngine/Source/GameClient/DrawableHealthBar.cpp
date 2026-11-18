@@ -7,9 +7,9 @@
 // used by this body; they are deliberately TU-local so they do not claim a
 // broader reconstructed class layout.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum KindOfType
 {

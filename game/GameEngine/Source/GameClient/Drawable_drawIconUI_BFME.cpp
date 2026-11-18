@@ -3,9 +3,9 @@
 // This body matches the retail control flow, stack layout, and x87 sequence
 // through the projection and icon queue paths.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

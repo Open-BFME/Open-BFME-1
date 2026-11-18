@@ -3,9 +3,9 @@
 extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum UpdateSleepTime
 {

@@ -26,10 +26,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };

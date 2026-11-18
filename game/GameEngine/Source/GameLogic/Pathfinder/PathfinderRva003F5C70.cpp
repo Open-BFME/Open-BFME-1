@@ -21,9 +21,9 @@
 // Actual RET12 is at 003F5DBC, followed by INT3 at 003F5DBF.
 // This is the opaque three-argument method, not the old four-argument guess.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;

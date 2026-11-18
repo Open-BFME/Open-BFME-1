@@ -3,9 +3,9 @@
 // Zero Hour layout. Keep the object mirror local until the real body lands.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class RenderInfoClass;
 class IndexBufferClass;

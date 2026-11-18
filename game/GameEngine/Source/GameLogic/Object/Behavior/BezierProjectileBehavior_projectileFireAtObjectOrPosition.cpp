@@ -7,9 +7,9 @@
 // The primary vtable and the two-argument thiscall ABI are proven by the
 // constructor, vtable slot, and the caller at 0x001F1CE0.  The method identity follows the ZH DumbProjectile twin and the BFME caller/callee pins.
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 template <typename T>

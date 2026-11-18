@@ -19,9 +19,9 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef Int ObjectID;
 
 enum KindOfType { KINDOF_INVALID = 0 };

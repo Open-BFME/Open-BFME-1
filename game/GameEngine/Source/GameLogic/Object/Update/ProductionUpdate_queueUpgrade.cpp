@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME's queue-upgrade body receives the production interface subobject.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define TRUE true
 #define FALSE false

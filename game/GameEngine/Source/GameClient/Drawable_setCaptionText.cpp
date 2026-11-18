@@ -52,9 +52,9 @@ public:
 // (0x00887940) at +0xFC, after the getFont call at +0xEC.
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef unsigned char UnsignedByte;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class GameFont;
 

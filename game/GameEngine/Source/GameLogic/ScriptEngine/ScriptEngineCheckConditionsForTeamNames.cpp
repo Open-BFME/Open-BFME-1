@@ -2,9 +2,9 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's map loader checks team-condition names before evaluating scripts.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // This unit's Script view defines setFrameToEvaluate inline at another offset than
 // retail's 0x00191490 (+0x34) and emits that COMDAT copy; rename it so only

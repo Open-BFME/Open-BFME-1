@@ -28,9 +28,9 @@
 
 #include <string.h>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 #include "xfer.h"

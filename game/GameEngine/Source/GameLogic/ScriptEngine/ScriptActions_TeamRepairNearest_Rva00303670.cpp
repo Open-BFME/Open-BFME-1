@@ -9,9 +9,9 @@
 #include "StringInline.h"
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Incremental-link thunks the retail body calls through directly.
 extern void j_00001140(void);

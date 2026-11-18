@@ -9,9 +9,9 @@
 #include <vector>
 
 #include "Lib/Coord3D.h"
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 #include "vector3.h"
 #include "matrix3d.h"
 

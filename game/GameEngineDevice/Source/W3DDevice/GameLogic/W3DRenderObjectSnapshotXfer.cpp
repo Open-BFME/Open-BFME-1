@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-typedef unsigned char UnsignedByte;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct Vector4
 {

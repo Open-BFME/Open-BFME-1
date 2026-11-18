@@ -8,9 +8,9 @@
 // filter's own shader cache word; shader.h declares the real identity.
 #include "shader.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class TextureBaseClass;
 

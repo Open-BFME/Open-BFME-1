@@ -9,9 +9,9 @@
 // unique cell IDs, but it reads the cell's posUnit ID for both the test and
 // the stored value, and resolves layer cells through 0x003FBB20.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;

@@ -9,9 +9,9 @@
 // path-existence query; an obstacle cell is probed one target radius away in
 // each of the four axis directions.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short zoneStorageType;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

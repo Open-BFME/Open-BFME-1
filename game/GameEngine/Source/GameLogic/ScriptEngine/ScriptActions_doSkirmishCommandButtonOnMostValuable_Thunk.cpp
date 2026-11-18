@@ -16,9 +16,9 @@
 #include "../command_source_type.h"
 enum GUICommandType {};
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

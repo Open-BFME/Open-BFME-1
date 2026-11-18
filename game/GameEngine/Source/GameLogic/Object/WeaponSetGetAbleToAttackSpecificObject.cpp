@@ -10,9 +10,9 @@
 // (0x001EBEB0) with the victim's position.  The StealthUpdate module key is a
 // function-local static, which is what buys the SEH frame.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum AbleToAttackType
 {

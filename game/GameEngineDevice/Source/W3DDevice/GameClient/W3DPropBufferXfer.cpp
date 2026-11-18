@@ -2,9 +2,9 @@
 // W3DPropBuffer::xfer, retail 0x007032A0 (vtable 0x011209D8 slot 3).
 // BFME uses a different Xfer virtual order from the shared source headers.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

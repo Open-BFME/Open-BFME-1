@@ -17,9 +17,9 @@
 // ?snapClosestGoalPosition@Pathfinder@@... MASM row at 0x003F89A0 is the
 // interior +0x180 suffix of this body (refuted boundary, see re_attempts.log).
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };

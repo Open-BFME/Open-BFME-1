@@ -22,11 +22,11 @@
 // A null reference and command type 23, the one gap in the enum, both fall
 // through to the default and return TRUE.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #define NULL 0
 #define TRUE 1

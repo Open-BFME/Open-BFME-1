@@ -18,9 +18,9 @@
 // 0x01306F00..0x01306F14 are the ZH file statics bcX..beZ of the shadow
 // manager's unit, read here through their addresses.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #define AIRBORNE_UNIT_GROUND_DELTA	2.0f
 #define MAX_SHADOW_LENGTH_EXTRA_AIRBORNE_SCALE_FACTOR	1.5f

@@ -5,9 +5,9 @@
 // over the inline recursive Overridable::getFinalOverride (ILT 0x000022BB).
 // cl: /DNDEBUG /MD /EHs-c-
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // class-gate: allow Coord3D canonical header is struct-keyed; retail ILT 0x000239ED proves the class-keyed mangling (ilt_oracle CONFIRMED)
 class Coord3D

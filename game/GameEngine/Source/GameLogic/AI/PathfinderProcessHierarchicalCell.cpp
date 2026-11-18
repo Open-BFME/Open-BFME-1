@@ -2,11 +2,11 @@
 // Retail 0x003D9970 (711 B, ret 0x24): Pathfinder::processHierarchicalCell, the Zero Hour twin at AIPathfind.cpp:7346.
 // Its only caller 0x003EEB90 calls it four times through ILT 0x00042D3E with ECX = Pathfinder and nine stack args.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short zoneStorageType;
-typedef bool Bool;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

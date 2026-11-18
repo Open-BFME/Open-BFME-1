@@ -16,9 +16,9 @@
 
 #include "Lib/Coord3D.h"
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum RadiusCursorType { RADIUSCURSOR_NONE = 0 };
 #include "../../Include/Common/Enums/WeaponSlotType.h"

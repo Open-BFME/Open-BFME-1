@@ -7,9 +7,9 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int NameKeyType;
 typedef int GPProfile;
 typedef unsigned int WindowMsgData;

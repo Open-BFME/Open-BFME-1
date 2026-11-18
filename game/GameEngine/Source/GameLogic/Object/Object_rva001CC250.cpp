@@ -31,9 +31,9 @@
 
 #include "ascii_string.h"
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

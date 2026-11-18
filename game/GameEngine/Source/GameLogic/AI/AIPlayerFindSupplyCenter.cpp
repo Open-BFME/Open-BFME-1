@@ -19,9 +19,9 @@
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum Relationship
 {

@@ -12,9 +12,9 @@
 
 #include "../../../Common/System/xfer.h"
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersionView : Xfer::Version
 {

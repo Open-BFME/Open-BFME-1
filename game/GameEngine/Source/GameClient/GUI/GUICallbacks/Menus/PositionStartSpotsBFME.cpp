@@ -28,9 +28,9 @@
 #include <list>
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 // Retail's toLower is the public StringBase<char> member
 // ?toLower@?$StringBase@D@@QAEXXZ (0x00887DA0, matched,

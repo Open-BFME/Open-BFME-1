@@ -2,9 +2,9 @@
 // Retail 0x007D7910: slot 3 of the constructor-installed table 0x01128BAC.
 // Identity evidence: targets/game/reverse/identity_evidence/007d7910-postrender.md
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // The iterator passes each element in ECX to the existing empty callback.
 void j_00044486();

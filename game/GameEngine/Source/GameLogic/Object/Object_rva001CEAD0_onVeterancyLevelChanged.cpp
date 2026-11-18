@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ?onVeterancyLevelChanged@Rva001CEAD0Object@@QAEXHH@Z
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 enum VeterancyLevel { LEVEL_REGULAR, LEVEL_VETERAN, LEVEL_ELITE, LEVEL_HEROIC };
 #include "../../../Include/Common/Enums/WorldAnimationOptions.h"
 enum KindOfType { KINDOF_IGNORED_IN_GUI = 0x2f };
@@ -45,9 +45,9 @@ public: Bool isKindOf(KindOfType kind) const;
 #include "../../Common/Thing/thing.h"
 #undef THING_TU_MEMBERS
 
-typedef int Int;
 
-typedef unsigned int UnsignedInt;
+
+
 
 class BfmeVisionPartition
 {

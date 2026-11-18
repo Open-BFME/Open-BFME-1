@@ -30,9 +30,9 @@
 // class as a class: the forward declaration fixes the template argument's key
 // before the definition fixes the class's.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct FieldParse;
 class GenItem;

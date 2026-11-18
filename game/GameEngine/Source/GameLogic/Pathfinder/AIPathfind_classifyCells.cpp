@@ -5,9 +5,9 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define g_bfmeDefaultBU 1.0f
 #define g_bfmeDirectionWeight1285 10.0f

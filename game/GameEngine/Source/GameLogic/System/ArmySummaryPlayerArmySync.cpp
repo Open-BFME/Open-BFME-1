@@ -2,9 +2,9 @@
 // stlport
 // Identity and ABI: targets/game/reverse/identity_evidence/00365df0-state-transfer.md.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor( double value );
 

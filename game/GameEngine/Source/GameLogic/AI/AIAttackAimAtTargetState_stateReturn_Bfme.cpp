@@ -23,9 +23,9 @@
 // class-gate: allow Coord3D the canonical bare header drops the member-wise
 // copy constructor; adopting it moves 458 bytes (896/897 B), so this view needs
 // the local ctor.
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };

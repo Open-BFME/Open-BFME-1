@@ -29,9 +29,9 @@
 // The StringBase view below exposes the existing eight-byte string header
 // so str() inlines without adding an exception state to the game-name copy.
 typedef unsigned short wchar_t;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 extern "C" __declspec(dllimport) wchar_t *__cdecl wcsncpy(wchar_t *, const wchar_t *, unsigned int);
 #include "Common/AsciiString.h"
 // Local StringBase adapter also exposes str() for the inlined game-name copy.

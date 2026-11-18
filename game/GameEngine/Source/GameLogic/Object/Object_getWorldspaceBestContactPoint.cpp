@@ -1,9 +1,9 @@
 // cl: /Igame/Libraries/Source/WWVegas/WWLib
 // Byte-matched BFME Object world-space contact-point query.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

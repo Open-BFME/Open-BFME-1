@@ -40,9 +40,9 @@
 // Each of those names already resolves to a matched body in the tree, so no
 // pin was added for any callee of this function.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

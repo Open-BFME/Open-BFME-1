@@ -13,9 +13,9 @@
 // Status and KindOf numbers are read from the retail name tables
 // (ObjectStatusMaskType names at 0x012A6670, KindOfMaskType names at 0x012AA068).
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 class Player;

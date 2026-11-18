@@ -6,9 +6,9 @@
 #include <math.h>
 #include "wwmath.h"
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct Coord3D
 {

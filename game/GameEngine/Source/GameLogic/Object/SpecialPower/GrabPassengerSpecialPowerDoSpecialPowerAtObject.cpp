@@ -2,9 +2,9 @@
 // GrabPassengerSpecialPower secondary interface; evidence: targets/game/reverse/identity_evidence/0025f6c0-passenger-target.md
 // ?doSpecialPowerAtObject@GrabPassengerSpecialPower@@UAEXPBVObject@@I@Z
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 #include "Coord3D.h"

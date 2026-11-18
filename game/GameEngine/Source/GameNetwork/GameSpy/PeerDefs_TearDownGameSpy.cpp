@@ -11,9 +11,9 @@
 #include "../../../../../inputs/reference/shims/stringinline/StringInline.h"
 #include <string>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { SHELL_SCRIPT_HOOK_GENERALS_ONLINE_LOGOUT = 0x13 };
 

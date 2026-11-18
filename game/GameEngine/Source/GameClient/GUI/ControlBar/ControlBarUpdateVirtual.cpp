@@ -7,9 +7,9 @@
 // The retail vtable at VA 0x010FB890 has update at +0x0C through ILT 0x23FB5.
 // This TU deliberately models only the BFME fields and callable interfaces
 // witnessed by the retail body; the shipped ZH class layout is much larger.
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "StringInline.h"
 
