@@ -8,9 +8,9 @@
 #include <math.h>
 #include "d3dx8math.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct Coord3D;
 

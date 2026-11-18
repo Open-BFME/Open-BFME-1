@@ -15,9 +15,9 @@
 #include "string_base.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;
 

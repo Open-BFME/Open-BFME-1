@@ -2,10 +2,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // BFME ABI views; evidence: targets/game/reverse/identity_evidence/00793620-coordinate-lifetimes.md.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 class Image
 {

@@ -19,9 +19,9 @@
 // not the reference's chain of early returns, which lays the exits out the
 // other way round for otherwise identical code.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { MAX_SLOTS = 8 };
 

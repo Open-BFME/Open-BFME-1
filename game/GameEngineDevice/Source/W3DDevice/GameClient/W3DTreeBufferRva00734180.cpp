@@ -3,8 +3,8 @@
 // look-at vector and each tree's visibility, stepping through the trees by the tree index step.
 #include "camera.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct Rva00734180Tree
 {

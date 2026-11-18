@@ -14,9 +14,9 @@
 //   - The guard machine fields start at +0x44 (nemesis +0x6C, mode +0x70).
 //   - TheAI's data pointer is at +0x14; TheGameLogic's frame is at +0x3C.
 //   - The team-centre call is Team::getPosition through ILT 0x000241FE (pinned).
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 #include <stddef.h>
 // ---- inlined inputs/reference/open-bfme-2/Code/GameEngine/Source/Common/GameLogicObjectLookupView.h
 

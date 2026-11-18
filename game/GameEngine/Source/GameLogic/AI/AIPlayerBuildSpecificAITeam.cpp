@@ -36,9 +36,9 @@
 #define getAction getAction_LocalView
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 #define FALSE 0

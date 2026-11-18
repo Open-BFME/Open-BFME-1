@@ -4,8 +4,8 @@
 // not wantsToEnter and isSupplyTruckBrainActiveAndBusy.  Layout matches
 // WorkerStateMachineSupplyPredicate.cpp.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum { INVALID_STATE_ID = 999999 };
 enum { AS_SUPPLY_TRUCK = 1, ST_BUSY = 1 };

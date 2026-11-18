@@ -3,9 +3,9 @@
 // ?update@HijackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
 // HijackerUpdate ctor 0x00295B20 installs vtable 0x010BF714 at +0x10; slot 0 reaches this body via ILT 0x0003C673.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
