@@ -10,7 +10,7 @@
 
 #include "string_base.h"
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);

@@ -42,7 +42,7 @@ template <class T> inline T StringBase<T>::getCharAt(int i) const { return m_dat
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c, 1); }
 template <> inline void StringBase<char>::concat(const char *s) { concat(s,strlen(s)); }
 template <> inline void StringBase<char>::concat(const StringBase<char>& s) { concat(s.str(),s.getLength()); }
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 #define MAX_SLOTS 8
 #define TRUE true
 #define PLAYERTEMPLATE_OBSERVER -2

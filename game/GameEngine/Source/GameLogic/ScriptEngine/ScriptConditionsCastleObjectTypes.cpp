@@ -16,8 +16,8 @@
 // esi across both calls and the destructor, as retail does. Declared-only, it
 // reloads the member and grows to 234 bytes. The ledger row for
 // ??0ObjectTypesTemp@@QAE@XZ stays in ObjectTypesTemp_ctor_Thunk.cpp.
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

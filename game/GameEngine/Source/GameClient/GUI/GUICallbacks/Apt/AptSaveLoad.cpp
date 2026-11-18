@@ -37,13 +37,13 @@ struct AvailableGameInfo
 };
 
 // Zero Hour GameState.h numbering.
-enum SaveCode
-{
-	SC_INVALID = -1,
-	SC_OK,
-	SC_NO_FILE_AVAILABLE,
-	SC_FILE_NOT_FOUND
-};
+#include "../../../../../Include/Common/Enums/SaveCode.h"
+
+
+
+
+
+
 
 class BfmePopupSaveGameState
 {

@@ -3,7 +3,7 @@
 class W3DShadowManager;
 extern W3DShadowManager *TheW3DShadowManager;
 
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

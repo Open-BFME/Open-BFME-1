@@ -32,10 +32,10 @@ enum VeterancyLevel
 	VETERANCY_LEVEL_INVALID = -1
 };
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class Handicap
 {

@@ -13,7 +13,7 @@
 #include "vector3.h"
 #include "matrix3d.h"
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 

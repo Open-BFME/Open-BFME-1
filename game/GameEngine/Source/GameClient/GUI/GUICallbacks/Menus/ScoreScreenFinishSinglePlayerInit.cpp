@@ -186,10 +186,10 @@ public:
 	Int m_fieldAt16C4;									///< retail this+0x16C4, compared against 1
 };
 
-enum SaveCode
-{
-	SC_INVALID = -1
-};
+#include "../../../../../Include/Common/Enums/SaveCode.h"
+
+
+
 
 class GameState
 {

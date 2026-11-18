@@ -227,7 +227,7 @@ struct Matrix3D
 	float m_row[ 3 ][ 4 ];
 };
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../GameEngine/Include/Common/NameKeyType.h"
 

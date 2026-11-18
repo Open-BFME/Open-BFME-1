@@ -10,7 +10,7 @@
 
 
 
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Coord3D
 {

@@ -18,7 +18,7 @@ class GameLogic { public: Object* findObjectByID(int); };
 class ThingFactory { public: const ThingTemplate* findByTemplateID(unsigned short); };
 class SpecialPowerTemplate { public: AsciiString getName() const; };
 class SpecialPowerStore { public: const SpecialPowerTemplate* findSpecialPowerTemplateByID(unsigned); };
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../Include/Common/Enums/ScienceType.h"
 class ScienceStore { public: AsciiString getInternalNameForScience(ScienceType) const; };
 struct Coord0009A580 { float x,y,z; };
 union GameMessageArgumentType { int integer; unsigned timestamp; float real; bool boolean; unsigned short character; Coord0009A580 coord; struct { int x,y; } pixel; struct { int x1,y1,x2,y2; } region; };

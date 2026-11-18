@@ -207,13 +207,13 @@ private:
 	Bool m_desired;
 };
 
-enum DistanceCalculationType
-{
-	FROM_CENTER_2D = 0,
-	FROM_CENTER_3D = 1,
-	FROM_BOUNDINGSPHERE_2D = 2,
-	FROM_BOUNDINGSPHERE_3D = 3
-};
+#include "../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
+
+
+
 
 class PartitionManager
 {

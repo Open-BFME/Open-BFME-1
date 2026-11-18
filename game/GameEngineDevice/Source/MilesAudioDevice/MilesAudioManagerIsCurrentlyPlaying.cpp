@@ -21,7 +21,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
-typedef bool Bool;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef unsigned int AudioHandle;
 
 class MilesAudioScopedMutex

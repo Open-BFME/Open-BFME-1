@@ -2,7 +2,7 @@
 #include "dx8wrapper.h"
 
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef unsigned long UnsignedLong;
 
 struct BfmeRect;

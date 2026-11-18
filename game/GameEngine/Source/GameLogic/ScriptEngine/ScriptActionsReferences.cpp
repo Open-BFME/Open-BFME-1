@@ -10,7 +10,7 @@
 // the unit form has one extra step -- it binds the object back to the name so
 // the object knows what it is called.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 class Team;

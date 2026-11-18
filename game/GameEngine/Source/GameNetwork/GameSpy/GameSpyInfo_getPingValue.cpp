@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct BfmePingStringData
 {

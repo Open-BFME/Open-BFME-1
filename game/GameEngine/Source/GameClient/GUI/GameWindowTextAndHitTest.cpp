@@ -21,10 +21,10 @@
 
 #include "ascii_string.h"
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class AudioEventRTS
 {

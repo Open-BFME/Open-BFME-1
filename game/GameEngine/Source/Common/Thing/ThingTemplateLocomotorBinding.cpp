@@ -21,10 +21,10 @@ _Vector_base<const LocomotorTemplate *, allocator<const LocomotorTemplate *> >::
 	unsigned int, const allocator<const LocomotorTemplate *> &);
 }
 
-enum LocomotorSetType
-{
-	LOCOMOTORSET_INVALID = -1
-};
+#include "../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
 
 typedef std::vector<const LocomotorTemplate *> LocomotorTemplateVector;
 typedef std::map<LocomotorSetType, LocomotorTemplateVector,

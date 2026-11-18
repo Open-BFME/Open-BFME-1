@@ -58,7 +58,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 
 typedef unsigned int WindowMsgData;
 
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
 
 enum
 {

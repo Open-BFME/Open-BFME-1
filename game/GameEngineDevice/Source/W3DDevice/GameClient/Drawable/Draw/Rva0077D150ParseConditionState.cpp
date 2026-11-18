@@ -17,7 +17,7 @@ extern "C" void _ReadWriteBarrier(void);
 // Its owner is not named by a live caller, so the symbol keeps the proven
 // retail address while the callback signature and parser role are explicit.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GenItem;
 class INI;

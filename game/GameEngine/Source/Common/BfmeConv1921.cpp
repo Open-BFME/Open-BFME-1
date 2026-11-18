@@ -14,10 +14,10 @@ enum DamageType
 	DAMAGE_UNRESISTABLE = 8
 };
 
-enum DeathType
-{
-	DEATH_NORMAL = 0
-};
+#include "../../Include/Common/Enums/DeathType.h"
+
+
+
 
 // The owner held at this-8 is an Object. Thing is its polymorphic primary
 // base; only the eleventh virtual slot is called here.
