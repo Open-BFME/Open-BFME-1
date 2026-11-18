@@ -8,9 +8,9 @@
 // Object +0x38 is the position the caller reads the same way.
 #include <math.h>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 
 struct Coord3D

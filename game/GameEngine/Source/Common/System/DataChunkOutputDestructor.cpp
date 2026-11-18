@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 // The retail call sites inline str() and call the StringBase<char> destructor
 // directly; the canonical header's inline forwarders provide both.
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

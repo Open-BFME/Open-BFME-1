@@ -35,7 +35,7 @@
 // are DIR32 sites the gate takes from the target, leaving 38 of the 50 bytes
 // concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---- the first base, landed in V3InlineTwoBaseCopyCtors.cpp; declared only --
 

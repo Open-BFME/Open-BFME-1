@@ -3,7 +3,7 @@
 // retail RVA 0x003BDB80. The GUI:AutoSaveName string and TheGameState call
 // identify this body, but the original semantic method name remains unknown.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 #include "string_base.h"

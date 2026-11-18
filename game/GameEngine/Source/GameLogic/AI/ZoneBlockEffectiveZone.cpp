@@ -2,7 +2,7 @@
 // movement profile. The block stores nine five-pointer table groups starting
 // at +0x3c, one for each profile index.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short zoneStorageType;
 
 enum LocomotorSurfaceType

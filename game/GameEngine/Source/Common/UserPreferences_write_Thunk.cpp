@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // UserPreferences::write uses a UTF-16 filename and narrow preference entries.
 // Retail calls MSVCR71 _wfopen at IAT0x01359368 with a wide mode literal.
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct FILEShim;
 

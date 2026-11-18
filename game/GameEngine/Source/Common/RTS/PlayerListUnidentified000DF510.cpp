@@ -24,7 +24,7 @@
 // itself always increments. Those two ints' real field names are not
 // established -- only their offsets, from the raw instruction operands.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva000C9D40
 {

@@ -28,7 +28,7 @@
 //
 // All the vftable addresses ride DIR32 relocations copied from retail.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Thing;
 class ModuleData;

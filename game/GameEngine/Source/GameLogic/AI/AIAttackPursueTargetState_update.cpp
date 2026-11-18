@@ -2,7 +2,7 @@
 // readable body of ?update@AIAttackPursueTargetState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Retail 0x001764E0: AIAttackPursueTargetState::update.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

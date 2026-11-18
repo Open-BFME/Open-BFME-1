@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME AIAttackState::loadPostProcess, retail 0x0016F9E0.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 class Team;

@@ -11,7 +11,7 @@
 #include "vector3.h"
 #include "wwmath.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // Three floats copied as a trivially-copyable aggregate (retail moves them through
 // integer registers, which the real Vector3's user copy constructor does not);

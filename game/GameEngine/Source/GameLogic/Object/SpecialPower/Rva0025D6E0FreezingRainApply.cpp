@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: FreezingRain effect point helper at retail 0x0025D6E0.
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

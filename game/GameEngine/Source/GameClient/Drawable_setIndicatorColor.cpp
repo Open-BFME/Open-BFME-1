@@ -7,7 +7,7 @@
 // Identity: the matched Drawable::changedTeam at 0x00418830 calls it through
 // ILT 0x00028C09. This TU carries only the fields and ABI views the body uses.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include <bitset>
 

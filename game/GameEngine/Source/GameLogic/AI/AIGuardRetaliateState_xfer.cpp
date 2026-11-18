@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // AIGuardRetaliateState::xfer, retail 0x0016D820 (204B).
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

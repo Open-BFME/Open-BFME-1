@@ -9,7 +9,7 @@
 
 extern "C" unsigned int __cdecl strlen(const char *text);
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

@@ -6,7 +6,7 @@
 // the names below intentionally describe only those proven roles.  novtable
 // keeps this TU from inventing a target vtable.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern Real g_bfmeDefaultBU; // retail VA 0x01075334; existing canonical pin
 

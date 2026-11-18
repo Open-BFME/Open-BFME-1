@@ -8,7 +8,7 @@
 // argument at +0x6C, an active flag at +0x60 with a cleared +0x5C counter,
 // and 1/duration as the +0x64 rate.  IDENTITY IS NOT RECOVERED.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

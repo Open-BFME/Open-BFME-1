@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class SubsystemInterface
 {

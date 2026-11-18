@@ -4,7 +4,7 @@
 // owning Object supplies the controlling Player, and slot 1 receives the
 // union of the player's and object's six-word completed-upgrade masks.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct Rva002D9610UpgradeMask
 {

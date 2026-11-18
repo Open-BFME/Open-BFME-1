@@ -2,7 +2,7 @@
 // The BFME RenderObjClass vtable returns the mesh object from slot 5, and
 // MeshClass stores its MeshModelClass pointer at +0xC8.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class RenderObjClass
 {

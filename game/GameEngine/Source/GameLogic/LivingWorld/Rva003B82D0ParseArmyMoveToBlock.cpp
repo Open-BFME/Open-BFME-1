@@ -13,7 +13,7 @@
 // game/GameEngine/Source/Common/BfmeConv534.cpp (ctor at 0x00888BC0,
 // releaseBuffer at 0x00887940).  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

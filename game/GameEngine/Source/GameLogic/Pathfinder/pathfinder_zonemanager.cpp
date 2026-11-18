@@ -13,7 +13,7 @@ public:
 	void bfmeApplyZone();
 };
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 class Waypoint;
 
 class ZoneBlock

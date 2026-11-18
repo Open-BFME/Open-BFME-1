@@ -6,7 +6,7 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 enum AbleToAttackType { ATTACK_TYPE_DUMMY };

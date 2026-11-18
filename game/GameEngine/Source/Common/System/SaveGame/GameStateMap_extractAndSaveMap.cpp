@@ -4,7 +4,7 @@
 // internal static helper; the local views below preserve the retail virtual
 // slots and BFME AsciiString storage without changing shared headers.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *memory);

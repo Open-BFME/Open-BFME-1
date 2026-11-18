@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
 // Toggles the BFME house-color indicator over GameLogic's object chain.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // Both bodies retail calls from this loop (0x00018CF5 and 0x0001B9A5) are
 // five-byte ILT thunks, not bodies: the ledger defines each under its

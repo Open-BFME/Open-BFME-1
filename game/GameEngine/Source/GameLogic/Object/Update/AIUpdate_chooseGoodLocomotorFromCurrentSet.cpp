@@ -1,9 +1,9 @@
 // BFME AIUpdateInterface::chooseGoodLocomotorFromCurrentSet, retail 0x00270D40.
 // The BFME object and AIUpdate layouts differ from the reference headers.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

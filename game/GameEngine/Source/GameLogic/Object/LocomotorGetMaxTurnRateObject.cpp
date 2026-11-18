@@ -6,7 +6,7 @@
 // getDamageState.  The two template fields are angular periods: retail divides
 // the 2*pi constant by them before clamping against Locomotor+0x34.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum BodyDamageType
 {

@@ -5,9 +5,9 @@
 // otherwise delegates to the shared contained-list walk at 0x002234A0.
 // stlport
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

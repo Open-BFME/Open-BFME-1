@@ -7,7 +7,7 @@
 // jumps to 0x0039DC20; intern ILT 0x00037FD8 jumps to 0x0039EE50; dtor ILT
 // 0x00043699 jumps to the landed ??1S4Elem0039EBE0@@QAE@XZ.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

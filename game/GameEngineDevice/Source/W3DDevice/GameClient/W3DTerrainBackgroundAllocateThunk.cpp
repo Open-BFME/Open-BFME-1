@@ -14,7 +14,7 @@
 // `--NumRefs == 0` arm goes through slot 0 of the object's own vtable. NumRefs
 // is at +0x04, which is the WWLib RefCountClass layout unchanged.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define NULL 0
 

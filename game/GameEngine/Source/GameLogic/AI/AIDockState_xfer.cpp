@@ -5,7 +5,7 @@
 // the AIGuardRetaliateState twin by one extra bool member (m_afterDockMachine)
 // xferred unconditionally after the dock-machine snapshot.
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

@@ -16,7 +16,7 @@
 // Object and Thing use their canonical layout header. The subsystem manifest
 // has only a registration-only AI stub, not a declaration of this method.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return (const Coord3D *)m_cachedPos; }
 #include "object.h"
 #undef THING_TU_MEMBERS

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x007288B0: classify a terrain tile edge against the active map.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class WorldHeightMap
 {

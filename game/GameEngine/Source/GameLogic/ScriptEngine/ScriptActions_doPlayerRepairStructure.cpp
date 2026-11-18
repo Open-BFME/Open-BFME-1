@@ -8,7 +8,7 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
 
 #define BFME_HAVE_OBJECTID

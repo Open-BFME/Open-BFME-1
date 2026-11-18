@@ -15,7 +15,7 @@
 // strings and the extra scalar are only located, not identified, so they carry
 // _bfme_ names rather than invented ones.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class GameWindow;
 class WindowLayout;

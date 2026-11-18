@@ -5,8 +5,8 @@
 // and the member index at +0x30.  Vtable slot 113 proves the owner and ABI,
 // but the original method name is not present in the available evidence.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

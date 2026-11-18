@@ -7,7 +7,7 @@
 // independently fixes the fields at +0x210/+0x214/+0x218, and Object's layout
 // witness fixes m_disabledMask at +0x1A4.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

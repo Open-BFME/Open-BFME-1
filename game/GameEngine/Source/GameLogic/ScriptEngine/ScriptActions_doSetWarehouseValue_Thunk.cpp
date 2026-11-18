@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?doSetWarehouseValue@ScriptActions@@: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

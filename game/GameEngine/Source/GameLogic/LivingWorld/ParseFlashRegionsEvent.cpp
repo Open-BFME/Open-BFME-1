@@ -7,7 +7,7 @@
 // Parse table VA 0x010ECC38; append call via ILT 0x00003F3A to 0x003B1B40.
 // The early throwing guard keeps the native record in function scope;
 // VC7.1 reserves separate 8-byte exception and 16-byte record slots.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INI;
 typedef void (*INIFieldParseProc)( INI *, void *, void *, const void * );

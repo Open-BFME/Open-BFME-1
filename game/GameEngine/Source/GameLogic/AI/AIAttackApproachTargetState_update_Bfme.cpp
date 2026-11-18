@@ -6,7 +6,7 @@
 // retail layout local to this body while the known ILT thunks preserve the
 // original call sites.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

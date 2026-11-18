@@ -5,7 +5,7 @@
 // through the opaque singleton pointer cell (same sequence as the INI water-texture
 // report), then rethrows to force the crash.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Debug
 {

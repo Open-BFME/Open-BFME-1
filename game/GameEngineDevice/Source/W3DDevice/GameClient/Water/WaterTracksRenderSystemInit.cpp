@@ -5,7 +5,7 @@
 // body calls the separately emitted track-object constructor and uses the
 // BFME water-level field at TheGlobalData+0x7c.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class ShaderClass
 {

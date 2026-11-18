@@ -5,7 +5,7 @@
 // the "dispatch" virtual call (vtable slot 0x38) is replaced by a
 // direct call to StateMachine::setGoalObject.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class ObjectIsMobileBody
 {

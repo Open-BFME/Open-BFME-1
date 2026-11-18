@@ -2,7 +2,7 @@
 // Retail 0x001703C0: AIStateMachine::updateStateMachine.
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

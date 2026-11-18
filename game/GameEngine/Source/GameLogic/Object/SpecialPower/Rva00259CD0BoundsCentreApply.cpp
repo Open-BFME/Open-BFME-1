@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: bounds-centre effect point helper at retail 0x00259CD0 (near-twin of 0x0025D6E0, constant 1 vs 2).
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct Coord3D_259CD0
 {

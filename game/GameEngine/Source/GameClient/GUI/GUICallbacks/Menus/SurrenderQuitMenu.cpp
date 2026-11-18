@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 struct QuitMenu
 {

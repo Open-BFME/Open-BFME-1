@@ -51,7 +51,7 @@ private:
 	void *m_data;
 };
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 class WindowLayout;
 typedef void (*WindowLayoutInitFunc)(WindowLayout *, void *);
 typedef void (*WindowLayoutUpdateFunc)(WindowLayout *, void *);

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Rva0016D9C0State::xfer, retail 0x0016D820 (204B).
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

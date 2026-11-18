@@ -7,7 +7,7 @@
 // waypoint chain at g_waypointListHead, whose id and next fields are at +0x04 and
 // +0x1c, then records either the found waypoint or NULL in the cache.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Waypoint;
 

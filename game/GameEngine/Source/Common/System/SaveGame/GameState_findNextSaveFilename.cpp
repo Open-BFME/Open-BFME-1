@@ -3,7 +3,7 @@
 // The retail body is the BFME lowest-number save-file search: its hidden
 // AsciiString result and by-value UnicodeString account for ret 8.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

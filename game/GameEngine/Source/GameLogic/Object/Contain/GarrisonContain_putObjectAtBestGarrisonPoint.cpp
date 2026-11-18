@@ -9,8 +9,8 @@
 // getObjectGarrisonPointIndex at slot +0x68; the target passes ObjectID from
 // Object +0x74, while an Object target's position is the Coord3D at +0x38.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum ObjectID
 {

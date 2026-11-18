@@ -3,7 +3,7 @@
 // an Object. The ControlBar multi-select body at 0x004A9300 calls this member
 // through ILT 0x0000EDC7 and passes the returned pair to its level helpers.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

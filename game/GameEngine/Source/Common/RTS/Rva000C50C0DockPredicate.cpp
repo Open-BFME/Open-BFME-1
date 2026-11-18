@@ -5,7 +5,7 @@
 // Its ABI is an ActionManager thiscall with four stack arguments; the third
 // word is unused here and the fourth controls the final dock-interface query.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

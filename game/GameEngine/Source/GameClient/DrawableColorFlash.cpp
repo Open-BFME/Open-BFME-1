@@ -4,7 +4,7 @@
 // This isolated definition preserves the retail offsets: Drawable's tint
 // envelope is at +0x68 and its status word is at +0x110, while BFME's full
 // header has a different source-only layout in this TU.
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct RGBColor
 {
