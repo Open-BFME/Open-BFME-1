@@ -8,8 +8,8 @@
 
 #include "../../../../../inputs/reference/shims/stringinline/StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum
 {

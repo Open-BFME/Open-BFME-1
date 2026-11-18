@@ -10,8 +10,8 @@
 
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct Rva007209F0TreeDrawData
 {

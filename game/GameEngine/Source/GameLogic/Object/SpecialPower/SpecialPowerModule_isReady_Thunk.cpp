@@ -19,8 +19,8 @@
 // on the object alone (Zero Hour also tests the module data) and reuses that
 // pointer for getControllingPlayer rather than calling getObject twice.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 class Object;

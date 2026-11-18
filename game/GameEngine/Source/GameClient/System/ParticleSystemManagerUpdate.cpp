@@ -14,8 +14,8 @@
 // (its COMDAT reproduces retail 0x001DA440, reached through ILT 0x00013994);
 // with its body visible the compiler packs the int64->fild temporary into the
 // dead `start` slot exactly as retail does and omits the state -1 store.
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter( __int64 *count );
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency( __int64 *frequency );

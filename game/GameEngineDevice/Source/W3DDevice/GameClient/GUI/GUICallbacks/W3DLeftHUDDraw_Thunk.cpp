@@ -4,8 +4,8 @@
 // at Display +0xe0, and Radar::draw is at +0x1c.  Keep those ABI declarations
 // local to this callback; the common headers describe the Zero Hour slots.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class VideoBuffer;
 class WinInstanceData;

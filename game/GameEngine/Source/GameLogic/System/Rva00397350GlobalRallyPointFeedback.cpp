@@ -2,9 +2,9 @@
 // Rally-point feedback the dispatcher calls with (Object *, const Coord3D &);
 // no symbol proves a historical owner, so the name keeps the retail address.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // BFME's lobby displays the base player name with the preorder and rank icons.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 inline const T &min(const T &left, const T &right)

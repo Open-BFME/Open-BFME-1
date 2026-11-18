@@ -18,8 +18,8 @@ bool operator==(const StringBase<char> &left, const StringBase<char> &right) thr
 
 #include "ascii_string.h"
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum UpdateSleepTime
 {

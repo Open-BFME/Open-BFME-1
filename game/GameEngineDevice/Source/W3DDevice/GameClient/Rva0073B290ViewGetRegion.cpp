@@ -2,8 +2,8 @@
 // Projects the four far frustum corners onto the map's low and high z planes and
 // bounds the result; falls back to the frustum bound when the camera is below it.
 
-typedef float Real;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

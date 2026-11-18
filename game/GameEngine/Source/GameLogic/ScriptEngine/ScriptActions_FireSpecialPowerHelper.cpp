@@ -9,8 +9,8 @@
 // team instances and each team's members; the first member with a
 // SpecialPowerModule for the template fires it at the location.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -4,8 +4,8 @@
 // an unused third parameter on the virtual call.  The method updates the world
 // state of the object and repeats the update for riders that it does not enclose.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // Spellable stand-in for the retail owner of the matched setter
 // ?bfmeSet@Gen_00411DD0@@QAEX_N@Z (0x00411DD0, defined in

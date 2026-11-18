@@ -51,8 +51,8 @@ class UserParser;
 class DataChunkInput;
 struct DataChunkInfo;
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 typedef Bool (__cdecl *BfmeParserCallback)( DataChunkInput &, DataChunkInfo *, void * );
 

@@ -13,9 +13,9 @@
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum GuardMode
 {

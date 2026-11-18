@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // ?update@AIAttackMoveToState@@UAE?AW4StateReturnType@@XZ
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/Enums/StateReturnType.h"
 
 struct Coord3D {

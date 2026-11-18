@@ -9,10 +9,10 @@ extern "C" double sqrt(double value);
 
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
+
 
 #include "ascii_string.h"
 

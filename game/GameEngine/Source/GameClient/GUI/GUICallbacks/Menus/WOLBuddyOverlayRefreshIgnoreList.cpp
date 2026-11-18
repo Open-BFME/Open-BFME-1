@@ -13,9 +13,9 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef unsigned char UnsignedByte;
+
 
 // Retail calls StringBase<T>'s copy ctor and releaseBuffer directly, so the
 // string members this body needs are inline forwarders here.

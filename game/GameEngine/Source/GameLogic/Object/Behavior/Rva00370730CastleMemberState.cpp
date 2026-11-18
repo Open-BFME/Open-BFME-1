@@ -6,8 +6,8 @@
 #include "Common/NameKeyGenerator.h"
 #include "GameLogic/GameLogic.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum EvaMessage
 {

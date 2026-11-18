@@ -9,8 +9,8 @@
 // label looked up once to test that it exists before it is added.
 
 typedef unsigned short WideChar;
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 void __cdecl operator delete( void * ) throw();

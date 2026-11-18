@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /G6 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 struct UpgradeMaskType

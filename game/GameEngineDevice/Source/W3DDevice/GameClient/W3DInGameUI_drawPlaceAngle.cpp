@@ -7,9 +7,9 @@
 
 #include <math.h>
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 #define TRUE true

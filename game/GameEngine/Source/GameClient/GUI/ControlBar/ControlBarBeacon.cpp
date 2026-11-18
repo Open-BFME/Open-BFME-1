@@ -18,8 +18,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int WindowMsgData;
 
 #include "../../../../Include/Common/Enums/WindowMsgHandledType.h"

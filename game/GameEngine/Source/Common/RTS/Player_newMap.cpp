@@ -1,7 +1,7 @@
 // ?init@BfmePlayerMapState@@QAEXH_N@Z
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Player
 {

@@ -3,8 +3,8 @@
 // stlport
 
 #define __PLACEMENT_VEC_NEW_INLINE
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt ObjectID;
 
 #define _STLP_USE_NEWALLOC 1

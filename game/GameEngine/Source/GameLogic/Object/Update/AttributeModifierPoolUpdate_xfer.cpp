@@ -31,8 +31,8 @@
 #include "Common/System/xfer.h"
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Thing;
 class ModuleData;

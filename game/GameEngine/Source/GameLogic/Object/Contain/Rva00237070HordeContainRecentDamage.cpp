@@ -8,8 +8,8 @@
 // recent damage source of its own.  The method is not proven, so it keeps the
 // address.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt ObjectID;
 
 #define _STLP_USE_NEWALLOC 1

@@ -6,8 +6,8 @@
 // writes). GadgetParent uses the const-char nameToKey overload; the six
 // child IDs go through a by-value AsciiString temp.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/NameKeyType.h"
 

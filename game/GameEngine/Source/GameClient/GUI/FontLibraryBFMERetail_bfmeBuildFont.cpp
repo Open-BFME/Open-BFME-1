@@ -27,8 +27,8 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double floor(double value);
 extern const Real g_rva0107533C;

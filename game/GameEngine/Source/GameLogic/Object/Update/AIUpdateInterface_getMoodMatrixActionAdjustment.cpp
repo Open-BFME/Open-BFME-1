@@ -6,8 +6,8 @@
 // walk and the AI object at their retail offsets in this TU; the vendored
 // Zero Hour headers describe a different object layout.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeOverridable
 {

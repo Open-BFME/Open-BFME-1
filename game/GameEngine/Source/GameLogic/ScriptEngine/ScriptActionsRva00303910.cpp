@@ -8,8 +8,8 @@
 #include "ascii_string.h"
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Team;
 class Object;

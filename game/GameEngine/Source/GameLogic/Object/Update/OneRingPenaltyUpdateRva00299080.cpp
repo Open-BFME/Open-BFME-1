@@ -19,9 +19,9 @@
 #include <bitset>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 #define PI 3.14159265359f

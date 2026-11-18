@@ -15,9 +15,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
 typedef long Long;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef unsigned int AudioHandle;
-typedef float Real;
+
 
 // The decrement retail performs through the import slot at 0x01358E54.
 extern "C" __declspec(dllimport) Long __stdcall InterlockedDecrement(Long volatile *addend);

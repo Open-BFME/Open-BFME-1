@@ -44,8 +44,8 @@
 // boundary is the ret at +0x18E followed by int3 padding; the source matches
 // all 399 bytes modulo the normal relocation slots.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct FieldParse;
 // Retire ?g_010EAB48@@3QBDB

@@ -15,9 +15,9 @@
 // last call is the scalar deleting destructor MSVC emits for `delete`, with no
 // null check because the loop already has one.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { GWM_DESTROY = 2 };
 

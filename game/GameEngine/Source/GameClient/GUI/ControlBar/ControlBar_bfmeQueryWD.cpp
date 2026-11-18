@@ -4,8 +4,8 @@
 // caller at ControlBar::populatePurchaseScience.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/Enums/ScienceType.h"
 

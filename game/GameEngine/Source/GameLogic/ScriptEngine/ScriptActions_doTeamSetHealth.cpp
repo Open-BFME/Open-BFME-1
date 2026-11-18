@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // TEAM_SET_HEALTH at retail RVA 0x002F6A70.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template<class T>
 inline const T &min(const T &left, const T &right)

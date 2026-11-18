@@ -5,8 +5,8 @@
 #include <string>
 
 typedef void *PEER;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/Enums/SerialAuthResult.h"
 

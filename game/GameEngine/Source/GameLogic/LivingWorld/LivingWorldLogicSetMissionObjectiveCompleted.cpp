@@ -17,8 +17,8 @@ static inline bool hasStringStorage(const AsciiString &value)
 	return *reinterpret_cast<const void * const *>(&value) != 0;
 }
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct LivingWorldRegionPointerVector
 {

@@ -7,8 +7,8 @@
 // shorter than the inner state's.
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

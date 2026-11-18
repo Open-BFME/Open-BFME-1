@@ -7,8 +7,8 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

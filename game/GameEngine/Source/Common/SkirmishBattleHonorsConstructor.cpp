@@ -15,9 +15,9 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->r
 // unicode_string.h declares the exported static member, so the retail body's
 // empty-name compare reads the real object and no stand-in global is needed.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
-typedef int Int;
+
 
 #define TRUE 1
 

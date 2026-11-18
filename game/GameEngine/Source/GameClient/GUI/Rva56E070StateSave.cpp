@@ -23,8 +23,8 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 	return *this;
 }
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class GameWindow;
 class WindowLayout;

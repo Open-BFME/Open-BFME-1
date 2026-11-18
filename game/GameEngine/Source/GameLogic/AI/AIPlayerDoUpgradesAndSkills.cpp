@@ -11,8 +11,8 @@
 #include "string_base.h"
 template<class T> inline void StringBase<T>::concat(T c) { concat(&c,1); }
 #include "ascii_string.h"
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/Enums/ScienceType.h"
 #include "../../../Include/Common/NameKeyType.h"
 class Player {

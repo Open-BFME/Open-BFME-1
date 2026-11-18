@@ -11,8 +11,8 @@
 #define getSystemID getSystemID_LocalView
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/Enums/ParticleSystemID.h"
 

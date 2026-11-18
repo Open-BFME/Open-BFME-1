@@ -2,8 +2,8 @@
 // BuildAssistant unit availability, including the BFME command-index path.
 // Evidence: targets/game/reverse/identity_evidence/000fdbf0-buildassistant-ispossibletomakeunit.md
 #include "ascii_string.h"
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 class UpgradeTemplate;
 class Player;
 class ThingTemplate

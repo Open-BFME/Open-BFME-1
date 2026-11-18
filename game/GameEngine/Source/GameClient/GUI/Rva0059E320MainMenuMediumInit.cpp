@@ -4,8 +4,8 @@
 // BFME layout proven by the adjacent medium update body: frame bounds at +10
 // and +14, the normal window at +0c, and the medium grow window at +44.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 // NameKeyType is an enum upstream, not a typedef for int: the enum is part of

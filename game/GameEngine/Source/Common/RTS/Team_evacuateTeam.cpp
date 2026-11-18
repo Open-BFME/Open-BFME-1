@@ -10,8 +10,8 @@
 #include <list>
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern void j_00001140();
 

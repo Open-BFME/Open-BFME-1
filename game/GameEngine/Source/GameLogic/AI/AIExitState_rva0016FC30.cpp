@@ -17,8 +17,8 @@
 extern "C" void _WriteBarrier();
 #pragma intrinsic(_WriteBarrier)
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 
