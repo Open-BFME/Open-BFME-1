@@ -1,12 +1,12 @@
 // cl: /DNDEBUG /MD
 // Retail 0x0017D8C0: BFME AIEnterState entry path.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

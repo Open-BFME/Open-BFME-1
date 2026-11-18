@@ -7,10 +7,10 @@ typedef float Real;
 typedef unsigned int UnsignedInt;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum StateReturnType
-{
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 enum StateExitType
 {

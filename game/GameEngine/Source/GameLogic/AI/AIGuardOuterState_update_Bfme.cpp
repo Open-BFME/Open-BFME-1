@@ -6,12 +6,12 @@ typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 typedef float Real;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 enum StateExitType
 {

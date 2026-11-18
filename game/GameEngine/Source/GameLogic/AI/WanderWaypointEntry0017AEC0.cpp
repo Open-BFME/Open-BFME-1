@@ -49,7 +49,7 @@ struct Machine0017AEC0 {
     unsigned char pad000[0x10]; Owner0017AEC0* owner;
     unsigned char pad014[0x3c]; const Waypoint0017AEC0* waypoint;
 };
-enum StateReturnType { STATE_CONTINUE=0, STATE_SUCCESS=-1, STATE_FAILURE=-2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 class AIInternalMoveToState { public: virtual StateReturnType onEnter(); };
 class WanderWaypointEntry0017AEC0 {
 public:

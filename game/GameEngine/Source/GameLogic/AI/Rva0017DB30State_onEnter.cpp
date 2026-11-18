@@ -1,12 +1,12 @@
 // cl: /DNDEBUG /MD
 // Byte candidate for retail 0x0017DB30; owning class remains unknown.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

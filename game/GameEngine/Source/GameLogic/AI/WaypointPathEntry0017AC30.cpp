@@ -56,7 +56,7 @@ struct Machine0017AC30 {
         (this->*u.method)(p);
     }
 };
-enum StateReturnType { STATE_CONTINUE=0, STATE_SUCCESS=-1, STATE_FAILURE=-2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 class AIInternalMoveToState { public: virtual StateReturnType onEnter(); };
 class WaypointPathEntry0017AC30 {
 public:

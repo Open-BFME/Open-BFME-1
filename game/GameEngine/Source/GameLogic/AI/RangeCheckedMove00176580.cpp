@@ -56,7 +56,7 @@ struct Machine00176580 {
         return (this->*u.method)();
     }
 };
-enum StateReturnType { STATE_CONTINUE=0, STATE_SUCCESS=-1, STATE_FAILURE=-2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 class AIInternalMoveToState { public: virtual StateReturnType onEnter(); };
 class RangeCheckedMove00176580 {
 public:

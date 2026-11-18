@@ -3,12 +3,12 @@
 
 typedef unsigned char Bool;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 

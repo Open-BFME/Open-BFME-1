@@ -18,7 +18,7 @@ class Object;
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { EXIT_RESET = 1 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h

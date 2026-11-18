@@ -7,12 +7,12 @@
 // called after snapping the owner is an address-qualified helper of the same state at
 // 0x002BDBF0 through ILT 0x00024884.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

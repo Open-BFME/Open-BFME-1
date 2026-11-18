@@ -6,12 +6,12 @@
 // slot; the final qualified call uses the same receiver as the tail jump to
 // AIInternalMoveToState::onEnter, without asserting that this type derives from it.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 enum CrushSquishTestType
 {

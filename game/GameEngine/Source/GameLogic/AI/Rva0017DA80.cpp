@@ -11,9 +11,9 @@ extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 
-enum StateReturnType
-{
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 // Declared only to spell the callee ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ

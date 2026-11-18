@@ -2,10 +2,10 @@
 // stlport
 // Retail 0x0016ED40: Rva000A19E0StateBase::onEnter.
 
-enum StateReturnType
-{
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 struct Rva0016ED40ObjectView;
 

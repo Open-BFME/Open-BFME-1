@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: retain the matched AIInternalMoveToState getter body.
 
-enum StateReturnType
-{
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

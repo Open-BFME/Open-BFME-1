@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-enum StateReturnType
-{
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
 typedef unsigned char UnsignedByte;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

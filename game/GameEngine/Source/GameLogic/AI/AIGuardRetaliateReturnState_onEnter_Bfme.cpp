@@ -1,10 +1,10 @@
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum StateReturnType
-{
-    STATE_RETURN_DEFAULT
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 // Class-keyed as in the defined ?adjustDestination@Pathfinder@@...PAVCoord3D@@PBV4@@Z (0x003F6090).
 class Coord3D

@@ -3,12 +3,12 @@
 // The sibling xfer body at 0x0016CF40 fixes the state and child-machine
 // layout. The child constructor is the retail ILT at 0x0003FE4F.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -7,11 +7,11 @@ class TeamPrototype;
 
 typedef int ObjectID;
 
-enum StateReturnType
-{
-    STATE_CONTINUE = 0,
-    STATE_SUCCESS = -1
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

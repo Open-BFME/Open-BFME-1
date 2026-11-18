@@ -2,12 +2,12 @@
 // AIAttackMeleeHordeWaitPathState::onEnter at retail 0x00175C00 (EA's name; the
 // ILT slot confirms it): enter the state using the machine goal and current frame.
 
-enum StateReturnType
-{
-    STATE_CONTINUE = 0,
-    STATE_SUCCESS = -1,
-    STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

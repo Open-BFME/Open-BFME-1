@@ -27,9 +27,9 @@ extern void j_0000a9d4();
 extern void j_0000ebab();
 extern void j_0003251f();
 
-enum StateReturnType
-{
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 // Declared only to spell the callee ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ

@@ -15,7 +15,7 @@
 // horde interface, whose +0xF4 gives the combine target and +0x70 combines.
 #include <math.h>
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 #include "../command_source_type.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

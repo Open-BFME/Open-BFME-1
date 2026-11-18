@@ -1,6 +1,6 @@
 // BFME layout reconstruction for retail RVA 0x0017A370.
 
-enum StateReturnType { STATE_CONTINUE = 0 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 typedef int CommandSourceType;
 
 struct Rva0017A370Coord3D

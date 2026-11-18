@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?onEnter@DozerActionDoActionState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 class DozerAIInterface2B6240
 {

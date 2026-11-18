@@ -3,12 +3,12 @@
 // installs vftable 0x01098FA8 and uses the runtime name AIMoveToStateSA;
 // Rva00173900State is the already matched update for that same vftable.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

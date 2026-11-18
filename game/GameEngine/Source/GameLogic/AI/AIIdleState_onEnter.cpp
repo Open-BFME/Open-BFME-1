@@ -6,7 +6,7 @@
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
-enum StateReturnType { STATE_CONTINUE = 0 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
 class AIUpdateInterface
 {
