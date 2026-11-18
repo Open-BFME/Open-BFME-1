@@ -10,9 +10,9 @@
 // declared. The class declaration is a verbatim copy of the one in
 // victory_conditions.cpp -- see that file for the layout evidence.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Player;
 

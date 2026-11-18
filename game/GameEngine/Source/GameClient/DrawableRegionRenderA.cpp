@@ -8,9 +8,9 @@
 // The first carries an offset pointer; the second is interpreted as float.
 // The original source-level argument types have not been recovered.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int Color;
 
 struct Rva00412750Region

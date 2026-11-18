@@ -2,9 +2,9 @@
 // readable body of ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z: game/GameEngine/Source/GameClient/GUI/ProcessAnimateWindow.cpp
 // Open-BFME5: convert the retail animation initializer to clean C++.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

@@ -39,11 +39,11 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../Include/Common/NameKeyType.h"
 

@@ -3,10 +3,10 @@
 // field as the fourth stack argument to addAckCommand; the ZH declaration
 // omits it even though the retail callee cleans four arguments.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 class NetCommandMsg;
 

@@ -33,10 +33,10 @@
 // integer move rather than a block copy, which is what the copy constructor
 // produces.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 

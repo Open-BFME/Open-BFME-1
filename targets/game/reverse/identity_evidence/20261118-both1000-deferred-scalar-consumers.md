@@ -21,3 +21,9 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineIsSpeechComplete.cpp`: `?dup_00C19053@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngineDevice/Source/W3DDevice/Common/System/W3DRadarViewBoxRva006C0FA0.cpp`: `?dup_00C49C80@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngine/Source/GameNetwork/LANAPIhandlers_handleGameAnnounce_Thunk.cpp`: `?dup_00C46AC0@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameNetwork/LANAPIhandlers_handleGameAnnounce_Thunk.cpp`: `?dup_00C46ACB@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

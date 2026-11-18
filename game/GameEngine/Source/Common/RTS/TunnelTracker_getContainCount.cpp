@@ -16,10 +16,10 @@
 // at +0 and the value at +8. end() is re-read from the member on every trip
 // because the filter call could have moved it.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class Player;

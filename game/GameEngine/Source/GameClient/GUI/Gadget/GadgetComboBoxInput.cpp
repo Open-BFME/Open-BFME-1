@@ -277,10 +277,10 @@ static __declspec(noinline) void Rva004B3E30(GameWindow *window)
     }
 }
 
-typedef int Int;
-typedef short Short;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int WindowMsgData;
 typedef int Color;
 enum { FALSE = 0, TRUE = 1, WIN_STATE_HILITED = 2, GWM_INPUT_FOCUS = 0x17,

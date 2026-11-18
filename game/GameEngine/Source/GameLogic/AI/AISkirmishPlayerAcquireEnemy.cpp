@@ -9,10 +9,10 @@
 // The derived table at VA 0x01096FB0 selects getAiEnemy at RVA 0x00169250;
 // that body calls this implementation through ILT RVA 0x00004A70.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum Relationship
 {

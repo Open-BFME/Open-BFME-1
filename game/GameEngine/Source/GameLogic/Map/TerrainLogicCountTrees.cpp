@@ -9,8 +9,8 @@
  * Rva001A4DD0GridCount::visit method writes the count into the result block.
  */
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 inline const Int &maxExtent(const Int &a, const Int &b)
 {

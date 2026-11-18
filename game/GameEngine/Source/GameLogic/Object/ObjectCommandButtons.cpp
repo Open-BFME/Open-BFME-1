@@ -30,9 +30,9 @@
 // from m_template at +0x04. So the merged Object declares the accessor AND names
 // the fields it reads, which is more than either file could say on its own.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class SpecialPowerTemplate;
 class SpecialPowerModuleInterface;

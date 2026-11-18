@@ -8,9 +8,9 @@
 // to the three-argument setter (0x00433900).  All callees are still dumps;
 // names are address-derived.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define TRUE true
 #define FALSE false

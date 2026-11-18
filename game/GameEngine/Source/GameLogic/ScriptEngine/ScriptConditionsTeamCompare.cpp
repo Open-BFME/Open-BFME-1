@@ -33,9 +33,9 @@
 // this file reaches by casting the Team pointer because that is what retail
 // does.
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

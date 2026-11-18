@@ -13,10 +13,10 @@
 // -- it deletes the returned reference and stops. That is one more piece of the
 // adaptive-latency layer that FINDINGS already shows is absent.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum
 {

@@ -27,9 +27,9 @@
 // The player counter keeps its address-derived name: PlayerList's body at
 // 0x000DF510 is the matched PlayerList::unidentified_000df510 row.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class Parameter

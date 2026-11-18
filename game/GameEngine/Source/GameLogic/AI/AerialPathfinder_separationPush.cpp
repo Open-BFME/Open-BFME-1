@@ -20,10 +20,10 @@
 // the worst overlap and adds the separation vector scaled by the overlap to
 // the caller's push; it returns false when anything overlapped.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Int ObjectID;
 
 #define NULL 0

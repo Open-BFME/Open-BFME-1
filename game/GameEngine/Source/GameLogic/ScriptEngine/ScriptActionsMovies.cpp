@@ -20,10 +20,10 @@
 
 #include <stddef.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 

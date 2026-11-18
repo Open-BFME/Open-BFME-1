@@ -25,9 +25,9 @@
 // SlideFromRightFast reads past m_gameWindow, so the finished flag at +0x41 and
 // the padding that carries it there cost the other two nothing.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

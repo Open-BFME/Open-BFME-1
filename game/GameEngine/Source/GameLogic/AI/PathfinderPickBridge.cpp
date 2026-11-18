@@ -22,9 +22,9 @@
 
 #include "vector3.h"
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };

@@ -21,9 +21,9 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int GPProfile;
 typedef wchar_t WideChar;
 

@@ -6,9 +6,9 @@
 // and places it in HordeContain.cpp; ilt_oracle CONFIRMS the public static
 // decoration at its ILT 0x00049BE8.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 #include "Common/INIException.h"

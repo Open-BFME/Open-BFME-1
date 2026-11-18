@@ -2,10 +2,10 @@
 // BFME RAMFile methods recovered against the Zero Hour declaration order.
 // File has BFME's lock/unlock additions before RAMFile's own overloads.
 
-typedef int Int;
-typedef bool Bool;
-typedef char Char;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define FALSE false
 #define TRUE true

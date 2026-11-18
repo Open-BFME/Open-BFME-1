@@ -5,10 +5,10 @@
 
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
+
 
 template <typename T> class StringBase
 {

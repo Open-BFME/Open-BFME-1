@@ -4,9 +4,9 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class GameEngine;
 class GlobalData;

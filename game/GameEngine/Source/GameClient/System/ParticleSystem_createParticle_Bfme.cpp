@@ -3,9 +3,9 @@
 
 #include <new>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ParticlePriorityType
 {

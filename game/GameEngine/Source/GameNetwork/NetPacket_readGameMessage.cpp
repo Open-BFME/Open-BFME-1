@@ -20,11 +20,11 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #define NULL 0
 

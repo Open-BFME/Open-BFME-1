@@ -4,9 +4,9 @@
 #include <algorithm>
 #include <math.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // BFME float-coordinate overload: the original method name is not recovered.
 // Only the three scalar coordinates are used by this TU's ABI view.

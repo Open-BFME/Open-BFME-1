@@ -8,9 +8,9 @@
 // unrolled and the rest reaches the walker at 0x00087A80 through its ILT.
 // Same shape as Locomotor::getAppearance in Drawable_calcPhysicsXform_Thunk.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum KindOfType { KINDOF_INVALID = 0 };
 
