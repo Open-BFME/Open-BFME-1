@@ -10,7 +10,7 @@
 
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

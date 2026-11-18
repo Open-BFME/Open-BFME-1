@@ -5,7 +5,7 @@
 #include <set>
 #include <vector>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

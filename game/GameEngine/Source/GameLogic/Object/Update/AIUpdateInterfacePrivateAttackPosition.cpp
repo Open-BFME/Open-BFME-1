@@ -14,7 +14,7 @@
 // The attack filter installs vtable 0x010956C4, not PartitionFilterPossibleToAttack's
 // 0x010FD964, so it keeps an address-derived name and stores the recorded
 // table g_010956C4 itself (novtable), as AIMeleeReAcquireState_update.cpp does.
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 #include "../../command_source_type.h"
 #include "../../../../Include/Common/Enums/WeaponSlotType.h"
 enum StateID { AI_ATTACK_POSITION = 9 };

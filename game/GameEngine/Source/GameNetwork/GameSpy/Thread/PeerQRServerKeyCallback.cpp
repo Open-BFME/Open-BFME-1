@@ -24,7 +24,7 @@
 #define hasPassword hasPassword_LocalView
 #include <string>
 #include <string.h>
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 template<class T> struct StringData { int ref_count; unsigned short length, capacity; T text[1]; };
 template<class T> class StringBase {
     friend class AsciiString;

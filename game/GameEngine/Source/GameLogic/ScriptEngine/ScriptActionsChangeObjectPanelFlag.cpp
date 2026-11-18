@@ -16,7 +16,7 @@
 // Object offsets: contain +0x1FC, body +0x200, AI +0x204 (matched sibling
 // ScriptActionsTeamMemberWalk.cpp reads AI +0x204 and its +0x32C flag).
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

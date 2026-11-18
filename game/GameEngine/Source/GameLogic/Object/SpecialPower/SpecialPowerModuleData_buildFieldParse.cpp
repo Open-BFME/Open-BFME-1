@@ -21,7 +21,7 @@
 // Member offsets stay as numbers. The class layout runs past 0x20D and no
 // witness names the fields that far out.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class INI;
 

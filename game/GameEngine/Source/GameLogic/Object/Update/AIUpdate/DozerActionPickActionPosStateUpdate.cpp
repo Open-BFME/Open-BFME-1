@@ -9,7 +9,7 @@
 #include "Lib/Coord3D.h"
 #include "../../../command_source_type.h"
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 typedef int DozerTask;
 

@@ -12,7 +12,7 @@
 // slot 22. The base call reaches W3DTruckDraw::doDrawModule, slot 9 of the
 // vtable 0x011265B0 that the matched W3DTruckDraw constructor installs.
 
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 #define NULL 0
 
 class Matrix3D;

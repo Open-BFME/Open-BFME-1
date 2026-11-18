@@ -12,7 +12,7 @@
 // each product (460 B).  The redundant test itself is not in retail, so the
 // block stands without it.
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
 
 enum DisabledType

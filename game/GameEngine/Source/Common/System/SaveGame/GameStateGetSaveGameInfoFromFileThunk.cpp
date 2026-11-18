@@ -94,18 +94,18 @@ public:
 
 
 
-enum SaveCode
-{
-	SC_INVALID = -1,
-	SC_OK,
-	SC_NO_FILE_AVAILABLE,
-	SC_FILE_NOT_FOUND,
-	SC_UNABLE_TO_OPEN_FILE,
-	SC_INVALID_XFER,
-	SC_UNKNOWN_BLOCK,
-	SC_INVALID_DATA,
-	SC_ERROR
-};
+#include "../../../../Include/Common/Enums/SaveCode.h"
+
+
+
+
+
+
+
+
+
+
+
 
 class SaveGameInfo
 {

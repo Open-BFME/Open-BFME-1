@@ -7,7 +7,7 @@
 #include <set>
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class Vector3
 {

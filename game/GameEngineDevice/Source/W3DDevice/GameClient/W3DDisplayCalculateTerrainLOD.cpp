@@ -3,7 +3,7 @@
 // TU-local layouts because the real W3DDisplay/GlobalData headers carry ZH
 // vtable/field offsets that drift from BFME's compiled layout for this body.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef __int64 Int64;
 
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(Int64 *counter);

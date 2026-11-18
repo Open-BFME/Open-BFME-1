@@ -13,7 +13,7 @@
 
 enum KindOfType { RVA00329A80_KIND_BIT_119 = 119 };
 typedef BitFlags<192> KindOfMaskType;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 enum DistanceCalculationType { FROM_CENTER_2D = 0 };
 

@@ -4,7 +4,7 @@
 // W3DShrubBuffer::allocateTreeBuffers, retail 0x0071C470: the twin of W3DTreeBuffer's at 0x00732B00
 // with USAGE_DEFAULT buffers, the Shrubs_darken/lighten shaders and the texture at +0x1E3914.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct IDirect3DBaseTexture8;
 

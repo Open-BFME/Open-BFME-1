@@ -26,7 +26,7 @@
 #include <string.h>
 #include "ascii_string.h"
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 struct Coord2D { Real x, y; Coord2D() : x(0), y(0) {} };
 struct Coord3D { Real x, y, z; Coord3D() : x(0), y(0), z(0) {} };
 

@@ -15,7 +15,7 @@
 // HordeContainInterface slot 53 (+0xD4) is abstract in HordeContain's vtable
 // 0x010AE8E0 and Object+0x360 is not witnessed, so both keep offset names.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 #include "ascii_string.h"

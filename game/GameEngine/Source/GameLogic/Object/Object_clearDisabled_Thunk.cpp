@@ -3,7 +3,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME 1 Object::clearDisabled at RVA 0x001C8440.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum DisabledType
 {

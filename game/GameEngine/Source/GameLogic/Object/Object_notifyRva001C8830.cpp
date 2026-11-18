@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME Object selection notification, retail 0x001C8830, 336 bytes.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeOverridable
 {

@@ -9,7 +9,7 @@
 #include <vector>
 #include "StringInline.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INI
 {

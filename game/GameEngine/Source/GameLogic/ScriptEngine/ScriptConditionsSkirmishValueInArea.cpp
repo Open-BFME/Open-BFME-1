@@ -17,7 +17,7 @@
 #include "ObjectDlinkPmf.h"
 #include <list>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 class PolygonTrigger;
 

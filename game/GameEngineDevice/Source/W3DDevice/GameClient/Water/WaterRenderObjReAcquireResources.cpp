@@ -22,7 +22,7 @@
 #define NULL 0
 #endif
 
-typedef unsigned short UnsignedShort;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define NEW_REF(className, args) new className args
 #define FAILED(hr) ((HRESULT)(hr) < 0)

@@ -8,8 +8,8 @@
 // Calls have been decoded from retail. The contained-interface local follows
 // the independently matched Object_containPairDispatch.cpp access pattern.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 template <typename T> inline void StringBase<T>::concat(T c)

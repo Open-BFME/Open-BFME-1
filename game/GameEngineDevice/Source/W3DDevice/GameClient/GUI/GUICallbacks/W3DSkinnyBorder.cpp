@@ -7,7 +7,7 @@
 // Direct contracts use the canonical StringBase and existing ImageCollection.
 // Evidence: targets/game/reverse/identity_evidence/0079bca0-skinny-border.md.
 #include "ascii_string.h"
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 class Image;
 class ImageCollection {public: const Image *findImageByName(const AsciiString&);};
 extern ImageCollection *TheMappedImageCollection;

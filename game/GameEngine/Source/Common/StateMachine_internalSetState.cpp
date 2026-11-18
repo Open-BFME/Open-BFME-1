@@ -28,10 +28,10 @@ enum
 	INVALID_STATE_ID = 999999
 };
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0
-};
+#include "../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Errors.h
 enum ErrorCode

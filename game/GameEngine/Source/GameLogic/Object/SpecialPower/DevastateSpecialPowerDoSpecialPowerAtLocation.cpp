@@ -30,7 +30,7 @@
 //     out, retail's shared fld/__ftol2 tail and its `lea` of whichever operand
 //     wins the comparison both disappear.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Coord3D;
 class Matrix3D;

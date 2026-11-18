@@ -166,7 +166,7 @@ class Display {
     virtual void enableClipping(bool);
 };
 extern Display *TheDisplay;
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 #define FALSE false
 void W3DCommandBarHelpPopupDraw(GameWindow *window, WinInstanceData *instData) {
     static const Image *endBar = TheMappedImageCollection->findImageByName("Helpbox-top");

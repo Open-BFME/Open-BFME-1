@@ -9,7 +9,7 @@
 // TheScriptEngine/TheTacticalView globals (0x012F076C, 0x012F1600) and identical
 // callee (bfmeGetID @ 0x00009B01) to the twin.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 #include "Common/GameType.h"

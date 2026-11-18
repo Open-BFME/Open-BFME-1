@@ -54,21 +54,21 @@ public:
 	virtual void message(UnicodeString format, ...);
 };
 
-enum SaveFileType
-{
-	SAVE_FILE_TYPE_NORMAL,
-	SAVE_FILE_TYPE_MISSION
-};
+#include "../../../../Include/Common/Enums/SaveFileType.h"
+
+
+
+
 
 #include "../../../../Include/Common/Enums/SnapshotType.h"
 
 
 
 
-enum SaveCode
-{
-	SC_OK = 0
-};
+#include "../../../../Include/Common/Enums/SaveCode.h"
+
+
+
 
 class GameState
 {

@@ -18,7 +18,7 @@
 #include "object.h"
 
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 typedef BitFlags<192> KindOfMaskType;
 
