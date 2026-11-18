@@ -6,7 +6,7 @@
 
 #pragma intrinsic(cos, sin, tan)
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern double Gen01085F58;
 

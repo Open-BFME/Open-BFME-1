@@ -9,7 +9,7 @@
 
 #include "StringInline.h"
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class TerrainType;
 

@@ -17,7 +17,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Gen_p16pod { int a[4]; };
 

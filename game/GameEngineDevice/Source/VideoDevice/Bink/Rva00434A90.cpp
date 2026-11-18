@@ -19,7 +19,7 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GameTextInterface
 {

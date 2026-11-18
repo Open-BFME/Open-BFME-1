@@ -5,7 +5,7 @@
 // enabled byte at 0x20.  The retail body is the corresponding memberwise
 // copy, including the existing AsciiString copy-constructor call.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 // Retail's AsciiString derives from StringBase<char>: its own copy ctor is the

@@ -12,7 +12,7 @@
 // field at +0x18 holds that preset's shader bits.
 #include "shader.h"
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class S4Made0090F650
 {

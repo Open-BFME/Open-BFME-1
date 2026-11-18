@@ -15,7 +15,7 @@
 // at +0 through 0x00887940, the narrow one. Reverse order puts the wide member
 // first, which is why the higher address is destroyed first.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <class T>
 class StringBase

@@ -6,9 +6,9 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
-typedef float Real;
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -11,7 +11,7 @@
 //
 // WW3D::Get_Sync_Time() is inlined to a read of the global at 0x0133F420.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 enum
 {

@@ -4,7 +4,7 @@
 
 #include "Common/INIException.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern const float g_rva01075350;
 

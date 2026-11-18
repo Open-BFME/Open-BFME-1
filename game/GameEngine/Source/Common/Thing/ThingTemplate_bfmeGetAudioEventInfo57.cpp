@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME-only ThingTemplate audio-event info getter at retail RVA 0x004172E0.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef long Long;
 
 extern "C" __declspec(dllimport) Long __stdcall InterlockedIncrement(

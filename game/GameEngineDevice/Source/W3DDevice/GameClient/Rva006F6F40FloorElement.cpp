@@ -3,7 +3,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
 #include "matrix3d.h"
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern const Real g_rva01075350;
 extern Real g_bfmeDefaultBU;

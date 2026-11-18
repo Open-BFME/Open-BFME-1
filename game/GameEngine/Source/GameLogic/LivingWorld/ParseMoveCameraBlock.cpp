@@ -7,7 +7,7 @@
 // 0x010ECD18 and handed to the instance's add routine (thunk 0x00401564).
 // Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

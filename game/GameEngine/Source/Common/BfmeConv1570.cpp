@@ -9,7 +9,7 @@
 // both share the scale at +0x20 with the converted bounds-checked cell
 // lookup ?bfmeAt@Gen_008F7CD0@@QBEPAVBfmeCellFD@@HH@Z at 0x008F7CD0.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 

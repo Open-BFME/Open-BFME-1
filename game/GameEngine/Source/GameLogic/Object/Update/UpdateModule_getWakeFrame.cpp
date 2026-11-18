@@ -6,7 +6,7 @@
 // compared against the module's own next-call frame at +0x14. A frame already
 // due sleeps one frame rather than zero.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // A real enum: the decorated name says ?AW4UpdateSleepTime@@, which a typedef
 // for UnsignedInt does not produce.

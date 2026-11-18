@@ -9,7 +9,7 @@
 // null test separate from the pointer add in the retail instruction shape.
 // cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Rva003D5B00Cell
 {

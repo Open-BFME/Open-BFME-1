@@ -1,7 +1,7 @@
 // BFME-only bridge-layer region overlap test, retail 0x003FBA10 (110 bytes).
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

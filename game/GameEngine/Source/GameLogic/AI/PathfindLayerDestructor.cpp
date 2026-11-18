@@ -3,7 +3,7 @@
 // this focused TU uses a collision-free name because AIPathfind.cpp already
 // defines the public destructor from the later reference source.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

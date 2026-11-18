@@ -9,7 +9,7 @@
 // Those real owner names provide the two existing ILT routes without
 // inventing enable/disable arm names or semantic virtual-slot labels.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../ScriptEngine/game_logic_dispatch.h"
 class Module;

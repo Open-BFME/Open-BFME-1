@@ -8,8 +8,8 @@
 // ILT 0x00006938 pins the call to Rva0049BA80::call(Object*, bool).
 // ILT 0x0001F253 pins GameLogic::findObjectByID(int).
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

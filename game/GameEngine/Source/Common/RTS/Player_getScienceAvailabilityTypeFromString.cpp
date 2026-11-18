@@ -4,7 +4,7 @@ extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count);
 extern "C" __declspec(dllimport) unsigned int __cdecl strlen( const char *text );
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/ScienceAvailabilityType.h"
 

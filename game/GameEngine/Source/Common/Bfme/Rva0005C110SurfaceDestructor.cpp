@@ -3,7 +3,7 @@
 // 0x0005C110 installs vtable 0x01073740.  The vtable's scalar deleting thunk
 // (0x0005FA60 -> 0x0005EC20) independently anchors this class identity.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned long DWORD;
 typedef void *HGDIOBJ;
 

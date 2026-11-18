@@ -14,7 +14,7 @@
 // lea of src+1 to subtract, and the comparison against dstSize is jb because
 // strlen is unsigned.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva007EB810Diag
 {

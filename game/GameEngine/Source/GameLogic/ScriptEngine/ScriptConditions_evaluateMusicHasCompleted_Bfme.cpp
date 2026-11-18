@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // BFME body of the music-track completion script condition.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

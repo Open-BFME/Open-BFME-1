@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: AISkirmishPlayer::getMyEnemyPlayerIndex, retail 0x001687B0, 63 bytes.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum PlayerType
 {

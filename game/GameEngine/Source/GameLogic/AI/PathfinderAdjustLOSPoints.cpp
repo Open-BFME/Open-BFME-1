@@ -3,7 +3,7 @@
 // Pathfinder helper: convert both points to cells, run the 0x003D79C0 walk,
 // and copy its adjusted x/y result back to the first point.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

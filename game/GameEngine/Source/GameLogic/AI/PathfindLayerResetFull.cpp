@@ -3,7 +3,7 @@
 // The existing AIPathfind.cpp owns the public reset name, so this focused TU
 // uses a collision-free selector for the retail body.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

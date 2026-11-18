@@ -11,7 +11,7 @@
 // buffer.  No persistent record struct is built here at all -- the "record"
 // in this family is just the temporary AsciiString.  Address-derived names.
 
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class INIException
 {

@@ -5,7 +5,7 @@
 // INI::initFromINI with the table at VA 0x010ECE14 and handed to the
 // instance's append routine (0x0043847E); the inline virtual destructor restores the vtable (VA 0x010EC76C) and releases the name.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

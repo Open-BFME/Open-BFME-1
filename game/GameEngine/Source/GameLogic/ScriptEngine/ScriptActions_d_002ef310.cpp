@@ -1,6 +1,6 @@
 // Open-BFME: recovered wrapper at retail 0x002EF310 (44 bytes).
 
-typedef char Byte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // Canonical global at retail 0x012ED668: AudioManager *TheAudio, defined once
 // in game/GameEngine/Source/Common/Audio/GameAudio.cpp.  This TU keeps its own

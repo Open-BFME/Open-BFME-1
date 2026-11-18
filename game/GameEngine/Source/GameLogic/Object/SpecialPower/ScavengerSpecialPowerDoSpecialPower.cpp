@@ -25,7 +25,7 @@ struct Rva00265A00Record
 	int m_key;
 };
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // The trailing call goes through ILT 0x00041BCD to 0x0026A550,
 // SpecialPowerModule::doSpecialPower, the base body every non-overriding

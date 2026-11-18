@@ -4,7 +4,7 @@
 // Retail installs vtable 0x010B7D40, clears +0x08 and +0x1CC, and constructs
 // four BfmeNamedSlot members at +0x0C, +0x7C, +0xEC, and +0x15C.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

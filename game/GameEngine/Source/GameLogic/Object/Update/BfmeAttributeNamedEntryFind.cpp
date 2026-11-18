@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 

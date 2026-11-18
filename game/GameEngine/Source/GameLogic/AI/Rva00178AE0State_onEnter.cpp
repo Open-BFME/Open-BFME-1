@@ -4,7 +4,7 @@
 #include <bitset>
 // BFME layout view for the anonymous 0x00178AE0 state-enter body.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

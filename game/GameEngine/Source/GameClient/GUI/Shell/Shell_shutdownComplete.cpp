@@ -5,7 +5,7 @@
 // its pending AsciiString at +0x54, and its AnimateWindowManager at +0x5c.
 // Those offsets match Shell_ctor_Thunk.cpp and the method body in Shell.cpp.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

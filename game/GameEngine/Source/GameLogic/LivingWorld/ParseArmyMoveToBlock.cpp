@@ -7,7 +7,7 @@
 // instance's append routine (0x00003ADA) and destroyed by the out-of-line
 // destructor at 0x00023AFB.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

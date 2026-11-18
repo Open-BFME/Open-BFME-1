@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?maskObject@Object@@QAEX_N@Z: game/GameEngine/Source/GameLogic/Object/Object.cpp
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h

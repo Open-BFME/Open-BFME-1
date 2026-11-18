@@ -13,7 +13,7 @@
 // distance between the two objects in a register and indexes the destination
 // with it, so there is one address to step rather than two.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

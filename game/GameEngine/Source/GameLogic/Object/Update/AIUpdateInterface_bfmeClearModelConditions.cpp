@@ -3,7 +3,7 @@
 
 #include <bitset>
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeC1166
 {

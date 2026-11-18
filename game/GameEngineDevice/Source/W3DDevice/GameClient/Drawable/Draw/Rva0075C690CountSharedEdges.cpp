@@ -3,7 +3,7 @@
 // both requested vertices after translating the packed indices through the
 // caller's vertex-remap table.
 
-typedef unsigned short UnsignedShort;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Rva0075C690PackedEntry
 {

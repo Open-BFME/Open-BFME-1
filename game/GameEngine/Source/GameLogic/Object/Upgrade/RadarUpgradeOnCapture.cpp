@@ -2,7 +2,7 @@
 // RadarUpgrade::onCapture, retail RVA 0x002D7CD0.
 // Identity and interface evidence: identity_evidence/002d7cd0-radar-capture.md.
 #include "../object.h"
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Player
 {

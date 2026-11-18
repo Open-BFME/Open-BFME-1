@@ -10,7 +10,7 @@
 // declarations retain the witnessed retail element sizes and member offsets;
 // the trigger callee is independently matched at 0x004223F0.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)

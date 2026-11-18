@@ -18,7 +18,7 @@
 // smaller one, and test ah,5 with jp branches away when it is not -- so the
 // true case is a strict less-than, the usual shape of a percentage roll.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 Real GetGameLogicRandomValueReal(Real low, Real high, char *file, int line);
 
