@@ -27,11 +27,11 @@ typedef unsigned int WindowMsgData;
 typedef int Int;
 typedef bool Bool;
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED,
-	MSG_HANDLED
-};
+#include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 enum
 {

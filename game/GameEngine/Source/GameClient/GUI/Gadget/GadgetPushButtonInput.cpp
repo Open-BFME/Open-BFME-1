@@ -11,7 +11,7 @@
 typedef unsigned int UnsignedInt;
 typedef unsigned int WindowMsgData;
 typedef bool Bool;
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
 #define FALSE false
 #define BitTest(a,b) ((a)&(b))
 #define BitSet(a,b) ((a)|=(b))

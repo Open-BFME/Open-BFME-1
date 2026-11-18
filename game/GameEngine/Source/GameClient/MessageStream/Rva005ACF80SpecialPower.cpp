@@ -58,7 +58,7 @@ public:
     }
 };
 
-enum SpecialPowerType { SPECIAL_INVALID };
+#include "../../../Include/Common/Enums/SpecialPowerType.h"
 
 class SpecialPowerTemplate : public Overridable {
 public:

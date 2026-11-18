@@ -26,10 +26,10 @@ public:
 
 class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
 
-enum SpecialPowerType
-{
-	SPECIAL_INVALID = 0
-};
+#include "../../../Include/Common/Enums/SpecialPowerType.h"
+
+
+
 
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier

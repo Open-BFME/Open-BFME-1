@@ -65,7 +65,7 @@ public:
     ParticleSystem *m_system;
     BfmeParticleSystemHandle *m_previous, *m_next;
 };
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID=0 };
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
 class ParticleSystemManager {
 private: BfmeParticleSystemHandle findParticleSystemByID(ParticleSystemID);
     friend class LaserUpdate;

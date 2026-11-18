@@ -35,7 +35,7 @@ enum
 	MODULEINTERFACE_BODY = 0x20,
 	MODULEINTERFACE_DRAW = 0x400
 };
-enum GeometryType { GEOMETRY_SPHERE = 0 };
+#include "../../../Include/Common/Enums/GeometryType.h"
 enum ShadowType { SHADOW_VOLUME = 2 };
 
 class ModuleFactory

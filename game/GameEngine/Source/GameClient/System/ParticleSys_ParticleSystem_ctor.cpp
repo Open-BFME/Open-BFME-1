@@ -14,7 +14,7 @@
 #include "matrix3d.h"
 
 typedef unsigned int UnsignedInt;
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID = 0 };
+#include "../../../Include/Common/Enums/ParticleSystemID.h"
 
 namespace FXParticleSystem {
 class ParticleSystemInfo {

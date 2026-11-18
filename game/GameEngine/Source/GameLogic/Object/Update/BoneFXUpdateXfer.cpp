@@ -8,10 +8,10 @@ typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef bool Bool;
 
-enum ParticleSystemID
-{
-	INVALID_PARTICLE_SYSTEM_ID = 0
-};
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 struct XferVersion
 {

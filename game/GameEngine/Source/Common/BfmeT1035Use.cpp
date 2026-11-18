@@ -40,12 +40,12 @@ extern GameLogic *TheGameLogic;
 
 extern void j_000309f4(void);
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 class GeometryInfo
 {

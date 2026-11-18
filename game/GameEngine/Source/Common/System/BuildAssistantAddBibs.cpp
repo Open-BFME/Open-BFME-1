@@ -186,11 +186,11 @@ private:
 	KindOfMaskType m_mustBeClear;
 };
 
-enum DistanceCalculationType
-{
-	FROM_CENTER_2D = 0,
-	FROM_CENTER_3D = 1
-};
+#include "../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
+
 
 class PartitionManager
 {

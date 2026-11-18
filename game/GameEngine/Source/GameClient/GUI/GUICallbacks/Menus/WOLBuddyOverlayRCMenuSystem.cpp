@@ -19,7 +19,7 @@ typedef unsigned UnsignedInt;
 typedef unsigned WindowMsgData;
 typedef bool Bool;
 typedef int GPProfile;
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 enum { GWM_CREATE = 1, GWM_DESTROY = 2, GGM_CLOSE = 0x4005, GBM_SELECTED = 0x4008 };
 enum RCItemType { ITEM_BUDDY, ITEM_REQUEST, ITEM_NONBUDDY, ITEM_NONE };
 enum GSOverlayType { GSOVERLAY_PLAYERINFO };

@@ -13,7 +13,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID = 0 };
+#include "../../../Include/Common/Enums/ParticleSystemID.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParticleSys.h
 class ParticleSystem

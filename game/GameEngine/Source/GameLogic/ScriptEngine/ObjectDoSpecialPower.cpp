@@ -19,10 +19,10 @@ public:
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum SpecialPowerType
-{
-	SPECIAL_POWER_TYPE_UNKNOWN = 0
-};
+#include "../../../Include/Common/Enums/SpecialPowerType.h"
+
+
+
 
 class SpecialPowerTemplate
 {

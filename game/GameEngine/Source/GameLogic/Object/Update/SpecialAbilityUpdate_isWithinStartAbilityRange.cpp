@@ -40,7 +40,7 @@ class Object { public:
 };
 class GameLogic { public: Object* findObjectByID(int); };
 extern GameLogic* TheGameLogic;
-enum SpecialPowerType { DummyPower002A79B0 };
+#include "../../../../Include/Common/Enums/SpecialPowerType.h"
 class Overridable { public: virtual ~Overridable(); Overridable* friend_getFinalOverride(); Overridable* next; };
 class SpecialPowerTemplate:public Overridable { public:
  SpecialPowerType getSpecialPowerType() const;

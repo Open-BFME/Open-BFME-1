@@ -14,11 +14,11 @@ typedef int NameKeyType;
 typedef int GPProfile;
 typedef unsigned int WindowMsgData;
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED = 0,
-	MSG_HANDLED = 1
-};
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 enum
 {

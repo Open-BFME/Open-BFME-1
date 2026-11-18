@@ -22,7 +22,7 @@ struct RecordVector001AEFF0 {
  char bytes[12];
  ~RecordVector001AEFF0() {typedef void (__fastcall *Call)(void*);((Call)j_000187d2)(this);}
 };
-enum GeometryType {GEOMETRY_SPHERE,GEOMETRY_CYLINDER,GEOMETRY_BOX};
+#include "../../../Include/Common/Enums/GeometryType.h"
 class GeometryInfo:public Snapshot {
  char unmodelled04[0x28];
  ShapeVector001AEFF0 shapes;

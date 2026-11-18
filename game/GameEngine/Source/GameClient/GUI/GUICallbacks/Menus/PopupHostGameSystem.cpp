@@ -95,7 +95,7 @@ public:
 	int winGetWindowId();
 };
 
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 typedef unsigned int WindowMsgData;
 
 // GameWindow.h GameWindowMessage / sweep Gadget.h GadgetGameMessage values

@@ -21,10 +21,10 @@ public:
 	int tag;
 };
 
-enum ParticleSystemID
-{
-	PARTICLE_SYSTEM_ID_NONE = 0
-};
+#include "../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 class ParticleSystem;
 

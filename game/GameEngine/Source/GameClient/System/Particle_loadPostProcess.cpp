@@ -3,10 +3,10 @@
 // The BFME save layout stores a 12-byte system handle at this+0x7C and its
 // serialized system ID at this+0x88.
 
-enum ParticleSystemID
-{
-	INVALID_PARTICLE_SYSTEM_ID = 0
-};
+#include "../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 class Particle;
 class ParticleSystem;

@@ -47,7 +47,7 @@ public:
 	~Rva0077B3F0Handle() throw(); // ILT 00013994 -> 001DA440
 };
 
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID = 0 };
+#include "../../../Include/Common/Enums/ParticleSystemID.h"
 class ParticleSystemManager
 {
 public:

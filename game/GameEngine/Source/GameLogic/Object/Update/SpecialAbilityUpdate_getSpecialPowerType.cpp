@@ -11,7 +11,7 @@
 // also has an override call the out-of-line walker. A single-entry chain costs
 // no call. The field this one reads is at template+0x14 rather than +0x1C.
 
-enum SpecialPowerType {};
+#include "../../../../Include/Common/Enums/SpecialPowerType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

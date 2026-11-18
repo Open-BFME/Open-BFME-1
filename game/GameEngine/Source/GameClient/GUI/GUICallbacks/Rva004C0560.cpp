@@ -26,7 +26,7 @@ typedef bool Bool;
 typedef unsigned short WideChar;
 typedef unsigned int WindowMsgData;
 
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
 enum { GWM_CREATE = 1 };
 enum GadgetGameMessage
 {

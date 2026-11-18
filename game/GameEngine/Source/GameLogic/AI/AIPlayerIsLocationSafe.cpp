@@ -254,11 +254,11 @@ enum AllowPlayerRelationship
 };
 
 // PartitionManager.h:155, the immediate retail pushes at 0x00163055.
-enum DistanceCalculationType
-{
-	FROM_BOUNDINGSPHERE_2D = 2,
-	FROM_BOUNDINGSPHERE_3D = 3
-};
+#include "../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
+
 
 // Retail vtables 0x01083B5C, 0x0109686C, 0x010956E4, 0x0109685C, 0x01083B80 and
 // 0x0109689C.  Each is named directly with __identifier, the compiler-emitted

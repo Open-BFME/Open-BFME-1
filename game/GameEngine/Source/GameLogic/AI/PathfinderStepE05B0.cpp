@@ -7,7 +7,7 @@ typedef bool Bool;
 
 enum KindOfType { KINDOF_INVALID = 0 };
 enum Relationship { RELATIONSHIP_INVALID = 0 };
-enum CrushSquishTestType { CRUSH_SQUISH_INVALID = 0 };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 
 #define THING_TU_MEMBERS \
 	Bool isKindOf(KindOfType kind) const;

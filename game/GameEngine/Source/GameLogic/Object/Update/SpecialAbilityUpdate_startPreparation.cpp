@@ -54,7 +54,7 @@ class GameLogic { public: Object* findObjectByID(int); };
 extern GameLogic* TheGameLogic;
 float GetGameLogicRandomValueReal(float,float,char*,int);
 class Overridable { public: virtual ~Overridable(); Overridable* friend_getFinalOverride(); Overridable* next; };
-enum SpecialPowerType { DummyPower002A9420 };
+#include "../../../../Include/Common/Enums/SpecialPowerType.h"
 class SpecialPowerTemplate:public Overridable { public:
  char pad008[0xc]; int powerType;
  SpecialPowerType getSpecialPowerType() const;

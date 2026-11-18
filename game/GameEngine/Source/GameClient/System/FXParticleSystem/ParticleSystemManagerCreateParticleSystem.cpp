@@ -5,10 +5,10 @@
 class ParticleSystemTemplate;
 class ParticleSystemHandle;
 
-enum ParticleSystemID
-{
-	INVALID_PARTICLE_SYSTEM_ID = 0
-};
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 class ParticleSystem
 {

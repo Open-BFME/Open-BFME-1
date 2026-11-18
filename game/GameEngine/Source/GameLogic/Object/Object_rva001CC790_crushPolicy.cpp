@@ -4,10 +4,10 @@
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 
-enum CrushSquishTestType
-{
-	TEST_CRUSH_OR_SQUISH = 2
-};
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
+
+
+
 
 enum Relationship
 {

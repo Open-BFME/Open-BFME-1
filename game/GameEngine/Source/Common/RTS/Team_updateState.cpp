@@ -285,10 +285,10 @@ public:
 	Bool m_match;
 };
 
-enum DistanceCalculationType
-{
-	FROM_CENTER_2D = 0
-};
+#include "../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
 
 class PartitionManager
 {

@@ -11,7 +11,7 @@ typedef int Int;
 
 enum KindOfType { KINDOF_FIRST = 0 };
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
-enum CrushSquishTestType { TEST_CRUSH_ONLY = 0, TEST_SQUISH_ONLY = 1, TEST_CRUSH_OR_SQUISH = 2 };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing

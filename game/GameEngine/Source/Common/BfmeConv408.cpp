@@ -5,7 +5,7 @@ public:
 	virtual bool bfmeTestAKB();
 };
 
-enum SpecialPowerType {};
+#include "../../Include/Common/Enums/SpecialPowerType.h"
 class SpecialPowerModuleInterface;
 struct AICommandParms;
 

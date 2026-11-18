@@ -62,10 +62,10 @@ enum UpdateSleepTime
 
 
 
-enum SpecialPowerType
-{
-	SPECIAL_POWER_INVALID = 0
-};
+#include "../../../../Include/Common/Enums/SpecialPowerType.h"
+
+
+
 
 class Object;
 class Player;

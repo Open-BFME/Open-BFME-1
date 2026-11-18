@@ -55,7 +55,7 @@ public:
     virtual void slot25(); virtual unsigned getFrame();
 };
 extern GameClient *TheGameClient;
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID=0 };
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
 class ParticleSystem {
 public:
     void setPosition(const Coord3D *);

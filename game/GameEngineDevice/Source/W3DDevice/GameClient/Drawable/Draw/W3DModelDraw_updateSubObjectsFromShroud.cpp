@@ -21,7 +21,7 @@
 
 typedef bool Bool;
 
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID = 0 };
+#include "../../../../../../GameEngine/Include/Common/Enums/ParticleSystemID.h"
 
 
 // Existing complete retail getter at RVA00410BA0, via ILT00012E3B.

@@ -91,12 +91,12 @@ class Team;
 
 extern Real GetGameLogicRandomValueReal(Real lo, Real hi, char *file, int line);
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 // BFME's 0x5C-byte GeometryInfo (see GeometryInfoConstructor.cpp). Only the
 // radius at +0x10 and the bounding-sphere radius at +0x14 are read here.

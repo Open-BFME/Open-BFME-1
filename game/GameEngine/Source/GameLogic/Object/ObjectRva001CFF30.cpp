@@ -40,10 +40,10 @@ enum Relationship
 	ENEMIES = 0
 };
 
-enum CrushSquishTestType
-{
-	TEST_CRUSH_OR_SQUISH = 2
-};
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
+
+
+
 
 #define BFME_SLOT(n) virtual Int bfmeSlot##n() = 0
 

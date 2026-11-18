@@ -14,10 +14,10 @@
 typedef bool Bool;
 typedef int Int;
 
-enum ParticleSystemID
-{
-	INVALID_PARTICLE_SYSTEM_ID = 0
-};
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
