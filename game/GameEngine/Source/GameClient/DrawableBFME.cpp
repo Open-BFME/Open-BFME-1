@@ -178,6 +178,7 @@ public:
 	bool getProjectileLaunchOffset(WeaponSlotType slot, int barrel, Matrix3D *launch,
 		WhichTurretType turret, Coord3D *turretRotation, Coord3D *turretPitch) const;
 	void enableAmbientSoundFromScript(bool enable);
+	void setAnimationLoopDuration(unsigned int numFrames);
 	void friend_setSelected();
 	void friend_clearSelected();
 	void bfmeNotifyCondition4Modules(Object *object);
@@ -232,6 +233,8 @@ public:
 	virtual void replaceModelConditionState(const ModelConditionFlags &state, bool immediate, unsigned int effect);
 	virtual void anchor50(); virtual void anchor54();
 	virtual int getBarrelCount(int slot);
+	virtual void anchor5c();
+	virtual void setAnimationLoopDuration(unsigned int numFrames);	// slot 24, vtable+0x60
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DrawModule.h
@@ -378,6 +381,20 @@ void Drawable::applyPendingModelConditionFlags(bool immediate)
 			interface->replaceModelConditionState(m_conditionState, immediate, 0);
 	}
 	m_isModelDirty = false;
+}
+
+// Retail 0x00413490 (ILT 0x000478CA): Zero Hour's Drawable::setAnimationLoopDuration
+// over BFME's inline draw-module list at +0x150. Identity: BattlePlanUpdate::setStatus
+// and BuildAssistant::sellObject call it where Zero Hour calls this member, and slot 24
+// is W3DModelDraw::setAnimationLoopDuration (0x0075C760).
+void Drawable::setAnimationLoopDuration(unsigned int numFrames)
+{
+	for (DrawModule **module = m_drawModules; *module; ++module)
+	{
+		ObjectDrawInterface *interface = (*module)->getObjectDrawInterface();
+		if (interface)
+			interface->setAnimationLoopDuration(numFrames);
+	}
 }
 
 int Drawable::getBarrelCount(WeaponSlotType slot) const

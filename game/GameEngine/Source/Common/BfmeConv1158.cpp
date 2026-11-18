@@ -115,7 +115,6 @@ public:
 	void bfmeSubFAll1158(void);
 	void bfmeSubAAll1158(BfmeArg1158 *a);
 	void bfmeSubCAll1158(BfmeArg1158 *a);
-	void bfmeSubDAll1158(BfmeArg1158 *a);
 	void bfmeSubEAll1158(BfmeArg1158 *a);
 	int bfmeSubIAny1158(void);
 	int bfmeSubJAny1158(void);
@@ -182,15 +181,7 @@ void BfmeOwner1158::bfmeSubCAll1158(BfmeArg1158 *a)
 	}
 }
 
-void BfmeOwner1158::bfmeSubDAll1158(BfmeArg1158 *a)
-{
-	for (BfmeItem1158 **p = m_bfmeItems; *p; ++p) {
-		BfmeSub1158 *s = (*p)->bfmeGetSub1158();
-
-		if (s)
-			s->bfmeSubD1158(a);
-	}
-}
+// Drawable::setAnimationLoopDuration (0x00413490): DrawableBFME.cpp.
 
 void BfmeOwner1158::bfmeSubEAll1158(BfmeArg1158 *a)
 {

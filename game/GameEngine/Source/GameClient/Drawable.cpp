@@ -708,16 +708,7 @@ Bool Drawable::getProjectileLaunchOffset(WeaponSlotType wslot, Int specificBarre
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?setAnimationLoopDuration@Drawable@@QAEXI@Z present-unmatched
-void Drawable::setAnimationLoopDuration(UnsignedInt numFrames)
-{
-	for (DrawModule** dm = getDrawModules(); *dm; ++dm)
-	{
-		ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
-		if (di)
-			di->setAnimationLoopDuration(numFrames);
-	}
-}
+// Drawable::setAnimationLoopDuration: retail body (0x00413490) in DrawableBFME.cpp.
 
 //-------------------------------------------------------------------------------------------------
 // ?setAnimationCompletionTime@Drawable@@QAEXI@Z present-unmatched
