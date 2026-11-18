@@ -3428,6 +3428,7 @@ Bool Player::canBuildMoreOfType( const ThingTemplate *whatToBuild ) const
 
 //=============================================================================
 // ?canBuild@Player@@QBE_NPBVThingTemplate@@@Z present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x000D57B0 is Player_canBuild.cpp
 Bool Player::canBuild(const ThingTemplate *tmplate) const
 {
 	if (!tmplate)
@@ -3473,6 +3474,13 @@ Bool Player::canBuild(const ThingTemplate *tmplate) const
 
 	return true;
 }
+#endif
+// Keeps the vector<ProductionPrerequisite> size/operator[]/begin COMDAT rows emitted from this TU now that the
+// non-retail canBuild body above (their only user) is disabled.
+typedef std::vector<ProductionPrerequisite> PlayerCanBuildPrereqVector;
+unsigned int (PlayerCanBuildPrereqVector::*g_keepPrereqVectorSize)() const = &PlayerCanBuildPrereqVector::size;
+const ProductionPrerequisite & (PlayerCanBuildPrereqVector::*g_keepPrereqVectorIndex)(unsigned int) const = &PlayerCanBuildPrereqVector::operator[];
+const ProductionPrerequisite * (PlayerCanBuildPrereqVector::*g_keepPrereqVectorBegin)() const = &PlayerCanBuildPrereqVector::begin;
 
 //=================================================================================================
 // Native canAffordBuild is owned by PlayerProductionCost.cpp.
