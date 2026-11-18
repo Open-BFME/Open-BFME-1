@@ -8,7 +8,7 @@
 // Distinct from NetworkInterface::createNetwork at 0x0065C1F0, which
 // allocates the 0xA8 GameSpy queue. This factory deletes any existing
 // TheNetwork, operator-news 0x40 bytes, constructs BFMENativeNetwork
-// (ILT 0x0001E8F8 -> construct@BFMENativeNetwork 0x006818B0), stores
+// (ILT 0x0001E8F8 -> its constructor at 0x006818B0), stores
 // the pointer at TheNetwork (0x012F7714), and vcalls init (slot +4).
 
 class NetworkInterface

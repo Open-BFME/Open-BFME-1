@@ -23,10 +23,12 @@ extern "C" const void *__identifier("??_7Network@@6B@")[];
 // `this` is already in ecx.
 extern "C" void __identifier("??0SubsystemInterface@@QAE@XZ")( void );
 
+// The view declares no virtual member, so the constructor stores the
+// retail vftable itself instead of a compiler-chosen one.
 class BFMENativeNetwork
 {
 public:
-	void *construct();
+	BFMENativeNetwork();
 
 private:
 	void *m_vtable;
@@ -46,7 +48,9 @@ private:
 	int m_lastValue;
 };
 
-void *BFMENativeNetwork::construct()
+// Retail 0x006818B0, reached through ILT 0x0001E8F8 by createTheNetwork's
+// `new BFMENativeNetwork` (0x40 bytes).
+BFMENativeNetwork::BFMENativeNetwork()
 {
 	__identifier("??0SubsystemInterface@@QAE@XZ")();
 	m_vtable = (void *)__identifier("??_7Network@@6B@");
@@ -60,5 +64,4 @@ void *BFMENativeNetwork::construct()
 	m_stallTimerRunning = false;
 	m_stallCount = 0;
 	m_lastValue = -1;
-	return this;
 }

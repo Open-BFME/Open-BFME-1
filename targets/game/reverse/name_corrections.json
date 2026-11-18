@@ -22230,5 +22230,15 @@
   "after_sha256": "3ac4a43c5fed92c42356feeac46cdc72019b017a5822d87dee9682acb0bd6b42",
   "evidence": "targets/game/reverse/identity_evidence/000d77b0-becominglocalplayer.md",
   "reason": "ABI correction, not a rename: retail calls 0x009F2A20 with a hidden return pointer for a one-word refcounted result, which the ledger matches as ?bfmeForwardResultA@BfmeResultForwardA@@QAE?AUBfmeResultA@@XZ; the bank's Zero Hour iterateAllObjects returns ObjectIterator* and cannot link to that body. The forwarder's EA name stays unproven."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameNetwork/native_network_interface.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/native_network_interface.cpp",
+  "old_name": "construct",
+  "new_name": "BFMENativeNetwork",
+  "before_sha256": "8438aead28ae96d147c13161e635c17df8ecef36ca7e8c41f2d881d888baf80e",
+  "after_sha256": "2269d8806c00bf28826fd6b968469e81cce064d7fa4d85b72b54bbc80b3bff9a",
+  "evidence": "targets/game/reverse/identity_evidence/006818b0-bfmenativenetwork-ctor.md",
+  "reason": "Identity correction, not a rename: the 0x006818B0 body is a constructor (base ctor, vftable store, returns this) that createTheNetwork reaches through ILT 0x0001E8F8 pinned as ??0BFMENativeNetwork@@QAE@XZ; the stand-in member construct() becomes that constructor."
  }
 ]
