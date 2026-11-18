@@ -1344,6 +1344,7 @@ void StatDebugDisplay( DebugDisplayInterface *, void *, FILE *fp )
 /** Calculates an adequately speedy terrain Level Of Detail. */
 //=============================================================================
 // ?calculateTerrainLOD@W3DDisplay@@IAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x006E8E60 is W3DDisplayCalculateTerrainLOD.cpp
 void W3DDisplay::calculateTerrainLOD( void )
 {
 	const Int NUM_SAMPLES=20;
@@ -1422,6 +1423,7 @@ void W3DDisplay::calculateTerrainLOD( void )
 #endif
 
 }
+#endif
 
 
 // W3DDisplay::getAverageFPS is defined byte-exact in W3DDisplayState.cpp (0x006E9140).
