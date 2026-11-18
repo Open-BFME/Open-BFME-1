@@ -607,6 +607,7 @@ void AI::parseAiDataDefinition(INI *ini)
  * Destroy the given AI Group
  */
 // ?destroyGroup@AI@@QAEXPAVAIGroup@@@Z present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x0014BC40 is AIGroup_destroy.cpp
 void AI::destroyGroup( AIGroup *group )
 {
 	std::list<AIGroup *>::iterator i = std::find( m_groupList.begin(), m_groupList.end(), group );
@@ -624,6 +625,12 @@ void AI::destroyGroup( AIGroup *group )
 	// destroy group
 	group->deleteInstance();
 }
+#endif
+// Keeps the std::find/__find<list<AIGroup*>::iterator> COMDAT rows emitted from this TU now that the non-retail
+// destroyGroup body (their only user) is disabled.
+typedef std::list<AIGroup *>::iterator AIGroupListIterator;
+AIGroupListIterator (*g_keepAIGroupFind)(AIGroupListIterator, AIGroupListIterator, AIGroup * const &) = &std::find<AIGroupListIterator, AIGroup *>;
+AIGroupListIterator (*g_keepAIGroupFindInput)(AIGroupListIterator, AIGroupListIterator, AIGroup * const &, const std::input_iterator_tag &) = &std::__find<AIGroupListIterator, AIGroup *>;
 
 /**
  * Given an ID, return the associated AIGroup
