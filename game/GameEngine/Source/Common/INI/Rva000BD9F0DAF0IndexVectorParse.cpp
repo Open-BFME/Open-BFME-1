@@ -9,7 +9,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // These are the already-proven four-byte POD vector element identities whose
 // retail overflow bodies are the two incremental-link aliases used here.  The

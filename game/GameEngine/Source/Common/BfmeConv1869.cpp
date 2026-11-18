@@ -2,7 +2,7 @@
 // BaseHeightMapRenderObjClass::getHeightMapHeight); the owner keeps its placeholder name.
 #include <math.h>
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

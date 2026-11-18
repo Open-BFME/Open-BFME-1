@@ -22,7 +22,7 @@
 typedef int ObjectID;
 
 
-enum DamageType { };
+#include "../../../Include/Common/Enums/DamageType.h"
 #include "../../../Include/Common/Enums/DeathType.h"
 
 #include "ascii_string.h"

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 #include <string.h>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 struct FieldParse;
 
 template <typename T>

@@ -7,7 +7,7 @@
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum KindOfType
 {

@@ -23,7 +23,7 @@ typedef unsigned short PlayerMaskType;
 typedef BitFlags<192> KindOfMaskType;
 
 enum KindOfType { Rva00329C20KindBit119 = 119 };
-enum DistanceCalculationType { FROM_CENTER_2D = 0 };
+#include "../../../Include/Common/Enums/DistanceCalculationType.h"
 
 #define MAKE_KINDOF_MASK(bit) KindOfMaskType(KindOfMaskType::kInit, (bit))
 

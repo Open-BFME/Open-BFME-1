@@ -17,7 +17,7 @@ template<int N> class BitFlags { public: _STL::bitset<N> bits;
 };
 template<int N> static __forceinline void checkedFlag(BitFlags<N> *flags,int n) { flags->bits.set(n); }
 class Object; class Module; class Drawable;
-enum ObjectID { INVALID_ID };
+#include "../../../../Include/Common/ObjectID.h"
 class AudioEventRTS { public: AudioEventRTS(const AudioEventRTS&); ~AudioEventRTS(); void setObjectID(ObjectID); AudioEventRTS& operator=(const AudioEventRTS&); void setPlayingHandle(unsigned); void* vptr; char payload[0x6c]; };
 class AudioManager { public:
  virtual void slot0();

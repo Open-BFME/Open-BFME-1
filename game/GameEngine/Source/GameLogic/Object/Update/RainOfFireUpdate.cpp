@@ -32,10 +32,10 @@
 
 
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // class-gate: allow Coord3D the ledgered callees take the struct-keyed (PBU) Coord3D and this body needs only its three components.
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

@@ -6,7 +6,7 @@
 
 #include <map>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ThingTemplate;
 typedef _STL::map<const ThingTemplate *, Int> ObjectCountMap;

@@ -133,10 +133,10 @@ public:
 	Coord3D m_position;
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // The vtable at the interface subobject (+0x10) points at the body below.
 // Keeping this TU's receiver as that interface view reproduces the retail

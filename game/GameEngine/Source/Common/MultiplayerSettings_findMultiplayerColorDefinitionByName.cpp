@@ -18,8 +18,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 template <typename T> class StringBase

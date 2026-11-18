@@ -28,7 +28,7 @@ typedef unsigned short PlayerMaskType;
 #include "game_logic_dispatch.h"
 enum KindOfType { KINDOF_STRUCTURE = 7 };
 enum AllowPlayerRelationship { ALLOW_NEUTRAL = 8 };
-enum DistanceCalculationType { FROM_CENTER_2D = 0 };
+#include "../../../Include/Common/Enums/DistanceCalculationType.h"
 enum IterOrderType { ITER_FASTEST = 0 };
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

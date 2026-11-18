@@ -32,10 +32,10 @@ enum ObjectShroudStatus
 	OBJECTSHROUD_SHROUDED
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
+
 
 class Object
 {

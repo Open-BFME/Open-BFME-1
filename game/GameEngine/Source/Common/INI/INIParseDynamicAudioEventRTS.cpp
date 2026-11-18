@@ -24,8 +24,8 @@
 #include "Common/INIException.h"
 #include "Common/AsciiString.h"	// inputs/reference/shims/ini: isEmpty and str() inline, as retail emits them
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 

@@ -37,11 +37,11 @@ typedef unsigned char UnsignedByte;
 
 #define NULL 0
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23
-};
+#include "../../../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
+
 
 template <int N>
 class BitFlags

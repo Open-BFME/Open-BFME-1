@@ -20,13 +20,13 @@ typedef int PEERBool;
 enum RoomType { TitleRoom, GroupRoom, StagingRoom };
 enum { MAX_SLOTS=8 };
 enum { PEER_ADD, PEER_UPDATE, PEER_REMOVE, PEER_CLEAR };
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 // this class encapsulates a request for the peer thread
 class PeerRequest
@@ -207,24 +207,24 @@ enum DisconnectReason
 	DISCONNECT_MAX,
 };
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED,
-};
+#include "../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // this class encapsulates an action the peer thread wants from the UI
 class PeerResponse

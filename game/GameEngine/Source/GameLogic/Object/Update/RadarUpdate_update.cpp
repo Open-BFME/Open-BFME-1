@@ -46,10 +46,10 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // Global bit indices into the 320-bit set at Object+0x110, derived from this
 // body's word 2 (+0x118) and its 0x400 / 0x800 masks -- NOT from the ZH enum,

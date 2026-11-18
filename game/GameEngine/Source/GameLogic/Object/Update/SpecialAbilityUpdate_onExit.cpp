@@ -19,7 +19,7 @@
 typedef unsigned int AudioHandle;
 
 #include "../../command_source_type.h"
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/NameKeyType.h"
 enum KindOfType { KINDOF_6 = 6, KINDOF_83 = 0x83 };
 enum ObjectStatusTypes { OBJECT_STATUS_3E = 0x3e };
 

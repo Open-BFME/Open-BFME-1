@@ -1,7 +1,7 @@
 // Retail 0x00299250: stealth state cleanup and conditional audio notification.
 // Address-derived module owner; offsets read directly from retail.
 struct AudioEventInfoRef { void* ptr; };
-enum ObjectID { INVALID_ID=0 };
+#include "../../../../Include/Common/ObjectID.h"
 class AudioEventRTS {
 public:
  AudioEventRTS(const AudioEventInfoRef&,ObjectID);
