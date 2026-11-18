@@ -3,7 +3,7 @@
 // The anonymous LAN game-info decoder at 0x0068EF70 calls this bounded byte
 // reader at retail address 0x0068D990.
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" UnsignedByte *readByteFromBuffer(UnsignedByte *buffer,
 		UnsignedByte *out, UnsignedByte *end)

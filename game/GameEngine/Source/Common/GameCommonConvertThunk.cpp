@@ -25,7 +25,7 @@
 // single 0.04f literal the way it would for a same-TU local `const` -- which
 // is exactly why the retail bytes still show two separate loads of the same
 // address. Referencing it the same way (a named extern) reproduces that.
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern const Real g_Va012A86A8;
 

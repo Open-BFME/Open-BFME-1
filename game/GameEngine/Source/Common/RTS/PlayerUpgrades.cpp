@@ -27,7 +27,7 @@
 // clear(getUpgradeMask()) calls produces the indexing form and misses. So both
 // overloads stay, now next to each other where the difference is visible.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 enum UpgradeStatusType

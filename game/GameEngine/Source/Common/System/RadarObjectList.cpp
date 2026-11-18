@@ -21,9 +21,9 @@
 // isTemporarilyHidden's identity is fixed by W3DRadar::renderObjectList, whose
 // matched body calls it at the source loop's isTemporarilyHidden() test.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class RadarObject;
 

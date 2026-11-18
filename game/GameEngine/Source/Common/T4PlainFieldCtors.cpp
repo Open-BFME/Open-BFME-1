@@ -45,7 +45,7 @@
 // fields are spelled `int` and only the constants that decode as floats are
 // spelled `float`.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---------------------------------------------------------------------------
 // 0x005FF910 -- the default constructor of Gen_005e9a20.  The class is spelled

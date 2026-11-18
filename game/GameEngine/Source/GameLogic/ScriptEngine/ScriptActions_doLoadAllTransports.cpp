@@ -23,7 +23,7 @@
 #include <utility>
 
 #include "../../../Include/Common/ScalarTypes.h"
-enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff };
+#include "../../../Include/Common/ObjectID.h"
 typedef _STL::pair<ObjectID, unsigned int> PairObjectIDAndUInt;
 typedef _STL::pair<ObjectID, ObjectID> PairObjectID;
 typedef _STL::vector<PairObjectIDAndUInt> EntriesVec;

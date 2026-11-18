@@ -48,7 +48,7 @@ template<class T> __forceinline T &sdField(void *p,int o){return *(T*)((char*)p+
 // UnicodeString, Relationship and ObjectShroudStatus declarations.
 
 // The key-generator callee is the matched ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z.
-enum NameKeyType { FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 
@@ -56,8 +56,8 @@ class Module;
 class ParticleSystemZA;
 class Matrix3D;
 
-enum ObjectID {};
-enum RadarEventType {};
+#include "../../../../Include/Common/ObjectID.h"
+#include "../../../../Include/Common/Enums/RadarEventType.h"
 
 // ?bfmeNullSystemZA@@YAPAVParticleSystemZA@@XZ (matched, 0x005CFF50)
 ParticleSystemZA *bfmeNullSystemZA();

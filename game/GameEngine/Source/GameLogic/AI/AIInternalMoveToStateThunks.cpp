@@ -1,13 +1,13 @@
 // readable body of ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // readable body of ?update@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // readable body of ?update@AIMoveOutOfTheWayState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
-enum StateReturnType
-{
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
-enum StateExitType
-{
-};
+
+
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState

@@ -21,11 +21,11 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0,
-	EXIT_RESET = 1
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
+
 
 // BFME Object leaf used only for the model-condition word at +0x118 and the
 // post-clear notify thunk (retail ILT 0x2191d -> body 0x1be1c0).

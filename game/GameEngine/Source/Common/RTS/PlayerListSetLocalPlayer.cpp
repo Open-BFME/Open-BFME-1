@@ -35,7 +35,7 @@
 // sites, so the byte gate does not depend on which one is which -- but the
 // shapes match the two calls, and taking their address is what retail does.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 class Team;

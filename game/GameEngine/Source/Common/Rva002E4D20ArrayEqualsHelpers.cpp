@@ -7,7 +7,7 @@
 // at /O2 for a small fixed count. IDENTITY IS NOT RECOVERED; class names are
 // derived from address.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---------------------------------------------------------------------------
 // 0x002E4D20 -- 3-element form

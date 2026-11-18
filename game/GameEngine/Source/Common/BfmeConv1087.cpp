@@ -76,7 +76,7 @@ void BfmeQ1087::bfmeGo1087A(void)
 
 // Rows at the ILTs: ScienceStore::getScienceFromInternalName (0x000E7460) and the
 // player-mask resolver ScriptEngine::unidentified_0034DB40 (0x0034DB40).
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../Include/Common/Enums/ScienceType.h"
 class AsciiString;
 
 class ScienceStore

@@ -30,7 +30,7 @@
 struct IRegion2D { ICoord2D lo, hi; };
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // upstream layout: inputs/reference/shims/pathfind/GameLogic/AIPathfind.h
 class PathfindCell

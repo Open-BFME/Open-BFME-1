@@ -29,15 +29,15 @@ public:
     }
 };
 
-enum SlotState
-{
-    SLOT_OPEN,
-    SLOT_CLOSED,
-    SLOT_EASY_AI,
-    SLOT_MED_AI,
-    SLOT_BRUTAL_AI,
-    SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 // Retail calls getName and isUser through their separate incremental-link thunks.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h

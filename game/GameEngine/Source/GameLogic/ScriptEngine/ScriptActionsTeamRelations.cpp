@@ -16,14 +16,14 @@
 
 class AIGroup;
 
-enum AttitudeType
-{
-	AI_SLEEP = -2,
-	AI_PASSIVE = -1,
-	AI_NORMAL = 0,
-	AI_ALERT = 1,
-	AI_AGGRESSIVE = 2
-};
+#include "../../../Include/Common/Enums/AttitudeType.h"
+
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team

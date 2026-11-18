@@ -24,7 +24,7 @@
 // this function as Bool, and any file under inputs/reference/shims/ forces the full
 // gate.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum NetCommandType
 {

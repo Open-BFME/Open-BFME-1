@@ -5,10 +5,10 @@
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum DamageType
-{
-	DAMAGE_EXPLOSION = 0
-};
+#include "../../../../Include/Common/Enums/DamageType.h"
+
+
+
 
 struct DamageInfoInput
 {

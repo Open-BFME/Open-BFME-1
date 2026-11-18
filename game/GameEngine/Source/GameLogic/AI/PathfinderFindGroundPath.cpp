@@ -54,11 +54,11 @@ struct IRegion2D
 extern Bool ClipLine2D(ICoord2D *p1, ICoord2D *p2, ICoord2D *c1, ICoord2D *c2,
 	IRegion2D *clipRegion);
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 enum { COST_ORTHOGONAL = 10 };
 

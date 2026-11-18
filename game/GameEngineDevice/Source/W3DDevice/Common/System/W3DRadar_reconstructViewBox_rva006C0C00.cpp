@@ -7,7 +7,7 @@
 // The retail BFME layout is wider than the published Zero Hour W3DRadar
 // declaration, so this TU gives the recovered body its actual BFME offsets.
 
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // These are the WWMath classes used by retail.  Their empty constructor and
 // destructor are existing canonical functions; declaring them here makes the

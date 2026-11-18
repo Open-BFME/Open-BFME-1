@@ -26,7 +26,7 @@ class Object;
 class ObjectCreationList;
 class FXList;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 typedef std::list<ObjectID> ObjectIDList;
 
 enum { BRIDGE_MAX_TOWERS = 4 };

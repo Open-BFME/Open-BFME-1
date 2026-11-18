@@ -14,7 +14,7 @@
 // candidate or of the running best and reloads through it, which is what the
 // fcomp/fnstsw/test ah,0x41 pair feeds.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // The running maximum comes back as a REFERENCE: that is what makes MSVC pick
 // the address of the candidate or of the running best and reload through it,

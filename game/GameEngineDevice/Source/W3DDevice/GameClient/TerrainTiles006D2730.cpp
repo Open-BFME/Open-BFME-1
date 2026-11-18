@@ -147,7 +147,7 @@ int TerrainTiles006D2730::initializeTiles(int x, int y, WorldHeightMap *map, voi
 // through the 0x000085F8 ILT to the matched W3DTerrainBackground::rva0072DC30
 // (RenderInfoClass &, Bool, Bool) at 0x0072DC30.
 class RenderInfoClass;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 class Rva006D2480Tile
 {
 public:

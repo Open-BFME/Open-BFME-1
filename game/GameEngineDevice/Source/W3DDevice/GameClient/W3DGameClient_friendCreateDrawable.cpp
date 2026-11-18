@@ -8,10 +8,10 @@
 
 class ThingTemplate;
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../../../GameEngine/Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 class Drawable
 {

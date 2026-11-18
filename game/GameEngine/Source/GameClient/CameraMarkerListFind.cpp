@@ -12,7 +12,7 @@
 // matched at 0x001AA900, so the camera resolves its target through a second,
 // separate named list that lives on the client side.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)

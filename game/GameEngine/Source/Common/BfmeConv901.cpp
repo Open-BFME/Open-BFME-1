@@ -141,7 +141,7 @@ public:
 // game/GameEngine/Source/GameClient/InGameUI.cpp.  Only the linked name may be
 // referenced here; BfmeGlobJB above stays as this TU's local view of the
 // pointee, so the use casts.
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class InGameUI
 {

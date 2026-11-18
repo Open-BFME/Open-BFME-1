@@ -40,7 +40,7 @@ static Coord3D getLocalEffectPos( const FXLocInfo *locInfo, Drawable *draw )
 		if( !locInfo->randomBone )
 		{
 			Coord3D pos;
-		
+
 			// get the bone position
 			int count = draw->getPristineBonePositions( locInfo->boneName.str(), 0, &pos, 0, 1, 0 );
 
@@ -83,7 +83,7 @@ inline Coord3D &Coord3D::operator=(const Coord3D &other) { x=other.x; y=other.y;
 class Matrix3D;
 class ParticleSystemTemplate;
 enum BodyDamageType { BODY_PRISTINE, BODY_DAMAGED, BODY_REALLYDAMAGED, BODY_RUBBLE };
-enum ParticleSystemID { INVALID_PARTICLE_SYSTEM_ID=0 };
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
 class DamageInfo {
 public:
  char m_unmodelled00[8];
@@ -213,7 +213,7 @@ void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo,
 	// get the source of the damage if present
 	if( damageInfo )
 		damageSource = TheBfmeGameLogic->findObjectByID( damageInfo->m_sourceID );
-	
+
 	// remove any particle systems that might be emitting from our old state
 	for( i = 0; i < 12; i++ )
 	{
@@ -260,7 +260,7 @@ void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo,
 				}  // end if
 
 			}  // end if
-					
+
 			// do any object creation list for our new state
 			if( modData->m_OCL[ newState ][ i ].ocl )
 			{
@@ -292,7 +292,7 @@ void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo,
 					BfmeParticleSystemHandle pSystem = TheParticleSystemManager->createParticleSystem( pSystemT, true );
 					if( pSystem )
 					{
-			
+
 						// get the what is the position we're going to playe the effect at
 						pos = getLocalEffectPos( &modData->m_particleSystem[ newState ][ i ].locInfo, draw );
 
@@ -315,11 +315,11 @@ void TransitionDamageFX::onBodyDamageStateChange( const DamageInfo* damageInfo,
 				}  // end if
 
 			}  // end if
-						
+
 		}  // end for i
 
 	}  // end if
-			
+
 	if( rva002525E0NeighborStateChanged( oldState, newState ) )
 		rva002523E0( true );
 

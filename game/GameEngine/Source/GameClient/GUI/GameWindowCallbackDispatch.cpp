@@ -6,11 +6,11 @@
 #include "../../../Include/Common/ScalarTypes.h"
 typedef UnsignedInt WindowMsgData;
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED,
-	MSG_HANDLED
-};
+#include "../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 // Honest address-derived identity: GameWindowManager's named system-message
 // caller at 0x0047C9F0 reaches this ILT, and its raw 22-byte target proves only

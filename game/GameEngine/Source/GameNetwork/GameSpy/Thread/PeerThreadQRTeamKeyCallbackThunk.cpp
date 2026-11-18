@@ -14,8 +14,8 @@
 // a local stand-in sized to the one offset retail proves, and nothing else in
 // the tree sees it.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 typedef void *PEER;
 typedef void *qr2_buffer_t;

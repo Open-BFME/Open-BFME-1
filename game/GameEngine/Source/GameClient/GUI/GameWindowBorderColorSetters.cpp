@@ -17,7 +17,7 @@
 // were named that way and have now been repointed; the three borderColor
 // bodies -- the third of each group -- are claimed here under their real names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int Color;			// HHH, so signed here
 
 enum { MAX_DRAW_DATA = 9 };

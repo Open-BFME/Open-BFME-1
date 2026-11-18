@@ -15,7 +15,7 @@ struct BfmeM1091
 
 // Rows at the ILTs retail calls: Player::isCapableOfPurchasingScience (0x000CFDF0),
 // hasAnyBuildFacility (0x000CE100), hasAnyObjects (0x000CE0B0); the view carries only those.
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../Include/Common/Enums/ScienceType.h"
 
 class Player
 {
