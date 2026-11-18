@@ -5,9 +5,9 @@
 #include "Lib/Coord3D.h"
 void *__cdecl operator new[](unsigned int);
 void __cdecl operator delete[](void *);
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Native x87 rounding for the CRT floor result.
 __forceinline long fast_float2long_round(float value)

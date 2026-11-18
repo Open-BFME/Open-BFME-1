@@ -17,9 +17,9 @@
 void *operator new[]( unsigned int size );
 void operator delete[]( void *p );
 
-typedef bool Bool;
-typedef int Int;
-typedef char Char;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef wchar_t WideChar;
 
 #define MAX_UITEXT_LENGTH (10*1024)

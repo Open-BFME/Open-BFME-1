@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /GX
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
-typedef unsigned int UnsignedInt;
+
+
 
 struct GameLogicBFMERetailLayout
 {

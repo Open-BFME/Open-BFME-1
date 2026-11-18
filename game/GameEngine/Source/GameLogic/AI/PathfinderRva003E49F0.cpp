@@ -6,9 +6,9 @@
 // helper reproduce retail. The fld/fistp helper is the established x87 blocker.
 // Evidence: targets/game/reverse/identity_evidence/003e49f0-radius-lifetime.md
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;

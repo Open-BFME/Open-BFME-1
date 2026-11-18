@@ -20,9 +20,9 @@
 // tested, so the source narrows it: reading the whole word gives a test on eax
 // where retail tests al.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 struct RvaC4390First;
 

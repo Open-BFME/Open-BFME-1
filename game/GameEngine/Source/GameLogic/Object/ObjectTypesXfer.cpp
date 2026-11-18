@@ -6,9 +6,9 @@
 #include <vector>
 #include "StringInline.h"
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct Rva001DC690Version
 {

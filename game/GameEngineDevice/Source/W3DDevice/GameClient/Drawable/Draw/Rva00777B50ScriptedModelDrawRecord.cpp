@@ -20,9 +20,9 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 int GetGameClientRandomValue(int lo, int hi, char *file, int line);
 

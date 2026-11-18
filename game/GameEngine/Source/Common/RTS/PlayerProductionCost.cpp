@@ -27,10 +27,10 @@
 // unchanged under canAffordBuild's flags (/GX being the old spelling of
 // /EHsc), which is what let the two share a TU.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Player;
 

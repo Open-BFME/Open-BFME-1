@@ -28,9 +28,9 @@
 // single `COMMAND_SOURCE_UNKNOWN = 0` -- neither body reads the value, and the
 // object handler's file already carried the real list.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class CommandButton;
 struct Coord3D;

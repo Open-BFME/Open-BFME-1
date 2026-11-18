@@ -14,9 +14,9 @@
 #include <exception>
 #include <hash_map>
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);

@@ -9,9 +9,9 @@
 // own receiver as the owner pointer, so the second argument is that owner view.
 // The method name stays address-derived: no caller names this slot.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include <math.h>
 

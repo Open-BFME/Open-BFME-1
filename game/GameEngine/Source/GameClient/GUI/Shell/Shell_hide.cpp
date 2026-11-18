@@ -16,9 +16,9 @@
 // which is then set to one. That audio call is slot 19 of the same table
 // Gen_00417cb0::alt uses.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class BfmeShellScreen
 {

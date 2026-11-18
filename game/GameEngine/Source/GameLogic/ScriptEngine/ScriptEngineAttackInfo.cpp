@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: ScriptEngine::getAttackInfo, retail 0x0033DD70, 555 bytes.
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 

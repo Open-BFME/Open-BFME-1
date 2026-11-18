@@ -25,9 +25,9 @@
 // The byte at this+0x108c is written by each active-button path, so it is
 // represented explicitly here rather than silently losing that retail store.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

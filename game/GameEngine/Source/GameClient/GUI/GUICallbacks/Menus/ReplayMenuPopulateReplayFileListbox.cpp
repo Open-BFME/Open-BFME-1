@@ -17,9 +17,9 @@
 // ZH's GameInfo lays out m_mapCRC at +0x3c, so that AsciiString keeps an
 // offset name.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 typedef unsigned int size_t;
 

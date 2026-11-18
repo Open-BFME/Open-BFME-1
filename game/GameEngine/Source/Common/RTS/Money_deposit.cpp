@@ -15,9 +15,9 @@
 // writeFileEnd, collectMsgStats, startScrollTime, and endScrollTime callees all
 // use the same receiver, and this file reaches its money counters at +4/+8.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS

@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef short Short;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class WinInstanceData;
 

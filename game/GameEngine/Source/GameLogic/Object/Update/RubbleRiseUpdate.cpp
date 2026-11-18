@@ -13,10 +13,10 @@
 //
 // Its own TU because #line in a shared file renumbers everything beneath it.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 Int GetGameLogicRandomValue( Int lo, Int hi, char *file, Int line );
 #define GameLogicRandomValue(lo, hi) GetGameLogicRandomValue((lo), (hi), (char *)__FILE__, __LINE__)

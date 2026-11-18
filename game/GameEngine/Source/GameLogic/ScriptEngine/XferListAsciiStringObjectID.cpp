@@ -6,9 +6,9 @@
 #include <list>
 #include "string_base.h"
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersion
 {

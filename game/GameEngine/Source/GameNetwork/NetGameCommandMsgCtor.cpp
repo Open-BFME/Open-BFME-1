@@ -4,9 +4,9 @@
 // NetCommandMsg_ctors.cpp; kept in its own TU so the "new NetGameCommandMsg"
 // call site in NetPacket_readGameMessage.cpp cannot inline this body.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum NetCommandType
 {

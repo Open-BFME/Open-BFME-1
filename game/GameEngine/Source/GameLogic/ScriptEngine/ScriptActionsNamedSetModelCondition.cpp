@@ -9,9 +9,9 @@
 // body is already sourced in ScriptActionsTeamSetModelCondition.cpp and
 // establishes the shared Object and outlined-helper layout.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

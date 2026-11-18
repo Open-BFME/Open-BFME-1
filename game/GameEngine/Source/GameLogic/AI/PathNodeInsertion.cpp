@@ -31,10 +31,10 @@
 // member accesses, the compiler reloads it between the two stores and the body
 // grows three bytes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

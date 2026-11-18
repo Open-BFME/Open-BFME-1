@@ -14,9 +14,9 @@
 // bound becomes a cell index with floor(v * 0.1f) (MAP_XY_FACTOR 10) rounded by
 // fast_float2long_round, and the cursor starts one row before the first cell.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 __forceinline long fast_float2long_round(float f)

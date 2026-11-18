@@ -33,9 +33,9 @@
 // The production-condition file built without /EHsc; it byte-verifies unchanged
 // with it, probed before merging.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum GameDifficulty
 {

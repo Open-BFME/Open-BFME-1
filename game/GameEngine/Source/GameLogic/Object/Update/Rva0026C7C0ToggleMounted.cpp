@@ -3,9 +3,9 @@
 // address-derived identity while the observed ToggleMounted layout is used.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 

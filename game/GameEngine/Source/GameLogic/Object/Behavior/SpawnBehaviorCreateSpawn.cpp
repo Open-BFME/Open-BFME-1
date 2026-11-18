@@ -36,11 +36,11 @@
 #include <bitset>
 #include <list>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
-typedef bool Bool;
-typedef float Real;
+
+
 
 class Team;
 class Object;

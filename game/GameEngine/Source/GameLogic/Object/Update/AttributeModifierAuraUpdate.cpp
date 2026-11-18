@@ -11,10 +11,10 @@
 #include <bitset>
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 template<> inline bool StringBase<char>::isEmpty() const {return m_data == 0 || m_data->length == 0;}
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned UnsignedInt;
-typedef float Real;
+
 struct Coord3D;
 enum IterOrderType {ITER_FASTEST=0};
 template<unsigned N> class AuraFlags2803 {

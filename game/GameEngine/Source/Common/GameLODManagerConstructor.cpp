@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 struct BfmeStaticGameLODInfo
 {

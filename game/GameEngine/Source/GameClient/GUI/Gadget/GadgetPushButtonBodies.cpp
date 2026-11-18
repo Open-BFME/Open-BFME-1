@@ -53,9 +53,9 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int WindowMsgData;
 
 enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };

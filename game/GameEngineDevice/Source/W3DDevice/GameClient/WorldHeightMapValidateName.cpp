@@ -14,7 +14,7 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // ?validateName@@YA?AVAsciiString@@ABV1@H@Z
 static __declspec(noinline) AsciiString validateName(const AsciiString &n, Int flags)
@@ -22,8 +22,8 @@ static __declspec(noinline) AsciiString validateName(const AsciiString &n, Int f
 	return n;
 }
 
-typedef float Real;
-typedef bool Bool;
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

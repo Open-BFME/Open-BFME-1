@@ -20,9 +20,9 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // BFME's two-byte version record (Xfer::Version in xfer.h, one pointer to
 // slot +0x28).  This body stores 1 into both bytes; initialising them in a

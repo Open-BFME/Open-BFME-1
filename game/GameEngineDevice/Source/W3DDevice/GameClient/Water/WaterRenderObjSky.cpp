@@ -22,9 +22,9 @@
 #include "WW3D2/vertmaterial.h"
 #include "WWMath/vector3.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 void __cdecl BoxSetTexture(UnsignedInt stage, TextureBaseClass *&texture);
 

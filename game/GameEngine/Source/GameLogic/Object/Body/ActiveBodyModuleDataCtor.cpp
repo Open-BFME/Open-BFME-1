@@ -27,9 +27,9 @@
 // FX list at +0xAA4 through the one guarded lookup, with isNotEmpty() and str()
 // spelled the way those two inline accessors compile.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 // vector elements: trivially destructible, so only their size reaches the bytes
 struct Gen_p12pod { int a[3]; };

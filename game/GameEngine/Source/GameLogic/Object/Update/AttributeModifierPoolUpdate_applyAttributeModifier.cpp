@@ -35,9 +35,9 @@
 #include <string.h>
 #include <bitset>
 #include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 #include "../../../../Include/Common/NameKeyType.h"
 
 template <int NUMBITS> class BitFlags {

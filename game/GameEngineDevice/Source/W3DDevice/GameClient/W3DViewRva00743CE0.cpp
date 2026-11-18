@@ -6,9 +6,9 @@
 // offset and pitch, and faces it along the object's orientation. Native method
 // name and argument meaning are unproven, so the name keeps the address.
 // Evidence: targets/game/reverse/identity_evidence/00743ce0-w3dview-object-camera-mode.md
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../GameEngine/Include/Common/ObjectID.h"
 

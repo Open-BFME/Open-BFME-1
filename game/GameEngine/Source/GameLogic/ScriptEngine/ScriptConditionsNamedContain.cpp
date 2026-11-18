@@ -28,9 +28,9 @@
 // pinned name, BfmeNamedContain::getContainCount, is fixed, so the class keeps
 // that name here rather than inventing a better one.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

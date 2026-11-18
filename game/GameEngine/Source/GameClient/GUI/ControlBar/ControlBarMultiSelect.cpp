@@ -2,10 +2,10 @@
 // ControlBar::updateContextMultiSelect, retail 0x004A9620, 688 bytes including the eight-entry jump table.
 // Twin: Zero Hour ControlBarMultiSelect.cpp; reached from ControlBar::update for context 7.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" void *__cdecl memset(void *dst, int value, unsigned int size);
 #pragma intrinsic(memset)

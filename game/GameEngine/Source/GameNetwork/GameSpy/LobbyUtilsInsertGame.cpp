@@ -9,11 +9,11 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 typedef int Color;
 
 extern const unsigned short BFMEEmptyUnicodeString;

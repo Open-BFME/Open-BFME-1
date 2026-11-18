@@ -12,9 +12,9 @@ extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *buffer, unsign
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *file);
 extern "C" __declspec(dllimport) int __cdecl fgetpos(FILE *file, long *position);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)

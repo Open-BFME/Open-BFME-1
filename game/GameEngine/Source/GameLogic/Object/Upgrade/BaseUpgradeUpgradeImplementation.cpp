@@ -31,10 +31,10 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // Retail's empty-string sentinel: `mov ebx, 0x107388b` at +0xb4 is a DIR32
 // relocation to ?Rva006A16B0Empty@@3PADA (targets/game/reverse/symbols.csv, 0x0107388B).

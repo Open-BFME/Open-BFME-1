@@ -9,3 +9,7 @@ No manual EH label, alias or pin is added, and no verifier or baseline changes.
 The whole unbanked cohort was restored before selecting the other consumers.
 This file and the failed native experiment count as zero completed tasks.
 Revisit only when native funclet identity evidence or the consumer context changes.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngine/Source/GameLogic/Object/Behavior/BezierProjectileBehaviorCalcFlightPath.cpp`: `?dup_00C0A890@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

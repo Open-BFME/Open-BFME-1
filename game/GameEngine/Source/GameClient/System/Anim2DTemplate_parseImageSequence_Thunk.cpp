@@ -3,9 +3,9 @@
 // The Anim2D field table in Anim2D.cpp registers this protected parser.
 // Retail places its body at RVA 0x005BB150 with a 381-byte boundary.
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
