@@ -2,10 +2,10 @@
 // Recovered from the EA Generals reference.  The four LZH-Light wrapper
 // calls are pinned to the matching retail wrapper bodies in this executable.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 typedef void *LZHL_DHANDLE;
 
 class LZHLDecompressor

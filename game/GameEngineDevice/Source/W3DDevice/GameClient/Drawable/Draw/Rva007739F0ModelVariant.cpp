@@ -1,9 +1,9 @@
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 void __cdecl operator delete(void *) throw();
 #include <set>

@@ -10,9 +10,9 @@
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *block);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" void * __cdecl memset(void *block, Int value, UnsignedInt bytes);
 #pragma intrinsic(memset)

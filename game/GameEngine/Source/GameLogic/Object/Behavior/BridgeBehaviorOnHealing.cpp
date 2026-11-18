@@ -15,8 +15,8 @@
 #include <hash_map>
 #include <list>
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 enum ObjectID { INVALID_ID = 0 };
 enum KindOfType { KINDOF_BRIDGE_TOWER = 24 };
 enum BodyDamageType { BODY_RUBBLE = 3 };

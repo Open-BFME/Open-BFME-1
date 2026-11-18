@@ -65,8 +65,8 @@
 #include "Common/BitFlags.h"
 extern const char *const g_bfmeNames012A68B0[];
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *left, const char *right );
 

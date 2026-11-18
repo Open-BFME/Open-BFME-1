@@ -35,10 +35,10 @@
 // timer's second count there. It is 0x1DC bytes, which is what the 0x1E0 frame
 // RequestAccept reserves for the message plus a UnicodeString temporary fixes.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 // MSVC 7.1 has no native wchar_t without /Zc:wchar_t; the game headers typedef
 // it the same way.
 typedef unsigned short WideChar;

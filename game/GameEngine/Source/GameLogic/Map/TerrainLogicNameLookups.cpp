@@ -38,9 +38,9 @@
 
 #pragma intrinsic(memcmp)
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 template <typename NUM>
 inline NUM sqr(NUM x)

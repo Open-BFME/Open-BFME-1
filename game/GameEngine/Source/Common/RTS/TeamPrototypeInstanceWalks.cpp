@@ -28,12 +28,12 @@
 // matched caller.  The old BitFlags<116> label was impossible: that type needs
 // four dwords, while every boundary in this chain returns with `ret 8`.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 template <int NUMBITS> class BitFlags

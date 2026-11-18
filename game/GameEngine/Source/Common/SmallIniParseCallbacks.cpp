@@ -44,10 +44,10 @@
 // IDENTITY IS NOT RECOVERED beyond the keywords: nothing here names the structs
 // the arguments point at, so their fields carry the keyword or the offset.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct LookupListRec;
 

@@ -39,8 +39,8 @@
 
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class ObjectFilter;
 class Player;

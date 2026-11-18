@@ -13,8 +13,8 @@
 #include <map>
 #include <vector>
 #include <string.h>
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #define TRUE true
 #define FALSE false
 

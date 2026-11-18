@@ -57,3 +57,11 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpenArchived.cpp`: `?dup_00C60E10@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpenArchived.cpp`: `?dup_00C60E1B@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngine/Source/Common/RTS/PlayerAIDispatch.cpp`: `?dup_00BF95A0@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/Common/RTS/PlayerAIDispatch.cpp`: `?dup_00BF95AB@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameClient/Terrain/TerrainRoadTypeConstructorThunk.cpp`: `?dup_00C3D03F@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
