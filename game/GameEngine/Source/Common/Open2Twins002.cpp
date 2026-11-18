@@ -35,10 +35,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 // bool, not unsigned char: the retail symbols spell it _N, and E would be a
 // different setBool and getBool entirely.
-typedef bool Bool;
+
 
 #define TRUE 1
 #define FALSE 0

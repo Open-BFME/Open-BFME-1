@@ -24,8 +24,8 @@
 // source-level difference: all nine bodies here are the same three expressions
 // written three times, and all nine matched on the first compile.
 
-typedef int Int;
-typedef short Short;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct Gen_000cd680_Element
 {

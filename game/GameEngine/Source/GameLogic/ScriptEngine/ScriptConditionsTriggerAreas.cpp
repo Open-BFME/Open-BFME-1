@@ -41,11 +41,11 @@
 // forwards to StringBase<char> is what puts the __$SEHRec$ store ahead of
 // `mov ecx, esp`.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
-typedef float Real;
+
+
+
 
 // Member-wise, because retail's copy is: the position's y and z go through
 // general registers into the local while x is fld'd straight out of the object

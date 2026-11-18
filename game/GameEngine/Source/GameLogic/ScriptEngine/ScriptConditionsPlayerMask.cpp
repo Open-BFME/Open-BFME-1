@@ -59,9 +59,9 @@
 #include "ascii_string.h"
 #include <bitset>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 template <int NUMBITS>

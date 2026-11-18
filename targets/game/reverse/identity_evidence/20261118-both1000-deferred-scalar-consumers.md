@@ -65,3 +65,17 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngine/Source/Common/RTS/PlayerAIDispatch.cpp`: `?dup_00BF95AB@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngine/Source/GameClient/Terrain/TerrainRoadTypeConstructorThunk.cpp`: `?dup_00C3D03F@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F01@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F0C@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F17@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F22@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F2D@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/AI/AttackStateMachineCtor.cpp`: `?dup_00C05F38@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

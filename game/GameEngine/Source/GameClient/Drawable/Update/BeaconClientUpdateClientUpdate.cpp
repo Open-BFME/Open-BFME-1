@@ -18,10 +18,10 @@
 // offset 3 units up, the failsafe no longer tints, and a hidden beacon is made
 // unselectable and sunk to -100.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum { FALSE = 0, TRUE = 1 };
 

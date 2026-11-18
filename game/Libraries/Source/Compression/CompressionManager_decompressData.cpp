@@ -22,9 +22,9 @@
 // Only what this body needs is declared; the compression headers would drag in
 // the whole EAC and ZLib surface for four prototypes.
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 extern "C" void * __cdecl memcpy(void *, const void *, unsigned int);

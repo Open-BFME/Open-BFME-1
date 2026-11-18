@@ -19,8 +19,8 @@
 // The four callees are TU-local helpers retail never named for us; they are
 // pinned by ILT address under _bfme_ names that describe their observed shape.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // Retail per-message check record, 24 bytes: two frame stamps this body
 // invalidates and a "played" flag at +0x14.

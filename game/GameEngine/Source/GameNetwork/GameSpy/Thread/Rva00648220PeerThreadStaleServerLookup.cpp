@@ -19,10 +19,10 @@
 
 typedef void *PEER;
 typedef int PEERBool;
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum RoomType
 {

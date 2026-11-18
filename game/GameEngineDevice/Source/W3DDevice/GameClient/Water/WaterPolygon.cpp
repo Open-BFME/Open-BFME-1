@@ -3,9 +3,9 @@
 // polygon object here. Its original class and method spelling are unproven;
 // the address-derived owner distinguishes it from the larger water renderer.
 
-typedef int Int;
-typedef char Char;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
 class TextureClass

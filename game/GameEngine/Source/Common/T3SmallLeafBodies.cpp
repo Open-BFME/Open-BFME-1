@@ -22,9 +22,9 @@
 // global or call anything, which is exactly why they verify completely and
 // exactly why nothing names them.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // ---------------------------------------------------------------------------
 // the four float less-than comparators
