@@ -9,9 +9,9 @@
 // Keep the real inline WWMath constructors visible to preserve the
 // translated bounding sphere's x87 value lifetimes.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class MeshClass;
 class RenderObjClass;

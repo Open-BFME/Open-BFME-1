@@ -9,8 +9,8 @@
 // Address-derived body for the +0xe4 interface subobject's slot 4.
 // The member-index value type stays opaque; only its verified key word is read.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

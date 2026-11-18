@@ -38,8 +38,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 class BuddyInfo;

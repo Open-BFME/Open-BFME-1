@@ -6,9 +6,9 @@
 // for an eligible member, and the GiveUpgrade special power is fired from
 // the source object at the destination team's first member.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

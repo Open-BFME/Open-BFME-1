@@ -18,8 +18,8 @@
 // The failure paths share one `xor al,al` epilogue while the two success paths
 // each set al and return, so the body is ZH's chain of early returns.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum { FREE_TO_EXIT = 0 };
 

@@ -11,8 +11,8 @@
 // and kills itself (damage 8), otherwise it issues one of two AI commands
 // (module flag +0x18), sets status bit 0x31 and raises model-condition bit 241.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

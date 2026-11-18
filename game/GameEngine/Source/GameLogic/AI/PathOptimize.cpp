@@ -19,8 +19,8 @@ class Object;
 class PathfindCell;
 class Path;
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int LocomotorSurfaceTypeMask;
 
 #include <stdlib.h>

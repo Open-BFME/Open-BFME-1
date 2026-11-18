@@ -27,8 +27,8 @@
 // at 0x001888D9, so the entry is declared here under an address-derived name.
 // Both are pinned in targets/game/reverse/symbols.csv.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

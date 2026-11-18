@@ -19,10 +19,10 @@
 // out of line, and retail builds each UnicodeString local with an inline
 // `m_data = 0` store.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef Int Color;
-typedef unsigned short UnsignedShort;
+
 typedef unsigned short WideChar;
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

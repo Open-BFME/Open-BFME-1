@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

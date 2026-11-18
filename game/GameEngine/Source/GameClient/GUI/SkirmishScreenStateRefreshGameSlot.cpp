@@ -2,8 +2,8 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // The wide string this body handles by value, as in the matched
 // SkirmishScreenStateRefreshPlayerTypeCombo.cpp: the default constructor and

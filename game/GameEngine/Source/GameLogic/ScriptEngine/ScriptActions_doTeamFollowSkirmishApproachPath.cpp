@@ -2,8 +2,8 @@
 // ?doTeamFollowSkirmishApproachPath@ScriptActions@@IAEXABVAsciiString@@0_N@Z
 // BFME team follow action at retail 0x002F2BD0 (498 bytes).
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> class StringBase
 {

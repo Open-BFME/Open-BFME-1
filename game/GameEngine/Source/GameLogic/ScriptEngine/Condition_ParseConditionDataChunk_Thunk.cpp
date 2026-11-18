@@ -9,8 +9,8 @@
 // BFME additionally frees stale parameters (both on a name mismatch and on
 // a parameter-count mismatch) where ZH only reset the count.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short DataChunkVersionType;
 #include "../../../Include/Common/NameKeyType.h"
 

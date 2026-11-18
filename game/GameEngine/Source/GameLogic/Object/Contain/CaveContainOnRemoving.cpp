@@ -23,8 +23,8 @@
 //
 // campaign=luna36h-20260907;lane=expand03;model=gpt-5.6-sol-ultra
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum DisabledType
 {

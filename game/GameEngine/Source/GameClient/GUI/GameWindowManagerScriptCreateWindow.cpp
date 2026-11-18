@@ -29,8 +29,8 @@
 #include "unicode_string.h"
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class WinInstanceData
 {

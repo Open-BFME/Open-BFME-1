@@ -25,8 +25,8 @@
 #include "ObjectDlinkPmf.h"
 #include <list>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))

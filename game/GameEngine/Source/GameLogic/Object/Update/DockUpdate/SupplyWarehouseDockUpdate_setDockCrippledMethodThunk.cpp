@@ -16,8 +16,8 @@
 // flag at this+0x64, and the AI pointer is at object+0x204, which agrees with
 // the TransportContain conversion done earlier.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef Int ObjectID;
 
 enum { INVALID_ID = 0 };

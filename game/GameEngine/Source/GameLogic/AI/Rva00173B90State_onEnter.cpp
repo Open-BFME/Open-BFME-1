@@ -4,8 +4,8 @@
 // variant receives the repulsor through the state-machine helper directly;
 // unlike the adjacent 0x00173D50 body it does not evaluate a vision range.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/ObjectID.h"
 
 

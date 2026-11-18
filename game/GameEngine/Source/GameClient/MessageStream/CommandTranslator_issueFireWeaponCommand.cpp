@@ -9,8 +9,8 @@
 
 #include <list>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

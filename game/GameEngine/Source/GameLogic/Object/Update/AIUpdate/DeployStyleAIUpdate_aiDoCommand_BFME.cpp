@@ -2,8 +2,8 @@
 // BFME retail RVA 0x002B5600: DeployStyleAIUpdate::aiDoCommand.
 // The command interface is the secondary subobject at primary+0x20.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../command_source_type.h"
 

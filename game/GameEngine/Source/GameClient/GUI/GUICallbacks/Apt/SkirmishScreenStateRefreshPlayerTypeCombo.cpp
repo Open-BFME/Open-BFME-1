@@ -2,8 +2,8 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 // The wide string this body handles by value. Retail inlines the default

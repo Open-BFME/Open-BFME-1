@@ -31,8 +31,8 @@
 // the level loads at +0xD8..+0xE7. Copying the owner's logic tag before its
 // call fixed the earlier transform-argument mismatch at +0xAE.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 

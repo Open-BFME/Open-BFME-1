@@ -16,8 +16,8 @@
 // Scratch-register choice follows two source details: the experience
 // pointer is a named local and object IDs are read through getID().
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType
 {

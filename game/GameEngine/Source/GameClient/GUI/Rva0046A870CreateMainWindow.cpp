@@ -3,8 +3,8 @@
 
 #include <list>
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // g_bfmeEmptyAE is the pooled empty string at 0x0107388B (dir32_addresses.csv,
 // ?g_bfmeEmptyAE@@3QBDB).  0x00418F52 is the matched 5-byte ILT thunk

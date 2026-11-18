@@ -16,8 +16,8 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::UnicodeString( const UnicodeString &that ) { ( (StringBase<unsigned short> *)this )->StringBase<unsigned short>::StringBase( *(const StringBase<unsigned short> *)&that ); }
 inline UnicodeString::~UnicodeString() { ( (StringBase<unsigned short> *)this )->releaseBuffer(); }
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
 
 enum KindOfType

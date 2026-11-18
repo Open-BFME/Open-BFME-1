@@ -57,8 +57,8 @@ inline UnicodeString &UnicodeString::operator+=(const UnicodeString &s)
 	return *this;
 }
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // Slot order as in the matched SkirmishScreenStateRva005294F0.cpp: the two
 // fetch overloads land at +0x24 (AsciiString) and +0x28 (const char *).

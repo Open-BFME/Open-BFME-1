@@ -24,8 +24,8 @@
 // the out-of-line copy is 0x0005E4C0
 template<> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 // retail SpecialPower name table 0x00EA8D40 (targets/game/reverse/name_tables.tsv), in index order

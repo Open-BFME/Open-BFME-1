@@ -7,8 +7,8 @@
 // bfmeAllowsRelationship(6, launcher->find(0)) then testStatus(0xB).
 // handle() at 0x001F08B0 calls this as its last thiscall (ILT 0x00048D06).
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/ObjectID.h"
 
 

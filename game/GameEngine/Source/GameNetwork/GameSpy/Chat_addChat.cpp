@@ -47,8 +47,8 @@ template <> inline __declspec(noinline) int StringBase<char>::compare(const Stri
     if (result == 0) result = myLen-len;
     return result;
 }
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef wchar_t WideChar;
 #define FALSE false
 #define TRUE true

@@ -7,8 +7,8 @@
 #include <string.h>
 #include <vector>
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

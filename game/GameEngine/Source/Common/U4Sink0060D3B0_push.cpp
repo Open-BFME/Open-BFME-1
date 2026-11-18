@@ -6,9 +6,9 @@
 // (byte loads + test al,al); the GameLogic::closeWindows self-call resolves
 // through the GameLogic shim decl.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 struct BfmeStringData
 {

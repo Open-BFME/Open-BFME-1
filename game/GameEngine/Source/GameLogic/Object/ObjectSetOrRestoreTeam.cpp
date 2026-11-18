@@ -22,8 +22,8 @@ template <typename T> __declspec(noinline) bool StringBase<T>::isNotEmpty() cons
 {
     return !isEmpty();
 }
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 class Object;
 class Team;
 class Player;

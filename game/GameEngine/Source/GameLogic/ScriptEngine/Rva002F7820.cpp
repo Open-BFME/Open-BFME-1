@@ -15,8 +15,8 @@
 #include "StringInline.h"
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedShort PlayerMaskType;
 
 class Parameter

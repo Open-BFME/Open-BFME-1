@@ -2,8 +2,8 @@
 // TransportContain containment validation through its secondary interface.
 // The canonical Object layout supplies the status and model-condition fields.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 struct Rva2225E0Filter;

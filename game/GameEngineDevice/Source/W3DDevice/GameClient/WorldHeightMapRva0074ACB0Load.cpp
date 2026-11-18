@@ -27,8 +27,8 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 enum ErrorCode
 {

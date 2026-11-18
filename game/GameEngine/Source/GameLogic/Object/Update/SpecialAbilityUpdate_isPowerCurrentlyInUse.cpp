@@ -46,8 +46,8 @@
 //   +0x30 is the packing state and the ctor TU's +0xd8 label is the one in doubt.
 //   That disagreement is recorded here rather than papered over.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Thing;
 class ModuleData;

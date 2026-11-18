@@ -14,8 +14,8 @@
 // explicit Z = 0 store); centre/ray-start and right/up live in sibling scopes so
 // they share frame slots; the camera position is read member-wise and written back
 // as one struct copy; `up` is declared before `right`.
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

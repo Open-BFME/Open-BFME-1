@@ -5,8 +5,8 @@
 // points at this body, while the primary AI vtable keeps isIdle at slot 96.
 // The HordeAIUpdate module factory and the constructor identify the class.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

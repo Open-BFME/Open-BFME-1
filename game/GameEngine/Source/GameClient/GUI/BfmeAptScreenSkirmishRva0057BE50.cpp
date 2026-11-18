@@ -7,8 +7,8 @@ extern void b_0009d020();
 
 
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/SlotState.h"
 

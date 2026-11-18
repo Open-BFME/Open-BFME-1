@@ -33,8 +33,8 @@
 // the already-landed free-function spellings directly, which leaves a few
 // non-relocation bytes (the extra ECX loads) unexplained.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 #include "../../../Libraries/Include/Lib/Coord3D.h"

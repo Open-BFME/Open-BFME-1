@@ -4,9 +4,9 @@
 // The method uses the BFME Object layout and its virtually inherited team
 // member link, which identifies the virtual joinTeam slot and its owner.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 #include "../../command_source_type.h"

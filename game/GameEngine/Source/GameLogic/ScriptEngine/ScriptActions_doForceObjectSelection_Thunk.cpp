@@ -13,9 +13,9 @@
 // accessor (Common/Overridable.h): with that typing the Zero Hour statement
 // order keeps retail's EBX bestGuess / EDI vbtable-index registers.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

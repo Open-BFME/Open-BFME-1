@@ -2,8 +2,8 @@
 // Clean BFME reconstruction of the pinned incremental-link target at retail 0x001C81C0.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 extern AsciiString TheEmptyString;

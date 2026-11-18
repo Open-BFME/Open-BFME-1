@@ -3,8 +3,8 @@
 // Evidence: targets/game/reverse/identity_evidence/001752a0-path-location.md
 #include <math.h>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 enum KindOfType { KINDOF_5C = 0x5c };
 #include "../ScriptEngine/game_logic_dispatch.h"
 enum WeaponSlotType { WEAPONSLOT_DUMMY = 0 };

@@ -19,8 +19,8 @@
 // Coord3D as its out-of-line helpers mangle it: struct base, class derived,
 // implicit (memberwise) copy; the dot product sums x, z, y as MemberMotion's length does.
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class BfmeSpotCN;

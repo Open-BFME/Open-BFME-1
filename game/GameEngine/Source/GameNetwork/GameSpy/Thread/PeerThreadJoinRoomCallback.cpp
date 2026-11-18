@@ -14,10 +14,10 @@
 #include <string>
 
 typedef void *PEER;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int PEERBool;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+
+
 
 enum
 {

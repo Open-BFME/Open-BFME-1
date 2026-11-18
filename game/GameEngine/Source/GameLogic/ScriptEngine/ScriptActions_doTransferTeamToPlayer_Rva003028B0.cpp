@@ -8,9 +8,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
+
 
 class Player;
 class Object;

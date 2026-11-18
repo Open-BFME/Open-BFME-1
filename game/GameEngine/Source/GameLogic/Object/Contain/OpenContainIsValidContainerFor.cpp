@@ -15,8 +15,8 @@
 //
 // Retail enters with the ContainModuleInterface subobject (+0x20) in ECX.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType
 {

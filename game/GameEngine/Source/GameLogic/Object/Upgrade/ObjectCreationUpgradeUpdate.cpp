@@ -27,8 +27,8 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_FOREVER = 0x3fffffff
 };
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define LOGICFRAMES_PER_MSEC_REAL (30.0f / 1000.0f)
 

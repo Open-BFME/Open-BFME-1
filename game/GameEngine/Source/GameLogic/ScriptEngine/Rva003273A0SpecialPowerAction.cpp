@@ -19,8 +19,8 @@ class AsciiString;
 class UnicodeString;
 class BfmeAsciiStringArg;
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
 
 #include "../command_source_type.h"

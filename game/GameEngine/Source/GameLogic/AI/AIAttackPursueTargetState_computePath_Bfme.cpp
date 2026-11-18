@@ -3,7 +3,7 @@
 // Retail 0x00175E90, 384 bytes. BFME pursue-state reconstruction from the
 // landed AI donor helpers, the vtable slot and the decoded retail body.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
@@ -14,7 +14,7 @@ enum WeaponSlotType {};
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
-typedef float Real;
+
 
 class Object;
 class Weapon;

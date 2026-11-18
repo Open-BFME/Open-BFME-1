@@ -9,9 +9,9 @@
 // Keep the real inline WWMath constructors visible: treating SphereClass
 // construction as opaque changes the x87 lifetime of the translated center.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class MeshClass;
 class RenderObjClass;

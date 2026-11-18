@@ -35,8 +35,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int TeamID;
 
 #define NULL 0
