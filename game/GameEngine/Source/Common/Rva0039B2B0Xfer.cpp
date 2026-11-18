@@ -4,7 +4,7 @@
 // name is not recovered, so the owner remains address-derived; the field
 // offsets and every dispatch target come from the retail instructions.
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva0039B2B0Version
 {

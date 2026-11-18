@@ -6,7 +6,7 @@
 // The paired, matched Object::notifyRva001C8830 body proves the Object field
 // layout and the selection-side slots of the two interfaces used below.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Player;
 

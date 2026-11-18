@@ -47,7 +47,7 @@ public:
 	AsciiString &operator=( const AsciiString &other );
 };
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class SceneClass;
 

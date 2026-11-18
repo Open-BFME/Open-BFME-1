@@ -2,7 +2,7 @@
 // Observed transition state at W3DDisplay +0x278.
 // Evidence: targets/game/reverse/identity_evidence/006e8310-transition.md
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Rva006E8310Rgb
 {

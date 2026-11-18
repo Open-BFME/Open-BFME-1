@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // upstream body: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Update/SlavedUpdate.cpp
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum RepairStates
 {

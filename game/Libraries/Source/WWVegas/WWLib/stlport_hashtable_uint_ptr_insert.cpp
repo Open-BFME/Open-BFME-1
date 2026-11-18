@@ -18,8 +18,8 @@
 // There is no unwind frame, so this translation unit is built without
 // exceptions and STLport's try around the construct is gone.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // Retail calls ILT 0x0000E4D0 -> hashtable::resize at 0x00430F10.
 // The target receives this in ECX and one unsigned stack argument (RET4).

@@ -1,6 +1,6 @@
 // Clean C++ reconstruction of the BFME position range condition at retail RVA 0x0016AEE0 (109 bytes).
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

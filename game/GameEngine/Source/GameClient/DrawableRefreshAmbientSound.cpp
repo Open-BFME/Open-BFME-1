@@ -2,7 +2,7 @@
 // Selected ambient refresh with retail ABI views.
 // Evidence: targets/game/reverse/identity_evidence/0x0041ae50-refresh-ambient.md
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 #include "../../Include/Common/DrawableID.h"
 
 #include "ascii_string.h"

@@ -7,7 +7,7 @@
 
 #include <string.h>
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef unsigned int UINT;
 typedef unsigned long DWORD;
 typedef long HRESULT;

@@ -4,7 +4,7 @@
 // member offsets match AISideInfo, whose existing constructor body is named
 // ??0Gen_0014B790 at retail 0x0014B6B0 (destructor 0x0014B790).
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)

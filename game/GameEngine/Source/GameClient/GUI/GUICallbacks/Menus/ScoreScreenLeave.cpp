@@ -6,7 +6,7 @@
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 enum ObjectID
 {

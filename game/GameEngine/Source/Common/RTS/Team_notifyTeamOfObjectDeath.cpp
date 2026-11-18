@@ -13,8 +13,8 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <> inline bool StringBase<char>::isEmpty() const
 {

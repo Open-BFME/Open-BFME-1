@@ -2,7 +2,7 @@
 // Weapon::preFireWeapon, retail 0x001E8970, identified by Object::preFireCurrentWeapon
 // and the three-pointer ABI in targets/game/reverse/symbols.csv.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 int GetGameLogicRandomValue(int low, int high, char *file, int line);
 

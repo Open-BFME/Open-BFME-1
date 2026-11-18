@@ -1,6 +1,6 @@
 // ?Rva0051D1E0Shutdown@@YAH_NPAX0@Z
 // Reset the display and game services before returning the next display state.
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class WindowManager
 {

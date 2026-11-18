@@ -9,7 +9,7 @@
 #include <vector>
 
 typedef int ObjectID;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // Retail ILT thunk reached in place of the Overridable::getFinalOverride call.
 extern void j_000022bb();

@@ -16,7 +16,7 @@
 #include "GameClient/TerrainRoads.h"
 #include "GameLogic/Module/BridgeTowerBehavior.h"
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectPtrHash;

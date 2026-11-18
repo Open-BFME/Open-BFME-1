@@ -26,7 +26,7 @@
 
 #include <windows.h>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class BfmeAwakenLog;
 

@@ -11,7 +11,7 @@
 #include <list>
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/Common/BitFlags/BitFlags.h"
 

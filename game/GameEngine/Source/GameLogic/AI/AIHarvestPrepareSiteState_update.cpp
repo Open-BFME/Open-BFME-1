@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00160050: AIHarvestPrepareSiteState::update.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

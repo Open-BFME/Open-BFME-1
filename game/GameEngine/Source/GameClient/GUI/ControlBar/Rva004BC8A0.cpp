@@ -3,7 +3,7 @@
 // address-derived. Retail proves the GameWindow data field, selected drawable,
 // production interface, command-button resolver, and six-word upgrade mask.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class GameWindow;
 class Drawable;

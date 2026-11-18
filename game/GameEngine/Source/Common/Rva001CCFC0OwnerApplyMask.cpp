@@ -15,8 +15,8 @@
 
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include <bitset>
 class Rva001CCFC0Mask { public: Rva001CCFC0Mask() {} private: _STL::bitset<320> m_bits; };

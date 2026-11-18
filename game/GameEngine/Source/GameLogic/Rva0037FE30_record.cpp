@@ -3,7 +3,7 @@
 // Retail 0x0037FE30. this+0x1C circular 0x14-byte list (push_back). arg2 is
 // Object with ExperienceTracker at +0x210. RVA-derived host name.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 inline void *operator new(unsigned int, void *place) { return place; }
 

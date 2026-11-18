@@ -7,7 +7,7 @@
 #include "ObjectDlinkPmf.h"
 #include <list>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 // Retail reaches these four members through incremental-link thunks, so the

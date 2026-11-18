@@ -104,7 +104,7 @@ public:
 	int m_disabledMask;
 };
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class SplitHordeSpecialPower
 {

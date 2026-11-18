@@ -15,8 +15,8 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 class GameWindow;

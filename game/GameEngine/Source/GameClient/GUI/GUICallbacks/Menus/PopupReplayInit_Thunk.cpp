@@ -10,7 +10,7 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #define DEBUG_ASSERTCRASH(condition, message) ((void)0)
 

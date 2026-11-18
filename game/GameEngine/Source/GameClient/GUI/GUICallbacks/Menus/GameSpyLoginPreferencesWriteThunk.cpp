@@ -12,7 +12,7 @@
 #include <list>
 #include <map>
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 template <class T> class StringBase

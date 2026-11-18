@@ -7,7 +7,7 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <map>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 struct Rva0009ECA0NoCaseTraits

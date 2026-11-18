@@ -19,7 +19,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

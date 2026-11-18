@@ -21,8 +21,8 @@
 // ESI/EDI roles of the contain module and the object.
 #include <bitset>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class ProjectileUpdateInterface
 {

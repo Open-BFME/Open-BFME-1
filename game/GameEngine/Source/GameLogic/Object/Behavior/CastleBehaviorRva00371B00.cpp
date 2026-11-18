@@ -37,7 +37,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 // The call site pushes 0xE; BFME's own KindOf name table (.data RVA

@@ -1,6 +1,6 @@
 // cl: /O2 /Ob2 /G6 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc-
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
 
 #include "../../../command_source_type.h"

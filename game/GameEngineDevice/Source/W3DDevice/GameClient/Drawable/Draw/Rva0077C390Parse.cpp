@@ -8,7 +8,7 @@
 
 #include <bitset>
 
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

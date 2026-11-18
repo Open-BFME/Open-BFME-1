@@ -20,7 +20,7 @@
 
 #include <string>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 typedef void *PEER;
 typedef void *qr2_buffer_t;

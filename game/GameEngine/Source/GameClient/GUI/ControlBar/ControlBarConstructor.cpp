@@ -22,7 +22,7 @@
 //  - the new-expression tail must go through a local pointer so the member
 //    store precedes the dispatch receiver build.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 inline UnsignedInt GameMakeColor(int r, int g, int b, int a) { return (a << 24) | (r << 16) | (g << 8) | b; }
 
 class SubsystemInterface

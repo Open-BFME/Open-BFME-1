@@ -4,7 +4,7 @@
 // overloaded operator== slots for the scalar and region transfers; the two
 // small helper loops below are the already reconstructed retail array bodies.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct IRegion2D
 {

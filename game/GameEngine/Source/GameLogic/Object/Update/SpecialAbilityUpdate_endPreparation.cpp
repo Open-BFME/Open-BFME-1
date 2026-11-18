@@ -9,8 +9,8 @@
 // friend_getFinalOverride inlines the non-const one once, and only the
 // recursive step stays a call (0x00048C61 -> 0x00097880).
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int AudioHandle;
 
 enum SpecialPowerType

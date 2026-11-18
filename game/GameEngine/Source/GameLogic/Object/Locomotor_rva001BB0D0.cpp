@@ -8,7 +8,7 @@
 // See docs/header_adoption.md on the conflicting Coord3D headers.
 #include <math.h>
 #pragma intrinsic(atan2, fabs)
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 class Overridable {
 public:

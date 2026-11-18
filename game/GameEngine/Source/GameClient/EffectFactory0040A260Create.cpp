@@ -6,7 +6,7 @@
 // module share the formatted-warning path.
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class ThingTemplate;
 struct Snapshot0040A260;
