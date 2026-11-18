@@ -2,8 +2,8 @@
 // LAN custom-games list tooltip callback, retail 0x00518150, 402 bytes.
 // Installed by BfmeAptScreenLanLobby_onInitGadget.cpp through winSetTooltipFunc.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 extern const unsigned short BFMEEmptyUnicodeString;

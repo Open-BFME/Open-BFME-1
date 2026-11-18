@@ -11,8 +11,8 @@
 // The state clears all four flight-condition groups, rebuilds the ground goal,
 // then resets the attached locomotor's landing state.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/Enums/StateExitType.h"
 

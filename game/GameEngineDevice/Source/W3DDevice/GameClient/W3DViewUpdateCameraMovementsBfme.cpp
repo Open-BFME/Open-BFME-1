@@ -2,8 +2,8 @@
 // readable body of ?updateCameraMovements@W3DView@@: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp
 // BFME W3DView::updateCameraMovements, retail 0x00744530.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData

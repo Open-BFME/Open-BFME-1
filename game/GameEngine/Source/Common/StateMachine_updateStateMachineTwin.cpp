@@ -13,9 +13,9 @@
 // without disturbing the landed friend_checkForTransitions/
 // friend_checkForSleepTransitions definitions in that header's own TU.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 

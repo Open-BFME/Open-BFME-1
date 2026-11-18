@@ -4,8 +4,8 @@
 // the object's final template, checks the BFME upgrade-broadcast flag, and
 // marks the callback state when the contained upgrade sink rejects the test.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Overridable
 {

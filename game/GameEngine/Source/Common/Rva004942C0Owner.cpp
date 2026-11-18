@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class BObj;
 

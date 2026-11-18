@@ -3,8 +3,8 @@
 // Neighbour copy-ctor Gen_000F9C60 / xfer Rva001C2E50 sits at +0x44.
 // Image* at +4 is saved/loaded by name through TheMappedImageCollection.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

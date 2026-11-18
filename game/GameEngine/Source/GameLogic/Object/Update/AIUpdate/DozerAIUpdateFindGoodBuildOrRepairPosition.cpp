@@ -3,8 +3,8 @@
 // BFME uses an incoming receiver; the old static lift was an ABI error.
 // Evidence: identity_evidence/002b6c40-dozer-member-and-native-vector.md
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D
 {

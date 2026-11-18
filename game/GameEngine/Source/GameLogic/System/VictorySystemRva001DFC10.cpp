@@ -15,8 +15,8 @@
 // bfmeParametersForPlayer 0x001DE880 masks it off with 0x7FFFFFFF); spelled as
 // a signed `< 0` compare VC7.1 swaps the player registers.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType
 {

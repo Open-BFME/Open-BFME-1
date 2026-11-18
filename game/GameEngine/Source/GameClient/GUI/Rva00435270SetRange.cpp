@@ -7,8 +7,8 @@
 // three virtual setters and finally placing the receiver.  Owner and slot names
 // stay address-derived: no layout or string witness names this class.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Rva00435270Receiver;
 

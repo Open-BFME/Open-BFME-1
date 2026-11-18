@@ -9,8 +9,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/Enums/WeaponSlotType.h"
 

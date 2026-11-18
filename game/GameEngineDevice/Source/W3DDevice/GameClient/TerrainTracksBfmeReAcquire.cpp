@@ -2,8 +2,8 @@
 // readable body of ?ReAcquireResources@TerrainTracksRenderObjClassSystem@@QAEXXZ: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainTracks.cpp
 // BFME retail 0x0072EC10: TerrainTracksRenderObjClassSystem::ReAcquireResources.
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // Retail's writable-global pointer (0x012ED5C8), defined once in
 // Common/GlobalData.cpp. The canonical spelling is what links; the local view

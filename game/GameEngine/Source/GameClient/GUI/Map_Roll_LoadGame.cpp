@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // 0x003BE150 (121B). Load-game Map_Roll movie step: Display viewport + the
 // slot-57 movie call on start, else poll Display+0xF8 and GlobalData+0xA7D.

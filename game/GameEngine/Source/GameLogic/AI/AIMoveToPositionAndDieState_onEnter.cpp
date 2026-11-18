@@ -6,11 +6,11 @@
 // is AIMoveAndDeleteState::onEnter's without the model-condition bits, logging
 // "... 60" where that one logs "... 50".
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

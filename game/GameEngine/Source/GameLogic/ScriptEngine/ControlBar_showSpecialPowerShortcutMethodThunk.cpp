@@ -17,8 +17,8 @@
 // array at this+0xCC, count at +0xF4, shortcut parent at +0xFC, and the count
 // re-read on every iteration.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2
 
 typedef unsigned short WideChar;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // The empty wide payload at 0x0107388C is the recorded
 // ?BFMEEmptyUnicodeString@@3GB.  The wcstok delimiter string at 0x01084C10

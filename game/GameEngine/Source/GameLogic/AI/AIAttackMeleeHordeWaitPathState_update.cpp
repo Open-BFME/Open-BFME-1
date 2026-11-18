@@ -4,8 +4,8 @@
 // state base and clears the two fields used below.  The adjacent onEnter body
 // at 0x00175C00 confirms the state-machine field layout.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Same numbering as StateMachine.h. A path that exists, or a structure
 // this horde can attack, returns failure so the machine goes back to approach.

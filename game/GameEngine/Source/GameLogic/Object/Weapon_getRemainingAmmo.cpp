@@ -5,9 +5,9 @@
 // countReloadingAsEmpty flag.  The ILT at 0x00046F10 and the
 // Object::getAmmoPipShowingInfo caller establish this method's identity.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
-typedef bool Bool;
+
 
 // This view matches the retail definition in BfmeConv1961.cpp. The
 // 0x000413B2 thunk used here routes to BfmeHostERT::bfmeQueryERT.

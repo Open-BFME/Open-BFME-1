@@ -2,8 +2,8 @@
 // BFME compact PathfindCell layout, retail 0x003F73D0.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

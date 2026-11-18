@@ -4,8 +4,8 @@
 // slice keeps the BFME Object offsets and ContainModuleInterface slots rather
 // than relying on the narrower Zero Hour header.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../GameLogic/command_source_type.h"
 

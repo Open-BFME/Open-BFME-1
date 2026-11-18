@@ -12,8 +12,8 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Push-button overlay helper with the decoded private register ABI.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 class Image;

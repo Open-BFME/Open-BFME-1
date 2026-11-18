@@ -6,8 +6,8 @@
 // OVERRIDE-style template access and a real TheProjectedShadowManager global
 // (VA 0x01306DEC), which lets the offsetY store schedule after the manager test.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Overridable
 {

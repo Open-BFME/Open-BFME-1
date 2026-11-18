@@ -3,8 +3,8 @@
 // its DrawModule terrain-decal slot routes through ILT 0x000400CF to 0x00763230.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 enum TerrainDecalType
 {

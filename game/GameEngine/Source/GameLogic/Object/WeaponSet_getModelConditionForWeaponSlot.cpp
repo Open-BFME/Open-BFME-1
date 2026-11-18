@@ -6,8 +6,8 @@
 // the pre-attack row), and two extra per-slot tables are OR'd in for
 // FIRING/UNUSED/PREATTACK and FIRING/RELOADING. Return is BitFlags<320>.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum WeaponSlotType
 {

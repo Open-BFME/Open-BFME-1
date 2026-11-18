@@ -4,8 +4,8 @@
 // preserves retail's otherwise redundant null guard before iterator advance.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Retail routes these three calls through incremental-link thunks.
 extern void j_00001140();

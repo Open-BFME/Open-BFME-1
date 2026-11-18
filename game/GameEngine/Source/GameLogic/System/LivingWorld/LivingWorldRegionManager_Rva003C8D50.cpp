@@ -13,8 +13,8 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // Retail sorts this record among the four-byte locals, so it fills a whole
 // dword slot (as in XferListAsciiStringUINT.cpp); the upper half is unused.

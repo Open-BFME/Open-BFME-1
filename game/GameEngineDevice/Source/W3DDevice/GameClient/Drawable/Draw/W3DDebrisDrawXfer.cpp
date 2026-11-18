@@ -5,9 +5,9 @@
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef unsigned char XferVersion;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 #include "../../../../../../GameEngine/Include/Common/Enums/ShadowType.h"

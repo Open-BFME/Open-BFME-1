@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // stlport
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D {

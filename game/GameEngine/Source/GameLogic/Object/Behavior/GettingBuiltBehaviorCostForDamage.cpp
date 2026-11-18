@@ -12,8 +12,8 @@
 // +0x30..+0x3C, one for each BodyDamageType.  The existing named callers of
 // ThingTemplate::calcCostToBuild prove its (const Player *, Int) ABI.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

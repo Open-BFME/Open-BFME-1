@@ -3,8 +3,8 @@
 // disableRadar@0xCC1C0, enableRadar@0xCC2C0 in Player.cpp. ZH twin at
 // GeneralsMD Player.cpp:3164. AudioEventRTS is 0x70 as in Money_deposit.cpp.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AudioEventRTS
 {

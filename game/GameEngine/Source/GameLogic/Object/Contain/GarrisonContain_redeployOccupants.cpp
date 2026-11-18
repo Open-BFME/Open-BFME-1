@@ -8,8 +8,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Rva0021F850Link
 {

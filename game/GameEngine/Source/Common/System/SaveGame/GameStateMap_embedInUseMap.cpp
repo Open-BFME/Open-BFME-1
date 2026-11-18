@@ -11,8 +11,8 @@
 // GeneralsMD/Code/GameEngine/Source/Common/System/SaveGame/GameStateMap.cpp:135.
 // See targets/game/reverse/identity_evidence/00112bf0-embedInUseMap.md.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *memory);

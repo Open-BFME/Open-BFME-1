@@ -3,8 +3,8 @@
 // The BFME LaserUpdate interface takes the four-argument positional form;
 // this is the BFME-era twin of the Zero Hour helper.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 
