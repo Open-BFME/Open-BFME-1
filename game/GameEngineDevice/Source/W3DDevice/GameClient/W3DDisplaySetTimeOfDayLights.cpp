@@ -96,7 +96,7 @@ static void updateLights(const TerrainLighting *ol, LightClass **myLight)
 
 }
 
-enum TimeOfDay { TIME_OF_DAY_INVALID = 0 };
+#include "../../../../GameEngine/Include/Common/Enums/TimeOfDay.h"
 
 // The two terrain-light tables GlobalData keeps per time of day, three lights each.
 class GlobalData

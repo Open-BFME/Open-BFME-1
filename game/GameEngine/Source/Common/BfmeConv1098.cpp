@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

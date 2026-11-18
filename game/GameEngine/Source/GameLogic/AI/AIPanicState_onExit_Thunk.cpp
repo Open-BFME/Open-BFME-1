@@ -20,10 +20,10 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 enum KindOfType
 {
@@ -35,10 +35,10 @@ enum ModelConditionFlagType
 	MODELCONDITION_FIRST = 0
 };
 
-enum ObjectStatusTypes
-{
-	OBJECT_STATUS_NONE = 0
-};
+#include "../../../Include/Common/Enums/ObjectStatusTypes.h"
+
+
+
 
 class ModelConditionFlags
 {

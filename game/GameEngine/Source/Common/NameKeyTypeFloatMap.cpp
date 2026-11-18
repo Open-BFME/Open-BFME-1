@@ -13,9 +13,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // enum base type 4: W4NameKeyType in the mangled name is an int-sized enum.
 #include "../../Include/Common/NameKeyType.h"

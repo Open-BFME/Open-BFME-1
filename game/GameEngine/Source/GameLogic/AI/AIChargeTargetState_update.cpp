@@ -16,10 +16,10 @@
 
 
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum WeaponStatus
 {

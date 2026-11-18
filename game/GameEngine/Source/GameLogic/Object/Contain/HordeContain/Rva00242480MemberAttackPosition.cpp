@@ -21,7 +21,7 @@ typedef float Real;
 
 class Object;
 class Weapon;
-enum WeaponSlotType {};
+#include "../../../../../Include/Common/Enums/WeaponSlotType.h"
 
 template<int N>
 class AIUpdateSlots : public AIUpdateSlots<N - 1> {

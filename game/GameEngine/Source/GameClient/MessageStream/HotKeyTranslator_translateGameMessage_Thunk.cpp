@@ -129,7 +129,7 @@ typedef int ObjectID;
 typedef UnsignedInt WindowMsgData;
 
 enum { WIN_STATUS_ENABLED = 8, WIN_STATUS_HIDDEN = 16 };
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../Include/Common/Enums/WindowMsgHandledType.h"
 
 class GameWindow;
 class WinInstanceData

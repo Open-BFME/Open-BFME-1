@@ -19,10 +19,10 @@ enum WeaponChoiceCriteria
 	PREFER_SPECIAL = 2
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 #include "../command_source_type.h"
 

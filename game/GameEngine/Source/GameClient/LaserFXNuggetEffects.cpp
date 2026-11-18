@@ -4,10 +4,10 @@
 
 #include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -6,11 +6,11 @@
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0,
-	EXIT_RESET = 1
-};
+#include "../../../../../Include/Common/Enums/StateExitType.h"
+
+
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 
@@ -19,11 +19,11 @@ enum StateExitType
 
 
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"

@@ -18,10 +18,10 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum WindowVideoPlayType
-{
-	WINDOW_PLAY_MOVIE_ONCE = 0
-};
+#include "../../../Include/Common/Enums/WindowVideoPlayType.h"
+
+
+
 
 enum WindowVideoStates
 {

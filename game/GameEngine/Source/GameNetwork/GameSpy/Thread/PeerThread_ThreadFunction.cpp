@@ -41,13 +41,13 @@ extern "C" {
 #include "GameNetwork/GameSpy/PeerDefs.h"
 #include "mutex.h"
 #define __PEERTHREAD_H__
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 // this class encapsulates a request for the peer thread
 class PeerRequest
@@ -85,7 +85,7 @@ public:
 	std::string password;
 	std::string email;
 	std::string id;
-	
+
 	// gameopts
 	std::string options; // full string for UTMs
 	std::string ladderIP;
@@ -106,7 +106,7 @@ public:
 		{
 			Int id;
 		} groupRoom;
-		
+
 		struct
 		{
 			Bool restrictGameList;
@@ -217,24 +217,24 @@ enum DisconnectReason
 	DISCONNECT_MAX,
 };
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED,
-};
+#include "../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // this class encapsulates an action the peer thread wants from the UI
 class PeerResponse
@@ -307,12 +307,12 @@ public:
 			Int id;
 			Bool ok;
 		} joinGroupRoom;
-		
+
 		struct
 		{
 			Int result;
 		} createStagingRoom;
-		
+
 		struct
 		{
 			Int id;
@@ -320,7 +320,7 @@ public:
 			Bool isHostPresent;
 			Int result; // for failures
 		} joinStagingRoom;
-		
+
 		struct
 		{
 			Bool isPrivate;
@@ -851,8 +851,8 @@ void PeerThreadClass::Thread_Function()
 	crossPingRooms[TitleRoom] = PEERFalse;
 	crossPingRooms[GroupRoom] = PEERFalse;
 	crossPingRooms[StagingRoom] = PEERFalse;
-	
-	
+
+
 // Set the title.
 	/////////////////
 	if(!peerSetTitle( peer , gameName, secretKey, gameName, secretKey, GetRegistryVersion(), 30, PEERTrue, pingRooms, crossPingRooms))
@@ -1076,7 +1076,7 @@ void PeerThreadClass::Thread_Function()
 #endif
 				}
 				break;
-				
+
             case 25:
                 _snprintf(s_valueBuffers[6],20,"%d",incomingRequest.gameOptions.wins[0]);
                 _snprintf(s_valueBuffers[7],20,"%d",incomingRequest.gameOptions.wins[1]);
@@ -1102,7 +1102,7 @@ void PeerThreadClass::Thread_Function()
 
 					s_wantStateChangedHeartbeat = TRUE;
 
-					
+
 
 					/*
 					peerStateChanged( peer );
@@ -1244,7 +1244,7 @@ void PeerThreadClass::Thread_Function()
 						s_lastStateChangedHeartbeat = timeGetTime(); // wait the full interval before updating state
 						s_wantStateChangedHeartbeat = FALSE;
 						m_isHosting = TRUE;
-						
+
             m_useStats = incomingRequest.stagingRoomCreation.useStats;
 						m_mapName = "";
 
@@ -1278,7 +1278,7 @@ void PeerThreadClass::Thread_Function()
 					peerStopListingGames( peer );
 				}
 				break;
-				
+
             case 22: {
                 m_sawCompleteGameList=false;
                 PeerResponse resp;
@@ -1366,7 +1366,7 @@ void PeerThreadClass::Thread_Function()
 		}
 
 		// end our timeslice
-		
+
 	}
 
 	DEBUG_LOG(("voluntarily ending peer thread %d\n", running));

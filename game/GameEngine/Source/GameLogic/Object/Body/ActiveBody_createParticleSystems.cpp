@@ -12,10 +12,10 @@
 
 typedef unsigned int size_t;
 
-enum ParticleSystemID
-{
-	INVALID_PARTICLE_SYSTEM_ID = 0
-};
+#include "../../../../Include/Common/Enums/ParticleSystemID.h"
+
+
+
 
 // Struct tag as the retail callees mangle it; the out-of-line empty ctor/dtor
 // (coord3d.cpp) make the local array use the EH vector iterators.

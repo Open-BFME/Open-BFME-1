@@ -121,7 +121,7 @@ private:
 };
 
 class Object;
-enum LocomotorSetType { LOCOMOTORSET_NORMAL };
+#include "../../../../../Include/Common/Enums/LocomotorSetType.h"
 
 class AIUpdateInterface
 {

@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?getCanAttackObject@ActionManager@@QAE?AW4CanAttackResult@@PBVObject@@0W4CommandSourceType@@W4AbleToAttackType@@@Z: game/GameEngine/Source/Common/RTS/ActionManager.cpp
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define TRUE true
 

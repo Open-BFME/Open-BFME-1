@@ -13,7 +13,7 @@
 // the compiler-generated unwind action calls AsciiString::~AsciiString.
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva002E4030Template;
 struct Rva002E32A0IdOwner

@@ -17,7 +17,7 @@ template<int N> class BitFlags { _STL::bitset<N> bits; public:
  void set(int n) { bits._Unchecked_set(n); }
 };
 class Object; class Module; class Drawable;
-enum ObjectID { INVALID_ID };
+#include "../../../../Include/Common/ObjectID.h"
 class AudioEventRTS { public: AudioEventRTS(const AudioEventRTS&); ~AudioEventRTS(); void setObjectID(ObjectID); void* vptr; char payload[0x6c]; };
 class AudioManager { public:
  virtual void slot0();

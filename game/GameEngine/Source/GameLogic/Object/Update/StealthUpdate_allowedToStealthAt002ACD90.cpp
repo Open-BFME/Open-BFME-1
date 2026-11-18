@@ -27,12 +27,12 @@
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0,
-	SECONDARY_WEAPON,
-	TERTIARY_WEAPON
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
+
+
 
 class Module;
 class UpgradeTemplate;
@@ -156,13 +156,13 @@ public:
 	virtual Bool allow(Object *obj);
 };
 
-enum DistanceCalculationType
-{
-	FROM_CENTER_2D = 0,
-	FROM_CENTER_3D = 1,
-	FROM_BOUNDINGSPHERE_2D = 2,
-	FROM_BOUNDINGSPHERE_3D = 3
-};
+#include "../../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
+
+
+
 
 class PartitionManager
 {

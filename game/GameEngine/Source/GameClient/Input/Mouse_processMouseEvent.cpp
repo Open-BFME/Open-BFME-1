@@ -31,28 +31,28 @@
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum MouseButtonState
-{
-	MBS_Up = 0,
-	MBS_Down = 1,
-	MBS_DoubleClick = 2
-};
+#include "../../../Include/Common/Enums/MouseButtonState.h"
 
-enum GameWindowMessage
-{
-	GWM_LEFT_DOWN = 5,
-	GWM_LEFT_UP = 6,
-	GWM_LEFT_DOUBLE_CLICK = 7,
-	GWM_LEFT_DRAG = 8,
-	GWM_MIDDLE_DOWN = 9,
-	GWM_MIDDLE_UP = 10,
-	GWM_MIDDLE_DOUBLE_CLICK = 11,
-	GWM_MIDDLE_DRAG = 12,
-	GWM_RIGHT_DOWN = 13,
-	GWM_RIGHT_UP = 14,
-	GWM_RIGHT_DOUBLE_CLICK = 15,
-	GWM_RIGHT_DRAG = 16
-};
+
+
+
+
+
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 static const Int MOUSE_EVENT_NONE = 0;
 static const Int MOUSE_MOVE_RELATIVE = 0;

@@ -31,15 +31,15 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum DamageType
-{
-	DAMAGE_FLAME = 6
-};
+#include "../../../../Include/Common/Enums/DamageType.h"
 
-enum DeathType
-{
-	DEATH_BURNED = 3
-};
+
+
+
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

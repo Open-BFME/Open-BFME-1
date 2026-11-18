@@ -10,10 +10,10 @@
 // Both float pairs initialize their second word before the body assigns the first.
 #include "snapshot.h"
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0
-};
+#include "../../../../Include/Common/Enums/GeometryType.h"
+
+
+
 
 class GeometryInfo : public Snapshot
 {
