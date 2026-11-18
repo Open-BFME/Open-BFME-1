@@ -5,7 +5,7 @@
 // Pathfinder::buildHierachicalPath, retail 0x003E7A30.
 // BFME records the parent chain in a 12-byte vector before it builds the Path.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 

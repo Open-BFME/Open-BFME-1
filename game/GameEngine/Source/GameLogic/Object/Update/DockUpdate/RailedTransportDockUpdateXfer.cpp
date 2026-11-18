@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 #include "../../../../../Include/Common/ObjectID.h"
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 struct XferVersionInfo
 {

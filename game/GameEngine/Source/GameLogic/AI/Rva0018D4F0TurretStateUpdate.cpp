@@ -4,7 +4,7 @@
 // Retail 0x0018D4F0.  The BFME state base places the machine at +0x1c;
 // TurretStateMachine places its TurretAI back-pointer at +0x44.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 typedef int StateReturnType;
 static const StateReturnType STATE_CONTINUE = 0;

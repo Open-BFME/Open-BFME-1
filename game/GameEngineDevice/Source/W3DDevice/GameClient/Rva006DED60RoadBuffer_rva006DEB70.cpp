@@ -2,7 +2,7 @@
 // stlport
 #include <set>
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // Retail 0x006DEB70, the reset the terrain calls on its +0x30B4 child (constructor 0x006DED60),
 // uses the same resource-reference shape and STLport

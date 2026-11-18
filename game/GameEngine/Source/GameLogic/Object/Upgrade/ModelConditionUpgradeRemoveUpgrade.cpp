@@ -9,7 +9,7 @@
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeC1166
 {

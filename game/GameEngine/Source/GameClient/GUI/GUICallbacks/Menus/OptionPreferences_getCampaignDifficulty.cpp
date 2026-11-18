@@ -4,7 +4,7 @@
 // keeps the retail preference-node and StringBase layout explicit so MSVC 7.1
 // emits the out-of-line AsciiString constructor/destructor calls used here.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl atoi(char *text);
 

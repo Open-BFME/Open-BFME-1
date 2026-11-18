@@ -15,7 +15,7 @@
 // first member is even built: that state covers the base, so the base has a
 // destructor of its own. Without one the count starts a step late.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x006C1A20 initializes the radar image state and its texture view.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 

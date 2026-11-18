@@ -29,7 +29,7 @@
 #include <map>
 #include <string>
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum RoomType
 {

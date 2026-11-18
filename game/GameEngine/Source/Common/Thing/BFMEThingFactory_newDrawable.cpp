@@ -8,7 +8,7 @@
 // The class name is this tree's, from reloc_names; only the forwarding is
 // claimed here.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Drawable;
 class ThingTemplate;

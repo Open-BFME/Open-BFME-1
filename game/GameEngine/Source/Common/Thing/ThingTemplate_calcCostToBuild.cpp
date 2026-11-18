@@ -8,7 +8,7 @@
 // returned unscaled; otherwise it is scaled by the faction modifier, the
 // owner-list modifier and the BUILDCOST handicap.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 class ThingTemplate;

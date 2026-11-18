@@ -6,7 +6,7 @@
 // selectable bits are 0x400/0x200/0x100 for which==3/2/1 (not
 // 0x800/0x400/0x200) -- confirmed against the disassembly bit-by-bit.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object
 {

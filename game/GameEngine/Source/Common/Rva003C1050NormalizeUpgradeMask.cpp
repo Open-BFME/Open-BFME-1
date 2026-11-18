@@ -3,7 +3,7 @@
 // a six-word mask and stores the normalized mask at this+0xA8.
 // BfmeThingND::bfmeFindND and the UpgradeCenter global prove the lookup path.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 #ifndef _STLP_BITSET_H
 namespace _STL

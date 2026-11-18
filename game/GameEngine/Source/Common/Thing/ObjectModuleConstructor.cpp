@@ -17,7 +17,7 @@
 // 0x00113F20, and the null ModuleData string at 0x01089750 is shared with the
 // DrawableModule twin.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INIException
 {

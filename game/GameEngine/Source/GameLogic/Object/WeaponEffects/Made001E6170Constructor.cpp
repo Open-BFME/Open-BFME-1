@@ -14,7 +14,7 @@
 // gives the body an unwind frame at all: the state is written once, for the base,
 // just before the call. Its sibling at 0x002DE130 has no such call and no frame.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class WeaponTemplate;
 

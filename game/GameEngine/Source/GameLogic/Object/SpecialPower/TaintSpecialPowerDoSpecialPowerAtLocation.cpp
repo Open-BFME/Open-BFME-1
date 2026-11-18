@@ -15,7 +15,7 @@
 // no identity yet.
 
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Coord3D;
 

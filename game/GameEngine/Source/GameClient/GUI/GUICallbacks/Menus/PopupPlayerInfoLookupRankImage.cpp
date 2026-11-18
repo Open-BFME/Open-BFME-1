@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift PopupPlayerInfo's rank-image helper to clean C++.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl strcmp(const char *left, const char *right);
 #pragma intrinsic(strcmp)

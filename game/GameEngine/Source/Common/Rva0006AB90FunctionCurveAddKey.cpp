@@ -5,7 +5,7 @@
 // its MSVC 7.1 register schedule.
 // cl: /Iinputs/reference/shims/iniexception /DNDEBUG /DWIN32 /MD /EHsc
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "Common/INIException.h"
 

@@ -4,7 +4,7 @@
 // getQualifiedTriggerAreaByName (vtable +0x58) on arg3's string; on success
 // invert-call the 700B sibling body at 0x0032C090 via ILT 0x0000C586.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" void __cdecl __identifier("?d_0032c090@@YAXXZ")();
 class PolygonTrigger;

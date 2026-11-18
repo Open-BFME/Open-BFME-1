@@ -13,7 +13,7 @@
 // is set after, so those are body assignments. Within the body the zeros keep
 // source order and the two ones follow, which is the order the bytes have.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class RS_Member
 {

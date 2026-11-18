@@ -2,7 +2,7 @@
 
 #include "vector3.h"
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct TerrainLighting
 {

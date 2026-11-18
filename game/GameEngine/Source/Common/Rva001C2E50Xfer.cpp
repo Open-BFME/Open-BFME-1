@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 #include "ascii_string.h"

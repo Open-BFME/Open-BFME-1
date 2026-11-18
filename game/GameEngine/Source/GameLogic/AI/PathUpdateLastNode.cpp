@@ -2,8 +2,8 @@
 // a layer. The later reference source performs that call first, so this small
 // TU preserves the retail ordering under a collision-free selector.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

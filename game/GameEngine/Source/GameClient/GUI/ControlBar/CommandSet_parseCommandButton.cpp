@@ -8,7 +8,7 @@
 // read) and getLineNum is the 16-byte accessor at 0x00850810.  The button is
 // stored at the userData index of the store array.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern const char g_bfmeEmptyAscii[];
 

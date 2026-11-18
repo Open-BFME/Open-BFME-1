@@ -26,7 +26,7 @@
 #include <list>
 #include "ascii_string.h"
 
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
 
 // 8-byte payload of the 16-byte list node: the name copied through
 // StringBase<char>::set, and the id.

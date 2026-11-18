@@ -3,7 +3,7 @@
 // Retail RVA 0x001B5B40.
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Thing
 {

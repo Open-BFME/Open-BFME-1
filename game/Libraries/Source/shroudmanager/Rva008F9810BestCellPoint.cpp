@@ -6,7 +6,7 @@
 // at their stores preserves the retail reloads and register allocation.
 // Evidence: targets/game/reverse/identity_evidence/008f9810-native-grid-scan.md.
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct BfmePointFD3
 {

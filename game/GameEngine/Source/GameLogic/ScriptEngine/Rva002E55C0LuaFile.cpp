@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc
 // The Lua host at 0x002E55C0 reads and executes one script file.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned int SizeT;
 
 struct lua_State;

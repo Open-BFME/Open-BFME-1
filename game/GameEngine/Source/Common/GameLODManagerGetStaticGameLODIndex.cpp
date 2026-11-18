@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?getStaticGameLODIndex@GameLODManager@@QAEHVAsciiString@@@Z: game/GameEngine/Source/Common/GameLOD.cpp
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned count);

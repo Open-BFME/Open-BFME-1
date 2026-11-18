@@ -15,7 +15,7 @@
 #include <map>
 #include "StringInline.h"
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class GameSpyGroupRoom
 {

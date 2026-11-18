@@ -3,7 +3,7 @@
 // BFME keeps the attack-priority table behind a pointer.  These local layout
 // facades preserve the retail STL03 offsets while giving the recovered public
 // method its canonical class and signature.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ThingTemplate
 {

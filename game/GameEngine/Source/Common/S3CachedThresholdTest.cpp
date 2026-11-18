@@ -17,7 +17,7 @@
 // backwards and test ah,5 with jp leaves the true case as sum strictly
 // greater.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 // View of retail's global at 0x012ED5C8. That global is
 // Common/GlobalData.cpp's GlobalData *TheWritableGlobalData, the game's only

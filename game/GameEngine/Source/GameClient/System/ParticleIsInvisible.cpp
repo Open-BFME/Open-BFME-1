@@ -3,7 +3,7 @@
 // Open-BFME: Particle::isInvisible, retail 0x005C31A0, 91 bytes.
 // The reference Particle declaration and the retail module dispatch identify this body.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum ParticleType
 {

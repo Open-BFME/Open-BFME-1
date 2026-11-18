@@ -2,7 +2,7 @@
 // supplied global region. The large local array is BFME's fixed 24,000-zone
 // scratch space.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short zoneStorageType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

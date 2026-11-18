@@ -4,7 +4,7 @@
 // Rva00769260Owner::lookup at 0x00769260. The slot at node+0x14 holds
 // three coordinate components at +0x0C/+0x1C/+0x2C. The address-derived
 // method name does not assert an unproved original declaration.
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva00769260Node
 {

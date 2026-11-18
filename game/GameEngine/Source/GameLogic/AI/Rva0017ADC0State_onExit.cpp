@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME state-exit reconstruction for retail RVA 0x0017ADC0.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateExitType.h"
 

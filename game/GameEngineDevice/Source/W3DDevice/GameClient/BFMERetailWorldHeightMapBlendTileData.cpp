@@ -16,7 +16,7 @@
 // short. The last call takes the third call's answer plus three, and the size
 // squared.
 
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct TBlendTileInfo
 {

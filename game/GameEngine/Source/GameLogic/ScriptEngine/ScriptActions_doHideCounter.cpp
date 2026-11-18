@@ -5,7 +5,7 @@
 // jump table at VA 0x0070D6A0 sends arm 241 to this body.  BFME prefixes the
 // counter name with the slash-separated script scope before it drops the timer.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct BfmeAsciiStringData
 {

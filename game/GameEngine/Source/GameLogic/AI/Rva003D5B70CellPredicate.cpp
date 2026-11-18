@@ -11,7 +11,7 @@
 // - "Model-condition bit masks" (TU-local form): an inline bool test ending in
 //   `!= 0` emits retail's `mov edx,eax; shr edx,0x15; test dl,1`.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Rva003D5B70Cell
 {

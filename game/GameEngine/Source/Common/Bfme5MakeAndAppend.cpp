@@ -11,7 +11,7 @@
 // +0x08 behind its own null test, and the predecessor cached before the four
 // stores.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 // stlport
 #define _STLP_USE_STATIC_LIB 1

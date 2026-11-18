@@ -4,7 +4,7 @@
 // Retail string/call pairs establish InternalEvent -> 002E2970, ScriptedEvent
 // -> 002E9590, ModelConditionEvent -> 002E9680, ObjectStatusEvent -> 002E9AA0.
 // All receive the unchanged engine ECX and parser stack argument; each returns ret 4.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" int strcmp(const char *, const char *);
 

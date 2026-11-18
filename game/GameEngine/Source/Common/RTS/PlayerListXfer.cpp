@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /O2 /EHsc
 // Clean C++ reconstruction of PlayerList::xfer().
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

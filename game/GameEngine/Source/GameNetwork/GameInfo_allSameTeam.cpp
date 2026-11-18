@@ -2,7 +2,7 @@
 // The body calls the BFME getLocalSlotNum virtual at vtable +0x14 and walks the
 // eight slot pointers directly.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../Include/Common/Enums/SlotState.h"
 

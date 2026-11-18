@@ -4,8 +4,8 @@
 // ?rva001CABE0@BfmeSubBIC@@QAEHXZ
 // candidate (wf 001cabe0): Zero Hour Radar::addObject colour-selection shape
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum NameKeyType
 {

@@ -14,7 +14,7 @@
 
 template <class T> inline void StringBase<T>::concat(T c) { concat(&c, 1); }
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class GlobalData
 {

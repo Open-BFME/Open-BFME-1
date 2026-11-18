@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define BFME_AI_SLOT(n) virtual void bfmeAiSlot##n();
 
