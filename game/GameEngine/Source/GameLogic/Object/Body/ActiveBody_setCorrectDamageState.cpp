@@ -93,7 +93,7 @@ public:
 typedef BitFlags<86> ObjectStatusMaskType;
 #define MAKE_OBJECT_STATUS_MASK(k) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (k))
 
-enum ObjectStatusTypes { OBJECT_STATUS_4 = 4 };
+#include "../../../../Include/Common/Enums/ObjectStatusTypes.h"
 
 struct BfmeShapeE15 { char m_bytes000[0x1c]; AsciiString m_name; char m_bytes020[4]; };
 class BfmeObjE15

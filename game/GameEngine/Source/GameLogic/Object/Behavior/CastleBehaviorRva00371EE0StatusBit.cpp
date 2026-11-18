@@ -25,10 +25,10 @@ typedef int Int;
 typedef int ObjectID;
 typedef bool Bool;
 
-enum ObjectStatusTypes
-{
-	OBJECT_STATUS_DESTROYED = 0
-};
+#include "../../../../Include/Common/Enums/ObjectStatusTypes.h"
+
+
+
 
 template <int NUMBITS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

@@ -12,10 +12,10 @@
 
 class BfmeX1011;
 
-enum DamageType
-{
-	DAMAGE_SNIPER = 8
-};
+#include "../../../../Include/Common/Enums/DamageType.h"
+
+
+
 
 enum DeathType
 {

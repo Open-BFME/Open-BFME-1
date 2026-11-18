@@ -172,7 +172,7 @@ public:
     TurretAI(Object *, const TurretAIData *, WhichTurretType);
     char m_000[0xac];
 };
-enum LocomotorSetType { LOCOMOTORSET_INVALID=-1, LOCOMOTORSET_NORMAL, LOCOMOTORSET_NORMAL_UPGRADED };
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
 class Overridable {
 public:
     virtual ~Overridable();

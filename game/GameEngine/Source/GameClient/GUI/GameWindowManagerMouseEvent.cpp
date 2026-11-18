@@ -69,11 +69,11 @@ enum WinInputReturnCode
 	WIN_INPUT_USED = 1
 };
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED = 0,
-	MSG_HANDLED = 1
-};
+#include "../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 enum GameWindowMessage
 {

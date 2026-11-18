@@ -194,10 +194,10 @@ public:
 
 extern GameClient *TheGameClient;
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 class BFMEThingFactory
 {

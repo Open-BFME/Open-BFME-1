@@ -90,7 +90,7 @@ bool dup_00099E10(AsciiString *source, AsciiString *name, UnicodeString *descrip
 
 enum SaveCode { SC_INVALID = -1 };
 enum SaveFileType { SAVE_FILE_TYPE_NORMAL };
-enum SnapshotType { SNAPSHOT_SAVELOAD };
+#include "../../../Include/Common/Enums/SnapshotType.h"
 
 class GameState
 {

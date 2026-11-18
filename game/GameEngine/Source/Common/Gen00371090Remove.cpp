@@ -14,10 +14,10 @@
 
 typedef float Real;
 
-enum ObjectStatusTypes
-{
-	OBJECT_STATUS_UNUSED = 0
-};
+#include "../../Include/Common/Enums/ObjectStatusTypes.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

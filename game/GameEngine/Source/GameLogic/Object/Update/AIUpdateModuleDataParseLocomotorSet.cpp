@@ -16,7 +16,7 @@
 #include <vector>
 #include <string.h>
 
-enum LocomotorSetType { LOCOMOTORSET_INVALID = -1 };
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
 #include "../../ScriptEngine/game_logic_dispatch.h"
 class LocomotorTemplate;
 typedef std::vector<const LocomotorTemplate *> LocomotorTemplateVector;

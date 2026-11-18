@@ -22,21 +22,21 @@ typedef float Real;
 
 #include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-enum GameMessageArgumentDataType
-{
-	ARGUMENTDATATYPE_INTEGER = 0,
-	ARGUMENTDATATYPE_REAL,
-	ARGUMENTDATATYPE_BOOLEAN,
-	ARGUMENTDATATYPE_OBJECTID,
-	ARGUMENTDATATYPE_DRAWABLEID,
-	ARGUMENTDATATYPE_TEAMID,
-	ARGUMENTDATATYPE_SQUADID,
-	ARGUMENTDATATYPE_LOCATION,
-	ARGUMENTDATATYPE_PIXEL,
-	ARGUMENTDATATYPE_PIXELREGION,
-	ARGUMENTDATATYPE_TIMESTAMP,
-	ARGUMENTDATATYPE_WIDECHAR
-};
+#include "../../Include/Common/Enums/GameMessageArgumentDataType.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../Libraries/Include/Lib/ICoord2D.h"

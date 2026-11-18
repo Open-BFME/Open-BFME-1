@@ -8,7 +8,7 @@
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class SubsystemInterface { public: virtual ~SubsystemInterface(); private: int m_subsystemData; };
 class Snapshot { public: virtual ~Snapshot(); };
-enum SnapshotType { SNAPSHOT_SAVELOAD, SNAPSHOT_DEEPCRC_LOGICONLY };
+#include "../../../../Include/Common/Enums/SnapshotType.h"
 class GameState : public SubsystemInterface, public Snapshot {
 public:
     virtual void init();

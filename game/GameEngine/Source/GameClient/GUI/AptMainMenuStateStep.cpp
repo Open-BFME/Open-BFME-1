@@ -27,7 +27,7 @@ public:
 };
 extern Shell *TheShell;
 
-enum SaveCode { SC_OK };
+#include "../../../Include/Common/Enums/SaveCode.h"
 class GameState
 {
 public:

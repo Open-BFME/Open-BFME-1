@@ -21,7 +21,7 @@ private:
 	unsigned char m_data[0x6C];
 };
 
-enum DisabledType { DISABLED_PLACEHOLDER };
+#include "../../../Include/Common/Enums/DisabledType.h"
 enum KindOfType { KINDOF_PLACEHOLDER };
 
 class DisabledMaskType

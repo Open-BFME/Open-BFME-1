@@ -13,10 +13,10 @@ typedef int Int;
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-enum ObjectStatusTypes
-{
-	OBJECT_STATUS_NONE = 0, OBJECT_STATUS_LAST = 85
-};
+#include "../../../Include/Common/Enums/ObjectStatusTypes.h"
+
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

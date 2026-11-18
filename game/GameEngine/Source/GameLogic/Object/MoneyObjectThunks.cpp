@@ -1,8 +1,8 @@
 // readable body of ?setDisabledUntil@Object@@: game/GameEngine/Source/GameLogic/Object/Object.cpp
-enum DisabledType
-{
-	DisabledTypePlaceholder
-};
+#include "../../../Include/Common/Enums/DisabledType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

@@ -34,24 +34,24 @@ enum RoomType
 	StagingRoom
 };
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED
-};
+#include "../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // This is the BFME request layout used by the matched queue copy body.  The
 // callback only writes peerRequestType, but its ctor/dtor still cover the full

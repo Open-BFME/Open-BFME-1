@@ -32,24 +32,24 @@ enum MessageType
 	ActionMessage
 };
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED
-};
+#include "../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class PeerResponse
 {

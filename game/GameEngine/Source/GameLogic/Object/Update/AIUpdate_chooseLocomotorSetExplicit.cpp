@@ -20,10 +20,10 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum LocomotorSetType
-{
-	LOCOMOTORSET_NORMAL = 0
-};
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
 
 class LocomotorTemplate;
 

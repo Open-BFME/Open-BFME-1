@@ -65,10 +65,10 @@ class Module;
 class ModuleData;
 class Xfer;
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 enum ModuleType
 {

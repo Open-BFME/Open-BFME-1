@@ -13,10 +13,10 @@ typedef int Int;
 class Drawable;
 class ThingTemplate;
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 class BFMEDrawableFactory
 {

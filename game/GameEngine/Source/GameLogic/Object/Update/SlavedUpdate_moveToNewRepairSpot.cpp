@@ -27,10 +27,10 @@ enum WeaponSlotType
 
 #include "../../command_source_type.h"
 
-enum LocomotorSetType
-{
-    LOCOMOTORSET_PANIC = 4
-};
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 Real GetGameLogicRandomValueReal(Real lo, Real hi, char *file, int line);

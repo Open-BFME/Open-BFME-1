@@ -18,7 +18,7 @@
 typedef bool Bool;
 typedef int Int;
 
-enum SaveCode { SC_INVALID = -1, SC_OK, SC_NO_FILE_AVAILABLE };
+#include "../../../../Include/Common/Enums/SaveCode.h"
 
 class SaveGameInfo
 {

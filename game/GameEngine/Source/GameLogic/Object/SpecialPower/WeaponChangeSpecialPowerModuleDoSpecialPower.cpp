@@ -26,7 +26,7 @@ class BfmeRvaBA00Object { public: void action(int); };
 class BfmeObjE10 { public: void actionA(int); };
 class BfmeItemRY { public: void bfmeDoRY(void*,void*); };
 class SpecialPowerModule { public: virtual void doSpecialPower(unsigned); };
-enum DisabledType {};
+#include "../../../../Include/Common/Enums/DisabledType.h"
 class Object { public:
     void clearAndSetModelConditionFlags(const BitFlags<320>&,const BitFlags<320>&);
     bool applyAttributeModifier(const AsciiString&,int);

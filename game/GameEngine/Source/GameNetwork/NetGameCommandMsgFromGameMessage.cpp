@@ -10,10 +10,10 @@ enum NetCommandType
 	NETCOMMANDTYPE_GAMECOMMAND = 4
 };
 
-enum GameMessageArgumentDataType
-{
-	ARGUMENTDATATYPE_UNKNOWN = 12
-};
+#include "../../Include/Common/Enums/GameMessageArgumentDataType.h"
+
+
+
 
 // The largest member is IRegion2D: two pairs of integer screen coordinates.
 union GameMessageArgumentType

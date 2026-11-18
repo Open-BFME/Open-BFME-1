@@ -11,7 +11,7 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum ObjectStatusTypes { OBJECT_STATUS_PLACEHOLDER };
+#include "../../../../Include/Common/Enums/ObjectStatusTypes.h"
 enum DisabledType { DISABLED_PLACEHOLDER };
 enum AttitudeType { ATTITUDE_PLACEHOLDER };
 #include "../../command_source_type.h"

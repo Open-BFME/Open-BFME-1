@@ -17,7 +17,7 @@ template<int N> class BitFlags {
 // Retail's ModelConditionFlags is BitFlags<320> (?clearAndSetModelConditionFlags@Object@@QAEXABV?$BitFlags@$0BEA@@@0@Z).
 typedef BitFlags<320> BfmeConditionFlags;
 class Player;
-enum DisabledType { Disabled4 = 4 };
+#include "../../../../Include/Common/Enums/DisabledType.h"
 class Object;
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class ExitInterface {public:

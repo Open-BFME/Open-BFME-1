@@ -2,10 +2,10 @@
 
 #include <string.h>
 
-enum ObjectStatusTypes
-{
-	OBJECT_STATUS_DESTROYED = 0
-};
+#include "../../../Include/Common/Enums/ObjectStatusTypes.h"
+
+
+
 typedef bool Bool;
 
 template <int NUM_BITS> class BitFlags

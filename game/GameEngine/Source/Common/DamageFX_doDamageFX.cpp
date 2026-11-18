@@ -8,10 +8,10 @@
 typedef float Real;
 typedef bool Bool;
 
-enum DamageType
-{
-	DAMAGE_TYPE_ZERO
-};
+#include "../../Include/Common/Enums/DamageType.h"
+
+
+
 
 class Object;
 

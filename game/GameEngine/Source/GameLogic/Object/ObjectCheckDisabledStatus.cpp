@@ -1,20 +1,20 @@
 // BFME 1.03 Object::checkDisabledStatus at RVA 0x001C5780.
 
-enum DisabledType
-{
-	DISABLED_DEFAULT,
-	DISABLED_HACKED,
-	DISABLED_EMP,
-	DISABLED_HELD,
-	DISABLED_PARALYZED,
-	DISABLED_UNMANNED,
-	DISABLED_UNDERPOWERED,
-	DISABLED_FREEFALL,
-	DISABLED_SUBDUED,
-	DISABLED_SCRIPT_DISABLED,
-	DISABLED_SCRIPT_UNDERPOWERED,
-	DISABLED_COUNT
-};
+#include "../../../Include/Common/Enums/DisabledType.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class DisabledMask
 {

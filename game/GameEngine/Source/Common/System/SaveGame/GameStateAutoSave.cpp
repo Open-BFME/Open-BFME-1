@@ -60,10 +60,10 @@ enum SaveFileType
 	SAVE_FILE_TYPE_MISSION
 };
 
-enum SnapshotType
-{
-	SNAPSHOT_SAVELOAD
-};
+#include "../../../../Include/Common/Enums/SnapshotType.h"
+
+
+
 
 enum SaveCode
 {

@@ -22,10 +22,10 @@ public:
 	unsigned char m_argCount;					///< retail msg+0x18
 };
 
-enum GameMessageArgumentDataType
-{
-	ARGUMENTDATATYPE_UNKNOWN = 12
-};
+#include "../../Include/Common/Enums/GameMessageArgumentDataType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameMessageParser.h
 class GameMessageParser

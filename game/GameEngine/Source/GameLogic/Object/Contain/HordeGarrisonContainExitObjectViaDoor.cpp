@@ -19,7 +19,7 @@
 #include <list>
 
 class Object;
-enum ExitDoorType { DOOR_NONE_AVAILABLE = -1 };
+#include "../../../../Include/Common/Enums/ExitDoorType.h"
 
 namespace _STL {
 template <> list<Object *, allocator<Object *> >::list(const list<Object *, allocator<Object *> > &);

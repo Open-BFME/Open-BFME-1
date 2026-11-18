@@ -49,10 +49,10 @@ public:
 	UnsignedInt m_words[ 10 ];
 };
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NONE = 0
-};
+#include "../../../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 // Retail ?getFinalOverride@Overridable@@QBEPBV1@XZ (ILT 0x000022BB).
 class Overridable

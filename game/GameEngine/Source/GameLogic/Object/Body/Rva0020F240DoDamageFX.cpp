@@ -31,7 +31,7 @@ typedef int ObjectID;
 
 #define NULL 0
 
-enum DamageType { DAMAGE_EXPLOSION = 0 };
+#include "../../../../Include/Common/Enums/DamageType.h"
 
 class Object;
 

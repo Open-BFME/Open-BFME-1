@@ -13,10 +13,10 @@ enum ModelConditionFlagType
 	MODELCONDITION_PACKING = 0x5d
 };
 
-enum LocomotorSetType
-{
-	LOCOMOTORSET_NORMAL = 0
-};
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
 
 class Locomotor
 {

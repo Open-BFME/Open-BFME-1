@@ -19,11 +19,11 @@
 typedef bool Bool;
 typedef float Real;
 
-enum LocomotorSetType
-{
-	LOCOMOTORSET_NORMAL = 0,
-	LOCOMOTORSET_NORMAL_UPGRADED = 1
-};
+#include "../../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

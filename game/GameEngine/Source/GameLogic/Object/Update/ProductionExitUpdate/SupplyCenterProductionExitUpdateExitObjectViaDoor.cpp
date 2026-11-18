@@ -18,10 +18,10 @@ typedef bool Bool;
 class Object;
 class ThingTemplate;
 
-enum ExitDoorType
-{
-	DOOR_1 = 0
-};
+#include "../../../../../Include/Common/Enums/ExitDoorType.h"
+
+
+
 
 template <Int N>
 class Rva002D2790VirtualSlots : public Rva002D2790VirtualSlots<N - 1>

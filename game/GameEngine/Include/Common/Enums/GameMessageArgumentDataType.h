@@ -1,0 +1,21 @@
+
+#pragma once
+
+// Existing BFME1 enum contract from inputs/reference/shims/sweep/Common/MessageStream.h.
+// Original provider contexts remain intact; this narrow header is for proven consumers.
+enum GameMessageArgumentDataType
+{
+	ARGUMENTDATATYPE_INTEGER,
+	ARGUMENTDATATYPE_REAL,
+	ARGUMENTDATATYPE_BOOLEAN,
+	ARGUMENTDATATYPE_OBJECTID,
+	ARGUMENTDATATYPE_DRAWABLEID,
+	ARGUMENTDATATYPE_TEAMID,
+	ARGUMENTDATATYPE_SQUADID,			// BFME: one more type here, so LOCATION..UNKNOWN are one higher
+	ARGUMENTDATATYPE_LOCATION,
+	ARGUMENTDATATYPE_PIXEL,
+	ARGUMENTDATATYPE_PIXELREGION,
+	ARGUMENTDATATYPE_TIMESTAMP,
+	ARGUMENTDATATYPE_WIDECHAR,
+	ARGUMENTDATATYPE_UNKNOWN
+};

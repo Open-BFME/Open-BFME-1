@@ -86,13 +86,13 @@ public:
 	virtual void loadPostProcess();
 };
 
-enum SnapshotType
-{
-	SNAPSHOT_SAVELOAD,
-	SNAPSHOT_DEEPCRC_LOGICONLY,
-	SNAPSHOT_DEEPCRC,
-	SNAPSHOT_MAX
-};
+#include "../../../../Include/Common/Enums/SnapshotType.h"
+
+
+
+
+
+
 
 enum SaveCode
 {
