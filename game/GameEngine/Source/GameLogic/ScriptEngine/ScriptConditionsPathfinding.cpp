@@ -23,7 +23,7 @@
 // Declared once, all three pinned slots state themselves together:
 // getTeamNamed at +0x44, getUnitNamed at +0x68, getWaypointByName at +0x7C.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/ObjectID.h"
 

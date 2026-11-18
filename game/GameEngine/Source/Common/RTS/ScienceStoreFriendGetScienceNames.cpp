@@ -25,10 +25,10 @@
 
 
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class NameKeyGenerator
 {

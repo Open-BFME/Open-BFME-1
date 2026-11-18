@@ -14,12 +14,12 @@
 // (docs/shape_levers.md "Compiler-private ABI: compile the static helper with
 // its caller").  Its identity is not proven, so it keeps the address token.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 typedef unsigned char Bool;
 
@@ -134,7 +134,7 @@ public:
 	Bool byte_33a;
 };
 
-enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 
 class Object
 {

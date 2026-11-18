@@ -22,7 +22,7 @@
 #include <hash_map>
 #include <utility>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff };
 typedef _STL::pair<ObjectID, unsigned int> PairObjectIDAndUInt;
 typedef _STL::pair<ObjectID, ObjectID> PairObjectID;

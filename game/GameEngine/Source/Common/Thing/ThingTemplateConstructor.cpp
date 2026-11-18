@@ -52,10 +52,10 @@ private:
 	bool m_isOverride;
 };
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
 
 class GeometryInfo
 {

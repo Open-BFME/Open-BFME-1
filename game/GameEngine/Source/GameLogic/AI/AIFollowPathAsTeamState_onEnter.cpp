@@ -19,7 +19,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_FAILURE = -2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
 // class-gate: allow Coord3D BFME's class-keyed Coord3D (ilt_oracle confirms PBVCoord3D for 0x0016FFD0) with the canonical x/y/z layout
 class Coord3D

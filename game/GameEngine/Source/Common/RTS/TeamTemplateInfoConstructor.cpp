@@ -6,7 +6,7 @@
 #include "ascii_string.h"
 #include "basetype.h"
 #include "../../../Include/Common/NameKeyType.h"
-enum AttitudeType { AI_NORMAL=0 };
+#include "../../../Include/Common/Enums/AttitudeType.h"
 enum VeterancyLevel { LEVEL_REGULAR=0 };
 class StaticNameKey {
 public: NameKeyType key() const; operator NameKeyType() const { return key(); }
@@ -260,7 +260,7 @@ TeamTemplateInfo::TeamTemplateInfo(Dict *d) :
 	m_productionCondition = d->getAsciiString(TheKey_teamProductionCondition, &exists);
 	m_executeActions = d->getBool(TheKey_teamExecutesActionsOnCreate, &exists);
 
-	
+
 	// Which scripts to attempt during run?
 	for (int i = 0; i < MAX_GENERIC_SCRIPTS; ++i) {
 		AsciiString keyName;

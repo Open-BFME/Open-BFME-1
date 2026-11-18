@@ -14,7 +14,7 @@
 #include <list>
 #include <new>
 #include "../../Include/Common/ObjectID.h"
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../Include/Common/Enums/ScienceType.h"
 class Overridable {
 public:
  void *vtable;

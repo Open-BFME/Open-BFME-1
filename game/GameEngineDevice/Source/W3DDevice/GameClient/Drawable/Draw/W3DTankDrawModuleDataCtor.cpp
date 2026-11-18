@@ -24,7 +24,7 @@
 // is polymorphic, so it emits a second vftable store and widens the EH-state
 // transition from a byte to a dword.
 
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

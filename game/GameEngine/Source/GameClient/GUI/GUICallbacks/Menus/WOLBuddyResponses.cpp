@@ -37,7 +37,7 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 
 typedef int GPProfile;
 typedef int GPEnum;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 #define TRUE true
 #define FALSE false
 #define GP_OFFLINE 0

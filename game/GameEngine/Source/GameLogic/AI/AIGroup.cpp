@@ -87,10 +87,10 @@ public:
 };
 
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum KindOfType
 {

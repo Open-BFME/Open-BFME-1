@@ -13,7 +13,7 @@
 
 extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *, const char * );
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class INI
 {

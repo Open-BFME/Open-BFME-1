@@ -89,7 +89,7 @@ UnsignedInt TunnelTracker::getContainCount(Int filterArg)
 }
 
 enum DamageType { DAMAGE_HEALING = 7 };
-enum DeathType { DEATH_NORMAL = 0, DEATH_NONE = 1 };
+#include "../../../Include/Common/Enums/DeathType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameLogic/Damage.h
 struct DamageInfoInput

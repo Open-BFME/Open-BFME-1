@@ -7,11 +7,11 @@
 
 
 
-enum ParticlePriorityType
-{
-	AREA_EFFECT = 0xB,
-	ALWAYS_RENDER = 0xD
-};
+#include "../../../Include/Common/Enums/ParticlePriorityType.h"
+
+
+
+
 
 class GlobalData;
 class GameLODManager;

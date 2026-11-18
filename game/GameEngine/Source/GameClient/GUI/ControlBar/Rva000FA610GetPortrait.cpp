@@ -41,7 +41,7 @@ public:
 class Image;
 class Player;
 
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../../Include/Common/Enums/ScienceType.h"
 
 class GameLogicPortraitShim
 {

@@ -4,7 +4,7 @@
 // The secondary SoundSelectorInterface walks 0x210-byte upgrade records, tests
 // the attached object against each record, and returns the mapped sound value.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 

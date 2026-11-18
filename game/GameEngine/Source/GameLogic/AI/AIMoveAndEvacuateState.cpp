@@ -14,7 +14,7 @@
 // flag at +0x4c; and the Object's position at +0x38, AI module at +0x204, team
 // at +0x23c and dead flags at +0x344.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateReturnType
 {

@@ -34,7 +34,7 @@ public:
 
 extern const char g_bfmeEmptyAscii[];
 
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct BfmeAsciiStringData
 {
