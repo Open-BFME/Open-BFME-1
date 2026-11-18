@@ -10,13 +10,13 @@
 // GameMessageArgument layout (vptr, next@+4, 16-byte union@+8, type@+0x18)
 // with SQUADID occupying ordinal 6 so LOCATION..WIDECHAR sit at 7..11.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
-typedef float Real;
+
+
+
 
 #define NULL 0
 

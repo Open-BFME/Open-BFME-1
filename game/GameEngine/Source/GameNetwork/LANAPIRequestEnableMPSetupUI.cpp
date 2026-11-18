@@ -6,12 +6,12 @@
 // message formatter maps type 0x0C to MSG_ENABLE_MPSETUP_UI, and this body
 // carries one Bool argument into that message before queueing it.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+
+
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
 	WideChar *, const WideChar *, unsigned int);

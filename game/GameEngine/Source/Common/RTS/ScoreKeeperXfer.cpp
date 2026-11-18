@@ -4,11 +4,11 @@
 
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct XferVersion
 {

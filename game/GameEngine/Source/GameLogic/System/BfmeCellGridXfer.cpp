@@ -6,11 +6,11 @@
 // follow the landed CellGrid family. Loading a grid whose dimensions differ
 // reads the saved cells into cell 0 and reports the mismatch to the caller.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct XferVersionFields
 {

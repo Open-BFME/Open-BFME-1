@@ -6,11 +6,11 @@
 // BFME GameSpy stats auth-key message. Their existing ILT routes and the
 // StringBase release body account for every retail REL32 callee.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum { MAX_PACKET_SIZE = 0x1DC };
 

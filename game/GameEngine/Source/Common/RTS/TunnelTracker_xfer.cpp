@@ -9,11 +9,11 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef unsigned int ObjectID;
 
 struct XferVersion
