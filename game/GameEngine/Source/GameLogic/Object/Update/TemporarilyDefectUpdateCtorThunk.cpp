@@ -8,7 +8,7 @@
 class Thing;
 class ModuleData;
 class Object;
-enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class PB_DeepBase
 {

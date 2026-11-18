@@ -4,10 +4,10 @@
 // record supplies a position payload and two byte-sized selectors; the
 // drawable contributes its stable DrawableID.
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../Include/Common/DrawableID.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable

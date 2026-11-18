@@ -11,10 +11,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class Object
 {

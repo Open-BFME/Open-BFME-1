@@ -8,7 +8,7 @@
 // row (WallUpgradeUpdateCtorThunk.cpp, 0x002B2270). Real function name not
 // recovered; this is address-derived.
 
-enum NameKeyType { };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

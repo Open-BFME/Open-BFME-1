@@ -5,7 +5,7 @@
 #include <list>
 #include "unicode_string.h"
 
-enum NameKeyType {};
+#include "../../Include/Common/NameKeyType.h"
 
 typedef _STL::pair<const NameKeyType, float> NameKeyFloatPair;
 typedef _STL::_Rb_tree<NameKeyType, NameKeyFloatPair,

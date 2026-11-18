@@ -5,7 +5,7 @@
 	virtual void PREFIX##6(void); virtual void PREFIX##7(void); \
 	virtual void PREFIX##8(void); virtual void PREFIX##9(void)
 
-enum CommandSourceType {};
+#include "../GameLogic/command_source_type.h"
 
 // retail ILT 0x0001C882 -> 0x000D88D0 is the matched AICommandInterface::aiHunt row
 class AICommandInterface

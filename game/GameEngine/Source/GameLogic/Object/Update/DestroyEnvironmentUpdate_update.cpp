@@ -5,11 +5,11 @@ extern "C" void _ReadWriteBarrier(void);
 // Constructor 0x0028CD70 installs vtable 0x010BDAB0 at primary+0x10; slot 0
 // routes here. `this` is that UpdateModuleInterface address.
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 class Object;
 

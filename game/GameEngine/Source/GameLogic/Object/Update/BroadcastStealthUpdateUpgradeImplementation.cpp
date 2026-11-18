@@ -14,7 +14,7 @@
 
 // ILT 0x000157DA jumps to the matched UpdateModule::setWakeFrame (0x002B2040).
 class Object;
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class UpdateModule
 {

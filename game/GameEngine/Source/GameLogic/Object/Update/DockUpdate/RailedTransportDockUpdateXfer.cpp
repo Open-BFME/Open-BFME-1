@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-enum ObjectID {};
+#include "../../../../../Include/Common/ObjectID.h"
 typedef float Real;
 
 struct XferVersionInfo

@@ -3,7 +3,7 @@
 // Grok promote from masm_dumps — retail 0x00202BD0 size 48
 // was: game/masm_dumps/update_PoisonedBehavior_00202BD0_packet301.asm
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=0 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 // The callee (ILT 0x000202A7 -> 0x002B1FD0) is the matched protected
 // UpdateModule::frameToSleepTime; call it by that defined name.
 class UpdateModule {

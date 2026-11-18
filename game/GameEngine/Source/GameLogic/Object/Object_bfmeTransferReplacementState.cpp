@@ -8,10 +8,10 @@
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 
-enum NameKeyType
-{
-	INVALID_NAME_KEY = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

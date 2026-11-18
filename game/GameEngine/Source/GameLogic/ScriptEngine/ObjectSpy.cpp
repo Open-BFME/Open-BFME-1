@@ -6,12 +6,12 @@ struct lua_State;
 unsigned Rva00990030Lookup(lua_State *, int);
 extern "C" const char *lua_tostring(lua_State *, int);
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 class NameKeyGenerator
 {

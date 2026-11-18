@@ -3,11 +3,11 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

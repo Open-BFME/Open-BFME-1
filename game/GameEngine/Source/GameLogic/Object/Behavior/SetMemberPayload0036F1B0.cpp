@@ -10,7 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <vector>
-enum NameKeyType {};
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Module;

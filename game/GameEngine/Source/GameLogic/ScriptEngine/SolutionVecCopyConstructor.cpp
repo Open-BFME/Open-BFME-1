@@ -22,9 +22,9 @@ inline void *operator new(unsigned int, void *place)
 	return place;
 }
 
-enum ObjectID
-{
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
 
 namespace _STL
 {

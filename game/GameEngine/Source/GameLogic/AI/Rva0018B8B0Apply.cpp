@@ -4,10 +4,10 @@
 
 #include <vector>
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 struct BfmePartCDF
 {

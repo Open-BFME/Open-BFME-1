@@ -16,11 +16,11 @@
 
 // An enum, as in the game: STLport then copies ids element by element on
 // erase instead of memmove, which is what retail does.
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_32 = 0x7fffffff
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
+
 
 class Object;
 

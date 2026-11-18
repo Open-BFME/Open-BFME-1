@@ -32,7 +32,7 @@ public:
 };
 
 // UpdateModule.h defines UPDATE_SLEEP_NONE as one frame.
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class TransportContain
 {

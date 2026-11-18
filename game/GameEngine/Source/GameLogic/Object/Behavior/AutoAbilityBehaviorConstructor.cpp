@@ -9,11 +9,11 @@ class ModuleData;
 class Object;
 #include "ascii_string.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 // Upstream layout: GameLogic/Module/ObjectModule.h.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h

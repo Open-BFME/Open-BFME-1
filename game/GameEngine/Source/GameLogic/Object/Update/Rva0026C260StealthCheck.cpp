@@ -12,11 +12,11 @@ extern "C" void _ReadWriteBarrier();
 
 
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_FORCE_LONG = 0x7fffffff
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

@@ -21,7 +21,7 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 // NameKeyType is an unscoped enum, not an int typedef: the return type is part
 // of the mangled name retail spells ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z.
-enum NameKeyType { };
+#include "../../../Include/Common/NameKeyType.h"
 
 // The tree at +0x27C is keyed on the plain int the map<int, ...>::find
 // instantiation (the one this body byte-matches) is built with; the generator

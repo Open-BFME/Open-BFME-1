@@ -5,10 +5,10 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../Include/Common/DrawableID.h"
+
+
+
 
 extern void j_0000c3d3(void);
 

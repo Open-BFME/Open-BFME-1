@@ -3,7 +3,7 @@
 // UpdateModule vtable subobject (this+0x10 in the full retail layout), so
 // this TU-local shape starts its own fields at that subobject's offset 0.
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class QueueProductionExitUpdate
 {

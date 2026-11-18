@@ -8,10 +8,10 @@ class Thing;
 class ModuleData;
 class Object;
 
-enum UpdateSleepTime
-{
-    UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class PB_DeepBase
 {

@@ -2,7 +2,7 @@
 // stlport
 // Open-BFME5: canonical production-veterancy parser with BFME retail layouts.
 
-enum NameKeyType { NAME_KEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum VeterancyLevel { VETERANCY_INVALID = 0 };
 
 class AsciiString;

@@ -2,12 +2,12 @@
 // cache-refresh: exact retail module-check candidate
 
 typedef int ObjectID;
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 extern void j_00008f7b();
 

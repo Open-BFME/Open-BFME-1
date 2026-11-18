@@ -7,10 +7,10 @@
 
 #include "StringInline.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
 
 class StaticNameKey
 {

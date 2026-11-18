@@ -1,6 +1,6 @@
 // ?getKey@Rva002A0A40@@SAIXZ
 // cl: /DNDEBUG /MD /EHsc
-enum NameKeyType { NAMEKEY_INVALID = 0, FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
+#include "../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char* name); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 struct Rva002A0A40 { static unsigned int getKey(); };

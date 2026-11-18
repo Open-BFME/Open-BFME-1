@@ -30,7 +30,7 @@ public:
     char m_pad[0x110];
     Rva0029B120Conditions m_modelConditionFlags;
 };
-enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class UpdateModule {
 public:
     char m_vptr[4];

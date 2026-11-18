@@ -9,10 +9,10 @@ struct LargeGroupBonusModuleData
     int m_maximumDelay;
 };
 
-enum UpdateSleepTime
-{
-    UPDATE_SLEEP_DUMMY
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class LargeGroupBonusDeepBase
 {

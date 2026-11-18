@@ -6,7 +6,7 @@ extern "C" unsigned int __cdecl strlen(const char *text);
 typedef float Real;
 typedef bool Bool;
 
-enum NameKeyType {};
+#include "../../../Include/Common/NameKeyType.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

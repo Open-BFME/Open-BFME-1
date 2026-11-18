@@ -10,10 +10,10 @@ typedef unsigned int UnsignedInt;
 
 // A real enum: the decorated name says ?AW4UpdateSleepTime@@, which a typedef
 // for UnsignedInt does not produce.
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

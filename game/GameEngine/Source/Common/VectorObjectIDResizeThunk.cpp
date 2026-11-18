@@ -4,7 +4,7 @@
 // copy(__last, end(), __first) range is empty by construction (__last==end()),
 // yielding the dead zero-count move loop; grow calls _M_fill_insert (matched).
 
-enum ObjectID {};
+#include "../../Include/Common/ObjectID.h"
 
 namespace _STL
 {

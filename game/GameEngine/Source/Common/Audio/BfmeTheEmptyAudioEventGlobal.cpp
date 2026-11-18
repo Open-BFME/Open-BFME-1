@@ -11,10 +11,10 @@
 // upstream constructor: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 #include "ascii_string.h"
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class AudioEventRTS
 {

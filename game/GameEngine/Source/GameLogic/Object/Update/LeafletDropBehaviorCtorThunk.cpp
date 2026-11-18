@@ -6,10 +6,10 @@ class ModuleData;
 class Object;
 class DamageInfo;
 
-enum UpdateSleepTime
-{
-    UPDATE_SLEEP_DUMMY
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class PB_DeepBase
 {

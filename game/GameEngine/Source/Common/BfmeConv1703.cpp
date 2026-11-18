@@ -34,7 +34,7 @@ static inline BfmeAudioFU *localBfmeAudioFU()
 	return (BfmeAudioFU *)TheAudio;
 }
 
-enum ObjectID {};
+#include "../../Include/Common/ObjectID.h"
 
 // retail ILTs 0x0001F753 -> 0x000B2690, 0x00019A6A -> 0x000B2250 and
 // 0x00040A52 -> 0x000B2200 are the matched AudioEventRTS::operator=,

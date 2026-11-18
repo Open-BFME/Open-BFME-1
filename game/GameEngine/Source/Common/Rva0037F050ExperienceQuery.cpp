@@ -7,12 +7,12 @@
 
 typedef int Int;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 class NameKeyGenerator
 {

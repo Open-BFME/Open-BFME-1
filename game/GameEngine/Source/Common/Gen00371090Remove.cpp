@@ -8,10 +8,10 @@
 #include <map>
 #include <set>
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 typedef float Real;
 
 enum ObjectStatusTypes

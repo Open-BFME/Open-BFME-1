@@ -33,7 +33,7 @@ public:
     Rva0029A7D0Conditions m_conditions;
 };
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class Overridable
 {

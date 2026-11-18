@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-enum ObjectID {};
+#include "../../Include/Common/ObjectID.h"
 
 namespace _STL
 {

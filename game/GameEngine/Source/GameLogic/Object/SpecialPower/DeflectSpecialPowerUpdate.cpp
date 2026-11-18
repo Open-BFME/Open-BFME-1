@@ -7,11 +7,11 @@ enum ModelConditionFlagType
 	MODELCONDITION_BIT_20 = 20
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 class Object
 {

@@ -10,9 +10,9 @@
 
 class AsciiString;
 
-enum NameKeyType
-{
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
 
 enum ModuleType
 {

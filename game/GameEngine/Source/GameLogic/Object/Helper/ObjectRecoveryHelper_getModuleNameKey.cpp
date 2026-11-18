@@ -11,7 +11,7 @@
 // carries is what assigns it, and a wrong name fails the gate rather than
 // landing quietly.
 
-enum NameKeyType { };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

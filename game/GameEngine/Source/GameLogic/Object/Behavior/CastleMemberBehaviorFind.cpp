@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-enum NameKeyType { };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

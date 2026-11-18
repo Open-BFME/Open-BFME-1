@@ -4,10 +4,10 @@
 
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 enum DamageType
 {

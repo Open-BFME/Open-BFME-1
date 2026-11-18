@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-enum NameKeyType { };
+#include "../../../../Include/Common/NameKeyType.h"
 typedef int ObjectID;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h

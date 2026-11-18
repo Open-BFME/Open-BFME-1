@@ -6,7 +6,7 @@
 
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 int GetGameLogicRandomValue(int, int, char *, int);
 

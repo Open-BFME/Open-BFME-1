@@ -5,7 +5,7 @@ extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *, unsig
 
 #include "ascii_string.h"
 
-enum NameKeyType { NameKeyType_dummy = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

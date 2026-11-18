@@ -33,10 +33,10 @@ struct XferVersion : public Xfer::Version
 	}
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 

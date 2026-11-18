@@ -13,7 +13,7 @@
 #include <vector>
 #include "StringInline.h"
 class INI { public: const char *getNextToken(const char *seps=0); };
-enum NameKeyType { InvalidKey=-1 };
+#include "../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Rva000BD260 { public: static void parseIndexListVector(INI *,void *,void *,const void *); };

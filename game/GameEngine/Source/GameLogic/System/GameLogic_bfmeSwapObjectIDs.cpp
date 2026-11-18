@@ -9,10 +9,10 @@
 
 typedef int ObjectMapID;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class GameLogic;
 

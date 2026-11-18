@@ -6,7 +6,7 @@
 class Thing;
 class ModuleData;
 class Object;
-enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 enum DeathType { DEATH_POISONED = 5 };
 
 class PB_DeepBase
@@ -59,7 +59,7 @@ private:
     DeathType m_deathType;
 };
 
-// ??0Gen_002029F0@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
+// ??0Gen_002029F0@@QAE@PAVThing@@PBVModuleData@@@Z matched
 Gen_002029F0::Gen_002029F0(Thing *thing, const ModuleData *moduleData)
     : UpdateModule(thing, moduleData), m_poisonDamageFrame(0),
       m_poisonOverallStopFrame(0), m_poisonDamageAmount(0.0f),

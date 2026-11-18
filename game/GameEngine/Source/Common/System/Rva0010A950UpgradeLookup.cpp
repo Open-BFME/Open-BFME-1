@@ -5,10 +5,10 @@
 // compares the node field at +0x20, unlike the separately claimed +0x0C
 // UpgradeCenter copies at 0x0010A980 and 0x0010A9B0.
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Rva0010A950UpgradeTemplate
 {

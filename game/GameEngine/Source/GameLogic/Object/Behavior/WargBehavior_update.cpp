@@ -4,10 +4,10 @@
 // Keep the status copy explicit: this is the retail layout at Object+0x90.
 // cl: /O2
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 struct ObjectStatusBits
 {

@@ -5,10 +5,10 @@ struct lua_State;
 extern "C" int lua_gettop(lua_State *state);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../../Include/Common/DrawableID.h"
+
+
+
 
 class Drawable
 {

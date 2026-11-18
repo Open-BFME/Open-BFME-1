@@ -51,10 +51,10 @@ public:
 	}
 };
 
-enum NameKeyType
-{
-	NameKeyTypeUnknown
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class StaticNameKey
 {

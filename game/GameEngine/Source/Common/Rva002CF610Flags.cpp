@@ -30,10 +30,10 @@ public:
 	int m_value;
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_PLACEHOLDER = 0
-};
+#include "../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // Retail calls 0x2AC7F -> 0x002CCEC0, the matched DockUpdate::update; this
 // body extends it (base-qualified, non-virtual call).

@@ -9,10 +9,10 @@
 //
 // Zero Hour's loop never advances; BFME's walks the list.
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ClientUpdateModule
