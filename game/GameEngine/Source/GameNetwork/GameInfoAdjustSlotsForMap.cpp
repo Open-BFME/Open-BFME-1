@@ -21,7 +21,7 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) {
       ->set(*(const StringBase<unsigned short> *)&s);
   return *this;
 }
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 enum { MAX_SLOTS = 8 };
 #include "../../Include/Common/Enums/SlotState.h"
 

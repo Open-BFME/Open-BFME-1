@@ -18,13 +18,13 @@ typedef int PEERBool;
 enum RoomType { TitleRoom, GroupRoom, StagingRoom };
 enum { MAX_SLOTS=8 };
 enum { PEER_ADD, PEER_UPDATE, PEER_REMOVE, PEER_CLEAR };
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 // this class encapsulates a request for the peer thread
 class PeerRequest
@@ -205,24 +205,24 @@ enum DisconnectReason
 	DISCONNECT_MAX,
 };
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED,
-};
+#include "../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // this class encapsulates an action the peer thread wants from the UI
 class PeerResponse
@@ -535,7 +535,7 @@ public:
  virtual void addRequest(const BuddyRequest&)=0;
 };
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
-enum GameSpyBuddyStatus { BUDDY_OFFLINE, BUDDY_ONLINE, BUDDY_LOBBY, BUDDY_STAGING, BUDDY_LOADING, BUDDY_PLAYING, BUDDY_MATCHING };
+#include "../../../../Include/Common/Enums/GameSpyBuddyStatus.h"
 enum { GP_OFFLINE=0, GP_ONLINE=1, GP_CHATTING=4, GP_STAGING=3, GP_PLAYING=2 };
 static void updateBuddyStatus( GameSpyBuddyStatus status, Int groupRoom = 0, std::string gameName = "" )
 {

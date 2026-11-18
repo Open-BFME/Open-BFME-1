@@ -2,8 +2,8 @@
 
 #include "ascii_string.h"
 
-enum ObjectID { INVALID_ID = 0 };
-enum DrawableID { INVALID_DRAWABLE_ID = 0 };
+#include "../../Include/Common/ObjectID.h"
+#include "../../Include/Common/DrawableID.h"
 enum LivingWorldID { INVALID_LIVING_WORLD_ID = 0 };
 
 struct Coord3D { unsigned int x, y, z; };

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // SELECT_OBJECT at retail RVA 0x002F0FD0.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 typedef unsigned int ObjectID;
 

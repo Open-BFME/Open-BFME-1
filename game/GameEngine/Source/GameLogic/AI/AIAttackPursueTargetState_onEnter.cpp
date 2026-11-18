@@ -9,20 +9,20 @@ typedef float Real;
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType {};
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
-enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 enum { INVALID_STATE_ID = 999999 };
 
 class Object;

@@ -252,16 +252,16 @@ enum
 	AI_VISIONFACTOR_MOOD = 0x02,
 	AI_VISIONFACTOR_GUARDINNER = 0x04
 };
-enum StateExitType
-{
-	EXIT_NORMAL = 0
-};
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 #include "Lib/Coord3D.h"
 class Object;
 class AIUpdateInterface;
@@ -743,10 +743,10 @@ enum ObjectStatusTypes
 {
 	OBJECT_STATUS_BFME_26 = 0x26
 };
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 enum WeaponStatus
 {
 	WEAPON_STATUS_BFME_4 = 4

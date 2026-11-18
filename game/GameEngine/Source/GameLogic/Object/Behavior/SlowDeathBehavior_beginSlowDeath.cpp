@@ -115,10 +115,10 @@ public:
  bool any() const { for (unsigned i=0;i<(N+31)/32;++i) if(bits[i]) return true; return false; }
 };
 class ModelConditionFlags {};
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../../Include/Common/NameKeyType.h"
 enum KindOfType { KINDOF_RVA00209BB0_HULK=0x51 };
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=1 };
-enum SlowDeathPhaseType { SDPHASE_INITIAL=0 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+#include "../../../../Include/Common/Enums/SlowDeathPhaseType.h"
 class PhysicsBehavior { public: void applyMotiveForce(const Coord3D *); };
 class Thing {
 public:
