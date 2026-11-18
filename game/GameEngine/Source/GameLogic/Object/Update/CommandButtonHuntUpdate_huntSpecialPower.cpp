@@ -5,8 +5,8 @@
 // command button at +0x24. The three calls below use the retail thunks for the
 // override walk, special-ability lookup, and target scan.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

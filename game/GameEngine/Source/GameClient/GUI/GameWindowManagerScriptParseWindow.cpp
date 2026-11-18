@@ -14,8 +14,8 @@
 #include "GameClient/Gadget.h"
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Ledger names for the two GameWindow calls retail makes on every path
 // (ZH winSetWindowId / winGetEditData positions; identities not yet proven).

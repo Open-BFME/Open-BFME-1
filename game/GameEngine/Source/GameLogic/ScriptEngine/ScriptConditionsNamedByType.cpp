@@ -29,8 +29,8 @@
 // module at +0x200, the dead bit at +0x344, the template name at +0x20 -- is
 // an explicit cast rather than a member.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

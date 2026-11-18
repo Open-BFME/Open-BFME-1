@@ -25,8 +25,8 @@
 // +0x30 and an opaque word at +0x34; aiDoCommand had already named +0x34 the
 // same way and left +0x30 inside a filler run. They are one member list.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class Team;

@@ -18,8 +18,8 @@
 // held a char*; both pass one by value to a virtual, so the delegating slice
 // is what they share.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int WaypointID;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

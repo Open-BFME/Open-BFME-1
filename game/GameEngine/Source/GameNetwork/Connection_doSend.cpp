@@ -5,8 +5,8 @@
 // This TU keeps BFME's de-pooled command references and Connection layout.
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
-typedef unsigned char UnsignedByte;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class NetCommandMsg {
 public:

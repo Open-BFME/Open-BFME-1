@@ -28,8 +28,8 @@
 #define _STLP_NO_EXCEPTIONS 0
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class SubsystemInterface
 {

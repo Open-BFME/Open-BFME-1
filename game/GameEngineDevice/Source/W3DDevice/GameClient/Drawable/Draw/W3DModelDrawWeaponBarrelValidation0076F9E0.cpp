@@ -7,8 +7,8 @@
 #include <stdio.h>
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "WWMath/matrix3d.h"
 

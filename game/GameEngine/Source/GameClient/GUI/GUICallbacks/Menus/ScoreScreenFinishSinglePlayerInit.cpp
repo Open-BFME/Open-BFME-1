@@ -19,8 +19,8 @@
 // ScoreScreen.cpp's window statics are mirrored here as TU statics (DIR32
 // relocations to file statics are patched to retail's addresses).
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 #define TRUE true

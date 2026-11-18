@@ -41,12 +41,12 @@ extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count)
 #define TRUE 1
 #define FALSE 0
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 typedef UnsignedInt ObjectID;
 typedef UnsignedInt DrawableID;
 typedef unsigned short WideChar;

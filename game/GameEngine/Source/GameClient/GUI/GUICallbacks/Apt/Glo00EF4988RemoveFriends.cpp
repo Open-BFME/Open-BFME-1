@@ -2,8 +2,8 @@
 // stlport
 // Visible helper bodies preserve the call setup and vector lifetime.
 #include "GameClient/BfmeAptScreenBaseLayout.h"
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 #include <vector>

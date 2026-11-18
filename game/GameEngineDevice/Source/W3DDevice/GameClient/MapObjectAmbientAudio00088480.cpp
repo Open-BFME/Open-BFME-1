@@ -27,8 +27,8 @@
 #include "ascii_string.h"
 
 typedef long Long;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned int AudioHandle;
 
 extern "C" __declspec(dllimport) Long __stdcall InterlockedDecrement(Long volatile *addend);

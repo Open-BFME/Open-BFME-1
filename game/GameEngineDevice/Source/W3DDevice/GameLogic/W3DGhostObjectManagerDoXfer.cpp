@@ -25,8 +25,8 @@
 // version is the constructed XferVersion record; a plain Xfer::Version
 // aggregate always took the argument slot instead (3 bytes at +0x26/+0x2A/+0x2F).
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

@@ -5,8 +5,8 @@
 // and its converted destructor; the manager's public spelling is not present
 // in the retail symbol evidence, so this remains an address-derived method.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 extern "C" double __cdecl tan(double angle);
 

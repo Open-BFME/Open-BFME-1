@@ -4,9 +4,9 @@
 // render object; the local layouts keep the converted body independent of the
 // still-unmatched implementation headers.
 
-typedef int Int;
-typedef char Char;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class Thing;
 class ModuleData;

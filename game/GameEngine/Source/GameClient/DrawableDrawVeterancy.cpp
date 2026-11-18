@@ -19,8 +19,8 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #ifndef NULL
 #define NULL 0

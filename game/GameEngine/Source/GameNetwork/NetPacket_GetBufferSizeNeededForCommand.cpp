@@ -38,14 +38,14 @@
 // order, so the order of the seventeen surviving blocks is the order of the
 // first case that reaches each of them.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedInt ObjectID;
 typedef UnsignedInt DrawableID;
-typedef bool Bool;
+
 typedef unsigned short WideChar;
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"

@@ -19,11 +19,11 @@ inline UnicodeString::~UnicodeString()
     ((StringBase<unsigned short> *)this)->releaseBuffer();
 }
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct BfmeXferVersion
 {

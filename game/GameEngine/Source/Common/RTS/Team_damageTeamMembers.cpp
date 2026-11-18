@@ -6,8 +6,8 @@
 // Object kill entry point or fills the 0x5c-byte BFME DamageInfo and dispatches
 // Object::attemptDamage at vtable +0x34.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 enum DamageType

@@ -12,8 +12,8 @@
 #include <map>
 #include <string>
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef std::map<int, unsigned int> PerGeneralMap;
 
 namespace _STL {

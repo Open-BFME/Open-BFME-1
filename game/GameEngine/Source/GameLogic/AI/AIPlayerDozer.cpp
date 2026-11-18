@@ -35,8 +35,8 @@
 // position at +0x38. The AI at +0x204 and the position at +0x38 are the same two
 // offsets the AIGroup and AIUpdateInterface lanes measured independently.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 #define NULL 0

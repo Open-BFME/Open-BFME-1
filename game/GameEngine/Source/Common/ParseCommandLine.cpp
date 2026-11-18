@@ -5,8 +5,8 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class GlobalData;								///< retail pointee at 0x012ED5C8
 extern GlobalData *TheWritableGlobalData;		///< retail [0x012ED5C8]

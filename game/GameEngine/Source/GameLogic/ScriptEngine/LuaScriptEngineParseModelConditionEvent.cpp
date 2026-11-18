@@ -22,8 +22,8 @@
 #include <string.h>
 #pragma intrinsic(strcmp, strlen, memcpy, memset)
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct StringBaseCharHeader
 {

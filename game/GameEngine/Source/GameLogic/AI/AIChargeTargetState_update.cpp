@@ -6,8 +6,8 @@
 // Each opaque call adapter retains the witnessed retail receiver/stack ABI.
 // The local goal copy, source status tests and retained AI pointer are intentional.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

@@ -9,8 +9,8 @@
 // GetReplayFilenameFromListbox is ReplayMenuGetReplayFilenameFromListbox.cpp's
 // matched twin; only its prototype is needed here.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 #include "ascii_string.h"

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Same numbering as StateMachine.h. -2 is failure, and the horde machine
 // sends that edge from the wait state to path-wait.

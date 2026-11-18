@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

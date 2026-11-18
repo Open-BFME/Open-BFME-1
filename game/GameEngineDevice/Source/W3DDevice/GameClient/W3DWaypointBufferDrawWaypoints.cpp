@@ -12,10 +12,10 @@
 #include <list>
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #define MAX_DISPLAY_NODES 512
 

@@ -34,8 +34,8 @@ void Object::adjustModelConditionForWeaponStatus()
     ((ObjectAdjustModelConditionShim *)this)->adjust();
 }
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum WeaponSlotType
 {

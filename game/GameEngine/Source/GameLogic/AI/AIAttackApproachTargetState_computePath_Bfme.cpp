@@ -7,7 +7,7 @@
 // Port of the Zero Hour AIStates.cpp body with the BFME desync traces, the
 // kind-58 pathfinder gate and the melee/retry tail.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
@@ -18,7 +18,7 @@ enum WeaponSlotType {};
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
-typedef float Real;
+
 
 class Object;
 class Weapon;

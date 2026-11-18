@@ -15,8 +15,8 @@ extern "C" void _ReadWriteBarrier(void);
 #include <string.h>
 #pragma intrinsic(memcpy)
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D
 {

@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /MD
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 enum ObjectShroudStatus
 {

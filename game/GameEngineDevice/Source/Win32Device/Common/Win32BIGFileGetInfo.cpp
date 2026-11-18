@@ -19,8 +19,8 @@
 // instruction stream proves they are.
 #include "string_base.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

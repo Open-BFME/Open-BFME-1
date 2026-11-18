@@ -17,8 +17,8 @@
 #include <set>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 template <>

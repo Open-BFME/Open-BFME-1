@@ -20,11 +20,11 @@
 // The virtuals keep their declaration order (slot0, crc, xfer): xfer's own slot
 // index is what dispatches it, and reordering them would move it.
 
-typedef int Int;
-typedef char Char;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWaterTracks.h
 class WaterTracksRenderSystem

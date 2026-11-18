@@ -6,8 +6,8 @@ extern "C" int __cdecl abs( int n );
 // a cell coordinate to an offset candidate, resolves the candidate's effective
 // zone, and accepts it when the movement-zone check allows the transition.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short zoneStorageType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

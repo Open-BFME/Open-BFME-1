@@ -64,8 +64,8 @@
 // integer division and subtracts nothing; BFME uses the float macro, which is
 // why retail really does subtract 0.1f.  AIPathfind.h:439-440 defines both.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" __declspec(dllimport) double __cdecl ceil(double);

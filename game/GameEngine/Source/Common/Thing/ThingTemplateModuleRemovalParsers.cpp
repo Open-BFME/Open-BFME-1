@@ -38,8 +38,8 @@
 // all. Neither body stores anything above 1, so naming the slots correctly costs
 // nothing here and stops the invented name spreading.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // The empty-string constant at retail 0x0107388B.
 extern const char g_bfmeEmptyAscii[];

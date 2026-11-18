@@ -30,8 +30,8 @@
 // slot 26, and a virtual call resolves by slot, so the argument type here is
 // only what these two bodies pass.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "game_logic_dispatch.h"
 

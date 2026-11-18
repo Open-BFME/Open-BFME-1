@@ -63,9 +63,9 @@ private:
 	unsigned char m_bfmeData[0x6C];
 };
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 // The base supplies the vptr at +0x00 and one dword at +0x04 that retail never
 // stores to.
