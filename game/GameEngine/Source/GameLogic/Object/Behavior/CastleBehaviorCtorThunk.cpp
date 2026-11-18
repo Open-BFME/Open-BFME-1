@@ -36,8 +36,8 @@ class Thing;
 class ModuleData;
 class Object;
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum UpdateSleepTime
 {

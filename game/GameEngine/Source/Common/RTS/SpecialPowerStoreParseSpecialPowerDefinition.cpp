@@ -21,8 +21,8 @@
 #include "Common/INIException.h"
 #include "string_base.h"
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct FieldParse;
 

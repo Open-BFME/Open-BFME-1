@@ -6,8 +6,8 @@
 #include "PreRTS.h"
 #include "Common/Player.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Parameter
 {

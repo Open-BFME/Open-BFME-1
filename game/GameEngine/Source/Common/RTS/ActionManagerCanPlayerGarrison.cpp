@@ -25,8 +25,8 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../GameLogic/command_source_type.h"
 

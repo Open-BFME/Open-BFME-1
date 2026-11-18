@@ -30,8 +30,8 @@
 //
 // No /EHsc: retail registers no handler for the body.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 enum KindOfType { KINDOF_FIRST = 0 };

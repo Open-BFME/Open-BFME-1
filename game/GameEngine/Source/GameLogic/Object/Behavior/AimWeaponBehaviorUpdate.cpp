@@ -4,8 +4,8 @@
 
 #include <math.h>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

@@ -11,8 +11,8 @@
 #include "WW3D2/RendObj.h"
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 struct Rva0076D850StringData

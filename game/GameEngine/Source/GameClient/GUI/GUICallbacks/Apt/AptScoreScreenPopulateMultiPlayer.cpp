@@ -23,8 +23,8 @@
 #include <string.h>
 #include "string_base.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 // The narrow string this body copies out of a game slot. Retail inlines the
 // emptiness test and the destructor (a direct call to the private

@@ -12,8 +12,8 @@
 #include <list>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Canonical GameLogic/Damage.h types; the retail Object::kill decoration and
 // the observed pushes are DamageType(8), DeathType(0).

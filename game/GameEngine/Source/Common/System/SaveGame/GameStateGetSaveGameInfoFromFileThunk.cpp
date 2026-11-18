@@ -8,8 +8,8 @@
 // Gen009D8CA0/readAt009D89E0 pair; the Xfer block helpers are direct calls,
 // while xferSnapshot and xferAsciiString retain their observed virtual slots.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> struct BfmeStringData
 {

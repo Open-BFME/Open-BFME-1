@@ -9,8 +9,8 @@
 // Shape note measured against retail: ICoord2D has an empty user-declared
 // constructor; without it the corner lea encodes [eax+edi] where retail has
 // [edi+eax] (the residue the 0.99 bank carried behind a volatile pointer hack).
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 #define NULL 0
 
 struct ICoord2D

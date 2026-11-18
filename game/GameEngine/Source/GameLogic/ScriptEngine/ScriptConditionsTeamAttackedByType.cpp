@@ -28,8 +28,8 @@
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Parameter
 {

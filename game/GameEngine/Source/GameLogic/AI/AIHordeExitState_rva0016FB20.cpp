@@ -18,8 +18,8 @@
 // pin or a guessed alias.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

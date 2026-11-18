@@ -2,8 +2,8 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define TRUE true
 #define FALSE false

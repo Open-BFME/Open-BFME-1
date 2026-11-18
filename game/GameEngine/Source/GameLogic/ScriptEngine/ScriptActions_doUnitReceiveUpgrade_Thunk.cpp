@@ -24,9 +24,9 @@
 // aborts the grant, +0xAC takes the template itself. Those roles are read off the
 // call sites -- the slot names below are descriptive, not attested.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class AsciiString;
 class Upgrade;

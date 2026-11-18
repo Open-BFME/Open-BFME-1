@@ -5,10 +5,10 @@
 
 #include <bitset>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int Color;
-typedef bool Bool;
+
 #ifndef TRUE
 #define TRUE true
 #define FALSE false

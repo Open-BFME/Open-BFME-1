@@ -2,8 +2,8 @@
 // BFME's WorkerAIUpdate::aiDoCommand is emitted through the secondary
 // AICommandInterface view.  The method receiver is full WorkerAIUpdate + 0x20.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class Drawable;

@@ -19,8 +19,8 @@
 #include <string>
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 static const Int MAX_SLOTS = 8;
 
 // upstream layout: inputs/reference/shims/nat/GameNetwork/GameSpy/PeerThread.h

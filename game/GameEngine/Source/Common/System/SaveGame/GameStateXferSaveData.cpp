@@ -17,8 +17,8 @@
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count);
 
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define TRUE true
 #define FALSE false

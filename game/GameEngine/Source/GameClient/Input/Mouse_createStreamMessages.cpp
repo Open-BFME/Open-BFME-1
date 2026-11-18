@@ -4,8 +4,8 @@
 // Full1090 code bytes through5A50A1 plus2-byte alignment and three
 // four-entry switch tables through5A50D3. Mouse/W3DMouse slot11 via198FD.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

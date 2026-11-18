@@ -11,8 +11,8 @@
 // forces beginPlayerLeave + a NetDestroyPlayerCommandMsg when the leave
 // timer on the connection manager has been up for 10 s.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../Include/Common/Enums/NetLocalStatus.h"
 

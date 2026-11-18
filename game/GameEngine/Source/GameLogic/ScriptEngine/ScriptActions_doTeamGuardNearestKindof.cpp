@@ -8,10 +8,10 @@ extern "C" double sqrt(double value);
 
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
+
 
 // This declaration keeps the one-pointer BFME AsciiString layout.
 #include "ascii_string.h"

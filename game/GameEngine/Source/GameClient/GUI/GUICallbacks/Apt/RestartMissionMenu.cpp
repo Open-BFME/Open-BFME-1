@@ -1,8 +1,8 @@
 // BFME restartMissionMenu at retail RVA 0x00569E10.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 enum RecorderModeType { RECORDER_MODE_RECORD = 0, RECORDER_MODE_PLAYBACK = 1, RECORDER_MODE_NONE = 2 };
 
 template <class T> class StringBase

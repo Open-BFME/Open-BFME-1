@@ -38,8 +38,8 @@
 // /EHsc is kept: retail registers no exception handler for this body because
 // nothing here needs unwinding, and /EHsc emits none when that is true.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short zoneStorageType;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

@@ -18,9 +18,9 @@
 
 #define _STLP_USE_STATIC_LIB 1
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
-typedef bool Bool;
+
 
 enum
 {

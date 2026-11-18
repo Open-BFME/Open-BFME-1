@@ -18,8 +18,8 @@
 #include "vector3.h"
 #include "matrix3d.h"
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

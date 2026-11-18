@@ -2,8 +2,8 @@
 // readable body of ?update@AIAttackAreaState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for retail RVA 0x0017E900.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

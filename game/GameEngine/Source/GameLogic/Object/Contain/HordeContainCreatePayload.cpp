@@ -2,8 +2,8 @@
 // stlport
 // Open-BFME: HordeContain initial payload cleanup, retail 0x0023C000.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include <list>
 

@@ -15,9 +15,9 @@
 #include "unicode_string.h"
 #include <list>
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef bool Bool;
+
 
 
 inline UnicodeString::UnicodeString()

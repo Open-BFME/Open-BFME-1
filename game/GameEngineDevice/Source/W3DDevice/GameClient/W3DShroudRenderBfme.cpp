@@ -14,8 +14,8 @@
 
 #include <string.h>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 

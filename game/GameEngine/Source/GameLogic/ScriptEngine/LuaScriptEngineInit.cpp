@@ -6,8 +6,8 @@
 struct lua_State;
 struct lua_Debug;
 struct Xfer;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // AsciiString is one data pointer in the retail 32-bit layout.
 struct AsciiString { void *m_data; };

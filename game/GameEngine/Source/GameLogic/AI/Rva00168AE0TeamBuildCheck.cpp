@@ -3,8 +3,8 @@
 // The body proves the queue, production-condition, limit, and factory checks,
 // but no caller or vtable proves a semantic owner beyond this address.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

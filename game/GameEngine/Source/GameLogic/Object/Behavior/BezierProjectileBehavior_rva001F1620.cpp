@@ -3,8 +3,8 @@
 // Evidence: targets/game/reverse/identity_evidence/001f1620-mask-scope-recovery.md
 #include <string.h>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include <Lib/Coord3D.h>
 

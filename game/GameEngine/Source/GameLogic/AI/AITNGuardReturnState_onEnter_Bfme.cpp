@@ -8,8 +8,8 @@
 #include <list>
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

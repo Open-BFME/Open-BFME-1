@@ -4,8 +4,8 @@
 // The callers at 0x002875C0 and 0x00287670 both call Object::bfmePrepare(0x3F).
 // The symbol at 0x0001F852 resolves to this retail body.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include <list>
 

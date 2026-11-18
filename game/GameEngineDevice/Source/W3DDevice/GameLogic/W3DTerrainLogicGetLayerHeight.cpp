@@ -8,8 +8,8 @@
 // slot 39, Bridge::getBridgeHeight at ILT 0x0000B802, and the already matched
 // bounded-value accessor at 0x003D5BF0 when no bridge is present.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 enum PathfindLayerEnum
 {

@@ -18,12 +18,12 @@
 // the value construction: _Construct is a call here, so it is declared and left
 // undefined rather than written as placement new.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct BfmeRbTreeInsertAnchorHelper;
 
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+
+
 
 
 namespace _STL

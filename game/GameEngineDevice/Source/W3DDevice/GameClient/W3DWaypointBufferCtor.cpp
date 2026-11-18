@@ -26,8 +26,8 @@
 // W3DWaterTracks.cpp / RoadTypeLoadTexture.cpp: a four-byte owning handle whose
 // 16-bit retain sits at +4 of the texture and whose release is the
 // RVA 0x009EB7A0 leaf.
-typedef int Int;
-typedef char Char;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // only ever used as a pointer here; the anchor member keeps it a distinct type
 class RenderObjClass

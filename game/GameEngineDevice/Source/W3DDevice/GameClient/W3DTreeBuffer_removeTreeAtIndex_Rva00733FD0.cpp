@@ -4,9 +4,9 @@
 // ILT 0x0001512C.  Records are 0xE8 bytes and the count/dirty fields are at
 // +0x2A7CB0/+0x2A7CB4, as witnessed by the adjacent tree-buffer bodies.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

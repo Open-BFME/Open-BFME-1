@@ -25,8 +25,8 @@
 #include <map>
 #include <string.h>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcscpy(WideChar *dest, const WideChar *src);

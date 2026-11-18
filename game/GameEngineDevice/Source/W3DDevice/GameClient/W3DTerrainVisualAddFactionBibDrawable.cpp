@@ -3,8 +3,8 @@
 // twin, but its Drawable/ThingTemplate/GeometryInfo layouts are different.
 // Keep those layout witnesses local to this body.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 #include "../../../../GameEngine/Include/Common/DrawableID.h"
 
 extern void j_000309f4(void);

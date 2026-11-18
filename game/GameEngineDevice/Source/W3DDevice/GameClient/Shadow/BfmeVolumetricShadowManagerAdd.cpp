@@ -2,8 +2,8 @@
 
 #include <math.h>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 extern const float g_rva01075350;
 extern const float BfmeShadowTanScale;

@@ -5,8 +5,8 @@
 // A temporary entry in the intern call must have its native C++ lifetime:
 // retail constructs it, marks EH state 1, interns it, then destroys it.
 // The old raw-storage bank omitted that unwind state and could not match.
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

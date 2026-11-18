@@ -3,8 +3,8 @@
 // Retail RVA 0x0032A2E0 (346 bytes); executeCondition's
 // TEAM_HAS_UNITS arm names this body.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 

@@ -13,8 +13,8 @@
 // have to be adjacent in the frame and in this order, and separate locals leave
 // that to the allocator, which places them the other way round.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Image;
 class WinInstanceData;

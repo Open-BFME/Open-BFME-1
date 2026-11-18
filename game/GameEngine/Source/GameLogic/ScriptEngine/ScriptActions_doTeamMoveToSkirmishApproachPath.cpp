@@ -2,8 +2,8 @@
 // Readable C++ for the BFME skirmish approach-path team action at retail
 // 0x002F2E40 (461 bytes).
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> class StringBase
 {

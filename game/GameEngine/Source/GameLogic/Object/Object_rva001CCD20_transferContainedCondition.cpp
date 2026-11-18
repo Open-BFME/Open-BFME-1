@@ -4,8 +4,8 @@
 // Clears one model-condition bit and sets another on every horde member and the owner.
 // No caller or vtable slot names the method; the address token is intentionally kept.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include <list>
 

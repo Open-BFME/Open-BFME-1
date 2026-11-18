@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // readable body of ?updateDamageState@Bridge@@QAEXXZ: game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/ObjectID.h"
 enum BodyDamageType { BODY_RUBBLE = 3 };

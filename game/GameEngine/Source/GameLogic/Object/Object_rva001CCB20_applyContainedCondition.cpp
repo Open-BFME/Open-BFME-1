@@ -3,8 +3,8 @@
 // Open-BFME: address-derived Object-layout body, retail 0x001CCB20, 400 bytes.
 // The method identity is not proven; the address token is intentionally kept.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include <list>
 

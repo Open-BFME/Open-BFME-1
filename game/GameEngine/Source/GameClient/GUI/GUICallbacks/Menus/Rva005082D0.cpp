@@ -23,9 +23,9 @@ template <> inline const char *StringBase<char>::str() const { return m_data ? m
 
 
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef bool Bool;
+
 
 inline UnicodeString::UnicodeString()
 {

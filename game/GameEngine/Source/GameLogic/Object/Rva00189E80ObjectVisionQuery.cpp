@@ -10,8 +10,8 @@
 // are intentionally separate because retail stores the second trailing value
 // as a dword but the confirmed 0x01085DC0 relationship filter stores a byte.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern const void *g_010956C4[];
 

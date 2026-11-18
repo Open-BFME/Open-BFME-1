@@ -17,8 +17,8 @@
 #include <string>
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 static const Int MAX_SLOTS = 8;
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

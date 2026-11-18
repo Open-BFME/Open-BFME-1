@@ -17,8 +17,8 @@
 #include <list>
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 #include "../../Include/Common/NameKeyType.h"
 

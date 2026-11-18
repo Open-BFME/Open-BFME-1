@@ -10,9 +10,9 @@
 // only their tracked lifetimes survive. What those branches did is
 // unrecoverable; they are modelled below only by their lifetime counts.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short wchar_t;
 
 #include "Common/UnicodeString.h"
