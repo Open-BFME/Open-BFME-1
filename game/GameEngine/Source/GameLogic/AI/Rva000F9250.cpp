@@ -6,7 +6,7 @@
 // that setter as a store to +0x1C of a 0x24-byte node, so class and method
 // keep the address.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva000F9250
 {

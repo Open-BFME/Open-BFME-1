@@ -4,7 +4,7 @@
 // ParticleSystem layout and the exact setSaveable body at 0x005C1F60 agree
 // that m_isSaveable is the byte at +0x1AA.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystem
 {

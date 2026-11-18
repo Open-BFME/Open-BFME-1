@@ -2,7 +2,7 @@
 // The carved body at retail RVA 0x006E7B20 copies three argument dwords.
 // No caller or table proves the owning class, so both names keep the address.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Rva006E7B20Vector3
 {

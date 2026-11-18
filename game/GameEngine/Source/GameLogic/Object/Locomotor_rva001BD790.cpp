@@ -6,7 +6,7 @@
 // the argument. Its only caller is Object::rva001CC250 (0x001CC250), through
 // ILT 0x00032A24. Identity unproven, so the name keeps the address.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeSub1CC_EC3
 {

@@ -1,6 +1,6 @@
 // cl: /GX
 // Convert a scaled positive extent to its enclosing cell count.
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 

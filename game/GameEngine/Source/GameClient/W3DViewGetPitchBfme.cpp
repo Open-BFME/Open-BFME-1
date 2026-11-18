@@ -7,7 +7,7 @@
 // identifies that camera value as the current pitch.  This TU-local
 // declaration preserves the BFME layout without changing shared headers.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class View
 {

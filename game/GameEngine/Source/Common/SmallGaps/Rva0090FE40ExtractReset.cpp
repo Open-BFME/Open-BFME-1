@@ -2,7 +2,7 @@
 // Address-derived: save *src into *dest, then reset *src in place: if
 // src->x == g_rva01075350, set src->x = 1.0f; otherwise set src->x = 0.0f and
 // src->y = g_bfmeDefaultBU - src->y.
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 extern const Real g_rva01075350;
 extern float g_bfmeDefaultBU;
 

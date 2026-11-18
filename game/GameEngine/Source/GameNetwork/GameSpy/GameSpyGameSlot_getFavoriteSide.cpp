@@ -3,7 +3,7 @@
 // StagingRoomGameInfo.h declares this accessor inline.  The adjacent exact
 // setFavoriteSide body at 0x006370C0 stores the same field at this+0x60.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class GameSpyGameSlot
 {

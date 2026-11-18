@@ -3,7 +3,7 @@
 // The table is the only one holding this body, so the owning class is proven;
 // the lexical method name stays RVA-derived.
 
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DBuffDraw
 {

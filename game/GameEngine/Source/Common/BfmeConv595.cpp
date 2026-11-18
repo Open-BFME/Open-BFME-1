@@ -1,4 +1,4 @@
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BFMENetworkLock;
 

@@ -6,7 +6,7 @@
 
 
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <int NUM_BITS> class BitFlags
 {

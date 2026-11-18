@@ -5,7 +5,7 @@
 // string names W3DFXParticleSystem.cpp.  The base-manager layout fixes the
 // inherited on-screen particle counter at +0x90.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DParticleSystemManager
 {

@@ -5,7 +5,7 @@
 // is the Zero Hour GameWindow.cpp accessor with BFME's cursor fields at
 // +0x24/+0x28.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class GameWindow
 {

@@ -3,7 +3,7 @@
 // The carved body at 0x0043A610 returns the byte at this+0x10. The available
 // evidence proves the offset and width but does not prove a semantic owner.
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva0043A610ByteField
 {

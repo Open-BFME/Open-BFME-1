@@ -3,7 +3,7 @@
 
 #include <stdlib.h>
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 typedef long HRESULT;
 
 #define W3_E_OUTOFMEMORY ((HRESULT)0x8007000EL)

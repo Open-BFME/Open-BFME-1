@@ -4,7 +4,7 @@
 // through ILT 0x00409D22 to this body.  The adjacent doParticles body at
 // 0x006FA9B0 tests and clears the same ready-to-render byte at +0xBC.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DParticleSystemManager
 {

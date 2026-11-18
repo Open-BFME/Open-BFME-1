@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 // Identity has not been recovered.  The complete retail body only exposes
 // two adjacent dwords at offsets 0x58 and 0x5c and copies them to its two

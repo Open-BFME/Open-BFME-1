@@ -1,7 +1,7 @@
 // cl: /MD
 #include <math.h>
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern volatile const Real TheBfmeCountScaleA;
 extern volatile const Real TheBfmeCountScaleB;

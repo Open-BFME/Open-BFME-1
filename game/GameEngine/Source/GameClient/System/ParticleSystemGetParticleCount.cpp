@@ -4,7 +4,7 @@
 // exact BFME createParticle/addParticle/removeParticle bodies independently
 // establish that per-system counter at +0xA8.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystem
 {

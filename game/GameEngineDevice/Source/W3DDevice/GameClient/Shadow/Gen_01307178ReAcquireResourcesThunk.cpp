@@ -1,4 +1,4 @@
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DVolumetricShadowManager
 {

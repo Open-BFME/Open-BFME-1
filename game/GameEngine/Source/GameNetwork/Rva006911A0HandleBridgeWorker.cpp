@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen0002857E;
 

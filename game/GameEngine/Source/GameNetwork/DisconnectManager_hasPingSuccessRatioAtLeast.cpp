@@ -2,7 +2,7 @@
 // threshold.  The retail implementation intentionally uses x87 status-word
 // testing, including the true result for a nonpositive sent count.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BFMEDisconnectManager
 {

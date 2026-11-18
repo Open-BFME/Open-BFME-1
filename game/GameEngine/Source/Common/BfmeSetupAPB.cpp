@@ -5,7 +5,7 @@
 // mode at 0x012ED4E6, and rejects the mode pair through the shared INIException
 // text at 0x01075230 when g_deepCRC at 0x012ED4E5 is already set.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern UnsignedInt TheCommandLineFlags;
 extern bool g_deepCRC;

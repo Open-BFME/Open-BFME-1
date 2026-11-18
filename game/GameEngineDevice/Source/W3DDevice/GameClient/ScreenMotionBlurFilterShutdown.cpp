@@ -4,7 +4,7 @@
 // bytes are also claimed by the independently named parseNoLogOrCrash ICF
 // owner already present at this address.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class ScreenMotionBlurFilter
 {

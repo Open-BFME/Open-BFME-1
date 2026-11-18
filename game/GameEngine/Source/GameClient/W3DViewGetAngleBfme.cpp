@@ -6,7 +6,7 @@
 // View angle at +0x6c; the padding below accounts for the vptr at +0x00.
 // This TU-local declaration avoids changing the shared View layout.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class View
 {

@@ -2,7 +2,7 @@
 // AnimalAIUpdateModuleData vtable 0x010899F0 slot 4 reaches this retail
 // body through ILT 0x0001D787. The slot has no recovered semantic name.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class AnimalAIUpdateModuleData
 {

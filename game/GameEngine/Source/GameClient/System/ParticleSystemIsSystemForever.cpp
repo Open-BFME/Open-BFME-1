@@ -5,7 +5,7 @@
 // and destroyed fields at +0x1A7/+0x1A8.  This byte pattern occurs only once
 // in the retail image.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystem
 {

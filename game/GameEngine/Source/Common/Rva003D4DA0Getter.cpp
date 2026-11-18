@@ -4,7 +4,7 @@
 // No caller or table proves a semantic owner, so the address-derived class
 // keeps the identity honest.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva003D4DA0Opaque
 {

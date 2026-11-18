@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 class AsciiString;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ScriptEngine
 {

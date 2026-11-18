@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // W3DModelDraw::setAnimationLoopDuration at retail 0x0075C760.
 
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 extern const Real g_bfmeScaleGI;

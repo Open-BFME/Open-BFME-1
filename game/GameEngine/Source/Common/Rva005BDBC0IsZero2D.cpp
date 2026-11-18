@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /G6
 // Open-BFME5: clean C++ conversion of the two-component zero test.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern const Real g_rva01075350;
 

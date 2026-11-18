@@ -5,7 +5,7 @@
 // Exact manager particle creation/removal code independently fixes the global
 // particle-count dword at +0x84.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystemManager
 {

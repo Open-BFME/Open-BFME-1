@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME adds an immediate flag to View::setViewFilterPos.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Coord3D;
 

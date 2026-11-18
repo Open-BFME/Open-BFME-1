@@ -3,7 +3,7 @@
 // Retail RVA 0x00183BF0 is slot 14 of the Rva00183C10 vtable at 0x0109B190.
 // The slot routes through ILT 0x0002EF0A and returns true without using this.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva00183C10
 {

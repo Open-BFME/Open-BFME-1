@@ -7,7 +7,7 @@
 // camera transform.  The retail constructor at 0x00745B10 initializes the
 // corresponding +0x70 Real.  Keep the BFME layout local to this TU.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DView
 {

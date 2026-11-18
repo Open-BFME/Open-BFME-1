@@ -4,7 +4,7 @@
 // 0x011203C4 routes through ILT 0x00449D82 to this body.  The exact manager
 // constructor/reset layout fixes m_onScreenParticleCount at +0x90.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystemManager
 {

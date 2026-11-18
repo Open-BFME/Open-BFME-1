@@ -3,7 +3,7 @@
 // evaluateBezSegmentAtT body. This wrapper keeps the ILT's address-derived
 // identity and emits the proven route without duplicating that body.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Coord3D;
 

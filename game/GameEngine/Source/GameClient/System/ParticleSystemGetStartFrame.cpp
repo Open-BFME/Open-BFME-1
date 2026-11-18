@@ -4,7 +4,7 @@
 // recovered BFME layout that dword is at +0x19C, immediately before the exact
 // m_systemLifetimeLeft setter at +0x1A0.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystem
 {

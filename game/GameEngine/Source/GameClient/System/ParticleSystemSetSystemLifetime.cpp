@@ -4,7 +4,7 @@
 // ParticleSystem+0x1A0.  The authentic ParticleSys.h declaration and the
 // recovered BFME field layout identify that slot as m_systemLifetimeLeft.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParticleSystem
 {

@@ -3,7 +3,7 @@
 // the ContainModuleInterface query HealContain alone answers true. Identity:
 // targets/game/reverse/identity_evidence/containmodule-slot4-ishealcontain.md.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/HealContain.h
 class HealContain

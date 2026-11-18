@@ -1,7 +1,7 @@
 // Map a BFME movement profile to one of the nine ZoneBlock equivalency tables:
 // three layer states multiplied by crusher and terrain-only variants.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct PathfindMovementProfile
 {

@@ -3,7 +3,7 @@
 // The retail ILT at 0x0001C693 forwards to TerrainRoadType's matched
 // friend_setRepairedToFXString body at 0x00601CC0.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum BodyDamageType
 {

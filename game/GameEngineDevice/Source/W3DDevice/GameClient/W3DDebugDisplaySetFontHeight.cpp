@@ -4,7 +4,7 @@
 // The vendored inline setter is otherwise no longer emitted from W3DDisplay.cpp
 // after its BFME init body moved to W3DDisplayInit_Bfme.cpp. Retail stores the
 // height at W3DDebugDisplay+0x28.
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DDebugDisplay
 {

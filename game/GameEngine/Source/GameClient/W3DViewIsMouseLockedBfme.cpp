@@ -8,7 +8,7 @@
 // WindowXlat input path supplies the named isMouseLocked callers.  Keep the
 // BFME member offset local to this TU.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class View
 {

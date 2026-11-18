@@ -1,4 +1,4 @@
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern const Real g_rva01075350;
 

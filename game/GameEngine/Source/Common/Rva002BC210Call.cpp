@@ -3,7 +3,7 @@
 // 17-byte flag test + tail jmp: test byte [this+0x3F0], 1; if set,
 // xor al,al / ret; else jmp ILT 0x000042BE (thiscall, ecx unchanged).
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Object;
 class StateMachine;

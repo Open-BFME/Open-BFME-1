@@ -4,7 +4,7 @@
 // GameSpyGameSlot.  The retail constructor stores m_losses at +0x5c, and the
 // adjacent setFavoriteSide body stores m_favoriteSide at +0x60.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class GameSpyGameSlot
 {
