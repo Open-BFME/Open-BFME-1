@@ -280,6 +280,7 @@ const CrateTemplate *CrateSystem::findCrateTemplate(AsciiString name) const
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/System/CrateSystem_friend_findCrateTemplate.cpp
 // ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x003795E0 is CrateSystem_friend_findCrateTemplate.cpp
 CrateTemplate *CrateSystem::friend_findCrateTemplate(AsciiString name)
 {
 	// search weapon list for name
@@ -290,6 +291,7 @@ CrateTemplate *CrateSystem::friend_findCrateTemplate(AsciiString name)
 		}
 	return NULL;
 }
+#endif
 
 
 

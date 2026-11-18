@@ -1536,6 +1536,7 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK)
 	return NULL;
 }
 
+#if 0 // non-retail copy; retail 0x001645B0 is AIPlayerIsPossibleToBuildTeam.cpp
 // ------------------------------------------------------------------------------------------------
 /** Return true if team can be considered for building */
 // ------------------------------------------------------------------------------------------------
@@ -1579,6 +1580,7 @@ Bool AIPlayer::isPossibleToBuildTeam( TeamPrototype *proto, Bool requireIdleFact
 	}
 	return false;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Check if this team is buildable, doesn't exceed maximum limits, meets conditions, 

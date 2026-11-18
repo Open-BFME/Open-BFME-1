@@ -5109,6 +5109,7 @@ void GameLogic::removeObjectFromLookupTable( Object *obj )
 
 }  // end removeObjectFromLookupTable
 
+#if 0 // non-retail copy; retail 0x0038E4C0 is GameLogicRegisterObject.cpp
 // ------------------------------------------------------------------------------------------------
 /** Given an object, register it with the GameLogic and give it a unique ID. */
 // ------------------------------------------------------------------------------------------------
@@ -5158,6 +5159,7 @@ void GameLogic::registerObject( Object *obj )
 	}
 
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** create an object based on the thing template, the reason that this is
@@ -5804,6 +5806,7 @@ void GameLogic::xferObjectTOC( Xfer *xfer )
 	}  // end else
 
 }  // end xferObjectTOC
+#if 0 // non-retail copy; retail 0x0038B2C0 is GameLogicPrepareObjectLoad.cpp
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
@@ -5876,6 +5879,7 @@ void GameLogic::prepareLogicForObjectLoad( void )
 										 getFirstObject()->getTemplate()->getName().str()) );
 
 }  // end prepareLogicForObjectLoad
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load/Save game logic to xfer 

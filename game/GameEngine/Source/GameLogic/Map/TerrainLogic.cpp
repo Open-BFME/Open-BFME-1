@@ -1389,6 +1389,7 @@ void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
 //-------------------------------------------------------------------------------------------------
 /** Given a name, return the associated waypoint. */
 //-------------------------------------------------------------------------------------------------
+#if 0 // non-retail copy; retail 0x001AA900 is TerrainLogicNameLookups.cpp
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
 // ?getWaypointByName@TerrainLogic@@UAEPAVWaypoint@@VAsciiString@@@Z present-unmatched
 Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
@@ -1399,6 +1400,7 @@ Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
 
 	return NULL;
 }
+#endif
 
 // Retail TerrainLogic::getWaypointByID (0x001ACE10) is implemented in TerrainLogicGetWaypointByID.cpp.
 
@@ -1922,6 +1924,7 @@ const WaterHandle* TerrainLogic::getWaterHandle( Real x, Real y )
 }
 
 // ------------------------------------------------------------------------------------------------
+#if 0 // non-retail copy; retail 0x001AAFD0 is TerrainLogicNameLookups.cpp
 /** Get water handle by name assigned from the editor */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
@@ -1942,6 +1945,7 @@ const WaterHandle* TerrainLogic::getWaterHandleByName( AsciiString name )
 	return NULL;
 
 }  // end getWaterHandleByName
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

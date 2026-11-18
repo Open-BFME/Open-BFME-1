@@ -839,6 +839,7 @@ void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 #endif
 
 // ------------------------------------------------------------------------------------------------
+#if 0 // non-retail copy; retail 0x001F2530 is BridgeBehaviorCreateScaffoldingThunk.cpp
 /** Set all the position, angle, and speed data we need to for a single scaffold object */
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorOnHealing.cpp
@@ -901,6 +902,7 @@ void BridgeBehavior::setScaffoldData( Object *obj,
 	scaffoldBehavior->setVerticalSpeed( verticalSpeed );
 
 }  // end setScaffoldData
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Start the bridge repair scaffolding.  If we already have scaffolding this call

@@ -86,6 +86,7 @@ LANAPI::~LANAPI( void )
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/LANAPI_Init.cpp
 // ?init@LANAPI@@UAEXXZ present-unmatched
+#if 0 // non-retail copy; retail 0x00685690 is LANAPILocalAddress.cpp
 void LANAPI::init( void )
 {
 	m_gameStartTime = 0;
@@ -118,6 +119,7 @@ void LANAPI::init( void )
 	}
 	m_hostName = computerName;
 }
+#endif
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/LANAPI_RequestAccept_Thunk.cpp
 // ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched

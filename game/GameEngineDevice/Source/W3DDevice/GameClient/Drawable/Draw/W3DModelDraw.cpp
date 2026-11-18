@@ -2778,6 +2778,7 @@ void W3DModelDraw::recalcBonesForClientParticleSystems()
 // W3DModelDraw_updateBonesForClientParticleSystemsMethodThunk.cpp.
 
 
+#if 0 // non-retail copy; retail 0x00763230 is W3DModelDrawSetTerrainDecal.cpp
 
 
 //-------------------------------------------------------------------------------------------------
@@ -2818,6 +2819,7 @@ void W3DModelDraw::setTerrainDecal(TerrainDecalType type)
 		m_terrainDecal->enableShadowRender(m_shadowEnabled);
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 void W3DModelDraw::setTerrainDecalSize(Real x, Real y)

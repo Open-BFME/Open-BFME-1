@@ -227,6 +227,7 @@ Mission *CampaignManager::gotoNextMission( void )
 
 //-----------------------------------------------------------------------------
 // ?setCampaignAndMission@CampaignManager@@QAEXVAsciiString@@0@Z present-unmatched
+#if 0 // non-retail copy; retail 0x005BC9A0 is CampaignManager_setCampaignAndMissionThunk.cpp
 void CampaignManager::setCampaignAndMission( AsciiString campaign, AsciiString mission )
 {
 	if(mission.StringBase<char>::isEmpty())
@@ -249,6 +250,7 @@ void CampaignManager::setCampaignAndMission( AsciiString campaign, AsciiString m
 		++it;
 	}
 }	
+#endif
 
 //-----------------------------------------------------------------------------
 void CampaignManager::setCampaign( AsciiString campaign )

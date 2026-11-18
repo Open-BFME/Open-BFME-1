@@ -731,6 +731,7 @@ void ScriptList::WriteScriptListDataChunk(DataChunkOutput &chunkWriter)
 *	Input: DataChunkInput 
 *		
 */
+#if 0 // non-retail copy; retail 0x0035BE10 is ScriptListParseScriptListDataChunk.cpp
 // byte-exact reconstruction: game/GameEngine/Source/Common/ScriptList_ParseScriptListDataChunkThunk.cpp
 // ?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z present-unmatched
 Bool ScriptList::ParseScriptListDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
@@ -746,6 +747,7 @@ Bool ScriptList::ParseScriptListDataChunk(DataChunkInput &file, DataChunkInfo *i
 	return file.parse(pInfo->readLists[cur]);
 	
 }
+#endif
 
 
 //-------------------------------------------------------------------------------------------------
