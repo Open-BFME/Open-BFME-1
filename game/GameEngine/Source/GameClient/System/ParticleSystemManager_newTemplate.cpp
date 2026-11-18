@@ -6,8 +6,8 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)

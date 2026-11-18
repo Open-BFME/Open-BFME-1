@@ -11,7 +11,7 @@
 enum DamageType { DAMAGE_TYPE_8 = 8 };
 enum DeathType { DEATH_TYPE_0 = 0 };
 enum ObjectStatusTypes { OBJECT_STATUS_4E = 0x4e };
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 class Module;
 #define OBJECT_TU_MEMBERS \
 	Team* getTeam() const { return m_team; } \

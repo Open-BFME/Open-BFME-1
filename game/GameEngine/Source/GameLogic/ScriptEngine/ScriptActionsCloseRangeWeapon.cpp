@@ -11,7 +11,7 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "game_logic_dispatch.h"
 

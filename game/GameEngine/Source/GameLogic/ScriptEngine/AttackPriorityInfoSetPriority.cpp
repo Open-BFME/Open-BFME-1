@@ -55,7 +55,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Overridable
 {

@@ -5,7 +5,7 @@
 
 #include <vector>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum { FALSE = 0, TRUE = 1 };
 

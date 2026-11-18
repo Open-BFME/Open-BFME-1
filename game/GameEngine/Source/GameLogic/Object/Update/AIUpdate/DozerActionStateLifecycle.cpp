@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
 // BFME DozerActionState lifecycle; constructor 002B76F0 installs vtable 010C6F70.
 // Slots +10/+14 route to 002B6390/002B63E0; both bodies verified byte-for-byte.
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { STATE_EXIT_UNKNOWN = 0 };

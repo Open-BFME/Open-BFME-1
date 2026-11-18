@@ -15,7 +15,7 @@
 // local BfmeStringArgBase/BfmeAsciiStringArg pair is gone; the previous
 // TU-local copy ctor was the one spelling nothing defined.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ScriptEngineAreaLookup
 {

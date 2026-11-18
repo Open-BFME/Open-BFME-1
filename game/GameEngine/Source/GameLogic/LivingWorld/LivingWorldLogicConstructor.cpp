@@ -8,8 +8,8 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "GameEngine/Source/Common/System/subsystem_interface.h"
 #include "GameEngine/Source/Common/System/snapshot.h"

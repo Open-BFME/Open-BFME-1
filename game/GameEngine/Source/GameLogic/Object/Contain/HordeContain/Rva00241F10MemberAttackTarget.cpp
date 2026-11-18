@@ -12,7 +12,7 @@
 #include "coord.h"
 #include "../../../command_source_type.h"
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 class Weapon;

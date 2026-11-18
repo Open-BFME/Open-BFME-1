@@ -29,7 +29,7 @@ public:
 	Object *m_owner;
 };
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 struct Rva0016F770Coord3D
 {

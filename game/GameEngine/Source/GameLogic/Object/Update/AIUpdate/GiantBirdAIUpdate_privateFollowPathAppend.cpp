@@ -4,7 +4,7 @@
 // The bird module keeps its dynamic path reset byte at +0x488 and uses the
 // BFME movement-state range before forwarding to its specialized path method.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../command_source_type.h"
 

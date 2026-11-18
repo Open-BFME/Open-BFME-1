@@ -13,7 +13,7 @@
 #include "Lib/BaseType.h"
 #include "GameLogic/CaveSystem.h"
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 class Team;

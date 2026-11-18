@@ -18,7 +18,7 @@
 
 #include <string.h>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateExitType
 {

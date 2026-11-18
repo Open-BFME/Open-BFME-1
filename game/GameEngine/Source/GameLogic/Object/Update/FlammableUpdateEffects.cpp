@@ -29,7 +29,7 @@
 // machine-byte dump and is deliberately left where it is: merging a dump buys
 // nothing and would only hide a real body's worth of work still to do.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum DamageType
 {

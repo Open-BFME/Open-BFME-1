@@ -3,7 +3,7 @@
 #include <bitset>
 #include <vector>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <size_t NUMBITS>
 class BitFlags

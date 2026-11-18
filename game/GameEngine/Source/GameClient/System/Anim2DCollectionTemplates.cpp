@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Collection head +8 and template nextTemplate +4 are shared by creation and lookup.
 // The returned name temporary must be released before the lookup branch.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
