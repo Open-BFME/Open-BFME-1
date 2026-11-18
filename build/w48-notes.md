@@ -435,3 +435,4 @@
 - link_check on 68 files takes ~20 min; use `link_check ... > file; echo done >> file` in the background and poll with an until-loop (never `pgrep -f` the script name from the same shell: it matches itself).
 ## w48 lane d round 9 (claude-sonnet-5-5, 2026-11-18 06:35-07:15)
 - LANDED 30e77e291: 18 more ZH present-unmatched copies #if 0 (build/w48d8_trial.py indexes 150-195 of build/w48d8_shadow.json: 25 OK, 18 applied after skipping 6 object-symbol/gen alias providers and GameState). build/w48d9_apply.py applies a selection list (build/w48d9_sel.json) in one go; ~45 candidates take ~18 min. Remaining untried: indexes 195+ (sizes <=330 B). eh_state_pins needs --fix --model claude-sonnet-5-5; some Scripts.cpp pins are "unprovable" (only warnings).
+- (r9 cont.) LANDED 8c2e397ca: indexes 195-222 of the shadow list -> 11 more copies dropped (13 OK, 2 alias). Remaining untried: index 222+ of build/w48d8_shadow.json.
