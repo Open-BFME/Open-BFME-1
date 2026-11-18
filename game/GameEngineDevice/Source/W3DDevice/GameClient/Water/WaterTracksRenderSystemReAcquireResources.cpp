@@ -4,7 +4,7 @@
 
 #define WATER_VB_PAGES 1000
 
-typedef unsigned short UnsignedShort;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // BFME's resource classes have the same witnessed refcount/vtable prefix as
 // the neighboring TerrainTracks converter, but their full headers introduce

@@ -7,7 +7,7 @@
 // The real noinline GameLogic lookup exposes its read-only effects and fixes
 // the bank's EBX/EBP mirror. Object uses the shared BFME layout header.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 extern "C" int __cdecl abs( Int n );

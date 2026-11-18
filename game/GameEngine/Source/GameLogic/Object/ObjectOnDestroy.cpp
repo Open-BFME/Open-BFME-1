@@ -12,7 +12,7 @@
 // and the matched GameLogic::destroyObject ends with that +0x24 call, as the
 // Zero Hour destroyObject ends with obj->onDestroy().
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

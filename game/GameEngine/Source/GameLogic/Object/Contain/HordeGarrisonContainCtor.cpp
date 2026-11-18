@@ -17,7 +17,7 @@
 class Thing;
 class ModuleData;
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: .../GameEngine/Include/GameLogic/Object.h
 //

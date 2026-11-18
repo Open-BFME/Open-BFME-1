@@ -4,7 +4,7 @@
 // offsets. The reference Object header uses a different weapon-set map and
 // places the global time and weather fields at different offsets.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum ModelConditionFlagType
 {

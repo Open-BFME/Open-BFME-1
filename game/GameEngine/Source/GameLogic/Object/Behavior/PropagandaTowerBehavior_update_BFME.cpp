@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // BFME secondary UpdateModuleInterface entry at retail RVA 0x00203660.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"

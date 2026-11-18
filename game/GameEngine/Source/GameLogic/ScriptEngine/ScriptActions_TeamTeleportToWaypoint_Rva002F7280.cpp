@@ -11,7 +11,7 @@
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeAsciiStringArg : public AsciiString
 {

@@ -4,7 +4,7 @@
 // checks every team member's AI state. The member list head sits at +0x0c.
 // Each object exposes its AI interface at +0x204. The dead flag sits at +0x344.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AIUpdateInterface;
 class Object;

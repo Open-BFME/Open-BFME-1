@@ -3,7 +3,7 @@
 // readable body of ??0SpawnBehavior@@: game/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehavior.cpp
 #include <list>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 class Thing;
 class ModuleData;
 class ThingTemplate;

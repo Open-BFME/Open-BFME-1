@@ -9,7 +9,7 @@
 // name because retail gives no native owner type. Existing callee declarations
 // are ABI views, with routes and contracts in the evidence file.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned int UInt;
 
 class Rva001BEF20FieldAddress

@@ -15,7 +15,7 @@
 // their offsets. The base chain itself is real: ObjectModule at 0x00113C60 is
 // matched, and BehaviorModule and UpdateModule are inlined here.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 class Thing;
 class ModuleData;
 class Object;

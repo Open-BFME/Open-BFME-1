@@ -14,7 +14,7 @@
 // receiver in ECX, matching thiscall for this no-explicit-argument slot. The
 // member-call form at the second site already emits retail's EDX temporary.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 class Object;
 
 typedef UnsignedInt (__fastcall *Rva0023A380Slot48)(void *);

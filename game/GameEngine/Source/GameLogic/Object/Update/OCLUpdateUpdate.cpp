@@ -15,7 +15,7 @@
 // remains after both stores. Both helpers are zero-overhead real C++.
 // cl: /DNDEBUG /MD
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

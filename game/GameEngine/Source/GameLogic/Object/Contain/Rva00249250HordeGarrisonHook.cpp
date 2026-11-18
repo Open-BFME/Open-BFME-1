@@ -2,7 +2,7 @@
 // Retail 0x00249250. This Horde containment hook refreshes the owner's frame
 // after it applies or falls back for the supplied object.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeRva49250Object;
 class BfmeRva49250AI;

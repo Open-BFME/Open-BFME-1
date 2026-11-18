@@ -2,7 +2,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 class GameFont;
 
 class Rva00510DC0DisplayView

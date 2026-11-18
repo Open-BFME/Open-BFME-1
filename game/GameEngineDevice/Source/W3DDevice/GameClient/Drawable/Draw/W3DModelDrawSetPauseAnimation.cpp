@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD
 
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class HAnimClass;
 

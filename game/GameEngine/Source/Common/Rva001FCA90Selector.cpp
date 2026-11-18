@@ -11,7 +11,7 @@
 // (this+0x24) instead of a script parameter, and gated on the object's
 // *controlling* player rather than a resolved player mask.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
 
 class Drawable;

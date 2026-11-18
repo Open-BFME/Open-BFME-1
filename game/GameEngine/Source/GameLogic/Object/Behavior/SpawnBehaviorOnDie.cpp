@@ -11,7 +11,7 @@
 // keeps the first GameLogic::findObjectByID call out of line and inlines the
 // second hash-map lookup, exactly as retail does.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // Zero Hour GameLogic.h preserves this older BFME hash-map body in a comment.
 inline Object *GameLogic::findObjectByID(ObjectID id)

@@ -7,7 +7,7 @@
 // circular record list at module +0x7C (the constructor/destructor evidence
 // is in the neighboring landed Bezier sources).
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

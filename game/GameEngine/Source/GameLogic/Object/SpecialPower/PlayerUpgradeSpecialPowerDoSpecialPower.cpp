@@ -23,7 +23,7 @@
 
 #include "ascii_string.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum UpgradeType
 {

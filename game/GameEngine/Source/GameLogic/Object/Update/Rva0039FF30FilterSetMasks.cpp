@@ -54,7 +54,7 @@ private:
     int m_initialPayloadCount;
 };
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

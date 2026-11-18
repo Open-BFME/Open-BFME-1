@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // OSDisplayWarningBox at retail RVA 0x006BB040, 509 bytes.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 template <typename T> struct StringInlineData

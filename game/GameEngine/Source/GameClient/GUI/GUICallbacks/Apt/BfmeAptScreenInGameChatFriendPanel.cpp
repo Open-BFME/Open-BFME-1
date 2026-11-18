@@ -17,8 +17,8 @@
 // Reading the members produces the same instructions with ecx and edx where
 // retail uses eax; the accessors put eax back.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 class GameWindow;
 

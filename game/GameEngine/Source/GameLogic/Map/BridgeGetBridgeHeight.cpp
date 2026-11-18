@@ -12,7 +12,7 @@
 // Coord3D::normalize (0x000FB930) twice, PlaneClass::Set (0x001A5DC0) and
 // PlaneClass::Compute_Intersection (0x001A1CF0) out of line.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // class-gate: allow Coord3D BFME's user default and copy constructors and header-inline sub/scale, absent from the canonical header, give the polygon-area branch retail's member-wise copies and stack slots
 class Coord3D

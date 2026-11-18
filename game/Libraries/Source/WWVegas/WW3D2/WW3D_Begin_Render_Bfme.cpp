@@ -3,7 +3,7 @@
 // Clean BFME body for WW3D::Begin_Render at retail RVA 0x008FE280.
 // The BFME flags use byte globals and the status result is returned through AL.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../WWMath/vector3.h"
 

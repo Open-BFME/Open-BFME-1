@@ -22,7 +22,7 @@
 #include "StringInline.h"
 #include <vector>
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <int N>
 class BitFlags

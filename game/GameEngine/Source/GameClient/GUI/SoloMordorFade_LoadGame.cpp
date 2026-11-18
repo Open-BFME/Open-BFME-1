@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // 0x003BE1F0 (126B). Load-game SoloMordor fade step: WindowManager pop(-1),
 // Display stopMovie, Shell hide, optional clearGameData when not GAME_NONE,

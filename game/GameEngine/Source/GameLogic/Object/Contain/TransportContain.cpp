@@ -3,7 +3,7 @@
 // Identity is anchored by TransportContain's vtable slot 27 and the matched
 // HordeContain::createPayload caller at retail 0x0023C000.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

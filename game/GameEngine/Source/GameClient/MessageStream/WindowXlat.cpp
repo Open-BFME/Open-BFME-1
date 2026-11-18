@@ -17,7 +17,7 @@
 //
 // Its own TU because BFME has no WindowXlat.cpp yet.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 union GameMessageArgumentType
 {

@@ -12,7 +12,7 @@
 #include <list>
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 enum EmotionType

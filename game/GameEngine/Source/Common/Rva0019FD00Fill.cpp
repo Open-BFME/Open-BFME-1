@@ -1,6 +1,6 @@
 // cl: /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../Include/Common/NameKeyType.h"
 

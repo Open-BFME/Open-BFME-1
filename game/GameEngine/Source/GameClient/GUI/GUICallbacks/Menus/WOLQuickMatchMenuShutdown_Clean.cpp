@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/asciistring_downloadmanager
 // Open-BFME5: convert the BFME quick-match shutdown callback to clean C++.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class GameWindow;
 

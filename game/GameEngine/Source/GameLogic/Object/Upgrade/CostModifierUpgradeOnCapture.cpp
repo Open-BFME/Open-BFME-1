@@ -15,7 +15,7 @@
 // dispatch through the UpgradeMux vtable at this+0x10, matching those files'
 // this-object layout (getModuleData()=this+4, getObject()=this+8).
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Rva000C9C50 { public: void dec(); };
 class Rva000C9C40 { public: void inc(); };

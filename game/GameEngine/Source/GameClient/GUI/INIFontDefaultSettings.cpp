@@ -10,7 +10,7 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 extern const FieldParse g_010F76AC[];

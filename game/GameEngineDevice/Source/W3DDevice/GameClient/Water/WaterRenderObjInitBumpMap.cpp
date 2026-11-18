@@ -10,7 +10,7 @@ typedef unsigned long DWORD;
 typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef long LONG;
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 struct LockedRect0079E700 { int Pitch; void *pBits; };
 class SurfaceClass { public:
  struct SurfaceDescription { unsigned Format, Width, Height; };

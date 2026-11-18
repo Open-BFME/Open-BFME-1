@@ -6,7 +6,7 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Parameter
 {

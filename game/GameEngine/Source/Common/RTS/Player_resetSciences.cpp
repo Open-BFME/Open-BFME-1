@@ -1,6 +1,6 @@
 // cl: /O2 /Oy /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/ScienceType.h"
 

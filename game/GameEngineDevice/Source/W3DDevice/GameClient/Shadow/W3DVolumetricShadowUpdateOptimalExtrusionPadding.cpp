@@ -3,7 +3,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWDebug /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Include
 #include "rendobj.h"
 
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 static __forceinline Vector3 Corner0(const Vector3 &center, const Vector3 &extent)
 {
 	return Vector3(((const volatile Vector3 &)extent).X + center.X, center.Y + extent.Y, center.Z + extent.Z);

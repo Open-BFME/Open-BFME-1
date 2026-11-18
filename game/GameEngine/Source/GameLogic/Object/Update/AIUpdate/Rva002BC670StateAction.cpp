@@ -2,7 +2,7 @@
 //
 // Address-derived recovery for the BFME state-action body at 0x002BC670.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class ObjectIsMobileBody
 {

@@ -20,7 +20,7 @@
 // the EH `this` spill (seven bytes off), which is where twelve earlier
 // sessions stalled.
 
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" void *memset(void *, int, unsigned int);
 #pragma intrinsic(memset)

@@ -37,7 +37,7 @@
 // outside this file needs the layout, and a header change would run the full
 // gate.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WCHAR;
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"

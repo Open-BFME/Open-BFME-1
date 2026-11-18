@@ -11,7 +11,7 @@
 // with the KillArmorUpgrade sense swapped relative to slot 7, and tail-calls
 // notifyModelConditionChanged.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ArmorSetType;
 
 // Armor-set to model-condition table, retail .data VA 0x012B2C98: one entry

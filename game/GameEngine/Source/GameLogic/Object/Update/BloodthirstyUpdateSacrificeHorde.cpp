@@ -14,7 +14,7 @@
 
 #include <list>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../command_source_type.h"
 

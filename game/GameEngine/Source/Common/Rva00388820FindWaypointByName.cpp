@@ -19,8 +19,8 @@
 
 #pragma intrinsic(memcmp)
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeAsciiStringData
 {

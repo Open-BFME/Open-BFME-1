@@ -9,7 +9,7 @@
 // There is no unwind frame, so this translation unit is built without
 // exceptions and STLport's try around the construct is gone.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 struct Gen_t_0042dd00_p12cd;
 
 namespace _STL

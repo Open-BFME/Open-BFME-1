@@ -22,7 +22,7 @@
 // pointer is at this+0x04 and its active count at this+0x10, and the shared
 // flag is the byte at data+0x10.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

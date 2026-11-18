@@ -5,7 +5,7 @@
 // through thunk 0x000036DE.  The state checks its owner and target, waits for
 // a reloading weapon, then fires the current weapon at the target.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

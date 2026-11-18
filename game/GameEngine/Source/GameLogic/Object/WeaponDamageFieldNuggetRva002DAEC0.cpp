@@ -13,7 +13,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 #include "../../../Include/Common/NameKeyType.h"
 

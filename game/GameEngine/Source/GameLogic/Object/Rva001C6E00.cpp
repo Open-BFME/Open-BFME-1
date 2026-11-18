@@ -20,8 +20,8 @@
 // tail: it is both bfmeTransferDefection's Object* argument and the
 // interface call's sole argument.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../ScriptEngine/game_logic_dispatch.h"
 
 

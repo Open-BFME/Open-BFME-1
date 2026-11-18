@@ -2,7 +2,7 @@
 // readable body of ?Load_Geom@W3DShadowGeometryManager@@QAEHPAVRenderObjClass@@PBD@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DVolumetricShadow.cpp
 // Open-BFME5: clean C++ reconstruction of W3DShadowGeometryManager::Load_Geom.
 
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 #define FALSE false
 #define TRUE true
 #ifndef NULL

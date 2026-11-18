@@ -7,7 +7,7 @@
 
 #include "../../Common/Thing/GameLogicObjectLookup.h"
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType { KINDOF_FIRST = 0 };
 enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
