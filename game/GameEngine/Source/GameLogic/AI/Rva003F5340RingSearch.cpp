@@ -7,8 +7,8 @@
 // Let VC7.1 derive the 4*delta induction variable. The last two inclusive
 // loops generate retail's >=0 guards and delta+1 counts without manual guards.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

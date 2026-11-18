@@ -18,8 +18,8 @@
 // 0x402EB/0x7617, 0x316B0/0x271C9). Each dtor tail-jumps to AsciiString's
 // release, matching the leading BoneLocInfo::boneName.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int DamageTypeFlags;
 
 class FXList;

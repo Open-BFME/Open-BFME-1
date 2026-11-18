@@ -63,9 +63,9 @@
 // than this line.  One of the two is misnamed and settling that is an identity
 // question, not a merge.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 template <int NUMBITS>

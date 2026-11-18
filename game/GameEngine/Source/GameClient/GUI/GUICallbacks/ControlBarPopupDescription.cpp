@@ -16,9 +16,9 @@
 // before the new handle stores the pointer (retail: pointer in ECX, argument
 // slot in EDX).
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 // WINMM timeGetTime through its import slot 0x01359544, read as a plain pointer so
 // each call reloads the slot as retail does.

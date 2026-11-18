@@ -34,8 +34,8 @@
 // definitions in one TU does not let the compiler inline the three that are
 // called from here.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 // The ScoreKeeper block, contiguous. INI names in docs/ini_schema.md.

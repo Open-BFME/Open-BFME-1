@@ -31,8 +31,8 @@
 // separate and the normal relocation-aware gate verifies the original route.
 // Access spelling does not require a second body or an alias.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct CRITICAL_SECTION;
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(CRITICAL_SECTION *lock);

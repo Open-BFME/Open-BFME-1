@@ -17,8 +17,8 @@
 // override body's `lea ecx,[edi+0x0C]` reaches it, twenty button slots, and
 // the list link the allocators write. One statement now, not three.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // Raised only while an override is being copied over its original.
 extern Bool TheBfmeOverrideCopyInProgress;			// 0x012ED611

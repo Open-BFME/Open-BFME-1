@@ -12,8 +12,8 @@
 // IDENTITY IS NOT RECOVERED: the slot names and the member fields are named
 // for the addresses.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

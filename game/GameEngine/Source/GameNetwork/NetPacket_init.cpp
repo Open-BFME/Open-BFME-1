@@ -36,10 +36,10 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 class NetCommandMsg;
 

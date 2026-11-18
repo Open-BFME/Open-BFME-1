@@ -46,11 +46,11 @@
 // forwards to TheScriptEngine's virtual at +0x4C, and queryRva001CAEE0 reads
 // the viewer at +0x2C. Neither identity is proven.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef unsigned short PlayerMaskType;
 
 class Object;

@@ -41,3 +41,13 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundTesselatedUpdate.cpp`: `?dup_00C4D258@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundTesselatedUpdate.cpp`: `?dup_00C4D26B@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngine/Source/Common/System/SaveGame/GameStateSaveGame.cpp`: `?dup_00110499@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/Common/RTS/TeamConstructor.cpp`: `?dup_00BFBF75@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/Common/RTS/TeamConstructor.cpp`: `?dup_00BFBF80@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngine/Source/GameLogic/ScriptEngine/XferListAsciiStringUINT.cpp`: `?dup_00C18048@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

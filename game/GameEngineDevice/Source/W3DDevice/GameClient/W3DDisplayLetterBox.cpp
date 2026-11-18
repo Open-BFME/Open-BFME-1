@@ -16,9 +16,9 @@
 // The offsets are retail's, counted from the vtable pointer at +0x00; upstream
 // supplies only the words.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 

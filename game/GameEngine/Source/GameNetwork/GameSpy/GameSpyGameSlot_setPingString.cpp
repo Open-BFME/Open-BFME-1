@@ -7,8 +7,8 @@
 
 #include "string_base.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct statsgame_s;
 typedef statsgame_s *statsgame_t;

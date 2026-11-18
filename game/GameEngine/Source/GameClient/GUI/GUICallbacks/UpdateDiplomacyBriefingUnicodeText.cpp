@@ -66,8 +66,8 @@ inline bool operator==(const UnicodeString &left, const UnicodeString &right)
 	return left.compare(right) == 0;
 }
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0,
