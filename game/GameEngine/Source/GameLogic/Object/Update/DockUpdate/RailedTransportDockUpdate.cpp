@@ -231,6 +231,7 @@ void RailedTransportDockUpdate::unloadSingleObject( Object *obj )
 /** If we have an object recorded as being pushed out of us then do that here */
 // ------------------------------------------------------------------------------------------------
 // ?doPushOutDocking@RailedTransportDockUpdate@@IAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x002CEA90 is RailedTransportDockUpdate_doPushOutDocking_Bfme.cpp
 void RailedTransportDockUpdate::doPushOutDocking( void )
 {
 
@@ -326,6 +327,7 @@ void RailedTransportDockUpdate::doPushOutDocking( void )
 	}  // end if, m_unloadingID
 
 }  // end doPushOutDocking
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Iterate callback for the finding the first contained object */

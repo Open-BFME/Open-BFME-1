@@ -1003,6 +1003,7 @@ void AIPlayer::guardSupplyCenter( Team *team, Int minSupplies )
 /** Is a supply source attacked? */
 //-------------------------------------------------------------------------------------------------
 // ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00163F10 is AIPlayerIsSupplySourceAttacked.cpp
 Bool AIPlayer::isSupplySourceAttacked( void )
 {
 	const Int SCAN_RATE = 10; // don't scan more often than every 10 seconds.
@@ -1057,6 +1058,7 @@ Bool AIPlayer::isSupplySourceAttacked( void )
 	}
 	return false;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** Is the nearest supply source safe? */
@@ -2738,6 +2740,7 @@ void AIPlayer::newMap( void )
 /** Find the center of the base and the radius of buildings.  */
 // ------------------------------------------------------------------------------------------------
 // ?computeCenterAndRadiusOfBase@AIPlayer@@IAEXPAUCoord3D@@PAM@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00162190 is AIPlayerComputeCenterAndRadiusOfBase.cpp
 void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 {
 	//
@@ -2791,6 +2794,7 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 	}
 	*radius = sqrt(maxRadSqr);
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 /**
@@ -3105,6 +3109,7 @@ void TeamInQueue::crc( Xfer *xfer )
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
 // ?xfer@TeamInQueue@@MAEXPAVXfer@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00161B50 is TeamInQueueXfer.cpp
 void TeamInQueue::xfer( Xfer *xfer )
 {
 
@@ -3188,6 +3193,7 @@ void TeamInQueue::xfer( Xfer *xfer )
 	xfer->xferObjectID( &m_reinforcementID );
 
 }  // end xfer
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

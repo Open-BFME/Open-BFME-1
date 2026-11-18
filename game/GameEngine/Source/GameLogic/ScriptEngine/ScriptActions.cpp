@@ -2654,6 +2654,7 @@ void ScriptActions::doNamedSetGarrisonEvacDisposition(const AsciiString& unitNam
 /** doTeamFollowSkirmishApproachPath */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamFollowSkirmishApproachPath@ScriptActions@@IAEXABVAsciiString@@0_N@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x002F2BD0 is ScriptActions_doTeamFollowSkirmishApproachPath.cpp
 void ScriptActions::doTeamFollowSkirmishApproachPath(const AsciiString& teamName, const AsciiString& waypointPathLabel, Bool asTeam)
 {
 	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
@@ -2713,11 +2714,13 @@ void ScriptActions::doTeamFollowSkirmishApproachPath(const AsciiString& teamName
 		theGroup->groupFollowWaypointPath(way, CMD_FROM_SCRIPT);
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamFollowSkirmishApproachPath */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamMoveToSkirmishApproachPath@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x002F2E40 is ScriptActions_doTeamMoveToSkirmishApproachPath.cpp
 void ScriptActions::doTeamMoveToSkirmishApproachPath(const AsciiString& teamName, const AsciiString& waypointPathLabel)
 {
 	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
@@ -2762,6 +2765,7 @@ void ScriptActions::doTeamMoveToSkirmishApproachPath(const AsciiString& teamName
 	DEBUG_ASSERTLOG(TheTerrainLogic->isPurposeOfPath(way, pathLabel), ("***Wrong waypoint purpose. Make jba fix this.\n"));
 	theGroup->groupMoveToPosition(way->getLocation(), false, CMD_FROM_SCRIPT);
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamFollowWaypoints */
@@ -3805,6 +3809,7 @@ void ScriptActions::doCollectNearbyForTeam(const AsciiString& teamName)
 /** doMergeTeamIntoTeam */
 //-------------------------------------------------------------------------------------------------
 // ?doMergeTeamIntoTeam@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x002FD790 is ScriptActions_doMergeTeamIntoTeam.cpp
 void ScriptActions::doMergeTeamIntoTeam(const AsciiString& teamSrcName, const AsciiString& teamDestName)
 {
 	Team *teamSrc = TheScriptEngine->getTeamNamed(teamSrcName);
@@ -3842,6 +3847,7 @@ void ScriptActions::doMergeTeamIntoTeam(const AsciiString& teamSrcName, const As
 	teamSrc->deleteTeam();
 	teamDest->setActive(); // in case we just created him.
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doDisableInput */
@@ -4003,6 +4009,7 @@ void ScriptActions::doTeamGarrisonSpecificBuilding(const AsciiString& teamName, 
 /** doTeamGarrisonNearestBuilding */
 //-------------------------------------------------------------------------------------------------
 // ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00302240 is ScriptActions_doTeamGarrisonNearestBuilding.cpp
 void ScriptActions::doTeamGarrisonNearestBuilding(const AsciiString& teamName)
 {
 	Team *theTeam = TheScriptEngine->getTeamNamed( teamName );
@@ -4068,6 +4075,7 @@ void ScriptActions::doTeamGarrisonNearestBuilding(const AsciiString& teamName)
 		}
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamExitAllBuildings */
@@ -4116,6 +4124,7 @@ void ScriptActions::doUnitGarrisonSpecificBuilding(const AsciiString& unitName, 
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doUnitGarrisonNearestBuilding_Thunk.cpp
 // ?doUnitGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00302630 is ScriptActions_doUnitGarrisonNearestBuilding_Thunk.cpp
 void ScriptActions::doUnitGarrisonNearestBuilding(const AsciiString& unitName)
 {
 	Object *theUnit = TheScriptEngine->getUnitNamed( unitName );
@@ -4176,6 +4185,7 @@ void ScriptActions::doUnitGarrisonNearestBuilding(const AsciiString& unitName)
 		return;
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doNamedEnableStealth */
@@ -6007,6 +6017,7 @@ void ScriptActions::doSkirmishAttackNearestGroupWithValue( const AsciiString& te
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doSkirmishCommandButtonOnMostValuable_Thunk.cpp
 // ?doSkirmishCommandButtonOnMostValuable@ScriptActions@@IAEXABVAsciiString@@0M_N@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x002FF770 is ScriptActions_doSkirmishCommandButtonOnMostValuable_Thunk.cpp
 void ScriptActions::doSkirmishCommandButtonOnMostValuable( const AsciiString& teamName, const AsciiString& ability, Real range, Bool allTeamMembers)
 {
 	Team *team = TheScriptEngine->getTeamNamed(teamName);
@@ -6053,6 +6064,7 @@ void ScriptActions::doSkirmishCommandButtonOnMostValuable( const AsciiString& te
 		theGroup->groupDoCommandButtonAtObject(commandButton, iter->first(), CMD_FROM_SCRIPT);
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** doTeamSpinForFramecount */

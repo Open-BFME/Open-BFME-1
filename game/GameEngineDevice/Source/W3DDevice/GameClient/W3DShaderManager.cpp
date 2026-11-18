@@ -497,6 +497,7 @@ Bool ScreenDefaultFilter::postRender(enum FilterModes mode, Coord2D &scrollDelta
 }
 
 // ?set@ScreenDefaultFilter@@MAEHW4FilterModes@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x007D47A0 is ScreenDefaultFilterSet.cpp
 Int ScreenDefaultFilter::set(enum FilterModes mode)
 {
 	VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
@@ -514,6 +515,7 @@ Int ScreenDefaultFilter::set(enum FilterModes mode)
 
 	return true;
 }
+#endif
 
 void ScreenDefaultFilter::reset(void)
 {
@@ -1490,6 +1492,7 @@ Int ShroudTextureShader::init(void)
 // ShroudTextureShader::set is defined in ShroudTextureShaderSet.cpp.
 
 // ?reset@ShroudTextureShader@@EAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x007C4660 is ShroudTextureShaderReset.cpp
 void ShroudTextureShader::reset(void)
 {
 	{
@@ -1500,6 +1503,7 @@ void ShroudTextureShader::reset(void)
 	BFME_SET_TSS(m_stageOfSet,  D3DTSS_TEXCOORDINDEX, m_stageOfSet);
 	BFME_SET_TSS(m_stageOfSet,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
 }
+#endif
 
 ///Shroud layer rendering shader
 class FlatShroudTextureShader : public W3DShaderInterface
@@ -1599,6 +1603,7 @@ Int FlatShroudTextureShader::set(Int stage)
 }
 
 // ?reset@FlatShroudTextureShader@@EAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x007C5240 is FlatShroudTextureShaderReset.cpp
 void FlatShroudTextureShader::reset(void)
 {
 	if (m_stageOfSet < MAX_TEXTURE_STAGES)
@@ -1610,6 +1615,7 @@ void FlatShroudTextureShader::reset(void)
 	BFME_SET_TSS(m_stageOfSet,  D3DTSS_TEXCOORDINDEX, m_stageOfSet);
 	BFME_SET_TSS(m_stageOfSet,  D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
 }
+#endif
 
 ///Mask layer rendering shader
 class MaskTextureShader : public W3DShaderInterface

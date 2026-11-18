@@ -267,6 +267,7 @@ void GameSpyInfo::joinGroupRoom( Int groupID )
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/GameSpyInfo_joinBestGroupRoomMethodThunk.cpp
 // ?joinBestGroupRoom@GameSpyInfo@@UAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00634EF2 is GameSpyInfo_joinBestGroupRoomMethodThunk.cpp
 void GameSpyInfo::joinBestGroupRoom( void )
 {
 	if (m_currentGroupRoomID)
@@ -314,6 +315,7 @@ void GameSpyInfo::joinBestGroupRoom( void )
 		GSMessageBoxOk(TheGameText->fetch("GUI:Error"), TheGameText->fetch("GUI:GSGroupRoomJoinFail"), NULL);
 	}
 }
+#endif
 
 // ?updatePlayerInfo@GameSpyInfo@@UAEXVPlayerInfo@@VAsciiString@@@Z present-unmatched
 void GameSpyInfo::updatePlayerInfo( PlayerInfo pi, AsciiString oldNick )

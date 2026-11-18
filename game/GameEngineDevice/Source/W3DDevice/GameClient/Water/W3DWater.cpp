@@ -380,6 +380,7 @@ WaterRenderObjClass::~WaterRenderObjClass(void)
 /** Constructor. Just nulls out some variables. */
 //-------------------------------------------------------------------------------------------------
 // ??0WaterRenderObjClass@@QAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x007A46E0 is WaterRenderObjConstructor.cpp
 WaterRenderObjClass::WaterRenderObjClass(void)
 {
 	memset( &m_settings, 0, sizeof( m_settings ) );
@@ -432,6 +433,7 @@ WaterRenderObjClass::WaterRenderObjClass(void)
 	m_riverXOffset=0;
 	m_riverYOffset=0;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** WW3D method that returns object bounding sphere used in frustum culling*/

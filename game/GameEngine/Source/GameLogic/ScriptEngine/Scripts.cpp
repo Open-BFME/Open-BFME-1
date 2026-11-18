@@ -1253,6 +1253,7 @@ void Script::deleteFalseAction(ScriptAction *pAct)
 */
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/Script_getUiText_Thunk.cpp
 // ?getUiText@Script@@QAE?AVAsciiString@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00357860 is Script_getUiText_Thunk.cpp
 AsciiString Script::getUiText(void) 
 {
 	AsciiString uiText("*** IF ***\r\n");
@@ -1296,6 +1297,7 @@ AsciiString Script::getUiText(void)
 	}
 	return uiText;
 }
+#endif
 
 /**
 * Script::WriteScriptDataChunk - Writes a Scripts chunk.
@@ -2231,6 +2233,7 @@ void ScriptAction::setActionType(enum ScriptActionType type)
 
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptAction_duplicate_Thunk.cpp
 // ?duplicate@ScriptAction@@QBEPAV1@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x003560A0 is ScriptAction_duplicate.cpp
 ScriptAction *ScriptAction::duplicate(void) const 
 {
 	ScriptAction *pNew = newInstance(ScriptAction)(m_actionType);	
@@ -2254,6 +2257,7 @@ ScriptAction *ScriptAction::duplicate(void) const
 	}
 	return pNew;
 }
+#endif
 
 // ?duplicateAndQualify@ScriptAction@@QBEPAV1@ABVAsciiString@@00@Z present-unmatched
 ScriptAction *ScriptAction::duplicateAndQualify(const AsciiString& qualifier, 

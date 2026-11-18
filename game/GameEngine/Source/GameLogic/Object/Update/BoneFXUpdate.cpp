@@ -220,6 +220,7 @@ void BoneFXUpdateModuleData::parseParticleSystem( INI *ini, void *instance,
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/BoneFXUpdate_update_Thunk.cpp
 // ?update@BoneFXUpdate@@UAE?AW4UpdateSleepTime@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00289580 is BoneFXUpdate_update_Thunk.cpp
 UpdateSleepTime BoneFXUpdate::update( void )
 {
 /// @todo srj use SLEEPY_UPDATE here
@@ -248,6 +249,7 @@ UpdateSleepTime BoneFXUpdate::update( void )
 	}
 	return UPDATE_SLEEP_NONE;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -533,6 +535,7 @@ void BoneFXUpdate::crc( Xfer *xfer )
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
 // ?xfer@BoneFXUpdate@@MAEXPAVXfer@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00289330 is BoneFXUpdateXfer.cpp
 void BoneFXUpdate::xfer( Xfer *xfer )
 {
 
@@ -615,6 +618,7 @@ void BoneFXUpdate::xfer( Xfer *xfer )
 	xfer->xferBool( &m_active );
 
 }  // end xfer
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

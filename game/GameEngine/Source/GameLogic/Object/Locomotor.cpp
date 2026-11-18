@@ -292,6 +292,7 @@ static void calcDirectionToApplyThrust(
 
 //-------------------------------------------------------------------------------------------------
 // ??0LocomotorTemplate@@QAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001B52C0 is LocomotorTemplateConstructor.cpp
 LocomotorTemplate::LocomotorTemplate()
 {
 	// these values mean "make the same as undamaged if not explicitly specified"
@@ -370,6 +371,7 @@ LocomotorTemplate::LocomotorTemplate()
 	m_elevatorCorrectionRate    = 0.0f;
 
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ??1LocomotorTemplate@@MAE@XZ present-unmatched
@@ -2233,6 +2235,7 @@ void Locomotor::moveTowardsPositionOther(Object* obj, PhysicsBehavior *physics, 
 	resting on the ground), false if not (eg, we are hovering or circling)
 */
 // ?locoUpdate_maintainCurrentPosition@Locomotor@@QAE_NPAVObject@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001BCB10 is Locomotor_maintainCurrentPosition.cpp
 Bool Locomotor::locoUpdate_maintainCurrentPosition(Object* obj)
 {
 	if (!getFlag(MAINTAIN_POS_IS_VALID))
@@ -2299,6 +2302,7 @@ Bool Locomotor::locoUpdate_maintainCurrentPosition(Object* obj)
 
 	return requiresConstantCalling;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ?maintainCurrentPositionThrust@Locomotor@@IAEXPAVObject@@PAVPhysicsBehavior@@@Z present-unmatched
@@ -2464,6 +2468,7 @@ void LocomotorSet::crc( Xfer *xfer )
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
 // ?xfer@LocomotorSet@@MAEXPAVXfer@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001BAAA0 is LocomotorSet_xfer.cpp
 void LocomotorSet::xfer( Xfer *xfer )
 {
 	// version
@@ -2517,6 +2522,7 @@ void LocomotorSet::xfer( Xfer *xfer )
 	xfer->xferBool(&m_downhillOnly);
 
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

@@ -1873,6 +1873,7 @@ void W3DModelDraw::onDrawableBoundToObject(void)
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/W3DModelDrawDestructorThunk.cpp
 // ??1W3DModelDraw@@MAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0077B090 is W3DModelDrawDestructorThunk.cpp
 W3DModelDraw::~W3DModelDraw(void)
 {
 	if (m_trackRenderObject && TheTerrainTracksRenderObjClassSystem)
@@ -1883,6 +1884,7 @@ W3DModelDraw::~W3DModelDraw(void)
 
 	nukeCurrentRender(NULL);
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ?doStartOrStopParticleSys@W3DModelDraw@@AAEXXZ present-unmatched

@@ -747,6 +747,7 @@ void BridgeBehavior::onDie( const DamageInfo *damageInfo )
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/BridgeBehavior_handleObjectsOnBridgeOnDieMethodThunk.cpp
 // ?handleObjectsOnBridgeOnDie@BridgeBehavior@@IAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001F4F40 is BridgeBehaviorHandleObjectsOnDie.cpp
 void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 {
 	const Object *bridge = getObject();
@@ -832,6 +833,7 @@ void BridgeBehavior::handleObjectsOnBridgeOnDie( void )
 	}  // end if, terrainBridge
 
 }  // end handleObjectsOnBridgeDie
+#endif
 #endif
 
 // ------------------------------------------------------------------------------------------------

@@ -938,6 +938,7 @@ Object *AI::findClosestAlly( const Object *me, Real range, UnsignedInt qualifier
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/AI/TAiDataCtor.cpp
 // ??0TAiData@@QAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0014B150 is TAiDataCtor.cpp
 TAiData::TAiData() : 
 m_next(NULL), 
 m_sideInfo(NULL), 
@@ -990,6 +991,7 @@ m_retaliateFriendsRadius(120.0f)
 //
 {
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ?crc@TAiData@@UAEXPAVXfer@@@Z present-unmatched

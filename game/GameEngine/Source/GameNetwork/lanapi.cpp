@@ -785,6 +785,7 @@ void LANAPI::RequestAccept( void )
 }
 
 // ?RequestHasMap@LANAPI@@UAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x006861C0 is LANAPIRequestHasMap.cpp
 void LANAPI::RequestHasMap( void )
 {
 	if (m_inLobby || !m_currentGame)
@@ -827,6 +828,7 @@ void LANAPI::RequestHasMap( void )
 		OnChat(UnicodeString(L"SYSTEM"), m_localIP, text, LANCHAT_SYSTEM);
 	}
 }
+#endif
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/LANAPI_RequestChat_Thunk.cpp
 // ?RequestChat@LANAPI@@UAEXVUnicodeString@@W4ChatType@LANAPIInterface@@@Z present-unmatched
@@ -1113,6 +1115,7 @@ void LANAPI::RequestSlotList( void )
 */
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/LANAPI_RequestSetName.cpp
 // ?RequestSetName@LANAPI@@UAEXVUnicodeString@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00688220 is LANAPILobbyNames.cpp
 void LANAPI::RequestSetName( UnicodeString newName )
 {
 	newName.trim();
@@ -1155,6 +1158,7 @@ void LANAPI::RequestSetName( UnicodeString newName )
 		OnNameChange(player->getIP(), player->getName());
 	}
 }
+#endif
 
 // ?fillInLANMessage@LANAPI@@UAEXPAULANMessage@@@Z present-unmatched
 void LANAPI::fillInLANMessage( LANMessage *msg )

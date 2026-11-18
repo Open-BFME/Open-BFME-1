@@ -507,6 +507,7 @@ __declspec(noinline) void setFPMode( void )
 /** GameLogic class constructor */
 // ------------------------------------------------------------------------------------------------
 // ??0GameLogic@@QAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x003928E0 is GameLogicConstructor.cpp
 GameLogic::GameLogic( void )
 {
 	//Added By Sadullah Nader
@@ -551,6 +552,7 @@ GameLogic::GameLogic( void )
 	m_loadingSave = FALSE;
 	m_clearingGameData = FALSE;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Utility function to set class variables to default values. */
@@ -732,6 +734,7 @@ void GameLogic::init( void )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/GameLogic_resetMethodThunk.cpp
 // ?reset@GameLogic@@UAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0038F4B0 is GameLogicReset.cpp
 void GameLogic::reset( void )
 {
 	m_thingTemplateBuildableOverrides.clear();
@@ -796,6 +799,7 @@ void GameLogic::reset( void )
 
 	m_rankPointsToAddAtGameStart = 0;
 }  // end reset
+#endif
 
 static Object * placeObjectAtPosition(Int slotNum, AsciiString objectTemplateName, Coord3D& pos, Player *pPlayer,
 																	const PlayerTemplate *pTemplate)
@@ -6218,6 +6222,7 @@ void GameLogic::xfer( Xfer *xfer )
 /** Load post process entry point */
 // ------------------------------------------------------------------------------------------------
 // ?loadPostProcess@GameLogic@@MAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0038E6F0 is GameLogicLoadPostProcess.cpp
 void GameLogic::loadPostProcess( void )
 {
 
@@ -6294,6 +6299,7 @@ void GameLogic::loadPostProcess( void )
 	remakeSleepyUpdate();
 
 }  // end loadPostProcess
+#endif
 
 // BFME retail RVA 0038DA10. The matched GameEngine caller at 0006BAE0
 // passes the phase to primary vslot +20 (0006BB86); retail returns with ret4.

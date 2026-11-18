@@ -219,6 +219,7 @@ Bool GameSpyLoginPreferences::load( AsciiString fname )
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/GameSpyLoginPreferencesWriteThunk.cpp
 // ?write@GameSpyLoginPreferences@@UAE_NXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00080F40 is GameSpyLoginPreferencesWriteThunk.cpp
 Bool GameSpyLoginPreferences::write( void )
 {
 	if (m_filename.isEmpty())
@@ -269,6 +270,7 @@ Bool GameSpyLoginPreferences::write( void )
 	}
 	return false;
 }
+#endif
 // byte-exact reconstruction: game/GameEngine/Source/Common/GameSpyLoginPreferences_getDateForEmail_Thunk.cpp
 // ?getDateForEmail@GameSpyLoginPreferences@@QAE?AVAsciiString@@V2@AAV2@11@Z present-unmatched
 AsciiString GameSpyLoginPreferences::getDateForEmail( AsciiString email, AsciiString &month, AsciiString &date, AsciiString &year )

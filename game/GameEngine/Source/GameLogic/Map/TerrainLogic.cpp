@@ -881,6 +881,7 @@ void TerrainLogic::update( void )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ?enableWaterGrid@TerrainLogic@@QAEX_N@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001A8820 is TerrainLogicEnableWaterGrid.cpp
 void TerrainLogic::enableWaterGrid( Bool enable )
 {
 
@@ -979,6 +980,7 @@ void TerrainLogic::enableWaterGrid( Bool enable )
 	TheTerrainVisual->enableWaterGrid( enable );
 
 }  // end enableWaterGrid
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** device independent terrain logic load.  If query is true, we are just loading it to get
@@ -1405,6 +1407,7 @@ Waypoint *TerrainLogic::getWaypointByName( AsciiString name )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Map/TerrainLogicNameLookups.cpp
 // ?getClosestWaypointOnPath@TerrainLogic@@UAEPAVWaypoint@@PBUCoord3D@@VAsciiString@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001A8C70 is TerrainLogicNameLookups.cpp
 Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiString label )
 {
 	Real distSqr = 0;
@@ -1434,6 +1437,7 @@ Waypoint *TerrainLogic::getClosestWaypointOnPath( const Coord3D *pos, AsciiStrin
 		
 	return pClosestWay;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** Return true if the waypoint path containing pWay is labeled with the label. */
@@ -2300,6 +2304,7 @@ void TerrainLogic::setActiveBoundary(Int newActiveBoundary)
 /** Flatten the terrain beneath a struture. */
 // ------------------------------------------------------------------------------------------------
 // ?flattenTerrain@TerrainLogic@@QAEXPAVObject@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001AE610 is TerrainLogicFlattenTerrain.cpp
 void TerrainLogic::flattenTerrain(Object *obj) 
 {
 	if (obj->getGeometryInfo().getIsSmall()) {
@@ -2512,6 +2517,7 @@ void TerrainLogic::flattenTerrain(Object *obj)
 	} // switch
 
 }
+#endif
 
 
 

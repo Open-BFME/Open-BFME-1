@@ -1786,6 +1786,7 @@ void TeamPrototype::loadPostProcess( void )
 // ------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/TeamDestructorThunk.cpp
 // ??1Team@@MAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x000F4250 is TeamDestructorThunk.cpp
 Team::~Team()
 {
 //	DEBUG_ASSERTCRASH(getFirstItemIn_TeamMemberList() == NULL, ("Team still has members in existence"));
@@ -1821,6 +1822,7 @@ Team::~Team()
 	m_xferMemberIDList.clear();
 
 }
+#endif
 
 // ------------------------------------------------------------------------
 // BFME keeps the prototype at Team+0x04 and its owning player at

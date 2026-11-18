@@ -1349,6 +1349,7 @@ void INI::parseDeathTypeFlags(INI *ini, void *, void *store, const void *)
 // [whitespace] blockType [whitespace] blockName [EOL]
 // both blockType and blockName are case insensitive
 // ?isDeclarationOfType@INI@@SA_NVAsciiString@@0PAD@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00851BF0 is Rva00851BF0LineFilter.cpp
 Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, char *bufferToCheck )
 {
 	Bool retVal = true;
@@ -1407,6 +1408,7 @@ Bool INI::isDeclarationOfType( AsciiString blockType, AsciiString blockName, cha
 
 	return retVal;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // parse the line and return whether the given line is a Block declaration of the form

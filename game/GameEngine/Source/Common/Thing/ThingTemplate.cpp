@@ -1240,12 +1240,14 @@ void ThingTemplate::setCopiedFromDefault()
 
 //-------------------------------------------------------------------------------------------------
 // ??1ThingTemplate@@MAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00146BA0 is ThingTemplateBFMERetailDestructor.cpp
 ThingTemplate::~ThingTemplate()
 {
 	// note, we don't need to take any special action for Armor/WeaponSets...
 	// though it is just a list of 'raw' pointers, we don't have ownership of 'em,
 	// and so we MUST NOT delete them
 } 
+#endif
 
 //=============================================================================
 // The retail resolveNames body is owned by ThingTemplateResolveNames.cpp.

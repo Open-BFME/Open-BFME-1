@@ -437,6 +437,7 @@ W3DDisplay::W3DDisplay()
 /** */
 //=============================================================================
 // ??1W3DDisplay@@UAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x006EFC20 is W3DDisplayDestructor.cpp
 W3DDisplay::~W3DDisplay()
 {
 
@@ -483,6 +484,7 @@ W3DDisplay::~W3DDisplay()
 	TheW3DFileSystem = NULL;
 
 }  // end ~W3DDisplay
+#endif
 
 #define MIN_DISPLAY_RESOLUTION_X	800
 #define MIN_DISPLAY_RESOLUTOIN_Y	600
@@ -501,6 +503,7 @@ Bool IS_FOUR_BY_THREE_ASPECT( Real x, Real y )
 
 /*Return number of screen modes supported by the current device*/
 // ?getDisplayModeCount@W3DDisplay@@UAEHXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x006EB1C0 is W3DDisplayRva006EB3E0.cpp
 Int W3DDisplay::getDisplayModeCount(void)
 {
 	const RenderDeviceDescClass &devDesc=WW3D::Get_Render_Device_Desc(0);
@@ -532,6 +535,7 @@ Int W3DDisplay::getDisplayModeCount(void)
 
 	return numResolutions;
 }
+#endif
 
 // ?getDisplayModeDescription@W3DDisplay@@UAEXHPAH00@Z present-unmatched
 void W3DDisplay::getDisplayModeDescription(Int modeIndex, Int *xres, Int *yres, Int *bitDepth)
@@ -1450,6 +1454,7 @@ Int W3DDisplay::getLastFrameDrawCalls()
 /** Render letter-box border at top/bottom of display
 */
 // ?renderLetterBox@W3DDisplay@@IAEXI@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x006E9210 is W3DDisplayLetterBox.cpp
 void W3DDisplay::renderLetterBox(UnsignedInt currentTime)
 {
 		if (m_letterBoxEnabled)
@@ -1498,6 +1503,7 @@ void W3DDisplay::renderLetterBox(UnsignedInt currentTime)
 			}
 		}
 }
+#endif
 
 // byte-exact reconstruction: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayIsLetterBoxFading.cpp
 // ?isLetterBoxFading@W3DDisplay@@UAE_NXZ present-unmatched

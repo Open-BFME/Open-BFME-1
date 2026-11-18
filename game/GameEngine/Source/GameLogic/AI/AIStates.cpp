@@ -2240,6 +2240,7 @@ static Bool canPursue(Object *source, Weapon *weapon, Object *victim)
  * Return false if can't find a good spot.
  */
 // ?computePath@AIAttackApproachTargetState@@MAE_NXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00182360 is AIAttackApproachTargetState_computePath_Bfme.cpp
 Bool AIAttackApproachTargetState::computePath()
 {
 	Bool forceRepath = false;
@@ -2345,6 +2346,7 @@ Bool AIAttackApproachTargetState::computePath()
 	CRCDEBUG_LOG(("AIAttackApproachTargetState::computePath - bailing at end of function for object %d\n", getMachineOwner()->getID()));
 	return true;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */
@@ -2389,6 +2391,7 @@ void AIAttackApproachTargetState::loadPostProcess( void )
 
 //----------------------------------------------------------------------------------------------------------
 // ?onEnter@AIAttackApproachTargetState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00174E10 is AIAttackApproachTargetState_onEnter.cpp
 StateReturnType AIAttackApproachTargetState::onEnter()
 {
 	// contained by AIAttackState, so no separate timer
@@ -2496,6 +2499,7 @@ StateReturnType AIAttackApproachTargetState::onEnter()
 	setAdjustsDestination(true);
 	return ret;
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 // AIAttackApproachTargetState::updateInternal (retail 0x001827C0) is real C++ in
@@ -2785,6 +2789,7 @@ StateReturnType AIAttackPursueTargetState::onEnter()
 
 //----------------------------------------------------------------------------------------------------------
 // ?updateInternal@AIAttackPursueTargetState@@AAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00176250 is AIAttackPursueTargetState_updateInternal.cpp
 StateReturnType AIAttackPursueTargetState::updateInternal()
 {
 	AIUpdateInterface* ai = getMachineOwner()->getAI();	  
@@ -2854,6 +2859,7 @@ StateReturnType AIAttackPursueTargetState::updateInternal()
 	}																			
 	return code;
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 // AIAttackPursueTargetState::update: retail body matched in AIAttackPursueTargetState_update.cpp.
@@ -3424,6 +3430,7 @@ void AIAttackMoveToState::onExit( StateExitType status )
 
 //----------------------------------------------------------------------------------------------------------
 // ?update@AIAttackMoveToState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x001885B0 is AIAttackMoveToState_update_Bfme.cpp
 StateReturnType AIAttackMoveToState::update()
 {
 
@@ -3512,6 +3519,7 @@ StateReturnType AIAttackMoveToState::update()
 	}
 	return ret;
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 //----------------------------------------------------------------------------------------------------------
@@ -4401,6 +4409,7 @@ void AIAttackAimAtTargetState::loadPostProcess( void )
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/AIAttackAimAtTargetState_onEnterMethodThunk.cpp
 // ?onEnter@AIAttackAimAtTargetState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00183E40 is AIAttackAimAtTargetState_onEnter_Bfme.cpp
 StateReturnType AIAttackAimAtTargetState::onEnter()
 {
 	// contained by AIAttackState, so no separate timer
@@ -4497,6 +4506,7 @@ StateReturnType AIAttackAimAtTargetState::onEnter()
 	source->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_IS_AIMING_WEAPON ) );
 	return STATE_CONTINUE;
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 /**
@@ -4661,6 +4671,7 @@ void AIAttackAimAtTargetState::onExit( StateExitType status )
  * Start firing.
  */
 // ?onEnter@AIAttackFireWeaponState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0017BF70 is AIAttackFireWeaponState_onEnter.cpp
 StateReturnType AIAttackFireWeaponState::onEnter()
 {
 	// contained by AIAttackState, so no separate timer
@@ -4687,6 +4698,7 @@ StateReturnType AIAttackFireWeaponState::onEnter()
 	obj->preFireCurrentWeapon( getMachineGoalObject() );
 	return STATE_CONTINUE;	
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 /**
@@ -5470,6 +5482,7 @@ StateReturnType AIAttackSquadState::onEnter( void )
  */
 
 // ?update@AIAttackSquadState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00184D50 is AIAttackSquadStateOnEnter.cpp
 StateReturnType AIAttackSquadState::update( void )
 {
 
@@ -5511,6 +5524,7 @@ StateReturnType AIAttackSquadState::update( void )
 	m_attackSquadMachine->setState(AI_ATTACK_OBJECT);
 	return STATE_CONTINUE;
 }
+#endif
 
 //----------------------------------------------------------------------------------------------------------
 // ?onExit@AIAttackSquadState@@UAEXW4StateExitType@@@Z present-unmatched
