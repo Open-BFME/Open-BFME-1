@@ -7,11 +7,11 @@
 #include <map>
 #include <hash_map>
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../GameLogic/command_source_type.h"
 

@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // BFME text-entry factory; decoded creation-record ABI and native string cleanup.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef short Short;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern "C" void *memcpy(void *, const void *, unsigned int);
 extern "C" void *memset(void *, int, unsigned int);

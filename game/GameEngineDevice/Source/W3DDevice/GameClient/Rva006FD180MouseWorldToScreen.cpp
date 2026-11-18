@@ -7,10 +7,10 @@
 // and reports whether the point projected inside the frustum and within the
 // +/-2 logical-screen band.  IDENTITY IS NOT RECOVERED.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

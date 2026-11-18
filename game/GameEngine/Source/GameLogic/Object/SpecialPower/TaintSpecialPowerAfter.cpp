@@ -12,11 +12,11 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 class Coord3D
 {

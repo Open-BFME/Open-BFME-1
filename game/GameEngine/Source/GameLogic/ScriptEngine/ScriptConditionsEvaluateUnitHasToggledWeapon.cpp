@@ -16,11 +16,11 @@ extern void j_0003e80b();
 extern void j_000225f7();
 extern void j_00028560();
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 class Parameter

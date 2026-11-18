@@ -7,11 +7,11 @@
 #include "matrix3d.h"
 #include "sphere.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 

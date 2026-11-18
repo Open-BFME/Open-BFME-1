@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // BFME's real-coordinate animation draw with an explicit opacity byte.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Image;
 

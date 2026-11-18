@@ -2,11 +2,11 @@
 // BFME's NetPacket::isAckRepeat dispatcher.  The three repeat helpers are
 // already matched ILT-backed members; this TU owns the dispatcher body.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 class NetCommandMsg
 {

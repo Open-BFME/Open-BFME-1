@@ -36,11 +36,11 @@
 //     puts owner.x/owner.y on the x87 stack (the `fsub st(2)` / `fsub st(1)`
 //     pair) and spills only owner.z.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern "C" double __cdecl sqrt(double);
 

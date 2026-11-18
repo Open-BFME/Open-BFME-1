@@ -5,11 +5,11 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct XferVersionFields
 {

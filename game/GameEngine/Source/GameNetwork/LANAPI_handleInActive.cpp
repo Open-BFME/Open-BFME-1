@@ -13,12 +13,12 @@
 // Comparator names retain existing landed neutral identities; their zero/one
 // results are consumed as bytes by this retail caller.
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 #define FALSE 0
 
 template <typename T> class StringBase

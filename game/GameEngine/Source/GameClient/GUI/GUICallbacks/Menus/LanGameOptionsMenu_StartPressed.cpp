@@ -8,12 +8,12 @@
 // and the menu's window statics; its two callers (0x004CD470 and 0x004CDF20,
 // both through ILT 0x00040AF7) push FALSE and TRUE for the new Bool.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WCHAR;
-typedef bool Bool;
+
 
 enum { MAX_SLOTS = 8, PLAYERTEMPLATE_OBSERVER = -2 };
 #define TRUE true

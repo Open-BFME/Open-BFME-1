@@ -5,10 +5,10 @@
 // virtual init at slot 0, PREGAME status, QPF/QPC, stall fields, timeGetTime
 // into StallStartTime, GameLogic::resetPlayerLeaveStatus, +0x38 = -1.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../Include/Common/Enums/NetLocalStatus.h"
 

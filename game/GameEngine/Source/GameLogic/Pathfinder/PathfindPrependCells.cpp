@@ -17,11 +17,11 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

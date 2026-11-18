@@ -24,12 +24,12 @@
 // while assignment from a literal stays an out-of-line call.  No shared
 // header carries that exact inline set.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 typedef Int Color;
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(const WideChar *text);

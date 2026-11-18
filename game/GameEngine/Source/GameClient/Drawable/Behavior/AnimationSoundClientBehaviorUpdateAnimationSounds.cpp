@@ -5,12 +5,12 @@
 
 #include <set>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 

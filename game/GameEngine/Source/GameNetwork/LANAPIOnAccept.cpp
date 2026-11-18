@@ -6,11 +6,11 @@
 // pinning its underlying523380 setter would omit the required+25C adjustment.
 // Returns at+BC and+CA; CC padding starts+CD. No EH or embedded tables.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 // The pair is eight-byte storage in LANAPI's BFME object: dword IP, word
 // port, and the compiler's natural two-byte tail padding.

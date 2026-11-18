@@ -15,11 +15,11 @@
 
 #include "ascii_string.h"
 
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 #include "../../../Include/Common/DrawableID.h"
 
 // class-gate: allow Coord3D BFME's user copy constructor and destructor, absent from the canonical header, give the by-value position argument retail's copy and saved-ESP store

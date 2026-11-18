@@ -5,10 +5,10 @@
 // through __ftol2 before the Object vcalls at +0x40/+0x44. Particle pulse is
 // not in this 121B body. Focused TU -- do not fold into AutoHealBehavior.cpp.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class GameLogic

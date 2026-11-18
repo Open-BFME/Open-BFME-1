@@ -15,11 +15,11 @@
 // ScriptConditionsEvaluateUnitHasToggledWeapon.cpp.
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 class Parameter

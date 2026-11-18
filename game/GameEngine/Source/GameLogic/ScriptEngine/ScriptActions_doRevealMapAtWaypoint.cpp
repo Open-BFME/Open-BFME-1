@@ -3,10 +3,10 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

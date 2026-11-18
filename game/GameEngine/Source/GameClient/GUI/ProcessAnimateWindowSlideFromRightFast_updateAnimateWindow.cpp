@@ -3,10 +3,10 @@
 // Retail 0x00497640, 230 bytes.  Local BFME mirror; the witnessed layout
 // keeps the fields used by the retail update at their BFME offsets.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

@@ -13,10 +13,10 @@
 // 0x00674250, already the ICF owner under this class and method name.
 #include <string.h>
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg

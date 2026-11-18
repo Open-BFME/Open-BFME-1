@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction of the ZH ExitConditions::shouldExit twin.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord3D
 {

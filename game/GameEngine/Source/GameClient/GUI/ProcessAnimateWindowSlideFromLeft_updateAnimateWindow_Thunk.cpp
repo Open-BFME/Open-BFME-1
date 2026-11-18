@@ -4,10 +4,10 @@
 // SlideFromRight implementation; the horizontal comparisons and clamp face
 // the opposite direction.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

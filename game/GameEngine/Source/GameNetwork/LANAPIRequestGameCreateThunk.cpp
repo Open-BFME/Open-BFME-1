@@ -10,12 +10,12 @@
 // stay in this TU because the older lanapi.cpp shims model different virtual
 // and string layouts.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+
+
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
 

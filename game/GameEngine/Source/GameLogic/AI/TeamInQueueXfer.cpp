@@ -10,11 +10,11 @@
 // the inherited +0x04..+0x10 area, so its work-order and state fields start
 // at the retail +0x14.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedInt TeamID;
 
 #include "../../../Include/Common/ObjectID.h"

@@ -8,11 +8,11 @@
 // deployed-status test, the contain ownership gate and the NO_FREEWILL_ENTER
 // tail, and drops the unmanned-reject and airfield special cases.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../GameLogic/command_source_type.h"
 

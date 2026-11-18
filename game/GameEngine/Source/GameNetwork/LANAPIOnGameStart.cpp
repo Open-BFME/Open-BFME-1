@@ -22,12 +22,12 @@
 // them before it). The local-address copy into the game goes through a
 // local game pointer, which gives retail's eax base register.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 
 namespace _STL
 {

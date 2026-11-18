@@ -1,11 +1,11 @@
 // The Gen_00168910::bfmeSeed caller reaches this body through ILT 0x0004B53D.
 // The body transfers two TeamInQueue lists and the remaining object fields.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct BfmeXferVersion
 {

@@ -36,11 +36,11 @@ private:
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern Int g_Va012F7734;
 extern const char g_Rva0107301CEmptyString[];

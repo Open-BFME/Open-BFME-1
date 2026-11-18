@@ -20,11 +20,11 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

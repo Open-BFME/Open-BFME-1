@@ -25,11 +25,11 @@
 // stays the retail literal, the way Network_quitGame.cpp keeps 0x1D for clear
 // game data. Everything else is declared only as far as this body touches it.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #define NULL 0
 

@@ -10,12 +10,12 @@
 // for the BFME setup screen.  No selector string names the method, so the
 // name keeps its address.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WCHAR;
-typedef bool Bool;
+
 
 enum { MAX_SLOTS = 8, PLAYERTEMPLATE_OBSERVER = -2 };
 

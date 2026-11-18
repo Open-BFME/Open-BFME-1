@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: clean C++ reconstruction of Anim2D::Anim2D.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 class Anim2D;
 

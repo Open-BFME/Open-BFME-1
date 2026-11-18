@@ -11,12 +11,12 @@
 // 0x0000C9B4 is the ObjectID hand-over helper and 0x00008CA1 the separate
 // particle-system handle helper.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

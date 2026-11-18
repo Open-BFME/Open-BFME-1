@@ -8,12 +8,12 @@
 // this TU because the neighboring LANAPI source files intentionally model
 // other BFME subobjects.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+
+
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
 	WideChar *, const WideChar *, unsigned int);

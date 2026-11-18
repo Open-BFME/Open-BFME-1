@@ -10,11 +10,11 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

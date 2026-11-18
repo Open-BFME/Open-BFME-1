@@ -21,11 +21,11 @@
 #include <list>
 #include <vector>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern const char g_bfmeEmptyAscii[];
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);

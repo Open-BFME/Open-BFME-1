@@ -4,10 +4,10 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Player;
 class ScriptConditions;

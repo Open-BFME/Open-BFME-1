@@ -15,12 +15,12 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 // StringBase<unsigned short>::releaseBuffer (0x008881D0), not the ??1UnicodeString stub.
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int Color;
-typedef float Real;
-typedef bool Bool;
+
+
 
 class GameFont;
 

@@ -12,11 +12,11 @@
 // and the second module loop re-tests the element so cl drops the 4-byte
 // loop-head pad retail does not have (shape_levers "lea or mov edi,edi nop").
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum StealthLookType
 {

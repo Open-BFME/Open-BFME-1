@@ -5,10 +5,10 @@
 // the named constructor selects this body through vtable slot 4.
 // The x-axis body shares its instruction shape with SlideFromRight.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

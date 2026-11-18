@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // LaserUpdate::xfer, retail 0x00603A50 (240 bytes).
 
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

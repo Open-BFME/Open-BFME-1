@@ -4,10 +4,10 @@
 // passes ECX = the Pathfinder (m_map@+0x10) and six stack args. No string or ZH twin names it, so the name keeps the address.
 // Corner probes follow ZH PathfindLayer::classifyLayerMapCell; m_layerHeights@+0x243B8 as PathfinderGetLayerHeight.cpp.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct ICoord3D
 {

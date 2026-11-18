@@ -6,11 +6,11 @@
 // after the desired-speed call.  The narrow class views below carry the
 // recovered BFME offsets without touching the shared headers.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

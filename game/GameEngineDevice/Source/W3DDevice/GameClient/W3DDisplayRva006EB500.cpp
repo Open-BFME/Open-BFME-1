@@ -21,11 +21,11 @@
 // zero-argument slot 0x3C.  BFME 2 0x0004A462 (open-bfme-2 W3DDisplay.cpp,
 // `drawImage(m_38->s3c(), m_fc, m_100, m_104, m_108, -1)`) is the donor lead.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 
 class CameraClass;
 class Image;

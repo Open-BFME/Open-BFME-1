@@ -21,11 +21,11 @@
 #include <math.h>
 #include <list>
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 
 #define NUM_BUMP_FRAMES 32
 
