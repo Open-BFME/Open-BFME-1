@@ -56,15 +56,18 @@ public:
 class ThingTemplate : public Overridable
 {
 public:
-	Bool isKindOf( KindOfType t ) const
-	{
-		return (m_kindof[(unsigned int)t >> 5] & (1 << ((unsigned int)t & 31))) != 0;
-	}
+	Bool isKindOf( KindOfType t ) const;
+	unsigned int getKindOfWord0() const { return m_kindof[0]; }
 
 private:
 	unsigned char m_unreconstructed_08[0xC8 - 0x08];
 	unsigned int m_kindof[3];							///< retail this+0xC8
 };
+
+inline Bool ThingTemplate::isKindOf( KindOfType t ) const
+{
+	return (m_kindof[(unsigned int)t >> 5] & (1 << ((unsigned int)t & 31))) != 0;
+}
 
 class Module;
 
@@ -121,7 +124,11 @@ int Rva000D4500CastleSearchCallback( Object *obj, void *userData )
 	if( obj == NULL )
 		return 1;
 
-	if( !obj->getTemplate()->isKindOf( KINDOF_STRUCTURE ) && !obj->isKindOf( KINDOF_BASE_FOUNDATION ) )
+	const ThingTemplate *tmpl = obj->getTemplate();
+	// Force 32-bit operation to encourage dword load: extract bit 7 via shift.
+	unsigned int kindof0 = tmpl->getKindOfWord0();
+	unsigned int isStructure = (kindof0 >> 7) & 1u;
+	if( isStructure == 0 && !obj->isKindOf( KINDOF_BASE_FOUNDATION ) )
 		return 1;
 
 	static NameKeyType key = TheNameKeyGenerator->nameToKey( "CastleBehavior" );

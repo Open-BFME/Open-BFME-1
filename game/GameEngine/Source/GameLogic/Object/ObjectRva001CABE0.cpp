@@ -1,7 +1,7 @@
-// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
+// ?rva001CABE0@BfmeSubBIC@@QAEHXZ
 // partial score=1.0 date=2026-11-10
 // cl: /DNDEBUG /MD /EHsc
-// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
+// ?rva001CABE0@BfmeSubBIC@@QAEHXZ
 // candidate (wf 001cabe0): Zero Hour Radar::addObject colour-selection shape
 
 typedef bool Bool;
@@ -130,7 +130,7 @@ public:
 	int m_indicatorColor;
 };
 
-// ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ
+// ?rva001CABE0@BfmeSubBIC@@QAEHXZ
 int BfmeSubBIC::bfmeAskBIC()
 {
 	const Player *localPlayer = ThePlayerList->getLocalPlayer();

@@ -76977,7 +76977,6 @@ name,address,notes
 ?bfmeAskBEE@BfmeThingBEE@@QAE_NXZ,0x000042BE,pin
 ?bfmeAskBFD@BfmeSubBFD@@QAE_NXZ,0x00048928,pin
 ?bfmeAskBIA@BfmeSubBIA@@QAEHXZ,0x000022BB,pin
-?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin
 ?bfmeAskBJA@BfmeThingBJA@@QAE_NXZ,0x0002D538,pin
 ?bfmeAskBJB@BfmeThingBJB@@QAE_NXZ,0x0002D538,pin
 ?bfmeAskBUB@BfmeSinkBUB@@QAE_NPAX@Z,0x0001E64B,pin
@@ -80601,7 +80600,6 @@ name,address,notes
 ?bfmeVal1243@BfmeE1243@@QAEPAXXZ,0x00898300,pin
 ?bfmeValBC@BfmeObjBC@@QAEMXZ,0x008D8E00,Open-BFME5 float getter for 0x0040BC50
 ?bfmeValERB@BfmeSubERB@@QAEXPAVBfmeOtherERA@@H@Z,0x0000416A,pin
-?bfmeValueZD@BfmeItemZD@@QAEHXZ,0x0002CA61
 ?bfmeVec3Hermite@@YGPAUBfmeVector3@@PAU1@PBUCoord3D@@111M@Z,0x009FA11F,Open-BFME5 import thunk (slot 0x012DBEC0) the rope getPosition at 0x0041D090 evaluates its spline through
 ?bfmeVecCtor1030@@YGXPAX0HHP6AXXZ1@Z,0x009F7036,pin
 ?bfmeVecDtor936B@@YGXPAXIHP6GX0@Z@Z,0x009F6D76,pin
@@ -89151,7 +89149,6 @@ name,address,notes
 ?value00683D80@Gen00683900@@QBEMXZ,0x00026B7A,S2 float getter tail-jumped to from 0x00681CA0; ILT thunk to body 0x00683D80
 ?value00683F00@Gen00683900@@QBEMXZ,0x0000D82D,S2 float getter tail-jumped to from 0x00681CD0; ILT thunk to body 0x00683F00
 ?value00684080@Gen00683900@@QBEMXZ,0x0001F96A,S2 float getter tail-jumped to from 0x00681D00; ILT thunk to body 0x00684080
-?value@ObjectAttemptDamageFlagHook@@QAEHXZ,0x0002CA61,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?value@Rva003608F0FloatElement@@QAEMXZ,0x0002CC5F,address-derived float element callee; target read directly from RVA 0x00361420 rel32 call
 ?value@Rva00638030StringOwner@@QAE?AVAsciiString@@XZ,0x00016DD8,Address-derived string getter view; existing matched32B body00638030 copies StringBase<char> at this+70; exact GameSpy packet6386F0 caller sends result as authentication field; same ABI as Rva00505D10StringOwner; no original public-name claim
 ?value@Rva006380C0StringOwner@@QAE?AVAsciiString@@XZ,0x0000692E,Address-derived string getter view; existing matched32B body006380C0 copies StringBase<char> at this+74; exact GameSpy packet6386F0 caller sends result as authentication field; same ABI as Rva00505D10StringOwner; no original public-name claim
@@ -91348,3 +91345,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0BB@OFBFPLJO@KillArmorUpgrade?$AA@,0x00C8D6C8,g_bfmeTableABF field-parse table VA 0x012AC188 entry 0 token; compiler string literal KillArmorUpgrade equals retail at VA 0x0108D6C8
 ??_C@_0BD@ONIHLPGF@IgnoreArmorUpgrade?$AA@,0x00C8D6B0,g_bfmeTableABF field-parse table VA 0x012AC188 entry 1 token; compiler string literal IgnoreArmorUpgrade equals retail at VA 0x0108D6B0
 ??_C@_0N@GKGGOADM@ArmorSetFlag?$AA@,0x00C8D6A0,g_bfmeTableABF field-parse table VA 0x012AC188 entry 2 token; compiler string literal ArmorSetFlag equals retail at VA 0x0108D6A0
+?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin;abi-view=?rva001CABE0@BfmeSubBIC@@QAEHXZ
+?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x001CABE0,pin
