@@ -119,11 +119,13 @@ void TunnelTracker::iterateContained( ContainIterateFunc func, void *userData, B
 }
 
 // ------------------------------------------------------------------------
+#if 0 // non-retail copy (Zero Hour GlobalData offset); retail 0x000F8520 is TunnelTracker_getContainMax.cpp
 // ?getContainMax@TunnelTracker@@ present-unmatched
 Int TunnelTracker::getContainMax() const
 {
 	return TheGlobalData->m_maxTunnelCapacity;
 }
+#endif
 
 // ------------------------------------------------------------------------
 void TunnelTracker::updateNemesis(const Object *target)
