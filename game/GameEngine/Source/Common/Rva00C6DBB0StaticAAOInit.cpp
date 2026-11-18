@@ -6,7 +6,7 @@
 // atexit. The global is declared the same way in BfmeConv2120.cpp, which defines its
 // teardown.
 
-enum GeometryType { GEOMETRY_SPHERE, GEOMETRY_CYLINDER, GEOMETRY_BOX };
+#include "../../Include/Common/Enums/GeometryType.h"
 
 class GeometryInfo
 {

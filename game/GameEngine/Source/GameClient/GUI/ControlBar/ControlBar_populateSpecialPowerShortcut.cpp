@@ -27,10 +27,10 @@ typedef bool Bool;
 
 enum { FALSE = 0, TRUE = 1 };
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 enum
 {

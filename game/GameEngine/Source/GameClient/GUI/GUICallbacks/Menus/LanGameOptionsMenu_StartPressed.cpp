@@ -66,7 +66,7 @@ struct GameSlotConnectInfo
 	UnsignedShort m_port;
 };
 
-enum SlotState { SLOT_OPEN = 0, SLOT_CLOSED = 1 };
+#include "../../../../../Include/Common/Enums/SlotState.h"
 
 class GameSlot
 {

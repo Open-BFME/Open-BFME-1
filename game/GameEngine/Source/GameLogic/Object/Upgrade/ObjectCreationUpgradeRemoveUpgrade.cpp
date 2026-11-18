@@ -27,10 +27,10 @@ enum DamageType
     BFME_DAMAGE_TYPE_8 = 8
 };
 
-enum DeathType
-{
-    BFME_DEATH_TYPE_0 = 0
-};
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 #define OBJECT_TU_MEMBERS \
 	void kill(DamageType damageType, DeathType deathType);

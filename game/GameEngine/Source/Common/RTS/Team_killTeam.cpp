@@ -18,7 +18,7 @@ typedef unsigned int UnsignedInt;
 // Canonical GameLogic/Damage.h types; the retail Object::kill decoration and
 // the observed pushes are DamageType(8), DeathType(0).
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../Include/Common/Enums/DeathType.h"
 
 class Object;
 class Team;

@@ -6,15 +6,15 @@
 // StringBase would redefine the real one that AsciiString.h pulls in.
 #include "Common/AsciiString.h"
 
-enum SlotState
-{
-	SLOT_OPEN,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 // Modelled on the AsciiString shim rather than derived from StringBase: the
 // real StringBase default ctor is out of line so inheriting it emits a call

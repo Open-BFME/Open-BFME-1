@@ -56,7 +56,7 @@ extern TerrainLogic *TheTerrainLogic;
 
 #include "../../command_source_type.h"
 enum DamageType { DAMAGE_8 = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 
 class AICommandInterface
 {

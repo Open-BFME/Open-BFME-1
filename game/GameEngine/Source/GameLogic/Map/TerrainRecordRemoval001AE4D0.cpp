@@ -7,7 +7,7 @@
 // The canonical empty Snapshot base preserves its destructor EH state.
 // Native frame local reproduces EAX load/store after the visual notification.
 // Constructor and its two member vector destructor ABIs witnessed by retail.
-enum GeometryType { GEOMETRY_CYLINDER = 1 };
+#include "../../../Include/Common/Enums/GeometryType.h"
 class Gen_uwm_000187d2 { public: ~Gen_uwm_000187d2(); private: char bytes[12]; };
 class Gen_uw_0000ac2c { public: ~Gen_uw_0000ac2c(); private: char bytes[12]; };
 #include "snapshot.h"

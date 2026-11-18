@@ -79,15 +79,15 @@ public:
     virtual void xferBool(Bool *value);
 };
 
-enum SlotState
-{
-    SLOT_OPEN,
-    SLOT_CLOSED,
-    SLOT_EASY_AI,
-    SLOT_MED_AI,
-    SLOT_BRUTAL_AI,
-    SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 // Retail builds the loop's zeroed argument and the tail's IP/port pair as
 // 8-byte objects that share one stack slot.

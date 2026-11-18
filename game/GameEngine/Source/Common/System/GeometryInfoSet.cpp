@@ -20,12 +20,12 @@
 typedef bool Bool;
 typedef float Real;
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 // Three dwords at element +0x10, copied as one unit by the element's
 // assignment (retail addresses them through lea edx, [esi+0x10]).

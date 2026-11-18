@@ -7,7 +7,7 @@ class Thing;
 class ModuleData;
 class Object;
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
-enum DeathType { DEATH_POISONED = 5 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 
 class PB_DeepBase
 {

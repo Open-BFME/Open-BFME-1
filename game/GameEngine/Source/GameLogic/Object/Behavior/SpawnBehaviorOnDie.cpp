@@ -27,7 +27,7 @@ extern GameLogic *TheGameLogic;
 
 class DamageInfo;
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 
 class SlavedUpdateInterface
 {

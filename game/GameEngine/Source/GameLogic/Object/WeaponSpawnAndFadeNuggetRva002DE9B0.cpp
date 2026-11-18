@@ -23,7 +23,7 @@ typedef int ObjectID;
 typedef float Real;
 typedef bool Bool;
 enum DamageType { };
-enum DeathType { };
+#include "../../../Include/Common/Enums/DeathType.h"
 
 #include "ascii_string.h"
 #define _OPERATOR_NEW_DEFINED_

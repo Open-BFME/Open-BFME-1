@@ -15,10 +15,10 @@ enum DamageType
 	DAMAGE_SNIPER = 8
 };
 
-enum DeathType
-{
-	DEATH_LIFETIME = 0
-};
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 class DamageInfo
 {

@@ -16,12 +16,12 @@
 typedef bool Bool;
 typedef float Real;
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 #include "string_base.h"
 

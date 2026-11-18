@@ -9,10 +9,10 @@ enum DamageType
 	DAMAGE_DEPLOY = 13
 };
 
-enum DeathType
-{
-	DEATH_CRUSHED = 2
-};
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 struct DamageInfoInput
 {

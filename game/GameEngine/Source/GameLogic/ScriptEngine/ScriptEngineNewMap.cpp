@@ -16,10 +16,10 @@ typedef unsigned int UnsignedInt;
 // only forwarded here to avoid importing the unreconstructed subsystem graph.
 enum NameKeyType;
 
-enum ScienceType
-{
-	Rva00342E40ScienceType = 0
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 #include "ascii_string.h"
 #include "Common/LatchRestore.h"

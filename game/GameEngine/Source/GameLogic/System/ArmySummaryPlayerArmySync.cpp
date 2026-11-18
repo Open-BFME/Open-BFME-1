@@ -187,10 +187,10 @@ public:
 
 #include <vector>
 
-enum ScienceType
-{
-	Rva003C2720ScienceTypeValue = 0
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class Rva003C2720Owner
 {

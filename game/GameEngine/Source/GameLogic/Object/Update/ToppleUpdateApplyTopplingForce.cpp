@@ -46,10 +46,10 @@ enum DamageType
 	DAMAGE_UNRESISTABLE = 8
 };
 
-enum DeathType
-{
-	DEATH_NORMAL = 0
-};
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 

@@ -19,7 +19,7 @@ typedef int ObjectID;
 #define NULL 0
 
 enum DamageType { DAMAGE_FLAME = 6 };
-enum DeathType { DEATH_BURNED = 3 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 
 class DamageInfo
 {

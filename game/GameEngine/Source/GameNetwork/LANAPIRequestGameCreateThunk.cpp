@@ -115,15 +115,15 @@ struct GameSlotConnectInfo
 	UnsignedShort m_port;
 };
 
-enum SlotState
-{
-	SLOT_OPEN = 0,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 // This unit's GameSlot view defines setIP inline at another offset than
 // retail's 0x000C8DB0 (+0x2C) and emits that COMDAT copy; rename it so only

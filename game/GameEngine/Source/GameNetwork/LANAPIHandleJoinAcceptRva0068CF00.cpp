@@ -132,15 +132,15 @@ struct GameSlotConnectInfo
 	UnsignedShort m_port;
 };
 
-enum SlotState
-{
-	SLOT_OPEN = 0,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 #pragma pack(pop)
 class GameSlot

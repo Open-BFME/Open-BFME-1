@@ -18,10 +18,10 @@ enum DamageType
 	DAMAGE_UNRESISTABLE = 8
 };
 
-enum DeathType
-{
-	DEATH_LASERED = 9
-};
+#include "../../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 template<int Bits>
 class BitFlags

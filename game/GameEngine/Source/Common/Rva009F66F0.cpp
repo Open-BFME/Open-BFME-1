@@ -6,7 +6,7 @@
 #include <float.h>
 #include "coord.h"
 
-enum GeometryType { GEOMETRY_SPHERE, GEOMETRY_CYLINDER, GEOMETRY_BOX };
+#include "../../Include/Common/Enums/GeometryType.h"
 struct Rva009F66F0Shape {
     int type;
     float height, majorRadius;

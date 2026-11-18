@@ -169,11 +169,11 @@ enum DamageType
 	DAMAGE_UNRESISTABLE = 8
 };
 
-enum DeathType
-{
-	DEATH_NORMAL = 0,
-	DEATH_BURNED = 3
-};
+#include "../../Include/Common/Enums/DeathType.h"
+
+
+
+
 
 struct BFMEDamageInfoInput
 {

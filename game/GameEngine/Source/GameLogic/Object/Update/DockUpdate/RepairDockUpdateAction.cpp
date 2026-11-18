@@ -13,10 +13,10 @@ enum DamageType
 	DAMAGE_HEALING = 7
 };
 
-enum DeathType
-{
-	DEATH_NONE = 1
-};
+#include "../../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 struct BFMEDamageInfoInput
 {
