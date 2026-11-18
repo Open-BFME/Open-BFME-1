@@ -23,7 +23,7 @@
 
 typedef float Real;
 
-enum ObjectID {INVALID_ID=0};
+#include "../../../../../Include/Common/ObjectID.h"
 class Team;
 class HordeContainInterface;
 

@@ -90,7 +90,7 @@ template <class T> class OVERRIDE { public:
  T* m_overridable;
 };
 enum KindOfType { KINDOF_PLACEHOLDER };
-enum NameKeyType { NAMEKEY_NONE };
+#include "../../../Include/Common/NameKeyType.h"
 class Module;
 class ThingTemplate : public Overridable { public:
  bool isKindOf(KindOfType) const;

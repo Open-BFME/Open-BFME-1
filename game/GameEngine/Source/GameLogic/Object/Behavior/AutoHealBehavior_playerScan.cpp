@@ -411,11 +411,11 @@ class PartitionManager;
 extern PartitionManager *ThePartitionManager;
 
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 
 struct AutoHealBehaviorModuleData
