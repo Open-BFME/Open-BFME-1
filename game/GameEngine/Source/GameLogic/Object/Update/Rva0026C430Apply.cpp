@@ -3,9 +3,9 @@
 // The final source must retain the observed ToggleMountedSpecialAbilityUpdate
 // base layout and use the already-landed BFME helper identities.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>

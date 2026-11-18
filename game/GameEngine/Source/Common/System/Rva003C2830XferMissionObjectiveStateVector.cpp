@@ -27,9 +27,9 @@
 #define BFME_STLP_NODE_ALLOC
 #include <vector>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersion
 {

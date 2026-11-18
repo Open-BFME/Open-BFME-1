@@ -16,9 +16,9 @@
 // temporary share EDI, as in retail. The out-parameter lives in its own block
 // so its zero store is scheduled after the m_containedBy test, as in retail.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

@@ -54,9 +54,9 @@
 // still unidentified, so they carry Eva-scoped names and their entry points are
 // pinned by address only.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class Xfer;
 

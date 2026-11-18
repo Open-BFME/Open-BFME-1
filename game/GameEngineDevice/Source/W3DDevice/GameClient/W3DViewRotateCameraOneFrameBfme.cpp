@@ -23,9 +23,9 @@
 #include <math.h>
 #include "vector2.h"
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 #include "../../../../GameEngine/Include/Common/ObjectID.h"
 
 

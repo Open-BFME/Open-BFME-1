@@ -11,9 +11,9 @@
 // into the two-bit field at bit 22. Slot, bit and field names keep their
 // offsets: nothing witnesses their meaning.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" double __cdecl sqrt(double);
 extern "C" double __cdecl fabs(double);

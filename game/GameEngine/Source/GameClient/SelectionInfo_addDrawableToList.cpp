@@ -13,9 +13,9 @@
 
 #include <list>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 const Bool FALSE = 0;
 const Bool TRUE = 1;

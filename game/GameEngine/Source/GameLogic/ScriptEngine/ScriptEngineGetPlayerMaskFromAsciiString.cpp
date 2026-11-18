@@ -4,9 +4,9 @@
 // The ILT used by doGiveMoney/doSetMoney carries the proven two-argument
 // thiscall ABI: const AsciiString&, Bool*.  The return is a 16-bit player mask.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct BfmeAsciiStringData
 {

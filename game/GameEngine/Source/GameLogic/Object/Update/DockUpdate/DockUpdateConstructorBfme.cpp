@@ -6,10 +6,10 @@
 // claim; the ledger carries the real constructor name.
 #include <limits.h>
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #ifndef TRUE
 #define TRUE 1

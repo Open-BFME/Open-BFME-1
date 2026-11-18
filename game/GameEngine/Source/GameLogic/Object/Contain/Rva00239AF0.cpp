@@ -11,9 +11,9 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 class Player;

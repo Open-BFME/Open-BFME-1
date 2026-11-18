@@ -12,9 +12,9 @@
 // visible noinline body below reproduces that; the call still binds to the
 // pinned 0x0009A510 body through ILT 0x0001F253.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 class Object;

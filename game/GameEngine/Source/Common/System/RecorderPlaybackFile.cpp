@@ -12,9 +12,9 @@
 #include <list>
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct _iobuf;
 typedef _iobuf FILE;

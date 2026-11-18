@@ -9,10 +9,10 @@
 // the attack goal is gone or dead, or (every 5 frames) when a kind-of-7 goal
 // is being fought with a weapon that is not in status 4.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { EXIT_NORMAL = 0 };

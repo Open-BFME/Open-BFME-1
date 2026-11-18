@@ -25,9 +25,9 @@
 // vtable load above the Rva00459060 call into EBX, which adds a call-crossing
 // candidate and permutes ESI/EDI for `this` and screenRegion across 53 bytes.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/region.h"
 

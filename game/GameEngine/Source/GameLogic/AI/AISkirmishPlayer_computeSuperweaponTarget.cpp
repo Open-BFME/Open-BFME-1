@@ -2,9 +2,9 @@
 // AISkirmishPlayer identity: vtable 0x01096FB0 slot 4; constructor 0x00168660.
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 #include <math.h>
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 template <typename T> struct StringInlineData;
 template <typename T> class StringBase
 {

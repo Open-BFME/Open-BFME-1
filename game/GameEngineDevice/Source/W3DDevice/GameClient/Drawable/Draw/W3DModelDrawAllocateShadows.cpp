@@ -9,9 +9,9 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" char *__cdecl strcpy(char *, const char *);
 #pragma intrinsic(strcpy)

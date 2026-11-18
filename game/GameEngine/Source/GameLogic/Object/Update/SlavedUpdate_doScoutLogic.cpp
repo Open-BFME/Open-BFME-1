@@ -5,10 +5,10 @@
 
 #include <vector>
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern const Real g_rva01075350;
 

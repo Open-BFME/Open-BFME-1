@@ -7,9 +7,9 @@
 
 HWND ApplicationHWnd = NULL;
 
-typedef unsigned int UnsignedInt;
-typedef short Short;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

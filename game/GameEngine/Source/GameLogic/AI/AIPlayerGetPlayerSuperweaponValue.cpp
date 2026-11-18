@@ -11,9 +11,9 @@
 
 #include <math.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct Coord3D
 {

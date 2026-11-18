@@ -3,9 +3,9 @@
 // The return-state vtable slot 6 points to this body, and its adjacent name
 // getter returns GiantBirdGuardReturnState.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

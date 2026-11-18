@@ -7,9 +7,9 @@
 // greatest height-adjusted attack range.  The neutral owner preserves the
 // proven raw ABI without inventing a canonical source declaration.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /GX /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 template <typename T>
 const T &minimum(const T &first, const T &second)

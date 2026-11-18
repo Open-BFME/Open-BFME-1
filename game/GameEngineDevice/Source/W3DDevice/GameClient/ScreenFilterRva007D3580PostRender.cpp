@@ -6,9 +6,9 @@
 
 #include "d3dx8math.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern const Real g_rva0107533C;
 extern Real g_bfmeDefaultBU;

@@ -33,9 +33,9 @@ extern "C" double __cdecl sin(double value);
 extern "C" double __cdecl cos(double value);
 #pragma intrinsic(sin, cos)
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

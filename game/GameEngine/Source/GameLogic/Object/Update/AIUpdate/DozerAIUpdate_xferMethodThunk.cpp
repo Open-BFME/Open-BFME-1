@@ -2,9 +2,9 @@
 // readable body of ?xfer@DozerAIUpdate@@MAEXPAVXfer@@@Z: game/GameEngine/Source/GameLogic/Object/Update/AIUpdate/DozerAIUpdate.cpp
 // Open-BFME5: retail-layout C++ conversion of the dozer snapshot transfer.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 #include "../../../../../Include/Common/ObjectID.h"
 
 

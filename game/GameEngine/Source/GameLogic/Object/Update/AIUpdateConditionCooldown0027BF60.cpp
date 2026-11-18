@@ -2,10 +2,10 @@
 // Retail 0x0027BF60, called through ILT 0x00021189 from the body at 0x0027E5A0. Toggles model
 // condition bit 147 from the unit's and its parent AI's range checks with a frame cooldown.
 // Receiver and member offsets are proved by the decoded body; the method name stays opaque.
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Overridable {
 public: virtual ~Overridable();

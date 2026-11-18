@@ -7,9 +7,9 @@
 // plus the tunnel system's updateNemesis. The visible findObjectByID lever
 // lets MSVC keep the guard machine in EDI across that call, as retail does.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 class Object;

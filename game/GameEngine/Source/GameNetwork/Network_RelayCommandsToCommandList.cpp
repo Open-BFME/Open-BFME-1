@@ -6,9 +6,9 @@
 // beginPlayerLeave takes a byte player ID: its retail entry at 0x00667320
 // zero-extends byte [esp+0x28]. Modeling that as a pointer changed register
 // allocation and the stack frame in the prior banked reconstruction.
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../Include/Common/Enums/NetLocalStatus.h"
 

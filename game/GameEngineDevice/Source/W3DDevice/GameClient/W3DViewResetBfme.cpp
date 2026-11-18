@@ -8,9 +8,9 @@
 // and +0x24B8.  The shipped Generals/GeneralsMD source supplies the operation
 // sequence; the BFME constructor/vftable and matched methods prove its owner.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

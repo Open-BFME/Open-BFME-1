@@ -2,9 +2,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWMath
 // AIFearState::update, retail RVA 0x00173FB0 (402 bytes).
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"

@@ -10,9 +10,9 @@
 
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 class Object;

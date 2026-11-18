@@ -20,9 +20,9 @@
 // the science purchase points are at player+0x264 and the frame at
 // TheGameLogic+0x3C, which agrees with the DisconnectManager conversion.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Image;
 

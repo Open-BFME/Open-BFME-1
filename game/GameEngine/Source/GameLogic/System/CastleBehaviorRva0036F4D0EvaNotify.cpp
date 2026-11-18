@@ -4,9 +4,9 @@
 
 #include <map>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

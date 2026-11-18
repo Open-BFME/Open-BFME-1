@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Iinputs/reference/shims/pathfind /Igame/GameEngine/Source/GameLogic/Object /Igame/GameEngine/Source/Common/Thing /Igame/GameEngine/Include /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // Evidence: targets/game/reverse/identity_evidence/0x003e05b0-register-residue.md
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum KindOfType { KINDOF_INVALID = 0 };
 enum Relationship { RELATIONSHIP_INVALID = 0 };

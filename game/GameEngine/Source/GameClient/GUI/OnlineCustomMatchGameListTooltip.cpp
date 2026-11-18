@@ -2,9 +2,9 @@
 // GameList tooltip callback of Apt OnlineCustomMatch, retail 0x0053A280, 634 bytes.
 // Installed by the landed onInitGadget body (0x0053A710) through winSetTooltipFunc.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 template <typename T> class StringBase

@@ -20,9 +20,9 @@
 #include <string.h>
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class INI;
 class ModuleData;

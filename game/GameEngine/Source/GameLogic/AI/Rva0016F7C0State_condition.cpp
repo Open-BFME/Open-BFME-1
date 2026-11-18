@@ -3,9 +3,9 @@
 // Retail 0x0016F7C0: AI state condition reached through ILT 0x0000254F from the 0x00179B10 update body.
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 class Player;

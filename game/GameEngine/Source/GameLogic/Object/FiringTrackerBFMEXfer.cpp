@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef UnsignedInt AudioHandle;
 
 #include "../../../Include/Common/ObjectID.h"

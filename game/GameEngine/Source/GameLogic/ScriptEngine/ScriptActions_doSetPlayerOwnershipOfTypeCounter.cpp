@@ -7,9 +7,9 @@
 #include <vector>
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class ThingTemplate;
 

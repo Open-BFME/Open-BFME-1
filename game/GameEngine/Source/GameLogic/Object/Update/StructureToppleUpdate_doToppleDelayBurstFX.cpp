@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // StructureToppleUpdate::doToppleDelayBurstFX, retail 0x002AFB20.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -4,9 +4,9 @@
 // Snapshot supplies the vtable pointer; parent is at +0x04.
 // Recursive experience-sink forwarding with BFME shared-experience scaling.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Xfer;
 class AsciiString;

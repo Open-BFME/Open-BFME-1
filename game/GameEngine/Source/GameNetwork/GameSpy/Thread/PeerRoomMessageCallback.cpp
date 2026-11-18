@@ -18,9 +18,9 @@
 #include "strtok_r.h"
 
 typedef void *PEER;
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum RoomType
 {

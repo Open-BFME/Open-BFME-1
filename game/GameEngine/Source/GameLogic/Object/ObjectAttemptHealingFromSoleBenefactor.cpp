@@ -3,9 +3,9 @@
 // Object::attemptHealingFromSoleBenefactor, retail 0x001CE240: Object vtable slot 17 (+0x44, ILT 0x00036D6D).
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 enum DamageType { DAMAGE_HEALING_BFME = 7 };

@@ -3,9 +3,9 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // BFME's ModelState additions put the complete weapon-state block at bits
 // 39..56 and the per-slot weapon-use conditions at 116..118.  The later
