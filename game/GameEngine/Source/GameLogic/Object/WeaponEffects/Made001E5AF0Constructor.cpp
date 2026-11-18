@@ -6,7 +6,7 @@
 // +0x58 is zeroed and handed to a thiscall with its two pointer fields, then
 // the word at +0x64 is cleared.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class WeaponTemplate;
 

@@ -5,7 +5,7 @@
 // The allocator requests 0x3C4 bytes.
 // The body calls the Object constructor at retail RVA 0x001D29A0.
 // The constructor receives four caller arguments and a trailing literal 1.
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <int N>
 class BitFlags

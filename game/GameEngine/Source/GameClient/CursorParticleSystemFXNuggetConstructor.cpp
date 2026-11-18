@@ -3,7 +3,7 @@
 // FieldParse at 0x010F31B0 names Anim2DTemplateName, BurstCount, ParticleLife,
 // SystemLife, DriftVelX and DriftVelY.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

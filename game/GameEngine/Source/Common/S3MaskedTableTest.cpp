@@ -17,7 +17,7 @@
 // instructions suggest at a glance -- the five-byte false arm is the last of
 // them.
 
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" const _STL::ctype_base::mask __identifier("?_S_classic_table@?$ctype@D@_STL@@0QBW4mask@ctype_base@2@B")[257];					// 0x0112EC4C
 

@@ -15,7 +15,7 @@
 #include <list>
 #include "ascii_string.h"
 
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Rva0038EAD0Element
 {

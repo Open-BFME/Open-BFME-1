@@ -5,7 +5,7 @@
 // This TU uses its minimal non-polymorphic declaration because geometry.h
 // describes the later polymorphic GeometryInfo layout.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

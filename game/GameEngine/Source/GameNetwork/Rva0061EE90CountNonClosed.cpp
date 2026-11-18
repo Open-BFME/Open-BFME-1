@@ -6,7 +6,7 @@
 // The caller proves that behavior, but it does not prove a source-level method
 // name, so the class keeps the retail address in its name.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum Rva0061EE90SlotState
 {

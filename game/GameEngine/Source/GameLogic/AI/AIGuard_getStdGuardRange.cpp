@@ -6,7 +6,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

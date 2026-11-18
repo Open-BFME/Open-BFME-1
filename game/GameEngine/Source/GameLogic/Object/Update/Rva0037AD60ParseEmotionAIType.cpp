@@ -4,7 +4,7 @@
 // lookup at 0x004070A9 and stored into the field the store argument points at;
 // a missing token throws INIException(3 "Emotion AI type expected.").  Address-derived names.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class INIException
 {

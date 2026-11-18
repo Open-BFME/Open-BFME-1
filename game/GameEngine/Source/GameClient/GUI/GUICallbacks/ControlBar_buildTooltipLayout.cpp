@@ -4,7 +4,7 @@
 // (deleteBuildTooltipLayout) lives with the other popup bodies in
 // ControlBarPopupDescription.cpp, which owns the animate-manager file static.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeTooltipLayout
 {

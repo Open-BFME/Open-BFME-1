@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

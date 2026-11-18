@@ -2,7 +2,7 @@
 // twin of Gen006C6E20Terrain::query (retail 0x006C6E20): convert two terrain
 // coordinates and query the map plane, different member-thunk callee.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern void j_00007851(void);
 

@@ -2,7 +2,7 @@
 // Retail 0x00382B50: true when the campaign object at 0x012F1028 has +0x2c set
 // and the game is single-player (mode 0/7), a playback of those, or mode 6.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef bool ByteBool;
 
 enum RecorderModeType

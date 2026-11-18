@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva0040E990KeySlot
 {

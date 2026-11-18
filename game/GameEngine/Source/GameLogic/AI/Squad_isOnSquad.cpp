@@ -12,7 +12,7 @@
 // `cmp [eax],edx' instead. One byte, and the only one in the body.
 
 typedef int ObjectID;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define BFME_HAVE_OBJECTID
 #include "../Object/object.h"

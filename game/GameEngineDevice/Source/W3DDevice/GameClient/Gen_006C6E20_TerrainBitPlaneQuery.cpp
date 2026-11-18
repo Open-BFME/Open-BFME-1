@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x006C6E20: convert two terrain coordinates and query the map plane.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern void j_000480d1(void);
 

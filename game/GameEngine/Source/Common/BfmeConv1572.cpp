@@ -5,7 +5,7 @@
 // landed in BfmeConv1570.cpp: identical shape, reading the Y origin at
 // +0x08 instead of the X origin at +0x04, sharing the scale at +0x20.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 

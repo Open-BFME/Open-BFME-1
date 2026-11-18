@@ -5,7 +5,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INI;
 

@@ -9,7 +9,7 @@
 // The return is int, not bool: mov eax,1 and xor eax,eax rather than the
 // two-byte al forms. Declared bool the body comes out three bytes shorter.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BfmePlaneArg
 {

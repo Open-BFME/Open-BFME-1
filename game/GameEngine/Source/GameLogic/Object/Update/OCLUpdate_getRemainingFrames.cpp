@@ -7,7 +7,7 @@
 // The target frame at +0x20 minus the current frame, which TheGameLogic keeps
 // at +0x3C. TheGameLogic is the global at 0x012F0898 the ledger already names.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // The global at 0x012F0898 is EA's `GameLogic *TheGameLogic`
 // (?TheGameLogic@@3PAVGameLogic@@A, defined in GameLogic.cpp); only that

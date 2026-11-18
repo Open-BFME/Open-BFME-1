@@ -1,7 +1,7 @@
 // ?Rva004F1210Deallocate@@YGXPAXI@Z
 // cl: /DNDEBUG /MD /EHs-c-
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

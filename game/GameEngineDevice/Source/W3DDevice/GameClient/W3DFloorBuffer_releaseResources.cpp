@@ -2,7 +2,7 @@
 // W3DFloorBuffer::releaseResources, retail 0x006F7350, called by the destructor
 // through the ILT thunk at 0x000315F2.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);

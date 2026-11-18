@@ -1,6 +1,6 @@
 // cl: /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

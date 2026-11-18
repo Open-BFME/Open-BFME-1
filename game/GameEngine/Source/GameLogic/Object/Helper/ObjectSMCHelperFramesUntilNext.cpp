@@ -5,7 +5,7 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct GameLogicFrameSource
 {

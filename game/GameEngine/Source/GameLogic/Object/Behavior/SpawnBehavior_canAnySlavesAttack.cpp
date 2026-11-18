@@ -7,7 +7,7 @@
 #include <list>
 #include "../../../Common/Thing/GameLogicObjectLookup.h"
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern GameLogic *TheGameLogic;
 

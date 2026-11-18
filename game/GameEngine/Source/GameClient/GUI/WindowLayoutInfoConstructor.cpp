@@ -4,7 +4,7 @@
 
 #include <list>
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class WindowLayout;
 class GameWindow;

@@ -2,7 +2,7 @@
 // Retail 0x006CC000: the second terrain coordinate/bit-plane query wrapper.
 // Its ILT calls the matched 0x006CB500 bit-plane body.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern void j_0003cc04(void);
 

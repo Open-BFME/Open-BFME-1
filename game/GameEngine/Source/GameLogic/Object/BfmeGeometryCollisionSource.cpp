@@ -4,7 +4,7 @@
 // two output pointers belong to that interface but this implementation only
 // reports whether the two oriented footprints intersect.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

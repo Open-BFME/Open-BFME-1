@@ -2,7 +2,7 @@
 // The retail body at 0x0057F0B0 hides each of the sixteen shell layouts and
 // then notifies the global shell listener at 0x012F3344.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Rva0057F0B0ShellScreen
 {

@@ -7,7 +7,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 typedef _STL::pair<int, int> Rva00927800Key;
 typedef _STL::pair<const Rva00927800Key, int> Rva00927800Value;

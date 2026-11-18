@@ -7,7 +7,7 @@
 // has its byte at +0x78 clear.  The types are deliberately TU-local measured
 // slices; the remaining owner identity has not been recovered.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Glo012F7048CampaignGateMode
 {

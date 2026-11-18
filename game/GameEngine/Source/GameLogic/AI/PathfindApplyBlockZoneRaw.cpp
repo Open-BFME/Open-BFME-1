@@ -4,7 +4,7 @@
 // table by (rawZone - firstZone) for two cells and, when the resolved zones
 // differ, calls the same-TU static resolveBlockZones.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short zoneStorageType;
 
 static void resolveBlockZones(Int srcZone, Int targetZone, zoneStorageType *zoneEquivalency, Int sizeOfZE)

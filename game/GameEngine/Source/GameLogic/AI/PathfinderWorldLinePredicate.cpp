@@ -1,7 +1,7 @@
 // Converts two world points to cells and reports whether the BFME cell walk
 // completed without the callback reporting a hit.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Coord3D;
 

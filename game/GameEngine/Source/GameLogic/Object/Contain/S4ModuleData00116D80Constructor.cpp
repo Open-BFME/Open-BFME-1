@@ -6,7 +6,7 @@
 // ContestableContainModuleData, put this class's own vftable down, and set the
 // word at +0x1A8. Here it is a float, 0.5.
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // Retail's base ctor is the 5-byte ILT thunk at 0x00031142
 // (?j_00031142@@YAXXZ), defined only as j_00031142 in

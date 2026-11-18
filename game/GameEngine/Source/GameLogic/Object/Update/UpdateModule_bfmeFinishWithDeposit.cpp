@@ -3,7 +3,7 @@
 // If the +0x2C flag is set: sleep forever, stamp completion fields, and
 // deposit +0x3C into the controlling player's Money at Player+0x48.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

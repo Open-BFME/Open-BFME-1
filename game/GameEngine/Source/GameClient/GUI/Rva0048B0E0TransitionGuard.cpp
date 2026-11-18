@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Rva0048B0E0CriticalSection
 {

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Address-derived reconstruction of retail 0x0073C700.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class ParabolicEase
 {

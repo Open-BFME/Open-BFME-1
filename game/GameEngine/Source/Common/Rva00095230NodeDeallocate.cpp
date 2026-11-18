@@ -4,7 +4,7 @@
 // threshold branch calls operator delete above 0x80 bytes and
 // __node_alloc<true, 0>::_M_deallocate below that threshold.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

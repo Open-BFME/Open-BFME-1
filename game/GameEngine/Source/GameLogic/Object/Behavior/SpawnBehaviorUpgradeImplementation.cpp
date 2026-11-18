@@ -10,7 +10,7 @@
 // last, where Zero Hour's giveSelfUpgrade calls setUpgradeExecuted(true).
 // Zero Hour's SpawnBehavior is not an UpgradeMux, so this override is BFME's.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class UpgradeMux
 {

@@ -3,7 +3,7 @@
 // destructor and a scalar deleting dtor. Two inline Release_Ref at +0 and +8,
 // then two out-of-line releases at +0x14 and +0x10.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

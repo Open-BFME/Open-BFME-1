@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD
 // Open-BFME: ModuleInfo::clearCopiedFromDefaultEntries at retail RVA 0x001416F0.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva001417F0ModuleInfo
 {

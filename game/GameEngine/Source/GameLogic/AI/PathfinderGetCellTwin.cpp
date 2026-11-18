@@ -1,6 +1,6 @@
 // A second non-folded emission of Pathfinder's world-position getCell wrapper.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

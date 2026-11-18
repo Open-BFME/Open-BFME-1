@@ -12,7 +12,7 @@
 
 #include "../System/xfer.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Money
 {

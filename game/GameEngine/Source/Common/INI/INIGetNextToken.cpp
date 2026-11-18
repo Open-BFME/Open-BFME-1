@@ -9,7 +9,7 @@
 // Throw shape from BitFlagsParseToken: variadic INIException at 0x00850600
 // then _CxxThrowException. m_seps lives at +0x414.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INIException
 {

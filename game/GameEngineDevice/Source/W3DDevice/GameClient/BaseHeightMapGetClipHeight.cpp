@@ -2,7 +2,7 @@
 // BFME retail 0x006C5B40: BaseHeightMapRenderObjClass::getClipHeight.
 // The BFME height samples are 16-bit and m_data is at WorldHeightMap +0x24.
 
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/WorldHeightMap.h
 class WorldHeightMap

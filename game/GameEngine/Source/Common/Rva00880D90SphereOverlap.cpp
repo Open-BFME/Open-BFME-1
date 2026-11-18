@@ -6,7 +6,7 @@
 // compares two transformed circular footprints. The caller stores each
 // footprint's radius at +0x08 and its x and y coordinates at +0x24 and +0x28.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

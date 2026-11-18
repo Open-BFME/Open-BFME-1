@@ -4,7 +4,7 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva0015A5B0Thing;
 

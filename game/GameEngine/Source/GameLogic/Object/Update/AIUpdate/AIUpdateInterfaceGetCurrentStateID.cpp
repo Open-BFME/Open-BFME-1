@@ -7,7 +7,7 @@
 // m_stateMachine at AIUpdateInterface+0x30 and m_currentState at
 // StateMachine+0x1C; 999999 is ZH's INVALID_STATE_ID.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef UnsignedInt StateID;
 enum { INVALID_STATE_ID = 999999 };
 

@@ -10,7 +10,7 @@
 // the inherited table and 0 for this class's own, which is what says the first
 // belongs to a base whose data starts there.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

@@ -12,7 +12,7 @@
 // extra `xor eax,eax` and a 32-bit `test eax,eax`, spills the loads into ebx
 // and lands seven bytes over.  A byte-typed conditional is exact.
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern void *TheScriptDebugWindowDLL;
 

@@ -4,7 +4,7 @@
 // Retail calls GameLogic::getFirstObject through 0x000358BE and traverses
 // Object+0x88. It passes target->getControllingPlayer() and each object to the
 // filter at context+0x1DC, then applies model condition 5 to passing objects.
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Player;
 #define OBJECT_TU_MEMBERS \
