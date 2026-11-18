@@ -8,10 +8,10 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 enum LocomotorSetType
 {

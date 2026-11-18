@@ -34,11 +34,11 @@ struct Coord3D
 	float z;
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7fffffff
-};
+#include "../../../../../Include/Common/ObjectID.h"
+
+
+
+
 
 #include <stl/_bvector.h>
 

@@ -14,11 +14,11 @@ typedef bool Bool;
 
 #define DEBUG_ASSERTCRASH(condition, message) ((void)0)
 
-enum NameKeyType
-{
-    NAMEKEY_INVALID = 0,
-    FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

@@ -15,11 +15,11 @@ typedef int Int;
 typedef int ObjectID;
 typedef bool Bool;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0,
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 enum KindOfType
 {

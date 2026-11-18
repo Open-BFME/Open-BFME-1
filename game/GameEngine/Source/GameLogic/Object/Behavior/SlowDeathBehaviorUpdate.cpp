@@ -84,7 +84,7 @@ struct SlowDeathData208A50 {
  char pad00[0x34]; float m_sinkRate; char pad38[0x128]; _STL::vector<AsciiString> names160;
  char shadow16C[0x30]; int delay19C; unsigned sentinel1A0; unsigned char mask1A4; char pad1A5; bool flag1A6;
 };
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=1,UPDATE_SLEEP_FOREVER=0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 enum SlowDeathPhaseType { SDPHASE_INITIAL,SDPHASE_MIDPOINT,SDPHASE_FINAL,SDPHASE_LANDED208A50 };
 class SlowDeathBehavior { public:
  virtual UpdateSleepTime update();

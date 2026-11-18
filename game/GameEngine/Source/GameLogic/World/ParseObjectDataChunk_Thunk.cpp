@@ -10,10 +10,10 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

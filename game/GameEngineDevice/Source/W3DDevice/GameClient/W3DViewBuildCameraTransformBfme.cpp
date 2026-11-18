@@ -133,7 +133,7 @@ public:
 
 extern GameClient *TheGameClient;
 
-enum NameKeyType { NAMEKEY_INVALID = 0, NAMEKEY_MAX = 1 << 23 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 class StaticNameKey
 {
 	mutable NameKeyType m_key;

@@ -8,12 +8,12 @@ typedef float Real;
 // Retail calls nameToKey through the ILT thunk ?j_0003add7@@YAXXZ; it returns
 // this enum by value, so the member-pointer typedef spells it ?AW4NameKeyType@@
 // (retail's defining symbol is 0x0008FFC0).
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 enum KindOfType
 {

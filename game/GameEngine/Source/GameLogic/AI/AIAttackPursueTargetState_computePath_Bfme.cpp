@@ -10,7 +10,7 @@ typedef bool Bool;
 enum KindOfType {};
 enum PathfindLayerEnum {};
 enum WeaponSlotType {};
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };

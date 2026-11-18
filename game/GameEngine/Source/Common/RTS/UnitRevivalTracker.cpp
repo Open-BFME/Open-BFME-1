@@ -77,10 +77,10 @@ extern void j_0003add7();
 extern void j_000022bb();
 extern void j_0002ae23();
 
-enum NameKeyType
-{
-	Rva000FA1B0InvalidNameKey = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

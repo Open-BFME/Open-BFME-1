@@ -6,10 +6,10 @@ typedef int ObjectID;
 
 #include "../../command_source_type.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class Object;
 

@@ -28,11 +28,11 @@ typedef unsigned int ObjectID;
 // the return type's mangling (?AW4NameKeyType@@), so `int` here mangles to
 // ?nameToKey@NameKeyGenerator@@QAEHPBD@Z and can never link against the real
 // body at 0x0008FFC0.  Same underlying type, same code.
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 enum UpdateSleepTime
 {

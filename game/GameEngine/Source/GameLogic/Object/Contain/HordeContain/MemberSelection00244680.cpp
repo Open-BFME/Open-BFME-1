@@ -11,7 +11,7 @@ extern void j_00034a54();
 extern void j_0001f91f();
 extern int GetGameLogicRandomValue(int,int,char *,int);
 extern float Rva0002CCA5GetGameLogicRandomValueRealThunk(float,float,char *,int);
-enum UpdateSleepTime {UPDATE_SLEEP_NONE=1};
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class Object;
 class Update00244680;
 class UpdateModule {

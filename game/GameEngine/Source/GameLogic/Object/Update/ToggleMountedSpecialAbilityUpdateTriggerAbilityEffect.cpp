@@ -26,10 +26,10 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

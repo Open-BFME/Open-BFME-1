@@ -37,7 +37,7 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 enum KindOfType { KINDOF_RVA001CC250_6C = 0x6C };
 
 class Overridable

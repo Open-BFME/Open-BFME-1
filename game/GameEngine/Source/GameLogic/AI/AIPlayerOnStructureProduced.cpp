@@ -29,7 +29,7 @@ typedef int Int;
 
 #define NULL 0
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 // BFME numbering, as DozerActionDoActionState_update.cpp spells it.
 enum ObjectStatusTypes

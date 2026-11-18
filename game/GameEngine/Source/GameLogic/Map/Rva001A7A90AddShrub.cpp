@@ -31,10 +31,10 @@ struct Coord3D
 	Real z;
 };
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../../Include/Common/DrawableID.h"
+
+
+
 
 class Rva001A7A90TreeDrawData;
 

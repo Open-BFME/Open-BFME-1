@@ -25,7 +25,7 @@ extern "C" void _ReadWriteBarrier(void);
 typedef int Int;
 typedef bool Bool;
 typedef unsigned short DataChunkVersionType;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long milliseconds);
 

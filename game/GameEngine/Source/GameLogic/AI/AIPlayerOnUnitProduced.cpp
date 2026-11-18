@@ -15,11 +15,11 @@ typedef unsigned int UnsignedInt;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
+
+
+
+
 
 // Mask of the kind-of bit retail tests at ThingTemplate+0xC8.
 enum KindOfType

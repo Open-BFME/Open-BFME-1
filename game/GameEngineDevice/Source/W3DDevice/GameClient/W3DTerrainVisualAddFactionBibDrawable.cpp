@@ -5,7 +5,7 @@
 
 typedef bool Bool;
 typedef float Real;
-enum DrawableID { DRAWABLE_ID_ZERO = 0 };
+#include "../../../../GameEngine/Include/Common/DrawableID.h"
 
 extern void j_000309f4(void);
 #include "vector3.h"

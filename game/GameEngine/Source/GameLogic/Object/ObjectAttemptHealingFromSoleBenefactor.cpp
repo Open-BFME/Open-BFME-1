@@ -7,7 +7,7 @@ typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 enum DamageType { DAMAGE_HEALING_BFME = 7 };
 enum DeathType { DEATH_NONE = 1 };
 // Index 15 of the retail KindOf name table at 0x012AA068 is "SWARM_DOZER".

@@ -24,7 +24,7 @@
 
 typedef bool Bool;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 #define BFME_HAVE_OBJECTID
 
 enum KindOfType

@@ -16,10 +16,10 @@
 extern "C" void *__cdecl memset(void *dst, int value, unsigned int count);
 #pragma intrinsic(memset)
 
-enum NameKeyType
-{
-	NAME_KEY_NONE = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 enum UpdateSleepTime
 {

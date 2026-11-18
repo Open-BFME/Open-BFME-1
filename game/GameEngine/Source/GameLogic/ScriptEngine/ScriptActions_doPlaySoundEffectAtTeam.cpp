@@ -11,10 +11,10 @@
 typedef int Int;
 typedef bool Bool;
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 // Retail's KindOf name table (VA 0x012AA068) puts HORDE at index 0x6C.
 enum KindOfType

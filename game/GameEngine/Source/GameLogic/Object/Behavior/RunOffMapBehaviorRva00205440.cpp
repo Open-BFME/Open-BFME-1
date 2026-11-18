@@ -54,7 +54,7 @@ public:
 
 extern TerrainLogic *TheTerrainLogic;
 
-enum CommandSourceType { CMD_FROM_AI = 2 };
+#include "../../command_source_type.h"
 enum DamageType { DAMAGE_8 = 8 };
 enum DeathType { DEATH_NORMAL = 0 };
 

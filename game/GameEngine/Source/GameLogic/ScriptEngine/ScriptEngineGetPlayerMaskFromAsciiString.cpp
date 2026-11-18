@@ -58,10 +58,10 @@ public:
 	void __cdecl format(AsciiString format, ...);
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 NameKeyType NAMEKEY(const AsciiString &name);
 

@@ -23,7 +23,7 @@ extern int GetGameLogicRandomValue(int, int, char *, int);
 
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
-enum ObjectID { INVALID_OBJECT_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 enum SlowDeathPhaseType { SDPHASE_INITIAL, SDPHASE_MIDPOINT, SDPHASE_FINAL };
 class Object {
 public:

@@ -24,7 +24,7 @@ enum StateReturnType
 };
 
 enum WeaponChoiceCriteria { PREFER_MOST_DAMAGE = 0 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_AI = 2 };
+#include "../../../command_source_type.h"
 enum WeaponSlotType { PRIMARY_WEAPON = 0 };
 enum KindOfType { KINDOF_FIRST = 0 };
 

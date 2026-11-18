@@ -46,7 +46,7 @@ public:
     virtual ~Rva000C8480Owner();
     int m_a[32],m_aCount,m_b[32],m_bCount;
 };
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum VeterancyLevel { LEVEL_REGULAR=0 };
 struct Rva000D63C0Mapped { float m_value; };
 // Same AsciiString-keyed tables as matched PlayerInit.cpp.

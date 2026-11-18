@@ -26,7 +26,7 @@ inline AsciiString &AsciiString::operator=(const char *s) { ((StringBase<char>*)
 typedef int Int;
 typedef unsigned char UnsignedByte;
 typedef int Color;
-enum NameKeyType {};
+#include "../../../../../Include/Common/NameKeyType.h"
 class GameWindow;
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator *TheNameKeyGenerator;

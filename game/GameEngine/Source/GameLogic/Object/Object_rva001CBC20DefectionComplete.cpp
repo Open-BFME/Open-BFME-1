@@ -18,10 +18,10 @@ enum ObjectStatusTypes
 	OBJECT_STATUS_NONE = 0, OBJECT_STATUS_LAST = 85
 };
 
-enum NameKeyType
-{
-	INVALID_NAME_KEY = 0, NAME_KEY_MIN = (-2147483647 - 1), NAME_KEY_MAX = 2147483647
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

@@ -12,7 +12,7 @@
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 enum Relationship { ALLIES = 2 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum EvaMessage {};
 struct Coord3D;
 class Team;

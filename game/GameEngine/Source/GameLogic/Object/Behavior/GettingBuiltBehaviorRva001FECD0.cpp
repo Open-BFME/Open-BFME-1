@@ -17,10 +17,10 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 enum UpdateSleepTime
 {

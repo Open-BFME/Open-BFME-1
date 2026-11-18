@@ -10,7 +10,7 @@ public:
 enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff };
 enum KindOfType { KINDOF_FOUNDATION = 0x95 };
 enum ObjectStatusTypes { OBJECT_STATUS_UNSELECTABLE = 3 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../../Include/Common/NameKeyType.h"
 enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
 class Overridable
 {

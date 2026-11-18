@@ -5,10 +5,10 @@
 typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../../../Include/Common/ObjectID.h"
+
+
+
 
 struct XferVersion
 {

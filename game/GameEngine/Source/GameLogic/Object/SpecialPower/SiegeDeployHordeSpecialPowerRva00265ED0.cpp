@@ -37,10 +37,10 @@ enum UpdateSleepTime
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../command_source_type.h"
+
+
+
 
 enum NameKeyType
 {

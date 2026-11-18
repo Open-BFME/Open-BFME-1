@@ -10,7 +10,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../../Include/Common/ObjectID.h"
 
 struct Coord3D
 {

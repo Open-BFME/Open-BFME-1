@@ -19,7 +19,7 @@ struct Coord3D
 	void scale(float s) { x *= s; y *= s; z *= s; }
 };
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 enum DamageType { DAMAGE_00001CDE30_8 = 8 };
 enum DeathType { DEATH_00001CDE30_0 = 0 };
 enum AIStateType { AI_STATE_00001CDE30_2D = 0x2d };

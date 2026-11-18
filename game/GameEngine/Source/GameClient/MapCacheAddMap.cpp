@@ -36,7 +36,7 @@ public:
  void *m_tailF4,*m_tailF8;
 };
 struct FileInfo { unsigned sizeHigh,sizeLow,timestampHigh,timestampLow; };
-enum NameKeyType { Rva004570F0Key = 0 };
+#include "../../Include/Common/NameKeyType.h"
 class StaticNameKey { public: NameKeyType key() const; };
 class Dict { public: bool getBool(NameKeyType,bool *) const; AsciiString getAsciiString(NameKeyType,bool *) const; };
 extern void j_000263d7();

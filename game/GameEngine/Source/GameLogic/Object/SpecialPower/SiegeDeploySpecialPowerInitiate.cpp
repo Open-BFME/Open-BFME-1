@@ -27,7 +27,7 @@ struct Coord3D
 };
 
 enum NameKeyType { NAMEKEY_INVALID };
-enum CommandSourceType { CMD_FROM_AI = 2 };
+#include "../../command_source_type.h"
 enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
 
 class NameKeyGenerator

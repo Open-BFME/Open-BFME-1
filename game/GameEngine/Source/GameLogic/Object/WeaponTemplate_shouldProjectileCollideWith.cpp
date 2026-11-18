@@ -9,10 +9,10 @@
 
 typedef bool Bool;
 typedef int Int;
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 enum Relationship
 {

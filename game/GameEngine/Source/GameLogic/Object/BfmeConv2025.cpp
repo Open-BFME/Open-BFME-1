@@ -24,7 +24,7 @@ private:
 	void bfmeRebuild(int mode);
 };
 
-enum CommandSourceType { CMD_TP_2 = 2 };
+#include "../command_source_type.h"
 
 class AICommandInterface
 {

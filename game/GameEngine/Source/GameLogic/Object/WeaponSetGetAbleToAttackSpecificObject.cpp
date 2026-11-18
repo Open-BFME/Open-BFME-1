@@ -21,11 +21,11 @@ enum AbleToAttackType
 
 inline Bool isForcedAttack( AbleToAttackType t ) { return ( ( (Int)t ) & _ATTACK_FORCED ) != 0; }
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 2
-};
+#include "../command_source_type.h"
+
+
+
+
 
 enum CanAttackResult
 {

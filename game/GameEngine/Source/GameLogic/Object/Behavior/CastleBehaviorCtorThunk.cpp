@@ -164,11 +164,11 @@ public:
 
 class CastleOwnedObject;
 
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
+
 
 class BFMERetailAsciiString
 {

@@ -10,7 +10,7 @@ struct Coord3D { float x,y,z; void set(float a,float b,float c) { x=a;y=b;z=c; }
 class ModelConditionFlags { public: bool test(int n) const { return bits.test(n); } void reset(int n) { bits.reset(n); } void set(int n) { bits.set(n); } _STL::bitset<320> bits; };
 #define BFME_HAVE_COORD3D
 #define BFME_HAVE_MODELCONDITIONFLAGS
-enum NameKeyType { KEY_NONE=0 };
+#include "../../../../Include/Common/NameKeyType.h"
 enum ObjectStatusTypes { STATUS10=10 };
 class Module;
 #define OBJECT_TU_MEMBERS Module* findModule(NameKeyType) const; void setStatusBit(int,bool); void clearStatus(ObjectStatusTypes); void notifyModelConditionChanged(); AIUpdateInterface* getAI00294410() const { return m_ai; }

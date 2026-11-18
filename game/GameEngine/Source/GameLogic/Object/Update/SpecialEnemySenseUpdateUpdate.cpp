@@ -27,10 +27,10 @@ typedef unsigned int UnsignedInt;
 class Object;
 class Player;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Lib/BaseType.h
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

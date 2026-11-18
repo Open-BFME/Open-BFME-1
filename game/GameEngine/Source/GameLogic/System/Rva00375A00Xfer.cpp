@@ -16,10 +16,10 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef bool Bool;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class XferVersion
 {

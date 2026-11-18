@@ -182,7 +182,7 @@ static __forceinline void rva001F1370(void *o,int a,int b) {union {void(*raw)();
 static __forceinline void rva00266A30(void *o,const Coord3D *pos,CommandSourceType src) {union {void(*raw)();void(Rva00266F40Action::*fn)(const Coord3D*,CommandSourceType);}c;c.raw=j_00040732;(((Rva00266F40Action*)o)->*c.fn)(pos,src);}
 class AIUpdateInterface {public: void ignoreObstacle(const Object*);};
 struct Rva00266F40ModuleData {char pad[0x1d0];unsigned count;};
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1, UPDATE_SLEEP_FOREVER = 0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 // Private view of the +0x10 update-interface subobject (the vptr of vtable
 // VA 0x010B7494 at +0); the primary base and its module data and Object
 // pointers sit at -0x10, -0xC and -8.

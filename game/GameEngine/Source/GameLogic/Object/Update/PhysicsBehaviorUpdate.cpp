@@ -18,11 +18,11 @@
 #include "vector3.h"
 #include "matrix3d.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 class ModelConditionFlags
 {

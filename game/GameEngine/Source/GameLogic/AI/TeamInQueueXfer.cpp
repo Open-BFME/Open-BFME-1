@@ -17,10 +17,10 @@ typedef int Int;
 typedef bool Bool;
 typedef UnsignedInt TeamID;
 
-enum ObjectID
-{
-	BFME_OBJECT_ID_INVALID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 struct XferVersion
 {

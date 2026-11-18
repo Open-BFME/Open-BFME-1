@@ -242,10 +242,10 @@ extern void j_0001dd7c();
 extern void j_0002bdfa();
 extern void j_0003a279();
 extern void j_0001a9dd();
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 class RespawnUpdate
 {
   public:

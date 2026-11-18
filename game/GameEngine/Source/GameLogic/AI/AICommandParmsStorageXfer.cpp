@@ -32,10 +32,10 @@ struct Coord3D
 	}
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 template <typename T> struct StringBaseData
 {

@@ -38,10 +38,10 @@ typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 template <class T>
 inline const T &maxOf( const T &a, const T &b )

@@ -4,7 +4,7 @@
 typedef bool Bool;
 typedef float Real;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 enum BodyDamageType { BODY_RUBBLE = 3 };
 enum DamageType { DAMAGE_FALLING = 11 };
 enum DeathType { DEATH_SPLATTED = 11 };

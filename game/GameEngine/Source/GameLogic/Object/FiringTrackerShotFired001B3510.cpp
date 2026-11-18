@@ -19,10 +19,10 @@ typedef int Int;
 typedef unsigned char Bool;
 typedef unsigned int AudioHandle;
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 enum UpdateSleepTime
 {

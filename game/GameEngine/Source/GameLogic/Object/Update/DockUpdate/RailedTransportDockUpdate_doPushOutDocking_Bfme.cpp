@@ -25,10 +25,10 @@ enum ObjectStatusTypes
 	OBJECT_STATUS_UNSELECTABLE = 3
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
+#include "../../../command_source_type.h"
+
+
+
 
 enum ModelConditionFlagType
 {

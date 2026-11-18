@@ -22,7 +22,7 @@ typedef bool Bool;
 #include "snapshot.h"
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
-enum ObjectID { OBJECTID_NONE = 0 };
+#include "../../Include/Common/ObjectID.h"
 class SpecialPowerTemplate { public: AsciiString getName() const; };
 class SpecialPowerStore {
 protected:

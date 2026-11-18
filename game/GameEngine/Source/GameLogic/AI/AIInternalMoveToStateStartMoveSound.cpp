@@ -39,7 +39,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned int AudioHandle;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 
 // The retail AudioEventRTS destructor, copy constructor and assignment are
 // non-virtual (`??1AudioEventRTS@@QAE@XZ` and friends), so this shim carries no

@@ -54,10 +54,10 @@ inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &that) { x = that.x; y = that.y; z = that.z; }
 
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../../../Include/Common/DrawableID.h"
+
+
+
 
 // The complete constructor and copy helper establish this 0x60-byte record.
 // The +4 field owns a counted audio reference; comparison reads +0 and +8.

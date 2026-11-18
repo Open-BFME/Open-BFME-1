@@ -17,7 +17,7 @@ extern void j_0000c1e9();
 
 
 typedef unsigned char Bool;
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 0 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class Object;
 

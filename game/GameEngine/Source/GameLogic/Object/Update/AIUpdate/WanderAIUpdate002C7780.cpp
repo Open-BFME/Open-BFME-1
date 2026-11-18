@@ -14,7 +14,7 @@ typedef BitFlags<320> ModelConditionFlags;
 #define BFME_HAVE_MODELCONDITIONFLAGS 1
 
 #include "command_source_type.h"
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 #define BFME_HAVE_COORD3D 1
 #define THING_TU_MEMBERS const Coord3D *getPosition() const { return &m_cachedPos; }
 // ?statusAt002C7780@Object@@QBE_NH@Z absent-from-retail

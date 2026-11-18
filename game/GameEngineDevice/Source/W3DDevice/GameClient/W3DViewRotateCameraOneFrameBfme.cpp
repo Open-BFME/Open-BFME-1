@@ -26,11 +26,11 @@
 typedef float Real;
 typedef int Int;
 typedef bool Bool;
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7FFFFFFF
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
+
+
 
 // The shipped GlobalData.h spells this as TheGlobalData through the writable
 // singleton.  The disable flag is proven at GlobalData+0xA74 by the matched

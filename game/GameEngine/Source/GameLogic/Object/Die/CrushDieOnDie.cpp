@@ -9,10 +9,10 @@
 
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 class ModuleData;
 class Object;

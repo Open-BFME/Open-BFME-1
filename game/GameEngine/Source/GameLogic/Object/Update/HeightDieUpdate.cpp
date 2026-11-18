@@ -25,11 +25,11 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 enum PathfindLayerEnum
 {
 	LAYER_INVALID = 0,

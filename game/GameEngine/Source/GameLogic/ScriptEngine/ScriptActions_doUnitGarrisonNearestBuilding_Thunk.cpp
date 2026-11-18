@@ -32,7 +32,7 @@ typedef float Real;
 class AsciiString;
 class Object;
 
-enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT = 1 };
+#include "../command_source_type.h"
 
 template <int NUMBITS> class BitFlags
 {

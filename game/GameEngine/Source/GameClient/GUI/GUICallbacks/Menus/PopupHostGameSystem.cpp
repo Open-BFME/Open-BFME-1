@@ -150,7 +150,7 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 void createGame( void );
 void PopulateCustomLadderComboBox( void );
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../../Include/Common/NameKeyType.h"
 
 extern NameKeyType textEntryGameNameID;
 extern NameKeyType buttonCreateGameID;

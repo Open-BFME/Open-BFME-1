@@ -22,7 +22,7 @@ class Player;
 class Module;
 class Object;
 class LocomotorSet;
-enum NameKeyType { Key0024AE60Invalid=0 };
+#include "../../../../Include/Common/NameKeyType.h"
 enum PathfindLayerEnum { Layer0024AE60_11=17 };
 enum KindOfType { Kind0024AE60_5C=92, Kind0024AE60_6C=108 };
 enum ObjectStatusTypes { Status0024AE60_3B=59 };

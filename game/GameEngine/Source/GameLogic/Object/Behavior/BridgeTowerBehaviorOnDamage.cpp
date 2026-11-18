@@ -17,7 +17,7 @@ typedef float Real;
 typedef unsigned int UnsignedInt;
 typedef unsigned char Byte;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 enum KindOfType
 {
 	KINDOF_BRIDGE = 22,

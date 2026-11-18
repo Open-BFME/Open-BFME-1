@@ -8,10 +8,10 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class Object;
 

@@ -35,7 +35,7 @@ class BfmeOwnerBR { public: void bfmeTail939B(struct BfmeElem939B *,Object *,Del
 class LuaScriptEngine;
 extern LuaScriptEngine *TheLuaScriptEngine;
 class Rva002E4CA0 { public: void *rva002E4CA0(int) const; };
-enum NameKeyType { InvalidKey=-1 };
+#include "../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 // ?TheGameLogic0037C030@@3PAUGameLogic0037C030@@A: reference recorded ?TheGameLogic@@3PAVGameLogic@@A

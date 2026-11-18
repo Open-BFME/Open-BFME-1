@@ -26,10 +26,10 @@ class ModuleData;
 class UpgradeTemplate;
 class ObjectFilter;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 enum KindOfType
 {

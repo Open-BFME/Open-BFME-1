@@ -20,7 +20,7 @@
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int ObjectID;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 
 #include "ascii_string.h"
 

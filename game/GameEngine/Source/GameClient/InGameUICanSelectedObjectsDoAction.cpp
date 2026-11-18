@@ -13,7 +13,7 @@
 // InGameUISiegeDockSelection.cpp; unnamed interface methods stay address-tagged.
 enum KindOfType { KINDOF_INVALID = 0 };
 enum ObjectID { INVALID_ID = 0 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../GameLogic/command_source_type.h"
 enum CanEnterType { CHECK_CAPACITY=0, DONT_CHECK_CAPACITY=1, COMBATDROP_INTO=2 };
 class ExitInterface;
 #define BFME_HAVE_OBJECTID

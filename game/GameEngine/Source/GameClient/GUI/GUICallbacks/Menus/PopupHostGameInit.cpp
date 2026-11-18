@@ -17,7 +17,7 @@ inline UnicodeString::UnicodeString(const UnicodeString& s) { ((StringBase<unsig
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 class WindowLayout;
 class GameWindow;
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 class GameWindowManager { public:

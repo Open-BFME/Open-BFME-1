@@ -13,7 +13,7 @@
 
 class Coord3D;
 extern void j_00001e88();
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

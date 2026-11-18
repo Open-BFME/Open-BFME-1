@@ -25,7 +25,7 @@ typedef bool Bool;
 typedef Int ObjectID;
 
 enum KindOfType { KINDOF_INVALID = 0 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

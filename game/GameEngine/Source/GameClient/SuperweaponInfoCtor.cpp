@@ -108,7 +108,7 @@ public:
 
 extern DisplayStringManager *TheDisplayStringManager;
 
-enum ObjectID { OBJECTID_NONE = 0 };
+#include "../../Include/Common/ObjectID.h"
 
 class SpecialPowerTemplate;
 

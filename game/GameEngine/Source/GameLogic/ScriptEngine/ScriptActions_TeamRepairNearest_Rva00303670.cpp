@@ -145,10 +145,10 @@ public:
 	unsigned char m_carrier[4];
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_SCRIPT = 1
-};
+#include "../command_source_type.h"
+
+
+
 
 class AICommandInterface
 {

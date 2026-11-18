@@ -18,7 +18,7 @@ class ThingTemplate;
 class Object;
 class Team;
 class Module;
-enum NameKeyType { NAMEKEY_NONE };
+#include "../../../../Include/Common/NameKeyType.h"
 enum Relationship { ENEMIES };
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;

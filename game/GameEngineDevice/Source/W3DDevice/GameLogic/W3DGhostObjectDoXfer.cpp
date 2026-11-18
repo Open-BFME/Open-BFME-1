@@ -60,11 +60,11 @@ public:
 	int tag;
 };
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0,
-	FORCE_DRAWABLEID_LONG = 0x7fffffff
-};
+#include "../../../../GameEngine/Include/Common/DrawableID.h"
+
+
+
+
 
 // The ObjectID (0x0010C3C0, ILT 0x0000C9B4) and DrawableID (0x0010C3E0, ILT
 // 0x00008CA1) transfers by their ledger names, with their cdecl ABI
