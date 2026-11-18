@@ -74,13 +74,7 @@ struct IDirect3DDevice8
 
 #include "../WWMath/vector3.h"
 
-class ShaderClass
-{
-	friend class DX8Wrapper;
-
-	UnsignedInt bits;
-	void Apply();
-};
+#include "shader.h"
 
 class VertexMaterialClass
 {

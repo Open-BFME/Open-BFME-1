@@ -201,11 +201,7 @@ struct IDirect3DDevice8
 class TextureBaseClass;
 class VertexBufferClass;
 class IndexBufferClass;
-class ShaderClass
-{
-  public:
-	unsigned bits;
-};
+#include "../../../../Libraries/Source/WWVegas/WW3D2/shader.h"
 class W3DShaderManager
 {
   public:
