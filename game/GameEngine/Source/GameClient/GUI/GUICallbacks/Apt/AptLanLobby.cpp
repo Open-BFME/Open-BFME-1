@@ -13,7 +13,7 @@
 
 typedef unsigned short wchar_t;
 typedef unsigned short WideChar;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

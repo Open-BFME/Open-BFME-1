@@ -39,7 +39,7 @@
 // MODULEPARSE_NORMAL on any path that reaches the store, so the compiler
 // propagates the constant.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

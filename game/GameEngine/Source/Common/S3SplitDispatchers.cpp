@@ -12,7 +12,7 @@
 //
 // Both return int: mov eax,1 and xor eax,eax, not the two-byte al forms.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BfmeFloatAt8
 {

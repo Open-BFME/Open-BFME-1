@@ -2,9 +2,9 @@
 // SolutionVec (pair<ObjectID, ObjectID>) _M_insert_overflow at 0x000960A0; see
 // targets/game/reverse/identity_evidence/000960a0-00771870-objectid-pair-vector.md.
 
-enum ObjectID
-{
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
 
 namespace _STL
 {

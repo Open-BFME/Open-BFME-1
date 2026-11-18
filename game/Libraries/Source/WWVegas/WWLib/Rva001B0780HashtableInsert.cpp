@@ -84,7 +84,7 @@ public:
 
 }
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // retail 0x001B0050 is _Construct over a pair of these two, so the key is the
 // four-byte NameKeyType and the mapped value is ArmorTemplate, 0x60 bytes:

@@ -2,7 +2,7 @@
 // Open-BFME: GameLODManager::isReallyLowMHz() reads the BFME manager's
 // CPU-frequency and low-MHz threshold fields at +0x171C and +0x1734.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class GameLODManager
 {

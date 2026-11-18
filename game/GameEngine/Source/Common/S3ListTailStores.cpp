@@ -14,7 +14,7 @@
 // The lea of ecx+4 before each test is the address of the link being examined;
 // the load through it is the step.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen_000c8990
 {

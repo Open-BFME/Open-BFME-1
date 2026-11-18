@@ -2,7 +2,7 @@
 
 // Open-BFME: AudioEventRTS::generateFilenamePrefix, retail 0x000B33F0, 429B.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum AudioType
 {

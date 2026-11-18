@@ -1,7 +1,7 @@
 // Two retained flag-then-forward wrappers.
 // Native dynamic-audio overrides are recovered in Audio/DynamicAudioEventInfo.cpp.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 
 class MapObject

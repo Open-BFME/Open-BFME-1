@@ -23,7 +23,7 @@ typedef bool Bool;
 #define NULL 0
 #endif
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/NameKeyType.h"
 
 enum CommandAvailability
 {

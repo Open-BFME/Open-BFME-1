@@ -18,7 +18,7 @@
 // anyone wrote. It is placement new: MSVC 7.1 tests the pointer that
 // operator new(size_t, void*) hands back before constructing through it.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 inline void *operator new(unsigned int, void *place) { return place; }
 

@@ -44,7 +44,7 @@
 // dwords per body are DIR32 sites the gate takes from the target, leaving 44 of
 // the 62 bytes concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct V3Block16 { Int m_v[ 16 ]; };
 struct V3Block32 { Int m_v[ 32 ]; };

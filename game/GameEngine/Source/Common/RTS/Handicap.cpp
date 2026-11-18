@@ -10,7 +10,7 @@
 // declared HandicapType and ThingType but only as far as reading them. Stated
 // together, the loop bounds in the constructor are the two enums.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate

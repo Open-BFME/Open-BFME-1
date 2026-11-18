@@ -5,7 +5,7 @@
 // ILT 0x0002E48D. The object completion callback uses Object vtable slot 18,
 // which is the matched body at 0x001CBC20.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum UpdateSleepTime
 {

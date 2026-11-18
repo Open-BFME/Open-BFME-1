@@ -21,7 +21,7 @@
 // IDENTITY IS NOT RECOVERED.  Both names are derived from addresses, and the
 // unread arguments are spelled `int` because only their count is visible.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct T4Pair
 {

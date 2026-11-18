@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Igame/GameEngine/Source/Common/System /Igame/GameEngine/Include /Igame/GameEngine/Include/Precompiled /Igame/Libraries/Source/WWVegas/WWLib
 
-enum NameKeyType
-{
-};
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
 class ObjectCreationList;
 
 // The incremental-link thunk at 0x00654BA0 is retail's own body

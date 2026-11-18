@@ -3,7 +3,7 @@
 // at offsets 0x58 and 0x5C. Vtable 0x01128450 and the 0x74 allocation establish
 // the child type. BfmeB1159::bfmeGo1159 finishes the owning object.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 // retail 0x01128450: the shadow resources' vftable. Retail links the
 // reference against the defining symbol, so spell it with __identifier

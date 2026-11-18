@@ -3,7 +3,7 @@
 // Zero Hour View.cpp writes version 1 (angle and position); BFME extends it to
 // version 3 with the camera state through View+0xB0 and a linked record list
 // whose nodes serialize through Rva0045B700::visit.
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct XferVersionInfo
 {

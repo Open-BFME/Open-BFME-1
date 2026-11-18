@@ -24,7 +24,7 @@ typedef unsigned char Bool;
 
 class GameWindow;
 
-enum WindowMsgHandledType { MSG_IGNORED, MSG_HANDLED };
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 
 // upstream values: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 enum { GWM_CHAR = 0x15 };

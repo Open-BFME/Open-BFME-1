@@ -9,8 +9,8 @@
 //
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Rva0036CA00Str;
 

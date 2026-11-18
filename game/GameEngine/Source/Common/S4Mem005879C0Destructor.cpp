@@ -14,7 +14,7 @@
 // 0 across the clearing and drops to -1 for the release, which is what a
 // destructible member gives.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

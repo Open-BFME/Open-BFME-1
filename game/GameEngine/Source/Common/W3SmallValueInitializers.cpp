@@ -18,7 +18,7 @@
 // Identity is address-derived: the offsets are what retail writes, the member
 // names are the offsets.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva000643C0Value
 {

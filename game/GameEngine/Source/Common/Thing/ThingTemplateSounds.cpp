@@ -23,7 +23,7 @@
 // last. Its own file predates that hook check and is grandfathered, so it stays
 // where it is rather than have its body reshaped to fit a merge.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AudioEventRTS;
 

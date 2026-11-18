@@ -11,7 +11,7 @@
 // the frame 0xC bytes (a lane model without it came out 4 bytes short).
 // Address-derived names.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )

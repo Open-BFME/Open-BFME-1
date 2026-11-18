@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: rotated box point test helper, retail 0x00880A30.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #define BfmeZero (3.402823466e+38f)
 

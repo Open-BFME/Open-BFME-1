@@ -18,7 +18,7 @@
 // Team::healAllObjects (0x000EDA50) has no such guard and retail pads it,
 // which is why the pad is not a toolchain difference.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class UpgradeTemplate;
 class Object;

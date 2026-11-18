@@ -6,7 +6,7 @@
 // the two GameState routes: the ordinary real-to-portable conversion at
 // 0x0010F280 and the distinct hidden-sret/const-reference route at 0x0010F820.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

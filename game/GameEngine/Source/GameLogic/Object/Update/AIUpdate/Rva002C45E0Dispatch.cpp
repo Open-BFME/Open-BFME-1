@@ -3,7 +3,7 @@
 // the root and Object views preserve the proven BFME offsets and vtable slots.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 struct AICommandParms
 {
 	int m_cmd;

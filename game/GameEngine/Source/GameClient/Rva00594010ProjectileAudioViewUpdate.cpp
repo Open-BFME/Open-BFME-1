@@ -5,7 +5,7 @@
 // body.  The fields and virtual slots below are constrained by the retail
 // instructions and by the existing BFME client/audio shims.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 class BfmeOverridable

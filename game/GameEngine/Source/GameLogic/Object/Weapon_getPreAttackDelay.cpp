@@ -17,7 +17,7 @@
 // bytes); the counted for-loop and explicit stores give immediates or keep
 // all six stores before the lea.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Coord3DBase
 {

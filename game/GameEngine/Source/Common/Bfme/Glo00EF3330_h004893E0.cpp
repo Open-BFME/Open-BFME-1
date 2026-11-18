@@ -18,7 +18,7 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCritica
 
 extern void j_00043c57(void);
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Glo00EF3330
 {

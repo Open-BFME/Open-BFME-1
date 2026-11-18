@@ -15,7 +15,7 @@
 // Both return int: mov eax,1 and xor eax,eax rather than the two-byte al
 // forms.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen_001de230
 {

@@ -7,7 +7,7 @@
 // +0xec/+0xf0, and the transfer-list/gate-set pair at +0x100/+0x104.  Keep
 // those views in this TU so the shared Team ABI is not changed.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Team;
 class Player;

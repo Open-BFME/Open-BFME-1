@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
 // readable body of ?update@GameEngine@@UAEXXZ: game/GameEngine/Source/Common/GameEngine.cpp
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 typedef void *HANDLE;
 typedef unsigned char EngineBool;
 

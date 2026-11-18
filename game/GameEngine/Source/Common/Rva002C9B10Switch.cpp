@@ -5,10 +5,10 @@ enum KindOfType
 	KINDOF_DOCK = 0x18
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../Include/Common/ObjectID.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
 class Thing

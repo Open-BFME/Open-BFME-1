@@ -4,9 +4,9 @@
 // ObjectCreationList map.  Its complete destructor is already matched through
 // the incremental-link thunk at 0x00009525.
 
-enum NameKeyType
-{
-};
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
 
 class ObjectCreationList;
 

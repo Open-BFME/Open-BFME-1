@@ -10,11 +10,11 @@ enum
 	TRUE = 1
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3FFFFFFF
-};
+#include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 enum
 {

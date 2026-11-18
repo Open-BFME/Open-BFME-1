@@ -11,7 +11,7 @@
 // bool makes the compiler emit the pointer-to-bool test/setne pair retail does
 // not have. Calling through a pointer to the same symbol, typed to the argument
 // list retail actually pushes, keeps the cdecl pushes and the callee name.
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 int Rva0051D1E0Shutdown( Bool mode, void *unused, Bool enabled );
 

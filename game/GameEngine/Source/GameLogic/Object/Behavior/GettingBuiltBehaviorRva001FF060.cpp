@@ -12,7 +12,7 @@
 // test/set shape as AIMoveAndDeleteState_onEnter.cpp) and kills it with
 // damage 8 death 0x16.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum Relationship { ENEMIES = 2 };
 enum DamageType { DAMAGE_UNRESISTABLE_8 = 8 };
