@@ -110,7 +110,7 @@ void GadgetButtonSetAltSound(GameWindow *g, AsciiString altSound);
 void commandButtonTooltip(GameWindow *window, WinInstanceData *instData, unsigned int mouse);
 void Rva004BCCE0(GameWindow *window);					///< 0x004BCCE0
 
-enum CommandButtonMappedBorderType { COMMAND_BUTTON_BORDER_NONE = 0 };
+#include "../../../../Include/Common/Enums/CommandButtonMappedBorderType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 class HotKeyManager

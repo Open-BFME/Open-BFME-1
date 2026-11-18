@@ -3,7 +3,7 @@
 
 class Weapon;
 class WeaponTemplate;
-enum WeaponSlotType { WEAPON_SLOT_PLACEHOLDER };
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);

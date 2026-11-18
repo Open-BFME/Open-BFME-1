@@ -32,13 +32,13 @@ struct IRegion2D
 	ICoord2D lo, hi;
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1,
-	LAYER_WALL = 15,
-	LAYER_LAST = 15
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
+
+
 
 class Waypoint;
 class Object;

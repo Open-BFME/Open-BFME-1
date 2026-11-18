@@ -1,11 +1,11 @@
 // cl: /O2 /DNDEBUG /MD
 // BFME Recenter/IdleScan updates: no OBJECT_STATUS_UNDER_CONSTRUCTION guard.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 class TurretAIData
 {

@@ -4,7 +4,7 @@
 typedef bool Bool;
 typedef int Int;
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_FAILURE = -2 };
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 enum { DOZER_TASK_INVALID = -1 };
 

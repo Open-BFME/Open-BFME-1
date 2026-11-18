@@ -5,12 +5,12 @@ typedef unsigned int UnsignedInt;
 
 // Same numbering as StateMachine.h. -2 is failure, and the horde machine
 // sends that edge from the wait state to path-wait.
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 // Retail mangles this unsigned enumeration as W4KindOfType.
 enum KindOfType

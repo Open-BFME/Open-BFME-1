@@ -77,7 +77,7 @@ class Render2DClass {
     char data[0x58];
 public: Render2DClass(); void Set_Coordinate_Range(const RectClass &);
 };
-enum StaticGameLODLevel { RvaLODMinusOne=-1 };
+#include "../../../../GameEngine/Include/Common/Enums/StaticGameLODLevel.h"
 class GameLODManager {
 public: int rva0007E0F0(); bool setStaticLODLevel(StaticGameLODLevel); void rva0007C350(int);
 };

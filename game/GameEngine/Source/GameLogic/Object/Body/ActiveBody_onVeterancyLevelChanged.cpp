@@ -31,12 +31,12 @@ enum VeterancyLevel
 	LEVEL_HEROIC,
 };
 
-enum ArmorSetType
-{
-	ARMORSET_VETERAN,
-	ARMORSET_ELITE,
-	ARMORSET_HERO,
-};
+#include "../../../../Include/Common/Enums/ArmorSetType.h"
+
+
+
+
+
 
 enum MaxHealthChangeType
 {

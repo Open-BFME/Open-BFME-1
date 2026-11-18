@@ -3,7 +3,7 @@
 
 typedef bool Bool;
 enum VeterancyLevel { LEVEL_REGULAR, LEVEL_VETERAN, LEVEL_ELITE, LEVEL_HEROIC };
-enum WorldAnimationOptions { WORLD_ANIM_FADE_ON_EXPIRE = 1 };
+#include "../../../Include/Common/Enums/WorldAnimationOptions.h"
 enum KindOfType { KINDOF_IGNORED_IN_GUI = 0x2f };
 
 struct Coord3D

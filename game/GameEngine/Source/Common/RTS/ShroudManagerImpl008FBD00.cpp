@@ -11,11 +11,11 @@ typedef unsigned int UnsignedInt;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum ValueOrThreat
-{
-	VOT_CashValue = 0,
-	VOT_ThreatValue = 1
-};
+#include "../../../Include/Common/Enums/ValueOrThreat.h"
+
+
+
+
 
 struct Gen_t_008fbc70_p8cd
 {

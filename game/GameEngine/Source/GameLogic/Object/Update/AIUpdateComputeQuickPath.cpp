@@ -35,7 +35,7 @@ struct Coord3D
 	Real x, y, z;
 };
 
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // BFME ordinals: bit 12 and bit 25 of ThingTemplate::m_kindof.
 enum KindOfType { KINDOF_AIRCRAFT = 12, KINDOF_PROJECTILE = 25 };

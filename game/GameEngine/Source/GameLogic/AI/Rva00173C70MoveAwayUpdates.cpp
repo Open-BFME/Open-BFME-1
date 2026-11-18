@@ -1,12 +1,12 @@
 // cl: /DNDEBUG /MD
 // Retail 0x00173C70 and 0x00173E50: two path-ready move-state updates.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

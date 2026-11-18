@@ -21,7 +21,7 @@ const ObjectID INVALID_ID = 0;
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 #define OBJECT_TU_MEMBERS UnsignedByte getCrushableLevel() const;
 #include "object.h"

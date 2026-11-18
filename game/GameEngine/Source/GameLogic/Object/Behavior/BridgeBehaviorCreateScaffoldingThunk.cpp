@@ -37,7 +37,7 @@
 #define INT_TO_REAL(x) ((float)(x))
 
 #include "../../../../Include/Common/ObjectID.h"
-enum PathfindLayerEnum {};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 class Team; class Object;
 class GeometryInfo {
 public:

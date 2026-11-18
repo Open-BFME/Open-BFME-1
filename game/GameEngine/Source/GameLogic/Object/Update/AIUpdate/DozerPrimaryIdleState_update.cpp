@@ -11,11 +11,11 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 #include "../../../command_source_type.h"
 

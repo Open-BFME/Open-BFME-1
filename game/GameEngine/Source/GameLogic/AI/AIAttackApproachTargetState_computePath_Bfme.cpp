@@ -12,7 +12,7 @@ typedef bool Bool;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 enum KindOfType {};
-enum PathfindLayerEnum {};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 enum WeaponSlotType {};
 #include "../../../Include/Common/ObjectID.h"
 enum WhichTurretType { TURRET_INVALID = -1 };

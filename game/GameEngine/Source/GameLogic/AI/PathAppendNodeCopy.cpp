@@ -5,11 +5,11 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

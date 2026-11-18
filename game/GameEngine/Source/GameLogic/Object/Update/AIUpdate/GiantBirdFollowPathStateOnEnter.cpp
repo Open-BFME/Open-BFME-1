@@ -6,12 +6,12 @@
 // 0x002BDDC0 establish the same state layout.  The call below is the state
 // helper's retail ILT at 0x00024884, which jumps to 0x002BDBF0.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 class Object
 {

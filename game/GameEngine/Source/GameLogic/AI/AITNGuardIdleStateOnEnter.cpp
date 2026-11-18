@@ -84,10 +84,10 @@ public:
 	Object *m_owner;
 };
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AITNGuard.h
 class AITNGuardIdleState

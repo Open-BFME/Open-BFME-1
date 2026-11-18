@@ -34,11 +34,11 @@ enum ChipsetType
 	DC_UNKNOWN = 0
 };
 
-enum CpuType
-{
-	XX = 0,
-	P3 = 1
-};
+#include "../../Include/Common/Enums/CpuType.h"
+
+
+
+
 
 enum StaticGameLODLevel
 {

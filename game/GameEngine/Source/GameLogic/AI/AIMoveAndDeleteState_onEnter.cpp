@@ -12,7 +12,7 @@ typedef unsigned char UnsignedByte;
 typedef float Real;
 typedef bool Bool;
 
-enum StateReturnType { STATE_CONTINUE = 0 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

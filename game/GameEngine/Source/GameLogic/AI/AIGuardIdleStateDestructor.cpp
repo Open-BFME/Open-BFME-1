@@ -13,12 +13,12 @@ typedef unsigned int TeamID;
 typedef bool Bool;
 typedef float Real;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/coord.h"
 class AIUpdateInterface

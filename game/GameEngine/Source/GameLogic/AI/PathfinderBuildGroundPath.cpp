@@ -32,11 +32,11 @@ extern const float g_rva0107533C;
 
 class Pathfinder;
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 struct Rva003D61C0Vec
 {

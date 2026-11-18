@@ -13,12 +13,12 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum MouseButtonState
-{
-	MBS_Up = 0,
-	MBS_Down,
-	MBS_DoubleClick,
-};
+#include "../../../../GameEngine/Include/Common/Enums/MouseButtonState.h"
+
+
+
+
+
 
 struct MouseIO
 {
