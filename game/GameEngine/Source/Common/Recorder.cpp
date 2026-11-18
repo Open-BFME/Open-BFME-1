@@ -4,9 +4,9 @@
 
 extern "C" unsigned int __cdecl strlen(const char *str);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 static const char replayExtention[] = ".rep";
 static const char lastReplayFileName[] = "00000000";

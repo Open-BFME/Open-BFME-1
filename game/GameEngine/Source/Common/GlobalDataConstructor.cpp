@@ -34,12 +34,12 @@
 //   * m_movementPenaltyDamageState = 2 and GetDoubleClickTime().
 #include <vector>
 #include <string.h>
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 #define TRUE 1
 #define FALSE 0
 

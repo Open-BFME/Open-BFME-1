@@ -44,11 +44,11 @@
 //     the slot returns the constructor's; isLocalPlayer casts, which is what
 //     retail's own code does with the same eight bytes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum { MAX_SLOTS = 8 };
 

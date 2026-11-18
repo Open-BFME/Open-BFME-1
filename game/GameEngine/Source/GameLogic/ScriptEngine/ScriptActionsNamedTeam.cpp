@@ -24,9 +24,9 @@
 // once, that preamble is seventy lines instead of seven hundred, and the ten
 // one-liners sit next to each other where the family is legible.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class AIGroup;
 class Player;

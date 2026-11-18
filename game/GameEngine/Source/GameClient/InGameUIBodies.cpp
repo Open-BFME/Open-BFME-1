@@ -27,9 +27,9 @@
 // mangled names and nothing more -- no body here calls them through the table
 // -- so they are declared past the pinned run rather than given a number.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class Rva0043AAE0Noop
 {

@@ -26,10 +26,10 @@
 // -- findNonConstCommandSet is private and setControlCommand is public --
 // because the call sites name them the same way.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum { LOGICFRAMES_PER_SECOND = 5 };
 enum { MAX_COMMANDS_PER_SET = 20 };

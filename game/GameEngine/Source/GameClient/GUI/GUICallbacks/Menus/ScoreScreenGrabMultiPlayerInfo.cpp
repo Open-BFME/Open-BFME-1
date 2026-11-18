@@ -10,8 +10,8 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 

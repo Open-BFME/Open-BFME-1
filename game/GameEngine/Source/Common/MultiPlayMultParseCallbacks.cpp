@@ -41,8 +41,8 @@
 // The struct name and the setter names are this file's; the keywords, the
 // offsets, the bound and the array bases are the binary's.
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *, const char * );
 

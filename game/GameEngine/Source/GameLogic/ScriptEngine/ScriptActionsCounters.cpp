@@ -27,9 +27,9 @@ extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);
 #pragma intrinsic(memcmp)
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 class Player;

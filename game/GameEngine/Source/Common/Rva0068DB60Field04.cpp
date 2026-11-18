@@ -1,4 +1,4 @@
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva0068DB60
 {

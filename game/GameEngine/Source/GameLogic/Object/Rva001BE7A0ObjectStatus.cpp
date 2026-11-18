@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define OBJECT_TU_MEMBERS \
 	void Rva001BE7A0( Bool enable );

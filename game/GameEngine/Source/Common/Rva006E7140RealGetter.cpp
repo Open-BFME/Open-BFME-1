@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHs-c-
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva006E7140Owner
 {
