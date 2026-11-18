@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c- /Igame/Libraries/Source/WWVegas/WWLib
 // Lift the draw-callback window-file parser to clean C++.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *string, const char *separators);
 extern "C" unsigned int __cdecl strlen(const char *string);

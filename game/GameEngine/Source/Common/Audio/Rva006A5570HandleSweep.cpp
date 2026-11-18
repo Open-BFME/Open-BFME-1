@@ -8,8 +8,8 @@
 // address-derived class names; 0x006A5080 re-tests the identical predicate.
 // No caller, vtable slot or string proves a semantic name.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) Int __stdcall AIL_3D_sample_status(void *handle);
 

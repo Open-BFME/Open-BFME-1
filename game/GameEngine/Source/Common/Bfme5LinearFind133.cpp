@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // 0x00141520 133 bytes linear find - AsciiString vector search
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 #define NULL 0
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);

@@ -3,8 +3,8 @@
 // Methods run on this-0x20; the point table is at this+0x3DC with 40
 // Coord3D slots per condition index.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 #define NULL 0
 enum { GARRISON_INDEX_INVALID = -1 };
 

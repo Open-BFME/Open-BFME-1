@@ -11,9 +11,9 @@
 // BuffNuggetFXNugget::doFXObj (retail 0x0042D460), whose partial stash names
 // this method's own mangled symbol here.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 

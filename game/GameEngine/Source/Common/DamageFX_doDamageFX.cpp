@@ -5,8 +5,8 @@
 // The ActiveBody caller at 0x0020F240 passes the damage type, amount, source, and
 // victim, then tests AL. The four-level DFX records use a 0x40-byte type stride.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../Include/Common/Enums/DamageType.h"
 

@@ -11,8 +11,8 @@
 #include <math.h>
 #pragma intrinsic( tan )
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class INIException
 {

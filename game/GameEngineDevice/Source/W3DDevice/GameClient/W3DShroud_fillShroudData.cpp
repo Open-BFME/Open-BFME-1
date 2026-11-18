@@ -4,8 +4,8 @@
 // The reference W3DShroud::fillShroudData name and neighboring BFME methods
 // prove the field layout used here.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class GlobalData
 {

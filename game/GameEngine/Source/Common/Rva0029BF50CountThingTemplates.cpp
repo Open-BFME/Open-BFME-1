@@ -6,8 +6,8 @@
 // intentionally address-derived: the retail bytes prove the raw slot ABI and
 // node fields, but not a unique published class name.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class ThingTemplate
 {

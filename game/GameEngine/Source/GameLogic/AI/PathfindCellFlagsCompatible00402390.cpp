@@ -8,8 +8,8 @@
 // fields keep retail's separate shift/xor/test per bit, and the explicit
 // `return false` / `return true` tail keeps the shared early-fail block.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class PathfindCell
 {

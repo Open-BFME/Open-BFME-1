@@ -1,7 +1,7 @@
 // cl: /O2 /G6
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 

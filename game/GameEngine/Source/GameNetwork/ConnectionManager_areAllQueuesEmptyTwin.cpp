@@ -10,8 +10,8 @@
 // direct (non-virtual) Connection::isQueueEmpty(). Independent TU: does not
 // touch the landed native_connection_timing.cpp ConnectionManager class.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 #define TRUE 1
 #define FALSE 0
 

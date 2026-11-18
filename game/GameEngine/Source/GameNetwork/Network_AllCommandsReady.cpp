@@ -8,8 +8,8 @@
 // BFMEConnectionManager::areFrameCommandsComplete (0x006633E0). The connection
 // manager pointer the slow path uses lives at this+0x30, not this+0x08.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../Include/Common/Enums/NetLocalStatus.h"
 

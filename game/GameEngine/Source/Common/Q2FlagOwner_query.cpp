@@ -15,8 +15,8 @@
 // The pointer becomes a Bool through neg/sbb/neg, this compiler's spelling of
 // != 0, which is what makes the callers' test al,al a byte-wide truth value.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern void j_0000286a(void);
 

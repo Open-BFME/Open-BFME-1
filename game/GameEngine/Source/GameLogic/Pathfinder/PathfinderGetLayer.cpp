@@ -9,8 +9,8 @@
 // getGroundCell is only the ground-map subset of the layer-aware
 // Pathfinder::getCell(layer,x,y) contract; it is not a new exported identity.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D;
 

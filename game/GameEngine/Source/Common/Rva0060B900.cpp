@@ -8,8 +8,8 @@
 
 extern void j_00028c0e(void);
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct Rva0060B900Pair
 {

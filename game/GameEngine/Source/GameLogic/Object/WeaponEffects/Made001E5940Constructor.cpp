@@ -8,8 +8,8 @@
 // Field names stay offset-based because the matched parser proves ownership
 // and size, but not semantic names for the individual tail words.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

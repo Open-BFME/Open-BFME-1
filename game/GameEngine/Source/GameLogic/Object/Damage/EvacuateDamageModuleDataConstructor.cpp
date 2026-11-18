@@ -12,8 +12,8 @@
 //
 // Three fields follow: three at +0x0C, 0.1f at +0x10 and six at +0x14.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

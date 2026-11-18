@@ -12,8 +12,8 @@
 // ScriptConditionsTeamSighted_Rva00328020.cpp and ObjectCountNearbyEnemies.cpp
 // filters use.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

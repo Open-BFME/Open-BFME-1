@@ -4,8 +4,8 @@
 
 #include <vector>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeLegendStringVec
 {

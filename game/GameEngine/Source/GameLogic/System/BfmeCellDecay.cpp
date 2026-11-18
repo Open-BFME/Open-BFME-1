@@ -1,7 +1,7 @@
 // Byte-matched BFME cell-channel decay helper.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeCell
 {

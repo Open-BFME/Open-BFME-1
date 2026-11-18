@@ -3,8 +3,8 @@
 // recovered, so it carries an address-derived name. The layouts below are the
 // ones AIIdleState_update.cpp already uses for the same objects.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

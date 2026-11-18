@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/iniexception
 // Open-BFME5: TintDrawableFXNugget color field parser at retail 0x004276A0.
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 

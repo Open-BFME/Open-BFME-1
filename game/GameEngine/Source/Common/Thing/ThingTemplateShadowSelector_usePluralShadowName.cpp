@@ -13,8 +13,8 @@
 // vector of 36-byte shadow-layer entries; the retail predicate is true only
 // when the vector holds exactly one entry whose first field equals 2.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeThingTemplateShadowSelector
 {

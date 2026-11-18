@@ -7,8 +7,8 @@
 // the loop; it lands on the predicate at 0x00682DB0. FrameDataManager's body at
 // 0x006708C0 indexes the ring and forwards here.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class NetCommandMsg;
 Int CommandRequiresAck(NetCommandMsg *msg);

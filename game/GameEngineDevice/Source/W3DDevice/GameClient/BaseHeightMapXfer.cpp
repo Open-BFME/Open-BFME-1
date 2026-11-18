@@ -2,8 +2,8 @@
 // BaseHeightMapRenderObjClass::xfer, retail 0x006C8FF0.
 // BFME uses a different Xfer virtual order from the shared source headers.
 
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct BaseHeightMapXferVersion
 {

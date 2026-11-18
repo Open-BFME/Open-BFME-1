@@ -2,8 +2,8 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/matrix3d.h"
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #define g_rva01075350 0.0f
 

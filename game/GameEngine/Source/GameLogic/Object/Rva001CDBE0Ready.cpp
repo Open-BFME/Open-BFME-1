@@ -7,8 +7,8 @@
 // at +0x334 is the one ZH calls the safe-occlusion frame, but that identity is
 // not proven for BFME, so the member keeps its offset name.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum ObjectStatusTypes
 {

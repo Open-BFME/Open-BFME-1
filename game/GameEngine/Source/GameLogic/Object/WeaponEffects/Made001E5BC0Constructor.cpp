@@ -14,8 +14,8 @@
 // and to leave the vtable with pi among the immediates, which is the order
 // retail records.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class WeaponTemplate;
 

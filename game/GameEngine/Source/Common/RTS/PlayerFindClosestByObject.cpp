@@ -3,8 +3,8 @@
 // establish the search state and Player::iterateObjects callback protocol.
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <Int Bits> class BitFlags
 {

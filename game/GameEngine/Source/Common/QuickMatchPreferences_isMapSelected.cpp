@@ -2,8 +2,8 @@
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> struct StringInlineData
 {

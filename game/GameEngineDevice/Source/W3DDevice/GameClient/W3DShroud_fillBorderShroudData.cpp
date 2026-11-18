@@ -3,8 +3,8 @@
 // W3DShroud::fillBorderShroudData, retail 0x0071A5E0. Clamp the level to
 // GlobalData shroud-alpha, pack a pixel, lock the surface, flood-fill, unlock.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData

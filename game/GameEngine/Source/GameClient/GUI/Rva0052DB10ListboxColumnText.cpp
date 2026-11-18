@@ -10,8 +10,8 @@
 //
 // No caller names the body, so the name keeps the address.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class GameWindow;
 

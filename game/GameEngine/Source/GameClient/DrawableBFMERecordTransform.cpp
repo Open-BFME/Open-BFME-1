@@ -1,8 +1,8 @@
 // Byte-matched BFME Drawable transform-history update.
 // cl: /Igame/Libraries/Source/WWVegas/WWLib /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

@@ -9,8 +9,8 @@ struct Coord3D;
 class Object;
 class Weapon;
 class Rva003EEB50;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned char UByte;
 #include "../../Include/Common/Enums/PathfindLayerEnum.h"
 

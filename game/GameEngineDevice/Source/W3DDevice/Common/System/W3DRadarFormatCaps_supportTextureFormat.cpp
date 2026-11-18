@@ -11,8 +11,8 @@
 // The compare chain is MSVC's binary search over those five constants, not a
 // jump table: it tests 'DXT3' first and splits.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 enum WW3DFormat
 {

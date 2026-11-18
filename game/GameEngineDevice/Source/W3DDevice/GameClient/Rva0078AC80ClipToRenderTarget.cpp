@@ -7,8 +7,8 @@
 // would pass it.  Retail fetches the height too but compares both axes
 // against the width.  No named caller or owner: address-derived name.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "Lib/Coord2D.h"
 

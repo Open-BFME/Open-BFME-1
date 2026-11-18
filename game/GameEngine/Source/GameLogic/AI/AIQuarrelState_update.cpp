@@ -5,8 +5,8 @@
 // Constructor-owned vtable 0x00C98470 slot 6 -> ILT 0x00004E30 -> this body.
 // Slot 2 is the literal name getter for "AIQuarrelState".
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt ObjectID;
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
