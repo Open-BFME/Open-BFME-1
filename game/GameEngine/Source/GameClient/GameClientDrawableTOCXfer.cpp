@@ -12,8 +12,8 @@
 #include "ascii_string.h"
 #include "xfer.h"
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Overridable
 {

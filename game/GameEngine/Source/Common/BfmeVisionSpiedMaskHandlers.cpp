@@ -3,8 +3,8 @@
 // partition cell, then maintain the per-player reference bit selected by the
 // retail player-index table.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class BfmeVisionPartition
 {

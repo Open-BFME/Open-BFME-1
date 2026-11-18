@@ -6,8 +6,8 @@
 // inlines the word-at-+4 / text-at-+8 payload, and getReplayExtention is
 // static (no TheRecorder reload).
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 extern const unsigned short BFMEEmptyUnicodeString;

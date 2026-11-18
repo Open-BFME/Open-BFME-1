@@ -19,9 +19,9 @@
 // Declared locally: the real GameNetwork/NetCommandRef.h derives the class from
 // MemoryPoolObject, and any file under inputs/reference/shims/ forces the full gate.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandMsg.h
 class NetCommandMsg

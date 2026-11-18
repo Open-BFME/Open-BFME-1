@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?drawWindow@GameWindowManager@@IAEHPAVGameWindow@@@Z: game/GameEngine/Source/GameClient/GUI/GameWindowManager.cpp
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum
 {

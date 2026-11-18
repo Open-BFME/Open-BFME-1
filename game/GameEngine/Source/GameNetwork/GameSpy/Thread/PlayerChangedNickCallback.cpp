@@ -36,8 +36,8 @@ public:
 };
 
 typedef void *PEER;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum RoomType
 {

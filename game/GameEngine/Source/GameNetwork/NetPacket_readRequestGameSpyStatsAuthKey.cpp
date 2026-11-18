@@ -6,8 +6,8 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class NetCommandMsg
 {

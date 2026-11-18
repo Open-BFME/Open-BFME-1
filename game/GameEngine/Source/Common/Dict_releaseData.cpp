@@ -16,9 +16,9 @@
 
 extern "C" __declspec(dllimport) void __cdecl free(void *memblock);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../Include/Common/NameKeyType.h"
 

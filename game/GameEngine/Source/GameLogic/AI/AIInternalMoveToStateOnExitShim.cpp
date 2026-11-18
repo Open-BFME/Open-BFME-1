@@ -4,8 +4,8 @@
 // The incremental-link name for this body is kept as a TU-local shim because
 // the surviving Zero Hour base method is still the ILT at 0x00029311.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int AudioHandle;
 
 enum StateExitType

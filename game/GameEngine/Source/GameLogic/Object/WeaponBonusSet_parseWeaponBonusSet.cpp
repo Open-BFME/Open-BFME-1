@@ -11,8 +11,8 @@
 // DAMAGE, RADIUS, RANGE, RATE_OF_FIRE, PRE_ATTACK, FIRING. The same layout
 // is matched in WeaponBonusSet_bfmeApplyBonuses.cpp.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef const char *const *ConstCharPtrArray;
 
 // upstream: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h

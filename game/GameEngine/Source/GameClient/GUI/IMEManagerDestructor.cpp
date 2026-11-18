@@ -9,8 +9,8 @@
 
 #include "unicode_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // Keep the array form visible so MSVC emits the retail operator delete[]
 // target (0x00881EF0), rather than folding this array cleanup onto scalar

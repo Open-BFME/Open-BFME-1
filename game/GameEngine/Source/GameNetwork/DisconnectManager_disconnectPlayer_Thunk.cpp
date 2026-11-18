@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?disconnectPlayer@DisconnectManager@@IAEXHPAVConnectionManager@@@Z: game/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class UnicodeString;
 

@@ -3,8 +3,8 @@
 // GiantBirdNormalFlightState::onExit.  The BFME state clears its two
 // flight-related model-condition bits before rebuilding the ground goal.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum StateExitType
 {

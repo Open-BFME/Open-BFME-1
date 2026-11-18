@@ -7,9 +7,9 @@
 #include <vector>
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

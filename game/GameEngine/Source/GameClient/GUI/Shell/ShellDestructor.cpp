@@ -2,8 +2,8 @@
 // readable body of ??1Shell@@UAE@XZ: game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME: Shell::~Shell, retail 0x0057F7A0, 253 bytes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

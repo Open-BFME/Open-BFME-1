@@ -8,8 +8,8 @@
 #define getSystemID getSystemID_LocalView
 #include <string.h>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int size_t;
 
 enum ParticleSystemID

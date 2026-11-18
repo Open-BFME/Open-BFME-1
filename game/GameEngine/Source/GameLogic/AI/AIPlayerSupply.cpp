@@ -41,9 +41,9 @@
 // m_player, because VC7 otherwise folds the loop's address calculation into a
 // shorter form than retail's.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 enum GameDifficulty { DIFFICULTY_EASY, DIFFICULTY_NORMAL, DIFFICULTY_HARD };

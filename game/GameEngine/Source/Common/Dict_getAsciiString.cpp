@@ -2,9 +2,9 @@
 // readable body of ?getAsciiString@Dict@@: game/GameEngine/Source/Common/Dict.cpp
 // Open-BFME: Dict::getAsciiString, retail 0x00068580, 96 bytes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../Include/Common/NameKeyType.h"
 

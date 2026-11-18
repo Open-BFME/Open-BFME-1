@@ -16,8 +16,8 @@
 // the real at +0x0C, the string at +0x10 and the coordinate at +0x14 through
 // +0x1C.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" unsigned int __cdecl strlen(const char *);
 

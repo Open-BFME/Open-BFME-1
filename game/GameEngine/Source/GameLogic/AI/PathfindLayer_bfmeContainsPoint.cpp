@@ -4,9 +4,9 @@
 // 0x003FC300. The second layer owner at +0x3C is a PolygonTrigger chain;
 // each point component is truncated to an integer before the chain is tested.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

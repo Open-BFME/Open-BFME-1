@@ -17,8 +17,8 @@
 // colour at +0x164, and the colour comes from the object when the caller passes
 // no RGBColor.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt Color;
 
 class AsciiString;

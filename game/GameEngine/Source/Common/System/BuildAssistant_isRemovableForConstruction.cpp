@@ -9,8 +9,8 @@
 // +0x344.  These are the BFME offsets; the vendored Zero Hour headers use a
 // different Object layout and cannot be included for this leaf body.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType
 {

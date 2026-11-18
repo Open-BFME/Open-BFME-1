@@ -1,8 +1,8 @@
 // ?attachSlotList@NAT@@QAEXPAPAVGameSlot@@HI@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 

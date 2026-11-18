@@ -3,9 +3,9 @@
 // the Zero Hour relationship comparison and resolves contained buildings via
 // their apparent controlling player.
 
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Player
 {

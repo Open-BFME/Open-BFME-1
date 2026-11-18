@@ -8,8 +8,8 @@
 // +0x0c, and m_nextAndCondition is +0x3c.  The matched constructor at
 // 0x00357CC0 proves the 0x4c allocation and the inline constructor stores.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

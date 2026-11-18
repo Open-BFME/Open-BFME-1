@@ -13,8 +13,8 @@
 // which is what a single loop over both gives. The list end is re-read from
 // this on every trip, so this is spilled to the frame across the calls.
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeShadowPartNode;
 

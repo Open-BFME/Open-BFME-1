@@ -16,8 +16,8 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 class GameFont;

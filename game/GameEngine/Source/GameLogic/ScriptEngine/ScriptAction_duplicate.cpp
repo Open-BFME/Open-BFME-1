@@ -6,8 +6,8 @@
 // inline default construction of linked nodes, and the +0x44 tail are the
 // BFME layout (the reference header stops at m_hasWarnings).
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

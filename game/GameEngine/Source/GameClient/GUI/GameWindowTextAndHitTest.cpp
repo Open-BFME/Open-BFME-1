@@ -16,8 +16,8 @@
 //   +0x04 callback   +0x08 status   +0x0c size   +0x14 region
 //   +0x30 instance data              +0x1f8 next/prev/parent/child
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

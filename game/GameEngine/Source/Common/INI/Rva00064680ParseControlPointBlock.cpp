@@ -10,8 +10,8 @@
 // record is handed with the instance to the callback the userData argument
 // carries.  Address-derived names.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct FieldParse;
 

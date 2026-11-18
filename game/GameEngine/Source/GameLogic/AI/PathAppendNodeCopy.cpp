@@ -1,9 +1,9 @@
 // Clone a PathNode onto the tail of a Path. BFME carries the waypoint ID into
 // the clone and maintains both the ordinary and optimized links.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

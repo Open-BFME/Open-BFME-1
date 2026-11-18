@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Thing;
 class ModuleData;

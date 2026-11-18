@@ -13,8 +13,8 @@
 #include <stddef.h>
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
-typedef float Real;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 void *operator new( size_t bytes );

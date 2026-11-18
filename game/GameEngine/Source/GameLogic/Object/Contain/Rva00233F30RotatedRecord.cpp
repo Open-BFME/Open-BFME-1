@@ -18,8 +18,8 @@
 #include <vector>
 // BFME's Coord2D, as Rva00233F30RotatedOffset.cpp sees it.
 #include "coord2d.h"
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // landed: game/GameEngine/Source/GameLogic/Object/Contain/Rva00233F30RotatedOffset.cpp
 struct Rva00233F30Offset
