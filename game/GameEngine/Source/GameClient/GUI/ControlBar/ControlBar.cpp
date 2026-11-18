@@ -1031,6 +1031,7 @@ void ControlBarPopupDescriptionUpdateFunc( WindowLayout *layout, void *param );
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarInitThunk.cpp
 // ?init@ControlBar@@UAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x004A0F70 is ControlBarInit.cpp
 void ControlBar::init( void )
 {
 	INI ini;
@@ -1271,6 +1272,7 @@ void ControlBar::init( void )
 	}
 
 }  // end init
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** Reset the context sensitive control bar GUI */
@@ -3255,6 +3257,7 @@ void ControlBar::updateCommandMarkerImage( const Image *image )
 }
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateSlotExitImageThunk.cpp
 // ?updateSlotExitImage@ControlBar@@QAEXPBVImage@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x004AEE00 is ControlBarUpdateSlotExitImageThunk.cpp
 void ControlBar::updateSlotExitImage( const Image *image )
 {
 	//Hardcoding values here Not a good thing but there's no other way right now.
@@ -3287,6 +3290,7 @@ void ControlBar::updateSlotExitImage( const Image *image )
 		cmdButton->setButtonImage(image);
 
 }
+#endif
 
 // Retail places the final two image fields at +0x2c0/+0x2c4.  The shared ZH
 // ControlBar declaration places them at +0x300/+0x304, so keep this BFME

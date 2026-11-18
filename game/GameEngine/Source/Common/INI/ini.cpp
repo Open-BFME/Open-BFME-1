@@ -336,6 +336,7 @@ Bool INI::isValidINIFilename( const char *filename )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/INI/INIPrepFileThunk.cpp
 // ?prepFile@INI@@IAEXVAsciiString@@W4INILoadType@@@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00853610 is INIPrepFileThunk.cpp
 void INI::prepFile( AsciiString filename, INILoadType loadType )
 {
 	// if we have a file open already -- we can't do another one
@@ -365,6 +366,7 @@ void INI::prepFile( AsciiString filename, INILoadType loadType )
 	// save our load time
 	m_loadType = loadType;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

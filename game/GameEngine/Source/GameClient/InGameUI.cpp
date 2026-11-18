@@ -7361,6 +7361,7 @@ void InGameUI::createControlBar( void )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/InGameUICreateReplayControlThunk.cpp
 // ?createReplayControl@InGameUI@@IAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00440B40 is InGameUICreateReplayControlThunk.cpp
 void InGameUI::createReplayControl( void )
 {
 
@@ -7374,6 +7375,7 @@ void InGameUI::createReplayControl( void )
 */
 
 }  // end createReplayControl
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // InGameUI::playMovie

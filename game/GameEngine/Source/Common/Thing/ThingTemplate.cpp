@@ -927,6 +927,7 @@ void ThingTemplate::parseMaxSimultaneous(INI *ini, void *instance, void *store, 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ??0ThingTemplate@@QAE@XZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00147600 is ThingTemplateConstructor.cpp
 ThingTemplate::ThingTemplate() :
 	m_geometryInfo(GEOMETRY_SPHERE, FALSE, 1, 1, 1)
 {
@@ -989,6 +990,7 @@ ThingTemplate::ThingTemplate() :
 	m_crushableLevel = 255; //Unspecified, this object is unable to be crushed by anything!
 
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 AIUpdateModuleData *ThingTemplate::friend_getAIModuleInfo(void)

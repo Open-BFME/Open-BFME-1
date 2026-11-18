@@ -1625,6 +1625,7 @@ extern Int GetAdditionalDisconnectsFromUserFile(Int playerID);
 
 // byte-exact reconstruction: game/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@GameSpyLoadScreen@@ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x00493120 is LoadScreenInit.cpp
 void GameSpyLoadScreen::init( GameInfo *game )
 {
 	// create the layout of the load screen
@@ -1900,6 +1901,7 @@ GameSlot *lSlot = game->getSlot(game->getLocalSlotNum());
 
 	TheGameLogic->initTimeOutValues();
 }
+#endif
 
 // ?reset@GameSpyLoadScreen@@ present-unmatched
 void GameSpyLoadScreen::reset( void )

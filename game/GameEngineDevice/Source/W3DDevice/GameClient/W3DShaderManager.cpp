@@ -1926,6 +1926,7 @@ void TerrainShader2Stage::updateNoise2(D3DXMATRIX *destMatrix,D3DXMATRIX *curVie
 }
 
 // ?set@TerrainShader2Stage@@UAEHH@Z present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x007DD180 is TerrainShader2StageSet.cpp
 Int TerrainShader2Stage::set(Int pass)																											  
 {
 	//force WW3D2 system to set it's states so it won't later overwrite our custom settings.
@@ -2073,6 +2074,7 @@ Int TerrainShader2Stage::set(Int pass)
 
 	return TRUE;
 }
+#endif
 
 Int TerrainShader8Stage::init( void )
 {	

@@ -668,6 +668,7 @@ GameLogic::~GameLogic()
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/System/GameLogicInitThunk.cpp
 // ?init@GameLogic@@UAEXXZ present-unmatched
+#if 0 // non-retail Zero Hour copy; retail 0x0038A1F0 is GameLogicInit.cpp
 void GameLogic::init( void )
 {
 
@@ -724,6 +725,7 @@ void GameLogic::init( void )
 
 	m_rankPointsToAddAtGameStart = 0;
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** Reset the game logic systems */
