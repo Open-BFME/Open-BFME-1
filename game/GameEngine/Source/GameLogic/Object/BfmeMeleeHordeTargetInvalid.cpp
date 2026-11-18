@@ -1,8 +1,8 @@
 // Retail 0x00175820: BFME melee-horde target predicate.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const Real g_rva01075350;
 

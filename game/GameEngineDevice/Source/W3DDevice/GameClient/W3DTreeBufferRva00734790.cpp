@@ -2,9 +2,9 @@
 // W3DTreeBuffer method at retail 0x00734790: counts a tree's +0xD4 countdown down, forwards the remaining
 // share to its two render objects, and removes the tree once the count ends or the tree is flagged.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // The matched opacity walker takes the float payload as one raw int slot.
 unsigned char Rva00739900Forward(void *object, volatile int value);

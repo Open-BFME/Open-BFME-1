@@ -3,9 +3,9 @@
 // The retail caller and the attack-priority helpers identify this body as
 // ScriptEngine::setPriorityKind at retail RVA 0x00340DC0.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

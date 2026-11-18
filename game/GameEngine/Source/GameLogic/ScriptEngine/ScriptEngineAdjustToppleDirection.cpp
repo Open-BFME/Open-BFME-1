@@ -4,10 +4,10 @@
 // 198 bytes.
 
 #define _STLP_NO_EXCEPTIONS 1
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord3D
 {

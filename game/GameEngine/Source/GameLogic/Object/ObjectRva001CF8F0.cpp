@@ -7,9 +7,9 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" void *memset(void *destination, int value, unsigned int size);
 

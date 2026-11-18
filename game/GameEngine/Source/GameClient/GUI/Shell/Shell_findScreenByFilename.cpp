@@ -2,9 +2,9 @@
 // stlport
 // readable body of ?findScreenByFilename@Shell@@QAEPAVWindowLayout@@VAsciiString@@@Z: game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 #define NULL 0
 
 template <typename T>

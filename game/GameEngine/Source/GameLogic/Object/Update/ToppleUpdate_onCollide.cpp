@@ -9,10 +9,10 @@
 // BFME compares the incoming crusher against the owner's runtime crushable level,
 // then uses the colliding object's preferred locomotor height as topple speed.
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern const Real g_rva01075350;
 

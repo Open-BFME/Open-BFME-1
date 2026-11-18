@@ -9,9 +9,9 @@
 #include <math.h>
 #include <stdlib.h>
 
-typedef int Int;
-typedef float Real;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

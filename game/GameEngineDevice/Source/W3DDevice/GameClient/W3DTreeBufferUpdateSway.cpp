@@ -2,9 +2,9 @@
 // Readable body of ?updateSway@W3DTreeBuffer@@IAEXABUBreezeInfo@@@Z.
 // Retail stores the BFME tree buffer fields at the offsets below.
 
-typedef int Int;
-typedef short Short;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct BreezeInfo
 {

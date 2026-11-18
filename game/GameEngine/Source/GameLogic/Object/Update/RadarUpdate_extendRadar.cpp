@@ -4,9 +4,9 @@
 // setModelConditionState against the flags dword at +0x118 (bit 10) then
 // stamps the done-frame as unsigned-int + module-data Real, via __ftol2.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ModelConditionFlagType
 {

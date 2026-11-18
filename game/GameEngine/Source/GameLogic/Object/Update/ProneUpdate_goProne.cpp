@@ -11,9 +11,9 @@
 // truncated back. Retail computes the was-prone test before any of it, which is
 // what reading m_proneFrames into a local first compiles to.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo

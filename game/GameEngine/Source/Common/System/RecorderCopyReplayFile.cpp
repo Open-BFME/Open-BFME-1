@@ -14,9 +14,9 @@ extern "C" __declspec(dllimport) int __cdecl fclose(FILE *stream);
 extern "C" __declspec(dllimport) int __cdecl fwprintf(FILE *stream, const wchar_t *format, ...);
 extern "C" __declspec(dllimport) unsigned short __cdecl fputwc(unsigned short ch, FILE *stream);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 static const Int MAX_REPLAY_FILE_NUMBER = 99999999;

@@ -6,9 +6,9 @@
 // goal to each of its eight neighbours at attack range (at least 150) and
 // reports whether any walk set the context's found flag. No Zero Hour twin;
 // the method keeps an address-derived name.
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "Lib/Coord3D.h"
 

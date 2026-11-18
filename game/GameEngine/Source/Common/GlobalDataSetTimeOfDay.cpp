@@ -15,9 +15,9 @@
 // (NONE MORNING AFTERNOON EVENING NIGHT INTERPOLATE, name table 0x012A9FE0),
 // so TIME_OF_DAY_COUNT is 6 and m_terrainLighting is [6][3].
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 #define TRUE 1
 #define FALSE 0
 

@@ -2,9 +2,9 @@
 // TBuff::xfer at retail 0x006DBD00. Vtable 0x0111E134 slot 3 selects this
 // body, and slot 2 at 0x006DAC30 returns the identifying name "TBuff".
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersion
 {

@@ -2,9 +2,9 @@
 // Retail 0x002C3FE0 (332 B, thiscall, ret 8): reached only through ILT 0x0002A991 from 0x002C3E00, which pushes a Coord3D* and a float and tests AL.
 // Returns false when the terrain height or the nearest kind 7/10/11 object's top within the owner's geometry radius exceeds the given height.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

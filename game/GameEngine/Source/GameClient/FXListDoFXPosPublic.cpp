@@ -5,9 +5,9 @@
 // gates on the primary position; each nugget is asked isVisible(0, 0) before
 // the four-arg doFXPos virtual.  ret 0x10.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../Libraries/Include/Lib/Coord3D.h"

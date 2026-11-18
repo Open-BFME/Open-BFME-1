@@ -9,10 +9,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMask;
-typedef bool Bool;
-typedef int Int;
+
+
 
 class BfmeFlags
 {

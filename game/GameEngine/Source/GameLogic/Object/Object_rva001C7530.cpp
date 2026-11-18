@@ -17,9 +17,9 @@
 // retail's aligned top-tested header and unconditional back edge, where a
 // while/for loop gets its header test duplicated at the bottom.
 
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const Real g_rva01075350;
 

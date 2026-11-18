@@ -4,9 +4,9 @@
 #include <windows.h>
 #include <string.h>
 
-typedef bool Bool;
-typedef char Char;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 // BFME retail AsciiString is the one-pointer value type backed by an
 // eight-byte StringBase header: ref_count, length, capacity, then data.

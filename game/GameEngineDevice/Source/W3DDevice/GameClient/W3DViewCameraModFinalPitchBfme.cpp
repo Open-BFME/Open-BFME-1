@@ -2,9 +2,9 @@
 // The W3DView vtable at 0x011217A0 maps slot 33 to this body. Its call through
 // vtable slot +0xF0 matches pitchCamera, while cameraModFinalZoom calls +0xE8.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

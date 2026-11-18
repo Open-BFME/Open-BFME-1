@@ -1,7 +1,7 @@
 // cl: /Igame/Libraries/Source/WWVegas/WWLib
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #define Rva006F7DA0ZeroRange 0.0f
 #define Rva006F7DA0One 1.0f

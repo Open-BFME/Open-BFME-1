@@ -5,9 +5,9 @@
 // the independently named findLevel(const AsciiString &) member; the rest of
 // the body is the same level-application tail as retail 0x00380510.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

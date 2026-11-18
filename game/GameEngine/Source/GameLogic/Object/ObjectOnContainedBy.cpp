@@ -6,9 +6,9 @@
 // preserves the retail fields and the virtual getStatus slot used here.
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ObjectStatusTypes
 {

@@ -11,9 +11,9 @@
 // with ECX=this and one byte argument. Its target at 0x00267B10 returns with ret 4.
 // The call names the ledger's exact ILT entry and keeps its unsigned-byte ABI.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

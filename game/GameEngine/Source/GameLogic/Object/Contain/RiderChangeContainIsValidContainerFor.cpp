@@ -2,9 +2,9 @@
 // Open-BFME: RiderChangeContain::isValidContainerFor at retail RVA 0x0022A690.
 // This source uses the adjusted containment pointer passed by the retail body.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum Relationship
 {

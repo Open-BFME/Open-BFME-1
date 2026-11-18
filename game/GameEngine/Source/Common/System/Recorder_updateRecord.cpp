@@ -6,9 +6,9 @@
 struct _iobuf;
 typedef _iobuf FILE;
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) int __cdecl fclose(FILE *file);
 extern "C" __declspec(dllimport) int __cdecl fflush(FILE *file);

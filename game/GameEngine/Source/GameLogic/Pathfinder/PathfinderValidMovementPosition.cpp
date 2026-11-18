@@ -11,10 +11,10 @@
 // using the moving object's template and player properties.  The views below
 // name only fields and methods exercised by this retail body.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

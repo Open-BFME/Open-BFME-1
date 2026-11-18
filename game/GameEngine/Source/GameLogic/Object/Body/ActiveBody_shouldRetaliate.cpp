@@ -7,9 +7,9 @@
 // layout is represented locally because the retail object puts the template,
 // status words, and AI pointer at offsets different from the ZH headers.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Overridable
 {

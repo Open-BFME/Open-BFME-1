@@ -1,9 +1,9 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
 // ScriptEngine::didUnitExist, retail 0x0034CA90, 165 bytes.
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)

@@ -4,9 +4,9 @@
 // WIN_ANIMATION_SLIDE_LEFT; the class layout and method contract come from the
 // original ProcessAnimateWindow header.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

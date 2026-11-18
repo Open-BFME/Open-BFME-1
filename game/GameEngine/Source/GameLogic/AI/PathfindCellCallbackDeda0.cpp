@@ -29,9 +29,9 @@
 //
 // No /EHsc: retail registers no handler for the body.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 // Declared as PathfinderClearCellForDiameter.cpp defines the 0x003DC810 body.
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

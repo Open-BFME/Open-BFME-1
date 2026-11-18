@@ -12,9 +12,9 @@
 #include <map>
 #include <string.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 template <typename T>
 class StringBase

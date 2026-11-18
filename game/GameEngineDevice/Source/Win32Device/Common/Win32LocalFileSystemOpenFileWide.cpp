@@ -2,9 +2,9 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef char Char;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // BFME's AsciiString buffer has a 16-bit length at +4 and text at +8.  The
 // visible inline-forwarding base is also what gives MSVC 7.1 retail's local

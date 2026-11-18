@@ -19,9 +19,9 @@
 
 extern "C" __declspec(dllimport) double __cdecl floor( double );
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const float g_rva01075350;		// VA 0x01075350, 0.0f
 

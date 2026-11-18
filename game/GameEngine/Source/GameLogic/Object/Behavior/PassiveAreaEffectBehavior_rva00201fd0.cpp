@@ -8,10 +8,10 @@
 // BodyModuleInterface slot +0x18 is maximum health, as also used by the
 // matched GarrisonContain::healSingleObject and Object damage/healing paths.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef UnsignedInt ObjectID;
-typedef float Real;
-typedef bool Bool;
+
+
 
 extern const Real g_rva01075350;
 

@@ -6,9 +6,9 @@
 
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

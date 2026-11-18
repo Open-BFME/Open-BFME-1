@@ -8,9 +8,9 @@
 // argument -- and Zero Hour declares getPlayerName straight after, which is what
 // slot 39 turns out to be (0x006826C0).
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // BFME's enum: quitGame (0x006822E0) parks 3 in this field, and this body tests
 // it against 1 alone where Zero Hour tests INGAME or LEAVING.

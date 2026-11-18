@@ -3,9 +3,9 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class GameMessage
 {

@@ -4,9 +4,9 @@
 // Union members model reuse of both argument slots after their inputs die.
 // The volatile integer store preserves the retail x87 conversion spill.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 

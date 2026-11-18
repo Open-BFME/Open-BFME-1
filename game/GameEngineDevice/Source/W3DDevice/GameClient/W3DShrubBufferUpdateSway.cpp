@@ -14,10 +14,10 @@
 // The retail shrub records use a 0xa4-byte stride and the buffer keeps the sway
 // arrays at the offsets below.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef short Short;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct BreezeInfo

@@ -4,9 +4,9 @@
 // match the canonical WorldBuilder map writer: location, angle, flags, name,
 // and the object's property dictionary.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

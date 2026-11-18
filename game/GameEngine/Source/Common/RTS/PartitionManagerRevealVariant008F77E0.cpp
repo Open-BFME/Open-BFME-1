@@ -13,9 +13,9 @@
 // m_impl@0xC) matches ShroudManagerImpl/PartitionManager exactly;
 // the retail call target is ledger-matched as BfmeOwnerXO::bfmeSendXO.
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 extern "C" __declspec(dllimport) double __cdecl floor(double value);

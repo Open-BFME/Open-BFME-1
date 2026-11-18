@@ -6,9 +6,9 @@
 #define _STLP_USE_OWN_NAMESPACE 1
 #include <set>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class AsciiString
 {

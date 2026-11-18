@@ -7,9 +7,9 @@
 // under 60 client frames old.  The method keeps the caller's address-derived
 // pin until the renamed identity is settled.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Spelled as the landed caller (CommandXlat.cpp) spells it, so the decorated
 // name is the pinned ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z.

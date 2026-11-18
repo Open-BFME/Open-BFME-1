@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersion
 {
