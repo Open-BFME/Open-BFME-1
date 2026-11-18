@@ -10,10 +10,10 @@ extern void j_0000ba50();
 typedef unsigned int UnsignedInt;
 typedef unsigned short PlayerMaskType;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 enum ModelConditionFlagType
 {

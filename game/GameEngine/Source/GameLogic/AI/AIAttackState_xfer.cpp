@@ -19,10 +19,10 @@ struct XferVersion
 
 class Object;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class Xfer
 {

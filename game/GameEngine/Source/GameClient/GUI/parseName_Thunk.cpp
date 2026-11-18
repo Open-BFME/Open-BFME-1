@@ -45,10 +45,10 @@ public:
 // routes to the matched body at 0x0008FFC0, whose mangled name is
 // ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (W4 = enum return).
 // NameKeyType is an enum here, not a typedef of int.
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

@@ -41,7 +41,7 @@ public:
 // copy at VA 0x010A6568. Address-named per the owner rulings of 2026-10-09.
 extern const float g_Va010C0904;
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class UpdateModule
 {

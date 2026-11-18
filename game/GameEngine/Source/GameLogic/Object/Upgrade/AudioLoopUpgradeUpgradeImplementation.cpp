@@ -13,10 +13,10 @@ struct AudioEventInfoRef
 	void *ptr;
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 // Audio/AudioEventRTSCopyAndLifetime.cpp defines the scalar destructor
 // (??1AudioEventRTS@@QAE@XZ, retail 0x000B31F0); the virtual one at 0x000CFA40

@@ -40,10 +40,10 @@ enum
 	GBM_SELECTED = 0x4008
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

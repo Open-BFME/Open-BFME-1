@@ -5,7 +5,7 @@
 template<int N> class BitFlags { public: enum Init { kInit }; BitFlags(Init,int bit) { bits.set(bit); } _STL::bitset<N> bits; };
 class Drawable { friend class FlameCleanup00293E50; private: void applyPendingModelConditionFlags(bool); };
 class Module;
-enum NameKeyType { KEY_NONE=0 };
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 #define OBJECT_TU_MEMBERS void setStatus(const BitFlags<86>&,bool); void notifyModelConditionChanged(); friend class FlameCleanup00293E50; protected: Module* findModule(NameKeyType) const; public:

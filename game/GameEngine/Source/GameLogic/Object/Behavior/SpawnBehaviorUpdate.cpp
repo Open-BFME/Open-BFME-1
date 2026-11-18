@@ -20,11 +20,11 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0,
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 template <int NUMBITS>
 class BitFlags

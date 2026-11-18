@@ -21,7 +21,7 @@
 
 typedef int Int;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/DamageFX.h
 class DamageFX

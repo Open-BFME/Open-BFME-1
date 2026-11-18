@@ -34,3 +34,6 @@ Useful diagnostics are preserved locally under
 W:/OpenBFME/diagnostics/continue-20261118-fivehundred/:
 batch-103-commit-initial-refusal.log and blocked-broad-enum-factoring.patch.txt.
 No crash, memory, FPS, linked-byte or runtime result follows from this trial.
+
+The exact withdrawn eight-header delta is preserved beside this note as
+20261118-shared-enum-provider-context.patch.json (base64, decoded SHA256 5ef2eee69b0a5b35e2b80cdb0142b37539e7ed55ed663892f8ae191efc5e4bc5).

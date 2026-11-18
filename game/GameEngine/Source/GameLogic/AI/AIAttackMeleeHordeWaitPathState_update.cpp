@@ -22,10 +22,10 @@ enum KindOfType
 	KINDOF_MELEE_HORDE_TARGET = 92
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 enum ObjectID
 {

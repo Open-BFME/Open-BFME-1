@@ -28,10 +28,10 @@ public:
     }
 };
 
-enum UpdateSleepTime
-{
-    UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class PB_DeepBase
 {

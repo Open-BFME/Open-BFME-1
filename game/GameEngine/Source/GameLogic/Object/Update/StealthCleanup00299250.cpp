@@ -8,7 +8,7 @@ public:
  ~AudioEventRTS();
  void* vtable; char data[108];
 };
-enum NameKeyType { INVALID_NAME=0 };
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 class StealthUpdate { public: char pad00[0x2d]; bool at2d; };

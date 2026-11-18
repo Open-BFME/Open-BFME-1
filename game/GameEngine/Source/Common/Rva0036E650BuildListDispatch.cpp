@@ -14,10 +14,10 @@
 
 typedef int Int;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0, NAMEKEY_MIN = (-2147483647 - 1), NAMEKEY_MAX = 2147483647
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

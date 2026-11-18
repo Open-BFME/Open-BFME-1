@@ -13,7 +13,7 @@
 // 3A279 -> logic thunk 383930 (Object*, int). No new pins are required.
 // clearStatus uses the corrected 00162CD0 identity, not its old model-condition
 // alias. CastleBehavior and Object+0x258 have no witnessed member names.
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum KindOfType { KINDOF_00373220_98=0x98, KINDOF_00373220_67=0x67, KINDOF_00373220_95=0x95 };
 enum ObjectStatusTypes { OBJECT_STATUS_00373220_5=5 };
 class Player;

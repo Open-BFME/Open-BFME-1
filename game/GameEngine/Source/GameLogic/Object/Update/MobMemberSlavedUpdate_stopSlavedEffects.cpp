@@ -10,10 +10,10 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef int Int;
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 enum MobStates
 {

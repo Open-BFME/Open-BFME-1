@@ -74,11 +74,11 @@ public:
 	void addPublicBone( const AsciiString &boneName ) const;
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

@@ -11,10 +11,10 @@ enum WeaponSlotType
 	PRIMARY_WEAPON = 0
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Weapon;
 class WeaponTemplate;

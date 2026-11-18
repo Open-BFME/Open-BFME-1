@@ -34,7 +34,7 @@ struct Rva003720F0Context
 // The retail object is AudioEventRTS (0x70B). Its outlined ObjectID
 // constructor is a distinct compiled variant, reached through ILT 0x00008E86.
 #include "ascii_string.h"
-enum ObjectID { INVALID_ID = 0 };
+#include "../../Include/Common/ObjectID.h"
 class AudioEventRTS
 {
 public:

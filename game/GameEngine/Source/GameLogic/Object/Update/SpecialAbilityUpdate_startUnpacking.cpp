@@ -18,7 +18,7 @@ template<int N> class BitFlags { _STL::bitset<N> bits; public:
 };
 class Object; class Module;
 enum KindOfType { DummyKind002A8CE0 };
-enum NameKeyType { NAMEKEY_NONE };
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 class GameLogic { public: Object* findObjectByID(int); };

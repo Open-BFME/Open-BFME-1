@@ -6,12 +6,12 @@
 // original names of the behavior floats at +0xf4/+0xf8 remain unproven.
 // Completion clears Object model-condition bit 0x10 and sleeps forever.
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0,
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
+
 
 class Object
 {

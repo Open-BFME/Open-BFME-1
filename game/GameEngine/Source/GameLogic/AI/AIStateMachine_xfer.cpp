@@ -8,7 +8,7 @@
 
 struct Coord3DBase { float x, y, z; };
 struct Coord3D : Coord3DBase {};
-enum ObjectID { INVALID_OBJECT_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 
 struct XferVersion : Xfer::Version
 {

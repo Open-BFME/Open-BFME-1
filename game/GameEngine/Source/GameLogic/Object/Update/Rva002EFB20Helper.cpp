@@ -25,7 +25,7 @@
 // set) or the flame-cleanup apply (flag clear). Both are void members reached
 // on the same pointer, so they are spelled as two casts.
 
-enum NameKeyType { };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/NameKeyGenerator.h
 class NameKeyGenerator

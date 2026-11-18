@@ -4,7 +4,7 @@ typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
 class ModuleData;
-enum UpdateSleepTime { UPDATE_SLEEP_DUMMY };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 enum KindOfType { KINDOF_HULK = 81 };
 
 int GetGameLogicRandomValue(int, int, char *, int);

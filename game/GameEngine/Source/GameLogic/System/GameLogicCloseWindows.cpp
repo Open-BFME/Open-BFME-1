@@ -8,7 +8,7 @@
 // Identity: the ILT thunk callers are ScriptActions::doVictory, doDefeat and
 // doLocalDefeat, the Zero Hour callers of TheGameLogic->closeWindows().
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 typedef unsigned int WindowMsgData;
 enum { GBM_SELECTED = 0x4008 };
 

@@ -105,10 +105,10 @@ private:
 	WideChar *m_data;
 };
 
-enum NameKeyType
-{
-	NAMEKEY_UNKNOWN
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class StaticNameKey
 {

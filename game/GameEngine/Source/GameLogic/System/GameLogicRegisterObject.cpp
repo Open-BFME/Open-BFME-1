@@ -16,10 +16,10 @@
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class UpdateModuleInterface
 {

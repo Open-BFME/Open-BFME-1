@@ -135,10 +135,10 @@ public:
 	const WeaponTemplate *m_deathWeapon;
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class UpdateModule
 {

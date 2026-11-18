@@ -10,10 +10,10 @@
 typedef int Int;
 typedef bool Bool;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 // The slot-name temporary copies and releases the native base storage.
 inline UnicodeString::UnicodeString() : m_text(0) {}

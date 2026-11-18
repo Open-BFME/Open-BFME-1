@@ -13,9 +13,9 @@
 // line through the ILT at 0x000060CD (body 0x000953E0), and the teardown is
 // inlined: the old block goes straight back to the allocator pair.
 
-enum ObjectID
-{
-};
+#include "../../Include/Common/ObjectID.h"
+
+
 
 void j_000060cd();
 

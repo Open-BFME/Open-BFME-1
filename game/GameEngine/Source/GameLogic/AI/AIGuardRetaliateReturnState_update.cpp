@@ -7,10 +7,10 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 enum StateReturnType
 {

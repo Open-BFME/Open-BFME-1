@@ -18,7 +18,7 @@
 
 #define NULL 0
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 enum BodyDamageType { BODY_PRISTINE = 0 };

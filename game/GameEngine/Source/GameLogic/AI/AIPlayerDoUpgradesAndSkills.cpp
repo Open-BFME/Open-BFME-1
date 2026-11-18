@@ -14,7 +14,7 @@ template<class T> inline void StringBase<T>::concat(T c) { concat(&c,1); }
 typedef int Int;
 typedef bool Bool;
 enum ScienceType {};
-enum NameKeyType {};
+#include "../../../Include/Common/NameKeyType.h"
 class Player {
  char pad00[0x20]; NameKeyType m_playerNameKey; char pad24[4]; AsciiString m_side;
  char pad2c[0x264-0x2c]; int m_sciencePurchasePoints;

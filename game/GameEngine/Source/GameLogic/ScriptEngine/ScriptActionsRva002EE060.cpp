@@ -21,7 +21,7 @@
 // (+0x68).
 typedef int Int;
 typedef float Real;
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 class AsciiString;
 
 #define BFME_VIRTUAL_SLOT(n) virtual void slot##n();

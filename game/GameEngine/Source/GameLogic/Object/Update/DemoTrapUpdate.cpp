@@ -7,10 +7,10 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include "PreRTS.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 enum WeaponSlotType
 {

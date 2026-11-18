@@ -9,11 +9,11 @@
 // device-draw/draw or layout-init/device-init pairs those two use. No caller
 // or vftable slot names this accessor, so the name is address-derived.
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/FunctionLexicon.h
 // findFunction(key, CONST) is defined in the same TU as gameWinDrawFunc /

@@ -17,10 +17,10 @@
 
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

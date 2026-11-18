@@ -3,7 +3,7 @@
 // Evidence: targets/game/reverse/identity_evidence/0x0041ae50-refresh-ambient.md
 
 typedef unsigned int UnsignedInt;
-enum DrawableID { INVALID_DRAWABLE_ID = 0 };
+#include "../../Include/Common/DrawableID.h"
 
 #include "ascii_string.h"
 

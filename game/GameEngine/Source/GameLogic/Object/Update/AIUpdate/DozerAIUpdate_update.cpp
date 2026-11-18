@@ -9,7 +9,7 @@
 class Object;
 
 enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../../../command_source_type.h"
 enum DozerTask { DOZER_TASK_INVALID = -1, DOZER_TASK_BUILD = 0, DOZER_TASK_REPAIR = 1 };
 enum ObjectID { INVALID_ID = 0 };
 

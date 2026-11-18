@@ -8,10 +8,10 @@ typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
-enum NameKeyType
-{
-	NAMEKEY_NONE = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 enum UpdateSleepTime
 {

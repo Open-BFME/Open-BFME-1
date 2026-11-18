@@ -2,10 +2,10 @@
 
 typedef unsigned char Bool;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 enum StateReturnType
 {

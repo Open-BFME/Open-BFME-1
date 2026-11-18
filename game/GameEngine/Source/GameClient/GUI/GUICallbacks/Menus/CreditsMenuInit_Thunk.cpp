@@ -9,10 +9,10 @@ typedef int Int;
 #define TRUE true
 #define FALSE false
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Shell
 {

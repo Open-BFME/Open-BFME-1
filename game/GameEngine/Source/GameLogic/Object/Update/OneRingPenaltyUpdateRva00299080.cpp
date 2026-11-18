@@ -26,7 +26,7 @@ typedef float Real;
 #define NULL 0
 #define PI 3.14159265359f
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 
 #include "Lib/Coord3D.h"
 

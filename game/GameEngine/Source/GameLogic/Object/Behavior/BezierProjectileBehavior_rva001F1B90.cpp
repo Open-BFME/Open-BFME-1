@@ -27,10 +27,10 @@
 typedef bool Bool;
 typedef float Real;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

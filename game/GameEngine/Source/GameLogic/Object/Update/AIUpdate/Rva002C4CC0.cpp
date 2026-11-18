@@ -13,7 +13,7 @@ class Rva002C4910 {};
 // member-pointer call, as the Apt callers of ?d_008cc940 do.
 extern void d_002c4910();
 typedef void (Rva002C4910::*Rva002C4910Method)(Object *, CommandSourceType);
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1, UPDATE_SLEEP_FOREVER = 0x3FFFFFFF };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class HordeAIUpdate { public: virtual UpdateSleepTime update(); };
 class AICommandInterface { public: void aiIdle(CommandSourceType); };
 template <class T> inline T &field(void *p, unsigned int offset) {

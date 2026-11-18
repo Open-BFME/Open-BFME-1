@@ -80,11 +80,11 @@ public:
 	CRITICAL_SECTION *m_lock;
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

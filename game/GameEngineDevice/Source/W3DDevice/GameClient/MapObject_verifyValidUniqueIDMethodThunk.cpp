@@ -36,7 +36,7 @@ public:
     }
     void __cdecl format(AsciiString, ...);
 };
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 class StaticNameKey { public: NameKeyType key() const; };
 extern const StaticNameKey TheKey_uniqueID;
 class Dict { public:

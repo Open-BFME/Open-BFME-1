@@ -1,8 +1,8 @@
 typedef bool Bool;
-enum NameKeyType
-{
-	NameKeyTypeDummy = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Player;
 

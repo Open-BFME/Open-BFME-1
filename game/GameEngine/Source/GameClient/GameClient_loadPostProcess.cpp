@@ -12,9 +12,9 @@
 
 #define BFME_VSLOT(n) virtual void slot##n();
 
-enum DrawableID
-{
-};
+#include "../../Include/Common/DrawableID.h"
+
+
 
 class Drawable
 {

@@ -7,10 +7,10 @@
 // `test byte ptr ..., 0x14`; spelling it as one 0x14 mask flips the ESI/EDI
 // assignment of the object and receiver.
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class TurretAI
 {

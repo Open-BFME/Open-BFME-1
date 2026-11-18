@@ -8,11 +8,11 @@
 // The list selector 0/1 picks which vector receives the inlined push_back.
 // Sole caller is the chunk parser at 0x0019A470. Owning class is not recovered.
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

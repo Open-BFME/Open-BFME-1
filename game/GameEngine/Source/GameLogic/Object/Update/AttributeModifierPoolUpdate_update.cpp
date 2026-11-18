@@ -70,9 +70,9 @@ class PB_DeepBase {
 class PB_BehaviorModuleInterface {
     public:virtual void behaviorModuleInterfaceAnchor()=0;
 };
-enum UpdateSleepTime {
-    UPDATE_SLEEP_FOREVER=0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
 class PB_UpdateModuleInterface {
     public:virtual UpdateSleepTime update()=0;
 };

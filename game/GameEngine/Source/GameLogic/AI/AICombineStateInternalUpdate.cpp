@@ -16,7 +16,7 @@
 #include <math.h>
 
 enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../command_source_type.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

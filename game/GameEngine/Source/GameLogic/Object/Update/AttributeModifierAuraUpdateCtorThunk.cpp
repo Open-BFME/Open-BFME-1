@@ -32,10 +32,10 @@ class Thing;
 class ModuleData;
 class Object;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_FRAME = 0
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // The field this body tests is the byte at +0x90.  The matched
 // AttributeModifierAuraUpdateModuleData constructor (189B, 0x00280B20) is what

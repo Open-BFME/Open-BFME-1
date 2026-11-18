@@ -7,7 +7,7 @@ struct BfmeOneAOA
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
-enum NameKeyType { };
+#include "../../../Include/Common/NameKeyType.h"
 
 class NameKeyGenerator
 {

@@ -12,10 +12,10 @@ enum GameDifficulty
 	DIFFICULTY_HARD
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 NameKeyType NAMEKEY(const char *name);
 

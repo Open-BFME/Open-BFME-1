@@ -92,10 +92,10 @@ struct LadderPref
 
 typedef std::map<long, LadderPref> LadderPrefMap;
 
-enum NameKeyType
-{
-    NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 typedef std::map<NameKeyType, float> UserPreferenceClearMap;
 

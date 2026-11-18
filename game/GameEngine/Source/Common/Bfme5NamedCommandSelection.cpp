@@ -83,10 +83,10 @@ public:
 	virtual void bfmeReset(void);
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 0
-};
+#include "../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModule

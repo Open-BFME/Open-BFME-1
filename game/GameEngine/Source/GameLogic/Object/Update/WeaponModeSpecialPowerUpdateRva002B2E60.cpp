@@ -55,10 +55,10 @@ public:
 	void handle(Int condition);
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // defining name ?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z:
 // 'I' is protected access and the parameter is enum UpdateSleepTime.

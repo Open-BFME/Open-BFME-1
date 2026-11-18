@@ -99,10 +99,10 @@ public:
 	virtual void message(UnicodeString format, ...);
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 class AudioEventRTS
 {

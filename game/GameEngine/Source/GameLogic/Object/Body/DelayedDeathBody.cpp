@@ -5,7 +5,7 @@
 // Both upgrade predicates are evaluated. A transition clears the incoming
 // damage flag and zeroes the amount according to module flag68.
 class UpgradeTemplate; class Module; struct DamageInfo { unsigned char before20[0x20]; unsigned char flag20; };
-enum NameKeyType { NAMEKEY_INVALID = 0, FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
+#include "../../../../Include/Common/NameKeyType.h"
 class Player { public: bool hasUpgradeComplete(const UpgradeTemplate*) const; };
 class Object { public:
  Player *getControllingPlayer() const;

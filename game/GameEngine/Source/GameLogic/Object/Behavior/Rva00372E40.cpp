@@ -23,7 +23,7 @@ extern GameLogic *TheGameLogic;
 #include "Common/GameMemory.h"
 #include "Common/Overridable.h"
 #include "Common/Override.h"
-enum NameKeyType {};
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Module;

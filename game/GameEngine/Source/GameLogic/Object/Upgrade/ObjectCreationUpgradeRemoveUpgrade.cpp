@@ -9,10 +9,10 @@
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot7-removeupgrade.md
 // Evidence: targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
-enum NameKeyType
-{
-    NAME_KEY_NONE = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

@@ -23,7 +23,7 @@ typedef int Int;
 // Retail ILT 0x0000266C -> resize at 0x0048A970 uses ECX and RET4.
 extern "C" void __cdecl __identifier("?j_0000266c@@YAXXZ")();
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 
 class Transition;
 

@@ -4,10 +4,10 @@
 
 #include "Common/AsciiString.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 // Canonical retail type of the 0x012EF428 singleton; pointee only, so a forward
 // declaration is enough.  The definition lives in

@@ -4,11 +4,11 @@
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 enum KindOfType
 {

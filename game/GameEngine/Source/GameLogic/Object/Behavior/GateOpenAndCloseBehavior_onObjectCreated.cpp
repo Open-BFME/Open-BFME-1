@@ -20,10 +20,10 @@ enum ObjectID
 {
 	INVALID_ID = 0
 };
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 class ModuleData
 {

@@ -6,11 +6,11 @@
 extern "C" void __cdecl _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 class S4Sink004135C0
 {

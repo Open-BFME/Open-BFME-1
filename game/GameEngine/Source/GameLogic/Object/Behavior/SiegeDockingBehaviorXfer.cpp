@@ -24,10 +24,10 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

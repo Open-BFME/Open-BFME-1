@@ -22,10 +22,10 @@ class Object;
 class SpecialPowerTemplate;
 class Waypoint;
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
+
+
+
 
 class SpecialPowerStore
 {

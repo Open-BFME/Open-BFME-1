@@ -7,7 +7,7 @@ class Object;
 
 extern int GetGameLogicRandomValue(int, int, char *, int);
 
-enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class PB_DeepBase
 {

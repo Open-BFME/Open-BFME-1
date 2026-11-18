@@ -7,10 +7,10 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../../../Include/Common/ObjectID.h"
+
+
+
 
 class GameLogicPortraitShim
 {

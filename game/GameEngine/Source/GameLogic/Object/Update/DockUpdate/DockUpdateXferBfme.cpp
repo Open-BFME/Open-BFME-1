@@ -7,7 +7,7 @@
 // and 35 are its version, Coord3D, int and bool transfer operators.
 #include <limits.h>
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
-enum ObjectID { INVALID_ID=0 };
+#include "../../../../../Include/Common/ObjectID.h"
 #include <vector>
 // BFME supplies the single-argument resize overload through ILT 0x0002BB34.
 namespace _STL {

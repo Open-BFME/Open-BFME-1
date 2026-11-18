@@ -18,7 +18,7 @@
 #include <list>
 #include <map>
 #include "xfer.h"
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 struct XferVersion : public Xfer::Version {
 	XferVersion(unsigned char version, unsigned char currentVersion) { data[0]=version; data[1]=currentVersion; }
 };

@@ -11,9 +11,9 @@
 // is a scale-8 lea. All three phases reach the out-of-line _STL::_Construct
 // through the ILT at 0x000267F6 (body 0x000952A0), and the teardown is inlined.
 
-enum ObjectID
-{
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
 
 void j_000267f6();
 

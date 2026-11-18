@@ -8,10 +8,10 @@
 class Matrix3D;
 class Module;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 class S4Sink004135C0
 {

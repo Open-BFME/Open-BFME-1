@@ -15,7 +15,7 @@
 
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 #include "ascii_string.h"
 
