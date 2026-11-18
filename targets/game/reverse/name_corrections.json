@@ -22240,5 +22240,55 @@
   "after_sha256": "2269d8806c00bf28826fd6b968469e81cce064d7fa4d85b72b54bbc80b3bff9a",
   "evidence": "targets/game/reverse/identity_evidence/006818b0-bfmenativenetwork-ctor.md",
   "reason": "Identity correction, not a rename: the 0x006818B0 body is a constructor (base ctor, vftable store, returns this) that createTheNetwork reaches through ILT 0x0001E8F8 pinned as ??0BFMENativeNetwork@@QAE@XZ; the stand-in member construct() becomes that constructor."
+ },
+ {
+  "old_path": "targets/game/reverse/functions.csv",
+  "new_path": "targets/game/reverse/functions.csv",
+  "old_name": "m",
+  "new_name": "_bfme_nextInInstanceList",
+  "before_sha256": "12ccb5254220a368defbc63ae8c5de3b9ae872c529ee83f31b7ccb5e2bbc8c0c",
+  "after_sha256": "c4039e64167be5c6cab92a5c7380688b2324911d5940915ccc3bc4c7e223b351",
+  "evidence": "targets/game/reverse/identity_evidence/000c8a30-team-instance-next.md",
+  "reason": "Gen_000c8a30::m was a generated gen-shim scaffold name; matched AIPlayer callers reach 0x000C8A30 through ILT 0x00022A70 as the Team instance-list advance, so the body takes the callers' pinned name."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1110.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1110.cpp",
+  "old_name": "m",
+  "new_name": "_bfme_nextInInstanceList",
+  "before_sha256": "a44b138240e19c931f8ff481d42eec98fe696edb776ebbde08ba2cd7e36aa389",
+  "after_sha256": "5d7474615016b61d06a2a389bcc81e3bc57279220e375209ed6fc7f96c619931",
+  "evidence": "targets/game/reverse/identity_evidence/000c8a30-team-instance-next.md",
+  "reason": "Consumer of 0x000C8A30 through ILT 0x00022A70: Gen_000c8a30::m was the generated gen-shim scaffold name, now replaced by the recovered row's caller-pinned Team::_bfme_nextInInstanceList."
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/RTS/PlayerObjectWalk.cpp",
+  "new_path": "game/GameEngine/Source/Common/RTS/PlayerObjectWalk.cpp",
+  "old_name": "m",
+  "new_name": "_bfme_nextInInstanceList",
+  "before_sha256": "7987fa1059a188a984513589e202d0c4fae83f518426149f338a678282b6634a",
+  "after_sha256": "918c97d0df402d7ebf0935a990e8c5a20d182d668458da5bb85459e3cdf25ff5",
+  "evidence": "targets/game/reverse/identity_evidence/000c8a30-team-instance-next.md",
+  "reason": "Consumer of 0x000C8A30 through ILT 0x00022A70: Gen_000c8a30::m was the generated gen-shim scaffold name, now replaced by the recovered row's caller-pinned Team::_bfme_nextInInstanceList."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "old_name": "m",
+  "new_name": "_bfme_nextInInstanceList",
+  "before_sha256": "96c6286b1dafaa88ef88f24813b427f7c2edba6d6527dfc54259fae0a5f17c22",
+  "after_sha256": "e1f778976a8e07a34c2ad68484cf57e4df62f9f4a00e871e94e470bb943b1ef2",
+  "evidence": "targets/game/reverse/identity_evidence/000c8a30-team-instance-next.md",
+  "reason": "Consumer of 0x000C8A30 through ILT 0x00022A70: Gen_000c8a30::m was the generated gen-shim scaffold name, now replaced by the recovered row's caller-pinned Team::_bfme_nextInInstanceList."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsRva0032C680.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsRva0032C680.cpp",
+  "old_name": "m",
+  "new_name": "_bfme_nextInInstanceList",
+  "before_sha256": "8c47789e16737f55fb965d8a6f407eaeee4bbb8904996b9f530b79f9d6e7caa1",
+  "after_sha256": "90bb747f10dcc04a206d8390db34669fada3c16f32b2f4e62fef01a2791f31be",
+  "evidence": "targets/game/reverse/identity_evidence/000c8a30-team-instance-next.md",
+  "reason": "Consumer of 0x000C8A30 through ILT 0x00022A70: Gen_000c8a30::m was the generated gen-shim scaffold name, now replaced by the recovered row's caller-pinned Team::_bfme_nextInInstanceList."
  }
 ]

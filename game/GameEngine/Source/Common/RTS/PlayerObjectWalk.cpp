@@ -88,10 +88,12 @@ public:
 	Int bfmeVisit(ObjectIterateFunc func, void *userData);
 };
 
-class Gen_000c8a30
+// ILT 0x00022A70 reaches the ledger's four-byte Team instance-list advance at
+// 0x000C8A30.
+class Team
 {
 public:
-	Int m(void);
+	Team *_bfme_nextInInstanceList() const;
 };
 
 class BfmeIterableObject
@@ -115,7 +117,7 @@ Int BfmeIterableObject::bfmeIterate(ObjectIterateFunc func, void *userData)
 			return 0;
 
 		if (node)
-			node = (BfmeInnerIterable *)((Gen_000c8a30 *)node)->m();
+			node = (BfmeInnerIterable *)((Team *)node)->_bfme_nextInInstanceList();
 	}
 
 	return 1;

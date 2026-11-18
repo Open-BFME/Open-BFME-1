@@ -70,11 +70,12 @@ struct BfmePlayerTeamListNode
 };
 
 class BfmePlayerTeamPrototypeInstances;
-// ILT 0x00022A70 reaches the ledger's four-byte getter at 0x000C8A30.
-class Gen_000c8a30
+// ILT 0x00022A70 reaches the ledger's four-byte Team instance-list advance at
+// 0x000C8A30.
+class Team
 {
 public:
-	int m();
+	Team *_bfme_nextInInstanceList() const;
 };
 
 // Address-derived COMDAT spelling: other TUs inline different
@@ -101,8 +102,8 @@ public:
 	{
 		if (m_cur)
 			m_cur = (BfmePlayerTeamView *)
-				((Gen_000c8a30 *)m_cur)
-					->m();
+				((Team *)m_cur)
+					->_bfme_nextInInstanceList();
 	}
 
 private:

@@ -50,10 +50,12 @@ public:
 	unsigned int m_bfme08;
 };
 
-// ILT 0x00022A70 reaches the ledger's four-byte getter at 0x000C8A30.
-struct Gen_000c8a30
+// ILT 0x00022A70 reaches the ledger's four-byte Team instance-list advance at
+// 0x000C8A30.
+class Team
 {
-	int m();
+public:
+	Team *_bfme_nextInInstanceList() const;
 };
 
 struct BfmeQ1110
@@ -104,7 +106,7 @@ void BfmeV1110::loadPostProcess(void)
 
 			if (b >= m_bfme14)
 				m_bfme14 = b + 1;
-			r = reinterpret_cast<BfmeR1110 *>(reinterpret_cast<Gen_000c8a30 *>(r)->m());
+			r = reinterpret_cast<BfmeR1110 *>(reinterpret_cast<Team *>(r)->_bfme_nextInInstanceList());
 		}
 		p = reinterpret_cast<BfmeM1110 *>(_STL::_Rb_global<bool>::_M_increment(
 			reinterpret_cast<_STL::_Rb_tree_node_base *>(p)));
