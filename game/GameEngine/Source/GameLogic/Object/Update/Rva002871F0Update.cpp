@@ -3,9 +3,9 @@
 // owner name retains the RVA.  The relation/filter callees are named from
 // their existing retail pins.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 struct RvaC4390Interface
 {

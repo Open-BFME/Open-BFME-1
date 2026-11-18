@@ -31,10 +31,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "Lib/Coord3D.h"
 #include "ascii_string.h"

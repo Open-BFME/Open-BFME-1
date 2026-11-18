@@ -4,9 +4,9 @@
 // the thunk at 0x000035E4, which identifies this setter separately from the
 // zoom setter at 0x0073FC40.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

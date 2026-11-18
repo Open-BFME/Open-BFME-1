@@ -20,10 +20,10 @@
 //     No retail body is ever called as that ctor, so its name is not pinned
 //     and claims no retail address.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" float __cdecl sinf(float value);
 

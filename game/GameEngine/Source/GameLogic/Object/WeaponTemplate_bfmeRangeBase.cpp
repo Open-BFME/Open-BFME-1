@@ -5,9 +5,9 @@
 
 #include <math.h>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const float g_rva01075350;		// retail 0x01075350
 

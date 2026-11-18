@@ -11,11 +11,11 @@
 // calls it with m_maintainPos through ILT 0x0000FEBB, under the opaque name
 // the callers already use. OVERRIDE<T> resolves through the inline recursive
 // Overridable::getFinalOverride, as Zero Hour's Override.h spells it.
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "Lib/Coord3D.h"
 

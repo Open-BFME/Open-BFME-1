@@ -1,10 +1,10 @@
 // ?generatePortNumbers@NAT@@IAEXPAPAVGameSlot@@H@Z
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 #define MAX_SLOTS 8

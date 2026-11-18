@@ -19,10 +19,10 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 template <> inline bool StringBase<char>::isEmpty() const
 {

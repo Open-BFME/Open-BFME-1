@@ -12,10 +12,10 @@
 #include <bitset>
 #include <math.h>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Bool (__fastcall *Rva00172600Slot17Fn)(void *, void *);
 struct Rva00172600StateVtable {
 	void *slots[17];

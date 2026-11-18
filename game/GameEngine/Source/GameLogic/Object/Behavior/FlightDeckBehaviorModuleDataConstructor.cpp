@@ -14,9 +14,9 @@
 // of the float. Their order within that pair follows the source, so the word
 // is written before the byte.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class ModuleDataBase
 {

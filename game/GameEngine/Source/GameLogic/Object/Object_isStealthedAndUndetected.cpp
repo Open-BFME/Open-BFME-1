@@ -3,9 +3,9 @@
 // and either no viewer, viewer->m_2C != 1, or this has no recently-active
 // weapon.  Callee is Object::bfmeHasActiveOrRecentlyActiveWeapon.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 

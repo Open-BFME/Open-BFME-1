@@ -5,9 +5,9 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 

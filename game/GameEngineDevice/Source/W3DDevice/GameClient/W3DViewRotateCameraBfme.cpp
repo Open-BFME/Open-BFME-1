@@ -1,9 +1,9 @@
 // BFME W3DView::rotateCamera, retail 0x0073BDD0.
 // The BFME vtable places this five-argument camera rotation at slot 50.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

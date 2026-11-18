@@ -169,10 +169,10 @@
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

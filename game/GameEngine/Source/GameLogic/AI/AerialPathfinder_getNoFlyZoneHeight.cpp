@@ -5,9 +5,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct ICoord3D
 {

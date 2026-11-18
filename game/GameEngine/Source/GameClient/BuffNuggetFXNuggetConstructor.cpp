@@ -4,9 +4,9 @@
 // strings, BuffLifeTime, Extrusion and Color.  The 12-byte tail at +0xE8
 // is the same zero-then-range-assign shape as Made001E5AF0Member.
 
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "string_base.h"
 

@@ -1,9 +1,9 @@
 // ?updateTopplingTree@W3DShrubBuffer@@IAEXH@Z
 // BFME W3DShrubBuffer indexed toppling update at retail 0x0071D9F0.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Real g_bfmeDefaultBU;
 extern Real g_bfmeUint32Scale;

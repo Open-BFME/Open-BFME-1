@@ -4,9 +4,9 @@
 // thunk at 0x0002ACA2, which separates this body from cameraUpdate at
 // 0x0073FDD0.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

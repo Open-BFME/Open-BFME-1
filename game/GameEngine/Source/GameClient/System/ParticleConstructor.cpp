@@ -19,10 +19,10 @@
 #include "snapshot.h"
 #include "string_base.h"
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class ParticleSystem;
 class Particle;

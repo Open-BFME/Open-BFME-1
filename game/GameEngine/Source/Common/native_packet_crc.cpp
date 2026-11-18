@@ -11,9 +11,9 @@
 // It is one of the two things 0x00683830 does to a packet, the other being the
 // rolling-XOR pass at 0x006832C0.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // The carry bit has to be written as a branch, exactly as the engine's own CRC
 // class writes it, even though MSVC compiles it to a shift either way. Written

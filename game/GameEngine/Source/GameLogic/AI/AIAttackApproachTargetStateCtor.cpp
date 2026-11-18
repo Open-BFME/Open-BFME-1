@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class StateMachine;
 

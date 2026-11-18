@@ -2,9 +2,9 @@
 //
 // Retail 0x0071A410. Cdecl shroud-level pixel packer.
 
-typedef float Real;
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
 class GlobalData

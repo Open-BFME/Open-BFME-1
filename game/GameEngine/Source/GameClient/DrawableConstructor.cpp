@@ -19,10 +19,10 @@
 #include "coord3d.h"
 #include "snapshot.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(volatile long *);
 #include <string.h>

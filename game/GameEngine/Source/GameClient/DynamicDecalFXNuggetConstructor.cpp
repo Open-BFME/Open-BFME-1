@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME dynamic-decal FX nugget constructor.
 
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 

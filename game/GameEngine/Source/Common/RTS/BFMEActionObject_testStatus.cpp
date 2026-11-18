@@ -11,9 +11,9 @@
 // modelled as the one word the index reaches and no more, which is why the
 // class carries the read rather than a sized member.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class BFMEActionObject
 {

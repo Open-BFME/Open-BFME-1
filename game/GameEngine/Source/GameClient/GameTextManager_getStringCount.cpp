@@ -5,9 +5,9 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef bool Bool;
-typedef char Char;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum
 {

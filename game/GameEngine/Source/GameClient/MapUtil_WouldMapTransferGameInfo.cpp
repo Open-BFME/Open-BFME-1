@@ -9,9 +9,9 @@
 // two returned AsciiString temporaries in the source expression preserves the
 // retail compiler's construction order and register schedule.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 template <typename T>
 class StringBase

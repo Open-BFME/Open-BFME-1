@@ -12,10 +12,10 @@
 // from the retail body; callee names are the ledger's.  The protected virtual
 // spelling (MAE) is the one ilt_oracle confirms for ILT slot 11952.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int AudioHandle;
 
 #include "../../command_source_type.h"

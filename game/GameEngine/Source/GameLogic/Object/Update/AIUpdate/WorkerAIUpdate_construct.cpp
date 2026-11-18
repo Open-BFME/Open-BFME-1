@@ -11,10 +11,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Rva002C96D0Coord3DBase
 {

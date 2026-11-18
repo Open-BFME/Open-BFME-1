@@ -35,10 +35,10 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 #define FALSE 0

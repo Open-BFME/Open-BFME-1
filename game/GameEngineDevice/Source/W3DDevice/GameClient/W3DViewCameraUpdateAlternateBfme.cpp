@@ -4,9 +4,9 @@
 // the alternate camera-update state at +0x258. The state blends the view value
 // at +0x30 and clears its active flag at +0x27C.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

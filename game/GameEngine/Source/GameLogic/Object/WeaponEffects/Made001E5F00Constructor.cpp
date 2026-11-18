@@ -6,9 +6,9 @@
 // down and set the handful of fields below. The zero is materialised once and
 // reused, which is what interleaves the stores the way retail has them.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Made002DF2B0
 {

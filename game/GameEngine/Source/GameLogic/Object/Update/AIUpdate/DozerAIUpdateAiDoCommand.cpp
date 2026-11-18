@@ -56,10 +56,10 @@ template<> __declspec(dllimport) inline bool StringBase<unsigned short>::isEmpty
 #define COORD3D_VIEW_INLINE_ONLY
 #include "Lib/Coord3D.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define FALSE false
 #define TRUE true

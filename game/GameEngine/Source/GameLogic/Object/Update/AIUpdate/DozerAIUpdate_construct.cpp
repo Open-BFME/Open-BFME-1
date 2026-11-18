@@ -9,10 +9,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // BFME Coord3D derives its three floats from Coord3DBase and has a real
 // copy constructor (RVA 0x0005BC20). Preserve that copy operation when inline.

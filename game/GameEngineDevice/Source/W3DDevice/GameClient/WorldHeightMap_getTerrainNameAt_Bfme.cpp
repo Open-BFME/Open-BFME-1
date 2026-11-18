@@ -2,9 +2,9 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef short Short;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

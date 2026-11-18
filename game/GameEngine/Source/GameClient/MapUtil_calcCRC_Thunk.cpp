@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Canonical MapUtil CRC helper, retail 0x00450560.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" char *__cdecl strcpy(char *, const char *);
 extern "C" unsigned int __cdecl strlen(const char *);

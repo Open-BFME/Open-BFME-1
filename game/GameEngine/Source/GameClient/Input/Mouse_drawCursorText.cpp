@@ -1,8 +1,8 @@
 // cl: /O2 /DNDEBUG /MD
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 inline Color GameMakeColor(UnsignedByte red, UnsignedByte green,

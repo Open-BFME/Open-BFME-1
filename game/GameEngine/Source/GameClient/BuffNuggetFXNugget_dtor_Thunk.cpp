@@ -5,9 +5,9 @@
 // The tail dtor is the ILT at 0x00026AB2 already pinned as
 // ??1BuffNuggetFXNuggetMember@@QAE@XZ.
 
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #include "ascii_string.h"
 extern void j_00026ab2();

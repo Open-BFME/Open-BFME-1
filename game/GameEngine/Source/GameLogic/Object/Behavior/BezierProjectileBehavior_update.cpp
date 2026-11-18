@@ -28,10 +28,10 @@
 #include "matrix3d.h"
 #include <vector>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int ObjectID;
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
