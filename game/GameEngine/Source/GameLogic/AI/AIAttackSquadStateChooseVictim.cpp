@@ -235,20 +235,7 @@ public:
 // ScriptEngine/TeamCommandQuery002FBC90.cpp (three matched bodies) and
 // System/CrateSystem.cpp.  The single-bit ctor is inline because retail builds
 // the mask in place here (xor/store/or at +0x260), not through a call.
-template <size_t NUMBITS>
-class BitFlags
-{
-public:
-	enum BogusInitType
-	{
-		kInit = 0
-	};
-
-	BitFlags(BogusInitType, Int bit) { m_bits.set(bit); }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../Include/Common/BitFlags/BitFlags.h"
 
 // BFME's kind-of list runs past Zero Hour's, so the mask is the wide
 // 192-bit/24-byte one retail stores.  Only the width is provable here (six

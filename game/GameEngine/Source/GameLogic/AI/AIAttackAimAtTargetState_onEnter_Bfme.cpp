@@ -61,28 +61,7 @@ enum { BFME_OBJECT_RVA00183E40_STATUS_0X400 = 0x00000400 };
 // The template argument is 86: Object::setStatus's recovered name is
 // ?setStatus@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z.  STLport's bitset ctor
 // supplies the zero-register/OR initialization retail compiled.
-template <size_t NUMBITS>
-class BitFlags
-{
-public:
-	// just a little syntactic sugar so that there is no "foo = 0" compatible ctor
-	enum BogusInitType
-	{
-		kInit = 0
-	};
-
-	inline BitFlags()
-	{
-	}
-
-	inline BitFlags(BogusInitType k, Int idx1)
-	{
-		m_bits.set(idx1);
-	}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 

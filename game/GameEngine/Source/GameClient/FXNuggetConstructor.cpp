@@ -36,15 +36,7 @@ private:
 // The shipped game used STLport's std::bitset implementation.  Its default
 // constructor is intentionally empty here; std::bitset's member constructor
 // supplies the retail zeroing stores.
-template <size_t NUMBITS>
-class BitFlags
-{
-public:
-	BitFlags() {}
-
-private:
-	std::bitset<NUMBITS> m_bits;
-};
+#include "../../Include/Common/BitFlags/BitFlags.h"
 
 // upstream layout: inputs/reference/.../game/GameEngine/Include/GameClient/FXList.h
 class FXNugget

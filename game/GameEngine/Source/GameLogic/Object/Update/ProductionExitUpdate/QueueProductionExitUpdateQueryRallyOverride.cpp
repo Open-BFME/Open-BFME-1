@@ -11,20 +11,7 @@ typedef unsigned int UnsignedInt;
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
-template <int NUMBITS>
-class BitFlags
-{
-public:
-	 enum BogusInitType { kInit = 0 };
-	 BitFlags() {}
-	 BitFlags(BogusInitType, Int first, Int second)
-	 {
-		 m_bits._Unchecked_set((size_t)first);
-		 m_bits._Unchecked_set((size_t)second);
-	 }
-private:
-	 _STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<192> KindOfMaskType;
 extern const KindOfMaskType KINDOFMASK_NONE;

@@ -44,15 +44,7 @@ enum WeaponSlotType
 class Object;
 typedef _STL::list<Object *> ContainedItemsList;
 
-template <Int NUMBITS>
-class BitFlags
-{
-public:
-	Bool test(Int bit) const { return m_bits.test(bit); }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 

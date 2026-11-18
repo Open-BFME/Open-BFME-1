@@ -7,15 +7,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-template <size_t NUMBITS>
-class BitFlags
-{
-public:
-	BitFlags() {}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<304> ModelConditionFlags;
 

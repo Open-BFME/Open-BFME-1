@@ -13,16 +13,7 @@
 
 typedef unsigned int UnsignedInt;
 
-template<int NUMBITS>
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
-class BitFlags
-{
-public:
-	BitFlags() { }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 

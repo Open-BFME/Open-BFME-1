@@ -20,21 +20,7 @@ public:
 	virtual ~AudioEventRTS();
 };
 
-template <unsigned int BitCount>
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
-class BitFlags
-{
-public:
-	BitFlags() {}
-
-	void clear()
-	{
-		m_bits.reset();
-	}
-
-private:
-	std::bitset<BitCount> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<192> KindOfMaskType;
 

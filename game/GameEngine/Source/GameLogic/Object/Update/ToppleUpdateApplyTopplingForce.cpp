@@ -287,16 +287,7 @@ public:
 
 class ThingTemplate;
 
-template<int NUMBITS>
-class BitFlags
-{
-public:
-	BitFlags() { }
-	void clear() { m_bits.reset(); }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusBits;
 

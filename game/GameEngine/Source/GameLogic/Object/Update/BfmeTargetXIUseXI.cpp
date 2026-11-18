@@ -30,17 +30,7 @@ typedef float Real;
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-template <int NUMBITS>
-class BitFlags
-{
-public:
-	BitFlags()
-	{
-	}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<320> ModelConditionFlags;
 

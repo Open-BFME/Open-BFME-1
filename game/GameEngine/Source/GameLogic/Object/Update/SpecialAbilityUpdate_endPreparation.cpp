@@ -23,19 +23,7 @@ enum SpecialPowerType
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-template<int NUMBITS>
-class BitFlags
-{
-public:
-	enum BogusInitType { kInit = 0 };
-
-	BitFlags() { }
-	BitFlags(BogusInitType, int bit) { m_bits.set(bit); }
-	void set(int bit) { m_bits.set(bit); }
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 typedef BitFlags<320> ModelConditionFlags;

@@ -58,17 +58,7 @@ private:
 class RvaBehaviorModuleSlots;
 class SlavedUpdateInterface;
 
-template <int NUMBITS>
-class BitFlags
-{
-private:
-	_STL::bitset<NUMBITS> m_bits;
-
-public:
-	BitFlags()
-	{
-	}
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 

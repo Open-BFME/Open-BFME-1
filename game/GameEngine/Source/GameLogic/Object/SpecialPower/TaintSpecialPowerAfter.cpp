@@ -28,15 +28,7 @@ class Player;
 class Matrix3D;
 class Object;
 
-template <int NUMBITS>
-class BitFlags
-{
-public:
-	enum BogusInitType { kInit };
-	BitFlags(BogusInitType, Int bit) { m_bits.set(bit); }
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 typedef BitFlags<192> KindOfMaskType;
 extern const KindOfMaskType KINDOFMASK_NONE;
 

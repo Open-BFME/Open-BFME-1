@@ -7,24 +7,7 @@
 typedef int Int;
 typedef bool Bool;
 
-template <int NUMBITS>
-// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
-class BitFlags
-{
-public:
-	enum BogusInitType
-	{
-		kInit = 0
-	};
-
-	BitFlags(BogusInitType, Int bitIndex)
-	{
-		m_bits.set(bitIndex);
-	}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 

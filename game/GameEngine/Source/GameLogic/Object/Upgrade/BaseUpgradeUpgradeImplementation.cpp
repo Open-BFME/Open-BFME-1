@@ -117,15 +117,7 @@ class ThingTemplate;
 class Team;
 class Object;
 
-template <Int NUMBITS>
-class BitFlags
-{
-public:
-	BitFlags() {}
-
-private:
-	_STL::bitset<NUMBITS> m_bits;
-};
+#include "../../../../Include/Common/BitFlags/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
