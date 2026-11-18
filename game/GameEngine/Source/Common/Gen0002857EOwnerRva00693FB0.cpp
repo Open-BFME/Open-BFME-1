@@ -16,7 +16,7 @@
 #include <set>
 #undef private
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);

@@ -22,7 +22,7 @@
 #include <bitset>
 #include <list>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/ObjectID.h"
 #define BFME_HAVE_OBJECTID

@@ -14,7 +14,7 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef unsigned short UnsignedShort;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class GameWindow
 {

@@ -23,8 +23,8 @@ template<> inline bool StringBase<char>::startsWith(const char *s) const {return
 inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->~StringBase<char>(); }
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t>*)this)->~StringBase<wchar_t>(); }
 inline AsciiString &AsciiString::operator=(const char *s) { ((StringBase<char>*)this)->set(s,s?strlen(s):0); return *this; }
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 #include "../../../../../Include/Common/NameKeyType.h"
 class GameWindow;

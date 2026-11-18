@@ -80,10 +80,10 @@ extern unsigned char g_00E03745;
 
 #include "Lib/Coord2D.h"
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../../Include/Common/ObjectID.h"
+
+
+
 
 extern "C" void *memset(void *dst, int val, unsigned size);
 
@@ -276,7 +276,7 @@ class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
 {
 };
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class UpdateModuleInterface
 {
@@ -818,13 +818,13 @@ enum DisabledType
 
 class Module;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../../Include/Common/NameKeyType.h"
+
+
+
 
 enum DamageType { DAMAGE_08 = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../../../Include/Common/Enums/DeathType.h"
 
 class Object : public Thing
 {
@@ -1664,11 +1664,11 @@ public:
 
 extern GameTextInterface *TheGameText;
 
-enum RadarEventType
-{
-	RADAR_EVENT_INVALID = 0,
-	RADAR_EVENT_CONSTRUCTION
-};
+#include "../../../../../Include/Common/Enums/RadarEventType.h"
+
+
+
+
 
 class Radar
 {

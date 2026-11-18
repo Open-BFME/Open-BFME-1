@@ -14,7 +14,7 @@
 #include <list>
 #include <stddef.h>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class SuperweaponInfo
 {

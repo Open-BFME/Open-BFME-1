@@ -120,7 +120,7 @@ private:
 	Rva21ABF0Node *m_ring;
 };
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>

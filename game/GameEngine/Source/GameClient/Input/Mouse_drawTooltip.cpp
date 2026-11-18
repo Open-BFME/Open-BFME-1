@@ -4,7 +4,7 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 

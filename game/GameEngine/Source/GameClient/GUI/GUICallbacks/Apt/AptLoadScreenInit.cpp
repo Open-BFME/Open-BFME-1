@@ -26,9 +26,9 @@
 // at 0x004F1120/0x00630D60/0x004F10B0; the object has no virtual prefix.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
-typedef unsigned int UnsignedInt;
+
 #include "../../../../../Include/Common/NameKeyType.h"
 
 #include "ascii_string.h"

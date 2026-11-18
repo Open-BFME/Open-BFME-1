@@ -6,7 +6,7 @@
 // image. By-value UnicodeString / AsciiString format args use inline StringBase
 // forwarders so the EH saved-esp store lands before mov ecx,esp.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int Color;
 
 // The empty AsciiString fallback, retail 0x0107388B

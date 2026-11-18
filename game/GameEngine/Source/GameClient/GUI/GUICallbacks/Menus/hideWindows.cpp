@@ -4,7 +4,7 @@
 // ZH twin: pos<0||pos>=8 returns; for i=pos..7 winHide(TRUE) on the 11
 // ScoreScreen.wnd:*%d windows (BuildingsDestroyed is written twice, as in ZH).
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 // The empty AsciiString fallback, retail 0x0107388B
 // (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).

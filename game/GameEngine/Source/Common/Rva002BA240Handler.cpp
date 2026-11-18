@@ -21,7 +21,7 @@
 // clearStatus(3) fires, the vtable+0x28 lookup happens afterward, a second
 // isKindOf(0x95) check gates a select (true) and a second delay variant.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Player;
 enum ObjectStatusTypes;

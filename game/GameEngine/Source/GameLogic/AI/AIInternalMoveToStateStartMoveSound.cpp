@@ -35,8 +35,8 @@
 // events in a table that starts 0x47 entries earlier.
 #include "Common/AsciiString.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int AudioHandle;
 
 #include "../../../Include/Common/ObjectID.h"

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB
 // stlport
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include <bitset>
 

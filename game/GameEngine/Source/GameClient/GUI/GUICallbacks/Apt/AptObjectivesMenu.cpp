@@ -14,7 +14,7 @@
 #include <vector>
 #include <string.h>
 #include "string_base.h"
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 class AsciiString
 {
 public:

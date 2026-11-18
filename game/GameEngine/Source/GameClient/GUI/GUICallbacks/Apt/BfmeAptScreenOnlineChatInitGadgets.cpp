@@ -9,8 +9,8 @@
 // one OnlineChatListButtons.cpp already models, down to the list mode at
 // this+0xA4.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int strcmp( const char *left, const char *right );
 #pragma intrinsic( strcmp )

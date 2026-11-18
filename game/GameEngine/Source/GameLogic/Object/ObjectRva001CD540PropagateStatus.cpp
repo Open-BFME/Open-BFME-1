@@ -16,8 +16,8 @@
 
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <int NUMBITS>
 class BitFlags

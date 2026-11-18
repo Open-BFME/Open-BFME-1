@@ -28,8 +28,8 @@
 // (not the global) before falling into LoadScreen::update(percent) either
 // way.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

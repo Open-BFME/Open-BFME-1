@@ -16,7 +16,7 @@
 // the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class GameWindow;
 

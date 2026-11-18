@@ -4,7 +4,7 @@
 #include <list>
 #include "color.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 enum KindOfType { RvaSelectionHordeKind = 0x6c };
 
 class TintEnvelope

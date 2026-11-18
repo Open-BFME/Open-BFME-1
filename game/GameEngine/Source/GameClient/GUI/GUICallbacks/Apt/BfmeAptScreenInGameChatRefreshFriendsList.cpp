@@ -19,7 +19,7 @@
 
 #include "StringInline.h"
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int GPProfile;
 typedef int GPEnum;
 typedef int Color;

@@ -3,8 +3,8 @@
 // TU-local retail ABI views preserve the literal-string and vtable call
 // order while keeping all control flow and temporary lifetimes ordinary C++.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 // NameKeyType is an enum upstream, not a typedef for int: the enum is part of

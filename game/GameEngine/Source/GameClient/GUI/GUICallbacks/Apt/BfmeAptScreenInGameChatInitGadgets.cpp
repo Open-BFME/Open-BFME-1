@@ -11,8 +11,8 @@
 // at this+0x268, and the two friend text entries into the slots at this+0x270
 // and this+0x280 that BfmeAptScreenInGameChatFriendPanel.cpp already reads.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int strcmp( const char *left, const char *right );
 #pragma intrinsic( strcmp )

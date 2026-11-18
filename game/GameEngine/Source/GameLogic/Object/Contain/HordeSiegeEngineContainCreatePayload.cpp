@@ -16,7 +16,7 @@ template <> inline bool StringBase<char>::isEmpty() const { return !m_data || m_
 #include "Common/BitFlags.h"
 
 typedef BitFlags<86> ObjectStatusMaskType;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *, const char *, ...);
 
 class Player;

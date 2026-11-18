@@ -9,7 +9,7 @@
 #include "CastleBehaviorRecovery.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 template<int N> class BitFlags
 {

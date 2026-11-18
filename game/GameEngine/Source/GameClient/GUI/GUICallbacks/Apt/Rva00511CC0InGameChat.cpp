@@ -16,7 +16,7 @@
 // only a named symbol lets MSVC 7.1 hoist its first load above the
 // mov fs:[0],esp of the EH prologue, as retail does at +0x0e.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 template <typename T> struct StringInlineData
 {

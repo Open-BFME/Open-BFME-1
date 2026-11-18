@@ -7,8 +7,8 @@
 #include <math.h>
 // Opaque HordeContain formation-slot rebalance at retail 0x002435F0.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

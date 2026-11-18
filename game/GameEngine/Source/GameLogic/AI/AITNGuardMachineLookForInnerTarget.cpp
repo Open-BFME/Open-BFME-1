@@ -9,7 +9,7 @@
 #include <hash_map>
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum Relationship
 {

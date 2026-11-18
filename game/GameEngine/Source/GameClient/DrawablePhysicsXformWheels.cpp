@@ -24,7 +24,7 @@
 // Object +204 is independently used by ObjectHeightAndLayer.cpp; +208 remains opaque.
 // The constructor has no unwind cleanup at the retail allocation site.
 #include <math.h>
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 #define NULL 0
 typedef float Real; typedef bool Bool;
 #define PI 3.14159265358979323846f

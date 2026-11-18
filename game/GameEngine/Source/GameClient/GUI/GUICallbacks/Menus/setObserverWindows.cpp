@@ -6,7 +6,7 @@
 // twice); Winner shown with getPlayerTemplate()->getSideIconImage. Template
 // getter is the +4 pointer load.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int Color;
 
 // The empty AsciiString fallback, retail 0x0107388B

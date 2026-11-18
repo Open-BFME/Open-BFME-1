@@ -2,7 +2,7 @@
 
 #include "../../../../../../../inputs/reference/shims/stringinline/StringInline.h"
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #define TRUE true
 #define FALSE false

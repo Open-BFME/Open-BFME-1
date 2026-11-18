@@ -13,7 +13,7 @@
 #define _OPERATOR_NEW_DEFINED_
 #include "matrix3d.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 #include "../../../Include/Common/Enums/ParticleSystemID.h"
 
 namespace FXParticleSystem {
