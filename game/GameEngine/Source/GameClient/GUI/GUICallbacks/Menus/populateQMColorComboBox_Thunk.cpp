@@ -7,8 +7,8 @@
 // and its init-gadgets caller; this TU keeps that ABI view local.
 
 typedef unsigned short WideChar;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 // The empty AsciiString fallback, retail 0x0107388B

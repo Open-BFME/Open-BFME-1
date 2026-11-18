@@ -9,8 +9,8 @@
 #include <string.h>
 #include <string>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef int GPProfile;
 typedef int GPEnum;
 

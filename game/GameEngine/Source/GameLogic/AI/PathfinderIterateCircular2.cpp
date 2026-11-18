@@ -5,8 +5,8 @@
 // AdjustTargetInfo record and calls this scan. Five pinned checkForTarget calls
 // confirm the target.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

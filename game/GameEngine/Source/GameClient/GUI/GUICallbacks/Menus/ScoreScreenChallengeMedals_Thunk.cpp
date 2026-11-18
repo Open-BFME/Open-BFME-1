@@ -25,8 +25,8 @@
 // 0x004E2860, so the second isAI() call retail makes there is the source's
 // `else if (slot->isAI())`, not a re-test.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum { TRUE = 1, FALSE = 0 };
 

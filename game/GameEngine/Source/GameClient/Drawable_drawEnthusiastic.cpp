@@ -13,8 +13,8 @@
 // icon is sized by KindOf 7 (structure) or 13 (1.0), 9 (0.75) or 0.5; otherwise
 // both icons are killed. BFME draws at the region's hi.y.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Anim2DTemplate;
 class Anim2DCollection;

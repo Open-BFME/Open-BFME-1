@@ -3,8 +3,8 @@
 // 16-byte BFME cell stores its connect layer in flag bits 12..17 and the
 // ground-cell zone must pass through both zone-manager equivalence maps.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short zoneStorageType;
 
 enum PathfindLayerEnum

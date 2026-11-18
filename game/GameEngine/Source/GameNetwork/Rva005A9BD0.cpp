@@ -7,8 +7,8 @@
 // vtbl+0x28 gets the selection flash called with a null color. No named caller (brief lists
 // none) and no vtable/string ties an owner, so this keeps the address token.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType { KINDOF_INVALID = 0 };
 

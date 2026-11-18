@@ -3,8 +3,8 @@
 // The parent-window literal and the Credits audio event prove the callback
 // identity. The local views preserve BFME's vtable slots and retail ABI.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #define TRUE true
 #define FALSE false

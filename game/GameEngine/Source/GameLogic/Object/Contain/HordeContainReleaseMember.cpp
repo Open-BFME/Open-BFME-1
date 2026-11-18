@@ -17,8 +17,8 @@
 // +0xE4; both interfaces are otherwise opaque, so their earlier slots are
 // placeholders and only the two used ones carry a name.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

@@ -20,8 +20,8 @@
 // StringBase members.  It must not be modeled as a no-argument free call
 // followed by implicit member destruction.
 
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> struct BfmeStringData
 {

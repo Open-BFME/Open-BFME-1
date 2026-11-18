@@ -2,8 +2,8 @@
 // stlport
 // Open-BFME5: HordeContain member experience refresh, retail 0x0023D720.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

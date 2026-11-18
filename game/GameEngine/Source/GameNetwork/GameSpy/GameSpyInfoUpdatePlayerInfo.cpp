@@ -5,8 +5,8 @@
 #include <map>
 #include "../../../../../inputs/reference/shims/stringinline/StringInline.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class PlayerInfo
 {

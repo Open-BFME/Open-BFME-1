@@ -2,8 +2,8 @@
 // stlport
 // Address-derived receiver view shared with the matched Rva00597FC0Client::update caller.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include <algorithm>
 #include <stl/_iterator_base.h>

@@ -22,8 +22,8 @@
 void *__cdecl operator new[](size_t size);
 void __cdecl operator delete[](void *ptr);
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/GameSpy/ghttp/ghttp.h
 typedef enum { GHTTPFalse, GHTTPTrue } GHTTPBool;

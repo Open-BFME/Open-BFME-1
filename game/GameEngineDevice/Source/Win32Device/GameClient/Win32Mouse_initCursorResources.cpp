@@ -7,8 +7,8 @@
 // table walk but copies the texture name, accepts a trailing .cur, strips it,
 // and selects the cur/ani extension before calling the Win32 loader.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // BFME's AsciiString supplies the real StringBase ownership and copy lifetime.
 // This view keeps only the raw fields used by the matched cursor loader local.

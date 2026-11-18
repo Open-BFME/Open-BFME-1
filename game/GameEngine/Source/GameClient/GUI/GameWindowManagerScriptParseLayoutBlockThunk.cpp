@@ -14,8 +14,8 @@ extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 extern "C" unsigned int __cdecl strlen(const char *);
 #pragma intrinsic(strlen)
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString
 {

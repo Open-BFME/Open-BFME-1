@@ -3,9 +3,9 @@
 // BFME W3DView virtual at vtable 0x011217A0 slot 155 (ILT 0x000217E7), retail 0x00744360.
 // Casts a ray between two objects; false when a different object's drawable blocks it.
 // Evidence: targets/game/reverse/identity_evidence/00744360-vector-evaluation.md
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 enum ObjectID
 {

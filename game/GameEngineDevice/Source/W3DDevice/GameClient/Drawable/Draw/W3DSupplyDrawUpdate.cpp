@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <algorithm>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 static const Int& bfmeMax(const Int& left, const Int& right)
 {

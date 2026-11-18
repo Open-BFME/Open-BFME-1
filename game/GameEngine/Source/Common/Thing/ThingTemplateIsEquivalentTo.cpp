@@ -14,8 +14,8 @@
 #define _DLL
 #include <string.h>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <class T> class StringBase
 {

@@ -17,8 +17,8 @@
 // The AI interface is opaque apart from slot 97, so the preceding slots are
 // placeholders.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define BFME_SLOT( N ) virtual int bfmeSlot##N( void ) = 0
 

@@ -3,8 +3,8 @@
 // above the terrain; both height queries dispatch through retail slot 0x248.
 #include "StringInline.h"
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

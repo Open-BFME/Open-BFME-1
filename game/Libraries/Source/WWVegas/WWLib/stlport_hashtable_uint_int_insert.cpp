@@ -18,8 +18,8 @@
 // There is no unwind frame, so this translation unit is built without
 // exceptions and STLport's try around the construct is gone.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 namespace _STL
 {

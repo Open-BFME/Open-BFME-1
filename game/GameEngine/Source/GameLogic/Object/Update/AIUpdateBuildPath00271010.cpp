@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Opaque path-builder body at retail RVA 0x00271010.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);

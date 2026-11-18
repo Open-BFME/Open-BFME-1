@@ -8,9 +8,9 @@
 extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

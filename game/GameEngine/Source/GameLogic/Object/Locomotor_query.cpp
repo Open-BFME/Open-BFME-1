@@ -2,8 +2,8 @@
 // Retail RVA 0x001B7E90, 297 bytes.
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum BodyDamageType
 {

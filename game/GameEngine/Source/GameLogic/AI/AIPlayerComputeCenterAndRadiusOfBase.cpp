@@ -2,8 +2,8 @@
 // ?computeCenterAndRadiusOfBase@AIPlayer@@IAEXPAUCoord3D@@PAM@Z
 // cl: /O2 /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include <math.h>
 

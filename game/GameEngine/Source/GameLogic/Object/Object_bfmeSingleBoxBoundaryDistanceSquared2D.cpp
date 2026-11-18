@@ -3,8 +3,8 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/matrix3d.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" double __cdecl fabs(double value);
 extern "C" double __cdecl sqrt(double value);

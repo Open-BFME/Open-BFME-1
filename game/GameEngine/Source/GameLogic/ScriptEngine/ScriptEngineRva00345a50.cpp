@@ -9,8 +9,8 @@
 // misleading GameSpyGroupRoom alias printed by the historical ledger.
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Parameter
 {

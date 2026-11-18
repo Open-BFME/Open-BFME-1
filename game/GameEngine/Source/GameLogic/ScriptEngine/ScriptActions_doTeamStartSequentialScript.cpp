@@ -2,8 +2,8 @@
 // Open-BFME: TEAM_EXECUTE_SEQUENTIAL_SCRIPT(_LOOPING) at retail RVA
 // 0x002F4E80.  The two dispatch arms share this team sequential-script body.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

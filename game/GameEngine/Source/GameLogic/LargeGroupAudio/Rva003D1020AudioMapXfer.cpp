@@ -2,8 +2,8 @@
 // "AudioMap" record-vector transfer, retail 0x003D1020 (500 bytes). The owner stays
 // address-derived; each record is transferred by 0x003D0A40 with the version as context.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned int count);

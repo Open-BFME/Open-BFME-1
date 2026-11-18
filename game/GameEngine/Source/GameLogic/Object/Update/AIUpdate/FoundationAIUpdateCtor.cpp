@@ -24,8 +24,8 @@ class ModuleData;
 class Object;
 class AsciiString;
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

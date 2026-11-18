@@ -16,8 +16,8 @@
 // getTemplate() is vtable slot 10 (+0x28) on the object and is called twice: once
 // for the guard and once for the sound, because a virtual call is not CSEd.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 enum { BFME_SOUND_ENTER = 101 };

@@ -24,8 +24,8 @@
 // the 40-byte block before the 12-byte one on both paths; declaring the status
 // temporary first reorders those copies and costs 3 bytes.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class LuaScriptEngine;

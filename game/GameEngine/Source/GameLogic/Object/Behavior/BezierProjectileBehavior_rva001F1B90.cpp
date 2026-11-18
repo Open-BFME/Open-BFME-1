@@ -24,8 +24,8 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

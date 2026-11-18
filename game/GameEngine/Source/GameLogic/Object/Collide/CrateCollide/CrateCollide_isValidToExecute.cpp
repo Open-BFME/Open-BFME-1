@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)

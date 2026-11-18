@@ -2,8 +2,8 @@
 //
 // BFME reconstruction of AIRampageState::onEnter at retail 0x0017EA20.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

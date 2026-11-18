@@ -5,9 +5,9 @@
 // 2-arg TerrainLogic::getLayerForDestination, a 4-arg ICoord2D iterate that
 // hardcodes the tighten callback, and an out-of-line info initializer.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

@@ -13,8 +13,8 @@
 #include <vector>
 #include <hash_map>
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

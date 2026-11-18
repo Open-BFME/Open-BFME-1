@@ -28,8 +28,8 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../../GameEngine/Source/Common/System/xfer.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class BaseHeightMapFloorElement
 {

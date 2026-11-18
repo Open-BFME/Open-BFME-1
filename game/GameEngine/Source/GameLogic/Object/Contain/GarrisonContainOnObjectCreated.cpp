@@ -8,8 +8,8 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 class ThingTemplate;

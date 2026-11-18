@@ -52,8 +52,8 @@ static __forceinline int asciiCompare( const AsciiString &left, const AsciiStrin
 	return thisLen - thatLen;
 }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

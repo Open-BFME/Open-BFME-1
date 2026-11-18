@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

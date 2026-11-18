@@ -3,8 +3,8 @@
 // BFME HordeContain::getMembers, retail 0x002388F0, 286 bytes.
 // The dump thunk at ILT 0x00011D24 is HordeContain's secondary-interface slot 60.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

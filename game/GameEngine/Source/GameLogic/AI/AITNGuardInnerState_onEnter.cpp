@@ -5,8 +5,8 @@
 // Zero Hour's body from AITNGuard.cpp.
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

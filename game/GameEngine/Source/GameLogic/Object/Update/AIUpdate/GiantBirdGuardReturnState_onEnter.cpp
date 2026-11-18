@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // GiantBirdGuardReturnState::onEnter at retail RVA 0x002C0D50.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

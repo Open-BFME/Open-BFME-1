@@ -9,8 +9,8 @@ extern "C" double sqrt(double value);
 
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
 
 #include "ascii_string.h"

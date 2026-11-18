@@ -4,8 +4,8 @@
 // ZH ReturnState::update plus inlined hasAttackedMeAndICanReturnFire and
 // BFME melee-target resolve (testStatus 0x25 then bfmeResolveMeleeTarget).
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/ObjectID.h"
 

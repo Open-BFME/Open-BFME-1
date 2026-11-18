@@ -15,8 +15,8 @@
 // length at +4 of the string buffer; both come from Shell_showShellMap.cpp,
 // which is byte-matched.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeStringData
 {

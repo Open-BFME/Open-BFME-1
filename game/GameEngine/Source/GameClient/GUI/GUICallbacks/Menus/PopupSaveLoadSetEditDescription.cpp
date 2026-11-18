@@ -4,8 +4,8 @@
 // that TU already owns SaveLoadMenu* rows, so this lives here. BFME drops the
 // four-char extension strip and reads m_mapName from TheWritableGlobalData+8.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 extern const unsigned short BFMEEmptyUnicodeString;
 
