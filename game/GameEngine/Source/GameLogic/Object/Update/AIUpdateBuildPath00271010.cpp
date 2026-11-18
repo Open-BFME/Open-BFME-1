@@ -9,11 +9,11 @@ void __cdecl operator delete(void *);
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 class Object
 {

@@ -18,10 +18,10 @@ typedef float Real;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_GROUND = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class PathfindCell
 {

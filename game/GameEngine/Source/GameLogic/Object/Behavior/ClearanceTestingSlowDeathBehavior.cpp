@@ -17,7 +17,7 @@ typedef float Real;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum PathfindLayerEnum { LAYER_INVALID = 0 };
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 #include "Lib/Coord3D.h"
 #include "Lib/Coord2D.h"

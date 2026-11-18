@@ -23,7 +23,7 @@ typedef int Int;
 typedef int Bool;
 
 enum ExitDoorType { DOOR_1 = 0 };
-enum PathfindLayerEnum { LAYER_GROUND = 0 };
+#include "../../../../../Include/Common/Enums/PathfindLayerEnum.h"
 #include "../../../command_source_type.h"
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"

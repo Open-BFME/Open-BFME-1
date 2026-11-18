@@ -3,7 +3,7 @@
 typedef int Int;
 typedef bool Bool;
 typedef unsigned char UByte;
-enum PathfindLayerEnum { LAYER_GROUND = 1 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

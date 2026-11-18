@@ -67,10 +67,10 @@ public:
 
 class Module;
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_GROUND = 0
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class Object;
 

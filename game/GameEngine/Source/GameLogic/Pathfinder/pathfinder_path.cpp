@@ -26,10 +26,10 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

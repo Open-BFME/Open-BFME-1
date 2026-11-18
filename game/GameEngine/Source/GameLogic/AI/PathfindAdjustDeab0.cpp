@@ -14,7 +14,7 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

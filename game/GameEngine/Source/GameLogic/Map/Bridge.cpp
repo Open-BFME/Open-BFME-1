@@ -8,7 +8,7 @@ typedef float Real;
 enum BodyDamageType { BODY_RUBBLE = 3 };
 enum DamageType { DAMAGE_FALLING = 11 };
 enum DeathType { DEATH_SPLATTED = 11 };
-enum PathfindLayerEnum {};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfoInput

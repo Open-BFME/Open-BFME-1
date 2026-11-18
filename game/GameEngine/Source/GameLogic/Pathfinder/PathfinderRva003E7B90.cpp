@@ -25,10 +25,10 @@ extern void j_00042249();
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 struct BfmeMovementPositionInfo
 {

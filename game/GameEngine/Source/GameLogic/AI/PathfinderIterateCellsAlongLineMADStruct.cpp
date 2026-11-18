@@ -12,10 +12,10 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class PathfindCell
 {

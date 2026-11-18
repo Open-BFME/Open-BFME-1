@@ -25,11 +25,11 @@ struct Coord3D
 	void set( const Coord3D *p ) { x = p->x; y = p->y; z = p->z; }
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 struct PathfindMovementProfile
 {

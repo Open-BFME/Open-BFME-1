@@ -8,10 +8,10 @@ typedef float Real;
 #include <stddef.h>
 extern void j_000022bb( void );
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

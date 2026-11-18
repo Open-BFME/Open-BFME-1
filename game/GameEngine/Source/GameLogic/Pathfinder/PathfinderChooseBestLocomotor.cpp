@@ -20,10 +20,10 @@ __forceinline Int bfmeFloatToInt(Real value)
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class PathfindCell
 {

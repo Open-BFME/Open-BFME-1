@@ -37,7 +37,7 @@ public:
 };
 
 // Declared as PathfinderClearCellForDiameter.cpp defines the 0x003DC810 body.
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class Pathfinder
 {

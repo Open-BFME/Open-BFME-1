@@ -13,12 +13,12 @@ typedef bool Bool;
 #define g_bfmeDirectionWeight1285 10.0f
 #define g_bfmeScaleBK 0.1f
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1,
-	LAYER_WALL = 15
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

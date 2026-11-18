@@ -24,10 +24,10 @@ struct ICoord2D
 	Int x, y;
 };
 
-enum PathfindLayerEnum
-{
-	RVA003F1690_LAYER_INVALID = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum KindOfType
 {

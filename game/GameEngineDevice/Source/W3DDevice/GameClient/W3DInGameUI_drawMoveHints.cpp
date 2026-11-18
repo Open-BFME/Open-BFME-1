@@ -28,11 +28,11 @@ class Matrix3D
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../../GameEngine/Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 #define DECLARE_TEN(prefix) \
 	virtual void prefix##0(); virtual void prefix##1(); \

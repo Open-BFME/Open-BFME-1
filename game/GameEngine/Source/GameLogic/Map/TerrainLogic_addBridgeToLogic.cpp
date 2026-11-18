@@ -13,9 +13,9 @@ class BridgeInfo
 
 class Dict;
 
-enum PathfindLayerEnum
-{
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
 
 class Bridge
 {

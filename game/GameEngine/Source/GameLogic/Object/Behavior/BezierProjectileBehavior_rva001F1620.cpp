@@ -8,10 +8,10 @@ typedef unsigned int UnsignedInt;
 
 #include <Lib/Coord3D.h>
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum DamageType
 {

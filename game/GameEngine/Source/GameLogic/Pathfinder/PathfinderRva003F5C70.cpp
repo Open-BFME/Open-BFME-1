@@ -35,7 +35,7 @@ extern "C" __declspec(dllimport) double __cdecl floor(double);
 
 
 
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1, LAYER_LAST = 15 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // Retail 0x01075C74 is ?g_bfmeDirectionWeight1285@@3MB (data_rows.csv,
 // AI/PathfinderDirectionWeight1285.cpp); g_pathfindCellSize was only a pin.

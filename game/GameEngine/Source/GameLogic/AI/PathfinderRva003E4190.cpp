@@ -14,10 +14,10 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_DUMMY = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class BFMEObjectLayerQuery
 {

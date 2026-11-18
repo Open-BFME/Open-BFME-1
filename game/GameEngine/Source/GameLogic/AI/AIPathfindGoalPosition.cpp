@@ -5,10 +5,10 @@
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // BFME stores these pathfinding fields at different offsets than the later
 // Zero Hour Object layout used by the shared headers.

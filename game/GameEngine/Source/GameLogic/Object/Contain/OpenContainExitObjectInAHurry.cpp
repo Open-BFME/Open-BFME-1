@@ -35,10 +35,10 @@ enum KindOfType
 	KINDOF_VEHICLE = 9
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum ModelConditionFlagType
 {

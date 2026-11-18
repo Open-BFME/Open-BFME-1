@@ -12,10 +12,10 @@
 #include "coord.h"
 typedef unsigned int ObjectID;
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 extern const float g_bfmeDirectionWeight1285;
 extern const float g_Rva010977E0;

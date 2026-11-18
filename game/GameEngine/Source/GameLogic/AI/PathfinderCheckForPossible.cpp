@@ -44,10 +44,10 @@ typedef unsigned short zoneStorageType;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_GROUND = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // The compact BFME movement profile: the pair of ZoneBlock flags the Zero Hour
 // twin spells as separate arguments (getValidSurfaces, isCrusher) is one

@@ -51,10 +51,10 @@ enum KindOfType
 	KINDOF_IMMOBILE = 2
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class PathfindCell;
 

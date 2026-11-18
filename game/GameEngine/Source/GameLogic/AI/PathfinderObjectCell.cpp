@@ -28,10 +28,10 @@ class Object;
 class Pathfinder;
 class PathfindCell;
 
-enum PathfindLayerEnum
-{
-	PATHFIND_LAYER_DUMMY = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

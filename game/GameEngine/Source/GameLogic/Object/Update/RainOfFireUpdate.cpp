@@ -27,10 +27,10 @@ typedef bool Bool;
 
 
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum WeaponSlotType
 {

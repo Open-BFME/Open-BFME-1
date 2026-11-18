@@ -7,7 +7,7 @@
 #include "Common/Thing/GameLogicObjectLookup.h"
 extern GameLogic *TheGameLogic;
 
-enum PathfindLayerEnum { LAYER_INVALID = 0, LAYER_GROUND = 1 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 class TerrainLogic { public: PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *); };
 extern TerrainLogic *TheTerrainLogic;
 class Team;

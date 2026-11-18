@@ -21,10 +21,10 @@ typedef unsigned short UnsignedShort;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../../GameEngine/Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // BFME's REAL_TO_INT_FLOOR: CRT floor() then the engine's x87 round.
 __forceinline long fast_float2long_round(Real f)

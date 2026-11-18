@@ -13,10 +13,10 @@ enum StateExitType
 	STATE_EXIT_UNKNOWN = 0
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum WeaponSlotType
 {
