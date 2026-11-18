@@ -1,7 +1,7 @@
 // ?isSourceObjectWithGoalPositionWithinAttackRange@Weapon@@QBE_NPBVObject@@PBUCoord3D@@01@Z
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

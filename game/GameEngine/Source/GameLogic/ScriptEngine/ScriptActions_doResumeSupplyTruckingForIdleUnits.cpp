@@ -6,8 +6,8 @@
 // The player-mask loop and the fallback field at Player+0x2c match the BFME
 // rewrite of the Zero Hour action.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
 
 class BfmeScriptEngine_getPlayerMaskFromAsciiString

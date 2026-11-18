@@ -8,8 +8,8 @@
 // the five-argument view operation proven by the adjacent camera wrappers.
 // The three anonymous retail constants are written as their float values.
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // The two calls use the existing View vtable. This view declares no virtual
 // slots or object layout; the receiver and call signatures follow retail.

@@ -5,8 +5,8 @@
 // signature.  Retail calls ScriptEngine::getUnitNamed at +0x68, Object's
 // getDrawable at +0x28, and the named Drawable::setEmoticon ILT.
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

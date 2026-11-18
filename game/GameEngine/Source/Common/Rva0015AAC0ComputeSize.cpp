@@ -8,8 +8,8 @@
 // constructor, so the width goes from the FPU straight into the return slot
 // and the height is copied from the local, as retail does.
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // The pair computeSize returns: width then height, built in the caller's
 // return slot.  Address-derived; the retail type is not proven.

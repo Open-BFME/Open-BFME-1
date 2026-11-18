@@ -3,8 +3,8 @@
 // The BFME passenger-bone list lives at OpenContainModuleData+0x11C. Each
 // entry stores a 116-bit KindOf mask at +0x08 and an AsciiString at +0x20.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 template <int NUMBITS>
 class BitFlags

@@ -1,8 +1,8 @@
 // Retail 0x003F6D20: PathfindCell cost accumulated from a parent cell.
 // The compact BFME cell layout differs from the reference game header.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

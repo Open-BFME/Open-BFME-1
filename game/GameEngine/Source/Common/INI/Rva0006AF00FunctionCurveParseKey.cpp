@@ -1,7 +1,7 @@
 // cl: /Iinputs/reference/shims/iniexception /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "Common/INIException.h"
 

@@ -7,8 +7,8 @@
 // 0x001EDCA0 (naked ModuleData-dtor claim; identity-suspect). No matched
 // caller names this symbol; bfmeCanAutoFire is descriptive.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class CommandButton;

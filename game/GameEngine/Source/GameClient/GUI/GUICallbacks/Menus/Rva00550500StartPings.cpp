@@ -7,8 +7,8 @@
 #include <string>
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString : private StringBase<char>
 {

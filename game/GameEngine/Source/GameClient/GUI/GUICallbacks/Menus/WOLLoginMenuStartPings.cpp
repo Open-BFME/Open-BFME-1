@@ -5,8 +5,8 @@
 #include <list>
 #include <string>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

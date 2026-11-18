@@ -13,8 +13,8 @@
 // is 2^38 / 0x78787879, which is 136. The bound test is unsigned even though
 // the pointer difference is signed, because the index is not.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

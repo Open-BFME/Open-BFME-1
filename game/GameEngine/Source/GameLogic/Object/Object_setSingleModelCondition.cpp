@@ -22,8 +22,8 @@
 // reason -- nothing here supplies a better one, and the width is
 // mangling-neutral because a typedef name never reaches the decoration.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include <string.h>
 
 template<int NUMBITS>

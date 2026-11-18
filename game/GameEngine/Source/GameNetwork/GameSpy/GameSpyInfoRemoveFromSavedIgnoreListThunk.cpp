@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // readable body of ?removeFromSavedIgnoreList@GameSpyInfo@@UAEXH@Z: game/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

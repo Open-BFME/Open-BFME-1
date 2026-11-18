@@ -12,8 +12,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct FieldParse;
 

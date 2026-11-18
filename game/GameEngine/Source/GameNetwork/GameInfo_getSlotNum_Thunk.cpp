@@ -2,8 +2,8 @@
 // readable body of ?getSlotNum@GameInfo@@QBEHVAsciiString@@@Z: game/GameEngine/Source/GameNetwork/GameInfo.cpp
 // The local string declarations preserve BFME's by-value ABI and call names.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 template <typename T> struct StringInlineData
 {

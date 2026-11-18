@@ -14,8 +14,8 @@
 // cast emits __ftol2, and /QIfist emits a qword fistp, while retail stores a
 // dword.
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 

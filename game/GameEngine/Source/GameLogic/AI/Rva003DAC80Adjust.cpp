@@ -3,8 +3,8 @@
 // Twin of the matched 0x003DAD60 wrapper; this one walks the ground-layer
 // circular iterator 0x003D9F00 (ILT 0x000135E3) instead of 0x003DA3C0.
 // Retail wrapper keeps its unknown method identity address-derived.
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "Lib/Coord3D.h"
 

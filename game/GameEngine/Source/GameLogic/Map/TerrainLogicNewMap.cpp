@@ -9,8 +9,8 @@
 // TerrainLogic::getGroundHeight body.  BFME's waypoint list is global, unlike
 // the member list in the Zero Hour header.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" void __cdecl __identifier("?buildBeacons@TerrainLogic@@IAEXXZ")();
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

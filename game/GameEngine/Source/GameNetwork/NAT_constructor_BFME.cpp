@@ -6,8 +6,8 @@
 // connection-state array starts at 0x44, each connection node occupies eight
 // bytes at 0x64, and the BFME-only mangled-port flag is at 0xc4.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class GameSlot;
 class Transport;

@@ -2,9 +2,9 @@
 // W3DDebugDisplay::drawText, retail 0x006E6D30, 220 bytes.
 // The receiver offsets and DisplayString slots match the retail body.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef char Char;
+
 typedef unsigned short WideChar;
 
 class AsciiString;

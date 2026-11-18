@@ -7,8 +7,8 @@
 // minimum test reading the argument and the maximum test the stored zoom.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class GameClient
 {

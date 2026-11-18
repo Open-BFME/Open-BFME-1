@@ -1,8 +1,8 @@
 // cl: /O2 /Ob1 /DNDEBUG /MD /EHsc
 // BFME function-curve field parser at retail RVA 0x000BD900.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl sscanf(const char *, const char *, ...);
 extern "C" int __cdecl strcmp(const char *, const char *);

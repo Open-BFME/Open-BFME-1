@@ -4,9 +4,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum DisabledType
 {

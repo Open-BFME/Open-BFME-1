@@ -12,8 +12,8 @@
 // argument-less members on this. The sorting-array path uses the verified
 // Allocate_Sorting_Dynamic_Buffer provider at RVA 0091F040.
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // Match the existing slot-storage owner in DynamicVBAccessClassDeinitBFME.cpp.
 class BFMEVertexFVFInfo

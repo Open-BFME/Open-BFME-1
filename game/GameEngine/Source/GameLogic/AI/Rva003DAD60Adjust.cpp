@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Include
 // Retail wrapper keeps its unknown method identity address-derived.
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "Lib/Coord3D.h"
 

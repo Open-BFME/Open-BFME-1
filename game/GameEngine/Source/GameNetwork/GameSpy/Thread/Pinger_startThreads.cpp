@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME conversion of Pinger::startThreads at retail 0x0065EFD0.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 class PingRequest;

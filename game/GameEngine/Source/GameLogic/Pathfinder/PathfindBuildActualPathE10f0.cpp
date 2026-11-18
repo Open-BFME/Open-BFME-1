@@ -5,8 +5,8 @@
 class Object;
 class PathfindCell;
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int LocomotorSurfaceTypeMask;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

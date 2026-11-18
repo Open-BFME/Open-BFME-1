@@ -17,8 +17,8 @@
 // base constructor, so the vptr belongs to this class and the base subobject is
 // empty.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ObjectCreationList.h
 class ObjectCreationNugget

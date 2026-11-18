@@ -23,8 +23,8 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 	return result ? result : length - otherLength;
 }
 
-typedef float Real;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player
 {

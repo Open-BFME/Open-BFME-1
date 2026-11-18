@@ -4,8 +4,8 @@
 // +0xB4, +0xFC, +0x104, +0x108, then the FXNugget base.
 // BFME FieldParse table 0x00CF2F80 names the extended tail fields.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

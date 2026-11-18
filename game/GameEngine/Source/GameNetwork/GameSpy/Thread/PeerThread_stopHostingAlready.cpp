@@ -16,8 +16,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <string>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef void *PEER;
 typedef unsigned int SOCKET;
 

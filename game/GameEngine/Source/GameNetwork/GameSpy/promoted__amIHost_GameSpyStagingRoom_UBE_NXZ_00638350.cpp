@@ -12,8 +12,8 @@
 // before getConstSlot is called rather than after.
 #include "Common/AsciiString.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot

@@ -2,8 +2,8 @@
 // GameWindowTransitionsHandler::findGroup. ZH twin with BFME string layout
 // and inlined compareNoCase (ControlBarScheme_find donor).
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 

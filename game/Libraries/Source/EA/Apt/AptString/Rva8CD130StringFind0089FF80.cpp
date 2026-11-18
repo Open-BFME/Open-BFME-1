@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef unsigned short UnsignedShort;
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct Rva8CD130StringData
 {

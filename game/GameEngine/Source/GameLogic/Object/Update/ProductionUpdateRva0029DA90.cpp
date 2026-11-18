@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 
 class Player;

@@ -4,8 +4,8 @@
 
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Rva007A1230ArrayOwner
 {

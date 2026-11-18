@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME: address-derived PassengerBone INI callback, retail 0x002274A0.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)

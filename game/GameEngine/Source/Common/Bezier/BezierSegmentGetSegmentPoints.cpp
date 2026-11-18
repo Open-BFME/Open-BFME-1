@@ -2,8 +2,8 @@
 // stlport
 // readable body of ?getSegmentPoints@BezierSegment@@QBEXHPAV?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@@Z: game/GameEngine/Source/Common/Bezier/BezierSegmentGetSegmentPoints.cpp
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D
 {

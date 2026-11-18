@@ -17,8 +17,8 @@
 
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // Existing BFME ICF-folded four-byte member constructor spelling.  The actual
 // body is shared by several unrelated member classes at ILT 0x0003747A.

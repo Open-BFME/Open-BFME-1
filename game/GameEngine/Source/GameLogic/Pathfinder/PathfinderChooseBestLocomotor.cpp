@@ -1,7 +1,7 @@
 // BFME choose-best-locomotor query at retail 0x003D5CA0.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

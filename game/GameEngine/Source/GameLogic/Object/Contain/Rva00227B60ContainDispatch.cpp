@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD
 // Open-BFME: containment dispatch body at retail RVA 0x00227B60, 103 bytes.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ObjectStatusTypes { OBJECT_STATUS_05 = 5 };
 

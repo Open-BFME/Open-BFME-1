@@ -8,8 +8,8 @@
 // behavior are proven by the constructor/caller pair and the retail body, but
 // no surviving public declaration names this private helper.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class File
 {

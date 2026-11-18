@@ -2,8 +2,8 @@
 // W3DShrubBuffer method at retail 0x0071CF40: for a visible shrub whose type has a mesh and its +0x44 flag, reports
 // the position, ten times the scale and two float pairs of the type, and returns whether it did.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct Rva0071CF40TypeRecord
 {

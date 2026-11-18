@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 enum { TRUE = 1, FALSE = 0 };
 

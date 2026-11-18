@@ -3,8 +3,8 @@
 // The Ghidra 143-byte extent omitted six live epilogue bytes.
 // Typed script-condition caller via ILT 0x1FF1E proves two BitFlags<192> values.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <int NUMBITS>
 class BitFlags

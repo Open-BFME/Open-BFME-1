@@ -11,8 +11,8 @@ extern "C" __declspec(dllimport) void __stdcall AIL_stream_ms_position(
 	HSTREAM stream, long *total_milliseconds, long *current_milliseconds);
 extern "C" __declspec(dllimport) void __stdcall AIL_close_stream(HSTREAM stream);
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #define INT_TO_REAL(x) ((Real) (x))
 

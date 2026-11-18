@@ -11,8 +11,8 @@
 #include <bitset>
 #include <list>
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AIGroup;
 
