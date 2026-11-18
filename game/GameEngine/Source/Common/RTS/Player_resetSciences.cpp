@@ -2,10 +2,10 @@
 
 typedef int Int;
 
-enum ScienceType
-{
-	SCIENCE_VALUE = 0
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 struct ICoord2D
 {

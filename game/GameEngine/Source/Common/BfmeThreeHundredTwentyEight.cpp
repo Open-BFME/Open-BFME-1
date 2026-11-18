@@ -25,9 +25,9 @@ struct BfmeOuterRZ
 // Retail's callee at 0x00029311 is the AIInternalMoveToState::onExit ILT
 // (game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExitShim.cpp);
 // the call site pushes one word and reaches it through ECX.
-enum StateExitType
-{
-};
+#include "../../Include/Common/Enums/StateExitType.h"
+
+
 
 class AIInternalMoveToState
 {

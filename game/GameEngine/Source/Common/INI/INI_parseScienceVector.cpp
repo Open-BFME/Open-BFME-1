@@ -16,7 +16,7 @@ typedef int Int;
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../Include/Common/Enums/ScienceType.h"
 
 // BFME does not call INI::scanScience here: the token goes to the science
 // store, whose pointer sits at 0x012ED7AC, through

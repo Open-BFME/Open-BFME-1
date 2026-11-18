@@ -6,11 +6,11 @@
 
 typedef int ObjectID;
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0,
-	STATE_EXIT_RESET = 1
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
+
 
 enum ObjectEnterExitType
 {

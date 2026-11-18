@@ -105,10 +105,10 @@ public:
 	bool isWithinAttackRange(const Object *source, const Object *target, int extra) const;
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // DamageInfoInput::m_sourceID is the only member this body reads; the Zero
 // Hour DamageInfoInput derives from Snapshot, which is why the id is not at +0.

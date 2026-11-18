@@ -145,7 +145,7 @@ struct BfmeOwnerCLB
 
 // Retail 0x001746E0 first calls ILT 0x29311 -> matched 0x00172D80,
 // AIInternalMoveToState::onExit, non-virtually on this (callees.py).
-enum StateExitType { EXIT_NORMAL };
+#include "../../Include/Common/Enums/StateExitType.h"
 
 class AIInternalMoveToState
 {

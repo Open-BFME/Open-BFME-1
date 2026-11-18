@@ -8,7 +8,7 @@
 // ?addScience@Player@@AAE_NW4ScienceType@@@Z at 0x000D5380.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../Include/Common/Enums/ScienceType.h"
 
 // Declaration only: the body is owned by
 // game/GameEngine/Source/Common/RTS/Player_addScience_bfme.cpp at 0x000D5380.

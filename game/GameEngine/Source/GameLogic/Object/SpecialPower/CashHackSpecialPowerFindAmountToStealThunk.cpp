@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CashHackSpecialPower.h
-enum ScienceType
-{
-	SCIENCE_UNRECONSTRUCTED
-};
+#include "../../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class Player
 {

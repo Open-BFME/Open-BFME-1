@@ -2,7 +2,7 @@
 
 // Ported from the Zero Hour OCLSpecialPower::findOCL twin.
 
-enum ScienceType {};
+#include "../../../../Include/Common/Enums/ScienceType.h"
 class ObjectCreationList;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h

@@ -6,10 +6,10 @@
 
 #include <vector>
 
-enum ScienceType
-{
-	Rva0034C830ScienceType = 0
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 namespace _STL
 {

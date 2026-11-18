@@ -7,10 +7,10 @@
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-enum StateExitType
-{
-	STATE_EXIT_UNKNOWN = 0
-};
+#include "../../../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

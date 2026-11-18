@@ -168,9 +168,9 @@ public:
 // ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z
 // (AIInternalMoveToStateOnExitShim.cpp), through ECX with one stack word that
 // the thunk's tail jump consumes with `ret 4`.
-enum StateExitType
-{
-};
+#include "../../Include/Common/Enums/StateExitType.h"
+
+
 
 class AIInternalMoveToState
 {

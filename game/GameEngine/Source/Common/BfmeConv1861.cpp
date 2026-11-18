@@ -151,7 +151,7 @@ public:
 // callees.py 0x001749A0: the first call is ILT 0x00029311 -> 0x00172D80,
 // the matched AIInternalMoveToState::onExit, called non-virtually (the
 // base-class step of a derived state's onExit).
-enum StateExitType { };
+#include "../../Include/Common/Enums/StateExitType.h"
 class AIInternalMoveToState
 {
 public:

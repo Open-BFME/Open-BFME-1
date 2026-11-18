@@ -3,10 +3,10 @@
 
 #include <vector>
 
-enum ScienceType
-{
-	Rva003C2720ScienceType = 0
-};
+#include "../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 namespace _STL
 {

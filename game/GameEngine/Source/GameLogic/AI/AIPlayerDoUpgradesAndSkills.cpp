@@ -13,7 +13,7 @@ template<class T> inline void StringBase<T>::concat(T c) { concat(&c,1); }
 #include "ascii_string.h"
 typedef int Int;
 typedef bool Bool;
-enum ScienceType {};
+#include "../../../Include/Common/Enums/ScienceType.h"
 #include "../../../Include/Common/NameKeyType.h"
 class Player {
  char pad00[0x20]; NameKeyType m_playerNameKey; char pad24[4]; AsciiString m_side;

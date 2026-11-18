@@ -2,10 +2,10 @@
 
 typedef bool Bool;
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Rva00178B40AI
 {

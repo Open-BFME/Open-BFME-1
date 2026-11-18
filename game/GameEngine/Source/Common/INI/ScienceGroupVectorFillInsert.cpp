@@ -21,10 +21,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-enum ScienceType
-{
-    SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 typedef _STL::vector<ScienceType> ScienceVec;
 

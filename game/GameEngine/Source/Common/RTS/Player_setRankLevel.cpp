@@ -5,7 +5,7 @@ typedef int Int;
 typedef float Real;
 typedef bool Bool;
 
-enum ScienceType {};
+#include "../../../Include/Common/Enums/ScienceType.h"
 
 #include "ascii_string.h"
 

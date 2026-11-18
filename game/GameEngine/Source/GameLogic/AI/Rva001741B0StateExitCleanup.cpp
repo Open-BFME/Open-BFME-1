@@ -35,10 +35,10 @@ struct StateMachine
 // game/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExitShim.cpp.
 // The call is spelled with that owner and its exit enum instead of a local
 // namesake, so the object references a body the link can resolve.
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class AIInternalMoveToStateOnExitShim
 {

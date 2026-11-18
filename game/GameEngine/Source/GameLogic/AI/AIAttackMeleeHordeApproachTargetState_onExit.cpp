@@ -11,10 +11,10 @@ typedef int Int;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Object;
 

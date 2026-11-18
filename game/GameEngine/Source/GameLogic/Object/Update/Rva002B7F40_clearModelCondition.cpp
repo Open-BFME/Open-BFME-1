@@ -4,11 +4,11 @@
 
 typedef unsigned int UnsignedInt;
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0,
-	EXIT_RESET = 1
-};
+#include "../../../../Include/Common/Enums/StateExitType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object

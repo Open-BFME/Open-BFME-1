@@ -27,10 +27,10 @@
 // name lets this call site pin to the ILT it really calls without disturbing
 // the _Construct names the ledger pins elsewhere.
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 struct Gen_t_000bc360_k4;
 struct Gen_t_000bc360_p12cd;

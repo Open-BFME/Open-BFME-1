@@ -16,10 +16,10 @@ public:
 };
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class ScienceStore
 {

@@ -8,10 +8,10 @@ typedef unsigned char UnsignedByte;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 struct XferVersion
 {

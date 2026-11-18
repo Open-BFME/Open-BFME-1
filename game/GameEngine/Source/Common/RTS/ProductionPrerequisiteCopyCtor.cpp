@@ -3,9 +3,9 @@
 
 #include <vector>
 
-enum ScienceType
-{
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
 
 template <class Type> class BfmeIntAllocator : public std::allocator<Type>
 {

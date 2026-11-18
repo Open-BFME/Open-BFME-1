@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <vector>
 
-enum ScienceType {};
+#include "../../Include/Common/Enums/ScienceType.h"
 
 struct Gen_t_004353c0_p8cd
 {

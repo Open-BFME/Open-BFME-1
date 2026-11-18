@@ -6,10 +6,10 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Object;
 

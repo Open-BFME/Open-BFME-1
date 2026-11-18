@@ -10,10 +10,10 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 template <Int NUMBITS>
 class BitFlags

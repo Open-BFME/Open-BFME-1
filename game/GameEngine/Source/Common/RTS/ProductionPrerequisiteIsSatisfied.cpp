@@ -6,9 +6,9 @@
 class Player;
 class ThingTemplate;
 
-enum ScienceType
-{
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
 
 enum UpgradeType
 {

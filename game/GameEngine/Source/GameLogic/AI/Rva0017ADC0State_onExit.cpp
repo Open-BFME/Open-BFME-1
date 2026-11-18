@@ -3,10 +3,10 @@
 
 typedef unsigned int UnsignedInt;
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Rva0017ADC0Locomotor
 {

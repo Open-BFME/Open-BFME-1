@@ -1,9 +1,9 @@
 // BFME layout view for the anonymous 0x0017AE70 state-exit body.
 
-enum StateExitType
-{
-	STATE_EXIT_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Object;
 

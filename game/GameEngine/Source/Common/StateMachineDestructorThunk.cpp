@@ -12,10 +12,10 @@
 
 typedef unsigned int StateID;
 
-enum StateExitType
-{
-	EXIT_RESET = 1
-};
+#include "../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class State
 {

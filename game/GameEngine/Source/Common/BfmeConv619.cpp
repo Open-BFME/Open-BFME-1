@@ -13,7 +13,7 @@ struct BfmeOwnerCLC
 
 // Retail 0x0017BA40+0x2B calls 0x00029311, the matched
 // onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z (a direct base call).
-enum StateExitType { EXIT_NORMAL };
+#include "../../Include/Common/Enums/StateExitType.h"
 
 class AIInternalMoveToState
 {
