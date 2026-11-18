@@ -5,10 +5,10 @@
 // hint before adding the new one instead of expiring the old hints of the
 // same source.
 
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord3D
 {

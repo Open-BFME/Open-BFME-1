@@ -2,11 +2,11 @@
 // ?rva00326f40@ScriptConditions@@IAE_NPAVParameter@@000@Z
 // Retail 0x00326F40: typed team walk and six-way integer comparison.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 #include "ascii_string.h"

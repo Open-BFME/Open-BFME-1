@@ -8,10 +8,10 @@
 // Map metadata getter remains bound to existing ILT00042807 (body00450FC0),
 // without inventing a new semantic callee pin.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 template <typename T> struct BfmeStringData
 {

@@ -14,11 +14,11 @@ extern "C" void _WriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 #pragma intrinsic(_WriteBarrier)
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 struct Coord3D

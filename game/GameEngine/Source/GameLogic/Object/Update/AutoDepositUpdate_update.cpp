@@ -9,10 +9,10 @@ inline UnicodeString::UnicodeString(const UnicodeString &that) { ((StringBase<un
 inline UnicodeString::UnicodeString() { m_text = 0; }
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Int Color;
 
 #define TRUE 1

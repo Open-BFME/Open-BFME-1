@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
 // GiantBirdGuardInnerState::onEnter at retail RVA 0x002BD020.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

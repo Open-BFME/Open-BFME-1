@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // BFME SlavedUpdate repair-position movement, based on the Zero Hour twin.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord3D
 {

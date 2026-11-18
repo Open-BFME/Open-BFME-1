@@ -11,10 +11,10 @@
 // to the retail body 0x000D86C0, ledgered in AICommandInterfaceMovementOrders.cpp.
 // Coord3D is struct-keyed to spell that callee as the ledger does.
 #include <vector>
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // class-gate: allow Coord3D user copy constructor: the canonical POD header emits 681 B / 257 diffs; retail's x87 copy of targetObj->m_position needs the copy-ctor view
 struct Coord3D

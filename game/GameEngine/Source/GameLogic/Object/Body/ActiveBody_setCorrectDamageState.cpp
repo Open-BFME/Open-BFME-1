@@ -30,10 +30,10 @@
 #include <vector>
 #include <bitset>
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Overridable
 {

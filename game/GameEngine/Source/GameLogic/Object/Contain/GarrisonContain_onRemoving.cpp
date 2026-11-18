@@ -15,11 +15,11 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
-typedef bool Bool;
-typedef float Real;
+
+
 
 class Object;
 class Team;

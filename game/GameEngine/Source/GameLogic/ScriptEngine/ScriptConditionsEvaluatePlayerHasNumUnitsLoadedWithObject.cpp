@@ -5,11 +5,11 @@
 // Retail reads Object::m_contain and ContainModuleInterface slot 65 to count loaded template matches.
 // Local list and iterator views describe the retail walks through team prototypes and team members.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 #define _STLP_USE_NEWALLOC 1

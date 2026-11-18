@@ -23,11 +23,11 @@
 #include <bitset>
 #include "Lib/Coord3D.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short PlayerMaskType;
-typedef float Real;
+
 
 class AsciiString;
 class Object;

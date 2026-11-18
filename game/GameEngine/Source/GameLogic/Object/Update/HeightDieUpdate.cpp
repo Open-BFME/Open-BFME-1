@@ -20,10 +20,10 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

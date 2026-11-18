@@ -37,10 +37,10 @@ template <> __declspec(noinline) inline int StringBase<char>::compare(const Stri
     return result;
 }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 template <typename T> inline void StringBase<T>::set(const T *s) { set(s, s ? strlen((const char*)s) : 0); }
 template <typename T> inline void StringBase<T>::concat(const StringBase<T>& s) {

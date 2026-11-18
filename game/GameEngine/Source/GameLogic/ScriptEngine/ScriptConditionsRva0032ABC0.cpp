@@ -19,10 +19,10 @@
 
 extern void j_00022a70();
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class PolygonTrigger;

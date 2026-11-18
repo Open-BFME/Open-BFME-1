@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef char Char;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 // The retail global is an array of WaterSetting objects (element size 0x7C, six
 // elements, base 0x012F1608) defined by Rva00C6B810StaticInit.cpp.  Only the

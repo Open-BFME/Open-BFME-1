@@ -10,10 +10,10 @@
 // a bridge layer's surface via Pathfinder::getLayer and
 // TerrainLogic::getLayerHeight.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #include <math.h>
 #include <stdlib.h>

@@ -26,10 +26,10 @@
 // after the height tests; the layer-insert arm falls through to the shared
 // final clear, which is why retail stores the cell dword twice there.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 struct Region2D { Coord2D lo, hi; };

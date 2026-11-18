@@ -8,10 +8,10 @@
 // straight to the particle update, the parent transform may come from a named
 // bone of the attached Drawable, and emission is one out-of-line call.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter( __int64 *count );
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency( __int64 *frequency );

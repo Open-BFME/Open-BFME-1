@@ -23,10 +23,10 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class Player;

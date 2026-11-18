@@ -19,10 +19,10 @@
 // member list before walking it.
 #include <list>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class Player;

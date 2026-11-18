@@ -17,10 +17,10 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->r
 
 
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct RGBColor;
 

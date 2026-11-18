@@ -16,10 +16,10 @@
 #include <string.h>
 #include <string>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
 
 template <class T> struct StringData

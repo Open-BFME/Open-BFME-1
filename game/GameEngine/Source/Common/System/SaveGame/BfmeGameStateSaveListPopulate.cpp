@@ -5,10 +5,10 @@
 // Explicit alternating-color branches preserve MSVC 7.1's Boolean mask;
 // reducing them to equivalent bit arithmetic removes a retail instruction.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 template <typename T> struct BfmeStringData
 {

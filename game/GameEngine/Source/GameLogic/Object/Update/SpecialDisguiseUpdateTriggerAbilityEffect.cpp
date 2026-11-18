@@ -27,10 +27,10 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int AudioHandle;
 
 // An enum: AudioEventRTS::setObjectID's parameter type is part of its symbol.

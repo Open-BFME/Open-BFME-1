@@ -13,10 +13,10 @@
 // fills it, and links it into the list at +0x14 next to a pair that already
 // uses the same two textures.
 
-typedef int Int;
-typedef float Real;
-typedef char Char;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #include "vector3.h"
 #include "aabox.h"

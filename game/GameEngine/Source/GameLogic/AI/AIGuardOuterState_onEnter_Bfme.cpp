@@ -5,10 +5,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

@@ -10,10 +10,10 @@
 // shape); VC7.1 cross-jumps the three operator= calls, which is what puts the
 // receiver lea before the source push at +0x234.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 

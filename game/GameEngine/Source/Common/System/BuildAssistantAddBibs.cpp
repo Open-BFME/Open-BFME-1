@@ -22,10 +22,10 @@
 // IMMOBILE bit 2 of word 0, SHRUBBERY bit 6 of word 0, CLEARED_BY_BUILD bit 18
 // of word 1, INERT bit 24 of word 2.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 

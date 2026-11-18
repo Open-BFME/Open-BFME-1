@@ -8,10 +8,10 @@
 
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int ObjectID;
 enum Relationship { ALLIES = 2 };
 class SpecialPowerTemplate;

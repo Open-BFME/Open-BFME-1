@@ -2,10 +2,10 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /MD /EHsc
 // BFME AIIdleState::update at retail RVA 0x00188090.
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

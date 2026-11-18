@@ -9,11 +9,11 @@
 // Object::findSpecialAbilityUpdate(0x27) and checks a virtual slot on the
 // result instead of the status-bit family.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 #include "ascii_string.h"

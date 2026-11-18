@@ -5,10 +5,10 @@
 #include <map>
 #include <string>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int Color;
 
 template <typename T>

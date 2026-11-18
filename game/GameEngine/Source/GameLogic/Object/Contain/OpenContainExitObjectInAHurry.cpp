@@ -18,10 +18,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum ExitDoorType
 {

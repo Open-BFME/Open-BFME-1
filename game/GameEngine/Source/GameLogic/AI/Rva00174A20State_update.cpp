@@ -4,13 +4,13 @@
 // position from the path's last node, and a non-continuing internal update
 // latches the state flag and plays the unit's VoiceDesperateAttack sound.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int AudioHandle;
 typedef unsigned int ObjectID;
-typedef bool Bool;
-typedef float Real;
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

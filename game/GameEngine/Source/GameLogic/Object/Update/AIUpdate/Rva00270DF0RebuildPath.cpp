@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Opaque AIUpdate path rebuild body recovered at retail RVA 0x00270DF0.
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include <stddef.h>
 extern void j_000022bb( void );

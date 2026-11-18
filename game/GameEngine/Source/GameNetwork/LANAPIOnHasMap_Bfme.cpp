@@ -24,10 +24,10 @@ inline UnicodeString::~UnicodeString(void)
 	((StringBase<wchar_t> *)this)->releaseBuffer();
 }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct BfmeNetAddress
 {

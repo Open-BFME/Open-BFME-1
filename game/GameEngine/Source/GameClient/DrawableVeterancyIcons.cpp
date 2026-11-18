@@ -20,11 +20,11 @@
 // in a row above level%5 Vet_Dot icons, both rows centred on the projected
 // health-box position.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int Color;
-typedef float Real;
-typedef bool Bool;
+
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

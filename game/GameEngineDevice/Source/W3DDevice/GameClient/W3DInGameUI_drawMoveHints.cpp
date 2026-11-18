@@ -12,10 +12,10 @@
 
 extern const char g_bfmeEmptyAscii[];
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 

@@ -20,10 +20,10 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int ObjectID;
 
 struct Rva0020BAE0Coord3D

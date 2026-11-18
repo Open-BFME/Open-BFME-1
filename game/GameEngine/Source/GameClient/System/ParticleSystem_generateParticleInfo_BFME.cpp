@@ -25,10 +25,10 @@
 // Rotate_Vector produce retail's z-first x87 order on their own.
 #include "matrix3d.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define INT_TO_REAL(x) ((Real)(x))
 #define MAX_SIZE_BONUS 50

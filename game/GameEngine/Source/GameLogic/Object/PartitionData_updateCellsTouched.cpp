@@ -34,10 +34,10 @@
 // Retail frees the COI array through operator delete[] (0x00881EF0).
 void __cdecl operator delete[](void *);
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" __declspec(dllimport) double __cdecl ceil(double);

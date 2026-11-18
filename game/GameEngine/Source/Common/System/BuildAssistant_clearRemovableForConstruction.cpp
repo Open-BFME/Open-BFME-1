@@ -16,10 +16,10 @@
 // 25 of the second and KINDOF_INERT bit 24 of the third.  Object's
 // effectively-dead flag is the low bit of the status byte at +0x344.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 

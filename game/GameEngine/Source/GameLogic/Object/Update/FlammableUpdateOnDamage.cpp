@@ -11,10 +11,10 @@
 // with half of the aflame damage amount (at least 1) or notifies the contain
 // module.  Unwitnessed members keep their offsets.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int ObjectID;
 #define NULL 0
 

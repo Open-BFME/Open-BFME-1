@@ -2,10 +2,10 @@
 // Retail 0x0015F420, 527 bytes: vtable 0x010965C8 slot 4 (onEnter), table installed by
 // Rva0015F070GuardState. Zero Hour twin: AIGuardRetaliateAttackAggressorState::onEnter.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum Relationship
 {

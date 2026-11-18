@@ -31,10 +31,10 @@
 // it anywhere in the body, just six sscanf calls through the IAT -- which is
 // why it is spelled out here as a static rather than reached for as a helper.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 #define TRUE true

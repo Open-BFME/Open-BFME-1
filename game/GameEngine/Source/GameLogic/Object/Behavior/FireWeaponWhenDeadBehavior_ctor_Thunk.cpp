@@ -33,10 +33,10 @@ class Thing;
 class ModuleData;
 class Object;
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
