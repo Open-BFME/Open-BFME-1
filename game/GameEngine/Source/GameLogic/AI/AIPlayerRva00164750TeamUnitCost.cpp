@@ -74,10 +74,18 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-class BfmeBuildIndexSetter
+// ILT 0x000237D1 reaches retail 0x000F9570, whose ledger row is
+// ?bfmeGo980A@BfmeA980@@QAEPAXH@Z (game/GameEngine/Source/Common/BfmeConv980.cpp).
+// Call that name so this unit links against the one retail body; the caller
+// consumes EAX as the unit cost.
+class BfmeA980
 {
 public:
-	Int set(Int value);
+	void *bfmeGo980A(int a);
+};
+
+class BfmeBuildIndexSetter
+{
 };
 
 class Team
@@ -227,7 +235,7 @@ Bool AIPlayer::rva00164750(TeamPrototype *proto)
 		if (buildIndex == -1)
 			thingCost = thing->calcCostToBuild(m_player, buildIndex);
 		else
-			thingCost = m_player->m_buildIndexSetter684.set(buildIndex);
+			thingCost = (Int)reinterpret_cast<BfmeA980 *>(&m_player->m_buildIndexSetter684)->bfmeGo980A(buildIndex);
 		totalCost += (float)((unitInfo[i].minUnits - count) * thingCost);
 		if ((float)m_player->m_money.m_money < totalCost)
 		{

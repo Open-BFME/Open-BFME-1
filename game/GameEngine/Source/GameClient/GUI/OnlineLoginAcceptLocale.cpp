@@ -15,11 +15,18 @@ class GameWindow;
 void GadgetListBoxGetSelected( GameWindow *window, int *selected );
 void *GadgetListBoxGetItemData( GameWindow *window, int row, int column );
 
-class WindowManager
+class WindowManager;
+
+// The APT CallChild calls go through ILT 0x00015235 to retail 0x004675F0,
+// whose ledger row is ?bfmeBuildAN@BfmeLevelAN@@QAEPADIHHHHHHH@Z
+// (game/GameEngine/Source/Common/BfmeLevelPathAN.cpp).  Call that name so the
+// unit links against the one retail body; ECX is still the WindowManager
+// read from 0x012F19E8, as in VictoryConditionsHideEndGame.cpp.
+class BfmeLevelAN
 {
 public:
-	void add( void *window, const char *name, int type, void *value,
-		int unused0, int unused1, int unused2, int unused3 );
+	char *bfmeBuildAN( unsigned int level, int p2, int p3, int p4, int p5,
+		int p6, int p7, int p8 );
 };
 
 // This is the existing 0x00049E1D ICF route used by the OnlineLogin
@@ -84,8 +91,10 @@ void BfmeAptScreenOnlineLogin::_bfme_acceptLocale( const char * )
 		g_012F4AB0 = 1;
 	}
 
-	g_rva012F19E8WindowManager->add( m_context->m_window,
-		"CallChild", 1, (void *)"DoCloseLocale", 0, 0, 0, 0 );
+	reinterpret_cast<BfmeLevelAN *>( g_rva012F19E8WindowManager )->bfmeBuildAN(
+			reinterpret_cast<unsigned int>( m_context->m_window ),
+			reinterpret_cast<int>( "CallChild" ), 1,
+			reinterpret_cast<int>( "DoCloseLocale" ), 0, 0, 0, 0 );
 
 	TheBfmeOnlineLogin->rva00552C40( m_closeLocaleArgument );
 }
