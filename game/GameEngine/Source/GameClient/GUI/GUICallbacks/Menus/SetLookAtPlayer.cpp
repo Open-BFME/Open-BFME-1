@@ -11,7 +11,7 @@
 #include <string>
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 Int lookAtPlayerID = 0;
 std::string lookAtPlayerName;

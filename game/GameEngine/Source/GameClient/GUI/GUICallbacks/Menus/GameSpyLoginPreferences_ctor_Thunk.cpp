@@ -13,7 +13,7 @@
 #include <map>
 #include <list>
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 template <class T> class StringBase
 {

@@ -1,7 +1,7 @@
 // ?buildScriptData@Rva001A0320Owner@@AAEXPAURva001A0320Record@@PAVScriptList@@PAVRva0019A1D0Owner@@@Z
 // cl: /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../Include/Common/NameKeyType.h"
 

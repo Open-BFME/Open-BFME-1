@@ -3,7 +3,7 @@
 
 #include <vector>
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <typename T> class StringBase
 {

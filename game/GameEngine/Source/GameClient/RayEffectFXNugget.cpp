@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail construction and dispatch establish the 0xB4 base and four-argument positional ABI.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

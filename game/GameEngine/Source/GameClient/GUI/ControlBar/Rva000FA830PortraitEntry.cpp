@@ -2,7 +2,7 @@
 // The portrait-entry list uses the adjacent Rva000FA610 selector bodies.
 #include "../../../Common/Bfme/BfmeVecVLH.h"
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Image;
 class Player;

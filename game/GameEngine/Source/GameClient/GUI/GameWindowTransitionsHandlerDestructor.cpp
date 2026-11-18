@@ -11,7 +11,7 @@
 #include <hash_map>
 #include <list>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class SubsystemInterface
 {

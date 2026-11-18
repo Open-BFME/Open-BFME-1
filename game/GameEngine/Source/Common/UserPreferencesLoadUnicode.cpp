@@ -7,7 +7,7 @@
 #include <map>
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #pragma intrinsic(strlen)
 

@@ -18,7 +18,7 @@
 // no such mapping -- its class name is the symbol. Folding the two shims into one
 // class renames that row's function and the symbol stops existing in the object.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 class Matrix3D { float m[12]; };
 

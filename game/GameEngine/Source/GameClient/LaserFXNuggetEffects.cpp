@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 

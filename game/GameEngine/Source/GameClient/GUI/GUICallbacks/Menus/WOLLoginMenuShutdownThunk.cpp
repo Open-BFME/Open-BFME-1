@@ -2,7 +2,7 @@
 
 #include "Common/AsciiString.h"
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowLayout.h
 class WindowLayout
