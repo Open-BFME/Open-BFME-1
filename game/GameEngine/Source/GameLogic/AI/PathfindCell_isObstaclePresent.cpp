@@ -6,7 +6,7 @@
 // The inner `m_info && ...` is materialised as a 32-bit 0/1 while the outer
 // `return false` stays 8-bit, which is why retail keeps two false exits.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 #define INVALID_ID 0
 

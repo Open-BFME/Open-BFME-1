@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /MD /EHs-c-
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 namespace _STL
 {

@@ -2,7 +2,7 @@
 // Retail 0x006C6F60: convert a pair of terrain coordinates and query the
 // height-map bit plane.  The bit-plane owner is the matched 0x0074BB30 body.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class Gen_0074BB30
 {

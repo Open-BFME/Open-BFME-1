@@ -2,7 +2,7 @@
 // Candidate for the BFME two-dimensional byte-plane query at retail
 // 0x006CB500.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Gen006CB500Bytes
 {

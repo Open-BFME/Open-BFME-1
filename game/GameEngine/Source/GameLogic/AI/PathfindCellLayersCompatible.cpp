@@ -3,7 +3,7 @@
 // Retail 0x004022D0 (80B): free cdecl bool comparing two PathfindCell flag
 // words for layer / connect-layer compatibility.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell

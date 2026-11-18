@@ -4,7 +4,7 @@
 // constructor at 0x002BEFA0 installs vtable 0x010C79E0; slot 4 reaches this
 // body alongside the matched onExit, update, and updateWaypointGoal methods.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

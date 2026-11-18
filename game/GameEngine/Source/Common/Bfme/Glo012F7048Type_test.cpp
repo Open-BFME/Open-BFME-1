@@ -5,7 +5,7 @@
 // +0x288. The method is a thiscall by its decorated name but never touches
 // `this' -- the answer comes entirely out of the global.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // This TU's local view of the pointee: only the byte at +0x288 is read.
 class BfmeGameCW

@@ -1,4 +1,4 @@
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 Real GetGameClientRandomValueReal(Real low, Real high, char *file, int line);
 

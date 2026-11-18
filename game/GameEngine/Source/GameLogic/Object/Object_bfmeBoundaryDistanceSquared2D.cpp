@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /G6
 // Open-BFME5: clean C++ conversion of the retail single-box distance wrapper.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

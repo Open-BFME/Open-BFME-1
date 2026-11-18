@@ -7,7 +7,7 @@
 // Retail counts the nodes into an unsigned counter and returns `0 < count`,
 // which MSVC 7.1 materialises with xor/cmp/sbb/neg.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Rva00256AB0Node
 {

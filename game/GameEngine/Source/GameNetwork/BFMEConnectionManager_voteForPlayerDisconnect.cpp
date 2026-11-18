@@ -4,7 +4,7 @@
 // at +0x120E0.  This forwarding member is the BFME-side hop used by Network's
 // voteForPlayerDisconnect virtual call.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class ConnectionManager;
 

@@ -2,7 +2,7 @@
 // Retail 0x002B7F40: switch on a 0/1 argument, then if the object at this-0x338
 // has model-condition bit 0x100 set, clear it and notify.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/Common/Enums/StateExitType.h"
 

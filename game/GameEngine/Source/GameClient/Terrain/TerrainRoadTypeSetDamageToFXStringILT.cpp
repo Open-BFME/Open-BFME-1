@@ -3,7 +3,7 @@
 // Open-BFME: the retail ILT at 0x00024E0B forwards to the matched body at
 // 0x00601B50. The caller and targets/game/reverse/symbols.csv identify the target method.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum BodyDamageType
 {

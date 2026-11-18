@@ -10,7 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/CrateSystem.h
 struct crateCreationEntry

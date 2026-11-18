@@ -2,7 +2,7 @@
 // Open-BFME5: BFME's WeaponSet has four weapon slots, placing its current
 // lock state at WeaponSet+0x1c rather than Zero Hour's three-slot offset.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BFMEWeaponSetLockShim
 {

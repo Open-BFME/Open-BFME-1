@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Object;
 class Pathfinder

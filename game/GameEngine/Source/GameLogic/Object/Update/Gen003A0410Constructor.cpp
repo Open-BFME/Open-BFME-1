@@ -7,7 +7,7 @@
 // 0x00008067, 0x00037FD8, 0x00043699. Stores 0xFFFFFFFF then interns a default
 // 0x88-byte attribute entry into the handle at this+0.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum { BFME_NO_ATTRIBUTE_HANDLE = 0xFFFFFFFF };
 

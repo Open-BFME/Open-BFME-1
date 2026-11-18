@@ -1,7 +1,7 @@
 // ?dup_002d7890@@YAXXZ
 // Retail RVA 0x002D7890. The owning class and method name remain unknown.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern float g_bfmeDefaultBU;
 

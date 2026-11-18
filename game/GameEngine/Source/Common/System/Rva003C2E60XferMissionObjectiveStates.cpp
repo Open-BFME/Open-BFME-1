@@ -8,7 +8,7 @@
 #include <vector>
 #include "xfer.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct MissionObjectiveState
 {

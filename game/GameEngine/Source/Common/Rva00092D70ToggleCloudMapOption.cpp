@@ -6,7 +6,7 @@
 // writes the negation: the option ends up toggled.  The getter (0x0007F460)
 // and setter (0x0007F440) forward through the handle.  Address-derived names.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

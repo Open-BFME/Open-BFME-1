@@ -4,7 +4,7 @@
 // walks (stride 0xA4 count at +0x1E1CC8 first entry at +0x15DC). Each live
 // row's dword at DualType+0x0C becomes 1 when TheShroudManager is null.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class PartitionManager;
 class RefCountClass;

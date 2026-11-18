@@ -3,7 +3,7 @@
 // The adjacent clearChunkStack body and the DataChunkInput layout prove the
 // linked stack at +0x1c and the first-chunk file offset at +0x14.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ChunkInputStream
 {

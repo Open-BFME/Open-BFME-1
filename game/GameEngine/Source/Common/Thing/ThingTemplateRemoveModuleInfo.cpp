@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

@@ -1,7 +1,7 @@
 // Maintain the compact twelve-entry waypoint array owned by a BFME ZoneBlock.
 // Erase is unordered: the final entry replaces the removed slot.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Waypoint;
 

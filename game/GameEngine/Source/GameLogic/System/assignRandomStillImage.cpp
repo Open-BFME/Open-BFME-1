@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /MD /EHsc
 // Builds the BFME film-frame resource name chosen by the client RNG.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

@@ -12,7 +12,7 @@
 // vendored CampaignManager header identifies +0x2C as m_victorious, but its
 // Zero Hour layout differs, so the measured BFME slice remains TU-local here.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class LivingWorldLogic;
 extern LivingWorldLogic *TheLivingWorldLogic;

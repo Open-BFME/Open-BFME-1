@@ -9,7 +9,7 @@
 // The delete is a tail jump: the deleting destructor's flag is written over the
 // argument slot and the vtable slot 0 call becomes the return.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeIntrusiveNode
 {

@@ -3,7 +3,7 @@
 // The reference constructor supplies only the leaf preference filename; the
 // superclass puts it in the per-user directory through UserPreferences::load.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

@@ -4,7 +4,7 @@
 // the matching 28-byte check-info. Stores -1.0 at +4 and the unsigned-to-float
 // of either info[0] or info[8], whichever is larger.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Eva.h
 struct EvaCheckInfo

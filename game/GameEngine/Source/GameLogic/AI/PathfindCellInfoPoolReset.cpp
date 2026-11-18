@@ -3,7 +3,7 @@
 // Retail 0x003D5FC0: release the fixed cell-info slots and the optional
 // overflow list, retaining the number of released entries.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern void j_0004a561(void);
 extern void j_000135ac(void);

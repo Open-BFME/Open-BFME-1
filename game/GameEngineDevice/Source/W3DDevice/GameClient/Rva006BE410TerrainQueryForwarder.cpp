@@ -1,6 +1,6 @@
 // cl: /O2 /Ob0 /MD /EHs-c-
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // Retail 0x012F7FE0: BaseHeightMapRenderObjClass *TheTerrainRenderObject
 // (W3DDevice/GameClient/BaseHeightMap.h). The member-thunk receiver is the

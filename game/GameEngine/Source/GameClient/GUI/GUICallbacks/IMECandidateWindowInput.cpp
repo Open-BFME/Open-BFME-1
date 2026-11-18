@@ -10,7 +10,7 @@
 //
 // Local ABI-slice replica so no shared header moves.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int WindowMsgData;
 
 class GameWindow;

@@ -6,7 +6,7 @@
 
 #include <set>
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 
 

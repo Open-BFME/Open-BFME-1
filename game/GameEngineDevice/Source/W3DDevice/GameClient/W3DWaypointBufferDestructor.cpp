@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ??1W3DWaypointBuffer@@QAE@XZ: game/GameEngineDevice/Source/W3DDevice/GameClient/W3dWaypointBuffer.cpp
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class RefCountClass
 {

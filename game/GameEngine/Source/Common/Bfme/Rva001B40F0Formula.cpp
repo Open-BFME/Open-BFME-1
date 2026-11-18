@@ -4,7 +4,7 @@
 // literal (retail reads it from 0x0107533C); a named extern const would keep
 // diff live on the x87 stack instead of retail's fxch/fmul-mem pair.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern const Real g_rva01075350;	// retail 0x01075350, 0.0f
 extern float g_bfmeDefaultBU;		// retail 0x01075334, 1.0f

@@ -7,7 +7,7 @@
 // Both arguments are ignored: whatever they once selected, this build just sets
 // the flag at +0 and returns.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager

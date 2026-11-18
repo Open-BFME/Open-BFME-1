@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class Rva002BC4E0Sink
 {

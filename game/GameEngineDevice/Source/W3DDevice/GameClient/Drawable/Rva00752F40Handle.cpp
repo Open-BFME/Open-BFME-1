@@ -1,6 +1,6 @@
 // cl: /O2 /Ob2 /GR- /EHsc /MD /DNDEBUG
 
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GameLODLevelState00752F40
 {

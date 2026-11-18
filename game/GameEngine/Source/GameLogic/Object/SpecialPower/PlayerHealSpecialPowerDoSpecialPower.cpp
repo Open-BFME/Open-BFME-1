@@ -7,7 +7,7 @@
 // Evidence: targets/game/reverse/identity_evidence/specialpower-slot11-12-dospecialpower.md
 
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class PlayerHealSpecialPower
 {

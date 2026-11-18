@@ -9,7 +9,7 @@
 // user-declared copy constructor (as WWMath's Vector3 does); a trivially
 // copyable struct is copied with a different register order.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Rva006CB1E0Value
 {

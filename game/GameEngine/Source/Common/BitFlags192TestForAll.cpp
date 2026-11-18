@@ -5,7 +5,7 @@
 // The six dword loads and the inverted-mask scan match BitFlags.h.
 #include <bitset>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <size_t NUMBITS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

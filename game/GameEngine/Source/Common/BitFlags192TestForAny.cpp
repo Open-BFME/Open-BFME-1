@@ -5,7 +5,7 @@
 // UpgradeMux callers pass two six-dword upgrade masks to this body.
 #include <bitset>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <size_t NUMBITS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

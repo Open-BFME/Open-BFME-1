@@ -6,7 +6,7 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MultiplayerSettings.h
 class MultiplayerColorDefinition

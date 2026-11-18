@@ -9,7 +9,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 
 extern "C" UnsignedByte *readAsciiFieldFromBuffer(UnsignedByte *buffer,

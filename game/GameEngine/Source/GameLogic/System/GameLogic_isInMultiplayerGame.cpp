@@ -1,6 +1,6 @@
 // ?_bfme_isInMultiplayerGame@GameLogic@@QAE_NXZ
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum RecorderModeType
 {

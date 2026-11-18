@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // readable body of ?draw@W3DDisplayString@@: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef int Color;
 
 // BFME added the two-argument convenience overload at vtable slot +0x34;
