@@ -10,7 +10,7 @@
 // cache AsDrawable(thing).  A non-trivial Module destructor is declared so
 // VC7.1 emits the constructor's retail exception-unwind state.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class INIException
 {

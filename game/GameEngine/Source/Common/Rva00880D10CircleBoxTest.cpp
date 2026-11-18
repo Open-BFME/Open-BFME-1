@@ -7,7 +7,7 @@
 // FSINCOS has no portable VC7.1 intrinsic, so the sin/cos pair is inline asm
 // per the anti-lift policy's proven-codegen-blocker exception.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct BfmePointF0
 {

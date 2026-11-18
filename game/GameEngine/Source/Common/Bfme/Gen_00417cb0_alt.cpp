@@ -8,7 +8,7 @@
 // handed to slot 19 of TheAudio in turn. The global is loaded once per call
 // rather than kept, and it is never tested -- only the two slots are.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager

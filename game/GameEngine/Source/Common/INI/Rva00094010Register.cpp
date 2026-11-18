@@ -3,7 +3,7 @@
 // retail RVA 0x00094010.  The two scalar definition parsers at 0x000940F0
 // and 0x00094470 both call this routine through ILT 0x00023344.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

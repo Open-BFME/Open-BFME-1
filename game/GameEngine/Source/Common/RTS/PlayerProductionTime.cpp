@@ -5,7 +5,7 @@
 // on a miss.  The local layout keeps that BFME map position independent of the
 // shorter Zero Hour Player header.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

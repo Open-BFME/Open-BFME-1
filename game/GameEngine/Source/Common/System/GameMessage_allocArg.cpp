@@ -10,9 +10,9 @@
 // link at +0x04 behind the pool object's vptr, and nothing else in it is
 // touched, so its constructor is just that vptr.
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 struct GameMessageArgument

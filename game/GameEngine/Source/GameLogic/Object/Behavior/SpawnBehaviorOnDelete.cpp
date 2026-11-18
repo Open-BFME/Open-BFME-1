@@ -6,7 +6,7 @@
 #include <hash_map>
 
 typedef int ObjectID;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

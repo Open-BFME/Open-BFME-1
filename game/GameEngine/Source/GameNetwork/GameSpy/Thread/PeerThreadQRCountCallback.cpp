@@ -13,7 +13,7 @@
 // stopHostingAlready callee are required by this body; the padding is not a
 // claim about the rest of the class layout.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef void *PEER;
 
 typedef enum

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // BFME AIPickUpCrateState::computePath at retail 0x0016B380.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

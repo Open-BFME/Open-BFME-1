@@ -10,7 +10,7 @@
 // inline virtual destructor restores the vtable (VA 0x010EC84C) and destroys
 // the map.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

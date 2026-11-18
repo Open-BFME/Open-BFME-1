@@ -10,7 +10,7 @@
 // at +0x04 of the target dropped in place, slot 0 of its table entered with no
 // argument when it reaches zero -- and the pointer cleared.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 void W3DRadarResetLock(void);					// retail 0x00903090
 char bfmeUnlock1179(void);					// retail 0x00905B10

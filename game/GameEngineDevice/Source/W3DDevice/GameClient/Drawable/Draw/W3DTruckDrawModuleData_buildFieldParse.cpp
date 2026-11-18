@@ -11,7 +11,7 @@
 // twenty-one strings the matched destructor
 // ??1W3DTruckDrawModuleData@@UAE@XZ at 0x0077F920 releases in reverse.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

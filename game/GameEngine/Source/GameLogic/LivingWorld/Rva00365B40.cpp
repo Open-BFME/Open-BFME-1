@@ -11,7 +11,7 @@
 // with the table at VA 0x010E8FE8, handed to the instance's append routine,
 // and destroyed by the out-of-line destructor.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

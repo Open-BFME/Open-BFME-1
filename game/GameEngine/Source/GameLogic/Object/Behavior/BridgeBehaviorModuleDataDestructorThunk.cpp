@@ -5,7 +5,7 @@
 
 #include <list>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

@@ -7,7 +7,7 @@
 // +0x00/+0x0C/+0x10 differ (0x010A6DD4 / 0x010A6D10 / 0x010A6D04).
 // Address-derived — owning type is not recovered.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Thing;
 class ModuleData;

@@ -2,7 +2,7 @@
 // Open-BFME5: register the network CRC debug switch and reject the two
 // mutually-exclusive CRC command-line modes.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern UnsignedInt TheCommandLineFlags;
 bool g_deepCRC = false;

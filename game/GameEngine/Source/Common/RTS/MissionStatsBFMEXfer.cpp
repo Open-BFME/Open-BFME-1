@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class XferVersion
 {

@@ -16,7 +16,7 @@
 // W3DTankDraw and W3DTruckDraw. Every one of those derives from W3DModelDraw,
 // so this is the top of that chain.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

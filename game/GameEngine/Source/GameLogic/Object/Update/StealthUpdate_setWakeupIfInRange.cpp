@@ -1,6 +1,6 @@
 // Retail 0x002AC150: the StealthUpdate object-iteration callback.
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" double sqrt( double value );
 

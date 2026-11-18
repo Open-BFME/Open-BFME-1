@@ -5,7 +5,7 @@
 // INI::initFromINI with the table at VA 0x010ECFF0 and handed to the
 // instance's append routine (0x00000000); the out-of-line destructor (the BfmeOwnVUO dtor row) runs after the append.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

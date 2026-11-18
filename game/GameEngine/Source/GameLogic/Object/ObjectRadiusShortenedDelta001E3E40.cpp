@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)

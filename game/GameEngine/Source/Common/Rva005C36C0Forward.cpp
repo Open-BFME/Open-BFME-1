@@ -3,7 +3,7 @@
 // retail leaves it in ECX for the call through ILT 0x0002F4AA to the matched
 // 0x005FAE40 body.  The public owner and method identity remain unknown.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 // Retail 0x01075334 is the single float defined once by
 // game/GameEngine/Source/Common/BfmeConv1813.cpp as ?g_bfmeDefaultBU@@3MA

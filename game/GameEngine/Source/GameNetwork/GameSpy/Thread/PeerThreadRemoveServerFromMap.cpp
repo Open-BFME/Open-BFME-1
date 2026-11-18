@@ -12,7 +12,7 @@
 // stlport
 #include <queue>
 #include <map>
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 struct _SBServer;
 typedef _SBServer *SBServer;
 struct Gen_t_00644050_p4pod

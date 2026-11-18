@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 enum { MAX_SLOTS = 8 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/ConnectionManager.h

@@ -4,7 +4,7 @@
 #include "coltest.h"
 #include "rendobj.h"
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

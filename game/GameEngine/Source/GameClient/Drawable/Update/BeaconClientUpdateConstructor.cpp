@@ -8,7 +8,7 @@
 // The name was aliased onto 0x0024FC20, a forty-six byte constructor several
 // unrelated modules share; a fifty-one byte body with a global read is not that.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Thing;
 class ModuleData;

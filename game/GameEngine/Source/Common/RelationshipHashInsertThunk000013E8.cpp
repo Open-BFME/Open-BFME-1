@@ -9,7 +9,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum Relationship
 {

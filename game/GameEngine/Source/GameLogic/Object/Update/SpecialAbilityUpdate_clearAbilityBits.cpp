@@ -2,7 +2,7 @@
 // Retail 0x0026D950: SpecialAbilityUpdate::onExit then clear Object+0x12c bit
 // selected by moduleData+0x258 (1/2/3 -> 0x200/0x400/0x800).
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object
 {

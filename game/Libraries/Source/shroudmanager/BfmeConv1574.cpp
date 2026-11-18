@@ -9,7 +9,7 @@
 // confined to sixteen bits first; the two stack-threaded converter
 // results become the lookup arguments in (x, y) order.
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct BfmePointFD
 {

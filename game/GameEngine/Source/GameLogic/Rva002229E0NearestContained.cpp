@@ -8,7 +8,7 @@
 // contained object nearest to a point in 2D (squared distance, first one wins
 // ties). The owning class is unproven, so it keeps an address-derived name.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

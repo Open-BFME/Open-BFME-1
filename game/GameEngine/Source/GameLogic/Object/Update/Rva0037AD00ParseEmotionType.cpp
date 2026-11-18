@@ -11,7 +11,7 @@
 template<>
 int BitFlags<10>::getSingleBitFromName(const char *name);
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class INIException
 {

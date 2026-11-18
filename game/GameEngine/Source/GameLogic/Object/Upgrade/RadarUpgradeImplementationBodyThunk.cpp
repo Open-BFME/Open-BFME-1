@@ -6,7 +6,7 @@
 // identity at 0x000CBFA0 follows from the matched caller and Boolean argument.
 // BFME's module lookup is the protected Object::findModule.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 #include "../../ScriptEngine/game_logic_dispatch.h"
 
 

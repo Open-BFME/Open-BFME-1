@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: Horde transport member dispatch, retail 0x0024B7E0.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeRvaB7E0AI
 {

@@ -4,7 +4,7 @@ struct BfmeHolderRM
 	void *m_bfmeWhat;
 };
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct BfmeModelConditionFlagsRM
 {

@@ -16,7 +16,7 @@
 // Isengard and Gondor together first, which costs the same instructions in
 // the other order.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

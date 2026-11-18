@@ -12,7 +12,7 @@
 // The two dwords after the arrays, at +0x1474 and +0x1478, are cleared outside
 // it.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI

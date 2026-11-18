@@ -12,7 +12,7 @@
 // the same two arguments. Slot 13 keeps a
 // placeholder name; see the evidence note's open question.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

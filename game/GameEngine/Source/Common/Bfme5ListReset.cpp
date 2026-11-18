@@ -8,7 +8,7 @@
 // callee-saved register; the head member is re-read for every comparison and
 // for both of the self-link stores, because the deallocator can change memory.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen_0040C600;
 
