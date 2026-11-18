@@ -666,6 +666,7 @@ void W3DBridgeBuffer::freeBridgeBuffers(void)
 /** loadBridges.  When loaded, tell the terrain logic where the bridge is. */
 //=============================================================================
 // ?loadBridges@W3DBridgeBuffer@@QAEXPAVW3DTerrainLogic@@_N@Z present-unmatched
+#if 0 // non-retail copy; retail 0x006DA8A0 is W3DBridgeBufferLoadMapBridges.cpp
 void W3DBridgeBuffer::loadBridges(W3DTerrainLogic *pTerrainLogic, Bool saveGame)
 {
 	clearAllBridges();
@@ -692,6 +693,7 @@ void W3DBridgeBuffer::loadBridges(W3DTerrainLogic *pTerrainLogic, Bool saveGame)
 		pTerrainLogic->updateBridgeDamageStates();
 	}
 }
+#endif
 
 //=============================================================================
 //=============================================================================

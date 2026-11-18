@@ -785,6 +785,7 @@ void CustomMatchPreferences::setDisallowNonAsianText( Bool val )
 
 // byte-exact reconstruction: game/GameEngine/Source/Common/CustomMatchPreferences_getPreferredMap_Thunk.cpp
 // ?getPreferredMap@CustomMatchPreferences@@QAE?AVAsciiString@@XZ present-unmatched
+#if 0 // non-retail copy; retail 0x000AC690 is CustomMatchPreferences_getPreferredMap_Thunk.cpp
 AsciiString CustomMatchPreferences::getPreferredMap(void)
 {
 	AsciiString ret;
@@ -808,6 +809,7 @@ AsciiString CustomMatchPreferences::getPreferredMap(void)
 		ret = getDefaultOfficialMap();
 	return ret;
 }
+#endif
 
 void CustomMatchPreferences::setPreferredMap(AsciiString val)
 {

@@ -1078,6 +1078,7 @@ Bool AIPlayer::isSupplySourceSafe( Int minSupplies )
 
 //-------------------------------------------------------------------------------------------------
 /** Is this location safe for building this thing? */
+#if 0 // non-retail copy; retail 0x00163030 is AIPlayerIsLocationSafe.cpp
 //-------------------------------------------------------------------------------------------------
 // ?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z present-unmatched
 Bool AIPlayer::isLocationSafe(const Coord3D *pos, const ThingTemplate *tthing )
@@ -1125,6 +1126,7 @@ Bool AIPlayer::isLocationSafe(const Coord3D *pos, const ThingTemplate *tthing )
 	return true;
 
 }  // isSupplySourceSafe
+#endif
 
 
 // ------------------------------------------------------------------------------------------------
@@ -2878,6 +2880,7 @@ enum GameDifficulty AIPlayer::getAIDifficulty(void) const
 
 
 //----------------------------------------------------------------------------------------------------------
+#if 0 // non-retail copy; retail 0x00165A50 is AIPlayerDozer.cpp
 /**
  * Finds a dozer that isn't building or collecting resources.
  */
@@ -2955,6 +2958,7 @@ Object * AIPlayer::findDozer( const Coord3D *pos )
 	if (closestDozer) return closestDozer;
 	return dozer;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** CRC */

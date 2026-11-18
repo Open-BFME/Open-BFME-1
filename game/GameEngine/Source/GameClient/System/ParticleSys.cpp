@@ -2338,6 +2338,7 @@ ParticleSystemManager::ParticleSystemManager( void )
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
 // ??1ParticleSystemManager@@UAE@XZ present-unmatched
+#if 0 // non-retail copy; retail 0x005CB360 is ParticleSystemManagerDestructor.cpp
 ParticleSystemManager::~ParticleSystemManager()
 {
 	reset();
@@ -2348,6 +2349,7 @@ ParticleSystemManager::~ParticleSystemManager()
 		(*begin).second->deleteInstance();
 	}
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Initialize the manager */

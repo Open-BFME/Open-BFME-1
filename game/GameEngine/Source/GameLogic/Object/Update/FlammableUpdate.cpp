@@ -84,6 +84,7 @@ FlammableUpdateModuleData::FlammableUpdateModuleData()
 /** Damage has been dealt, this is an opportunity to reach to that damage */
 //-------------------------------------------------------------------------------------------------
 // ?onDamage@FlammableUpdate@@UAEXPAVDamageInfo@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x002940D0 is FlammableUpdateOnDamage.cpp
 void FlammableUpdate::onDamage( DamageInfo *damageInfo )
 {
 	if( damageInfo->in.m_damageType == DAMAGE_FLAME || damageInfo->in.m_damageType == DAMAGE_PARTICLE_BEAM )
@@ -108,6 +109,7 @@ void FlammableUpdate::onDamage( DamageInfo *damageInfo )
 		}
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

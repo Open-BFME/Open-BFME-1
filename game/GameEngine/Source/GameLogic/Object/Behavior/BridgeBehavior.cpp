@@ -235,6 +235,7 @@ static void parseTimeAndLocationInfo( INI *ini, void *instance,
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Behavior/BridgeBehaviorCtorThunk.cpp
 // ??0BridgeBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x001F3390 is BridgeBehaviorCtorThunk.cpp
 BridgeBehavior::BridgeBehavior( Thing *thing, const ModuleData *moduleData )
 							: UpdateModule( thing, moduleData )
 {
@@ -269,6 +270,7 @@ BridgeBehavior::BridgeBehavior( Thing *thing, const ModuleData *moduleData )
 	m_deathFrame = 0;
 
 }  // end BridgeBehavior
+#endif
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

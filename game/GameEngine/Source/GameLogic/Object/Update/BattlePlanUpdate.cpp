@@ -157,6 +157,7 @@ BattlePlanUpdateModuleData::BattlePlanUpdateModuleData()
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Update/BattlePlanUpdateCtorThunk.cpp
 // ??0BattlePlanUpdate@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x00286260 is BattlePlanUpdateCtorThunk.cpp
 BattlePlanUpdate::BattlePlanUpdate( Thing *thing, const ModuleData* moduleData ) : 
 	SpecialPowerUpdateModule( thing, moduleData ),
 	m_bonuses(NULL)
@@ -190,6 +191,7 @@ BattlePlanUpdate::BattlePlanUpdate( Thing *thing, const ModuleData* moduleData )
 	m_specialPowerModule   = NULL;
 	//
 } 
+#endif
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -214,6 +216,7 @@ BattlePlanUpdate::~BattlePlanUpdate( void )
 // Validate that we have the necessary data from the ini file.
 //-------------------------------------------------------------------------------------------------
 // ?onObjectCreated@BattlePlanUpdate@@UAEXXZ present-unmatched
+#if 0 // non-retail copy; retail 0x00285D30 is BattlePlanUpdateOnObjectCreated.cpp
 void BattlePlanUpdate::onObjectCreated()
 {
 	const BattlePlanUpdateModuleData *data = getBattlePlanUpdateModuleData();
@@ -259,6 +262,7 @@ void BattlePlanUpdate::onObjectCreated()
 	}
 	enableTurret( false );
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ?initiateIntentToDoSpecialPower@BattlePlanUpdate@@UAE_NPBVSpecialPowerTemplate@@PBVObject@@PBUCoord3D@@PBVWaypoint@@I@Z present-unmatched

@@ -299,6 +299,7 @@ void LANAPI::handleHasMap( LANMessage *msg, UnsignedInt senderIP )
 }
 
 // ?handleChat@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
+#if 0 // non-retail copy; retail 0x0068B6A0 is LANAPIMessageHandlers.cpp
 void LANAPI::handleChat( LANMessage *msg, UnsignedInt senderIP )
 {
 	if (m_inLobby)
@@ -333,6 +334,7 @@ void LANAPI::handleChat( LANMessage *msg, UnsignedInt senderIP )
 		}
 	}
 }
+#endif
 
 // ?handleGameStart@LANAPI@@IAEXPAULANMessage@@I@Z present-unmatched
 void LANAPI::handleGameStart( LANMessage *msg, UnsignedInt senderIP )

@@ -1640,6 +1640,7 @@ void Weapon::rebuildScatterTargets()
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/Object/Weapon_reloadWithBonus_Thunk.cpp
 // ?reloadWithBonus@Weapon@@IAEXPBVObject@@ABVWeaponBonus@@_N@Z present-unmatched
+#if 0 // non-retail copy; retail 0x001E8720 is Weapon_reloadWithBonus_Thunk.cpp
 void Weapon::reloadWithBonus(const Object *sourceObj, const WeaponBonus& bonus, Bool loadInstantly)
 {
 	if (m_template->getClipSize() > 0 
@@ -1677,6 +1678,7 @@ void Weapon::reloadWithBonus(const Object *sourceObj, const WeaponBonus& bonus, 
 
 	rebuildScatterTargets();
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 static void clipToTerrainExtent(Coord3D& approachTargetPos)

@@ -304,6 +304,7 @@ void ScriptList::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/ScriptList_xferMethodThunk.cpp
 // ?xfer@ScriptList@@MAEXPAVXfer@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x003556A0 is ScriptList_xferMethodThunk.cpp
 // Counted and not started: about thirteen independent callees and offsets --
 // three Xfer vtable slots (xferVersion, xferUnsignedShort, xferSnapshot), the
 // eight intrusive-list fields BFME keeps for scripts and groups (head, begin,
@@ -382,6 +383,7 @@ void ScriptList::xfer( Xfer *xfer )
 	}
 
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
@@ -1685,6 +1687,7 @@ Int Condition::getUiStrings(AsciiString strings[MAX_PARMS])
 	return pTemplate->getUiStrings(strings);
 }
 
+#if 0 // non-retail copy; retail 0x00355E20 is ConditionGetUiText.cpp
 // byte-exact reconstruction: game/GameEngine/Source/GameLogic/ScriptEngine/Condition_getUiText_Thunk.cpp
 // ?getUiText@Condition@@QAE?AVAsciiString@@XZ present-unmatched
 AsciiString Condition::getUiText(void)
@@ -1709,6 +1712,7 @@ AsciiString Condition::getUiText(void)
 
 	return uiText;
 }
+#endif
 
 
 /**

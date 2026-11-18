@@ -223,6 +223,7 @@ void DozerActionPickActionPosState::loadPostProcess( void )
 //-------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/DozerActionPickActionPosState_update_Thunk.cpp
 // ?update@DozerActionPickActionPosState@@UAE?AW4StateReturnType@@XZ present-unmatched
+#if 0 // non-retail copy; retail 0x002B8E10 is DozerActionPickActionPosStateUpdate.cpp
 StateReturnType DozerActionPickActionPosState::update( void )
 {
 	StateMachine *machine = getMachine();
@@ -309,6 +310,7 @@ StateReturnType DozerActionPickActionPosState::update( void )
 	return STATE_SUCCESS;
 
 }  // end update
+#endif
 
 //-------------------------------------------------------------------------------------------------
 /** Dozer moves to the action position */
@@ -2080,6 +2082,7 @@ Real DozerAIUpdate::getBoredRange( void ) const
 
 //-------------------------------------------------------------------------------------------------
 // ?aiDoCommand@DozerAIUpdate@@UAEXPBUAICommandParms@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x002B9B80 is DozerAIUpdateAiDoCommand.cpp
 void DozerAIUpdate::aiDoCommand(const AICommandParms* parms)
 {
 
@@ -2163,6 +2166,7 @@ void DozerAIUpdate::aiDoCommand(const AICommandParms* parms)
 	}  // end switch
 
 }  // end aiDoCommand
+#endif
 
 //------------------------------------------------------------------------------------------------
 void DozerAIUpdate::startBuildingSound( const AudioEventRTS *sound, ObjectID constructionSiteID )
@@ -2198,6 +2202,7 @@ void DozerAIUpdate::crc( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/DozerAIUpdate_xferMethodThunk.cpp
 // ?xfer@DozerAIUpdate@@MAEXPAVXfer@@@Z present-unmatched
+#if 0 // non-retail copy; retail 0x002B7080 is DozerAIUpdate_xferMethodThunk.cpp
 void DozerAIUpdate::xfer( Xfer *xfer )
 {
   // version
@@ -2237,6 +2242,7 @@ void DozerAIUpdate::xfer( Xfer *xfer )
 	xfer->xferUser(&m_buildSubTask, sizeof(m_buildSubTask));
 
 }  // end xfer
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Load post process */

@@ -1939,6 +1939,7 @@ void W3DModelDraw::releaseShadows(void)	///< frees all shadow resources used by 
 	m_shadow = NULL;
 }
 
+#if 0 // non-retail copy; retail 0x007626F0 is W3DModelDrawAllocateShadows.cpp
 /** Create shadow resources if not already present. This is used to dynamically enable/disable shadows by the options screen*/
 // ?allocateShadows@W3DModelDraw@@UAEXXZ present-unmatched
 void W3DModelDraw::allocateShadows(void)
@@ -1966,6 +1967,7 @@ void W3DModelDraw::allocateShadows(void)
 		}
 	}
 }
+#endif
 
 //-------------------------------------------------------------------------------------------------
 // ?setShadowsEnabled@W3DModelDraw@@UAEX_N@Z present-unmatched

@@ -718,6 +718,7 @@ void LANAPI::RequestGameJoinDirectConnect(UnsignedInt ipaddress)
 }
 
 // ?RequestGameLeave@LANAPI@@UAEXXZ present-unmatched
+#if 0 // non-retail copy; retail 0x00687CE0 is LANAPIRequestGameLeave.cpp
 void LANAPI::RequestGameLeave( void )
 {
 	LANMessage msg;
@@ -742,6 +743,7 @@ void LANAPI::RequestGameLeave( void )
 		m_expiration = timeGetTime() + m_actionTimeout;
 	}
 }
+#endif
 
 // byte-exact reconstruction: game/GameEngine/Source/GameNetwork/LANAPI_RequestGameAnnounce.cpp
 // ?RequestGameAnnounce@LANAPI@@UAEXXZ present-unmatched
