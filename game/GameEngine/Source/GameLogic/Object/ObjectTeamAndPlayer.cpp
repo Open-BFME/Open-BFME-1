@@ -64,8 +64,8 @@
 // name is a reconstruction, which is why the ROW says PAX and only the source
 // says HordeContainInterface.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

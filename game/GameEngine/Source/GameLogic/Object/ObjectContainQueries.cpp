@@ -39,9 +39,9 @@
 // slots -- because each file declared only as far as the slot it needed.  One
 // declaration here runs to slot 48, the furthest any of them reaches.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum NameKeyType {};
 

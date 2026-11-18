@@ -11,10 +11,10 @@
 // "unset" payload at VA 0x0112E8AC that INIAudioSettings.cpp tests for.
 #include "ascii_string.h"
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 union Rva0112E8ACValue
 {

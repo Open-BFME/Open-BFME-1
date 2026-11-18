@@ -51,3 +51,9 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngine/Source/Common/RTS/TeamConstructor.cpp`: `?dup_00BFBF80@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngine/Source/GameLogic/ScriptEngine/XferListAsciiStringUINT.cpp`: `?dup_00C18048@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpenArchived.cpp`: `?dup_00C60E10@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileOpenArchived.cpp`: `?dup_00C60E1B@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

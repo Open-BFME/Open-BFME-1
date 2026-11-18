@@ -5,8 +5,8 @@
 
 #include <stdio.h>
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 struct BfmeStringData

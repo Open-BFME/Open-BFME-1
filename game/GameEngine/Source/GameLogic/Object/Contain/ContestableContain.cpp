@@ -13,8 +13,8 @@
 #include <list>
 #include <map>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum AbleToAttackType
 {

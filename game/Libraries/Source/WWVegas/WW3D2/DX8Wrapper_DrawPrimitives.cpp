@@ -8,8 +8,8 @@
 // by those named callers, while its boundary is the complete 526-byte body
 // ending at 0x00906D4D immediately before the named 0x00906D70 sibling.
 
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned long UnsignedLong;
 typedef long HRESULT;
 

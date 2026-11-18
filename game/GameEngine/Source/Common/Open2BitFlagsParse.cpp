@@ -11,8 +11,8 @@
 // touched here -- so each instantiation is named after its address rather than
 // given an invented width.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" unsigned int __cdecl strlen( const char *text );
 #pragma intrinsic(strlen)

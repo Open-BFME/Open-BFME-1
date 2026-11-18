@@ -33,8 +33,8 @@
 #define setFrameToEvaluate setFrameToEvaluate_LocalView
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef void *HMODULE;
 typedef int(__stdcall *FARPROC)();
 

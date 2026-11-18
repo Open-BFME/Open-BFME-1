@@ -37,8 +37,8 @@
 // the spelling that lands on its own call target. Collapsing them to one name
 // would move one of the two calls.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 class TeamFactory;

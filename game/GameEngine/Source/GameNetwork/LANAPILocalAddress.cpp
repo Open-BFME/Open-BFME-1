@@ -22,11 +22,11 @@
 // They are the same eight bytes; renaming either would rename a matched row, so
 // both stay and this comment is the reconciliation.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 
 extern "C" __declspec(dllimport) char *__cdecl getenv(const char *name);
 extern "C" __declspec(dllimport) Int __cdecl atoi(const char *text);

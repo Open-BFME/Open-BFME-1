@@ -24,10 +24,10 @@
 // word at +4, read as a byte because Zero Hour assigns it to an UnsignedByte,
 // and the temporary is released through ?releaseBuffer@?$StringBase@T@@AAEXXZ.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
 
 struct BfmeStringData

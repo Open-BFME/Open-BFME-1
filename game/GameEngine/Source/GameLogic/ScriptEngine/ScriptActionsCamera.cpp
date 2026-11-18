@@ -19,9 +19,9 @@
 
 #pragma intrinsic(memcmp)
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 typedef unsigned int DrawableID;
 

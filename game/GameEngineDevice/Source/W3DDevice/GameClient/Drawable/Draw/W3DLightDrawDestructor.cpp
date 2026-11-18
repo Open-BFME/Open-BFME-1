@@ -7,9 +7,9 @@
 // VA 0x01121BA8.  The declarations below are TU-local ABI reconciliation for
 // those complete tables; unresolved lexical identities stay RVA-derived.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 class ChunkLoadClass;
 class ChunkSaveClass;

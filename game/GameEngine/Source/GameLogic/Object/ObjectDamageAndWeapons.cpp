@@ -57,9 +57,9 @@
 //                      calls. Both rows are matched, so the two spellings both
 //                      stay and the disagreement is theirs, not this file's.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 typedef unsigned short PlayerMaskType;
 
