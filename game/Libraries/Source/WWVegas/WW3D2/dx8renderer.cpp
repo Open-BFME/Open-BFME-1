@@ -1215,6 +1215,7 @@ bool Textures_Material_And_Shader_Booking_Struct::Add_Textures_Material_And_Shad
 }
 
 // ?Generate_Texture_Categories@DX8FVFCategoryContainer@@IAEXAAVVertex_Split_Table@@I@Z present-unmatched
+#if 0 // non-retail Zero Hour body; retail 0x00948820 is DX8FVFCategoryContainerGenerateTextureCategoriesBFME.cpp
 void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& split_table,unsigned vertex_offset)
 {
 	int polygon_count=split_table.Get_Polygon_Count();
@@ -1262,6 +1263,17 @@ void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& sp
 		WWASSERT(new_inds<=polygon_count*3);
 	}
 }
+#endif
+// Keeps the inline accessor COMDAT rows (Vertex_Split_Table, MeshMatDescClass, MeshModelClass) emitted from
+// this TU now that the non-retail Generate_Texture_Categories body above (their only user) is disabled.
+unsigned (Vertex_Split_Table::*g_keepSplitPassCount)() const = &Vertex_Split_Table::Get_Pass_Count;
+VertexMaterialClass * (Vertex_Split_Table::*g_keepSplitPeekMaterial)(unsigned,unsigned) = &Vertex_Split_Table::Peek_Material;
+ShaderClass (Vertex_Split_Table::*g_keepSplitPeekShader)(unsigned,unsigned) = &Vertex_Split_Table::Peek_Shader;
+ShaderClass (MeshMatDescClass::*g_keepMatDescSingleShader)(int) const = &MeshMatDescClass::Get_Single_Shader;
+ShaderClass (MeshModelClass::*g_keepModelSingleShader)(int) const = &MeshModelClass::Get_Single_Shader;
+VertexMaterialClass * (MeshModelClass::*g_keepModelPeekMaterial)(int,int) const = &MeshModelClass::Peek_Material;
+VertexMaterialClass * (MeshModelClass::*g_keepModelPeekSingleMaterial)(int) const = &MeshModelClass::Peek_Single_Material;
+TextureClass * (MeshModelClass::*g_keepModelPeekTexture)(int,int,int) const = &MeshModelClass::Peek_Texture;
 
 // ----------------------------------------------------------------------------
 
