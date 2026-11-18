@@ -7,11 +7,11 @@
 // and draws it at the bottom right of the button.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef int Color;
 typedef unsigned short WCHAR;
-typedef float Real;
+
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 

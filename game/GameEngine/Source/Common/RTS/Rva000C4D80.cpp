@@ -10,9 +10,9 @@
 // caller or vtable proof.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum Relationship
 {

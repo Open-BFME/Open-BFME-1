@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Real-C++ reconstruction of GameState::missionSave at 0x00110600.
 
-typedef int Int;
-typedef bool Bool;
-typedef char Char;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 extern const unsigned short BFMEEmptyUnicodeString;

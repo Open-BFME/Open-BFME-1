@@ -9,9 +9,9 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
 
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class ObjectSMCHelper
 {

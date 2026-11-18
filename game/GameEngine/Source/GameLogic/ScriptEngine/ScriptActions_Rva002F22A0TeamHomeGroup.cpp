@@ -13,9 +13,9 @@
 // member, otherwise straight through that helper's packet fallback.
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "Lib/Coord3D.h"
 

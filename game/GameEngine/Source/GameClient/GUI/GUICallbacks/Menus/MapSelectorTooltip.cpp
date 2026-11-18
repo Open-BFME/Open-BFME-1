@@ -10,9 +10,9 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../../Libraries/Include/Lib/ICoord2D.h"
 

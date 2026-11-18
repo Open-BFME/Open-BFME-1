@@ -18,10 +18,10 @@
 // slot-5 early-out returns `false` in AL and sits last; the rubble test is a
 // Bool assignment (sete/test).
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int ObjectID;
 
 enum BodyDamageType

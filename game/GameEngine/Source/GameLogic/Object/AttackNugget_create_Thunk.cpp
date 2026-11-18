@@ -14,9 +14,9 @@
 // uses the actual BFME four-argument override ABI; functions.csv records its
 // object-symbol explicitly when it verifies this canonical retail row.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #pragma warning(disable : 4716)
 

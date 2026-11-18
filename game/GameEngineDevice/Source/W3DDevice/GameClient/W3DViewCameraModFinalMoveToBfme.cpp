@@ -14,9 +14,9 @@
 // camera dispatcher and matched camera methods independently prove the mode
 // word at +0x2354 and rotate flag at +0x1dc.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // The upstream AsciiString occupies one pointer-sized word in each camera
 // path record.  Its lifetime is owned by the real camera-path object; this

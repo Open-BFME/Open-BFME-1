@@ -8,10 +8,10 @@
 #include <hash_map>
 #include <vector>
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
-typedef bool Bool;
+
 
 enum
 {

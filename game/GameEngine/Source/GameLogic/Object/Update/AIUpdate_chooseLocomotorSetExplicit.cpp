@@ -16,9 +16,9 @@
 // inline Overridable::getFinalOverride unrolls one link before calling the
 // out-of-line copy, exactly as retail does.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Include/Common/Enums/LocomotorSetType.h"
 

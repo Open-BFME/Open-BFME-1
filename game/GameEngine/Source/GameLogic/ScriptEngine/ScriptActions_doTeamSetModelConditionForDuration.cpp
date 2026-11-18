@@ -18,9 +18,9 @@ extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class BfmeAsciiStringArg : public AsciiString
 {

@@ -7,9 +7,9 @@
 // translates a world Coord2D into the terrain bit plane after applying the
 // virtual map-origin offset and clamping to the map dimensions.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

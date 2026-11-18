@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Retail reaches these two bodies through incremental-link thunks.
 extern void j_00001140();

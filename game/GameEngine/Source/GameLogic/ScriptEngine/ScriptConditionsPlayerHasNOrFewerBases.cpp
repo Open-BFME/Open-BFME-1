@@ -6,10 +6,10 @@
 #include "ascii_string.h"
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
+
 
 template <size_t NUMBITS>
 class BitFlags

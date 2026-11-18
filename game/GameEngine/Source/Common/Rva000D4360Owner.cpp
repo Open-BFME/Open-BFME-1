@@ -33,9 +33,9 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 	return result ? result : length - otherLength;
 }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum KindOfType { KINDOF_INVALID = 0 };
 

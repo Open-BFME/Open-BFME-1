@@ -4,9 +4,9 @@
 
 #include <map>
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 struct XferVersion
 {

@@ -6,13 +6,13 @@
 // synchronization, which is absent from the unchanged ZH helper.
 // stlport
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
-typedef float Real;
+
 
 struct Coord3D
 {

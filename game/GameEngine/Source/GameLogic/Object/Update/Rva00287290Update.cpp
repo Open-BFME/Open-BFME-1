@@ -2,9 +2,9 @@
 // Retail 0x00287290, address-derived update body.  The concrete owner is not
 // proven; the class and method retain the RVA rather than inventing one.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 

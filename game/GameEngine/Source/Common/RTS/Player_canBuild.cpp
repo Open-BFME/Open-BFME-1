@@ -15,9 +15,9 @@
 #include <list>
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/BuildableStatus.h"
 

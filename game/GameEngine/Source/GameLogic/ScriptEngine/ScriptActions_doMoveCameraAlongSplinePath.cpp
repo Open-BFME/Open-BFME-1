@@ -3,9 +3,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum WaypointPathType
 {

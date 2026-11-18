@@ -12,10 +12,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Rva000D74B0XferVersion
 {

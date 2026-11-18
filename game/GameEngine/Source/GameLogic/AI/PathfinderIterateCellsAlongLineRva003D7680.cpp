@@ -11,9 +11,9 @@
 extern "C" int __cdecl abs(int n);
 #pragma intrinsic(abs)
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

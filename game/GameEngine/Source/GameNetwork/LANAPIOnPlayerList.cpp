@@ -4,9 +4,9 @@
 // LANAPI+0x60 and preserves its top visible row across the roster rebuild.
 #include "StringInline.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 class GameWindow;

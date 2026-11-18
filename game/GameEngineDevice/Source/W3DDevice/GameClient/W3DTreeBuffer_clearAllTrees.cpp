@@ -6,9 +6,9 @@
 // W3DTreeBuffer::clearAllTrees, retail 0x00732E70: Zero Hour's clearAllTrees on BFME's tree layout,
 // under the radar reset lock; the constructor at 0x00736720 calls it before allocateTreeBuffers.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

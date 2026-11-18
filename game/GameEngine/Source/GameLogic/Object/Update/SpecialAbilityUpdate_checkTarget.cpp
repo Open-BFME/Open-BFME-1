@@ -1,9 +1,9 @@
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc
 // ?checkTarget@SpecialAbilityUpdate@@QAE_NPAVObject@@@Z
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef Int ObjectID;
 
 class UpgradeTemplate;

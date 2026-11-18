@@ -28,10 +28,10 @@
 #include <string>
 
 typedef void *PEER;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef int PEERBool;
-typedef unsigned int UnsignedInt;
+
 
 enum RoomType
 {

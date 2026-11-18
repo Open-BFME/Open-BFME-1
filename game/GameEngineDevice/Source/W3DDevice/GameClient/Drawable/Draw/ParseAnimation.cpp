@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct FieldParse;
 extern const FieldParse g_011240A0[];

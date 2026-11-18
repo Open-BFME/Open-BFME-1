@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 

@@ -3,9 +3,9 @@
 // the zoom virtual at +0xE8, while the neighboring 0x0073C440 body calls the
 // pitch virtual at +0xF0 and therefore belongs to cameraModFinalPitch.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 #define TheAnimationMsPerStep (TheW3DFrameLengthInMsec)

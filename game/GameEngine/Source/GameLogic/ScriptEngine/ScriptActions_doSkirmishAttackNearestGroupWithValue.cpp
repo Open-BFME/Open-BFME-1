@@ -7,9 +7,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short PlayerMaskType;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

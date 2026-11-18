@@ -6,9 +6,9 @@
 // offsets and the Xfer virtual slots used below.  The two helper types are
 // declaration-only dispatch views; no object or vtable is emitted here.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 struct Rva0018C480XferVersion
 {

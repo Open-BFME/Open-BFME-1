@@ -3,9 +3,9 @@
 // The sink owns a displayed-credit-style list; its second argument supplies
 // the current display dimensions as two floats.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 template <typename T>

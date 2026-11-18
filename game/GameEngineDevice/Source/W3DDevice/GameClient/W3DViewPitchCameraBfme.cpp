@@ -3,9 +3,9 @@
 // BFME stores the pitch movement state at the offsets below.  The setter at
 // 0x0002A1B2 receives the two ease values and the duration as float words.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 extern void j_00025f0e();

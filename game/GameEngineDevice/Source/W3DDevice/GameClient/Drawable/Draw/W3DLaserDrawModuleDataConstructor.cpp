@@ -23,10 +23,10 @@
 // climb to sit beside the envelope's three, and why the constructor reads out
 // of order in the listing while the source below is in plain order.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned int Color;
-typedef float Real;
+
 
 // The base supplies the vptr at +0x00 and one dword at +0x04 that retail never
 // stores to, so the derived members start at +0x08.

@@ -24,9 +24,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class Overridable
 {
