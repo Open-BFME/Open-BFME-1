@@ -19,8 +19,8 @@
 //
 // Layout: Object id +0x74; ScriptEngine::getUnitNamed is vtable slot 26
 // (+0x68).
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/ObjectID.h"
 class AsciiString;
 

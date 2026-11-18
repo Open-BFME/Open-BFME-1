@@ -6,8 +6,8 @@
 // layout is the one recovered by the matched reset body at 0x0045C1D0; the
 // retail base vftable is the complete 64-slot table at 0x010F6940.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

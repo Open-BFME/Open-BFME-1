@@ -25,8 +25,8 @@
 #include "GameLogicObjectLookup.h"
 #include "coord3d.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum { INVALID_ID = 0 };
 

@@ -18,8 +18,8 @@ extern "C" void *bfmeVft0ZL[];
 extern "C" void *bfmeVft1ZL[];
 extern "C" void *bfmeVft2ZL[];
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class __declspec(novtable) Rva005EE8A0Owner
 {

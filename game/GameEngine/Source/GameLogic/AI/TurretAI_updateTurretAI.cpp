@@ -3,8 +3,8 @@
 // inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // Field offsets from the landed isTryingToAimAtTarget body and the turretai shim.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

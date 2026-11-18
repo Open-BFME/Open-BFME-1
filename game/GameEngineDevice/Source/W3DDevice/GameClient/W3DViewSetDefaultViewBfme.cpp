@@ -7,8 +7,8 @@
 // camera-limit member at +0x24B8 is also constructed by 0x006DF550; its vtable
 // proves the float getters at slots 0/1 and the slot-7 setter for its +8 field.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Rva006DF550
 {

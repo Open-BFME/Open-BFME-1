@@ -3,8 +3,8 @@
 // primary+0x10 (same shape as getPercentReady @0x00268A90): moduleData at -0xC,
 // Object at -8, available/paused at +4/+8, BFME flag at +0x14.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 class Object;

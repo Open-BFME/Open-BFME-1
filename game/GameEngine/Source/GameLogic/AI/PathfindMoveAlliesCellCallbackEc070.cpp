@@ -4,8 +4,8 @@
 // moveAlliesAwayFromDestination.  The cell-space line walk passes the payload
 // as this and (from,to,x,y) as its four stack arguments.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 #include "../command_source_type.h"

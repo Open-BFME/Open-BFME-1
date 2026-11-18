@@ -5,8 +5,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

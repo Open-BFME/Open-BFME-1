@@ -2,10 +2,10 @@
 // Open-BFME: SpecialAbilityUpdate::startFacing, retail 0x002AA850, 154 bytes.
 // The BFME AI command base is adjusted by 0x20 from the AI update object.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Int ObjectID;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

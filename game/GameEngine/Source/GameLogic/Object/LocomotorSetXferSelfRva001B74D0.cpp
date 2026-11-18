@@ -11,8 +11,8 @@
 
 template<> inline bool StringBase<char>::isEmpty() const { return !m_data || m_data->length == 0; }
 
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Rva001B74D0Version
 {

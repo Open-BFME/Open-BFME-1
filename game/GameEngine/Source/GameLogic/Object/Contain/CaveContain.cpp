@@ -4,8 +4,8 @@
 // reaches 0x002298B0. Retail's thunk table fits only the protected virtual
 // Xfer& decoration ?DoXfer@CaveContain@@MAEXAAVXfer@@@Z.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 struct XferVersion
 {

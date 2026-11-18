@@ -4,8 +4,8 @@
 
 #include <math.h>
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

@@ -3,8 +3,8 @@
 // current TeamPrototype.  The TeamPrototype and string views are local to this
 // TU so their BFME-only offsets do not alter the shared headers.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern const char g_bfmeEmptyAscii[];
 

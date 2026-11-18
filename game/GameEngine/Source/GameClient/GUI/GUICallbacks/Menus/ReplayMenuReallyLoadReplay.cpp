@@ -2,8 +2,8 @@
 // reallyLoadReplay, retail 0x004E08D0, 323 bytes.  The StringBase-backed
 // BFME string ABI is the one used by ReplayMenuGetReplayFilenameFromListbox.cpp.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 template <typename T> class StringBase

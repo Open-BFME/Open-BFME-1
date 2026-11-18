@@ -2,8 +2,8 @@
 // The method occupies slot 33 in the class vtable installed at object offset
 // +0x20. The module-data filter and capacity sit at +0x224 and +0x228.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

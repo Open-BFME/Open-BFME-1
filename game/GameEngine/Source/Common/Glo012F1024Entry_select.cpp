@@ -4,9 +4,9 @@
 // The entry owns a vector of 0xDC-byte items. Each item returns its name by
 // value, and the selector returns the first item whose name matches the key.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 extern const char g_bfmeEmptyAscii[];
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);

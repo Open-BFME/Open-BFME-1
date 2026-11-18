@@ -4,8 +4,8 @@
 // sixteen-byte slot at +0x12C to the module-data roster at +0x224, and asks
 // TheThingFactory (0x012EF1D8) for the matching template name.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

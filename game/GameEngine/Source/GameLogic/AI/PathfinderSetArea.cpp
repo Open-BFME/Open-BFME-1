@@ -3,8 +3,8 @@
 // The caller through ILT 0x00030B98 and the adjacent classifyFence method
 // prove the Pathfinder identity and the receiver offsets used here.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct ICoord3D
 {

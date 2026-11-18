@@ -15,8 +15,8 @@
 // null pointer (the shape of StateMachine::getCurrentStateID in the Generals
 // reference); two separate expansions give retail's reload of that pointer.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

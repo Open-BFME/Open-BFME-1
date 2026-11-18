@@ -5,8 +5,8 @@
 #include <vector>
 #include <string.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)

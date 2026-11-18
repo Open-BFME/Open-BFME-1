@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean C++ reconstruction of the BFME particle-system FX nugget.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

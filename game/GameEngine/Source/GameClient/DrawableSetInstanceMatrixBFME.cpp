@@ -5,8 +5,8 @@
 // +0x168, identity byte at +0x3af, expiration word at +0x1fc and frame at
 // +0x304.  Keep that view local to this conversion.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Matrix3D
 {

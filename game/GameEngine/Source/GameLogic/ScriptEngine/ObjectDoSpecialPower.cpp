@@ -16,8 +16,8 @@ public:
 	Rva002E64C0Name(const char *text) : AsciiString(text) {}
 };
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/SpecialPowerType.h"
 

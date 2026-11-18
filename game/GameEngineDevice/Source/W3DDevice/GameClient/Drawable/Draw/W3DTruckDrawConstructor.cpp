@@ -3,8 +3,8 @@
 // The BFME vehicle layout carries three 12-byte particle handles and two
 // 0x70-byte AudioEventRTS members after the scripted-model base.
 
-typedef bool Bool;
-typedef char Char;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Thing;
 class ModuleData;

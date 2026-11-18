@@ -17,8 +17,8 @@
 // storage absent from retail. A named clear helper would collide with the
 // older five-field reference copies under the same symbol.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponBonus

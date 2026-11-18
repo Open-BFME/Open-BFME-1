@@ -7,8 +7,8 @@
 // Matched 0x002C2C10 supplies the Waypoint layout and Coord3D copy shape.
 // The shared path action at slot 0x68 is matched 0x002BCE00.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

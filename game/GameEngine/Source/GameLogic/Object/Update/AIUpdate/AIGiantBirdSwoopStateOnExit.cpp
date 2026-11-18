@@ -4,8 +4,8 @@
 // 0x002BE230 stores vtable 0x010C7868, whose slot 5 thunk 0x0044AEC6 jumps
 // here.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/Enums/StateExitType.h"
 

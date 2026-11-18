@@ -5,8 +5,8 @@
 // class, so only the container class needs a fresh name. No name is
 // provable for this second site, so it is claimed address-derived.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class Player;

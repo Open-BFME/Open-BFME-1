@@ -16,8 +16,8 @@
 // body at 0x0008FFC0, so this TU spells it NameKeyGenerator::nameToKey (the
 // other two TUs still carry the old address-derived shim spelling).
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim);
 extern "C" unsigned int __cdecl strlen(const char *s);

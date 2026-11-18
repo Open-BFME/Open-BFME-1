@@ -4,8 +4,8 @@
 // The constructor at 0x002BEFA0 stores the state name, and its vtable at
 // 0x010C79E0 places this body in slot 5 beside the matched update at 0x002BF250.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/Enums/StateExitType.h"
 

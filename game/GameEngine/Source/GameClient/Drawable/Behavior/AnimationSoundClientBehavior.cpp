@@ -5,8 +5,8 @@
 // TheGhostObjectManager at 0x012EF4FC vslot +0x1C takes the host Object*
 // (this-0x64); a non-null result is returned skipped past its vptr.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 

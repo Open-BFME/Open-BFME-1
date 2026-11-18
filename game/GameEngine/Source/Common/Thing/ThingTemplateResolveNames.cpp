@@ -3,8 +3,8 @@
 
 #include <vector>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString
 {

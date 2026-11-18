@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: lift ScriptActions::doTeamAttackNamed to clean C++.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 class AIGroup;

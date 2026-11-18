@@ -14,8 +14,8 @@
 // The `if (!obj) continue;` guard is the upstream DLINK idiom; it lets the
 // compiler fold advance()'s null test, as in ScriptConditionsTeamIsLedByUnit.cpp.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "ObjectDlinkPmf.h"
 

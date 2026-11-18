@@ -15,8 +15,8 @@
 
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short DataChunkVersionType;
 
 

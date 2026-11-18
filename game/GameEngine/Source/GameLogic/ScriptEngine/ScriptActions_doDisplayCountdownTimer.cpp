@@ -6,8 +6,8 @@
 // first parameter arrives by value and this body releases it; the second stays a
 // const reference, so MSVC parks the GameText result in its dead argument slot.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeAsciiStringData
 {

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?doNamedDamage@ScriptActions@@IAEXABVAsciiString@@H@Z: game/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 class AsciiString;

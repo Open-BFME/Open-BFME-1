@@ -27,8 +27,8 @@
 // the shim models this class for a different TU and does not carry +0x344, and
 // touching any shim header forces the full gate.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 enum { MAX_SLOTS = 8 };
 

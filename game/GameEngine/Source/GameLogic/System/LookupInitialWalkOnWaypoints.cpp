@@ -3,8 +3,8 @@
 // Neighbour armyNameFromIndex is also stdcall. TerrainLogic getWaypointByName
 // is vtable slot 31 (+0x7C) taking AsciiString by value.
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

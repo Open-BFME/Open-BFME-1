@@ -5,8 +5,8 @@
 // the repair module data and body-module calls described by RepairDockUpdate.h.
 
 typedef int ObjectID;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum DamageType
 {

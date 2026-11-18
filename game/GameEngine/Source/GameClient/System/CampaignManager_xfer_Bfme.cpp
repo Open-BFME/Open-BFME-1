@@ -4,8 +4,8 @@
 
 #include "string_base.h"
 
-typedef unsigned char UnsignedByte;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum XferMode
 {

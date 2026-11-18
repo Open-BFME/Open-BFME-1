@@ -2,8 +2,8 @@
 // readable body of ??0Shell@@QAE@XZ: game/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME5: clean C++ reconstruction of Shell::Shell.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

@@ -3,8 +3,8 @@
 // Retail 0x005774E0. Open the BFME score screen after game cleanup and fill
 // the screen with the single-player or multiplayer score data.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum RecorderModeType
 {

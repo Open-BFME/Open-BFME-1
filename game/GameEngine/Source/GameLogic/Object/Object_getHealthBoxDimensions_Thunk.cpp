@@ -5,8 +5,8 @@
 // The previous 166-byte row began 0x44 bytes into this method. Retail
 // returns at RVA 0x001C9F07, ending the corrected 234-byte extent.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))

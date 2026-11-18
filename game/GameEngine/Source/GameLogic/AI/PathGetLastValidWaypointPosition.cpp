@@ -1,9 +1,9 @@
 // Walk backward from BFME's waypoint cursor until a waypoint still resolves,
 // then return that node's position. An empty scan falls back to the path head.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef UnsignedInt WaypointID;
-typedef float Real;
+
 
 static const WaypointID INVALID_WAYPOINT_ID = 0x7fffffff;
 

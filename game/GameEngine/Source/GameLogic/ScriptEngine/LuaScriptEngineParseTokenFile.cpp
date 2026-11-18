@@ -4,8 +4,8 @@
 // The parser constructor, parser cleanup, and parser loop all use the existing
 // retail ILT identities from BfmeConv2008.cpp and the XML parser table.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern void *operator new[](unsigned int size);
 extern void operator delete[](void *memory);

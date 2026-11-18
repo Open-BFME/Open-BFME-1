@@ -6,8 +6,8 @@
 // entry of combo box `index` whose item data equals `itemData`, selects it,
 // and hands the slot and the entry's data back to the handler.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 class GameWindow
 {

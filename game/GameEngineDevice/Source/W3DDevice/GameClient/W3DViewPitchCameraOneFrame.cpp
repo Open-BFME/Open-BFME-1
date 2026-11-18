@@ -11,8 +11,8 @@
 // W3DViewZoomCameraOneFrame.cpp (BFME's W3DView has fields ahead of these
 // not yet shimmed into the shared translation unit).
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase

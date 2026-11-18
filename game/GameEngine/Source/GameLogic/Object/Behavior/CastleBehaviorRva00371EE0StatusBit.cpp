@@ -21,9 +21,9 @@
 #include <vector>
 #include <bitset>
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
-typedef bool Bool;
+
 
 #include "../../../../Include/Common/Enums/ObjectStatusTypes.h"
 

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction with the helper's observed BFME ABI view.
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned char UByte;
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
