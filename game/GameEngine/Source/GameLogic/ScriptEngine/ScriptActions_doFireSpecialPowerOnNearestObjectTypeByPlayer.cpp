@@ -5,10 +5,10 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short PlayerMaskType;
-typedef float Real;
+
 
 class Object;
 class ObjectTypes;

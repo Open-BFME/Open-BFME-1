@@ -6,9 +6,9 @@
 // the supply-position branch and deletes the object through its virtual
 // destructor. The callee views below reuse the names that reader proved.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

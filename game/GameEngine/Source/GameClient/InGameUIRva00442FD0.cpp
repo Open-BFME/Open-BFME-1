@@ -6,9 +6,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 #define NULL 0
 #define TRUE true

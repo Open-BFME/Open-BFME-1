@@ -10,10 +10,10 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <vector>
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
-typedef bool Bool;
+
 
 #include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

@@ -8,9 +8,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short PlayerMaskType;
 
 class Object;

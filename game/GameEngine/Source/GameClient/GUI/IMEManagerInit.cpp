@@ -13,9 +13,9 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int NameKeyType;
 
 class GameWindow;

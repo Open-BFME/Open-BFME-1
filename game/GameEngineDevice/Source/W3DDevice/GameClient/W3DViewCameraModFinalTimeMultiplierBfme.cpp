@@ -9,9 +9,9 @@
 // the rotate state below come from those matched methods, not from an empty
 // overlay or an address-only cast.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

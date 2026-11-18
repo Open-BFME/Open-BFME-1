@@ -15,9 +15,9 @@
 // The in-range block is the ZH AIIdleState updateGoal/goalPosition pair; the
 // file literal (VA 0x0109769C) and line 0x1C9A are read from retail.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "coord.h"
 
