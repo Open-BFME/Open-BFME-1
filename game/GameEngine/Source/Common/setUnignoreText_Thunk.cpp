@@ -20,8 +20,8 @@ private:
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../Include/Common/NameKeyType.h"
 

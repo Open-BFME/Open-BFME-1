@@ -63,9 +63,9 @@
 // and only it needs -- retail's non-throwing compare call leaves no
 // intermediate EH-state stores, so the throw() stays.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *left, const char *right);
 

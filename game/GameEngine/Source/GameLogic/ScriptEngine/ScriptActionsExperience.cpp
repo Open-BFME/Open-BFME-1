@@ -12,8 +12,8 @@
 // pass. doUnitGainLevel skips the walk and calls the experience subsystem on one
 // object, which is the same subsystem the level lookup comes from.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class Team;

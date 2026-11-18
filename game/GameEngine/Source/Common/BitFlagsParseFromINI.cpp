@@ -12,8 +12,8 @@
 // declares other address-anchored callees: as a member of a class named after
 // its address, reached by casting the store.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)

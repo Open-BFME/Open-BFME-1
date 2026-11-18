@@ -17,8 +17,8 @@
 // how a third account of the same class could sit beside the other two without
 // anything noticing.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strtok( char *s, const char *delim );
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *a, const char *b );

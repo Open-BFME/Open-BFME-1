@@ -23,9 +23,9 @@
 #include <string.h>
 #include "string_base.h"
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 enum NameKeyType { NAMEKEY_INVALID = 0 };
 
 #define FALSE 0

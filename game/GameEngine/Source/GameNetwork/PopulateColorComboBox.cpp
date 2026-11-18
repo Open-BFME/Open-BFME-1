@@ -5,8 +5,8 @@
 // fixed four-team loop and the BFME init guard.
 
 typedef unsigned short WideChar;
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 #include <vector>

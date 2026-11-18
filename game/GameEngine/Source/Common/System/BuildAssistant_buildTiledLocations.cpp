@@ -4,10 +4,10 @@
 #include <new>
 #include <math.h>
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define NULL 0
 #define DEBUG_ASSERTCRASH(condition, message) ((void)0)

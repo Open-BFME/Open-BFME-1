@@ -48,8 +48,8 @@ int bfmeAxisOf(const BfmePointNC *offset)
 	return 3;
 }
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

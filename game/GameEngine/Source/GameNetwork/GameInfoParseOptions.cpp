@@ -49,9 +49,9 @@ extern char *__cdecl BFMEDuplicateString(const char *);
 extern AsciiString _Rva00621350GameInfoMapPath(const AsciiString &, bool);
 extern char *__cdecl strtok_r(char *, const char *, char **);
 extern std::basic_string<unsigned short> MultiByteToWideCharSingleLine(const char *);
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 #define FALSE false
 #define TRUE true
 enum { MAX_SLOTS = 8, PLAYERTEMPLATE_MIN = -2 };

@@ -31,8 +31,8 @@
 // The counting file built without /EHsc and byte-verifies unchanged with it,
 // which is what let the two share a TU.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

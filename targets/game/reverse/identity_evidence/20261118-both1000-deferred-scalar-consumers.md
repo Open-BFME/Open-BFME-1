@@ -35,3 +35,9 @@ Revisit only when native funclet identity evidence or the consumer context chang
 `game/GameEngine/Source/GameClient/DrawableStartAmbientSound.cpp`: `?dup_00C2082B@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
 
 `game/GameEngine/Source/GameNetwork/LANAPIMessageHandlers.cpp`: `?dup_00C46A18@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+## Additional consumers with the same native refusal
+
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundTesselatedUpdate.cpp`: `?dup_00C4D258@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.
+
+`game/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainBackgroundTesselatedUpdate.cpp`: `?dup_00C4D26B@@YAXXZ` remains at its original definition. The original source passes the native gate; the proposed header causes a compiler-label binding the native verifier cannot establish. No new label or alias is forced; zero task credit.

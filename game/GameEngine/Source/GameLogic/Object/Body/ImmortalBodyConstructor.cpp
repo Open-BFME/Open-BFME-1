@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Thing;
 class ModuleData;

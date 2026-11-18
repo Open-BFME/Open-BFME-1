@@ -10,8 +10,8 @@
 // argument slot (user copy constructor) under /EHsc it keeps retail's store
 // of that slot's address.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *string, const char *separators);
 extern "C" unsigned int __cdecl strlen(const char *string);

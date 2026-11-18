@@ -26,9 +26,9 @@
 #include "ascii_string.h"
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum GeometryType
 {

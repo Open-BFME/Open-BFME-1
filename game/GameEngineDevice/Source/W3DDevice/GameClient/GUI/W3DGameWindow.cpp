@@ -2,10 +2,10 @@
 // Open-BFME5: W3DGameWindow::~W3DGameWindow, retail 0x004655F0,
 // zh_sweep packet 004655f0.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef int Color;
-typedef bool Bool;
+
 static const Bool FALSE = false;
 class Image;
 class Display

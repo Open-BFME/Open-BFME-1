@@ -8,9 +8,9 @@
 #include "ascii_string.h"
 #include "GameClient/ClientRandomValue.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class Anim2DTemplate;
 class Anim2DCollection;

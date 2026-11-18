@@ -31,9 +31,9 @@
 // Private constructors on StringBase are what mangle its copy and destructor to
 // ??0?$StringBase@G@@AAE@ABV0@@Z and ??1?$StringBase@G@@AAE@XZ.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 typedef UnsignedInt Color;
 

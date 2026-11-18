@@ -4,8 +4,8 @@
 // BFME APT layout differs from ZH: movie +0x250, chat control +0x258,
 // per-player visibility +0x262. Keep existing symbol identities and offsets.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class UnicodeString;
 

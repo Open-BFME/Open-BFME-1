@@ -30,8 +30,8 @@
 // IDENTITY IS NOT RECOVERED.  Names come from addresses and field names carry
 // their offsets.  Seventeen of each row's 21 bytes are concrete.
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Rva005C3510Data
 {

@@ -9,7 +9,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum Relationship
 {
@@ -18,7 +18,7 @@ enum Relationship
 	ALLIES
 };
 
-typedef unsigned int UnsignedInt;
+
 
 typedef _STL::hash_map<Int, Relationship, _STL::hash<Int>, _STL::equal_to<Int> > BfmeRelationshipHash;
 typedef _STL::hash_map<UnsignedInt, Relationship, _STL::hash<UnsignedInt>, _STL::equal_to<UnsignedInt> > BfmeRelationshipHashU;

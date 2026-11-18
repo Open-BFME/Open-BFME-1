@@ -4,8 +4,8 @@
 // readable body of ??1W3DPropBuffer@@QAE@XZ: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBuffer.cpp
 // Open-BFME: W3DPropBuffer::~W3DPropBuffer, retail 0x00702E50, 268 bytes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "Lib/BaseType.h"
 #include "Common/AsciiString.h"

@@ -21,9 +21,9 @@
 // the only lever.  end.y matches either way, which is what made the asymmetry
 // look like allocation noise rather than a source-level fact.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 class Image;

@@ -22,10 +22,10 @@
 // drawAtOffsets at +0x38 and getWidth at +0x40; the rest are named for their
 // offsets because these bodies do not say what they are.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef float Real;
-typedef bool Bool;
+
+
 
 class GameFont;
 
