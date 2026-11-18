@@ -13,9 +13,9 @@
 // destroyWindows is +0x20, the same slot InGameUI_clearPopupMessageData.cpp
 // pinned; and the delete is the scalar deleting destructor at slot 1.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 enum GSOverlayType
 {

@@ -5,7 +5,7 @@
 
 #include "Common/AsciiString.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 #include "../../../Include/Common/NameKeyType.h"

@@ -4,7 +4,7 @@
 // the callers prove the Team head and the hasSpecialPower predicate, but not
 // the original source spelling.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

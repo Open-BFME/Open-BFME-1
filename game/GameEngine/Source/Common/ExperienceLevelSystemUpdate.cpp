@@ -8,7 +8,7 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
 
 class ExperienceLevelData;

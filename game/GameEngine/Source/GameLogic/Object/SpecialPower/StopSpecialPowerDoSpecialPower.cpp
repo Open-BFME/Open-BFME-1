@@ -9,7 +9,7 @@
 // Moved from BfmeTwoHundredOne.cpp with its private views. The guard calls
 // interface slot 1 (Zero Hour's isReady); the names below stay as they were.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeOtherGJ
 {

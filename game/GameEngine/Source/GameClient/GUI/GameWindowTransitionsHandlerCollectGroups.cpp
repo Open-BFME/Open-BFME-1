@@ -5,7 +5,7 @@
 // The group helper is kept as a TU-local ABI declaration.  Its retail call is
 // the existing ILT 0x0000BE97, whose verified body candidate is 0x0048B390.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct CRITICAL_SECTION;
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(

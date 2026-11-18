@@ -12,8 +12,8 @@
 // and the object's completed upgrades; its name is unproven.  The mask is
 // BFME's BitFlags<192>, an STLport bitset<192>.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 struct UpgradeMaskType
 {

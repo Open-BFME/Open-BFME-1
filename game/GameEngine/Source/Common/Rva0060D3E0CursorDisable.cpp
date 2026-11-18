@@ -8,7 +8,7 @@
 // vtable+0x38 in LanGameOptionsMenu.cpp.  The second receiver's identity is
 // not yet recovered, so its type and method retain address-derived names.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Mouse;
 extern Mouse *TheMouse;

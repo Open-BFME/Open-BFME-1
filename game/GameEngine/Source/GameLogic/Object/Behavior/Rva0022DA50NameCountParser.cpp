@@ -13,7 +13,7 @@
 // The string destructor is visible here because retail calls releaseBuffer
 // directly at0x00887940. Shared ascii_string.h supplies the type declaration.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )

@@ -6,7 +6,7 @@
 // this object.  The public method name is unresolved, so keep the method
 // address-derived while preserving the proven class and ABI.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 // "SkirmishStats.ini" appended to the translated profile name, retail

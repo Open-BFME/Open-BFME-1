@@ -16,7 +16,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ThingTemplate;
 

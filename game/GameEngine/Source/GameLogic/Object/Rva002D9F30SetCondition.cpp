@@ -15,7 +15,7 @@
 // shows the same effect: its clear-path test is word-first only while its set
 // path is in the function too.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define OBJECT_TU_MEMBERS void notifyModelConditionChanged();
 #include "object.h"

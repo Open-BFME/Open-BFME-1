@@ -5,7 +5,7 @@
 // this body calls it through ILT 0x0002B35A with the primary module address.
 
 typedef int ObjectID;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class DamageInfo
 {

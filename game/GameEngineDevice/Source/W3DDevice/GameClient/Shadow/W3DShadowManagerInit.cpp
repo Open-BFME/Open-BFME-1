@@ -6,7 +6,7 @@
 class W3DVolumetricShadowManager;
 extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
 
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // The first two BFME shadow submanager identities are intentionally kept
 // address-derived.  Their constructor and reacquire-body names disagree, but

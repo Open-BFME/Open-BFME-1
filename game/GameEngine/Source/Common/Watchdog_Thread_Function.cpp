@@ -1,7 +1,7 @@
 // ?Thread_Function@Watchdog@@UAEXXZ
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) long __cdecl time(long *value);
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(void *section);

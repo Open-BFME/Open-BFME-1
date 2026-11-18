@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // Existing matched body at 0x006092D0.  This call is made with the same
 // receiver and the two incoming integers; the target's thunk is an ILT for

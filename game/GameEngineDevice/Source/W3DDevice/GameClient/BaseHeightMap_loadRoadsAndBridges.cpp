@@ -4,7 +4,7 @@
 // BaseHeightMap.cpp; this TU supplies the retail member offsets and device lock.
 #include "dx8wrapper.h"
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class W3DTerrainLogic;
 

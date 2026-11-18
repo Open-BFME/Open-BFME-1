@@ -1,7 +1,7 @@
 // ?isPendingObjectUnavailable@CastleBehavior@@QBE_NXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 union CastleObjectStatus

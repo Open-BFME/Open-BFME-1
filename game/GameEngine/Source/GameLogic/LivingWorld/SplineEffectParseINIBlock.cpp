@@ -18,7 +18,7 @@
 // name's buffer.  The record is never freed here: ownership passes to the
 // instance.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned int UInt;
 
 void *operator new( UInt size );

@@ -9,7 +9,7 @@
 
 #include "Common/AsciiString.h"
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class WindowLayout;
 

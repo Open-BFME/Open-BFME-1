@@ -2,7 +2,7 @@
 // stlport
 // Open-BFME5: HordeContain split-result INI field parser, retail 0x0023E420.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 extern "C" __declspec(dllimport) int __cdecl atoi( const char * );

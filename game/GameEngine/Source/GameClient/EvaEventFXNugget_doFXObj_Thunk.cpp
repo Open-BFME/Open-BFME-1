@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Clean C++ reconstruction of BFME's Eva-event FX dispatch.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 enum EvaMessage
 {

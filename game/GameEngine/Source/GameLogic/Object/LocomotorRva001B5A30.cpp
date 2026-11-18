@@ -1,7 +1,7 @@
 // ?rva001B5A30@Locomotor@@QBEMPAVObject@@W4BodyDamageType@@@Z
 // Retail RVA 0x001B5A30, 148 bytes.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum BodyDamageType
 {

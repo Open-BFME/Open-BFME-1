@@ -5,7 +5,7 @@
 // message record: four literal head words followed by the proven 12-byte
 // STLport tree header whose 24-byte sentinel allocation is visible here.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 // Existing STLport allocator body at 0x0082E540.  This is a typed use of the
 // resolver's already-owned address, not a new ledger pin or alias.

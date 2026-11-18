@@ -2,8 +2,8 @@
 // stlport
 
 typedef unsigned short WideChar;
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "string_base.h"
 

@@ -6,7 +6,7 @@
 // code repeats doHideCounter at 0x002F9790 instruction for instruction, which is
 // how ZH spells the pair of removeNamedTimer actions.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct BfmeAsciiStringData
 {

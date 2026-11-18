@@ -4,7 +4,7 @@
 // module data, stores birth/die frames, and wakes the object. CastleBehavior
 // at 0x00372BD0 is the sole caller after findModule("LifetimeUpdate").
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

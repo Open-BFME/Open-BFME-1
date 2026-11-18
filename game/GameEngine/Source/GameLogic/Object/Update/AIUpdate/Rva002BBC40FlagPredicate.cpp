@@ -4,7 +4,7 @@
 // 0x002BBC40.  The lookup helper is the retail ILT at 0x000479BA; the two
 // coordinate fields and the frame gate are fixed by the body itself.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 struct Rva002BBC40Coord3D
 {

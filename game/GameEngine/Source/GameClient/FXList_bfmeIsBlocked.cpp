@@ -11,7 +11,7 @@
 #pragma comment(linker, "/alternatename:?putNode@PlayTimeList@@QAEXPAU_List_node_base@_STL@@I@Z=?j_0000ebec@@YAXXZ")
 #pragma comment(linker, "/alternatename:?size@PlayTimeList@@QBEIXZ=?j_0000e49e@@YAXXZ")
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern int GetGameClientRandomValue(int lo, int hi, char *file, int line);
 

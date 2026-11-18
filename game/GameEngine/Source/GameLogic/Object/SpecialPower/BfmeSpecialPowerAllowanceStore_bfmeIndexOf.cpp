@@ -1,6 +1,6 @@
 // ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Overridable
 {

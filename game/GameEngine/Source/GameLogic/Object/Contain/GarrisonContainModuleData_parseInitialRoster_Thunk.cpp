@@ -14,7 +14,7 @@
 // The roster fields sit at instance+0x174 and instance+0x178. The third and
 // fourth parameters are unused; being cdecl, nothing pops them.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" unsigned int __cdecl strlen(const char *s);
 

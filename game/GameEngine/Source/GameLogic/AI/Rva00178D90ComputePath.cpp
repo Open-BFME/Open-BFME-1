@@ -4,7 +4,7 @@
 // bytes once relocations (the callee ILTs and the debug string literal
 // address) are masked; the trace string itself differs (ComputePath30).
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

@@ -11,7 +11,7 @@
 // a variadic and therefore __cdecl constructor taking this as its first stack
 // argument, with a declared copy constructor so MSVC builds the exception in
 // place rather than constructing it and copying it into a second slot.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
 class INIException

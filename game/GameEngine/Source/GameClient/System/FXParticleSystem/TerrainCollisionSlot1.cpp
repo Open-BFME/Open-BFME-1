@@ -4,7 +4,7 @@
 // Its slot 1 is distinct from ParticleTerrainCollisionModule at 0x005FD380;
 // retain the address-qualified owner until the template class layers are known.
 // The one-pointer tracking view supplies a shared null singleton on dereference.
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

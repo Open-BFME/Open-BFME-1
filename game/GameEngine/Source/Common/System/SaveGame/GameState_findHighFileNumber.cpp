@@ -5,7 +5,7 @@
 // IterateSaveFileCallback used by GameState::findNextSaveFilename's disk
 // scan, retail 0x0010EF70, 318 bytes.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #define _DLL
 #include <stdlib.h>

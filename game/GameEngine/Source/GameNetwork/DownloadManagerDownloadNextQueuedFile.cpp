@@ -5,7 +5,7 @@
 #include <list>
 
 typedef long HRESULT;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class QueuedDownload
 {

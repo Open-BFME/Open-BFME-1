@@ -9,7 +9,7 @@
 // ILT thunk rows are called through typed member-pointer views so ECX and
 // argument widths remain explicit without introducing aliases or pins.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AIGroup
 {

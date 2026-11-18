@@ -14,7 +14,7 @@
 #include <list>
 #include <map>
 
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

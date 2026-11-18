@@ -2,7 +2,7 @@
 // readable body of ?update@RiderChangeContain@@UAE?AW4UpdateSleepTime@@XZ: game/GameEngine/Source/GameLogic/Object/Contain/RiderChangeContain.cpp
 // Zero Hour RiderChangeContain::update against BFME's retail module layout.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

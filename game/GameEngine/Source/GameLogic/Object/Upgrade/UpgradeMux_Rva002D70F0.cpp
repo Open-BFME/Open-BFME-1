@@ -11,8 +11,8 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 template <int NUMBITS>
 class BitFlags

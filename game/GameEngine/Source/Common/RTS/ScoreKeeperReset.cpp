@@ -5,7 +5,7 @@
 #include <bitset>
 #include <map>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <int Bits>
 class BitFlags

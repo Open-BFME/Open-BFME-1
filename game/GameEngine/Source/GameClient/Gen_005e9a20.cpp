@@ -24,7 +24,7 @@
 // seven member assignments, the implicit one forced through a holder, and an
 // indexed loop over a seven-element array all emit these exact 57 bytes.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen_005e9a20
 {

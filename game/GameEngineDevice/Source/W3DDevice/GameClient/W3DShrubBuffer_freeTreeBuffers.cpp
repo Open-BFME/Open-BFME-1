@@ -2,7 +2,7 @@
 // W3DShrubBuffer::freeTreeBuffers, retail 0x0071C2D0: Zero Hour's tree-buffer release on the shrub
 // layout, with per-type buffers at +0x04/+0x54, shader slots at +0xA4 and the texture at +0x1E3914.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

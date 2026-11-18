@@ -12,7 +12,7 @@
 // destroyed by the out-of-line destructor at 0x0040817A before the name is
 // released.  Address-derived names.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

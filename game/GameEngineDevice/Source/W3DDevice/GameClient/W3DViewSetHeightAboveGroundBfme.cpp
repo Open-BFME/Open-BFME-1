@@ -5,7 +5,7 @@
 // this name here and setZoom at 0x00742F70 (identity_evidence/w3dview-setzoom-setheight-swap.md).
 // cl: /DNDEBUG /MD /EHsc
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GameClient
 {

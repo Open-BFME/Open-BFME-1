@@ -12,7 +12,7 @@
 // xref, so the original method and selector type names are not recoverable.
 // Ret 12 proves three four-byte arguments; x87 use proves the third is a Real.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 enum Rva0073C640Selector
 {

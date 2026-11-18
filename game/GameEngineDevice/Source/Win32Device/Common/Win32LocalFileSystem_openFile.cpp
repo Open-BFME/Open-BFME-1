@@ -31,7 +31,7 @@
 // offset to the archived entry and treats size 0 as the whole entry.
 
 class File;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32LocalFileSystem.h
 class Win32LocalFileSystem

@@ -15,7 +15,7 @@
 // reset() sub-struct, gives retail's setne dl / mov [esi+0x46],dl.
 #include "Lib/Coord3D.h"
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ParabolicEase
 {

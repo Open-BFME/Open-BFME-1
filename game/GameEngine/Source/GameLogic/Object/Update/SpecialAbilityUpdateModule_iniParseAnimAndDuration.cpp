@@ -3,7 +3,7 @@
 // +0x414 and the colon separator mirror used here is at +0x41C.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)

@@ -14,7 +14,7 @@
 // written as members the compiler folds the offsets onto the objects and drops
 // the leas, which is what CrateTemplate::operator= at 0x0037A1A0 already showed.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 
