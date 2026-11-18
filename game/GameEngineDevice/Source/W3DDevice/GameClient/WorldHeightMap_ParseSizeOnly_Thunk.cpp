@@ -4,10 +4,10 @@
 // that ABI view local because the older public WorldHeightMap header describes
 // the Zero Hour byte-buffer layout.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 // The retail body calls the game's array operators directly.  Keeping these
 // declarations explicit preserves their distinct relocation identities:

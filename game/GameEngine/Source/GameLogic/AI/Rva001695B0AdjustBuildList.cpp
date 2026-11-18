@@ -7,10 +7,10 @@
 
 #define PI 3.14159265358979323846f
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord3D
 {

@@ -6,10 +6,10 @@
 // seconds are scaled by five and divided by fifteen, then each drawable gets
 // the selected colour and flash count.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef UnsignedInt Color;
 
 enum

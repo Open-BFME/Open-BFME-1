@@ -31,10 +31,10 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Overridable
 {

@@ -12,10 +12,10 @@
 // here).  The record's original name is unproven, so the class keeps the
 // address-derived name.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

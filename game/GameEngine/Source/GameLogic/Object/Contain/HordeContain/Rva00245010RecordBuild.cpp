@@ -15,10 +15,10 @@
 #include <vector>
 #include <list>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord2D.h"
 

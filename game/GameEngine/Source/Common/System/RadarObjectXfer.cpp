@@ -10,11 +10,11 @@
 // the xfer is a light CRC pass, and the object's back-pointer is the
 // store at Object+0x20C (the Zero Hour friend_setRadarData inline).
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef Int Color;
-typedef bool Bool;
+
 
 #define NULL 0
 

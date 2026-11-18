@@ -6,11 +6,11 @@
 // Its authoritative 186-byte row remains Rva000EDCD0TeamEstimatePosition.cpp.
 // Evidence: targets/game/reverse/identity_evidence/002c0fe0-visible-team-position.md.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int TeamID;
-typedef bool Bool;
-typedef float Real;
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

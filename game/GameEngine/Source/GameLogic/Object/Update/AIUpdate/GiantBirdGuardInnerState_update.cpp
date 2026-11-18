@@ -10,10 +10,10 @@
 // null-checks the attack state as a value (?:), not as an && guard: MSVC then
 // keeps the reloaded pointer in ECX, as retail does, instead of the dead ESI.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { EXIT_NORMAL = 0 };

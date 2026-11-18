@@ -12,10 +12,10 @@
 // object height plus the module data's high/low limits and fractions.
 // BFME 1 offsets come from the retail body, callee names from the ledger.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 

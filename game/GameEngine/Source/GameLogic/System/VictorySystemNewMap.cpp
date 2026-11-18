@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /G6 /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Include/Lib
 // stlport
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 extern "C" double __cdecl fabs(double value);

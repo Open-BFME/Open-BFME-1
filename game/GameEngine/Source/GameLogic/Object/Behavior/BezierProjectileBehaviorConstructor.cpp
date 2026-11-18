@@ -24,11 +24,11 @@
 #include <list>
 #include <vector>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int ObjectID;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+
+
+
 
 class Thing;
 class ModuleData;

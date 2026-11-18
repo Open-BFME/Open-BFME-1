@@ -7,10 +7,10 @@
 // This body checks cells along a path, wall range, and siege tower reach. The
 // KindOf bit indexes come from the retail table at 0x012AA068.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" double fabs(double);
 #pragma intrinsic(fabs)

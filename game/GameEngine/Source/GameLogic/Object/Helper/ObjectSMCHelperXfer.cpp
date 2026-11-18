@@ -10,10 +10,10 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct XferVersion
 {

@@ -6,10 +6,10 @@
 #define BFME_STLP_NODE_ALLOC 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 enum IterOrderType { ITER_FASTEST = 0 };
 

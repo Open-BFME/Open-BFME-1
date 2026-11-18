@@ -8,10 +8,10 @@
 // (0x00495730) and before ctor SlideFromLeft (0x00495AC0). Same shape as
 // SlideFromTopFast reverse with x-axis compare/clamp from the ZH twin.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

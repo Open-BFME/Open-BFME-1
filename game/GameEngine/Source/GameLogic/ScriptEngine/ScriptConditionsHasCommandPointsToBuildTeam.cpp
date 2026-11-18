@@ -11,10 +11,10 @@
 // ThingTemplate pointer in edi across __ftol2 and loads the command-point field
 // afterwards; folding the two into one expression loads the field first.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // The copy constructor and destructor forward inline to StringBase<char>, whose
 // bodies the ledger names at retail 0x00887B60 and 0x00887940.  A copy

@@ -9,10 +9,10 @@
 // player in the mask until the count passes the limit, then compares the count with
 // the comparison parameter. No Zero Hour name fits, so the name keeps the address token.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // Retail 0x01075350 is ?g_rva01075350@@3MB (data_rows.csv,
 // Common/BfmeAngleWrap0079D0.cpp); BfmeBoundaryZero3D was only a pin.

@@ -21,10 +21,10 @@
 #include <vector>
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 enum KindOfType { KINDOF_INVALID = -1 };

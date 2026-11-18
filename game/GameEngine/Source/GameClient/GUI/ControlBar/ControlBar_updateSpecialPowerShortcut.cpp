@@ -4,10 +4,10 @@
 // The bounded body is tied to the named populateSpecialPowerShortcut caller at
 // 0x004A04C0 and to the retail fields/callees below; it is not a dump lift.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum { FALSE = 0, TRUE = 1 };
 

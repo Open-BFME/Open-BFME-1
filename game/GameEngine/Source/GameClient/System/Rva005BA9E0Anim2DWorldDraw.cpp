@@ -2,10 +2,10 @@
 // World-animation mode 2 draw. The owning class is still address-derived, so
 // there is no destination file to name -- no `readable body of` claim until there is.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Image;
 

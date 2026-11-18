@@ -9,10 +9,10 @@
 
 #include <hash_map>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct XferVersion
 {

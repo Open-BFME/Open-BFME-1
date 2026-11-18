@@ -4,10 +4,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct BfmeAsciiStringData
 {

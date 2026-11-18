@@ -11,10 +11,10 @@
 // layouts used by the matched Player team walks and the ScriptConditions
 // team-member family.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef UnsignedShort PlayerMaskType;
 
 class Parameter;

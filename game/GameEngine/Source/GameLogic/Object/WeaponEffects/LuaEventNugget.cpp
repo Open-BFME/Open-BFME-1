@@ -19,10 +19,10 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Int ObjectID;
 
 struct Coord3D;

@@ -6,10 +6,10 @@
 // W3DShrubBuffer::clearAllTrees, retail 0x0071C7E0: Zero Hour's clearAllTrees on the shrub layout;
 // the constructor at 0x00720820 and the destructor at 0x007206E0 call it.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

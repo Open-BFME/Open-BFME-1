@@ -4,11 +4,11 @@
 
 #include "StringInline.h"
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 struct XferVersion
 {

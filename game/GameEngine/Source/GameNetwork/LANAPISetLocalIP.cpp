@@ -3,10 +3,10 @@
 // BFME address/transport layout and port retry path. The complete body,
 // both returns and all call targets were independently audited.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum { LAN_BASE_PORT = 8086, LAN_LAST_PORT = 8094 };
 

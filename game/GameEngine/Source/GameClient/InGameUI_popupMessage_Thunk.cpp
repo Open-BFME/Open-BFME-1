@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
-typedef unsigned int UnsignedInt;
+
 typedef int Color;
-typedef float Real;
+
 
 #define TRUE true
 #define FALSE false

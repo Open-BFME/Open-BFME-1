@@ -11,11 +11,11 @@
 // word, one opaque integer, a byte flag, four integers, a Bool center flag, a
 // position pointer, a float, and an integer output pointer.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned char UByte;
-typedef bool Bool;
-typedef float Real;
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

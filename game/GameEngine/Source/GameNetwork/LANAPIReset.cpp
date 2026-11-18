@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // readable body: game/GameEngine/Source/GameNetwork/lanapi.cpp
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct BfmeNetAddress
 {

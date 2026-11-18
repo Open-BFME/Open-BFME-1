@@ -5,10 +5,10 @@
 
 #include <bitset>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 template <int NUMBITS>
 class BitFlags

@@ -12,10 +12,10 @@
 // arguments, links it into the caller's list next to a shadow that already
 // uses the same texture and drawable, and counts decal-like types at +0x250.
 
-typedef int Int;
-typedef float Real;
-typedef char Char;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #include "refcount.h"
 

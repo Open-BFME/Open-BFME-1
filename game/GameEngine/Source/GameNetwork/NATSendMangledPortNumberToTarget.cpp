@@ -4,11 +4,11 @@
 // The local declarations use the BFME request layout proven by the online
 // custom-match request body.
 
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
-typedef int Int;
-typedef bool Bool;
+
+
 
 extern "C" unsigned int strlen(const char *text);
 

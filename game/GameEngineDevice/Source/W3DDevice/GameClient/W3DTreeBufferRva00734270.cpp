@@ -4,10 +4,10 @@
 #include "vector3.h"
 #include "matrix3d.h"
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 class VertexBufferClass
 {

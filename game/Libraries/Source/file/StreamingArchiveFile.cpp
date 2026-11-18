@@ -4,10 +4,10 @@
 // duplicate StreamingArchiveFile size field; this TU keeps the proven BFME
 // layout local while the real body remains at the official source path.
 
-typedef int Int;
-typedef bool Bool;
-typedef char Char;
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 #define FALSE false
 #define TRUE true

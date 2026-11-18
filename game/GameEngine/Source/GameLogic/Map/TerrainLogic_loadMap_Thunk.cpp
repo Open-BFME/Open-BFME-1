@@ -5,10 +5,10 @@
 // The decorated name records only the filename and query flag, so this TU
 // keeps the two additional observed stack words in an ABI helper.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class ChunkInputStream;
 

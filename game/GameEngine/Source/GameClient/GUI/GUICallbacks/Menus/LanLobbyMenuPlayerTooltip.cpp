@@ -9,11 +9,11 @@
 // 54, as in LANAPIHandleRequestLocationsThunk.cpp), and the tooltip is the
 // player's name itself rather than the formatted TOOLTIP:LANPlayer string.
 typedef unsigned short wchar_t;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
+
 #include "Common/AsciiString.h"
 // Local StringBase adapter also exposes str() for the inlined game-name copy.
 class UnicodeString {

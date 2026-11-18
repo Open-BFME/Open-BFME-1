@@ -13,10 +13,10 @@
 // reference's inline recursive Overridable::getFinalOverride, and the model
 // condition flags are STLport bitset BitFlags.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

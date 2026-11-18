@@ -2,10 +2,10 @@
 // BFME's InGameUI moved the floating-text list to +0x1298 and stores its
 // timeout as a Real at +0x129c.  Keep this retail view local to the body.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int Color;
 
 template <typename T> class StringBase

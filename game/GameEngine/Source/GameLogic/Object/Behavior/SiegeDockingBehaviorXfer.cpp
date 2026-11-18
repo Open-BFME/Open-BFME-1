@@ -19,10 +19,10 @@
 
 #include <vector>
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

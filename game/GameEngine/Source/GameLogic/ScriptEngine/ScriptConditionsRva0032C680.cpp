@@ -16,10 +16,10 @@
 #include "ObjectDlinkPmf.h"
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short PlayerMaskType;
 
 class Parameter

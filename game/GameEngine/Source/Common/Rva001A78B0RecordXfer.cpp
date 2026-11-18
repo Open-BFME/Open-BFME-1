@@ -10,10 +10,10 @@
 // BfmeThingFactory::findTemplate on load; then +0x18 Bool, +0x1C Coord3D,
 // +0x28 Int, +0x2E Short, +0x2C/+0x2D Bools, and +0x10 from version 2.
 // Retail inlines StringBase<char>::isNotEmpty() here.
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef short Short;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "ascii_string.h"
 #include "xfer.h"

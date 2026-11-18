@@ -5,10 +5,10 @@
 // tools/bfme_layout.py: m_name +0x10, m_pendingAction +0x24,
 // m_inLobby +0x3D, m_currentGame +0x40, and m_memberObject +0x4C.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "StringInline.h"
 

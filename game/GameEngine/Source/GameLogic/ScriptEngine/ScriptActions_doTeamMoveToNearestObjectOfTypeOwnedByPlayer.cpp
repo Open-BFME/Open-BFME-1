@@ -10,10 +10,10 @@
 #include "StringInline.h"
 #include <math.h>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class Player;

@@ -4,10 +4,10 @@
 // The matched dispatcher identifies this ScriptActions method. BFME walks
 // the selected-player mask instead of the older reference team loop.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

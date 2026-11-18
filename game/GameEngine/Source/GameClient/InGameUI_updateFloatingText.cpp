@@ -3,10 +3,10 @@
 // rate fields from the Zero Hour layout, so this TU keeps the retail view
 // local to the recovered body.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int Color;
 
 inline Color GameMakeColor( UnsignedByte red, UnsignedByte green,
