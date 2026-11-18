@@ -5,7 +5,7 @@
 // this+0x1c and the entry id at this+0x24, while the broad AIStates.cpp model
 // still carries the Zero Hour dual-base layout.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/StateExitType.h"
 

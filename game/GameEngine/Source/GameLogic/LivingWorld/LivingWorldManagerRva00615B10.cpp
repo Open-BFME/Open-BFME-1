@@ -13,7 +13,7 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeThingNA
 {

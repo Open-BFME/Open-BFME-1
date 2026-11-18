@@ -5,7 +5,7 @@
 // Keep the FBA helper's established void* ABI: pass the real's raw stack bits.
 // Parameter offsets also occur in the matched ScriptEngineRva00345a50.cpp.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

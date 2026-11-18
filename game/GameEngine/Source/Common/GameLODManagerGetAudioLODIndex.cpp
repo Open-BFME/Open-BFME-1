@@ -4,7 +4,7 @@
 // BFME's two-entry AudioLOD lookup.  The method is not present in the ZH
 // reference, so this TU keeps the BFME table and the reporting path local.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(
 	const void *left, const void *right, unsigned count);

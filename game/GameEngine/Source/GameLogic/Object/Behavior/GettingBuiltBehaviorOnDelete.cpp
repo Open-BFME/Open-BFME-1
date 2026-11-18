@@ -13,7 +13,7 @@
 // ID accessor lets VC7.1 reuse EAX for the ID and hoist the GameLogic load
 // above the push, where retail loads the ID into ECX.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../object.h"
 

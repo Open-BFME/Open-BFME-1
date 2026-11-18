@@ -2,7 +2,7 @@
 
 // LifetimeUpdate::update, retail 0x00298010.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

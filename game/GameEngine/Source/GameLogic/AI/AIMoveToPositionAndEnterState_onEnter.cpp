@@ -3,7 +3,7 @@
 #include "../../../Include/Common/Enums/StateReturnType.h"
 
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

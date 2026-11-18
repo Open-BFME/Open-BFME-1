@@ -15,8 +15,8 @@
 // Retail emits no call for the base class, so UpdateModuleData::buildFieldParse
 // is empty here. MultiIniFieldParse::add keeps its out-of-line copy at
 // 0x00850920, which is what the two calls reach.
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class INI
 {

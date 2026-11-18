@@ -24,7 +24,7 @@
 class W3DVolumetricShadowManager;
 extern W3DVolumetricShadowManager *TheW3DVolumetricShadowManager;
 
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define TRUE true
 #define FALSE false

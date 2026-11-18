@@ -24,7 +24,7 @@ inline AsciiString::AsciiString(const AsciiString &that)
     ((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
 }
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ArchivedFileInfo;
 typedef std::map<AsciiString, ArchivedFileInfo> ArchivedFileInfoMap;

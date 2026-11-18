@@ -14,7 +14,7 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <vector>
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // landed: game/GameEngine/Source/GameLogic/Object/Contain/Rva00244E60.cpp
 struct BfmeRva44E60Input

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // TerrainLogic P48 radius clear, retail 0x001A6410.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" double sqrt(double value);
 #pragma intrinsic(sqrt)

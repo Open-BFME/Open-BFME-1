@@ -12,7 +12,7 @@
 // Real name/class unknown (identity not provable from the callee set
 // alone): landed under an address-derived TAG per IDENTITY POLICY.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 

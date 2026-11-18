@@ -6,7 +6,7 @@
 // chains hanging off the receiver's pointer vector at +0x0C.  The receiver and
 // the method are not proven, so both keep the address.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva00351040Script
 {

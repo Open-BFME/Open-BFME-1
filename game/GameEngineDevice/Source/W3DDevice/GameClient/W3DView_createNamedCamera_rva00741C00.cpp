@@ -2,7 +2,7 @@
 // The primary vftable 0x011217A0 places this method at slot 112.
 // Its body allocates the named camera record constructed at 0x00741830.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

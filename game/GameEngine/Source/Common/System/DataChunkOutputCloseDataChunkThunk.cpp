@@ -19,7 +19,7 @@
 // at this+0x18, with the chunk's next pointer at +0x04 and its recorded file
 // position at +0x0C. The size written back excludes its own four bytes.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) long __cdecl ftell(void *stream);
 extern "C" __declspec(dllimport) int __cdecl fseek(void *stream, long offset, int origin);

@@ -1,6 +1,6 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva00249310Object;
 

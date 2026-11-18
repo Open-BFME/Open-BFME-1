@@ -7,7 +7,7 @@
 #include "Precompiled/PreRTS.h"
 #include "Common/Player.h"
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 // Retail ILT 0x0004B290 -> 0x0034CB60; use the thunk ledger owner because

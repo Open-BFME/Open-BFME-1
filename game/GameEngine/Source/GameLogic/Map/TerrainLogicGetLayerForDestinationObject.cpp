@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

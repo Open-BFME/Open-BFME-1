@@ -4,7 +4,7 @@
 // neutral.  The state, range, object, helper, and Bool-argument ABIs below
 // are taken from the retail body and existing callee rows.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BfmeStrF9
 {

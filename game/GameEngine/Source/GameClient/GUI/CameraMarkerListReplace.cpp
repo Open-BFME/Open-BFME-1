@@ -16,7 +16,7 @@
 // place of the matched node and returns the displaced node, instead of deleting
 // it. No landed caller names the purpose, so the method keeps the address token.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl memcmp( const void *, const void *, unsigned int );
 #pragma intrinsic(memcmp)

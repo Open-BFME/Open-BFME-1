@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Rva0024D520Node
 {

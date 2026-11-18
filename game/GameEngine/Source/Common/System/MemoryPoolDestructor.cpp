@@ -14,7 +14,7 @@
 //
 // After the loop the same sub-object is flushed once and the flag comes down.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmePoolEntry
 {

@@ -5,7 +5,7 @@
 // this body names AIAttackFireDuringApproachState::computePath.  Keep the
 // owner address-derived until those two identity clues are reconciled.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

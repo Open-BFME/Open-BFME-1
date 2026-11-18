@@ -19,7 +19,7 @@
 #define _STLP_USE_NEWALLOC 1
 #include <list>
 
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../../../GameEngine/Include/Common/Enums/ParticleSystemID.h"
 

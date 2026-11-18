@@ -4,7 +4,7 @@
 // 0x00760600.  It passes an Int and the validated RenderObjClass transform at
 // render-object +0x18, restoring the complete draw-module pointer by -0x0C.
 
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #include "../../../../../../Libraries/Source/WWVegas/WWMath/vector4.h"
 

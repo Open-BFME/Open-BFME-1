@@ -6,7 +6,7 @@
 // (RVA 0x0015FE90, ghidra FUN_0055fe90) is still an unconverted dump, so it
 // is called only through the existing gen-thunk ILT (j_0003fe4f).
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

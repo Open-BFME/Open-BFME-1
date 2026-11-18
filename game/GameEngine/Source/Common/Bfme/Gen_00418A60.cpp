@@ -16,7 +16,7 @@
 // is what keeps retail's second test before the destructor call. Reading the
 // member once into a local lets MSVC fold the two tests into one.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *lpAddend);

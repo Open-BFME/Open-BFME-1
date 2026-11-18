@@ -5,7 +5,7 @@
 // three arguments, and a returned unpacked length), so this remains a
 // TU-local engine helper rather than changing that vendor implementation.
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 int bfmeRefPackDecode(const UnsignedByte *compressedData,
                       UnsignedByte *destination)

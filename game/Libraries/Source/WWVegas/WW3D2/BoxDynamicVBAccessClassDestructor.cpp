@@ -18,7 +18,7 @@
 // its vtable at +0 and its count at +4, and slot 0 is called with no argument
 // when the count reaches zero.
 
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // Retail initialization at RVA 0091DA30 clears fifteen flags and offsets:
 // its FVF cursor runs from VA 013467F0 to 01346BB0 in steps of 0x40.

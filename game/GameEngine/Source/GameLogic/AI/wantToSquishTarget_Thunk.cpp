@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Authentic body from GeneralsMD/Code/GameEngine/Source/GameLogic/AI/AIStates.cpp.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_COMPUTER = 1 };

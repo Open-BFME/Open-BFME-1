@@ -4,7 +4,7 @@
 // The entry point is the third update interface at complete-object offset
 // +0x10.  The primary WallUpgradeUpdate subobject therefore starts at this-0x10.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum UpdateSleepTime
 {

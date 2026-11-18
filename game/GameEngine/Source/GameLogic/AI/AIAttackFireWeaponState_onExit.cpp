@@ -3,7 +3,7 @@
 // readable body of ?onExit@AIAttackFireWeaponState@@UAEXW4StateExitType@@@Z: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for AIAttackFireWeaponState::onExit.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>

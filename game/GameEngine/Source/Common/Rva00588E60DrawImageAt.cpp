@@ -8,7 +8,7 @@
 // carries the three Display calls so retail's global-load placement
 // reproduces byte-exact.
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

@@ -5,8 +5,8 @@
 #define BFME_HAVE_COORD3D
 #include "object.h"
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "snapshot.h"
 

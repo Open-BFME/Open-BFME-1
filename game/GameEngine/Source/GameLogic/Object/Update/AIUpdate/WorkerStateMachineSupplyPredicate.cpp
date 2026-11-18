@@ -8,7 +8,7 @@
 // comparison is absent from the upstream ZH implementation but explicit in
 // the BFME body.
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 enum AIStateType
 {

@@ -20,7 +20,7 @@
 // reached, and true unconditionally when there is no linked object id or
 // m_a0 is set.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template <int N>
 class BitFlags

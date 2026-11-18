@@ -8,7 +8,7 @@
 extern "C" int __cdecl abs( int n );
 #pragma intrinsic(abs)
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

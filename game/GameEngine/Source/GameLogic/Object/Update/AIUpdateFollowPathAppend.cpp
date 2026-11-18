@@ -10,7 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 #include "../../command_source_type.h"
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){} float x,y,z; };
 class Object;

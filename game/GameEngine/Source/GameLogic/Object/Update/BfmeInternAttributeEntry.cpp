@@ -4,7 +4,7 @@
 // The callers BfmeSecondPlainMember::setSecondPlain and Gen003A0410's
 // constructor reach this body through the retail ILT at 0x00037FD8.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Gen00043699
 {

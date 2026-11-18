@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /O1
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class State
 {

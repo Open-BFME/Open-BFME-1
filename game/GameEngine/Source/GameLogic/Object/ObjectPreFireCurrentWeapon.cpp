@@ -6,7 +6,7 @@
 // waits until the selected weapon can fire on the next frame, clears three
 // stale model conditions, and passes both target forms to Weapon.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

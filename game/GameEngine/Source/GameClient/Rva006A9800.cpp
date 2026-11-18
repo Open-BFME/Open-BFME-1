@@ -13,7 +13,7 @@
 // No named caller and no vtable slot prove a real class or method name, so
 // this keeps the address token.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 typedef void (__stdcall *Rva006A9800Stdcall1)(void *arg);
 typedef void (__stdcall *Rva006A9800Stdcall2)(Int arg);

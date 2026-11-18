@@ -3,7 +3,7 @@
 // Open-BFME5: BFME's replacement-state handoff for TemporarilyDefectUpdate.
 // Retail 0x002B0EA0, called through ILT 0x000411C3.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
