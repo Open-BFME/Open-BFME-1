@@ -107,7 +107,7 @@ class W3DShadowManager
 {
 public:
 	W3DShadowManager(void);
-	Bool rva007B7500(void);
+	Bool init(void);
 
 private:
 	unsigned char m_knownBfmeBody[0x0c];
@@ -334,7 +334,7 @@ void Rva00730590::init(void)
 
 	W3DShadowManager *shadow = new W3DShadowManager;
 	TheW3DShadowManager = shadow;
-	shadow->rva007B7500();
+	shadow->init();
 
 	m_waterRenderObject = new WaterRenderObjClass;
 	TheWaterRenderObj = m_waterRenderObject;
