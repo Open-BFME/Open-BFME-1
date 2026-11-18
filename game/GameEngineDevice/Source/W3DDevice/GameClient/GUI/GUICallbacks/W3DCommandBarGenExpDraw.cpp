@@ -154,7 +154,7 @@ class Display {
     virtual void enableClipping(bool);
 };
 extern Display *TheDisplay;
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 #define FALSE false
 void W3DCommandBarGenExpDraw(GameWindow *window, WinInstanceData *instData) {
     Player *player = ThePlayerList->getLocalPlayer();

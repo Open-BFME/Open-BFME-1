@@ -20,7 +20,7 @@ public:
  void set(unsigned int n) { bits._Unchecked_set(n); }
 private: _STL::bitset<N> bits;
 };
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateReturnType
 {

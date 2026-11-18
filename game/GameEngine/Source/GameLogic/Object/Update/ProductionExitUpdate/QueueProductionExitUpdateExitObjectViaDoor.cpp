@@ -21,7 +21,7 @@
 #include "matrix3d.h"
 #include <vector>
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../Include/Common/ObjectID.h"
 class Team;

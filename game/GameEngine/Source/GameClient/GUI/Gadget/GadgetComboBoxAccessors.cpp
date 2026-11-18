@@ -37,7 +37,7 @@
 
 #include "Common/UnicodeString.h"
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum { GWS_COMBO_BOX = 0x00008000 };	// GameClient/Gadget.h
 

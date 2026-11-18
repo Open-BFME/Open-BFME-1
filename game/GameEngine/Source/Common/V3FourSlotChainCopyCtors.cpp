@@ -56,7 +56,7 @@
 // IDENTITY IS NOT RECOVERED.  Names come from addresses; the vftable dwords are
 // DIR32 sites the gate takes from the target.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---- the head, landed in V3HeadNodeCopyCtors.cpp; the node call survives ----
 

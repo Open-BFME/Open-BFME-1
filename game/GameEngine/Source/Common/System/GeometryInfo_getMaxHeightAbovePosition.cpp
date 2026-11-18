@@ -24,12 +24,12 @@ static inline const Real &bfmeMax(const Real &a, const Real &b)
 	return (a > b) ? a : b;
 }
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Geometry.h
 class GeometryInfo

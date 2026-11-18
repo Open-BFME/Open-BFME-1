@@ -44,7 +44,7 @@ public:
 	virtual Rva009A36F0Thing *slot1c();
 };
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct Rva009A3540OpaqueOwner;
 

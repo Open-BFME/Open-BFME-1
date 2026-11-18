@@ -13,7 +13,7 @@
 #include <vector>
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct Coord3D
 {

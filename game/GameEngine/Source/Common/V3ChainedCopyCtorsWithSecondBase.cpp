@@ -42,7 +42,7 @@
 // per body are DIR32 sites the gate takes from the target, leaving 38 of the 62
 // bytes concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---- the pieces the first bases are built from (no byte of these bodies) ----
 

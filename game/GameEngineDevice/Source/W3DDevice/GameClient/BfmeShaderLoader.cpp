@@ -13,8 +13,8 @@
 #define NULL 0
 #endif
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #define HEAP_ZERO_MEMORY 8
 extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);

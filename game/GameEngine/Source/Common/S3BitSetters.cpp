@@ -17,7 +17,7 @@
 // Retail ILTs 000190F1, 00026A3F and 0004B218 reach the authored
 // BitFlags<304>, BitFlags<86> and BitFlags<116> name lookups respectively.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <unsigned int NUMBITS> class BitFlags
 {

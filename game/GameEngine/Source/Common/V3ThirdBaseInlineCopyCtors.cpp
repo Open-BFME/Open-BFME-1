@@ -56,7 +56,7 @@
 // dwords per body are DIR32 sites the gate takes from the target, leaving 100 of
 // the 116 bytes concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---- the first base, landed in V3HeadNodeCopyCtors.cpp; declared only here ---
 

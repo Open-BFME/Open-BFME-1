@@ -9,7 +9,7 @@
 #include <string.h>
 #include <windows.h>
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 class UnicodeString;

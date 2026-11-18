@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned int ObjectID;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 extern "C" void __cdecl __identifier("?d_002475a0@@YAXXZ")();

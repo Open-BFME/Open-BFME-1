@@ -38,7 +38,7 @@
 // same thing that moved Shell::isAnimReversed and
 // BattlePlanUpdate::recenterTurret into their own TUs.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
 
 class Object;

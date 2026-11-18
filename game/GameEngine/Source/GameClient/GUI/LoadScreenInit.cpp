@@ -26,7 +26,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 #define FALSE 0
 #define TRUE 1

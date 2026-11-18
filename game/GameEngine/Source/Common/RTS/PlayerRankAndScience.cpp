@@ -43,7 +43,7 @@
 #include <limits.h>
 #include <vector>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum ScienceType {};
 

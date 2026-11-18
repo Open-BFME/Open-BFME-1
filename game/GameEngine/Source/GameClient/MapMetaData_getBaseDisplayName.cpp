@@ -6,7 +6,7 @@
 // the display-name label at +0x00, filename at +0x50, and cached result at
 // +0xF4.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 extern const unsigned short BFMEEmptyUnicodeString;
 

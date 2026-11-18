@@ -21,7 +21,7 @@
 #include "StringInline.h"
 #include <vector>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ObjectTypes
 {

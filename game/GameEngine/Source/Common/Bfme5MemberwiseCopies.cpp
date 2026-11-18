@@ -8,7 +8,7 @@
 // two of them, four dwords in the other two. There is no unwind frame because
 // nothing constructed before the call needs destroying.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class BfmeCopyPart_000C08E0
 {

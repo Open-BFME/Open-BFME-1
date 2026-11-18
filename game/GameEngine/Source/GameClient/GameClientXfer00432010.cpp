@@ -12,7 +12,7 @@
 typedef int ObjectID;
 
 enum { INVALID_ID = 0, TRUE = 1, FALSE = 0 };
-enum DrawableStatus { DRAWABLE_STATUS_NONE = 0 };
+#include "../../Include/Common/Enums/DrawableStatus.h"
 class Xfer;
 // Snapshot has the BFME destructor, loadPostProcess, name and DoXfer slots.
 class Snapshot

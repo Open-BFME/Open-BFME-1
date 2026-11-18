@@ -13,7 +13,7 @@
 // -- so each of these classes has to be a friend of it to reach the same
 // symbol. Declaring it public would mangle a name that does not exist.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 void __cdecl operator delete(void *block);				// retail 0x00881EB0
 

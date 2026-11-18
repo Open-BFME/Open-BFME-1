@@ -30,12 +30,12 @@
 
 
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 // ------------------------------------------------------------------------
 // 0x0087E900: rotate a shape's offset by the angle and add the position.

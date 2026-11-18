@@ -34,7 +34,7 @@
 #include <list>
 #include "StringInline.h"
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 enum { SNAPSHOT_MAX = 3 };
 
 class SubsystemInterface
