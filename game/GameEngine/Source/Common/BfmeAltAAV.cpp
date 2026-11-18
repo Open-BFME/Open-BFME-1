@@ -8,10 +8,10 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
 
 extern const WideChar g_Rva01088AF4EmptyWideString[];

@@ -2,11 +2,11 @@
 // Open-BFME: GameMessage copy constructor, retail 0x0008AF70, 672 bytes; not in Zero Hour.
 // Layout as in GameMessage_allocArg.cpp: count byte +0x18, argument list +0x1C, tail +0x20.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef unsigned short WideChar;
 
 struct GameMessageLocationRaw { Real x, y, z; };

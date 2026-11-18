@@ -8,9 +8,9 @@
 // The final 0x3c bytes are the compiler switch tables, not executable code;
 // the complete extent ends at 0x004BC564 before alignment padding.
 #include "ascii_string.h"
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int WindowMsgData;
-typedef bool Bool;
+
 #include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
 #define FALSE false
 #define BitTest(a,b) ((a)&(b))

@@ -11,10 +11,10 @@
 // concrete ack class; retail inlines those, so only the three-argument form
 // survives as a call.  That form is the second body below, 0x00661CC0/166.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum
 {
@@ -22,7 +22,7 @@ enum
 	NETCOMMANDTYPE_ACKSTAGE1 = 1
 };
 
-typedef float Real;
+
 
 // The three-argument processAck's own view of the list.  All offsets are read
 // straight off the retail body at 0x00661CC0.

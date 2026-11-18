@@ -21,10 +21,10 @@
 // measured m_next at this+0x10 where the reference would put it at 0x0C, so
 // the shift is at the front of the object, not inside the string arrays.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // Only the two members these bodies reach. Declaring the whole of
 // string_base.h's StringBase would put its private destructor in the epilogue

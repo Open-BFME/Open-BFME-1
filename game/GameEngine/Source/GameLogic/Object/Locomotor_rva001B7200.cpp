@@ -14,10 +14,10 @@
 // forwarded into the x87 subtraction; the inline accessors in the path
 // conditional are what keep its jmp / xor edi,edi join.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

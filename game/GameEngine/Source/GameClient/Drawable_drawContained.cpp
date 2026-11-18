@@ -13,8 +13,8 @@
 
 #include "Lib/Coord3D.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int Color;
 typedef unsigned int DrawableID;
 

@@ -27,10 +27,10 @@
 // exactly Zero Hour's order, including the second getFileLength call Zero Hour
 // makes for the dead final offset bump.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count);
 #pragma intrinsic(memcpy)

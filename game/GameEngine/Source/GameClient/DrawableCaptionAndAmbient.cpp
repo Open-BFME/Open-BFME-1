@@ -27,12 +27,12 @@
 // keeps the names its own bodies' evidence gave them and says where the other
 // reading lives.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int Color;
-typedef float Real;
-typedef bool Bool;
+
+
 typedef long RefCount;
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement( long volatile *value );

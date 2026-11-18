@@ -3,10 +3,10 @@
 // Retail 0x00497140, 237 bytes. This is a relocation-masked byte twin of
 // ProcessAnimateWindowSlideFromTop::updateAnimateWindow at 0x00496130.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

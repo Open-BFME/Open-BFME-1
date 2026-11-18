@@ -3,9 +3,9 @@
 // ?translateGameMessage@HotKeyTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z
 // Clean C++ conversion of the HotKeyTranslator retail body.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
 
 union GameMessageArgumentType
@@ -124,7 +124,7 @@ GameMessageDisposition HotKeyTranslator::translateGameMessage(const GameMessage 
     return disp;
 }
 
-typedef unsigned int UnsignedInt;
+
 typedef int ObjectID;
 typedef UnsignedInt WindowMsgData;
 

@@ -10,10 +10,10 @@
 // these TU-local views retain its witnessed map, extent and layer offsets.
 // Evidence: targets/game/reverse/identity_evidence/003dc810-clear-cell.md.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef int ObjectID;
 
 const ObjectID INVALID_ID = 0;

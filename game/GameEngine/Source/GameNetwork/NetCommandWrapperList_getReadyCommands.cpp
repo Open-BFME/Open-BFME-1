@@ -12,11 +12,11 @@
 // than init()ed, and removeFromList is inlined rather than called, so its body
 // appears here as well as at 0x006766D0.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #define NULL 0
 

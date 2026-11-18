@@ -40,10 +40,10 @@ void *BfmeHostETC::bfmeRunETC(void *unused, void *a, void *b, void *c, void *d,
 	return result;
 }
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

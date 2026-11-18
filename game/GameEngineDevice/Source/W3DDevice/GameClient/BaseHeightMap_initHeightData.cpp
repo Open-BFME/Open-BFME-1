@@ -13,8 +13,8 @@ public:
     Rva006D0590Bounds m_at1440;
     void setBounds(const Rva006D0590Bounds &bounds) { m_at1440 = bounds; }
 };
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class WorldHeightMap;
 template <typename T> class RefMultiListIterator;

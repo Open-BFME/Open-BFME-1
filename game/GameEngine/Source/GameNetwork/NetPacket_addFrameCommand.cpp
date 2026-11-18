@@ -7,11 +7,11 @@ extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count)
 
 #define NULL 0
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum { MAX_PACKET_SIZE = 0x1DC };
 

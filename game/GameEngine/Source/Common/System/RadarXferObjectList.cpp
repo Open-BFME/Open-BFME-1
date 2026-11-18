@@ -21,12 +21,12 @@
 // version 2, and after the Zero Hour fields drops each event's reference-
 // counted attachment on load and transfers the BFME-only fields that follow.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef Int Color;
-typedef bool Bool;
+
 
 #ifndef NULL
 #define NULL 0

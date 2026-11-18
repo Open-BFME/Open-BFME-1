@@ -27,12 +27,12 @@
 
 #include <stdlib.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 
 #define NULL 0
 

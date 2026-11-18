@@ -13,10 +13,10 @@
 // source order; the volatile word copies keep that load/store schedule.
 // update calls the goal re-acquire helper 0x002C38B0 defined below.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

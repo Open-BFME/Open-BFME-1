@@ -5,10 +5,10 @@
 #include "ObjectDlinkPmf.h"
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 inline Coord3D::Coord3D() {}

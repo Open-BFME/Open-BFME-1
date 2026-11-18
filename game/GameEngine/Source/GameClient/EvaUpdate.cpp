@@ -18,10 +18,10 @@
 // call the matched ?isCurrentlyPlaying@AudioEventRTS@@QBE_NXZ makes, which is
 // what names it.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 typedef UnsignedInt AudioHandle;
 
 // One logic frame at thirty frames a second, which is the step retail subtracts

@@ -21,10 +21,10 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 class Object;
 class PolygonTrigger;

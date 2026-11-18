@@ -20,11 +20,11 @@
 // startPathfind's goalCell argument is unused (there is no costToGoal call);
 // the function still returns true.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" double __cdecl sqrt(double);

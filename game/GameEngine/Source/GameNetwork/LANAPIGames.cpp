@@ -24,12 +24,12 @@
 // liveness mask in ebx tells the funclet which of them to destroy. Nothing else
 // -- optimisation flags included -- collapses those states.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned short WideChar;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+
+
 
 #define NULL 0
 

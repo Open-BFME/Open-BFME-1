@@ -31,10 +31,10 @@
 #include <bitset>
 #include <hash_map>
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

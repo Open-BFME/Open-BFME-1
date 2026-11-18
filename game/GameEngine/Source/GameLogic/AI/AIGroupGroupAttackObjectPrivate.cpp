@@ -5,10 +5,10 @@
 #include <list>
 #include <bitset>
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned int size_t;
 
 void *__cdecl operator new(size_t);

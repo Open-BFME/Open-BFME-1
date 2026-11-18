@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /GX
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct AttributeModifierEntry
 {

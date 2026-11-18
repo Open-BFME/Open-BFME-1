@@ -53,10 +53,10 @@ enum
 	KEY_STATE_DOWN = 0x0002
 };
 
-typedef unsigned char  UnsignedByte;
-typedef unsigned short UnsignedShort;
-typedef unsigned int   UnsignedInt;
-typedef bool           Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct KeyboardIO
 {

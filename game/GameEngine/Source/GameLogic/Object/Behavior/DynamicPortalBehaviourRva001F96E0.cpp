@@ -10,10 +10,10 @@
 #include "ascii_string.h"
 #include "coord3d.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #define TRUE true
 #define FALSE false

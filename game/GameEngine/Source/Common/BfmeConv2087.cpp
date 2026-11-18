@@ -1,9 +1,9 @@
 class NetCommandRef;
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum
 {

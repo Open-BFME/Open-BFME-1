@@ -17,10 +17,10 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D

@@ -11,11 +11,11 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <list>
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
-typedef bool Bool;
-typedef float Real;
+
+
 #define TRUE true
 #define FALSE false
 #define INVALID_ID 0

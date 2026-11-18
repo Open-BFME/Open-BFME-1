@@ -16,11 +16,11 @@
 #include <string.h>
 #pragma intrinsic(strlen)
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 typedef Int Color;
 typedef UnsignedInt ObjectID;
 

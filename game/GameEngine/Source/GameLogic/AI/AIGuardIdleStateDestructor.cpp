@@ -7,11 +7,11 @@
 // novtable preserves the destructor's five-byte jump to State::~State.
 // Evidence: targets/game/reverse/identity_evidence/0015e510-visible-team-position.md.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int TeamID;
-typedef bool Bool;
-typedef float Real;
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

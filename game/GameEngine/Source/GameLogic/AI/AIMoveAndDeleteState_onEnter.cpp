@@ -6,11 +6,11 @@
 // setAdjustsDestination and two model-condition bits set on the owner before
 // the base onEnter.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

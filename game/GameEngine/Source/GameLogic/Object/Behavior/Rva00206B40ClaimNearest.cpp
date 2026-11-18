@@ -12,10 +12,10 @@
 // final return; writing it as an if-block over the loop moves the
 // bestIndex spill ahead of the branch.
 #include <vector>
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include <math.h>
 #pragma intrinsic(sqrt)

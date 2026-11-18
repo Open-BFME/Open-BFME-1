@@ -12,11 +12,11 @@
 // Zero Hour's own handlers take a bare sender IP; these take a pointer to the
 // address PAIR, which is what makes the slot walk a two-field compare.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum
 {

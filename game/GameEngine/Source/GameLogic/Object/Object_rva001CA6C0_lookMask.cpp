@@ -2,11 +2,11 @@
 // RVA-derived types: methods of the subobject at Object+0x64, slots 3 and 4 of
 // the table 0x0109EE28 the Object constructor installs.
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef unsigned short PlayerMaskType;
 
 enum KindOfType

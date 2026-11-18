@@ -7,10 +7,10 @@
 #include <string.h>
 #include <wchar.h>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 void *__cdecl operator new(unsigned int size);
 

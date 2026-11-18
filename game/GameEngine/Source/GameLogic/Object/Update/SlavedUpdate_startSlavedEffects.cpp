@@ -4,10 +4,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum ObjectStatusTypes
 {

@@ -35,12 +35,12 @@ static inline void appendListWord(_STL::list<int> *list, const int &value)
 #include "../System/xfer.h"
 #include "../System/snapshot.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
+
 typedef int ObjectID;
 
 class Object;

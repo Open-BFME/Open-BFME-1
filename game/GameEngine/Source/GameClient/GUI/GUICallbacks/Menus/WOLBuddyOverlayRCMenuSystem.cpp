@@ -14,10 +14,10 @@
 
 #define NULL 0
 #define TRUE true
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned UnsignedInt;
 typedef unsigned WindowMsgData;
-typedef bool Bool;
+
 typedef int GPProfile;
 #include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 enum { GWM_CREATE = 1, GWM_DESTROY = 2, GGM_CLOSE = 0x4005, GBM_SELECTED = 0x4008 };

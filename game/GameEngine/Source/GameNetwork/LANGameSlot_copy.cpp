@@ -20,11 +20,11 @@
 // Unlike the destructor's model, GameSlot keeps virtuals here: the vptr store
 // is in retail's bytes, so the derived vtable has to exist.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 #include "../../Include/Common/Enums/SlotState.h"
 

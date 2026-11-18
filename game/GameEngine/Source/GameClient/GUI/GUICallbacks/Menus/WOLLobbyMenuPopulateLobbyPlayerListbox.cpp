@@ -20,8 +20,8 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 typedef int GPProfile;
 typedef int GPEnum;

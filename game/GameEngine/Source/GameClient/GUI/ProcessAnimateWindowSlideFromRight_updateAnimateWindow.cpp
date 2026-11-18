@@ -3,10 +3,10 @@
 // Retail 0x00495850, 230 bytes.  BFME's SlideFromRight and
 // SlideFromRightFast implementations are byte twins apart from relocations.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 
 

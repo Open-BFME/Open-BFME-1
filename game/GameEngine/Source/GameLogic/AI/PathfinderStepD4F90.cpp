@@ -9,11 +9,11 @@
 // reached through a TU-local function-pointer union; no linker symbol
 // aliasing directive is used.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 // Retail ILT thunks every call below leaves through; named by address only.
 extern void j_000022bb();

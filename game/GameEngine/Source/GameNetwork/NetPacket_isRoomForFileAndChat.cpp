@@ -18,11 +18,11 @@
 // header, which is the whole reason the chat pair compiles to retail's bytes
 // inside NetPacket.cpp and this pair does not.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum { MAX_PACKET_SIZE = 0x1DC };
 

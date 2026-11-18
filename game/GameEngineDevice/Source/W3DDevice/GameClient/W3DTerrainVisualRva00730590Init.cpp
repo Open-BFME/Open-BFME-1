@@ -7,8 +7,8 @@
 #include "vector3.h"
 #include <stddef.h>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Gen_00602c10
 {

@@ -13,9 +13,9 @@
 // base-chain vtable and UpdateModule field stores that retail keeps (344 vs 383
 // bytes), while the flattened list reproduces them exactly.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Thing;
 class ModuleData;
@@ -86,7 +86,7 @@ private:
 };
 
 
-typedef float Real;
+
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 // BFME's KindOf mask is a 192-bit bitset; its ctor clears the words with memset.

@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?draw@Anim2D@@QAEXHHHH@Z: game/GameEngine/Source/GameClient/System/Anim2D.cpp
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

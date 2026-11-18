@@ -11,10 +11,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);

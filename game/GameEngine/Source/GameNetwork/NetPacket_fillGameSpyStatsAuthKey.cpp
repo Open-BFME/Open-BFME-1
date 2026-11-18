@@ -24,10 +24,10 @@
 // added; the message and NetCommandRef slices are
 // NetPacket_fillFileMessage.cpp's, unchanged.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count);
 #pragma intrinsic(memcpy)

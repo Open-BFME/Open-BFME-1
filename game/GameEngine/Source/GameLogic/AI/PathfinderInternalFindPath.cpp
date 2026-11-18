@@ -26,8 +26,8 @@ struct Coord3D
 	float z;
 };
 #define BFME_HAVE_COORD3D
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 class Player;
 #define OBJECT_TU_MEMBERS Player *getControllingPlayer() const; int getLayer() const; Bool bfmeIsComputerControlled() const;
 #include "object.h"
