@@ -37,7 +37,7 @@ private:
 
 extern GameLogic *TheGameLogic;
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // Same declaration as the forward one in Rva00370730CastleMemberState.cpp.
 typedef Int (__cdecl *Rva0036ff70Callback)(void *, void *);

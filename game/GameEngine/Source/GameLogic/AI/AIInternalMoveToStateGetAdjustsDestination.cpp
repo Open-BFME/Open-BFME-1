@@ -6,7 +6,7 @@
 // emits JGE instead of JNS and also changes the sink/AI register allocation.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define TEN_VIRTUAL_SLOTS(PREFIX) \
 	virtual void v##PREFIX##0(); virtual void v##PREFIX##1(); \

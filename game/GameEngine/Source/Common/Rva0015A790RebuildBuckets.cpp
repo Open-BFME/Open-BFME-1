@@ -1,7 +1,7 @@
 // Open-BFME: retail 0x0015A790 rebuilds the ten cost buckets owned by the
 // same BFME object as computeSize at 0x0015AAC0.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Overridable
 {

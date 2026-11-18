@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" void * __cdecl memset(void *destination, int value, unsigned int count);
 #pragma intrinsic(memset)

@@ -8,7 +8,7 @@
 // and only name the APIs whose receiver, argument widths, and return ABI are
 // independently established by their callers and bodies.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 template <typename T>
 class StringBase

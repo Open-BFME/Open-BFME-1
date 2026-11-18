@@ -9,7 +9,7 @@
 // receiver below EBX; without that copy the identical body puts `this` in EBX
 // and nine non-relocation bytes differ. The copy folds away, so the emitted
 // code is unchanged.
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct AsciiStringBuffer
 {

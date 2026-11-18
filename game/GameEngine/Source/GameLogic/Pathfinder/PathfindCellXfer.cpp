@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /MD
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Xfer
 {

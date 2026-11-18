@@ -9,8 +9,8 @@
 // +0xF4 (the secondary interface sees them at -0xAC and +0x30).
 // IDENTITY IS NOT RECOVERED: the slot name keeps the address.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1

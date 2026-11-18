@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHs-c-
 // TU-local BFME ABI slice for the bridge-repair target helper.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

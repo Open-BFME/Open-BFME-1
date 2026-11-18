@@ -12,7 +12,7 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 template<> inline bool StringBase<char>::isEmpty() const
 {

@@ -25,7 +25,7 @@ inline void UnicodeString::bfmeReleaseWideBuffer()
 	(this->*call.member)();
 }
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString

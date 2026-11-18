@@ -7,7 +7,7 @@ extern void j_0002191d();
 extern void j_00004953();
 extern void j_0000ba50();
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"

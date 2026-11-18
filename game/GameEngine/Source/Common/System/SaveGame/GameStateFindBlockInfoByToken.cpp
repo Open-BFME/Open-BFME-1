@@ -16,7 +16,7 @@ extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);
 #pragma intrinsic(memcmp)
 
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 template <typename T> struct BfmeStringData
 {

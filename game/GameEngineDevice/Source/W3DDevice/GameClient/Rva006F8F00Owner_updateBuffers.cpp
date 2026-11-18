@@ -10,8 +10,8 @@
 #include "../../../../Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h"
 #include <list>
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 void W3DRadarResetLock(void);
 

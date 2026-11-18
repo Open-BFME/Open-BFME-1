@@ -118,7 +118,7 @@ private:
 	Header *m_data;
 };
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class SidesInfo;
 

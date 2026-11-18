@@ -15,7 +15,7 @@
 
 #include <map>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 class Object;
 
 // Local replica: retail calls the destructor out of line (0x00887940), so the

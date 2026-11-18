@@ -13,7 +13,7 @@
 // the numerator is promoted and the int is divided in place, so the source
 // divides a floating-point cashValue by the raw int rather than casting both.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 // /MD pulls ceil from the CRT DLL, so retail calls it indirectly through the
 // import table (`ff 15`) rather than with a direct rel32.

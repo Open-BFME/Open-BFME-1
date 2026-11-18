@@ -7,7 +7,7 @@
 // The explicit else scope is intentional.  It reproduces retail's false-path
 // EH marker at [esp+0x18]; spelling this as an early return emits [esp+0x14].
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <typename T> class StringBase
 {

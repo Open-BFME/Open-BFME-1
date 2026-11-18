@@ -7,7 +7,7 @@
 
 
 
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 struct ICoord2D
 {

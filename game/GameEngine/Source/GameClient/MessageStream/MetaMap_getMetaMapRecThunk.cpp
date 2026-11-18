@@ -17,7 +17,7 @@
 // the field assignments follow the merge. clear() on a UnicodeString folds with
 // the wide-string destructor body, which is why both calls land on one address.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage

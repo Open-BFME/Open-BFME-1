@@ -17,7 +17,7 @@ extern "C" void *(__cdecl *bfme_memmove_ptr)(void *, const void *, unsigned int)
 #include <vector>
 #undef memmove
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern void j_00016e6e();	// ILT -> ExperienceScalarTable::~ExperienceScalarTable
 extern void j_00002568();	// ILT -> ExperienceLevelSystem::cleanup

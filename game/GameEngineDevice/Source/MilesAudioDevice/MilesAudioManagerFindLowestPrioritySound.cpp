@@ -17,7 +17,7 @@
 // winning rank is copied as a whole (mov ebp,ecx plus the volume dword).
 #include <list>
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define Rva006B1FC0One (1.0f)
 #define Rva006B1FC0Zero (0.0f)

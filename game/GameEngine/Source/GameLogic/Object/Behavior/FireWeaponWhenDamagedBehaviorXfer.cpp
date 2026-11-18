@@ -9,7 +9,7 @@
 #include "xfer.h"
 #include "snapshot.h"
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class DamageInfo;
 enum BodyDamageType

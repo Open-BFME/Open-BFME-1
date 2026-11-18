@@ -83,7 +83,7 @@ public:
 extern void *g_Rva00F36E5C;
 #define g_rva00889690 ( *(Rva00889690Obj **)&g_Rva00F36E5C )
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class DevastateSpecialPower
 {

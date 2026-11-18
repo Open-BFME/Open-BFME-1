@@ -31,7 +31,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall inet_addr(const char *c
 extern "C" __declspec(dllimport) unsigned long __stdcall htonl(unsigned long netlong);
 extern "C" __declspec(dllimport) struct hostent * __stdcall gethostbyname(const char *name);
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 // Only the private release member the inlined destructor calls.

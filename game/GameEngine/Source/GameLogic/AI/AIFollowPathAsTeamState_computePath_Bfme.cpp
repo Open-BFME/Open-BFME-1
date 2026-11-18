@@ -2,7 +2,7 @@
 // Retail 0x001795F0: BFME's out-of-bounds path fallback for
 // AIFollowPathAsTeamState::computePath.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

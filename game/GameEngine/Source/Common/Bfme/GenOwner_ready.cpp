@@ -8,7 +8,7 @@
 // object id of this owner's own object, read through this+0x08 and Object+0x74,
 // is stamped at +0xCC of whatever came back.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;					// H in the decorated name the ledger pins
 
 class BfmeReadyResult

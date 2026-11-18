@@ -10,7 +10,7 @@
 #include "../../../../Common/System/xfer.h"
 
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 #include "../../../../../../Libraries/Source/WWVegas/WWMath/coord3d.h"
 

@@ -5,7 +5,7 @@
 #include "StringInline.h"
 #include <bitset>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 class Player;
 class ScriptActions;
 struct ScriptCounter;

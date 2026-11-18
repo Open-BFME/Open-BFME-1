@@ -14,7 +14,7 @@
 // +0x110, +0xCC), the relationship to the owning object and the contest list
 // at this+0x9BC.
 #include <list>
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" void __cdecl __identifier("?d_00228050@@YAXXZ")();
 class Player;

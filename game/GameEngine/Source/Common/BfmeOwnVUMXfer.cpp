@@ -2,7 +2,7 @@
 // Retail 0x00361030. The adjacent BfmeOwnVUM destructor at 0x00360F90
 // fixes the class vftable and the five string fields used by this method.
 
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "ascii_string.h"
 

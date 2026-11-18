@@ -4,7 +4,7 @@
 // GameLogic+0x16c, notifies ScriptEngine, fires HeroDie for kind 0x59, and
 // walks drawable slots 1..5.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType
 {

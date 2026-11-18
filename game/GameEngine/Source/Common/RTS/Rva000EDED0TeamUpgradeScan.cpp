@@ -7,7 +7,7 @@
 // the upgrade, or, without one, when Object::affectedByUpgrade (ILT
 // 0x000077B6) does.  The owner, method and contain slots keep the address.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

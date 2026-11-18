@@ -10,7 +10,7 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // Only the erase call is needed; these declarations give it STLport's mangling.
 namespace _STL

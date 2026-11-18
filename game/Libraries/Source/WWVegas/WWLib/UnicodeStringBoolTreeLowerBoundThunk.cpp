@@ -12,8 +12,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 extern const unsigned short BFMEEmptyUnicodeString;

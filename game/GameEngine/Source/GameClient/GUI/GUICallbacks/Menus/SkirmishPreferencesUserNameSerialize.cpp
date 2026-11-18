@@ -7,7 +7,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
 
 // The shared empty UnicodeString payload, retail 0x0107388C

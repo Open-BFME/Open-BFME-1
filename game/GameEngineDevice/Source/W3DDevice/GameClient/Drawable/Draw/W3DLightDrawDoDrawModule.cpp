@@ -3,8 +3,8 @@
 #include "matrix3d.h"
 #include "wwmath.h"
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

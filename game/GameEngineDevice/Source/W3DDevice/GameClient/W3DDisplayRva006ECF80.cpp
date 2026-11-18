@@ -6,7 +6,7 @@
 // pair is the one 0x006ECF10 releases; the held object's +0x08/+0x0C words are an
 // eight-byte-element range (retail divides their difference by 8).
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class AudioManager
 {

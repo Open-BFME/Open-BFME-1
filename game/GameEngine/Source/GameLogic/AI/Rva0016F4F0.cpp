@@ -28,7 +28,7 @@ struct MemberwiseCoord3D : public Coord3D
 	float Normalize() { float len = GetLength(); float inv = 1.0f / len; x *= inv; y *= inv; z *= inv; return len; }
 };
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object
 {

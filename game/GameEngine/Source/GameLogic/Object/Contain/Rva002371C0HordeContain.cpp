@@ -9,7 +9,7 @@
 // key-at-+0x10 node layout are independently used by matched HordeContain
 // body 0x0023A270. The list and hash lookup follow those verified siblings.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1

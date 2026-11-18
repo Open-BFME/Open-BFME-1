@@ -4,7 +4,7 @@
 #include "StringInline.h"
 #include "ObjectDlinkPmf.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Team;
 class BfmeGlobFEA;

@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Rva006ABC60::xfer, retail 0x006B0CB0 (258 bytes).
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

@@ -10,7 +10,7 @@
 // such as "<This Player>" must not be cached, because ScriptEngine's current
 // player can change between calls.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

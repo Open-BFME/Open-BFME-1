@@ -12,7 +12,7 @@
 // code, not a template instantiation. No name is provable for this second
 // site, so it is claimed address-derived.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)

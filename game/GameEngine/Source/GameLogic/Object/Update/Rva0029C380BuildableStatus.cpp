@@ -14,8 +14,8 @@
 //     type-3 filter, and the owner+0x28 fallback return.
 // The containing owner class and the record/selector method names remain
 // unproven, so everything keeps the address token Rva0029C380.
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

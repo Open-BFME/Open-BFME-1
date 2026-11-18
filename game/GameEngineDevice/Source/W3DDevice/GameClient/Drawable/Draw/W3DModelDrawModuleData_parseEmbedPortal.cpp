@@ -2,7 +2,7 @@
 // stlport
 // Retail field-table owner: W3DModelDrawModuleData::EmbedPortal at +0xF0.
 
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

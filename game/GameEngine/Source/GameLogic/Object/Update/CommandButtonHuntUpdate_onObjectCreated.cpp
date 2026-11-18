@@ -2,7 +2,7 @@
 // Retail 0x0028ADA0 performs the command-button lookup used by the hunt module.
 // Its address-derived owner keeps the BFME-only source identity explicit.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 struct FlagPair2B2080
 {

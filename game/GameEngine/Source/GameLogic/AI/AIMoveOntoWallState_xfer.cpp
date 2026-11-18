@@ -3,7 +3,7 @@
 
 #include "StringInline.h"
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct XferVersion
 {

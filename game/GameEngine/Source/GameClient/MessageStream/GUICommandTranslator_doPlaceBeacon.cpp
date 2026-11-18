@@ -1,7 +1,7 @@
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /MD /EHsc
 // stlport
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct ICoord2D;
 

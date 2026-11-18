@@ -8,7 +8,7 @@
 // That preserves the retail ECX/stack ABI without assigning a new identity to
 // an ILT that is only a routing helper.
 
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "string_base.h"
 
