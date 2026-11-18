@@ -118,7 +118,7 @@ class BfmeSubBIC
 {
 public:
 	virtual void slot00();
-	int bfmeAskBIC();
+	int rva001CABE0();
 	ContainModuleInterface *getContain() const { return m_contain; }
 
 	ThingTemplate *m_template;
@@ -131,7 +131,7 @@ public:
 };
 
 // ?rva001CABE0@BfmeSubBIC@@QAEHXZ
-int BfmeSubBIC::bfmeAskBIC()
+int BfmeSubBIC::rva001CABE0()
 {
 	const Player *localPlayer = ThePlayerList->getLocalPlayer();
 	const Player *controller = m_team ? m_team->getControllingPlayer() : 0;
