@@ -72,11 +72,11 @@ public:
 	virtual void xferUnsignedShort(UnsignedShort *value);
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEYTYPE_FORCE_LONG = 0x7fffffff
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
+
 
 // ModuleData's tag key is at +0x04 and BFME's Module keeps m_moduleData at
 // +0x04 (Snapshot is its only polymorphic prefix); both are read by this body.

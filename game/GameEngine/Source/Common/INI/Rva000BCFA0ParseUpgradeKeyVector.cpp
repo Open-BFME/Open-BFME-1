@@ -6,9 +6,9 @@
 #include "Common/Errors.h"
 #include "Common/INI/INI.h"
 
-enum NameKeyType
-{
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
 
 class NameKeyGenerator
 {

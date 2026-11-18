@@ -55,14 +55,14 @@ void Rva00150100Rotate(const Coord3D *pB, const Coord3D *pA, Coord2D *vec)
 // groupSetPositionInFormation spellings at ILT 0x0002059A. From the BFME 2
 // donor (open-bfme-2 b5a7b8290 AIGroupSetPositionInFormation.cpp): a null
 // member ends the walk instead of being skipped.
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT = 1,
-	CMD_FROM_AI = 2,
-	CMD_FROM_DOZER = 3,
-	CMD_DEFAULT_SWITCH_WEAPON = 4
-};
+#include "../command_source_type.h"
+
+
+
+
+
+
+
 
 extern "C" void __cdecl __identifier("?d_0015ab50@@YAXXZ")();
 class Object;

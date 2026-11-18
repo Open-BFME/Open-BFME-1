@@ -11,7 +11,7 @@
 // Open transitions when the gate is NOT in state one; close transitions when it
 // is, and they call different slots of the same table to do it.
 class AsciiString;
-enum NameKeyType { };
+#include "../../../Include/Common/NameKeyType.h"
 
 class Object;
 // ScriptEngine's BFME vtable has getUnitNamed at slot 26 (+0x68).  The full

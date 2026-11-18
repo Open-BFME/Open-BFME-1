@@ -162,7 +162,7 @@ public:
 #undef R48_TERRAIN
     virtual void *findTrigger(AsciiString name);
 };
-enum NameKeyType { Rva001D48A0InvalidKey = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator
 {
 public:

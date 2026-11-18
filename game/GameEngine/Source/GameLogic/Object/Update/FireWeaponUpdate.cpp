@@ -36,10 +36,10 @@ FireWeaponUpdateModuleData::FireWeaponUpdateModuleData()
 // interface class instead of inventing the complete multiple-inheritance
 // hierarchy already represented by FireWeaponUpdateCtorThunk.cpp.
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 enum WeaponStatus
 {

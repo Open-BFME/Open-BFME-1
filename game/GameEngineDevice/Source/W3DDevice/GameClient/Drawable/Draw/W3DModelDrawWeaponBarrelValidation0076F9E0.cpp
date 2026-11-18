@@ -27,11 +27,11 @@ struct Rva0076F9E0AsciiString
 	const char *str(void) const { return m_data ? reinterpret_cast<const char *>(m_data) + 8 : ""; }
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {

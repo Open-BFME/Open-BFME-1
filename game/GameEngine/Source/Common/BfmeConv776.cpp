@@ -1,6 +1,6 @@
 // Retail 0x00146270 calls ILT 0x3931 -> 0x00145070, the matched
 // _STL::map<NameKeyType, float>::operator[] (callees.py), on the map at +0x340.
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 
 namespace _STL
 {

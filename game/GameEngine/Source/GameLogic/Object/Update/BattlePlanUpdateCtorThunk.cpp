@@ -23,7 +23,7 @@ class Object;
 class ObjectCreationList;
 class FXList;
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
 
 enum { BRIDGE_MAX_TOWERS = 4 };
 enum { BODY_PRISTINE = 0, BODYDAMAGETYPE_COUNT = 4 };

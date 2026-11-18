@@ -41,9 +41,9 @@ enum WeaponSlotType
 
 // An enum, not an integer typedef: AudioEventRTS::setObjectID is an external
 // call, so its parameter type is part of the symbol this TU links against.
-enum ObjectID {
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
 
 typedef unsigned int AudioHandle;
 

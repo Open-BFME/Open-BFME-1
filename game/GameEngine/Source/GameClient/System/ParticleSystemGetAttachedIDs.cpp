@@ -4,7 +4,7 @@
 // the exact BFME attachToDrawable/attachToObject bodies independently place
 // their ID fields at +0xB4 and +0xB8.
 
-enum DrawableID { INVALID_DRAWABLE_ID = 0 };
+#include "../../../Include/Common/DrawableID.h"
 enum ObjectID { INVALID_OBJECT_ID = 0 };
 
 class ParticleSystem

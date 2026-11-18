@@ -6,7 +6,7 @@
 // GameLogic::destroyObject 0x0038B0C0, operator delete 0x00881EB0.
 class Object;
 class Player;
-enum CommandSourceType { CMD_FROM_PLAYER_1026 = 0 };
+#include "../GameLogic/command_source_type.h"
 enum ObjectScriptStatusBit { OBJECT_STATUS_BIT8_1026 = 8 };
 
 class Rva000C4D80Manager

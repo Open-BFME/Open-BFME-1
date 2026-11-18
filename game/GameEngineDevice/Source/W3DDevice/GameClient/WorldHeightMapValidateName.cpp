@@ -27,7 +27,7 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 
 class StaticNameKey
 {

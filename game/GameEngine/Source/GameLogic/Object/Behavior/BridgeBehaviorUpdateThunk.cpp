@@ -66,7 +66,7 @@ typedef std::list<BridgeFX> BridgeFXList;
 struct BridgeOCL { const ObjectCreationList *ocl; unsigned delay; AsciiString boneName; };
 typedef std::list<BridgeOCL> BridgeOCLList;
 class BridgeBehaviorModuleData { char pad00[0x10]; public: BridgeFXList m_fx; BridgeOCLList m_ocl; };
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=1 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class BridgeBehavior {
  char pad04[0x470]; unsigned m_deathFrame;
  Object *getObject() const { return *(Object**)((char*)this-8); }

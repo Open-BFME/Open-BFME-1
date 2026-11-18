@@ -21,10 +21,10 @@ public:
 	virtual BodyModuleInterface *getBody() = 0;
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID = 0
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class UpdateModuleInterface
 {

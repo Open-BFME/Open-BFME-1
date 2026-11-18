@@ -46,7 +46,7 @@ void bfmeGo1085A(void)
 	}
 }
 
-enum CommandSourceType {};
+#include "../GameLogic/command_source_type.h"
 
 // retail ILT 0x00024D70 -> 0x000D87E0 is the matched AICommandInterface::aiIdle
 class AICommandInterface

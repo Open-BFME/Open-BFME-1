@@ -13,7 +13,7 @@
 
 class Gen_00755E70;
 
-enum NameKeyType { NAME_KEY_INVALID = 0 };
+#include "../../../../../GameEngine/Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator

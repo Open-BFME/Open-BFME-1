@@ -18,7 +18,7 @@ typedef float Real;
 typedef bool Bool;
 
 // enum base type 4: W4NameKeyType in the mangled name is an int-sized enum.
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 
 namespace _STL
 {

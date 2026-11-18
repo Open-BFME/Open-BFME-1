@@ -27,7 +27,7 @@ extern float __cdecl Sin(float);
 enum BridgeTowerType { BRIDGE_TOWER_FROM_LEFT, BRIDGE_TOWER_FROM_RIGHT, BRIDGE_TOWER_TO_LEFT, BRIDGE_TOWER_TO_RIGHT, BRIDGE_MAX_TOWERS };
 enum BodyDamageType { BODY_PRISTINE };
 enum PathfindLayerEnum { LAYER_GROUND };
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 const float PATHFIND_CELL_SIZE_F = 10.0f;
 class Overridable {
 public:

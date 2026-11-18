@@ -178,7 +178,7 @@ struct KindOfMask : AuraFlags2803<192> {
 
 class GameLogic;
 extern GameLogic *TheGameLogic;
-enum NameKeyType {};
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator {public: NameKeyType nameToKey(const char *);};
 extern NameKeyGenerator *TheNameKeyGenerator;
 class AttributeModifierDefinitionStore {public: int indexOf(int) const; int valueAt(int) const;};

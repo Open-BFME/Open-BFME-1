@@ -8,7 +8,7 @@ class GameLogic;
 extern GameLogic *TheGameLogic;
 class ModuleData;
 class Object;
-enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class FU_DeepBase
 {

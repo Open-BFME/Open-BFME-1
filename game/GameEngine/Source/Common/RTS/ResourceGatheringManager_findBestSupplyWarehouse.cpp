@@ -9,10 +9,10 @@ typedef bool Bool;
 typedef float Real;
 typedef unsigned int ObjectID;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Object;
 class ActionManager;

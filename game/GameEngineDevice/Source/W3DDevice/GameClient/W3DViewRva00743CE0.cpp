@@ -10,11 +10,11 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7FFFFFFF
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

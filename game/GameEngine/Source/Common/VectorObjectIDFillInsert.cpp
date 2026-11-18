@@ -7,6 +7,6 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../Include/Common/ObjectID.h"
 
 template class _STL::vector<ObjectID>;

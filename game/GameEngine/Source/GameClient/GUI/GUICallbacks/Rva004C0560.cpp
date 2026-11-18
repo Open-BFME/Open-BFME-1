@@ -37,7 +37,7 @@ enum GadgetGameMessage
     GSM_SLIDER_TRACK = 0x400B,
     GEM_EDIT_DONE = 0x4030
 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/NameKeyType.h"
 enum CBCommandStatus { CBC_COMMAND_NOT_USED = 0, CBC_COMMAND_USED };
 
 class GameWindow

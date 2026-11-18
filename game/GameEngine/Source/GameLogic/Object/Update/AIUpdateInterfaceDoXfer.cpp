@@ -313,10 +313,10 @@ public:
 
 typedef bool Bool;
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 void XferObjectID( Xfer *xfer, ObjectID *value );
 

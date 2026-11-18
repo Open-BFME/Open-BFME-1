@@ -47,7 +47,7 @@ class PickAndPlayInfo;
 void pickAndPlayUnitVoiceResponse(const _STL::list<Drawable*>*,GameMessage::Type,PickAndPlayInfo*);
 
 enum KindOfType { DummyKind002A8CE0 };
-enum NameKeyType { NAMEKEY_NONE };
+#include "../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 class GameLogic { public: Object* findObjectByID(int); };

@@ -20,7 +20,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 
 #include "ascii_string.h"
 

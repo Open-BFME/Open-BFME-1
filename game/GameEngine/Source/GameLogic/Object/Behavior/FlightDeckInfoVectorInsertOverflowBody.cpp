@@ -16,9 +16,9 @@
 // hands the helpers' empty dispatch tag the address of its own trailing bool
 // argument rather than spending a frame slot on it.
 
-enum ObjectID
-{
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

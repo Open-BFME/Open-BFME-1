@@ -45,7 +45,7 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum GameDifficulty { DIFFICULTY_EASY, DIFFICULTY_NORMAL, DIFFICULTY_HARD };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

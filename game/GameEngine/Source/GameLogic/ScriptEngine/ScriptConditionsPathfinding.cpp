@@ -25,10 +25,10 @@
 
 typedef bool Bool;
 
-enum ObjectID
-{
-	INVALID_ID = -1
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 struct Coord3D;
 class Object;

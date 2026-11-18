@@ -3,10 +3,10 @@
 
 typedef bool Bool;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 namespace _STL
 {

@@ -4,10 +4,10 @@
 
 #include <map>
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Overridable
 {

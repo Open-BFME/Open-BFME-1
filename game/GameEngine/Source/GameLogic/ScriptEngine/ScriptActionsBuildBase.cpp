@@ -16,12 +16,12 @@
 typedef bool Bool;
 typedef int Int;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 0x007fffff,
-	NAMEKEY_FORCE_LONG = 0x7fffffff
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 #include "ascii_string.h"
 

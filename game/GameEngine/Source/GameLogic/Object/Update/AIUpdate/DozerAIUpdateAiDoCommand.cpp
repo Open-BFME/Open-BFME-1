@@ -292,12 +292,12 @@ private:
 	Int m_reserved1C; // +0x1C
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT,
-	CMD_FROM_AI
-};
+#include "../../../command_source_type.h"
+
+
+
+
+
 
 // BFME 2's command ids (aiDoCommand 0x002673F6's jump table); ZH's order
 // up to AICMD_RESUME_CONSTRUCTION, BFME 2 inserts four before

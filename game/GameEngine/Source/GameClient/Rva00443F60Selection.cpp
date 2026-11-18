@@ -16,7 +16,7 @@ inline UnicodeString::UnicodeString(const UnicodeString& that) { ((StringBase<un
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->releaseBuffer(); }
 class Object; class Drawable; class ThingTemplate;
 enum KindOfType { Rva00443F60Kind108=108 };
-enum ObjectID { INVALID_ID=0 };
+#include "../../Include/Common/ObjectID.h"
 class Overridable { public: const Overridable *getFinalOverride()const { if(at04) return at04->getFinalOverride();return this; } void *vptr; Overridable *at04; };
 #define _OVERRIDABLE_H_
 #include "Common/Override.h"

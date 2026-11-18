@@ -6,10 +6,10 @@
 // and destructor at 0x00759350 establish the owner.  The final call is the
 // matched BaseHeightMapRenderObjClass::addProp body at 0x006C8C20.
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../../../../../GameEngine/Include/Common/DrawableID.h"
+
+
+
 typedef float Real;
 
 struct Coord3D

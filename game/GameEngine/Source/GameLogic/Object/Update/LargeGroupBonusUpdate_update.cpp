@@ -41,11 +41,11 @@ typedef int Int;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3FFFFFFF
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 enum KindOfType
 {

@@ -36,7 +36,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff };
+#include "../../../../Include/Common/ObjectID.h"
 
 #include "Lib/Coord3D.h"
 

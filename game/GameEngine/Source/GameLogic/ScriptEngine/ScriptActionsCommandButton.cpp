@@ -37,10 +37,10 @@ enum GUICommandType
 	GUI_COMMAND_NONE = 0
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 // Slot 27 takes the unit name by value through this wrapper, where slot 26
 // takes it by reference.

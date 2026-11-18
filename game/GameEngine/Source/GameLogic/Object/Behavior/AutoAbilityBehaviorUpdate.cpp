@@ -191,7 +191,7 @@ public:
     Rva0025ED50WideResult iterate(const Coord3D *, float, IterOrderType, PartitionFilter *, bool);
 };
 extern PartitionManager *ThePartitionManager;
-enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class AutoAbilityBehavior {
 public:
     virtual UpdateSleepTime update();

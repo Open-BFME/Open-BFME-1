@@ -34,10 +34,10 @@
 typedef bool Bool;
 typedef int Int;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class Object;
 class Player;

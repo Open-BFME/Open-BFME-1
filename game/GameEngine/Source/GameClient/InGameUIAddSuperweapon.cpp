@@ -13,7 +13,7 @@
 #include <map>
 #include <list>
 #include <new>
-enum ObjectID {};
+#include "../../Include/Common/ObjectID.h"
 enum ScienceType { SCIENCE_INVALID = -1 };
 class Overridable {
 public:

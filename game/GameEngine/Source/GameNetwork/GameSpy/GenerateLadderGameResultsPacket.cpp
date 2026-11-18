@@ -108,7 +108,7 @@ static __forceinline ScoreKeeper *getScoreKeeper(Player *player)
 {
  return reinterpret_cast<ScoreKeeper *>(reinterpret_cast<char *>(player) + 0x348);
 }
-enum NameKeyType {NAMEKEY_INVALID=0};
+#include "../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator {public:NameKeyType nameToKey(const char*);};
 class PlayerList {public:Player*findPlayerWithNameKey(NameKeyType);};
 class VictoryConditionsInterface {

@@ -16,11 +16,11 @@ extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
 	CRITICAL_SECTION *lock);
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../GameEngine/Include/Common/NameKeyType.h"
+
+
+
+
 
 class CriticalSectionLock
 {

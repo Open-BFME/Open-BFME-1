@@ -29,7 +29,7 @@ typedef bool Bool;
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 
 // AsciiString::TheEmptyString; ascii_string.h has no static member for it.
 extern const AsciiString Rva01336E50EmptyString;

@@ -38,8 +38,8 @@
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
-enum NameKeyType {
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
 template <int NUMBITS> class BitFlags {
     public: BitFlags() {
     }

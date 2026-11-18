@@ -174,7 +174,7 @@ public:
 	Bool m_turretsMustCenterBeforePacking;
 };
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=1, UPDATE_SLEEP_FOREVER=0x3fffffff };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 #define UPDATE_SLEEP(n) ((UpdateSleepTime)(n))
 class Rva002B5CC0UpdateInterface
 {

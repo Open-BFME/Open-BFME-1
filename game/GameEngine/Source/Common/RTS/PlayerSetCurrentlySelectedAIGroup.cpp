@@ -16,10 +16,10 @@
 typedef int Int;
 typedef unsigned char Bool;
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
 
 typedef _STL::vector<ObjectID> VecObjectID;
 

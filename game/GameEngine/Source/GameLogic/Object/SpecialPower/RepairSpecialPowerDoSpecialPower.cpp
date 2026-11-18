@@ -53,7 +53,7 @@ public:
 
 // Retail ILT 0x00029C08 lands on 0x00153D10, matched as
 // AICommandInterface::aiRepair(Object *, CommandSourceType).
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../../command_source_type.h"
 
 class AICommandInterface
 {

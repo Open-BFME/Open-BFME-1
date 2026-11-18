@@ -36,7 +36,7 @@
 #define REAL_TO_INT_CEIL(x) fast_float2long_round((float)ceil(x))
 #define INT_TO_REAL(x) ((float)(x))
 
-enum ObjectID { INVALID_ID=0 };
+#include "../../../../Include/Common/ObjectID.h"
 enum PathfindLayerEnum {};
 class Team; class Object;
 class GeometryInfo {

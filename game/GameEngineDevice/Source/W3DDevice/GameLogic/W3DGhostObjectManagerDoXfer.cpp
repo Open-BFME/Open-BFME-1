@@ -47,11 +47,11 @@ struct XferVersion : Xfer::Version
 	}
 };
 
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_LONG = 0x7fffffff
-};
+#include "../../../../GameEngine/Include/Common/ObjectID.h"
+
+
+
+
 
 // The ObjectID transfer at 0x0010C3C0 (called through ILT 0x0000C9B4) by its
 // ledger name, with its proven cdecl ABI and Xfer reference result

@@ -23,10 +23,10 @@ private:
 typedef int Int;
 typedef bool Bool;
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 class GameWindow;
 

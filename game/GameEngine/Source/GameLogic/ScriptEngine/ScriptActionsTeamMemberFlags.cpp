@@ -91,11 +91,11 @@ class AIUpdateInterface;
 // The AI command block at AIUpdateInterface+0x20 is its AICommandInterface
 // base: retail calls ILT 0x0000A5DD, which jumps to the matched
 // AICommandInterface::aiExit body (0x00154330), with (NULL, CMD_FROM_SCRIPT).
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0,
-	CMD_FROM_SCRIPT
-};
+#include "../command_source_type.h"
+
+
+
+
 
 class AICommandInterface
 {

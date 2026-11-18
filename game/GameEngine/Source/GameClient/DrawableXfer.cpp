@@ -138,7 +138,7 @@ enum ObjectID {RvaInvalidID};
 class Object {char pad[0x74];ObjectID m_74;public:ObjectID getID()const{return m_74;}};
 __forceinline ObjectID getObjectID(void *o) {return o?field<ObjectID>(o,0x74):RvaInvalidID;}
 class ModelConditionFlags;
-enum DrawableID {DrawableInvalid};
+#include "../../Include/Common/DrawableID.h"
 class Drawable:public Rva0041D290ThingBase,public Rva0041D290SnapshotBase {
 TintEnvelope* m_4;
 TintEnvelope* m_8;

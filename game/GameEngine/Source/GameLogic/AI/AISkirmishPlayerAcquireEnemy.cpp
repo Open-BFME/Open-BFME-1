@@ -21,10 +21,10 @@ enum Relationship
 	ALLIES
 };
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

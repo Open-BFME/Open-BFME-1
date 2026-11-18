@@ -168,10 +168,10 @@ public:
 	virtual bool isIdle( void ) = 0;					// slot 96 -> vtable+0x180
 };
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AutoFindHealingUpdate.h
 class AutoFindHealingUpdate

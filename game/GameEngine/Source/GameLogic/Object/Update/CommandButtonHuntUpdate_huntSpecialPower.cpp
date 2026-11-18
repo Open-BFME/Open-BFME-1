@@ -8,10 +8,10 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 #include "../../command_source_type.h"
 

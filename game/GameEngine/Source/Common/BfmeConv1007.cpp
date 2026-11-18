@@ -41,10 +41,10 @@ enum BattlePlanStatus
 	BfmeBattlePlanStatusNone = 0
 };
 
-enum DrawableID
-{
-	BfmeDrawableIDInvalid = 0
-};
+#include "../../Include/Common/DrawableID.h"
+
+
+
 
 struct BfmeB1007Flags
 {

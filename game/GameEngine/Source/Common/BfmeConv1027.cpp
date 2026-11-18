@@ -3,7 +3,7 @@
 // Matched callee rows, reached through their ILT thunks (callees.py):
 // aiEvacuate 0x000D8AC0, aiIdle 0x000D87E0, leaveGroup 0x001BFBF0,
 // bfmeGo916D 0x001C9B80, GameClientRandomVariable::getValue 0x00096F60.
-enum CommandSourceType { CMD_FROM_SCRIPT_1027 = 1 };
+#include "../GameLogic/command_source_type.h"
 
 class AICommandInterface
 {

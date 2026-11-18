@@ -10,11 +10,11 @@ typedef bool Bool;
 typedef unsigned short PlayerMaskType;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameType.h
-enum ObjectID
-{
-	INVALID_ID = 0,
-	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
-};
+#include "../../../Include/Common/ObjectID.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "ascii_string.h"

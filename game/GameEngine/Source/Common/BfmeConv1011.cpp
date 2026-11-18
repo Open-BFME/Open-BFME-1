@@ -129,7 +129,7 @@ class BfmeThingBZ
 public:
 	void bfmeGoBZ();
 };
-enum CommandSourceType { Rva002A8260CommandDummy };
+#include "../GameLogic/command_source_type.h"
 class AICommandInterface
 {
 public:

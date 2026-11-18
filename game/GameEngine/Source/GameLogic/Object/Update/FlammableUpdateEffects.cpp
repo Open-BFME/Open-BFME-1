@@ -41,10 +41,10 @@ enum DeathType
 	DEATH_BURNED = 3
 };
 
-enum ObjectID
-{
-	OBJECT_ID_UNUSED = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 #include "ascii_string.h"
 

@@ -5,7 +5,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/shims/zhcanonascii /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #include "ascii_string.h"
 #include "basetype.h"
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum AttitudeType { AI_NORMAL=0 };
 enum VeterancyLevel { LEVEL_REGULAR=0 };
 class StaticNameKey {

@@ -116,7 +116,7 @@ private:
     DrawableTOCEntry *findTOCEntryById(unsigned short);
 };
 extern GameClient *TheGameClient;
-enum NameKeyType { NAMEKEY_INVALID = 0, FORCE_NAMEKEYTYPE_LONG = 0x7fffffff };
+#include "../../Include/Common/NameKeyType.h"
 class StaticNameKey { public: NameKeyType key() const; };
 class Dict { public: float getReal(NameKeyType, bool *) const; void setReal(NameKeyType, float); };
 class MapObject { public: static Dict TheWorldDict; };

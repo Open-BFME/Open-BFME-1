@@ -7,9 +7,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 typedef int ObjectID;
-enum UpdateSleepTime {
-    UPDATE_SLEEP_INVALID=0, UPDATE_SLEEP_NONE=1, UPDATE_SLEEP_FOREVER=0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
 class BfmeThingYY { public: void bfmeClearYY(unsigned int); };
 class Object;
 struct Rva0025EB90ObjectVtable;

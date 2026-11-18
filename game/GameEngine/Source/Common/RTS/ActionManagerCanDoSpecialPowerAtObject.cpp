@@ -16,7 +16,7 @@ inline Coord3D::Coord3D(const Coord3D &v) { x=v.x;y=v.y;z=v.z; }
 enum Relationship {};
 enum KindOfType {};
 enum SpecialPowerType {};
-enum NameKeyType {};
+#include "../../../Include/Common/NameKeyType.h"
 enum ObjectShroudStatus {OBJECTSHROUD_FOGGED=3};
 class Object; class SpecialPowerTemplate;
 class Overridable { public:

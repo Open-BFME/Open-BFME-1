@@ -29,7 +29,7 @@
 typedef bool Bool;
 typedef unsigned short WideChar;
 typedef unsigned int UnsignedInt;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../../Include/Common/NameKeyType.h"
 
 #include "ascii_string.h"
 #include "unicode_string.h"

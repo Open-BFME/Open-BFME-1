@@ -27,10 +27,10 @@ private:
 	int m_18;
 };
 
-enum ObjectID
-{
-	INVALID_OBJECT_ID = 0
-};
+#include "../../Include/Common/ObjectID.h"
+
+
+
 
 template<class OBJCLASS>
 class Rva001705A0DlinkIterator

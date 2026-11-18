@@ -3,10 +3,10 @@
 // BFME keeps the name key at UpgradeTemplate+0x0C (same as ZH) and the
 // next-link at +0x108 (ZH +0xF8). List head is UpgradeCenter+0x08.
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class UpgradeTemplate
 {
