@@ -74,10 +74,10 @@ private:
     unsigned int m_sourceID;
 };
 
-enum WeaponSlotType
-{
-    PRIMARY_WEAPON
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponStore

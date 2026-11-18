@@ -162,10 +162,10 @@ enum KindOfType
 	KINDOF_BFME_6C = 0x6c
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum CrushSquishTestType
 {

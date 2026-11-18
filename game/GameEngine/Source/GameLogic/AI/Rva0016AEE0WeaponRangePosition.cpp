@@ -4,10 +4,10 @@ typedef bool Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 class Weapon;
 class AIUpdateInterface;

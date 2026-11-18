@@ -10,7 +10,7 @@
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D 1
 enum KindOfType {};
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum Relationship {};
 enum MoodMatrixAction {};
 enum StateReturnType { CONTINUE=0, SUCCESS=-1, FAILURE=-2 };

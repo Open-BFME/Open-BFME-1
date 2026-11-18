@@ -6,7 +6,7 @@ typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
 
 struct Coord3D

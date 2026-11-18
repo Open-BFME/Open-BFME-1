@@ -37,7 +37,7 @@ inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &p) {x=p.x; y=p.y; z=p.z;}
 inline Coord3D &Coord3D::operator=(const Coord3D &p) {x=p.x; y=p.y; z=p.z;return *this;}
 
-enum PathfindLayerEnum { LAYER_INVALID=0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 class LocomotorSet;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;

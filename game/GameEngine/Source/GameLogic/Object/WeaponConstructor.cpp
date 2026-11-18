@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-enum WeaponSlotType
-{
-	WEAPON_SLOT_PLACEHOLDER
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate;

@@ -13,10 +13,10 @@ typedef int Int;
 typedef bool Bool;
 typedef int WeaponLockType;
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum WeaponStatus
 {

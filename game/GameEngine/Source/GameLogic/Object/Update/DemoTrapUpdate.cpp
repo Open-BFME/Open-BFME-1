@@ -12,10 +12,10 @@
 
 
 
-enum WeaponSlotType
-{
-	WEAPON_SLOT_UNKNOWN = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum Relationship
 {

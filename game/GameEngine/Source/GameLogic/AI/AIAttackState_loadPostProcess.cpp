@@ -6,7 +6,7 @@ typedef bool Bool;
 class Object;
 class Team;
 class Weapon;
-enum WeaponSlotType { WEAPON_SLOT_TYPE_UNSPECIFIED = 0 };
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 
 #include "string_base.h"
 

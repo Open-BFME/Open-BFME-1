@@ -33,7 +33,7 @@ typedef float Real;
 
 #define NULL 0
 
-enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+#include "../../../../../../GameEngine/Include/Common/Enums/WeaponSlotType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 
 template <int NUMBITS> class BitFlags;

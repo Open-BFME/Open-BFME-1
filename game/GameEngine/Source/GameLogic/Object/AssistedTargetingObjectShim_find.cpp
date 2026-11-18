@@ -30,14 +30,14 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0,
-	SECONDARY_WEAPON,
-	TERTIARY_WEAPON,
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 
-	WEAPONSLOT_COUNT
-};
+
+
+
+
+
+
 
 class AssistedTargetingObjectShim
 {

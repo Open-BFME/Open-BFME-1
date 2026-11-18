@@ -34,10 +34,10 @@ typedef bool Bool;
 
 
 
-enum WeaponSlotType
-{
-	FORCE_WEAPONSLOTTYPE_TO_LONG_SIZE = 0x7ffffff
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

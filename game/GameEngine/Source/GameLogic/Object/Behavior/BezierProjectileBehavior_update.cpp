@@ -41,11 +41,11 @@ typedef unsigned int ObjectID;
 
 
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
+
 
 enum IterOrderType
 {

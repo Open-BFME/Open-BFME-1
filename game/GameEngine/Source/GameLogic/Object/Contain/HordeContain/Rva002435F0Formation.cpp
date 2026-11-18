@@ -65,10 +65,10 @@ public:
 	Overridable *overrideValue;
 };
 
-enum WeaponSlotType
-{
-	Rva002435F0WeaponSlotUnknown = 0
-};
+#include "../../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 class Weapon
 {

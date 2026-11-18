@@ -63,7 +63,7 @@ struct Coord3D
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
-enum PathfindLayerEnum { LAYER_GROUND = 0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // Layout of the profile PathfindZoneManager::getEffectiveZone reads
 // (PathfindZoneTerrain.cpp).

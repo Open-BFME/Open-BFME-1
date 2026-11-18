@@ -34,7 +34,7 @@ class Player;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
-enum PathfindLayerEnum { LAYER_GROUND = 1 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 class Path;
 class PathfindCell;
 class PathfindCellInfo;

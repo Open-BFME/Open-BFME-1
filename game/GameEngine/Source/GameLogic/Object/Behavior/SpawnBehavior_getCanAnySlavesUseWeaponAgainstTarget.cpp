@@ -9,7 +9,7 @@ typedef int ObjectID;
 
 enum AbleToAttackType { ATTACK_TYPE_DUMMY };
 #include "../../command_source_type.h"
-enum WeaponSlotType { WEAPON_SLOT_DUMMY };
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
 enum CanAttackResult { ATTACK_RESULT_DUMMY };
 
 struct Coord3D;

@@ -6,10 +6,10 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

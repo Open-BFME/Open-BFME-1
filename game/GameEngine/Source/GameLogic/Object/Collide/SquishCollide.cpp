@@ -23,10 +23,10 @@ enum KindOfType
 {
 	KINDOF_6C = 0x6c
 };
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 enum Relationship
 {
 	ALLIES = 2

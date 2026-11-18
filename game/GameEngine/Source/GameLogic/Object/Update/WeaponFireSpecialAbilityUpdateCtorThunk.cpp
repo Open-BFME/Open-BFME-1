@@ -75,10 +75,10 @@ public:
 	BFMERetailAsciiString m_specialWeapon;
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class Weapon

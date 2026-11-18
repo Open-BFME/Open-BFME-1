@@ -13,10 +13,10 @@ enum StateExitType
 	STATE_EXIT_NORMAL = 0
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum WeaponStatus
 {

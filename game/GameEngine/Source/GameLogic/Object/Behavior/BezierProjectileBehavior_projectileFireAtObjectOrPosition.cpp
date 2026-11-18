@@ -25,10 +25,10 @@ enum KindOfType
 	KINDOF_0x61 = 0x61
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 enum CellShroudStatus
 {

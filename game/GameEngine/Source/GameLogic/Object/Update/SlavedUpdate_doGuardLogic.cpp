@@ -11,10 +11,10 @@ int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 Real Cos(Real value);
 Real Sin(Real value);  // Trig.cpp, retail 0x00873910
 
-enum WeaponSlotType
-{
-    WEAPON_SLOT_CURRENT = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 class Weapon
 {

@@ -13,13 +13,13 @@ class Object;
 
 #include "../GameLogic/command_source_type.h"
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0,
-	SECONDARY_WEAPON,
-	TERTIARY_WEAPON,
-	WEAPONSLOT_COUNT
-};
+#include "../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
+
+
+
 
 enum CommandOption
 {

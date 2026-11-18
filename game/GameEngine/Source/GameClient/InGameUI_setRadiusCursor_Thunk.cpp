@@ -21,7 +21,7 @@ typedef int Int;
 typedef bool Bool;
 
 enum RadiusCursorType { RADIUSCURSOR_NONE = 0 };
-enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+#include "../../Include/Common/Enums/WeaponSlotType.h"
 
 class Object;
 

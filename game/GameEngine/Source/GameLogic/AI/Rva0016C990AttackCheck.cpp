@@ -7,10 +7,10 @@
 // Weapon::getStatus is 5, STATE_CONTINUE. Else SUCCESS when +0x68 is
 // negative, otherwise FAILURE.
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum WeaponStatus
 {

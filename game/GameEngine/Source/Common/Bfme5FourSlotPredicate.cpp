@@ -13,7 +13,7 @@ public:
 		int extra) const;
 };
 
-enum WeaponSlotType {};
+#include "../../Include/Common/Enums/WeaponSlotType.h"
 
 // Retail calls 0x3C8E9 -> 0x001EAF90, the matched
 // WeaponSet::getWeaponInWeaponSlot (WeaponSet.cpp).

@@ -13,10 +13,10 @@ typedef bool Bool;
 
 
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 class Drawable

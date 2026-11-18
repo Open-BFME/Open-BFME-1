@@ -18,10 +18,10 @@ public:
 
 class WeaponTemplate;
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 class Weapon
 {

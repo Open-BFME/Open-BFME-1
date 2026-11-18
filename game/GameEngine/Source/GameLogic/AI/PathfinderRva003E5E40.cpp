@@ -50,7 +50,7 @@ static __forceinline void copyCoord3D(Coord3D &point, const Coord3D *other)
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
-enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class BfmeOverridable
 {

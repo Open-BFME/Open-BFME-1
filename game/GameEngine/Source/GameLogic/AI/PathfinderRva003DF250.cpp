@@ -45,7 +45,7 @@ const ObjectID INVALID_ID = 0;
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 struct IRegion2D { ICoord2D lo, hi; };
 
-enum PathfindLayerEnum { PATHFIND_LAYER_GROUND = 0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 enum KindOfType
 {

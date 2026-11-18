@@ -17,10 +17,10 @@ enum KindOfType
 	KINDOF_0x6C = 0x6c
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 struct Coord0015F420
 {

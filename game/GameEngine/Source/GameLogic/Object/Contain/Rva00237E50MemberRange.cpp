@@ -20,10 +20,10 @@ typedef float Real;
 class Object;
 class Weapon;
 
-enum WeaponSlotType
-{
-	Rva00237E50WeaponSlotUnknown = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 class Object
 {

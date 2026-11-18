@@ -16,7 +16,7 @@
 // table g_010956C4 itself (novtable), as AIMeleeReAcquireState_update.cpp does.
 typedef bool Bool;
 #include "../../command_source_type.h"
-enum WeaponSlotType { PRIMARY_WEAPON };
+#include "../../../../Include/Common/Enums/WeaponSlotType.h"
 enum StateID { AI_ATTACK_POSITION = 9 };
 // class-gate: allow Coord3D ilt_oracle confirms the row's PBVCoord3D (class-keyed) decoration; Lib/Coord3D.h is struct-keyed
 class Coord3D { public: float x,y,z; };
