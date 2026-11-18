@@ -6,7 +6,7 @@
 
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	long volatile *value);

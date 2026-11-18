@@ -5,7 +5,7 @@
 // in ascending numeric order.
 
 typedef unsigned short WORD;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct WSADATA
 {

@@ -11,7 +11,7 @@
 // gadget slot to the matching handler. The screen then gives the chat entry
 // focus back, clears the dialog mode and refreshes the three lists.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class GameWindow;
 

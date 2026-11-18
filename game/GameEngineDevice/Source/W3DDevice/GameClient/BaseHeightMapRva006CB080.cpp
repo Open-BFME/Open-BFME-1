@@ -7,7 +7,7 @@
 // the counters beyond the 500-entry scorch array agree with the original
 // BaseHeightMap layout and with freeScorchBuffers at 0x006C7E10.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class DX8VertexBufferClass
 {

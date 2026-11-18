@@ -2,7 +2,7 @@
 // W3DTreeBuffer::freeTreeBuffers, retail 0x00732960: the terrain's +0x3094 child; the twin of
 // W3DShrubBuffer's at 0x0071C2D0, with the texture and type count at +0x2A9904/+0x2A9908.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

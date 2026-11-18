@@ -3,7 +3,7 @@
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include "GameLogic/Module/UpdateModule.h"
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object
 {

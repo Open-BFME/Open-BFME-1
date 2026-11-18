@@ -12,7 +12,7 @@
 // the 2D center distance is computed inline. The Weapon.cpp TU builds against
 // the ZH headers, which have neither, so this body lives in its own TU.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 #include "../ScriptEngine/game_logic_dispatch.h"
 
 

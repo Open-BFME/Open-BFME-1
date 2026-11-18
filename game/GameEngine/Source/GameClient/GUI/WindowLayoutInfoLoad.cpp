@@ -2,7 +2,7 @@
 // Retail 0x00487870 is WindowLayoutInfo::load, with a 234-byte body.
 // The caller at 0x004889A0 constructs WindowLayoutInfo through 0x004888A0, then uses this body to choose the .apt or window-script loader.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);

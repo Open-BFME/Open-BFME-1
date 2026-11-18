@@ -50,7 +50,7 @@
 // five vftable dwords and the EH handler address are DIR32 sites the gate takes
 // from the target, leaving 101 of the 125 bytes concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---- the first base, landed in V3HeadNodeCopyCtors.cpp; declared only -------
 

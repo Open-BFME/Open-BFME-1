@@ -1,6 +1,6 @@
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 

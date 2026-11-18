@@ -22,7 +22,7 @@
 
 #include <list>
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define Rva006B2110One (1.0f)
 #define Rva006B2110Zero (0.0f)

@@ -3,7 +3,7 @@
 // pair. Object::setReceivingDifficultyBonus (matched) calls this through the
 // ILT at 0x0002278C, which lands on 0x000CE560.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum GameDifficulty
 {

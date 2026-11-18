@@ -2,7 +2,7 @@
 // BaseHeightMapRenderObjClass::updateMacroTexture, retail 0x006CB8D0: BFME's two-argument form, called
 // on the terrain by reset() and ParseEnvironmentData; it reloads the stage-three texture by name.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class AsciiString;
 

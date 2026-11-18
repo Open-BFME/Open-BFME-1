@@ -14,7 +14,7 @@
 // contain slot +0x88) when the goal does not already have a horde interface
 // and the goal's contain accepts it (slot +0x84).
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

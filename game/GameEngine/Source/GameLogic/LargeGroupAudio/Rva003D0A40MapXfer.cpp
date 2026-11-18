@@ -7,7 +7,7 @@
 
 #include <vector>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Y1ForEachArg;
 

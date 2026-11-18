@@ -9,7 +9,7 @@
 #include <string.h>
 
 typedef void *PEER;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum
 {

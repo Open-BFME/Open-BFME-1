@@ -5,7 +5,7 @@
 // translation unit models the older position value 0 and the player-only
 // terrain clipping present in this body.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType
 {

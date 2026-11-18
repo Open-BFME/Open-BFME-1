@@ -6,8 +6,8 @@
 
 #pragma intrinsic(memcmp)
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int ObjectID;
 
 template <typename T> class StringBase

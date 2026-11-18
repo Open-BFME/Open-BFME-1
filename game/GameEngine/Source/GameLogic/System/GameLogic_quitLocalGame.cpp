@@ -7,7 +7,7 @@
 // vslot+0x30 calls. InGameUI+0x12BE is set unconditionally. Tail-calls the
 // helper on 0x012F7048. Descriptive name: local-game quit, not a ZH twin.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum
 {

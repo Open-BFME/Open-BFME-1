@@ -13,7 +13,7 @@ extern "C" int __cdecl strcmp(const char *, const char *);
 extern "C" __declspec(dllimport) char *__cdecl strncpy(char *, const char *, unsigned int);
 #pragma intrinsic(strcmp)
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <typename T> struct StringInlineData
 {

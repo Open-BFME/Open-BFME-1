@@ -11,8 +11,8 @@
 #include "rendobj.h"
 #include "shader.h"
 #include "dx8wrapper.h"
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 void BoxSetTexture(unsigned, TextureBaseClass *&);
 class BfmeHandleCX
 {

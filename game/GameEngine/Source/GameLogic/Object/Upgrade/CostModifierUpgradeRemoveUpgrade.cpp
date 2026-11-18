@@ -6,7 +6,7 @@
 // and
 // targets/game/reverse/identity_evidence/upgrademux-slot9-upgradeimplementation.md
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Rva000C9C50
 {

@@ -3,8 +3,8 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 extern Int g_012F4B5C;

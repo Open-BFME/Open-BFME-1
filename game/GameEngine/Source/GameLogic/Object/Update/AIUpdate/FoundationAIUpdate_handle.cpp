@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType
 {

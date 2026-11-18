@@ -5,7 +5,7 @@
 #include "Common/AsciiString.h"
 #include "Common/STLTypedefs.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // The callers' local declarations and both object signatures identify this as
 // a struct in the BFME translation unit (PBU in the decorated name). The

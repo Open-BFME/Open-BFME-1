@@ -38,7 +38,7 @@
 #include "Common/Recorder.h"		// GlobalData, TheGlobalData, getPath_UserData
 #include "Common/INI/INI.h"		// BFME's INI, whose loadDirectory takes five arguments
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ImageCollection
 {

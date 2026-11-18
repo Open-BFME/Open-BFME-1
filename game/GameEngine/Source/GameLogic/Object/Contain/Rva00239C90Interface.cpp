@@ -12,8 +12,8 @@
 #include <hash_map>
 #include <list>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeMsgXI
 {

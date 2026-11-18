@@ -10,7 +10,7 @@
 // but this slot increments the player's counter instead of decrementing
 // it and does not gate on isAlreadyUpgraded() or call setUpgradeExecuted.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern void j_00020824();
 

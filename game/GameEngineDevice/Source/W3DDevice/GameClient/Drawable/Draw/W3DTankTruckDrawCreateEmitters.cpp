@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /GR- /MD /DNDEBUG /DWIN32 /D_WINDOWS
 // Open-BFME BFME-layout reconstruction of W3DTankTruckDraw::createEmitters.
 
-typedef bool Bool;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 enum { FALSE = 0, TRUE = 1 };
 
 class AsciiString

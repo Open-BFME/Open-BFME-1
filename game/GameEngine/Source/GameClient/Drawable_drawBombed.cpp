@@ -13,7 +13,7 @@
 // position, which gives retail's hi.y-before-lo.y load order.  The barrier
 // keeps the two status tests separate, as retail tests them.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

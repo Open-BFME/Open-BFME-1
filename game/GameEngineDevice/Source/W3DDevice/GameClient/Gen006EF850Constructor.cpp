@@ -4,7 +4,7 @@
 
 #include <vector>
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // Callee 0x006D18D0 (ILT 0x0000A943) is the matched MultiListClass<DX8TextureCategoryClass> ctor.
 class DX8TextureCategoryClass;

@@ -20,7 +20,7 @@
 #include "string_base.h"
 #include "ascii_string.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi( const char *left, const char *right );
 

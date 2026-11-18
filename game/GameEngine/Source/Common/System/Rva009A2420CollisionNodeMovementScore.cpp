@@ -24,7 +24,7 @@
 //
 // cl: /O2 /DNDEBUG /MD /EHs-c-
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #include <math.h>
 

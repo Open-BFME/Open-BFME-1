@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 #define OBJECT_TU_MEMBERS Object *bfmePostClosest(const Object *owner, Bool add);
 #include "object.h"

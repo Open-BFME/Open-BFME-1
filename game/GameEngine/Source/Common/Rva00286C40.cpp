@@ -4,8 +4,8 @@
 // represented by the existing named callees.
 // cl: /DNDEBUG /MD /EHs-c-
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class BfmeSeedTarget;
 class Rva00286C40Self;

@@ -13,7 +13,7 @@
 #include "Common/NameKeyGenerator.h"
 #include <set>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // The set's key type is the enum the matched insert_unique (0x000EEC50) names.
 enum Rva000EEC50Key { RVA000EEC50KEY_NONE };

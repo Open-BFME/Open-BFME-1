@@ -6,7 +6,7 @@
 
 
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Rva0010C5E0XferView
 {

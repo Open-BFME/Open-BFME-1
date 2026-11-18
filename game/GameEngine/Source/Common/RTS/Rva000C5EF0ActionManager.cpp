@@ -13,8 +13,8 @@
 // SpecialAbilityGiveUpgrade, lookup of update type 0x34, and the named
 // SpecialAbilityUpdate::checkTarget body.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum Relationship
 {

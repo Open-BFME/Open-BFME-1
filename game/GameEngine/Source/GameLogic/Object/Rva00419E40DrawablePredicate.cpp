@@ -5,7 +5,7 @@
 // original source identity is not recovered.  The predicate reached through
 // the final template is likewise address-derived at ILT 0x00007DF6.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType
 {

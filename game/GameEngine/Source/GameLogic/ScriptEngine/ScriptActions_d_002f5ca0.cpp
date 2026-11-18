@@ -9,7 +9,7 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Team;
 class ObjectTypes;

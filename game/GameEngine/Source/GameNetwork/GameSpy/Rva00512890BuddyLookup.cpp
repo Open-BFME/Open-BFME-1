@@ -8,7 +8,7 @@
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <map>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int GPProfile;
 typedef int GPEnum;
 

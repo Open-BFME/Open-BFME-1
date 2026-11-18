@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

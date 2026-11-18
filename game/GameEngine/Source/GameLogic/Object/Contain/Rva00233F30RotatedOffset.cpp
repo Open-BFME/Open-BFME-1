@@ -13,7 +13,7 @@
 // not instantiate Zero Hour BaseType.h's inline copy.
 #include <math.h>
 #include "coord2d.h"
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 class Coord3D;
 class TerrainLogic;
 extern TerrainLogic* TheTerrainLogic;

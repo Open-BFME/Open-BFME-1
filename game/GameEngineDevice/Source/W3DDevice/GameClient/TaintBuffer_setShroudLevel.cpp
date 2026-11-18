@@ -6,7 +6,7 @@
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
 
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GlobalData
 {

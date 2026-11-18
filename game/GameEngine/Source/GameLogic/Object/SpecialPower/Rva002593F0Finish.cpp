@@ -11,7 +11,7 @@
 #include <bitset>
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 
 struct Region3D

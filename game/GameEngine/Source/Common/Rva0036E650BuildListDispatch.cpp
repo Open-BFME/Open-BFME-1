@@ -12,7 +12,7 @@
 #include <map>
 #include "Common/AsciiString.h"
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 #include "../../Include/Common/NameKeyType.h"
 

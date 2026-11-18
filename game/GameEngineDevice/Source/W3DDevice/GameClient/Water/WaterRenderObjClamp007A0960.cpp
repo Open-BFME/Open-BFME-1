@@ -10,8 +10,8 @@
 // MaterialInfo: refcount +4 and texture count +0x30, read directly by retail.
 // ShroudTexture_getFilter.cpp proves the same single-pointer handle view.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class TextureClass
 {

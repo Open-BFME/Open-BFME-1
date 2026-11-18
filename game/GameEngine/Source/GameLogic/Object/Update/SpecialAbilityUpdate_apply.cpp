@@ -11,7 +11,7 @@
 
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

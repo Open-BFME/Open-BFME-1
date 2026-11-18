@@ -4,8 +4,8 @@
 // BFME passes the object positions to LaserUpdate's four-argument interface.
 
 #define _STLP_NO_EXCEPTIONS 1
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 // Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum

@@ -11,7 +11,7 @@
 // since no caller/vtable/name-key proves the enclosing function's own
 // identity.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // Canonical direct callees and native override lifetime.
 

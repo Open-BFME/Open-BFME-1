@@ -13,8 +13,8 @@
 // status -- Zero Hour's quitGame in the same order, minus the MSG_SELF_DESTRUCT
 // pair BFME dropped.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // Zero Hour's enum; BFME's quitGame parks 3 where Zero Hour parks POSTGAME = 4,
 // and isPlayerConnected (0x00681F30) tests 1 alone. Named for the value.

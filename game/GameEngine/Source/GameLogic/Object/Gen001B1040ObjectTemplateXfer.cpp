@@ -2,7 +2,7 @@
 // BFME 0x001B1040: transfer an object/drawable reference and its template name.
 // The dump is the small save/load helper beside the proven BFME Xfer bodies.
 
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum ObjectID
 {

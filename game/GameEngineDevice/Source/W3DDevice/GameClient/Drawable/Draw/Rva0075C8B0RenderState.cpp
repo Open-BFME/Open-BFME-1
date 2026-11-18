@@ -7,7 +7,7 @@
 // constructor/vtable store, RTTI record, or emitted owner was found for this
 // body.  This TU deliberately emits no target vtable.
 
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern const Real g_rva01075350; // retail VA 0x01075350; existing canonical pin
 extern Real g_bfmeDefaultBU; // retail VA 0x01075334; existing canonical pin
