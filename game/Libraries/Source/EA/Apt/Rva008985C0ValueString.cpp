@@ -82,12 +82,11 @@ public:
 };
 
 class BfmeString1284;
-class BfmeStringWriter1284
-{
-public:
-    // Existing pin at 008B8E70 uses int for the separator pointer's bits.
-    void bfmeBuildString1284(BfmeString1284 *output, int separator);
-};
+// Retail 0x008B8E70 takes this in ECX and two stack words (ret 8).
+// Its existing row is d_008b8e70; use the same typed call bridge as the
+// verified BfmeStringWriter1284.cpp and JoinArray008B94F0.cpp callers.
+void d_008b8e70();
+class BfmeStringWriter1284 {};
 
 class Rva008B6880
 {
@@ -170,9 +169,17 @@ void Rva8CD130Value::getName(Rva8CD130String *output)
         break;
     }
     case 22:
-        reinterpret_cast<BfmeStringWriter1284 *>(this)->bfmeBuildString1284(
+    {
+        union
+        {
+            void (*raw)(void);
+            void (BfmeStringWriter1284::*typed)(BfmeString1284 *, int);
+        } buildString;
+        buildString.raw = &d_008b8e70;
+        (reinterpret_cast<BfmeStringWriter1284 *>(this)->*buildString.typed)(
             reinterpret_cast<BfmeString1284 *>(output), (int)",");
         break;
+    }
     case 21:
         *output = BfmeStrVKI("[sound]"); // T2
         break;
