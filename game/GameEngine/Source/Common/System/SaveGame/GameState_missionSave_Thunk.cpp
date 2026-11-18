@@ -88,22 +88,22 @@ public:
 	Int getCurrentMissionNumber();
 };
 
-enum SaveFileType
-{
-	SAVE_FILE_TYPE_NORMAL,
-	SAVE_FILE_TYPE_MISSION
-};
+#include "../../../../Include/Common/Enums/SaveFileType.h"
+
+
+
+
 
 #include "../../../../Include/Common/Enums/SnapshotType.h"
 
 
 
 
-enum SaveCode
-{
-	SC_INVALID = -1,
-	SC_OK
-};
+#include "../../../../Include/Common/Enums/SaveCode.h"
+
+
+
+
 
 class GameState
 {

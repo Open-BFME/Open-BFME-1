@@ -69,10 +69,10 @@ struct Coord3D
 
 
 
-enum MoodMatrixAction
-{
-	MM_Action_Move = 1
-};
+#include "../../../Include/Common/Enums/MoodMatrixAction.h"
+
+
+
 
 enum KindOfType
 {

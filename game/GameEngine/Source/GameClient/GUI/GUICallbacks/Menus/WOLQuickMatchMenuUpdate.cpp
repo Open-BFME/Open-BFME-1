@@ -402,14 +402,14 @@ public:
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameSpyConfigInterface *TheGameSpyConfig;
-enum SlotState {
-  SLOT_OPEN,
-  SLOT_CLOSED,
-  SLOT_EASY_AI,
-  SLOT_MED_AI,
-  SLOT_BRUTAL_AI,
-  SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
 
 struct GameSlotConnectInfo {
   unsigned ip;
@@ -618,23 +618,23 @@ public:
 };
 class InGameUI;
 extern InGameUI *TheInGameUI;
-enum QMStatus {
-  QM_IDLE,
-  QM_JOININGQMCHANNEL,
-  QM_LOOKINGFORBOT,
-  QM_SENTINFO,
-  QM_WORKING,
-  QM_POOLSIZE,
-  QM_WIDENINGSEARCH,
-  QM_MATCHED,
-  QM_INCHANNEL,
-  QM_NEGOTIATINGFIREWALLS,
-  QM_STARTINGGAME,
-  QM_COULDNOTFINDBOT,
-  QM_COULDNOTFINDCHANNEL,
-  QM_COULDNOTNEGOTIATEFIREWALLS,
-  QM_STOPPED
-};
+#include "../../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ECX is the layout; the single stack argument is unused (ret 4).
 void Rva00506720Layout::update(void *userData) {
   Rva004FD9B0Logic *const gameLogic = (Rva004FD9B0Logic *)TheGameLogic;

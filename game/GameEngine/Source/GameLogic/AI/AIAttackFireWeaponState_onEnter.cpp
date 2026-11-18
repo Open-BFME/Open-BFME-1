@@ -26,15 +26,15 @@ typedef char Int8;
 
 
 
-enum MoodMatrixAction
-{
-	MM_Action_Attack = 2
-};
+#include "../../../Include/Common/Enums/MoodMatrixAction.h"
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+
+
+
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 enum WeaponStatus
 {

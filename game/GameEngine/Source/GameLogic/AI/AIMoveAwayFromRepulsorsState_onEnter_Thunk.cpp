@@ -13,10 +13,10 @@
 
 
 
-enum LocomotorSetType
-{
-	LOCOMOTORSET_PANIC = 4
-};
+#include "../../../Include/Common/Enums/LocomotorSetType.h"
+
+
+
 
 enum ModelConditionFlagType
 {

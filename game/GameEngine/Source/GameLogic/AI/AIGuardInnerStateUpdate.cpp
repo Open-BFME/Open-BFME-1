@@ -15,7 +15,7 @@
 
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
-enum StateExitType { EXIT_NORMAL = 0 };
+#include "../../../Include/Common/Enums/StateExitType.h"
 enum KindOfType { BFME_KINDOF_7 = 7 };
 enum WeaponSlotType { BFME_WEAPONSLOT_INVALID = -1 };
 enum WeaponStatus { BFME_WEAPON_STATUS_4 = 4 };

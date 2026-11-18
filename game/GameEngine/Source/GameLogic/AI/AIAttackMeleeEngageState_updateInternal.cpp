@@ -8,7 +8,7 @@
 #include "coord.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
-enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 enum WeaponSlotType;
 
 class Object;

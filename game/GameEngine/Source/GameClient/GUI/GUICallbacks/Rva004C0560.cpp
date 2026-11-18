@@ -38,7 +38,7 @@ enum GadgetGameMessage
     GEM_EDIT_DONE = 0x4030
 };
 #include "../../../../Include/Common/NameKeyType.h"
-enum CBCommandStatus { CBC_COMMAND_NOT_USED = 0, CBC_COMMAND_USED };
+#include "../../../../Include/Common/Enums/CBCommandStatus.h"
 
 class GameWindow
 {

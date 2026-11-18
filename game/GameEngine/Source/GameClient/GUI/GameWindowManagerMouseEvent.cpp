@@ -75,18 +75,18 @@ enum WinInputReturnCode
 
 
 
-enum GameWindowMessage
-{
-	GWM_NONE = 0,
-	GWM_LEFT_DOWN = 5,
-	GWM_LEFT_UP = 6,
-	GWM_LEFT_DRAG = 8,
-	GWM_MIDDLE_UP = 10,
-	GWM_RIGHT_UP = 14,
-	GWM_MOUSE_ENTERING = 17,
-	GWM_MOUSE_LEAVING = 18,
-	GWM_MOUSE_POS = 24
-};
+#include "../../../Include/Common/Enums/GameWindowMessage.h"
+
+
+
+
+
+
+
+
+
+
+
 
 enum
 {

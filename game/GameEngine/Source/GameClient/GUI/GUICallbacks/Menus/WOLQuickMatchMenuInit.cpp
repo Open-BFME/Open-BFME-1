@@ -396,14 +396,14 @@ public:
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameSpyConfigInterface *TheGameSpyConfig;
-enum SlotState {
-  SLOT_OPEN,
-  SLOT_CLOSED,
-  SLOT_EASY_AI,
-  SLOT_MED_AI,
-  SLOT_BRUTAL_AI,
-  SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
 
 struct GameSlotConnectInfo {
   unsigned ip;
@@ -616,23 +616,23 @@ public:
 };
 class InGameUI;
 extern InGameUI *TheInGameUI;
-enum QMStatus {
-  QM_IDLE,
-  QM_JOININGQMCHANNEL,
-  QM_LOOKINGFORBOT,
-  QM_SENTINFO,
-  QM_WORKING,
-  QM_POOLSIZE,
-  QM_WIDENINGSEARCH,
-  QM_MATCHED,
-  QM_INCHANNEL,
-  QM_NEGOTIATINGFIREWALLS,
-  QM_STARTINGGAME,
-  QM_COULDNOTFINDBOT,
-  QM_COULDNOTFINDCHANNEL,
-  QM_COULDNOTNEGOTIATEFIREWALLS,
-  QM_STOPPED
-};
+#include "../../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // The init statics.  0x012F4800 and 0x012F4801 carry recorded names; the
 // other two (isInInit, raiseMessageBoxes in Zero Hour) are address-named.

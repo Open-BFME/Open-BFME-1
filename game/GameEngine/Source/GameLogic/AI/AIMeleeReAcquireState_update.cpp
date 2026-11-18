@@ -20,7 +20,7 @@ extern "C" void _ReadWriteBarrier(void);
 
 
 
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 
 class Player;
 class Weapon;

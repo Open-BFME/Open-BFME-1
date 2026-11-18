@@ -12,7 +12,7 @@
 // UI vslot 63 and interface slots are witnessed by this body and landed
 // InGameUISiegeDockSelection.cpp; unnamed interface methods stay address-tagged.
 enum KindOfType { KINDOF_INVALID = 0 };
-enum ObjectID { INVALID_ID = 0 };
+#include "../../Include/Common/ObjectID.h"
 #include "../GameLogic/command_source_type.h"
 enum CanEnterType { CHECK_CAPACITY=0, DONT_CHECK_CAPACITY=1, COMBATDROP_INTO=2 };
 class ExitInterface;

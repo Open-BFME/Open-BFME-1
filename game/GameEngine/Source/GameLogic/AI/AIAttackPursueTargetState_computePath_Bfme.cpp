@@ -9,11 +9,11 @@
 
 enum KindOfType {};
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 #include "../../../Include/Common/ObjectID.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
-enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 
 
 class Object;

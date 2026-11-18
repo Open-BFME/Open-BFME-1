@@ -11,11 +11,11 @@ enum { NAMEKEY_INVALID = 0 };
 
 #define TRUE 1
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED,
-	MSG_HANDLED
-};
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 enum
 {

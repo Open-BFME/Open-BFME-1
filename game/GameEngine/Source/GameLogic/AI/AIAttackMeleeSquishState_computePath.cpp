@@ -7,7 +7,7 @@
 
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
-enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
 
 struct Coord3D
 {

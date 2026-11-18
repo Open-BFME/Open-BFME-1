@@ -30,15 +30,15 @@
 
 enum { TRUE = 1, FALSE = 0 };
 
-enum SlotState
-{
-	SLOT_OPEN,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 enum
 {

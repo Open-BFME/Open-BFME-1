@@ -34,7 +34,7 @@
 #define NULL 0
 #define FALSE 0
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum UpgradeType { UPGRADE_TYPE_PLAYER = 0, UPGRADE_TYPE_OBJECT = 1 };
 enum { OBJECT_STATUS_UNDER_CONSTRUCTION = 2, OBJECT_STATUS_SOLD = 19 };
 enum { MAX_COMMANDS_PER_SET = 20 };

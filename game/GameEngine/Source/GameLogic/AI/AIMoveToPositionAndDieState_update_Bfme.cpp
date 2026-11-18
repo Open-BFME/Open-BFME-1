@@ -15,10 +15,10 @@ typedef int ObjectID;
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Path
@@ -74,10 +74,10 @@ enum DamageType
 	DAMAGE_UNRESISTABLE = 8
 };
 
-enum DeathType
-{
-	DEATH_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 #define OBJECT_TU_MEMBERS \
 	void kill(DamageType damageType, DeathType deathType);

@@ -88,8 +88,8 @@ public:
 };
 bool dup_00099E10(AsciiString *source, AsciiString *name, UnicodeString *description);
 
-enum SaveCode { SC_INVALID = -1 };
-enum SaveFileType { SAVE_FILE_TYPE_NORMAL };
+#include "../../../Include/Common/Enums/SaveCode.h"
+#include "../../../Include/Common/Enums/SaveFileType.h"
 #include "../../../Include/Common/Enums/SnapshotType.h"
 
 class GameState

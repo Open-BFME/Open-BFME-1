@@ -29,7 +29,7 @@
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
-enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum KindOfType { KINDOF_BFME_3B = 0x3b, KINDOF_BFME_88 = 0x88, KINDOF_BFME_95 = 0x95 };
 
 struct Coord3D

@@ -46,7 +46,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 enum { MAX_PURCHASE_SCIENCE_RANK_3 = 12 };
 enum { CP_PURCHASE_SCIENCE = 1 };
 enum { WIN_STATUS_ALWAYS_COLOR = 0x01000000 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // BaseType.h's fast_float2long_round is what retail's `fld; fistp` at
 // +0x21e is (shape_levers.md row 17); a C cast would call __ftol2.
@@ -125,10 +125,10 @@ static inline Bool inlineIsEmpty(const AsciiString &s)
 	return text == 0 || *reinterpret_cast<const unsigned short *>(text + 4) == 0;
 }
 
-enum ScienceType
-{
-	SCIENCE_INVALID = -1
-};
+#include "../../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class GameLogicPortraitShim
 {

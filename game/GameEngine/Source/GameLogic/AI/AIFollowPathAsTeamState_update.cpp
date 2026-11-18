@@ -210,7 +210,7 @@ public:
 	AIUpdateInterface *m_ai;				// +0x204
 };
 
-enum PathfindLayerEnum { LAYER_INVALID = 0 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class Pathfinder
 {

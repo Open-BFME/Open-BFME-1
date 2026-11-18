@@ -3,11 +3,11 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
-enum StaticGameLODLevel
-{
-	STATIC_GAME_LOD_UNKNOWN = -1,
-	STATIC_GAME_LOD_LOW = 0
-};
+#include "../../../../../Include/Common/Enums/StaticGameLODLevel.h"
+
+
+
+
 
 #include <map>
 

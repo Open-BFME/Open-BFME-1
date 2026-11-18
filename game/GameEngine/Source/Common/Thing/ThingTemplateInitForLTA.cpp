@@ -28,7 +28,7 @@ class INI;
 class ModuleData;
 class ThingTemplate;
 
-enum ModuleType { MODULETYPE_BEHAVIOR = 0, MODULETYPE_DRAW = 1 };
+#include "../../../Include/Common/Enums/ModuleType.h"
 enum
 {
 	MODULEINTERFACE_DIE = 0x02,
@@ -36,7 +36,7 @@ enum
 	MODULEINTERFACE_DRAW = 0x400
 };
 #include "../../../Include/Common/Enums/GeometryType.h"
-enum ShadowType { SHADOW_VOLUME = 2 };
+#include "../../../Include/Common/Enums/ShadowType.h"
 
 class ModuleFactory
 {

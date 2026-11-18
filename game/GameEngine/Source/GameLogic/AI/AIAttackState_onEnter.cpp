@@ -12,7 +12,7 @@
 enum KindOfType {};
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum Relationship {};
-enum MoodMatrixAction {};
+#include "../../../Include/Common/Enums/MoodMatrixAction.h"
 enum StateReturnType { CONTINUE=0, SUCCESS=-1, FAILURE=-2 };
 class Weapon;
 #define THING_TU_MEMBERS bool isKindOf(KindOfType) const;

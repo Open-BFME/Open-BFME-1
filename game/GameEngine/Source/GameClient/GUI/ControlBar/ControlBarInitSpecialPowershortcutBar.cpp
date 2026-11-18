@@ -28,7 +28,7 @@ typedef bool Bool;
 
 enum { MAX_SPECIAL_POWER_SHORTCUTS = 5 };
 enum { WIN_STATUS_USE_OVERLAY_STATES = 0x00200000 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/NameKeyType.h"
 
 // Retail inlines AsciiString::str() and isEmpty() here; ascii_string.h
 // forwards both to out-of-line StringBase<char> bodies. Read the Header

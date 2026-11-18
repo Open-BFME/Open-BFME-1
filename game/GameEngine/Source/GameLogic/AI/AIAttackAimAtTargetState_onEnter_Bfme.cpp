@@ -39,10 +39,10 @@ enum WhichTurretType
 	TURRET_INVALID = -1
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // OBJECT_STATUS_IS_AIMING_WEAPON is entry 25 of the shipped
 // ObjectStatusTypes list, and retail's mask argument is the literal

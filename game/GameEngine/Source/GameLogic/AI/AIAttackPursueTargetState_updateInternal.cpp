@@ -27,19 +27,19 @@ enum WhichTurretType
 	TURRET_INVALID = -1
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // Retail tests one bit of the status dword at Object+0x94.  The shared
 // ObjectStatusBits numbering is not the BFME numbering, so the recovered mask
 // is spelled directly.
 enum { BFME_OBJECT_STATUS_UNPURSUABLE = 0x00040000 };
-enum CrushSquishTestType
-{
-	TEST_CRUSH_OR_SQUISH = 2
-};
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
+
+
+
 
 const Real FAST_AS_POSSIBLE = 999999.0f;
 

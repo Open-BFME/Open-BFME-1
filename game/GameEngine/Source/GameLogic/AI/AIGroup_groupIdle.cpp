@@ -9,10 +9,10 @@ typedef unsigned int UnsignedInt;
 
 #include "../command_source_type.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../Include/Common/NameKeyType.h"
+
+
+
 
 class NameKeyGenerator
 {

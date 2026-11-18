@@ -12,7 +12,7 @@
 #include "command_source_type.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
-enum WeaponSlotType {};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum WeaponStatus { READY_TO_FIRE = 0, PRE_ATTACK = 4 };
 enum WhichTurretType {};
 enum KindOfType {};

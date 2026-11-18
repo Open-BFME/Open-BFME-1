@@ -49,7 +49,7 @@ enum GuardMode { BFME_GUARD_MODE_NORMAL };
 
 
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 enum IterOrderType
 {
 	ITER_FASTEST = 0,
@@ -57,7 +57,7 @@ enum IterOrderType
 	ITER_SORTED_FAR_TO_NEAR = 2
 };
 enum KindOfType { KINDOF_IMMOBILE = 2, KINDOF_STRUCTURE = 7, KINDOF_AIRCRAFT = 12 };
-enum PathfindLayerEnum { LAYER_GROUND = 1 };
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 extern const float g_01076C24;
 extern const float g_bfmeK1266B;

@@ -48,7 +48,7 @@ public:
     void winSetEnabledTextColors(Int,Int);
     Int winSetEnabledImage(Int,const Image*);
 };
-enum NameKeyType { NAMEKEY_INVALID=0 };
+#include "../../../../../Include/Common/NameKeyType.h"
 class NameKeyGenerator
 {
 public:
@@ -88,7 +88,7 @@ public:
     Bool isLocalPlayer() const;
     Bool isPlayerActive() const;
 };
-enum SlotState {SLOT_OPEN,SLOT_CLOSED,SLOT_EASY_AI,SLOT_MED_AI,SLOT_BRUTAL_AI,SLOT_PLAYER};
+#include "../../../../../Include/Common/Enums/SlotState.h"
 class GameSlot
 {
 public:

@@ -11,10 +11,10 @@ typedef int ObjectID;
 
 
 
-enum StateExitType
-{
-	EXIT_RESET = 1
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Object;
 class Player;

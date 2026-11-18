@@ -32,10 +32,10 @@ enum AIFreeToExitType
 	WAIT_TO_EXIT = 2
 };
 
-enum ExitDoorType
-{
-	DOOR_NONE_AVAILABLE = -1
-};
+#include "../../../Include/Common/Enums/ExitDoorType.h"
+
+
+
 
 class Object;
 

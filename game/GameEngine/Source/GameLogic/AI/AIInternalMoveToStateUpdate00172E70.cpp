@@ -57,10 +57,10 @@ enum ModelConditionFlagType
 
 #include "coord.h"
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class Object;
 class PathfindCell;
