@@ -158,7 +158,6 @@ private:
 
 // ILT 0x358BE reaches this existing address-derived 7-byte getter.
 // Its int-sized EAX result is the Object pointer consumed by this caller.
-struct Gen_00383090 { int m(); };
 extern GameLogic *TheGameLogic;
 extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
@@ -178,7 +177,7 @@ void Bridge::updateDamageState()
 			if (damageState == BODY_RUBBLE) {
 				TheAI->pathfinder()->changeBridgeState(m_layer, false);
 				m_damageStateChanged = true;
-				for (Object *object = reinterpret_cast<Object *>(reinterpret_cast<Gen_00383090 *>(TheGameLogic)->m()); object; object = object->getNextObject()) {
+				for (Object *object = TheGameLogic->getFirstObject(); object; object = object->getNextObject()) {
 					if (object->getLayer() == m_layer) {
 						const Bool considerBridgeHealth = false;
 						if (TheTerrainLogic->objectInteractsWithBridgeLayer(object, object->getLayer(), considerBridgeHealth)) {

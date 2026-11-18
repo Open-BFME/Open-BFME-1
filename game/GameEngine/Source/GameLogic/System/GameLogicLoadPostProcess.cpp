@@ -144,16 +144,12 @@ protected:
 		return m_frame;
 	}
 
-	Object *getFirstObject()
-	{
-		return m_objList;
-	}
 
 private:
 	char m_pad04[0x38];
 	UnsignedInt m_frame;
 	char m_pad40[0x60];
-	Object *m_objList;
+	Object *m_objList;	// GameLogic+0xA8; this view starts at the Snapshot subobject (+8)
 	char m_padA4[0x18];
 	_STL::vector<UpdateModulePtr> m_sleepyUpdates[4];
 	_STL::vector<UpdateModulePtr> m_normalUpdates;
@@ -184,7 +180,9 @@ void GameLogic::loadPostProcess()
 	if (now == 0)
 		now = 1;
 
-	for (Object *obj = getFirstObject(); obj; obj = obj->getNextObject())
+	// getFirstObject() (0x00383090), inlined: read the list head directly so
+	// this view emits no copy of the member with its shifted offset.
+	for (Object *obj = m_objList; obj; obj = obj->getNextObject())
 	{
 		for (BehaviorModule **module = obj->getBehaviorModules(); *module; ++module)
 		{

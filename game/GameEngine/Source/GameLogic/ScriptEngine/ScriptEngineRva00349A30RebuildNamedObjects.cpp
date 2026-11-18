@@ -24,14 +24,12 @@ private:
 	Object *m_nextObject;
 };
 
-struct Gen_00383090
+// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic.
+class GameLogic
 {
-	int m(void);
+public:
+	Object *getFirstObject();
 };
-
-// Retail's singleton at 0x012F0898 is GameLogic *TheGameLogic; Gen_00383090 is
-// this TU's view of that pointee.
-class GameLogic;
 extern GameLogic *TheGameLogic;
 
 class ScriptEngine
@@ -53,7 +51,7 @@ void ScriptEngine::createNamedCache(void)
 	if (TheGameLogic == 0)
 		return;
 
-	Object *object = (Object *)((Gen_00383090 *)TheGameLogic)->m();
+	Object *object = TheGameLogic->getFirstObject();
 	while (object != 0)
 	{
 		if (!object->getName().StringBase<char>::isEmpty())

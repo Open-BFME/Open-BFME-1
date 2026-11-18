@@ -5051,11 +5051,13 @@ void GameLogic::update( void )
 // ------------------------------------------------------------------------------------------------
 /** Return the first object in the world list */
 // ------------------------------------------------------------------------------------------------
+#if 0 // non-retail Zero Hour copy; retail 0x00383090 is GameLogic_getFirstObject.cpp
 // ?getFirstObject@GameLogic@@QAEPAVObject@@XZ present-unmatched
 Object *GameLogic::getFirstObject( void )
 {
 	return m_objList;
 }
+#endif
 
 // ------------------------------------------------------------------------------------------------
 /** Return a new unique object id. */

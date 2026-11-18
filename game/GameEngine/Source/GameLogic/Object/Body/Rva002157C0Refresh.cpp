@@ -37,13 +37,11 @@ struct Rva002157C0Entry
 	Rva002157C0Entry *next;
 };
 
-class Gen_00383090
+class GameLogic
 {
 public:
-	int m();
+	class Object *getFirstObject();
 };
-
-class GameLogic;
 extern GameLogic *TheGameLogic;
 
 class BfmeOwnFCB
@@ -76,7 +74,7 @@ void Rva002157C0Owner::refresh()
 	if ( obj )
 	{
 		Rva002157C0Data *md = m_data;
-		Rva002157C0Entry *entry = (Rva002157C0Entry *)( (Gen_00383090 *)TheGameLogic )->m();
+		Rva002157C0Entry *entry = (Rva002157C0Entry *)TheGameLogic->getFirstObject();
 		AsciiString name;
 		for ( ; entry; entry = entry->next )
 		{
