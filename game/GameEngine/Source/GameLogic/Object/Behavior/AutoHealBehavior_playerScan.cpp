@@ -270,11 +270,11 @@ public:
 };
 extern Anim2DCollection *TheAnim2DCollection;
 
-enum WorldAnimationOptions
-{
-	WORLD_ANIM_NO_OPTIONS = 0x00,
-	WORLD_ANIM_FADE_ON_EXPIRE = 0x01
-};
+#include "../../../../Include/Common/Enums/WorldAnimationOptions.h"
+
+
+
+
 
 class InGameUI
 {
@@ -391,11 +391,11 @@ struct BfmeWideResult : public Gen_uw_0002c471
 	}
 };
 
-enum DistanceCalculationType
-{
-	FROM_CENTER_2D = 0,
-	FROM_CENTER_3D = 1
-};
+#include "../../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
+
 
 enum IterOrderType
 {

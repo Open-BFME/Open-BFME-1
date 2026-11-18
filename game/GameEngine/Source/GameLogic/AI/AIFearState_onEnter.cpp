@@ -22,10 +22,10 @@ private: _STL::bitset<N> bits;
 };
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum StateReturnType
-{
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 #include "coord3d.h"
 #include <math.h>

@@ -47,9 +47,9 @@ class Object;
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-enum PathfindLayerEnum
-{
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

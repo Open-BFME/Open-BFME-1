@@ -45,15 +45,15 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum ScienceType {};
+#include "../../../Include/Common/Enums/ScienceType.h"
 
-enum ScienceAvailabilityType
-{
-	SCIENCE_AVAILABILITY_INVALID = -1,
-	SCIENCE_AVAILABLE,
-	SCIENCE_DISABLED,
-	SCIENCE_HIDDEN
-};
+#include "../../../Include/Common/Enums/ScienceAvailabilityType.h"
+
+
+
+
+
+
 
 typedef std::vector<ScienceType> ScienceVec;
 

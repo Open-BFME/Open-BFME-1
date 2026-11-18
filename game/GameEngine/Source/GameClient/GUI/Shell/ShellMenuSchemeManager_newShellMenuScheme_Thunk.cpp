@@ -6,9 +6,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 

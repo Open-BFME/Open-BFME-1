@@ -7,7 +7,7 @@
 #include <string>
 #include <string.h>
 
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 static inline void concat(AsciiString &target, const AsciiString &source);

@@ -18,17 +18,17 @@
 // is the scalar deleting dtor. setCanPathThroughUnits(false) is the byte at
 // AIUpdateInterface+0x328; ignoreObstacle(NULL) is a tail call.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
-enum StateExitType
-{
-	EXIT_NORMAL = 0
-};
+
+
+
+
+
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
 
 class Object;
 class DockUpdateInterface;

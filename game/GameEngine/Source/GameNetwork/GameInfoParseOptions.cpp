@@ -55,7 +55,7 @@ extern std::basic_string<unsigned short> MultiByteToWideCharSingleLine(const cha
 #define FALSE false
 #define TRUE true
 enum { MAX_SLOTS = 8, PLAYERTEMPLATE_MIN = -2 };
-enum SlotState { SLOT_OPEN, SLOT_CLOSED, SLOT_EASY_AI, SLOT_MED_AI, SLOT_BRUTAL_AI, SLOT_PLAYER };
+#include "../../Include/Common/Enums/SlotState.h"
 // setState at 0061F210 copies IP and the complete port/padding word to +30/+34.
 struct GameSlotConnectInfo {
     GameSlotConnectInfo() : m_ip(0), m_port(0) {}

@@ -7,7 +7,7 @@
 #include <bitset>
 #include <list>
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 template <int Number>
 class BitFlags
