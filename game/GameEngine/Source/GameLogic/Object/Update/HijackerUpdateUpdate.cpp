@@ -36,6 +36,7 @@ class Thing
 {
 public:
 	virtual void slot00() = 0;
+	bool isSignificantlyAboveTerrain() const;
 	void setPosition(const Coord3D *position);
 };
 
@@ -92,12 +93,6 @@ public:
 	Rva00295D70ContainModuleInterface *m_contain;
 	unsigned char m_padToTeam[0x3c];
 	Team *m_team;
-};
-
-class BfmeOwnerRW
-{
-public:
-	int bfmeCheckRW(void);
 };
 
 class GameLogic
@@ -315,7 +310,7 @@ UpdateSleepTime HijackerUpdate::update(void)
 				reinterpret_cast<UnsignedByte *>(target) + 0x38);
 			obj->setPosition(position);
 			m_wasTargetAirborne = static_cast<UnsignedByte>(
-				reinterpret_cast<BfmeOwnerRW *>(target)->bfmeCheckRW());
+				static_cast<Thing *>(target)->isSignificantlyAboveTerrain());
 			m_ejectPos = *position;
 		}
 		else

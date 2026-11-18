@@ -36,9 +36,8 @@
 
 class BfmeVec3FC { public: float x,y,z; };
 class BfmeHostFC { public: void bfmeGetPosFC(BfmeVec3FC *); };
-class Thing { public: float bfmeRelativeAngleTo(const Coord3D *) const; };
+class Thing { public: float bfmeRelativeAngleTo(const Coord3D *) const; bool isSignificantlyAboveTerrain() const; };
 class Rva000D3F10 { public: int test(unsigned); };
-class BfmeOwnerRW { public: int bfmeCheckRW(); };
 class Rva0077B3F0 { public: void method(const Matrix3D *); };
 class W3DTankTruckDraw { friend class W3DTruckDraw; protected: void createEmitters(); };
 struct Rva00781660Locomotor { char head[0x40]; unsigned field40; bool isMovingBackwards() const { return (field40 >> 7) & 1; } };
@@ -442,7 +441,7 @@ void W3DTruckDraw::doDrawModule(const Matrix3D* transformMtx)
     if(m_dustEffect) m_dustEffect->stop();
     if(m_dirtEffect) m_dirtEffect->stop();
     if(m_powerslideEffect) m_powerslideEffect->stop();
-    m_wasAirborne=(unsigned char)((BfmeOwnerRW *)obj)->bfmeCheckRW();
+    m_wasAirborne=((Thing *)obj)->isSignificantlyAboveTerrain();
 }
 
 const TWheelInfo *Drawable::getWheelInfo() const { return m_locoInfo ? reinterpret_cast<const TWheelInfo *>(reinterpret_cast<const unsigned char *>(m_locoInfo)+0x3c) : 0; }

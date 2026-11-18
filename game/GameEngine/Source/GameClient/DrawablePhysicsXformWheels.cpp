@@ -69,15 +69,14 @@ class AIUpdateInterface { public: float getCurLocomotorSpeed(); };
 class Object { public: char pad[0x204]; AIUpdateInterface *m_ai; void *dword_208; int getLayer() const; float bfmeGetNonnegativePreferredLocomotorHeight() const;
  BfmeGeometryInfo &getGeometryInfo() { return *(BfmeGeometryInfo*)((char*)this+0xac); }
 };
-// ILT 00019FF1 reaches the matched int-returning predicate at 00131B20.
-class BfmeOwnerRW { public: int bfmeCheckRW(); };
 class TerrainLogic { public: virtual void s0();virtual void s4();virtual void s8();virtual void sc();virtual void s10();virtual void s14();virtual void s18(); virtual float getLayerHeight(float,float,int,Coord3D*,bool); };
 extern TerrainLogic *TheTerrainLogic;
 class BfmeUnitRC; class BfmeHolderRC;
 class BfmeOwnerRC { public: char bfmeSendRC(BfmeUnitRC*,BfmeHolderRC*,void*,void*,void*,void*); };
 class BFMERopeDrawable { public: const Coord3D *getPosition() const; };
 #define THING_TU_MEMBERS \
-public: const Coord3D *getUnitDirectionVector2D() const;
+public: const Coord3D *getUnitDirectionVector2D() const; \
+	bool isSignificantlyAboveTerrain() const;
 #include "../Common/Thing/thing.h"
 #undef THING_TU_MEMBERS
 float Sin(float);
@@ -124,7 +123,7 @@ float groundPitch=0,groundRoll=0;
  ((BfmeOwnerRC*)this)->bfmeSendRC((BfmeUnitRC*)obj,(BfmeHolderRC*)locomotor,(void*)pos,(void*)dir,&groundPitch,&groundRoll);
  float hheight=TheTerrainLogic->getLayerHeight(pos->x,pos->y,obj->getLayer(),0,true);
 
-	const unsigned char airborne = (unsigned char)((BfmeOwnerRW *)obj)->bfmeCheckRW();
+	const unsigned char airborne = ((Thing *)obj)->isSignificantlyAboveTerrain();
 
 	if (airborne)
 	{

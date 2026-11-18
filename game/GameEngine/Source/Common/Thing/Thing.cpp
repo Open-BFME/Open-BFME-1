@@ -399,6 +399,7 @@ Real Thing::getHeightAboveTerrainOrWater() const
 /** If we treat this as airborne, then they slide down slopes.  This checks whether
 they are high enough that we should let them act like they're flying. jba. */
 //=============================================================================
+#if 0 // non-retail Zero Hour copy; retail 0x00131B20 is Thing_isSignificantlyAboveTerrain.cpp
 // ?isSignificantlyAboveTerrain@Thing@@QBE_NXZ present-unmatched
 Bool Thing::isSignificantlyAboveTerrain() const 
 {
@@ -406,6 +407,7 @@ Bool Thing::isSignificantlyAboveTerrain() const
 	// then it's significantly airborne.  jba
 	return (getHeightAboveTerrain() > -(3*3)*TheGlobalData->m_gravity);
 }
+#endif
 
 
 //-------------------------------------------------------------------------------------------------

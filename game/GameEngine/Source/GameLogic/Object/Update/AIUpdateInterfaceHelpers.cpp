@@ -227,7 +227,6 @@ protected:
 // Proven out-of-line callee declarations from Locomotor_query.cpp and
 // BfmeConv1807.cpp. The terrain result is tested through AL in retail.
 class BfmeSub1CC_EC3 { public: Real effectiveMaxSpeed(void *objectArgument); };
-class BfmeOwnerRW { public: int bfmeCheckRW(); };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
@@ -374,7 +373,7 @@ void AIUpdateInterface::setGoalPositionClipped( const Coord3D *position, Command
 			Real fudge = TheWritableGlobalData->m_partitionCellSize * 0.5f;
 			Object *object = getObject();
 			if( object->isKindOf( KINDOF_AIRCRAFT ) &&
-				(unsigned char)reinterpret_cast<BfmeOwnerRW *>(object)->bfmeCheckRW() && m_curLocomotor )
+				static_cast<Thing *>(object)->isSignificantlyAboveTerrain() && m_curLocomotor )
 			{
 				fudge = max( fudge, m_curLocomotor->getPreferredHeight() );
 			}
