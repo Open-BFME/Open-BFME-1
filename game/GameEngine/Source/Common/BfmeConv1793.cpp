@@ -1,16 +1,18 @@
 class BfmeThingYT;
 
-class BfmeInnerYT
+// The template's override link at +4: retail calls Overridable::getFinalOverride
+// (ILT 0x000022BB -> 0x00087A80) on it.
+class Overridable
 {
 public:
-	BfmeThingYT *bfmeResolveYT(void);
+	const Overridable *getFinalOverride(void) const;
 };
 
 class BfmeThingYT
 {
 public:
 	int m_bfmeSpareYT;
-	BfmeInnerYT *m_bfmeInnerYT;
+	Overridable *m_bfmeInnerYT;
 	unsigned char m_bfmeGapYT[0xcc];
 	int m_bfmeFlagsYT;
 };
@@ -108,7 +110,7 @@ void __cdecl bfmeNotifyYT(BfmeUnitYT *unit, void *param)
 		BfmeThingYT *thing = unit->m_bfmeThingYT;
 
 		if (thing && thing->m_bfmeInnerYT)
-			thing = thing->m_bfmeInnerYT->bfmeResolveYT();
+			thing = (BfmeThingYT *)thing->m_bfmeInnerYT->getFinalOverride();
 
 		if (thing->m_bfmeFlagsYT & 0x1000)
 		{

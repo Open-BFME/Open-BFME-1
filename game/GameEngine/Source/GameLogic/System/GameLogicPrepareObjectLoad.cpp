@@ -75,13 +75,11 @@ class TerrainLogic {public:
  virtual Bridge *findBridgeAt(const Coord3D*)const;
 };
 extern TerrainLogic *TheTerrainLogic;
-class Gen_0038D000 {friend class GameLogic; void bfmeFinish();};
 typedef _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> > ObjectPtrHash;
 class GameLogic {
 public:
  char pad0[0xa8];Object *first;char padAC[4];ObjectPtrHash objects;
  void destroyObject(Object*);
- void processDestroyList(){((Gen_0038D000*)this)->bfmeFinish();}
  Object *findObjectByID(int id) {
   if(id==0)return 0;
   ObjectPtrHash::iterator it=objects.find(id);
@@ -89,6 +87,7 @@ public:
   return it->second;
  }
 private:
+ void processDestroyList();
  void prepareLogicForObjectLoad();
 };
 void GameLogic::prepareLogicForObjectLoad()

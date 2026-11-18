@@ -7,11 +7,12 @@ class RecorderClass
 {
 public:
 	RecorderClass();
-	~RecorderClass();
+	// Retail's destructor is virtual: ??1RecorderClass@@UAE@XZ at 0x00099070 (ILT 0x0001F55F).
+	virtual ~RecorderClass();
 	bool testVersionPlayback(AsciiString filename);
 
 private:
-	char m_pad[0x2B4];
+	char m_pad[0x2B0];
 };
 
 class Rva56E070StateOwner
