@@ -24,8 +24,8 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

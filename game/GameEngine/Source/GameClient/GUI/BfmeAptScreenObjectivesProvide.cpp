@@ -40,8 +40,8 @@
 
 #include <string.h>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // class-gate: allow AsciiString the private view is the byte-proved codegen view of
 // bfmeProvideObjectiveText (303/303): ascii_string.h refuses its m_data reads (C2248,

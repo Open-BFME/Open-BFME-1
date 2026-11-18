@@ -29,9 +29,9 @@ extern VideoPlayerInterface *TheVideoPlayer;
 #include <vector>
 #include <hash_map>
 
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef UnsignedInt TranslatorID;
 
 enum { MAX_CLIENT_TRANSLATORS = 32 };

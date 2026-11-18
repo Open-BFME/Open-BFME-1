@@ -13,8 +13,8 @@
 // Real Coord3D implementations below reproduce the 24-byte frame and copies.
 
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum StateReturnType
 {

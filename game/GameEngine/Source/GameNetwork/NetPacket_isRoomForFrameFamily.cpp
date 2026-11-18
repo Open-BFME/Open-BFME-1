@@ -21,11 +21,11 @@
 //
 // All four bodies are the reference's, unchanged.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 enum { MAX_PACKET_SIZE = 0x1DC };
 

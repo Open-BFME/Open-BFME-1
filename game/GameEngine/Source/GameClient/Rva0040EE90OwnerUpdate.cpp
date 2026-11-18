@@ -5,8 +5,8 @@ extern float g_bfmeDefaultBU;
 #define Rva01075334One g_bfmeDefaultBU
 #define Rva01084068Scale 255.0f
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class Image;
 

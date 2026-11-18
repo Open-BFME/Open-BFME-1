@@ -19,8 +19,8 @@
 //   completed waypoint, take the precise-Z bit off the current locomotor and
 //   reset the waypoint index at +0x194 to -1.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 

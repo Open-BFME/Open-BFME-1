@@ -20,8 +20,8 @@
 // music entries are slot 25 (+0x64) setMusicEvent and slot 27 (+0x6C)
 // startMusic on AudioManager above.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum ObjectID
 {

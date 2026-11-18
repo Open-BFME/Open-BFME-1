@@ -13,8 +13,8 @@
 // APT:TeamChat, APT:GlobalChat and APT:SelfChat, and mode 3 hands the whole
 // call to the body at 0x00513E70 instead.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 class GameWindow;

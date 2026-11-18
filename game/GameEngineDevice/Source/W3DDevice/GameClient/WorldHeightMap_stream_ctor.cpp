@@ -18,8 +18,8 @@
 // DataChunkInput local all carry a declared destructor: the cleanup scopes ARE
 // the state numbers 0x0B/0x0C/0x11/0x12 retail writes.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class ChunkInputStream;
 

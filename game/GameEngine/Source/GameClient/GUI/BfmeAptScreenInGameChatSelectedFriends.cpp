@@ -3,8 +3,8 @@
 // Keep the selection helper visible to its friend-button caller: VC7.1 then
 // retains the vector start through cleanup, as retail does.
 #include "GameClient/BfmeAptScreenBaseLayout.h"
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 #include <vector>

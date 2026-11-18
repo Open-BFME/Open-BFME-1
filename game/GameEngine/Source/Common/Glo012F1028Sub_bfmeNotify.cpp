@@ -17,8 +17,8 @@
 // live size() gives -- the calls could have grown it. The index and the length
 // are compared unsigned.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern const char g_bfmeEmptyAscii[];
 

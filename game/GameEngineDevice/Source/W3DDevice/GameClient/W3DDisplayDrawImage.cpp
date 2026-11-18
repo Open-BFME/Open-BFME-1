@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned long UnsignedLong;
 
 struct BfmeRect

@@ -8,8 +8,8 @@
 #include "Common/AsciiString.h"
 #include <vector>
 
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct XferVersion
 {

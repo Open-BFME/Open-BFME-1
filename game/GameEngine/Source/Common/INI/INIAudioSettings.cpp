@@ -4,8 +4,8 @@
 #include <float.h>
 #include "Common/INIException.h"
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 class INI;
 typedef void (*INIFieldParseProc)(INI *ini, void *instance, void *store, const void *userData);
 #include "../../../Include/Common/FieldParse.h"

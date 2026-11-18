@@ -17,8 +17,8 @@
 // looked up on the global at 0x012ED88C with a second argument of 1. The result
 // lands in 0x012F255C and the function reports success unconditionally.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *s, const char *delim);
 extern "C" unsigned int __cdecl strlen(const char *s);

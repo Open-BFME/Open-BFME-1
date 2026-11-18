@@ -13,8 +13,8 @@
 // and affordability prefix, then asks the foundation's update interface to
 // construct the selected template at the foundation position.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

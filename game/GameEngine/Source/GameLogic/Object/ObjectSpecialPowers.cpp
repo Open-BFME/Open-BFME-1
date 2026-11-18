@@ -30,8 +30,8 @@
 // different return type upstream, and the bytes here never bring the two
 // together.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class BehaviorModule;

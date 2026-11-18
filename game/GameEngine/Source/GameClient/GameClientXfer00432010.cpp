@@ -6,11 +6,11 @@
 #include <list>
 #include "ascii_string.h"
 #include "unicode_string.h"
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
-typedef unsigned short UnsignedShort;
+
 enum { INVALID_ID = 0, TRUE = 1, FALSE = 0 };
 enum DrawableStatus { DRAWABLE_STATUS_NONE = 0 };
 class Xfer;

@@ -14,9 +14,9 @@
 // The zero is loaded from memory rather than materialised, so it is an extern
 // const and not a literal: written as 0.0f the compiler emits fldz.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const Real g_rva01075350;				// 0x01075350
 

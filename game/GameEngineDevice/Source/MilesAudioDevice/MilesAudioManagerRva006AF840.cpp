@@ -22,8 +22,8 @@ void __cdecl operator delete( void * ) throw();
 #include <vector>
 #include <hash_map>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef unsigned short WideChar;
 
 template <typename T>

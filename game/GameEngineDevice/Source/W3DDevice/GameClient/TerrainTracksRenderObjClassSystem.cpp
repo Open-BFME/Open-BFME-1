@@ -23,8 +23,8 @@
 // BFME's constructor has no m_edgesToFlush, so the three GlobalData-fed limits
 // sit at +0x1C/+0x20/+0x24 rather than upstream's +0x20/+0x24/+0x28.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // Retail's writable-global pointer (0x012ED5C8), defined once in
 // Common/GlobalData.cpp. The canonical spelling is what links; the local view

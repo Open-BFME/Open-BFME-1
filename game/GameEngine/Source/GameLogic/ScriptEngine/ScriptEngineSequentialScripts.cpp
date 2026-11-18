@@ -12,8 +12,8 @@
 #define getAction getAction_LocalView
 #include <vector>
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern const char g_bfmeEmptyAscii[]; // retail 0x0107388B
 

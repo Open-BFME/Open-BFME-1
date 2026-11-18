@@ -26,8 +26,8 @@
 // object -- the idle state's "Machine->Owner" and the retarget body's
 // "Machine->CurrentState" are the same machine, two fields apart.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum StateReturnType
 {

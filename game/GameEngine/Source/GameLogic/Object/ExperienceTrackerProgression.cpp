@@ -4,9 +4,9 @@
 // readable body of ?gainExpForLevel@ExperienceTracker@@: game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp
 // Snapshot supplies the vtable pointer; all three bodies use the same parent at +0x04.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Xfer;
 class AsciiString;
