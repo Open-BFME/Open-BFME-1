@@ -1,8 +1,8 @@
 // The BFME archive path keeps the WWLib string object by value.  The class is
 // repeated here so this body can keep the retail ABI local to its TU.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class BFMERetailAsciiString;
 

@@ -12,8 +12,8 @@
 // TheShell is read twice because the transition runs in between, so the
 // source tests it twice.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

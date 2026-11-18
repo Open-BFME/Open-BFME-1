@@ -5,8 +5,8 @@
 // at +0x13C/+0x16C, frame counters at +0x19C/+0x1A0, ParabolicEase at +0x1A4,
 // and the doing-flag at +0x2354.
 
-typedef float Real;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Matrix3D
 {

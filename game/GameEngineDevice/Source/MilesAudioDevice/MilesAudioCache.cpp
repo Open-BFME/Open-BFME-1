@@ -4,8 +4,8 @@
 // parameter can carry the scalar stamp without changing observable behavior.
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
 class Rva00691ED0Key
 {
 public:

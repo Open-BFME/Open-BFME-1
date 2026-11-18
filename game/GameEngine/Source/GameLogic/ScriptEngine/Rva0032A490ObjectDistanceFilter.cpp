@@ -5,8 +5,8 @@
 // whose final template passes the BFME template predicate, then stops the
 // walk after the count exceeds the inclusive limit.
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Overridable
 {

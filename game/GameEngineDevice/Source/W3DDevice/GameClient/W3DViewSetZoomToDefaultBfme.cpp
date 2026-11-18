@@ -3,8 +3,8 @@
 // offsets. The height sampler and zoom-limit calls identify the two embedded
 // helper objects used by this method.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

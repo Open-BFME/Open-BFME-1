@@ -1,7 +1,7 @@
 // Retail 0x0022B480: ContainModuleInterface::getStatus(Object *) const.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class Player;

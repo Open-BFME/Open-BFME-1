@@ -2,8 +2,8 @@
 // Open-BFME: BoneFXUpdate::doFXListAtBone, retail 0x00287F80 / 135B.
 // The standalone declarations preserve the BFME object and module offsets.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

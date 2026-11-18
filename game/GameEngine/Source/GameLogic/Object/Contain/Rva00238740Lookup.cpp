@@ -5,8 +5,8 @@
 // through the established StringBase<char> cleanup on normal and EH exits.
 // cl: /O2 /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);

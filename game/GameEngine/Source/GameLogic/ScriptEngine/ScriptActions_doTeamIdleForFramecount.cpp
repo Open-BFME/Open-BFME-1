@@ -7,8 +7,8 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // ScriptEngine passes AsciiString by value through its retail vtable.  This
 // wrapper preserves the in-place copy construction used by the BFME ABI.

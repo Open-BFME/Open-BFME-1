@@ -10,8 +10,8 @@
 // header -- only the fields this one body touches, at their real BFME
 // offsets (proven by probe.py against retail).
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase

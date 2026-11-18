@@ -4,8 +4,8 @@
 // module+0x30: moduleData at [this-0x2C], object at [this-0x28].
 // numberOfExitPaths at moduleData+0x144. Unused offset arg is ret-8.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

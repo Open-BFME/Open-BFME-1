@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // Open-BFME5: clean C++ recovery of DISPLAY_COUNTER.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct BfmeAsciiStringData
 {

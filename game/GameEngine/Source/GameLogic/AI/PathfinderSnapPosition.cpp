@@ -6,9 +6,9 @@
 // AIPathfind.cpp:5106.  BFME asks TerrainLogic for the destination layer
 // instead of hardcoding LAYER_GROUND.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define PATHFIND_CELL_SIZE_F 10.0f
 

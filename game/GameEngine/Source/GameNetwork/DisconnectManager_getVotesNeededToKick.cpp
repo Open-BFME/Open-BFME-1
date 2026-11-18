@@ -16,8 +16,8 @@
 // so the cast is written out. The loop's own compare stays signed, which is
 // what keeps the counter an Int.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 enum { BFME_MAX_SLOTS = 8 };
 

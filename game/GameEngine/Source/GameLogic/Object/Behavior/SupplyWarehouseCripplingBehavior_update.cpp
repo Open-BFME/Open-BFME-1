@@ -7,8 +7,8 @@
 // SupplyWarehouseCripplingBehavior bodies, while a C++ inheritance model here
 // would make the compiler adjust this before entering the body.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

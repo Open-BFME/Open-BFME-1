@@ -10,8 +10,8 @@
 // falls out of where they land: the name at +0, the size at +4 and the bold
 // flag as the byte at +8.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 template <typename T>
 class StringBase

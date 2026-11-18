@@ -7,8 +7,8 @@
 // 0x0111D090; its slots +0x20, +0x34, and +0x4C resolve respectively to the
 // extent, closest-edge (Coord3D sret), and underwater operations used here.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

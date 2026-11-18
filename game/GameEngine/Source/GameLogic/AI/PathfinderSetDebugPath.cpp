@@ -4,9 +4,9 @@
 // The BFME Pathfinder keeps debugPath at this+0x854.  The retail body also
 // performs the GameInfo slot-11 call before checking the AI debug option.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

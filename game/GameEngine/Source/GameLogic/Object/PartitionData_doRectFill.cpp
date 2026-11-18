@@ -1,7 +1,7 @@
 // cl: /O2 /DNDEBUG /MD /EHs-c- /Ob2
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 Int g_Va0133F408 = 0;
 extern const Real g_bfmeK1253;

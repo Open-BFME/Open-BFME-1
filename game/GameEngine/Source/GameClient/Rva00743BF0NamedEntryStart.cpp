@@ -18,8 +18,8 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 	return result ? result : length - otherLength;
 }
 
-typedef bool Bool;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 struct Rva00743BF0Entry
 {

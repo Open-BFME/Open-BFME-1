@@ -10,8 +10,8 @@
 // Neither callee nor caller names the method, so the address stays in the
 // names.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern const Real g_rva01075350;		// retail 0x01075350
 

@@ -13,8 +13,8 @@
 // registers and the height is spilled first.
 #include <math.h>
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D
 {

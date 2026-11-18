@@ -12,8 +12,8 @@
 // secondary-interface vtable 0x010A45E0 at +0x20. The local owner spelling
 // remains address-derived; m_value is a view of that real secondary base.
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 

@@ -8,8 +8,8 @@
 #define _STLP_NO_EXCEPTIONS
 #include <vector>
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class INI
 {

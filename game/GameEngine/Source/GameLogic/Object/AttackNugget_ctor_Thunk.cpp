@@ -18,8 +18,8 @@
 // base subobject is empty. The SEH frame is there to destroy that member if its
 // constructor throws.
 
-typedef float Real;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 

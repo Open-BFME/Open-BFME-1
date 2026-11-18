@@ -5,8 +5,8 @@
 // The caller and the string prove the serialization behavior, but no named
 // owner has enough independent evidence yet, so the method keeps its RVA.
 
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 

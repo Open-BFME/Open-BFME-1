@@ -12,8 +12,8 @@ extern "C" void _ReadWriteBarrier(void);
 // it is named here directly instead of through a linker alias.
 extern void j_0001b9a0();
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum WeaponStatus
 {

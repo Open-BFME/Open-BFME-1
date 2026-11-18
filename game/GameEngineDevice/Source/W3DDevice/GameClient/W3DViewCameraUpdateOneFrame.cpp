@@ -15,8 +15,8 @@
 // and what the body provably does: blend one Real field (+0x70) from start to
 // end over m_numFrames with the ParabolicEase at +0x1FC.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ParabolicEase.h
 class ParabolicEase

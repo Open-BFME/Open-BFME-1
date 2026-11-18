@@ -8,8 +8,8 @@
 // Historical method name unknown. TheGameClient slot 26 (+0x68) is getFrame,
 // as in the matched LifeEvent slot 1 at 0x005FC450.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

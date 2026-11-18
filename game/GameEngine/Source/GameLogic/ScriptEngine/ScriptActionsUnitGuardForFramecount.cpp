@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /O2 /EHsc /Igame/Libraries/Source/WWVegas/WWLib
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 

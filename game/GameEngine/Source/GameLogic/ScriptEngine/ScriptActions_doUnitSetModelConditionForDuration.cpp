@@ -8,9 +8,9 @@ extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Landed body 0x001D02C0 (ObjectRva001D02C0.cpp); this call site targets the
 // retail ILT thunk 0x00049D73 that forwards to it, so name the thunk directly.

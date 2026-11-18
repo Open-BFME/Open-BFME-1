@@ -1,8 +1,8 @@
 // BFME keeps an optional cursor into a Path's nodes and uses this query to
 // detect any remaining waypoint ID that TerrainLogic can no longer resolve.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt WaypointID;
 
 static const WaypointID INVALID_WAYPOINT_ID = 0x7fffffff;

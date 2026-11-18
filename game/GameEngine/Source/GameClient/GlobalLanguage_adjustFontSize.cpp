@@ -18,8 +18,8 @@
 // directly folds to fimul and consumes the ratio, where retail keeps the ratio
 // in st(1) and discards it with fstp st(0).
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) double __cdecl floor( double );
 

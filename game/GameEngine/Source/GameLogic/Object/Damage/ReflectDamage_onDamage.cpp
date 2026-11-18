@@ -1,8 +1,8 @@
 // ?onDamage@ReflectDamage@@UAEXPAUBFMEDamageInfo@@@Z
 // ReflectDamage's callback at retail RVA 0x002518B0.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum DamageType
 {

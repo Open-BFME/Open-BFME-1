@@ -10,8 +10,8 @@
 
 #include <vector>
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/GeometryType.h"
 

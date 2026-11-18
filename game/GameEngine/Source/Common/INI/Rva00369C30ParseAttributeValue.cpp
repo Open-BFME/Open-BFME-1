@@ -9,8 +9,8 @@
 // that is what parks the scanned real in the upper half of the 8-byte frame
 // (a plain Real local reuses the lower half).  Class names are address-derived.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) char *__cdecl strchr(const char *s, int c);
 

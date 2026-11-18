@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Shell::reset, retail 0x0057F8E0.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeImeManager
 {

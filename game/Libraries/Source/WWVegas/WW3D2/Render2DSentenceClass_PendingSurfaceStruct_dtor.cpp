@@ -27,8 +27,8 @@
 // form is declared where it can see it; retail calls ??_V@YAXPAX@Z here.
 void operator delete[]( void *block );
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class W3DRadarResetSurface
 {

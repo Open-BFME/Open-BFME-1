@@ -6,9 +6,9 @@
 
 #include <windows.h>
 
-typedef bool Bool;
-typedef char Char;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 extern "C" unsigned int __cdecl strlen( const char *text );
 

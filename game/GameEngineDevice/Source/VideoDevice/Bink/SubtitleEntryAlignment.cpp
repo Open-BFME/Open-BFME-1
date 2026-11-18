@@ -5,8 +5,8 @@
 
 #include <math.h>
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class BfmeDebugReport
 {

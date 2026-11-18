@@ -15,8 +15,8 @@
 // The halving is `cdq / sub / sar 1`, MSVC's signed divide by two, so the frame
 // count is a signed Int rather than unsigned.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow

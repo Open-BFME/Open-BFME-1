@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /O2 /EHsc
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class GameWindow;
 

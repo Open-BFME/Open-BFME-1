@@ -1,7 +1,7 @@
 // Retail 0x0022D590: TransportContain::onCapture.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

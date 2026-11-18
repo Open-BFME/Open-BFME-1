@@ -3,8 +3,8 @@
 // observed module, target, progress, mode, and value layout.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 extern float g_bfmeDefaultBU;       // retail 0x01075334
 

@@ -4,8 +4,8 @@
 // kind bit after resolving the template override, then marks the passenger detected
 // through the BFME two-argument StealthUpdate::markAsDetected (0x002AD380).
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 

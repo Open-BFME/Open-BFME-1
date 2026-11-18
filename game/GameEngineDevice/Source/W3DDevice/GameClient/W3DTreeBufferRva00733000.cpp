@@ -13,8 +13,8 @@
 #include "matrix3d.h"
 #include "sphere.h"
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 struct Rva00733000Record
 {

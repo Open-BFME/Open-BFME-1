@@ -5,8 +5,8 @@
 // constructor at 0x002BE400 installs that vtable and the update body at
 // 0x002BEA50 reads the same current-weapon and firing-condition fields.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 enum StateExitType
 {

@@ -3,8 +3,8 @@
 // The owning class is not recovered; the owner/target names describe only
 // the proven ABI and field layout used by this body.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class BfmeSeedTarget
 {

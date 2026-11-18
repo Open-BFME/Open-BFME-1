@@ -10,8 +10,8 @@
 #include <math.h>
 #include "vector2.h"
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 class Rva00740AE0Base
 {
