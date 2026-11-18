@@ -61,9 +61,9 @@ public:
 	Object *m_owner;
 };
 
-enum LocomotorSetType
-{
-};
+#include "../../../Include/Common/Enums/LocomotorSetType.h"
+
+
 
 // Local minimal AIUpdateInterface: requestPath declared, not defined, so
 // the call links against the already-matched

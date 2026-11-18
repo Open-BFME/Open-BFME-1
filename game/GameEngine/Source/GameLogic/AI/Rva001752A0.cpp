@@ -8,7 +8,7 @@
 enum KindOfType { KINDOF_5C = 0x5c };
 #include "../ScriptEngine/game_logic_dispatch.h"
 enum WeaponSlotType { WEAPONSLOT_DUMMY = 0 };
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../Include/Common/ObjectID.h"
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

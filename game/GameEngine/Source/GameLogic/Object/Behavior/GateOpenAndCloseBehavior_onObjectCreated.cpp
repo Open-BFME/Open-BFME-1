@@ -16,10 +16,10 @@
 // serves the call sites, so this TU specializes it inline as other callers do.
 template <> inline bool StringBase<char>::isEmpty() const { return m_data == 0 || m_data->length == 0; }
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 #include "../../../../Include/Common/NameKeyType.h"
 
 

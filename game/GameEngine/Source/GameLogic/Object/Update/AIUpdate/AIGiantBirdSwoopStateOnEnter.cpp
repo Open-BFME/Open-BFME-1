@@ -25,7 +25,7 @@ typedef int ObjectID;
 
 enum WeaponChoiceCriteria { PREFER_MOST_DAMAGE = 0 };
 #include "../../../command_source_type.h"
-enum WeaponSlotType { PRIMARY_WEAPON = 0 };
+#include "../../../../../Include/Common/Enums/WeaponSlotType.h"
 enum KindOfType { KINDOF_FIRST = 0 };
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"

@@ -31,10 +31,10 @@ class Thing;
 class ModuleData;
 class SpecialPowerTemplate;
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 #include "../../command_source_type.h"
@@ -42,10 +42,10 @@ enum UpdateSleepTime
 
 
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 
 typedef Int ObjectID;
 

@@ -33,8 +33,8 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 typedef unsigned int UnsignedInt;
-enum ObjectID { INVALID_ID = 0 };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../Include/Common/ObjectID.h"
+#include "../../../../Include/Common/NameKeyType.h"
 enum KindOfType
 {
 	BFME_KINDOF_08 = 0x08,

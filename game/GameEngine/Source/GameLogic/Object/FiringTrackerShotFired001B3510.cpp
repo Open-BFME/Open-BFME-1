@@ -24,11 +24,11 @@ typedef unsigned int AudioHandle;
 
 
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 void j_0001dd72();
 

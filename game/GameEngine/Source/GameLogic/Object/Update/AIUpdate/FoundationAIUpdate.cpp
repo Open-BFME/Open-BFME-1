@@ -7,11 +7,11 @@ class Drawable
 public:
 	void setSelectable(bool value);
 };
-enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff };
+#include "../../../../../Include/Common/ObjectID.h"
 enum KindOfType { KINDOF_FOUNDATION = 0x95 };
 enum ObjectStatusTypes { OBJECT_STATUS_UNSELECTABLE = 3 };
 #include "../../../../../Include/Common/NameKeyType.h"
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 class Overridable
 {
 public:

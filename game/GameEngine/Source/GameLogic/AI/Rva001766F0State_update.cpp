@@ -17,17 +17,17 @@ typedef unsigned int ObjectID;
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+
+
+
+
+
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/WeaponStatus.h
 // BFME carries one status past the Zero Hour list; it is spelled by value.

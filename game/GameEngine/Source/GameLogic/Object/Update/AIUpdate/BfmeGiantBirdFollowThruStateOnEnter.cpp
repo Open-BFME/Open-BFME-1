@@ -19,7 +19,7 @@ template<int N> class Rva002C3B90Slots : public Rva002C3B90Slots<N-1>
 { public: virtual void unused(char (*)[N]) = 0; };
 template<> class Rva002C3B90Slots<0> {};
 
-enum LocomotorSetType { LOCOMOTORSET_NORMAL = 0 };
+#include "../../../../../Include/Common/Enums/LocomotorSetType.h"
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 
 struct Rva002C3B90Locomotor

@@ -18,7 +18,7 @@ template<int N> class BitFlags { _STL::bitset<N> bits; public: enum BogusInitTyp
 typedef BitFlags<304> ModelConditionFlags;
 enum ObjectStatusTypes { OBJECT_STATUS_UNDER_CONSTRUCTION=2, OBJECT_STATUS_RECONSTRUCTING=21 };
 enum KindOfType { KINDOF_BRIDGE_TOWER=24 };
-enum RadarEventType { RADAR_EVENT_CONSTRUCTION=1 };
+#include "../../../../../Include/Common/Enums/RadarEventType.h"
 class Object; class Player; class Drawable; class AIUpdateInterface; class DozerAIInterface;
 class BodyModuleInterface; class AudioEventRTS; class PickAndPlayInfo;
 template<typename T> class StringBase {

@@ -38,12 +38,12 @@ struct Rva001AEA80GeometryRecord
 	unsigned char bytes[0x14];
 };
 
-enum GeometryType
-{
-	GEOMETRY_SPHERE = 0,
-	GEOMETRY_CYLINDER,
-	GEOMETRY_BOX
-};
+#include "../../../Include/Common/Enums/GeometryType.h"
+
+
+
+
+
 
 enum FindPositionFlags
 {

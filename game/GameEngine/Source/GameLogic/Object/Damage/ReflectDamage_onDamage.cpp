@@ -4,10 +4,10 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-enum DamageType
-{
-	DAMAGE_DEPLOY = 13
-};
+#include "../../../../Include/Common/Enums/DamageType.h"
+
+
+
 
 #include "../../../../Include/Common/Enums/DeathType.h"
 

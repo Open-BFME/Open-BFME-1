@@ -25,7 +25,7 @@ class Object;
 class Player;
 class SpecialPowerTemplate;
 enum SpecialPowerType { PickupPower00281F40 = 0x27, OtherPower00281F40 = 0x41 };
-enum UpdateSleepTime { UPDATE_SLEEP_NONE=1, UPDATE_SLEEP_FOREVER=0x3fffffff };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 template<> __declspec(noinline)
 BitFlags<192>::BitFlags(BogusInitType, Int idx)

@@ -22,10 +22,10 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volati
 
 
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 class Player;
 class Object;

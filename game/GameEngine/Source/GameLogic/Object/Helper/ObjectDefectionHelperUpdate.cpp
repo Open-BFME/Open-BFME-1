@@ -115,11 +115,11 @@ static inline Rva00367E30Logic *TheBfmeGameLogicView() { return (Rva00367E30Logi
 
 #define Rva0107C6EC 0.02f
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 class Object;
 

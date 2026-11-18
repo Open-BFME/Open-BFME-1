@@ -24,7 +24,7 @@ enum KindOfType
 	KINDOF_BRIDGE_TOWER = 24
 };
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 enum BodyDamageType { BODY_RUBBLE = 3 };
 enum BridgeTowerType { BRIDGE_TOWER_0, BRIDGE_TOWER_1, BRIDGE_TOWER_2, BRIDGE_TOWER_3 };
 

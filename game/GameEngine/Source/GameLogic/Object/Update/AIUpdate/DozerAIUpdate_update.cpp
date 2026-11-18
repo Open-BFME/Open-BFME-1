@@ -8,10 +8,10 @@
 
 class Object;
 
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 #include "../../../command_source_type.h"
 enum DozerTask { DOZER_TASK_INVALID = -1, DOZER_TASK_BUILD = 0, DOZER_TASK_REPAIR = 1 };
-enum ObjectID { INVALID_ID = 0 };
+#include "../../../../../Include/Common/ObjectID.h"
 
 class Object
 {

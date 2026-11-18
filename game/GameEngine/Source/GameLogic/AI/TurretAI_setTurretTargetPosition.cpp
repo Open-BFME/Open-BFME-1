@@ -21,10 +21,10 @@ enum TurretStateType
 	TURRETAI_HOLD = 5
 };
 
-enum WeaponSlotType
-{
-	PRIMARY_WEAPON = 0
-};
+#include "../../../Include/Common/Enums/WeaponSlotType.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

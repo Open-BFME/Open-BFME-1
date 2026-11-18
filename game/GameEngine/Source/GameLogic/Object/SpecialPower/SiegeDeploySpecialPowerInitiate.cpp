@@ -26,9 +26,9 @@ struct Coord3D
 	Real z;
 };
 
-enum NameKeyType { NAMEKEY_INVALID };
+#include "../../../../Include/Common/NameKeyType.h"
 #include "../../command_source_type.h"
-enum UpdateSleepTime { UPDATE_SLEEP_NONE = 1 };
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 
 class NameKeyGenerator
 {

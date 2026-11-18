@@ -11,11 +11,11 @@ typedef int ObjectID;
 
 
 
-enum StateExitType
-{
-    EXIT_NORMAL = 0,
-    EXIT_RESET = 1
-};
+#include "../../../Include/Common/Enums/StateExitType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

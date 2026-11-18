@@ -35,18 +35,18 @@
 
 
 
-enum DistanceCalculationType
-{
-	FROM_BOUNDINGSPHERE_3D = 3
-};
+#include "../../../../Include/Common/Enums/DistanceCalculationType.h"
+
+
+
 enum DamageType
 {
 	DAMAGE_UNRESISTABLE = 8
 };
-enum DeathType
-{
-	DEATH_NORMAL = 0
-};
+#include "../../../../Include/Common/Enums/DeathType.h"
+
+
+
 
 // class-gate: allow Coord3D struct-keyed view: the pinned callee ?setPosition@Object@@QAEXPBUCoord3D@@@Z (ILT 0x0003A1A7) and the TerrainLogic height queries are spelled PBU in this TU
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

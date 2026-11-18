@@ -10,10 +10,10 @@
 
 
 
-enum DamageType
-{
-	DAMAGE_SNIPER = 8
-};
+#include "../../../../Include/Common/Enums/DamageType.h"
+
+
+
 
 #include "../../../../Include/Common/Enums/DeathType.h"
 

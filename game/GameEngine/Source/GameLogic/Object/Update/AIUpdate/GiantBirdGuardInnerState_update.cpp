@@ -16,7 +16,7 @@
 
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
-enum StateExitType { EXIT_NORMAL = 0 };
+#include "../../../../../Include/Common/Enums/StateExitType.h"
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

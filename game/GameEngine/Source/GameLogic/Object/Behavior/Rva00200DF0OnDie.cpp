@@ -15,7 +15,7 @@ extern int GetGameLogicRandomValue(int, int, char *, int);
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../../Include/Common/ObjectID.h"
-enum SlowDeathPhaseType { SDPHASE_INITIAL, SDPHASE_MIDPOINT, SDPHASE_FINAL };
+#include "../../../../Include/Common/Enums/SlowDeathPhaseType.h"
 class Object {
 public:
     char pad00[0x38];

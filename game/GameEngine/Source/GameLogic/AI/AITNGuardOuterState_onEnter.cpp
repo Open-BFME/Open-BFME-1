@@ -19,7 +19,7 @@ class Object;
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
-enum StateExitType { EXIT_RESET = 1 };
+#include "../../../Include/Common/Enums/StateExitType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 // hash_map placement as game/GameEngine/Source/GameLogic/System/GameLogicFindObjectByID.cpp.

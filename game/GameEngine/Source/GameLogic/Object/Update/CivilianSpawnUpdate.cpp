@@ -50,10 +50,10 @@
 
 #include "Lib/Coord3D.h"
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../../Include/Common/ObjectID.h"
+
+
+
 
 #include "../../command_source_type.h"
 
@@ -62,11 +62,11 @@ enum ObjectID
 
 
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1,
-	UPDATE_SLEEP_FOREVER = 0x3fffffff
-};
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
 
 int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 

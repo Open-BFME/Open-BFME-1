@@ -13,12 +13,12 @@
 
 
 
-enum CrushSquishTestType
-{
-	TEST_CRUSH_ONLY,
-	TEST_SQUISH_ONLY,
-	TEST_CRUSH_OR_SQUISH
-};
+#include "../../../Include/Common/Enums/CrushSquishTestType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

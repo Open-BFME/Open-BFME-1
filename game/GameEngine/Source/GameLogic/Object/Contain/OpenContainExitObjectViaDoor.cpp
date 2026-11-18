@@ -23,10 +23,10 @@
 
 
 
-enum ExitDoorType
-{
-	DOOR_1 = 0
-};
+#include "../../../../Include/Common/Enums/ExitDoorType.h"
+
+
+
 
 #include "../../command_source_type.h"
 
