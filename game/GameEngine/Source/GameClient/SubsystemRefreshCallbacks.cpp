@@ -23,7 +23,7 @@
 // a2, a3 in that order at both call sites. The second's third argument is a
 // byte (see below), which is what moves its assignment.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Display.h
 class Display

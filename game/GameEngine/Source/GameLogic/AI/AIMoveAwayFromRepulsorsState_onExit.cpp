@@ -19,7 +19,7 @@
 //   Object *obj = getMachineOwner();
 //   if (obj) obj->clearModelConditionState(MODELCONDITION_PANICKING);
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateExitType
 {

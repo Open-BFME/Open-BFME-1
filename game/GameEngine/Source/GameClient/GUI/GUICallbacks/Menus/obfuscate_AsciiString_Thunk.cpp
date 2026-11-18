@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Canonical GameSpy login preference obfuscator, retail 0x0007FBF0.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 extern "C" char *__cdecl strcpy(char *, const char *);
 void *__cdecl operator new[](unsigned int);

@@ -23,7 +23,7 @@
 // missing return has to be allowed through rather than invented.
 #pragma warning(disable : 4716)
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 void W3DRadarResetLock(void);					// retail 0x00903090
 char bfmeUnlock1179(void);					// retail 0x00905B10

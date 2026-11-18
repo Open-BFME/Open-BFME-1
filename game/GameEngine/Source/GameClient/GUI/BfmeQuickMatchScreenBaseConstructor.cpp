@@ -11,7 +11,7 @@
 // frame exists for, and its constructor is nothing but the null. The rest are
 // body assignments.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeQuickMatchSlot
 {

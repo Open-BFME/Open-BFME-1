@@ -43,7 +43,7 @@
 //    first branch. Passing by reference leaves the front end unable to
 //    propagate the guard's non-null fact into the helper body, and all 104
 //    bytes match.
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern Real g_bfmeDefaultBU;
 extern const Real g_rva0107533C;

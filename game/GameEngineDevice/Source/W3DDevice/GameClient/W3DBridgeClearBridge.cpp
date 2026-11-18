@@ -7,7 +7,7 @@
 // clears m_visible and the three mesh RefCount pointers at +0x38/+0x7C/+0xB8.
 // Named caller: W3DBridge::load. Adjacent to cullBridge at 0x006D76F0.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

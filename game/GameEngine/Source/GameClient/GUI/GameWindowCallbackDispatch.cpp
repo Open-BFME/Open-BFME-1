@@ -3,7 +3,7 @@
 // The retail helpers first inspect an optional delegate at this+0x1dc, then
 // tail-jump through the receiver's virtual slot (+8 for system dispatch).
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef UnsignedInt WindowMsgData;
 
 enum WindowMsgHandledType

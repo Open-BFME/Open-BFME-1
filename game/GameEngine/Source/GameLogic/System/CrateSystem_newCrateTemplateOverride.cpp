@@ -14,9 +14,9 @@
 // vptr; and the new override is both returned and linked into the one it
 // copies.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 // Raised only while an override is being copied over its original.
 extern Bool TheBfmeOverrideCopyInProgress;			// 0x012ED611

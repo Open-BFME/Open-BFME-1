@@ -36,7 +36,7 @@
 // was grouped there by its name, but it never touches the condition flags at
 // +0x110: its whole job is this walk.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

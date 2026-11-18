@@ -24,7 +24,7 @@
 // set of types they are now identity casts, but rewriting a byte-verified body
 // to tidy a cast is not worth the risk of moving it.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
 class Object;

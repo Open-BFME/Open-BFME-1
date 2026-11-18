@@ -8,7 +8,7 @@
 // VA 0x010ECDC8 and handed to the instance's add routine (0x00415DD4 thunk)
 // before the inline destructor releases the held reference.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 struct FieldParse;
 

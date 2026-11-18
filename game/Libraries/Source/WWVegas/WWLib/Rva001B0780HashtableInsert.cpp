@@ -89,7 +89,7 @@ public:
 // retail 0x001B0050 is _Construct over a pair of these two, so the key is the
 // four-byte NameKeyType and the mapped value is ArmorTemplate, 0x60 bytes:
 // 23 damage coefficients plus the separate damage scalar.
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../../GameEngine/Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Armor.h
 class ArmorTemplate

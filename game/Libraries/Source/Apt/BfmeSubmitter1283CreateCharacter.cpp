@@ -22,7 +22,7 @@
 //  - the isContainer()/depth pair needs the container pointer in a named
 //    local, matching retail's register rotation.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-typedef bool Bool;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" int memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)

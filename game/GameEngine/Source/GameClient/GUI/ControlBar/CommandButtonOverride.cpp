@@ -4,7 +4,7 @@
 // Retail 0x004A3710.  The parser caller, ILT 0x00027CC3, and the paired
 // CommandSet override allocator establish this as the CommandButton clone.
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern Bool TheBfmeOverrideCopyInProgress; // 0x012ED611
 

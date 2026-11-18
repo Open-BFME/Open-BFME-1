@@ -8,7 +8,7 @@ extern void j_0002c8f9();
 extern void j_00031313();
 extern void j_00048068();
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeSharedString
 {

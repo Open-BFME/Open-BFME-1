@@ -7,7 +7,7 @@
 struct Coord3D;
 class Matrix3D;
 
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ABI slice of FXNugget.  Slot 0 stands for the MemoryPoolObject virtual that
 // FXNugget inherits; doFXPos is slot 1, which is the `call [eax+4]` retail

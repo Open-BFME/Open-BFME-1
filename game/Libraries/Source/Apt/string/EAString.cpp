@@ -4,7 +4,7 @@
 // the object with Left(size - suffixSize) when the suffix matches. The address
 // derived method name keeps the original Apt string identity unresolved.
 
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" unsigned int strlen(const char *);
 extern "C" int memcmp(const void *, const void *, unsigned int);

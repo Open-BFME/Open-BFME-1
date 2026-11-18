@@ -16,7 +16,7 @@
 // the exception type needs a declared copy constructor or MSVC builds the object
 // and then copies it into a second slot instead of constructing it in place.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *a, const char *b);
 

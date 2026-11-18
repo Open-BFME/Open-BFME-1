@@ -14,7 +14,7 @@
 // commandOptions. Slot 13 keeps its placeholder name `apply`; see the evidence
 // note's open question.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 

@@ -3,7 +3,7 @@
 // BFME's public PartitionManager is a thin delegate over its implementation
 // pointer.  This TU models only the ABI slice exercised by the retail body.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class PartitionManagerImpl008F8D60;
 

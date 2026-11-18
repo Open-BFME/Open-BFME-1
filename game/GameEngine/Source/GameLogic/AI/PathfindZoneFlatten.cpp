@@ -2,7 +2,7 @@
 // BFME's twelve movement profiles. Keeping the helpers in this TU preserves
 // VC7.1's retail private calling convention.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short zoneStorageType;
 
 static void __fastcall resolveZones(Int sourceZone, Int targetZone,

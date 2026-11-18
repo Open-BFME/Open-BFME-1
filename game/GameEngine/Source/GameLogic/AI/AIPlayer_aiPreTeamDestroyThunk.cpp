@@ -8,7 +8,7 @@
 // TeamInQueue::disband at 0x00161A60) equals the team being destroyed;
 // matched nodes are unlinked and deleted.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 class Team;
 class TeamInQueue;
 

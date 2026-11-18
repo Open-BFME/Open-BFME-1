@@ -9,7 +9,7 @@
 // decorated name reloc_names recovered says only that its parameters are an
 // Xfer and an Int.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer

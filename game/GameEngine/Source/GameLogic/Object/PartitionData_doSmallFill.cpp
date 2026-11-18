@@ -3,7 +3,7 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);

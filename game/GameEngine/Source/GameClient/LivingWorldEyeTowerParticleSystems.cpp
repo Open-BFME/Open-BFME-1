@@ -5,7 +5,7 @@ class ParticleSystem;
 // ?bfmeNullSystemZA@@YAPAVParticleSystemZA@@XZ; its real name is unproven.
 class ParticleSystemZA;
 ParticleSystemZA *bfmeNullSystemZA();
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class ParticleSystemHandle
 {

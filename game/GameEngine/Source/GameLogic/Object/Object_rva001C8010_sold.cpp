@@ -3,7 +3,7 @@
 // 0x001C8010 and 0x001C8080; both update the status bit, selection state, and
 // the optional per-module sale interface.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ObjectStatusMaskType
 {

@@ -5,7 +5,7 @@
 // run reverse: 200 W3DBridge objects of 0x114 bytes at +0x18, then texture
 // Release_Ref at +0xC.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
 class RefCountClass

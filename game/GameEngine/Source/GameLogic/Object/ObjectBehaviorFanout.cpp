@@ -24,7 +24,7 @@
 // only one of them can be retail's, and it is the one with the vptr -- retail
 // dispatches getDrawable through it. Pads here are measured from +0x04.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class Dict;
 

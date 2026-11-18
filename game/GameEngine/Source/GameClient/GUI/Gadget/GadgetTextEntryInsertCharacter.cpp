@@ -7,7 +7,7 @@
 // the complete BFME gadget header is reconstructed.
 
 typedef unsigned short WideChar;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeEntryString;
 

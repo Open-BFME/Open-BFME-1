@@ -4,7 +4,7 @@
 // BFME adds an integer argument to the drawable factory and passes all three
 // arguments to the 0x3d4-byte Drawable constructor.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class ThingTemplate;
 

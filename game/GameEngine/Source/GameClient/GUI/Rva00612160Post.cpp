@@ -49,7 +49,7 @@ public:
 
 bool postTimedOp(LoadGameFadeHolder holder, void *key);
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class BfmeVirtualMouseSetCursor
 {

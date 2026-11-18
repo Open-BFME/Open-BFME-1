@@ -2,7 +2,7 @@
 
 typedef unsigned short WideChar;
 typedef unsigned int size_t;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 
 extern "C" size_t __cdecl strlen( const char *s );
 

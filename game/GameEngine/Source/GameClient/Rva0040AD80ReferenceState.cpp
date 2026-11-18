@@ -2,7 +2,7 @@
 // The runtime label is "GlowMaterial"; the original C++ class spelling is unknown.
 // Preserve retail's second referent reload after registry erasure.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct Gen_t_0040abb0_p12cd
 {
