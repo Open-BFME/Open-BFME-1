@@ -18,12 +18,12 @@ __forceinline long fast_float2long_round(float value)
 
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((float)floor((double)(x))))
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

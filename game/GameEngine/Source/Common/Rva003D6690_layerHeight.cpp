@@ -7,10 +7,10 @@
 // world coords (i+0.5)*10 into +4/+8 and getLayerHeight(x,y,layer,0,1)
 // into +0xC. Int return (not bool) for xor-eax / mov-eax-1.
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 0
-};
+#include "../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class Coord3D;
 

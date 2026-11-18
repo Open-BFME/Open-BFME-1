@@ -27,7 +27,7 @@ typedef int Int;
 typedef bool Bool;
 typedef float Real;
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum WeaponSlotType { PRIMARY_WEAPON = 0 };
 enum KindOfType { KINDOF_BFME_3B = 0x3b, KINDOF_BFME_88 = 0x88, KINDOF_BFME_95 = 0x95 };

@@ -57,7 +57,7 @@ public:
     int calcTimeToBuild(const Player *,int) const;
 };
 enum DozerTask { DOZER_TASK_BUILD,DOZER_TASK_REPAIR,DOZER_TASK_FORTIFY };
-enum StateReturnType { STATE_FAILURE=-2,STATE_SUCCESS=-1,STATE_CONTINUE=0 };
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
 #include "../../../command_source_type.h"
 class AICommandInterface { public: void aiMoveToPosition(const Coord3D *,CommandSourceType); void aiFaceObject(Object *,CommandSourceType); void aiIdle(CommandSourceType); };
 class Drawable {

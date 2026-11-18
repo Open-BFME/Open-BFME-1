@@ -2,10 +2,10 @@
 
 typedef bool Bool;
 
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 struct Coord3D;
 class PathfindCell;

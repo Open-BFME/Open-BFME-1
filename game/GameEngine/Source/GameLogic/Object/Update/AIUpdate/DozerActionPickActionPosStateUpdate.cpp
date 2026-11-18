@@ -13,11 +13,11 @@ typedef float Real;
 typedef int ObjectID;
 typedef int DozerTask;
 
-enum StateReturnType
-{
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 class Object;
 

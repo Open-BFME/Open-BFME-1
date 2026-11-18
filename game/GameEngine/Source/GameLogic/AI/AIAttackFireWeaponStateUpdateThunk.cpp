@@ -11,7 +11,7 @@
 #include "Lib/Coord3D.h"
 #include "command_source_type.h"
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum WeaponSlotType {};
 enum WeaponStatus { READY_TO_FIRE = 0, PRE_ATTACK = 4 };
 enum WhichTurretType {};

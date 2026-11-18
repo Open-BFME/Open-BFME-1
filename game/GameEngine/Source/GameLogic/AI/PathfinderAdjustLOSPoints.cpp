@@ -15,10 +15,10 @@ struct BfmePair1181
 	Int x, y;
 };
 
-enum PathfindLayerEnum
-{
-	LAYER_GROUND = 1
-};
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
+
+
+
 
 class Gen_003d6680
 {

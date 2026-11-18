@@ -2,7 +2,7 @@
 // readable body of ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ: game/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
-enum StateReturnType {};
+#include "../../../Include/Common/Enums/StateReturnType.h"
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIMoveToState
 {

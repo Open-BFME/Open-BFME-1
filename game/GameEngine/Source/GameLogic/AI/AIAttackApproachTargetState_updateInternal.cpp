@@ -11,7 +11,7 @@ inline Coord3D &Coord3D::operator=(const Coord3D &v) { x=v.x; y=v.y; z=v.z; retu
 inline Coord3D &Coord3D::operator+=(const Coord3DBase &v) {x+=v.x; y+=v.y; z+=v.z; return *this;}
 inline Coord3D &Coord3D::Scale(float s) {x*=s; y*=s; z*=s; return *this;}
 typedef bool Bool;
-enum StateReturnType { STATE_CONTINUE=0, STATE_SUCCESS=-1, STATE_FAILURE=-2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum WeaponSlotType {};
 class Object; class Weapon; class Player;
 class Rva001827C0Data { public: char pad00[0x24]; float rva24; bool rva28; };

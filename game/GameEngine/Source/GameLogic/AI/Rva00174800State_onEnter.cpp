@@ -16,11 +16,11 @@
 // Rva00174730State_update.cpp / Rva00174A20State_update.cpp establish the
 // AIInternalMoveToState machine/adjustDestinations layout reused here.
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
 
 // Local minimal Coord3D: normalize() declared, not defined, so the call links
 // against the already-matched ?normalize@Coord3D@@QAEXXZ (coord3d.cpp);

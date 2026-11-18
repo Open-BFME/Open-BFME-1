@@ -6,7 +6,7 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 
 #include "coord.h"
-enum StateReturnType { STATE_FAILURE=-2, STATE_SUCCESS=-1 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
 // AIAttackMeleeHordeApproachTargetState::onEnter, retail RVA 0x001834E0.
 // Identity proven by the constructor at 0x0017F610

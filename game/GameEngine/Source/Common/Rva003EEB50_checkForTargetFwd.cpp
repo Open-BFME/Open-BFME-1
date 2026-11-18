@@ -12,7 +12,7 @@ class Rva003EEB50;
 typedef int Int;
 typedef bool Bool;
 typedef unsigned char UByte;
-enum PathfindLayerEnum { LAYER_GROUND = 1 };
+#include "../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class Pathfinder
 {

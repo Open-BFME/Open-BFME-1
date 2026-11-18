@@ -27,12 +27,12 @@ struct Rva00172600AIVtable {
 	Rva00172600Slot117Fn slot117;
 };
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 // TU-local coordinate view. The retail bodies of Coord3D's default ctor,
 // copy ctor, dtor, Sub2D and GetLengthEstimate2D belong to

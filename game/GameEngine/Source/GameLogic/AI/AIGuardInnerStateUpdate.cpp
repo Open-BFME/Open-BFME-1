@@ -14,7 +14,7 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum StateExitType { EXIT_NORMAL = 0 };
 enum KindOfType { BFME_KINDOF_7 = 7 };
 enum WeaponSlotType { BFME_WEAPONSLOT_INVALID = -1 };

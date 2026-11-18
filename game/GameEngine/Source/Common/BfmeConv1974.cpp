@@ -21,7 +21,7 @@ __forceinline int bfmeKindOkESF(BfmeCESF *c);
 struct Coord3D;
 struct ICoord2D;
 class PathfindCell;
-enum PathfindLayerEnum { LAYER_INVALID = 0 };
+#include "../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class Pathfinder
 {

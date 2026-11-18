@@ -3,7 +3,7 @@
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
-enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 
 struct Coord3D {
     float x, y, z;

@@ -17,12 +17,12 @@ typedef int ObjectID;
 typedef UnsignedInt StateID;
 enum { BFME_AI_IDLE = 0 };
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 enum KindOfType { KINDOF_PROJECTILE = 25 };
 enum WeaponSetType { WEAPONSET_RAMPAGE = 8 };

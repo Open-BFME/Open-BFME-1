@@ -16,12 +16,12 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef int ObjectID;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 enum WeaponChoiceCriteria { PREFER_MOST_DAMAGE = 0 };
 #include "../../../command_source_type.h"

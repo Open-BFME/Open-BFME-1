@@ -7,12 +7,12 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 struct Coord3D
 {

@@ -105,12 +105,12 @@ class Drawable;
 class Player;
 class ThingTemplate;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 typedef UnsignedInt StateID;
 enum { INVALID_STATE_ID = 999999 };

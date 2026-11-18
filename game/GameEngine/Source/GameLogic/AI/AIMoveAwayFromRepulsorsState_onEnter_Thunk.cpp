@@ -3,10 +3,10 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-enum StateReturnType
-{
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

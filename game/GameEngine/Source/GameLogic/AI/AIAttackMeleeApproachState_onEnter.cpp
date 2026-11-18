@@ -21,7 +21,7 @@ inline Coord3D &Coord3D::Sub2D(const Coord3DBase &p) {x-=p.x; y-=p.y; return *th
 typedef unsigned char Byte;
 template<int N> struct Slots : Slots<N-1> { virtual void unused(char(*)[N])=0; };
 template<> struct Slots<0> {};
-enum StateReturnType { STATE_CONTINUE=0, STATE_SUCCESS=-1, STATE_FAILURE=-2 };
+#include "../../../Include/Common/Enums/StateReturnType.h"
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };
 enum WeaponSlotType;
 

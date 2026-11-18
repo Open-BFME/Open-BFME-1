@@ -11,10 +11,10 @@ typedef unsigned int UnsignedInt;
 
 
 
-enum StateReturnType
-{
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
 
 class Object;
 

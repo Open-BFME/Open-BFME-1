@@ -5,12 +5,12 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 class Rva001601E0HarvestRecord;
 class Rva001601E0Locomotor;
