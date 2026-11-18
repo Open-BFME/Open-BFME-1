@@ -5,9 +5,9 @@
 // targets/game/reverse/attempt_support/20261107-00740f60-setup-waypoint-path.md
 #include <math.h>
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "wwmath.h"
 #include "vector2.h"

@@ -3,9 +3,9 @@
 // BFME's Shell::showShellMap keeps the Zero Hour control flow, but uses the
 // BFME GlobalData and Shell layouts and drops the blank-window fallback.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 struct BfmeStringData
 {

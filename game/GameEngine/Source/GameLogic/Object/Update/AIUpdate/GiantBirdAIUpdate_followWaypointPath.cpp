@@ -25,9 +25,9 @@
 // That header cannot be included here: it spells Coord3D as a class, and the
 // pinned vector and setGoalPosition names are spelled with the struct.
 
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../command_source_type.h"
 

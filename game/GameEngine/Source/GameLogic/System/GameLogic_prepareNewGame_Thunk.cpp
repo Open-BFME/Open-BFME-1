@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // readable body of ?prepareNewGame@GameLogic@@QAEXHW4GameDifficulty@@H@Z: game/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum GameDifficulty
 {

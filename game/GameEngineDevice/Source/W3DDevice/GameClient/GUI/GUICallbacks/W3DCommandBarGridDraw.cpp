@@ -11,9 +11,9 @@
 // that brackets the Real-coordinate line slot (+0xB8) with +0xB0/+0xDC
 // (same shape as the landed ShellMenuScheme::draw).
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 class WinInstanceData;

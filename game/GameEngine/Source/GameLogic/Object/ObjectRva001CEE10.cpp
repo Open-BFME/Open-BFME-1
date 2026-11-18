@@ -18,9 +18,9 @@
 // set and re-registers the object with the pathfinder.  Members and the
 // TerrainLogic slot without witnessed names keep their offsets.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef Int ObjectID;
 #define NULL 0
 

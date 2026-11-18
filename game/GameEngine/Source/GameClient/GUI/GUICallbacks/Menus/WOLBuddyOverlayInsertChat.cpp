@@ -11,10 +11,10 @@
 #include "ascii_string.h"
 #include "unicode_string.h"
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+
+
 typedef int GPProfile;
 
 // Retail inlines the null-checked data pointer read at every str() site.

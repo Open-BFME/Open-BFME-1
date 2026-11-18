@@ -2,9 +2,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x0016BD60, 475 bytes. Vtable 0x0109A738 (ctor 0x0017F860) slot 17 holds its thunk 0x00431584.
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum CrushSquishTestType { TEST_CRUSH_ONLY, TEST_SQUISH_ONLY, TEST_CRUSH_OR_SQUISH };

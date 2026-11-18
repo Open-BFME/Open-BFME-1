@@ -3,9 +3,9 @@
 // The BFME layout puts the required upgrade at behavior+0x2C, the recipient
 // Object's BodyModule at +0x200, and its weapon-bonus bits at +0x2A0.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class UpgradeTemplate;
 

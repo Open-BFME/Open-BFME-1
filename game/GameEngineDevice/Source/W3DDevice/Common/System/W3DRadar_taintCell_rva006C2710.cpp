@@ -11,9 +11,9 @@
 // 128 and ElvenWoodColor above it.  The method name is not known, so it keeps
 // the address.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 typedef Int Color;
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

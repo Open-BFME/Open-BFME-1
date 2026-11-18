@@ -14,9 +14,9 @@ class Mouse;
 extern Display *TheDisplay;
 extern Mouse *TheMouse;
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 struct Rva006FC3F0Point
 {

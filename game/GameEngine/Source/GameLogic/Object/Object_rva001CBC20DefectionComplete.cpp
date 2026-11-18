@@ -6,9 +6,9 @@
 // intentional: the vtable lookup proves this body is Object's slot 18, while
 // the body proves the BFME defection-completion state transition.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>

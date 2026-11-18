@@ -22,10 +22,10 @@
 // layout are the retail operands/layout, rather than the generic placeholders
 // in the banked probe.
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 typedef unsigned int WindowMsgData;
-typedef int Int;
-typedef bool Bool;
+
+
 
 #include "../../../../Include/Common/Enums/WindowMsgHandledType.h"
 

@@ -18,10 +18,10 @@
 #include <bitset>
 #include <math.h>
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef int ObjectID;
-typedef float Real;
-typedef bool Bool;
+
+
 enum DamageType { };
 #include "../../../Include/Common/Enums/DeathType.h"
 

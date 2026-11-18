@@ -24,10 +24,10 @@
 // provable name; they are declared with address-derived names and evidence
 // left here rather than invented ZH identifiers.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

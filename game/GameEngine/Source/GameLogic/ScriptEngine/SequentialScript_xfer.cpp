@@ -4,9 +4,9 @@
 // early-out, stores two name strings on the object, and resolves the script
 // through TheScriptEngine vcall +0xD4.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int ObjectID;
 
 struct XferVersion

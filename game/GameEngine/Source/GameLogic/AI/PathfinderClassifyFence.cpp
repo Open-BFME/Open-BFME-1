@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #define PATHFIND_CELL_SIZE_F 10.0f
 

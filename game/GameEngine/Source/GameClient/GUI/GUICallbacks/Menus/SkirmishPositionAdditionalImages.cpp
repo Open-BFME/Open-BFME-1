@@ -4,9 +4,9 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 struct Coord3DBase
 {

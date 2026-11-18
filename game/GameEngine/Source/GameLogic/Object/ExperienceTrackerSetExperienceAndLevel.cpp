@@ -6,9 +6,9 @@
 // into the retail sink loop, followed by BFME's level-system update and
 // scalar-table refresh.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Xfer;
 class AsciiString;

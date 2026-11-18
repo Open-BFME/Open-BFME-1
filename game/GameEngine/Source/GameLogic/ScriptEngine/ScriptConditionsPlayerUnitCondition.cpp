@@ -7,10 +7,10 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+
+
 
 class Parameter
 {

@@ -2,9 +2,9 @@
 // Height and smoothed normal from the BFME unsigned-word heightmap.
 // cl: /O2 /Ob1 /Oy /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Include /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Iinputs/reference/shims/sweep
 
-typedef float Real;
-typedef int Int;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 #include "coord3d.h"
 #include "vector3.h"

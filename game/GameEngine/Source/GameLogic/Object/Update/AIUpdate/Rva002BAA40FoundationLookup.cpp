@@ -3,9 +3,9 @@
 // stlport
 #include <bitset>
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include <Lib/Coord3D.h>
 

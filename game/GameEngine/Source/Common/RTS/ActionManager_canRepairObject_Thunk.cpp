@@ -2,9 +2,9 @@
 // Retail identity comes from the ActionManager callers and the helper ILTs.
 // The local views preserve the BFME object offsets and virtual call slots.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

@@ -8,9 +8,9 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Player;
 class Drawable

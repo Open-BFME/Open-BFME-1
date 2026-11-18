@@ -13,9 +13,9 @@
 #include <math.h>
 #include "coord2d.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
+
 
 class GameWindow
 {

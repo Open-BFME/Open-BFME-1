@@ -2,9 +2,9 @@
 // CastleBehavior's pack/unpack state transition and retail CRC trace.
 #pragma optimize("a", on)
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 extern const char g_bfmeEmptyAscii[];
 

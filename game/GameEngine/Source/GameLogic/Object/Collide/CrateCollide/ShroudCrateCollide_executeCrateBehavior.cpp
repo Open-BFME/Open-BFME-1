@@ -2,9 +2,9 @@
 // Zero Hour's ShroudCrateCollide behavior adapted to BFME's object and audio
 // ABI. This TU models only the slices used by the retail body.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/Common/ObjectID.h"
 

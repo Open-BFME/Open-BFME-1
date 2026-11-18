@@ -4,9 +4,9 @@
 // this TU keeps the address in its class name until the generated claim is
 // replaced by the proven body.
 
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 struct XferVersion

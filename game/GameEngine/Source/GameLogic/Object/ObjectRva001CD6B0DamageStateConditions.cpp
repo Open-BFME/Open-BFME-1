@@ -5,9 +5,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 template <size_t NUMBITS>
 class BitFlags

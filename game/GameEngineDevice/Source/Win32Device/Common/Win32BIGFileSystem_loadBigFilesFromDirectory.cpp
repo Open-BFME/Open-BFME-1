@@ -14,9 +14,9 @@ public:
 	virtual ~ArchiveFile();
 };
 
-typedef char Char;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 #define TRUE 1
 #define FALSE 0
 

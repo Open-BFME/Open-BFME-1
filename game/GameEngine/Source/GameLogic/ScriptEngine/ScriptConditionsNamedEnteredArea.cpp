@@ -9,9 +9,9 @@
 // the matching BFME source-level test: getUnitNamed, reject inert units,
 // resolve the qualified trigger area, then ask Object::didEnter.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

@@ -13,9 +13,9 @@
 // the listener through a pointer (retail's EDI) in its own block, which also
 // lets it share the offset's frame slot.
 
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern "C" double sqrt(double);
 #pragma intrinsic(sqrt)

@@ -10,9 +10,9 @@
 // the 12-byte block at Object+0x90 or its stealthed-and-undetected state
 // changed since the last pass, and remembers the new values.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

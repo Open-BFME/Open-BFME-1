@@ -2,9 +2,9 @@
 // ground and bridge layers in its transition scan, then shortcuts passable
 // segments and removes very short optimized middle nodes.
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum PathfindLayerEnum
 {

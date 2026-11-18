@@ -13,9 +13,9 @@
 //     (retail "add esi,0x38", no dereference) -- instead of
 //     setObjectID(other->getID()) which loads a scalar field by value
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 

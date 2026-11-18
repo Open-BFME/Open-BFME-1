@@ -7,9 +7,9 @@
 // its five stack words are position, angle bits, geometry, position, angle bits.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 typedef int ObjectID;
 
 // The zero range BFME compares against is the pooled float at retail

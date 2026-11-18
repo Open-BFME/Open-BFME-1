@@ -16,9 +16,9 @@
 // call. The landed callee declares the same two stack slots as (Int, Int), so
 // the copy is passed through a member pointer of that signature.
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

@@ -2,9 +2,9 @@
 // Open-BFME5: WeaponSet::updateWeaponSet, retail 0x001EBBC0 size 379; BFME walks 4 slots,
 // re-looks each template up by name key, drops locks via TheGameLogic and stores the owner id at +0x34.
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 

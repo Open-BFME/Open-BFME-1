@@ -10,9 +10,9 @@
 // Quarter factor is a witnessed data read at01083B6C; keeping it separate
 // from literal0.75 avoids folding the two retail floating-point operations.
 // cl: /DNDEBUG /MD /EHsc
-typedef float Real;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 class DamageInfo;
 
 #define g_rva01075350 0.0f

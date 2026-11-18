@@ -15,9 +15,9 @@
 
 #include "StringInline.h"
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum ModelConditionFlagType
 {

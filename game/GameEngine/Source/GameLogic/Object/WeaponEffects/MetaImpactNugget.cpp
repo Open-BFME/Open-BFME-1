@@ -7,10 +7,10 @@
 // F:\bfme\Code\gameengine\Source\GameLogic\Object\WeaponEffects\MetaImpactNugget.cpp
 // to GetGameLogicRandomValueReal.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum KindOfType
 {

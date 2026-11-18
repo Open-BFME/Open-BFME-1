@@ -1,10 +1,10 @@
 // ?update@AIGuardOuterState@@UAE?AW4StateReturnType@@XZ
 // Open-BFME: clean reconstruction of retail 0x0015E2F0.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
-typedef float Real;
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

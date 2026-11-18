@@ -3,9 +3,9 @@
 // retail ILT at 0x000227B9. The adjacent validation slot reaches the canonical
 // CrateCollide::isValidToExecute body.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/Common/ObjectID.h"
 

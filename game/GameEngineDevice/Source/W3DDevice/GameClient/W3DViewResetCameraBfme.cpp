@@ -2,9 +2,9 @@
 //
 // BFME W3DView::resetCamera, retail 0x00743640.
 
-typedef float Real;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 extern Int TheW3DFrameLengthInMsec;
 
