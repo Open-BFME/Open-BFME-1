@@ -22,9 +22,9 @@
 // mode value's high bits sitting in eax. Both other exits agree -- mov al,1
 // and xor al,al. So the row goes in as @@YAEXZ.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned char BfmeByteBool;			// see the note above
-typedef int Int;
+
 
 // The global at 0x012ED748 is retail's ThePlayerList, so the reference is
 // spelled with its defining name ?ThePlayerList@@3PAVPlayerList@@A. The

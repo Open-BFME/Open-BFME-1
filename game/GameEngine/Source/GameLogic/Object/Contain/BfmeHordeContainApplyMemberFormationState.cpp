@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: HordeContain member formation-pose transition, retail 0x0023D910.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #define BFME_SLOT( N ) virtual int bfmeSlot##N( void ) = 0
 

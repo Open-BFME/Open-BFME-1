@@ -4,8 +4,8 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

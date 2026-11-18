@@ -15,8 +15,8 @@
 // layout) is the value diffed between the owner and the new member. The
 // public method name is not proven, so it stays address-qualified.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

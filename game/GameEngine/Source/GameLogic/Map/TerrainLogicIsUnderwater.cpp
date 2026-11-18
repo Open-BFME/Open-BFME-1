@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // readable body of ?isUnderwater@TerrainLogic@@UAE_NMMPAM0@Z: game/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct Coord3D;
 class WaterHandle {};

@@ -4,8 +4,8 @@
 // 165 bytes. The map rebuilds its key records from INI data, so retail rejects
 // load transfers and writes the selected key names only while saving.
 
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AsciiString;
 

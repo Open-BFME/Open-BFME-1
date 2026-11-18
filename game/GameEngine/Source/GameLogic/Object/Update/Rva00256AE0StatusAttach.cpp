@@ -14,8 +14,8 @@
 // forward-declares Object, so it adds no second definition of this TU's class.
 #include "../../../Common/Thing/GameLogicObjectLookup.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 template <int NUMBITS>
 class BitFlags

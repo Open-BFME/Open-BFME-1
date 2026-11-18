@@ -8,8 +8,8 @@
 // +0x1c and +0x20.  The retail names in its diagnostics identify the latter
 // pair as m_cullTrackingMax and m_cullTrackingMin.
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
 class INI

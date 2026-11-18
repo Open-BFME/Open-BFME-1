@@ -21,9 +21,9 @@
 // data says the update module starts the attack.  finishSpecialPower is that
 // upstream triggerSpecialPower.
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object;
 class Coord3D;

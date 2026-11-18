@@ -12,8 +12,8 @@
 // independent twin TU (not editing the landed DozerAIUpdate.cpp) using the
 // same BfmeDozer* shape classes as the two sibling functions.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 class State;

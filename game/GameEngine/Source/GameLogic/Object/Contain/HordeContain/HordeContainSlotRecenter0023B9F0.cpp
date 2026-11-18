@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Recenter the slot positions around a selected slot or their mean.
 // Evidence: targets/game/reverse/identity_evidence/0023b9f0-recenter.md
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 

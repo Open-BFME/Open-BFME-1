@@ -22,8 +22,8 @@
 //
 ///////////////////////////////////////////////////////////////////////////////
 
-typedef float Real;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 // Scaled through the DIR32 site at 0x01075c74, which the byte comparison masks,
 // so the literal only has to be a float.

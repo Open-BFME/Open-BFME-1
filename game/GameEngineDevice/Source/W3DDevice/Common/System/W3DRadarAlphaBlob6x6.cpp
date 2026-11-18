@@ -10,9 +10,9 @@
 // guard is only live after Lock returns, so Lock runs inside its ctor.
 // 0x006C2DD0 is the radius-2 sibling (2x2 table at VA 0x0111D854).
 
-typedef int Int;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef int Color;
-typedef unsigned char UnsignedByte;
+
 
 #include <algorithm>
 

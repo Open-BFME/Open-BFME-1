@@ -5,8 +5,8 @@
 // pair; otherwise ENEMIES-only relationship, current weapon accepts, vcall
 // +0x68, then the same AI query/set on this.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum Relationship
 {

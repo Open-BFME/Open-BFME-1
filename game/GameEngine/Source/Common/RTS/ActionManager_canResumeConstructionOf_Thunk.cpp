@@ -16,8 +16,8 @@
 // The third parameter is never read; retail still pops it, which is how the
 // three-argument name and `ret 0xC` agree.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 enum KindOfType
 {

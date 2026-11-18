@@ -16,8 +16,8 @@
 // Overridable::getFinalOverride unrolls one link before calling the out-of-line
 // copy (0x00087A80 via ILT 0x000022BB), exactly as retail does.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../Include/Common/Enums/LocomotorSetType.h"
 

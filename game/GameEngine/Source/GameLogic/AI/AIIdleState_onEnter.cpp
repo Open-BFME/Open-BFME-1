@@ -4,8 +4,8 @@
 // Native OVERRIDE accessor preserves the base template when no override exists.
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 #include "../../../Include/Common/Enums/StateReturnType.h"
 
 class AIUpdateInterface

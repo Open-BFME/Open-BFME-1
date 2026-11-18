@@ -4,8 +4,8 @@
 #include <bitset>
 #include <list>
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Drawable;
 class PickAndPlayInfo;

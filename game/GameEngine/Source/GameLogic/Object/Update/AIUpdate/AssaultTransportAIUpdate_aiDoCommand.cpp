@@ -8,8 +8,8 @@
 // local layout consequently makes the derived transport fields appear at the
 // retail offsets used by the body.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 class Object;

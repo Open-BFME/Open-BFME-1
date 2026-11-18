@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int StateID;
 
 enum

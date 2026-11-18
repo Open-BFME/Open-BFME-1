@@ -3,8 +3,8 @@
 // requested flag, follows the Object template override chain, tests the bridge
 // kind bit, and propagates the flag to each of four bridge towers.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 typedef int ObjectID;
 
 class Object;

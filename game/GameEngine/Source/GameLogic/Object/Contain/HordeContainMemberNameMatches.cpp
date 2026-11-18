@@ -18,8 +18,8 @@
 // map lookup needs lives in the incoming member parameter's own stack slot,
 // which is free because the parameter has already been consumed.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

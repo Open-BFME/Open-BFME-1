@@ -7,8 +7,8 @@
 // builds the current player/object mask itself, after running the neighboring
 // per-class removal hook, and sends that mask through attemptUpgrade.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

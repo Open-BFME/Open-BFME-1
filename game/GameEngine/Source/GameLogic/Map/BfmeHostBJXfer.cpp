@@ -1,8 +1,8 @@
 // BFME 0x00192900: Xfer transfer for the snapshot array.
 // The frame mirror is deliberately TU-local.  Its first int is the count
 // slot and its XferVersion follows at +4, matching the retail stack reuse.
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 struct XferVersion
 {

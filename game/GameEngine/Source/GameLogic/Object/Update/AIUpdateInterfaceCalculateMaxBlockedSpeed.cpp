@@ -7,8 +7,8 @@
 // Reading getObject() inside a member helper (not passing it in) gives retail's
 // EAX; reading ourDir through volatile lvalues in the second dot makes retail
 // load ourDir and multiply by vectorToOther. See attempt_support handoff.
-typedef float Real;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

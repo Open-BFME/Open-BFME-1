@@ -6,8 +6,8 @@
 
 #include "../../../Common/System/xfer.h"
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 struct XferVersionView : Xfer::Version
 {

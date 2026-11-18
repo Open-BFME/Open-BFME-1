@@ -14,8 +14,8 @@
 // constructor: that keeps both coordinates on the x87 stack (popped dead at
 // the end) the way retail does; plain locals or a Coord2D copy do not.
 // cl: /DNDEBUG /MD /O2 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

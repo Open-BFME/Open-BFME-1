@@ -10,8 +10,8 @@
 // +0x3c.  BfmeV1112 is the already byte-matched data-bearing ScoreKeeper map
 // view whose 0x000EA260 body is reached by retail ILT 0x00013485.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include <stl/_config.h>
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG

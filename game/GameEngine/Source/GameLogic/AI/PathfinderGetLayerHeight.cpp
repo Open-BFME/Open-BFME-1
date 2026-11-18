@@ -3,8 +3,8 @@
 // Identity is established by the matched W3DTerrainLogic::getLayerHeight
 // caller at 0x006BE2A0 through ILT 0x00029F3C.
 
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

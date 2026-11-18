@@ -7,8 +7,8 @@
 // immutable.
 
 typedef unsigned short WideChar;
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef int Color;
 
 template <typename T> struct StringInlineData

@@ -1,8 +1,8 @@
 // cl: /EHsc-
 // Open-BFME: SiegeEngineContain::isValidContainerFor, retail 0x0022BF30.
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 class Player;
 

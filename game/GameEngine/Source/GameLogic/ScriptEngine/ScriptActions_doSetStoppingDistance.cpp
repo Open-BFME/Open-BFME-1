@@ -2,8 +2,8 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object;
 

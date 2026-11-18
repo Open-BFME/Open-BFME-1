@@ -8,9 +8,9 @@
 
 #include "StringInline.h"
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
 typedef unsigned short WideChar;
-typedef bool Bool;
+
 
 inline const unsigned short *UnicodeString::str() const
 {

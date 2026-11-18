@@ -2,8 +2,8 @@
 // predicate.  Its first lookup and override walk are shared with the adjacent
 // getSpecialObjectMax/apply bodies.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
 enum KindOfType { KINDOF_6 = 6 };

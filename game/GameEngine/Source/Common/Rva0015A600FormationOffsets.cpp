@@ -2,8 +2,8 @@
 // Formation coordinate assignment for the address-derived fixed bucket.
 // cl: 
 
-typedef float Real;
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

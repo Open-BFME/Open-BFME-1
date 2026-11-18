@@ -9,8 +9,8 @@
 // that vftable is this body.  The base is AIFollowPathState -- slot 6 of the
 // base vftable at 0x00C9A9F0 is ?update@AIFollowPathState@@.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../Include/Common/Enums/StateExitType.h"
 

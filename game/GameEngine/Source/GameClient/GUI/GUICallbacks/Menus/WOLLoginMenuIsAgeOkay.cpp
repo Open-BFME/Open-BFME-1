@@ -10,8 +10,8 @@
 // (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
 extern const char g_bfmeEmptyAscii[];
 
-typedef bool Bool;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

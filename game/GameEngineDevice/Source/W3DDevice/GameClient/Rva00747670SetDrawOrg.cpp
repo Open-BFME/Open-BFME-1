@@ -13,8 +13,8 @@
 // the ZH source collapse to a single outer "if (TheWritableGlobalData)" in
 // retail, guarding both the stretch-terrain and draw-entire-terrain checks.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
 
 enum
 {

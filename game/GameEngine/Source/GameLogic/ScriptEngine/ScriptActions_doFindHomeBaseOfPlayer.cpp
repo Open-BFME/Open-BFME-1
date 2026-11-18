@@ -3,8 +3,8 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class Object
 {

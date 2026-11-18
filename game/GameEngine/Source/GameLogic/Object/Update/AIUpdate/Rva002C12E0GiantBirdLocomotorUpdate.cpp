@@ -2,9 +2,9 @@
 // Retail 0x002C12E0 (322 B, thiscall, returns int): GiantBirdAIUpdate vtable 0x010C7F40 slot 133 (+0x214) reaches it through ILT 0x0002A31F.
 // Picks a locomotor, runs the goal-type 1/2/3 locomotor update unless dead without the template flag, then sets or clears status bit 6 by airborne height.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

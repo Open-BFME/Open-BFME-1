@@ -4,8 +4,8 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
 typedef UnsignedInt TeamID;
 
 enum { TEAM_ID_INVALID = 0 };

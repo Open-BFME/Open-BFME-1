@@ -18,8 +18,8 @@
 // pinned in targets/game/reverse/symbols.csv at its ILT 0x0003DAA5, body 0x0026EC30 in
 // game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceHelpers.cpp.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 class AIUpdateInterface
 {

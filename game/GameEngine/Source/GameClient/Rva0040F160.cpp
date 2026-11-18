@@ -5,8 +5,8 @@ typedef unsigned short wchar_t;
 // here are grounded by GameWindowTransitionsStyles.cpp and SuperweaponInfo.cpp.
 #include "../../../../inputs/reference/shims/stringbaseunicode/Common/UnicodeString.h"
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 class GameFont;
 class DisplayString
