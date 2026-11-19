@@ -1,6 +1,6 @@
 // cl: /O2 /Ob1
 
-enum GameDifficulty {};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
 
 // retail ILT 0x0001AB54 -> 0x0045B5C0 is the matched AIPlayer::setAIDifficulty
 // row and ILT 0x000312A0 -> 0x007423B0 the matched private

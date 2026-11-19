@@ -39,25 +39,25 @@ public:
 	static void Draw_Strip(unsigned short start_index, unsigned short polygon_count, unsigned short min_vertex_index, unsigned short vertex_count);
 };
 
-enum waveType
-{
-	WaveTypeFirst,
-	WaveTypePond=WaveTypeFirst,
-	WaveTypeOcean,
-	WaveTypeCloseOcean,
-	WaveTypeCloseOceanDouble,
-	WaveTypeRadial,
-	WaveTypeLast = WaveTypeRadial,
-	WaveTypeStationary,
-	WaveTypeMax,
-};
+#include "../../../../../GameEngine/Include/Common/Enums/waveType.h"
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED,
-};
+
+
+
+
+
+
+
+
+
+
+
+#include "../../../../../GameEngine/Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 class PartitionManager
 {

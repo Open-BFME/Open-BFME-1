@@ -52,10 +52,10 @@ struct BfmePlayerList
 	Player *m_localPlayer;
 };
 
-enum EvaMessage
-{
-	EVA_GENERAL_LEVEL_UP = 4
-};
+#include "../../../Include/Common/Enums/EvaMessage.h"
+
+
+
 
 class Eva
 {

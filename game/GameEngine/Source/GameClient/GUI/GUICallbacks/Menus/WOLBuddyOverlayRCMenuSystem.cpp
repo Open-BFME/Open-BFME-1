@@ -21,8 +21,8 @@ typedef unsigned WindowMsgData;
 typedef int GPProfile;
 #include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 enum { GWM_CREATE = 1, GWM_DESTROY = 2, GGM_CLOSE = 0x4005, GBM_SELECTED = 0x4008 };
-enum RCItemType { ITEM_BUDDY, ITEM_REQUEST, ITEM_NONBUDDY, ITEM_NONE };
-enum GSOverlayType { GSOVERLAY_PLAYERINFO };
+#include "../../../../../Include/Common/Enums/RCItemType.h"
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
 class WindowLayout {
   public:
     virtual void slot0();

@@ -33,12 +33,12 @@ public:
 
 extern UpgradeCenter *TheUpgradeCenter;
 
-enum UpgradeStatusType
-{
-	UPGRADE_STATUS_INVALID,
-	UPGRADE_STATUS_IN_PRODUCTION,
-	UPGRADE_STATUS_COMPLETE
-};
+#include "../../../Include/Common/Enums/UpgradeStatusType.h"
+
+
+
+
+
 
 class Player
 {

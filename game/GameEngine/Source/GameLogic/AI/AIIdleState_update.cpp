@@ -14,20 +14,20 @@
 
 
 
-enum StateID
-{
-	AI_IDLE_MOVE = 0x28
-};
+#include "../../../Include/Common/Enums/StateID.h"
+
+
+
 
 enum WeaponSlotType
 {
 	WEAPON_SLOT_CURRENT = 0
 };
 
-enum KindOfType
-{
-	KINDOF_CAN_BE_REPULSED = 0x2D
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../command_source_type.h"
 

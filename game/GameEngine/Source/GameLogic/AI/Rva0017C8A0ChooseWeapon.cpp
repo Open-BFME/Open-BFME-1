@@ -18,10 +18,10 @@ enum MoodMatrixAction
 	MM_ACTION_ATTACK = 2
 };
 
-enum WeaponChoiceCriteria
-{
-	PREFER_MOST_DAMAGE = 0
-};
+#include "../../../Include/Common/Enums/WeaponChoiceCriteria.h"
+
+
+
 
 #include "../command_source_type.h"
 

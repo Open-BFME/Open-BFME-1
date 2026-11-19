@@ -26,15 +26,15 @@
 
 #include "../../command_source_type.h"
 
-enum KindOfType { KINDOF_PROJECTILE = 25 };
+#include "../../../../Include/Common/Enums/KindOfType.h"
 
 enum { MAX_COMMANDS_PER_SET = 20 };
 
-enum GUICommandType
-{
-	GUI_COMMAND_NONE = 0,
-	GUI_COMMAND_STOP = 13
-};
+#include "../../../../Include/Common/Enums/GUICommandType.h"
+
+
+
+
 
 class AsciiString;
 

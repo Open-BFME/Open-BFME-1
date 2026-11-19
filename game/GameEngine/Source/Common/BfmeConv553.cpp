@@ -20,9 +20,9 @@ extern GameClient *TheGameClient;
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
 
-// ILT 0x0002CA61 reaches this dump at 0x001CABE0: ECX is the only
-// argument, and EAX holds the result. A one-argument fastcall has that ABI.
-extern void d_001cabe0();
+// ILT 0x0002CA61 reaches the matched member at 0x001CABE0: ECX is the only
+// argument, and EAX holds the result. Use its existing zero-stack-argument thiscall declaration.
+#include "../../Include/GameLogic/BfmeSubBIC.h"
 // ILT 0x0004067E reaches the one-stack-word thiscall body at 0x0041A2E0.
 extern void d_0041a2e0();
 
@@ -176,7 +176,7 @@ void BfmeThingBXF::bfmeOnceBXF()
 	if (!((Object *)hold)->isLocallyControlled())
 		return;
 
-	int value = ((int (__fastcall *)(BfmeHold1004 *))d_001cabe0)(hold);
+	int value = reinterpret_cast<BfmeSubBIC *>(hold)->rva001CABE0();
 
 	BfmeModuleBXF *module = m_bfmeModules[0];
 	if (module)

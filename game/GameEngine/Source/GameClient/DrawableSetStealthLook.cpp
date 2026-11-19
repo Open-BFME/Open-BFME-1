@@ -18,15 +18,15 @@
 
 
 
-enum StealthLookType
-{
-	STEALTHLOOK_NONE,
-	STEALTHLOOK_VISIBLE_FRIENDLY,
-	STEALTHLOOK_DISGUISED_ENEMY,
-	STEALTHLOOK_VISIBLE_DETECTED,
-	STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED,
-	STEALTHLOOK_INVISIBLE
-};
+#include "../../Include/Common/Enums/StealthLookType.h"
+
+
+
+
+
+
+
+
 
 extern Real GetGameClientRandomValueReal(Real low, Real high, char *file,
 	Int line);

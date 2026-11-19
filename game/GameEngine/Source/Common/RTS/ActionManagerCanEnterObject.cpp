@@ -17,25 +17,25 @@
 #include "../../GameLogic/command_source_type.h"
 
 // Zero Hour's CanEnterType (Common/ActionManager.h).
-enum CanEnterType
-{
-	CHECK_CAPACITY,
-	DONT_CHECK_CAPACITY,
-	COMBATDROP_INTO
-};
+#include "../../../Include/Common/Enums/CanEnterType.h"
+
+
+
+
+
 
 // KindOf bit numbers, named by the retail KindOf name table at 0x012AA068.
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2,
-	KINDOF_STRUCTURE = 7,
-	KINDOF_INFANTRY = 8,
-	KINDOF_DOZER = 14,
-	KINDOF_HARVESTER = 16,
-	KINDOF_MOB_NEXUS = 46,
-	KINDOF_IGNORED_IN_GUI = 47,
-	KINDOF_NO_FREEWILL_ENTER = 111
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
+
+
+
+
 
 // ObjectStatus bit numbers, named by the retail status name table at 0x012A6670.
 enum ObjectStatusTypes
@@ -52,12 +52,12 @@ enum DisabledType
 };
 
 // Zero Hour's Relationship (Common/GameCommon.h).
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 enum ObjectShroudStatus
 {

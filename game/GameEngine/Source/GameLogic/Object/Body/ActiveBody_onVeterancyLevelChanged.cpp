@@ -23,13 +23,13 @@
 
 #include "../../../../Include/Common/ObjectID.h"
 
-enum VeterancyLevel
-{
-	LEVEL_REGULAR,
-	LEVEL_VETERAN,
-	LEVEL_ELITE,
-	LEVEL_HEROIC,
-};
+#include "../../../../Include/Common/Enums/VeterancyLevel.h"
+
+
+
+
+
+
 
 #include "../../../../Include/Common/Enums/ArmorSetType.h"
 
@@ -38,11 +38,11 @@ enum VeterancyLevel
 
 
 
-enum MaxHealthChangeType
-{
-	SAME_CURRENTHEALTH,
-	PRESERVE_RATIO,
-};
+#include "../../../../Include/Common/Enums/MaxHealthChangeType.h"
+
+
+
+
 
 enum
 {

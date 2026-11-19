@@ -5,10 +5,10 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum EmotionType
-{
-	EMOTION_INVALID = -1
-};
+#include "../../../Include/Common/Enums/EmotionType.h"
+
+
+
 
 class ScriptActions;
 class Drawable;

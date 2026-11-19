@@ -29,10 +29,10 @@
 
 
 
-enum ChipsetType
-{
-	DC_UNKNOWN = 0
-};
+#include "../../Include/Common/Enums/ChipsetType.h"
+
+
+
 
 #include "../../Include/Common/Enums/CpuType.h"
 

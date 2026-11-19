@@ -15,7 +15,7 @@
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum WeaponStatus { READY_TO_FIRE = 0, PRE_ATTACK = 4 };
 enum WhichTurretType {};
-enum KindOfType {};
+#include "../../../Include/Common/Enums/KindOfType.h"
 class Player;
 class Object;
 class BfmeD1054;
@@ -257,7 +257,7 @@ class PartitionFilterSameMapStatus : public PartitionFilter {
 // parameter order. ilt_oracle confirms Zero Hour's exact constructor decoration at
 // 0x00149E60, but the ledger already gives that name to 0x004C12B0 (where the oracle
 // contradicts it), so the class stays address-named until that row is corrected.
-enum AbleToAttackType { ATTACK_NEW_TARGET = 0 };
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
 class Rva00149E60 : public PartitionFilter {
   public:
     const Object *m_obj;

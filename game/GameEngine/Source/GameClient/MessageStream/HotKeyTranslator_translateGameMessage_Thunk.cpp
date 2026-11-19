@@ -34,11 +34,11 @@ private:
     Int m_type;
 };
 
-enum GameMessageDisposition
-{
-    KEEP_MESSAGE,
-    DESTROY_MESSAGE
-};
+#include "../../../Include/Common/Enums/GameMessageDisposition.h"
+
+
+
+
 
 class Keyboard
 {

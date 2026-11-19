@@ -8,10 +8,10 @@ class Object;
 class Player;
 class BattlePlanBonuses;
 
-enum BattlePlanStatus
-{
-	PLANSTATUS_NONE = 0
-};
+#include "../../../../Include/Common/Enums/BattlePlanStatus.h"
+
+
+
 
 class GameLogic
 {

@@ -6,7 +6,7 @@ void __cdecl operator delete[](void *);
 
 typedef int GHTTPRequest;
 typedef int GHTTPResult;
-enum GHTTPBool { GHTTPFalse = 0, GHTTPTrue = 1 };
+#include "../../../Include/Common/Enums/GHTTPBool.h"
 extern int timeThroughOnline;
 extern int checksLeftBeforeOnline;
 extern char *MOTDBuffer;

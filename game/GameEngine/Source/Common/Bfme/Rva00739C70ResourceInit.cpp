@@ -12,7 +12,7 @@ public:
 
 #include "ww3dformat.h"
 static const WW3DFormat WW3D_FORMAT_UNKNOWN_0073A050 = WW3D_FORMAT_UNKNOWN;
-enum _D3DPOOL { D3DPOOL_DEFAULT_0073A050 };
+#include "../../../Include/Common/Enums/_D3DPOOL.h"
 
 // The shared SurfaceClass is 16 bytes with its resource pointer at +8.
 // Retail owns one pointer at +0, so this TU uses its four-byte value view.

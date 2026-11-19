@@ -18,15 +18,15 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char Byte;
 
 #include "../../../../Include/Common/ObjectID.h"
-enum KindOfType
-{
-	KINDOF_BRIDGE = 22,
-	KINDOF_BRIDGE_TOWER = 24
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 #include "../../../../Include/Common/Enums/DeathType.h"
-enum BodyDamageType { BODY_RUBBLE = 3 };
-enum BridgeTowerType { BRIDGE_TOWER_0, BRIDGE_TOWER_1, BRIDGE_TOWER_2, BRIDGE_TOWER_3 };
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
+#include "../../../../Include/Common/Enums/BridgeTowerType.h"
 
 class DamageInfo;
 class BodyModuleInterface;

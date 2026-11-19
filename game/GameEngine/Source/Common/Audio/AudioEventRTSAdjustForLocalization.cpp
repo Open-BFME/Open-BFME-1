@@ -4,10 +4,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum AudioType
-{
-	AT_Music = 0
-};
+#include "../../../Include/Common/Enums/AudioType.h"
+
+
+
 
 struct StringHeader
 {

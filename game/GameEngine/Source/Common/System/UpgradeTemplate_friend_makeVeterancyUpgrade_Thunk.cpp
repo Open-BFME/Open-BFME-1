@@ -18,16 +18,16 @@
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-enum VeterancyLevel
-{
-	LEVEL_REGULAR = 0
-};
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 
-enum UpgradeType
-{
-	UPGRADE_TYPE_PLAYER = 0,
-	UPGRADE_TYPE_OBJECT = 1
-};
+
+
+
+#include "../../../Include/Common/Enums/UpgradeType.h"
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

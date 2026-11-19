@@ -39,10 +39,10 @@ enum WeaponSlotType
 	WEAPONSLOT_COUNT = 4	// BFME 1 count, as W3DModelDrawWeaponBarrelValidation0076F9E0.cpp
 };
 
-enum WeaponSetConditionType
-{
-	WSF_INVALID = -1
-};
+#include "../../../Include/Common/Enums/WeaponSetConditionType.h"
+
+
+
 
 typedef unsigned char Byte;
 

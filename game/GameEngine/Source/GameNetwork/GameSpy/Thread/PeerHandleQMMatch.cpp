@@ -22,11 +22,11 @@ typedef void *PEER;
 
 static const Int MAX_SLOTS = 8;
 
-enum MessageType
-{
-	NormalMessage,
-	ActionMessage
-};
+#include "../../../../Include/Common/Enums/MessageType.h"
+
+
+
+
 
 #include "../../../../Include/Common/Enums/QMStatus.h"
 

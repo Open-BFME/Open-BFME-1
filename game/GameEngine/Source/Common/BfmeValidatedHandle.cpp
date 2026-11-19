@@ -1,7 +1,7 @@
 // Open-BFME5 conversion for the validated handle setter at 0x0073B5F0.
 
-enum FilterTypes {};
-enum FilterModes {};
+#include "../../Include/Common/Enums/FilterTypes.h"
+#include "../../Include/Common/Enums/FilterModes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DShaderManager

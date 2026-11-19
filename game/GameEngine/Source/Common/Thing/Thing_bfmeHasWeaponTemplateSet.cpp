@@ -2,10 +2,10 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum WeaponSetType
-{
-	WEAPONSET_INVALID = 0
-};
+#include "../../../Include/Common/Enums/WeaponSetType.h"
+
+
+
 
 class WeaponTemplateSet;
 

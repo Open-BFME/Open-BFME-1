@@ -40,7 +40,7 @@ class Object;
 class Waypoint;
 class PolygonTrigger;
 
-enum GuardMode { BFME_GUARD_MODE_NORMAL };
+#include "../../../Include/Common/Enums/GuardMode.h"
 
 #include "../command_source_type.h"
 
@@ -50,13 +50,13 @@ enum GuardMode { BFME_GUARD_MODE_NORMAL };
 
 
 #include "../../../Include/Common/NameKeyType.h"
-enum IterOrderType
-{
-	ITER_FASTEST = 0,
-	ITER_SORTED_NEAR_TO_FAR = 1,
-	ITER_SORTED_FAR_TO_NEAR = 2
-};
-enum KindOfType { KINDOF_IMMOBILE = 2, KINDOF_STRUCTURE = 7, KINDOF_AIRCRAFT = 12 };
+#include "../../../Include/Common/Enums/IterOrderType.h"
+
+
+
+
+
+#include "../../../Include/Common/Enums/KindOfType.h"
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 extern const float g_01076C24;

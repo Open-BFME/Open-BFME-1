@@ -4,7 +4,7 @@
 
 #include "../../Include/Common/ObjectID.h"
 #include "../../Include/Common/DrawableID.h"
-enum LivingWorldID { INVALID_LIVING_WORLD_ID = 0 };
+#include "../../Include/Common/Enums/LivingWorldID.h"
 
 struct Coord3D { unsigned int x, y, z; };
 

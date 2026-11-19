@@ -45,7 +45,7 @@ public:
 };
 
 #define OBJECT_TU_MEMBERS public: Module *findModule(NameKeyType key) const;
-#include "../../../../game/GameEngine/Source/GameLogic/Object/object.h"
+#include "object.h"
 
 class Team
 {
@@ -114,21 +114,7 @@ public:
 	virtual const Player *getApparentPlayer(const Player *localPlayer) const = 0;
 };
 
-class BfmeSubBIC
-{
-public:
-	virtual void slot00();
-	int rva001CABE0();
-	ContainModuleInterface *getContain() const { return m_contain; }
-
-	ThingTemplate *m_template;
-	unsigned char m_pad08[0x1f4];
-	ContainModuleInterface *m_contain;
-	unsigned char m_pad200[0x3c];
-	Team *m_team;
-	UnsignedInt m_originalTeamName;
-	int m_indicatorColor;
-};
+#include "../../../Include/GameLogic/BfmeSubBIC.h"
 
 // ?rva001CABE0@BfmeSubBIC@@QAEHXZ
 int BfmeSubBIC::rva001CABE0()

@@ -114,9 +114,9 @@ static __forceinline Real getRepairAltitude(const SlavedUpdateModuleData *data)
     return value;
 }
 
-enum RepairStates { REPAIRSTATE_NONE, REPAIRSTATE_UNPACKING, REPAIRSTATE_PACKING,
-    REPAIRSTATE_READY, REPAIRSTATE_EXTENDING, REPAIRSTATE_RETRACTING,
-    REPAIRSTATE_WELDING };
+#include "../../../../Include/Common/Enums/RepairStates.h"
+
+
 
 class SlavedUpdate
 {
