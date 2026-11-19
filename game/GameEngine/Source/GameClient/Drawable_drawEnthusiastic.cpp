@@ -54,10 +54,10 @@ public:
 
 extern Anim2DCollection *TheAnim2DCollection;
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7			///< retail KindOf name table entry 7
-};
+#include "../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class Thing
 {

@@ -13,10 +13,10 @@ typedef float Real;
 
 #include "../../../Libraries/Include/Lib/ICoord2D.h"
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
 
 class BfmeGameLogicPause
 {

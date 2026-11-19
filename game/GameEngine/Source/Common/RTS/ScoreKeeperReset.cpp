@@ -22,13 +22,13 @@ private:
 
 typedef BitFlags<116> KindOfMaskType;
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7,
-	KINDOF_SCORE = 39,
-	KINDOF_SCORE_CREATE = 40,
-	KINDOF_SCORE_DESTROY = 41
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
 
 static KindOfMaskType scoringBuildingMask;
 static KindOfMaskType scoringBuildingDestroyMask;

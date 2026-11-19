@@ -15,12 +15,12 @@
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 enum ObjectShroudStatus
 {

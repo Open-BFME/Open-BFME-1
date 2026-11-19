@@ -109,16 +109,16 @@ enum
 	GEM_UPDATE_TEXT = 0x4031
 };
 
-enum GSOverlayType
-{
-	GSOVERLAY_PLAYERINFO,
-	GSOVERLAY_MAPSELECT,
-	GSOVERLAY_BUDDY,
-	GSOVERLAY_PAGE,
-	GSOVERLAY_GAMEOPTIONS,
-	GSOVERLAY_GAMEPASSWORD,
-	GSOVERLAY_LADDERSELECT
-};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
+
+
+
+
+
+
+
+
+
 
 void GameSpyOpenOverlay( GSOverlayType );
 void GameSpyCloseOverlay( GSOverlayType );

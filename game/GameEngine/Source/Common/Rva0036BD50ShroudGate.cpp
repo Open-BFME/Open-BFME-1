@@ -16,7 +16,7 @@ struct Rva00367E30Logic {
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-enum CellShroudStatus { CELLSHROUD_CLEAR, CELLSHROUD_FOGGED, CELLSHROUD_SHROUDED };
+#include "../../Include/Common/Enums/CellShroudStatus.h"
 class PartitionManager {
 public:
     CellShroudStatus getShroudStatusForPlayer(int playerIndex, const Coord3D *position) const;

@@ -30,20 +30,20 @@ enum
 	GLM_RIGHT_CLICKED = 0x4016
 };
 
-enum GSOverlayType
-{
-	GSOVERLAY_PLAYERINFO = 0,
-	GSOVERLAY_MAPSELECT,
-	GSOVERLAY_BUDDY
-};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
 
-enum RCItemType
-{
-	ITEM_BUDDY,
-	ITEM_REQUEST,
-	ITEM_NONBUDDY,
-	ITEM_NONE
-};
+
+
+
+
+
+#include "../../../../../Include/Common/Enums/RCItemType.h"
+
+
+
+
+
+
 
 class GameWindow;
 class WindowLayout;

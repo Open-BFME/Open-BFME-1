@@ -54,11 +54,11 @@ private:
 
 typedef BitFlags<192> KindOfMaskType;
 
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2,
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 enum KindOfWordMask
 {

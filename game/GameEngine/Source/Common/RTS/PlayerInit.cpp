@@ -69,8 +69,8 @@ struct hash
 }
 
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
-enum VeterancyLevel { LEVEL_REGULAR = 0 };
-enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
+#include "../../../Include/Common/Enums/Relationship.h"
 enum Rva000D6C60Mapped { Rva000D6C60MappedZero = 0 };
 
 // The AsciiString-keyed table whose _M_copy_from is matched at 0x000D6800.

@@ -3,7 +3,7 @@
 // Open-BFME5: canonical production-veterancy parser with BFME retail layouts.
 
 #include "../../../Include/Common/NameKeyType.h"
-enum VeterancyLevel { VETERANCY_INVALID = 0 };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 
 class AsciiString;
 

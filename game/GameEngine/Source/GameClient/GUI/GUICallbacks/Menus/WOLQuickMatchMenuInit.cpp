@@ -575,7 +575,7 @@ public:
     (this->*f.member)();
   }
 };
-enum NATStateType { NATSTATE_DONE = 3, NATSTATE_FAILED = 4 };
+#include "../../../../../Include/Common/Enums/NATStateType.h"
 class NAT {
 public:
   virtual ~NAT();

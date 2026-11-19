@@ -28,10 +28,10 @@
 
 
 // inputs/reference/shims/bfmekindof/Common/KindOf.h: KINDOF_STRUCTURE is bit 7
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 enum PlayerType
 {

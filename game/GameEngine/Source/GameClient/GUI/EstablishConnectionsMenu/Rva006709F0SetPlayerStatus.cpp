@@ -48,16 +48,16 @@ public:
 
 extern GameTextInterface *TheGameText;
 
-enum NATConnectionState
-{
-	NATCONNECTIONSTATE_NOSTATE,
-	NATCONNECTIONSTATE_WAITINGTOBEGIN,
-	NATCONNECTIONSTATE_WAITINGFORMANGLERRESPONSE,
-	NATCONNECTIONSTATE_WAITINGFORMANGLEDPORT,
-	NATCONNECTIONSTATE_WAITINGFORRESPONSE,
-	NATCONNECTIONSTATE_DONE,
-	NATCONNECTIONSTATE_FAILED
-};
+#include "../../../../Include/Common/Enums/NATConnectionState.h"
+
+
+
+
+
+
+
+
+
 
 // Retail reaches setConnectingPlayerStatus 0x00538490 through ILT thunk 0x00022A7A.
 extern void j_00022a7a();

@@ -14,7 +14,7 @@
 enum RecorderModeType { RECORDER_PLAYBACK=1 };
 class RecorderClass { public: RecorderModeType getMode(); };
 extern RecorderClass *TheRecorder;
-enum KindOfType { KINDOF_STRUCTURE=7 };
+#include "../../Include/Common/Enums/KindOfType.h"
 enum ObjectShroudStatus { OBJECTSHROUD_SHROUDED=4 };
 class Thing { public: bool isKindOf(KindOfType) const; };
 class Object : public Thing { public: ObjectShroudStatus getShroudedStatus(int) const; bool isLocallyControlled() const; };

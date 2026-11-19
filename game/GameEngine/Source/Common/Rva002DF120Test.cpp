@@ -18,12 +18,12 @@ enum KindOfType
 	KINDOF_INVALID = 0
 };
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class ThingTemplate
 {

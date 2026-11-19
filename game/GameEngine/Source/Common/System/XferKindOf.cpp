@@ -5,10 +5,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum KindOfType
-{
-	KINDOF_INVALID = -1
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 // Retail's table of the 181 KindOf bit names at 0x012AA068, in KindOfType
 // order, closed by a null entry (scanIndexList walks to it; 0x2D8 bytes, zeros

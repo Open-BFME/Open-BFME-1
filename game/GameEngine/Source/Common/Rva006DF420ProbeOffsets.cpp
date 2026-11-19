@@ -42,10 +42,10 @@ public:
 	bool bfmeContainsPointAt0018FA20(Coord3D &point) const;
 };
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR = 0
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
 
 class PartitionManager
 {

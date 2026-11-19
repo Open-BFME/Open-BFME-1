@@ -155,11 +155,11 @@ enum BfmeGameMode
 	BFME_GAME_NONE = 8
 };
 
-enum BfmeMessageType
-{
-	BFME_MSG_CLEAR_GAME_DATA = 0x1d,
-	BFME_MSG_NEW_GAME = 0x1e
-};
+#include "../../../../Include/Common/Enums/BfmeMessageType.h"
+
+
+
+
 
 class Shell
 {

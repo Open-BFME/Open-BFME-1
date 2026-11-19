@@ -3,13 +3,13 @@
 
 #include "ascii_string.h"
 
-enum VeterancyLevel
-{
-	LEVEL_REGULAR = 0,
-	LEVEL_VETERAN = 1,
-	LEVEL_ELITE = 2,
-	LEVEL_HEROIC = 3
-};
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
+
+
+
+
+
+
 
 class UpgradeTemplate
 {

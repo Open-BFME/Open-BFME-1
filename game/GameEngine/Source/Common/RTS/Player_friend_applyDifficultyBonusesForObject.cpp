@@ -5,12 +5,12 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY = 0,
-	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD
-};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

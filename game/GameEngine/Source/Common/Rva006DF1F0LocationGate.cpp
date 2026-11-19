@@ -25,12 +25,12 @@ struct BfmePlayerList6DF1F0
 	BfmePlayer6DF1F0 *m_localPlayer0c;
 };
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 class PartitionManager
 {

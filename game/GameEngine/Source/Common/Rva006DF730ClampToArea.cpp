@@ -55,10 +55,10 @@ class BfmePolygon6DF1F0
 extern "C" void __cdecl __identifier("?bfmeContainsPointAt0018FA20@PolygonTrigger@@QBE_NAAUCoord3D@@@Z")();
 extern "C" void __cdecl __identifier("?d_0018fbf0@@YAXXZ")();
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR = 0
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
 
 class PartitionManager
 {

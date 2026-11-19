@@ -101,9 +101,9 @@ class Rva000C97B0DwordSlot {
 };
 class Upgrade;
 class UpgradeTemplate;
-enum UpgradeStatusType {
-    UPGRADE_STATUS_INVALID,UPGRADE_STATUS_IN_PRODUCTION,UPGRADE_STATUS_COMPLETE
-};
+#include "../../Include/Common/Enums/UpgradeStatusType.h"
+
+
 struct Player {
     bool addSkillPoints(float,bool);
     Upgrade *addUpgrade(const UpgradeTemplate*,UpgradeStatusType);

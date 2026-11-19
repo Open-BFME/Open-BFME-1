@@ -21,15 +21,15 @@ class Object;
 
 
 
-enum CommandOption
-{
-	NEED_TARGET_ENEMY_OBJECT = 0x00000001,
-	NEED_TARGET_NEUTRAL_OBJECT = 0x00000002,
-	NEED_TARGET_ALLY_OBJECT = 0x00000004,
-	NEED_TARGET_POS = 0x00000020,
-	COMMAND_OPTION_NEED_OBJECT_TARGET =
-		NEED_TARGET_ENEMY_OBJECT | NEED_TARGET_NEUTRAL_OBJECT | NEED_TARGET_ALLY_OBJECT
-};
+#include "../../Include/Common/Enums/CommandOption.h"
+
+
+
+
+
+
+
+
 
 #define BitTest(value, mask) (((value) & (mask)) != 0)
 

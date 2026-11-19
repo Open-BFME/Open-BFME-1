@@ -263,7 +263,7 @@ extern GameTextInterface *TheGameText;
 int g_bfmePeerReqE4 = -1;
 int g_bfmePeerReqE8 = -1;
 extern int g_Rva012F73D0, g_Rva012F73D4;
-enum GSOverlayType {GSOVERLAY_PLAYERINFO=0};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
 void GSMessageBoxOk(UnicodeString,UnicodeString,void (*)());
 void GameSpyCloseOverlay(GSOverlayType);
 bool SetUnsignedIntInRegistry(std::string,std::string,unsigned int);
@@ -347,7 +347,7 @@ void d_004dd2b0( void )
                 break;
             case PSResponse::PSRESPONSE_PLAYERSTATS:
 				{
-					
+
 					if (resp.player.id == TheGameSpyInfo->getLocalProfileID())
 					{
 						PeerRequest req;
@@ -398,7 +398,7 @@ void d_004dd2b0( void )
 					}
 					PopulatePlayerInfoWindows("PopupPlayerInfo.wnd");
 					//GadgetListBoxAddEntryText(listboxInfo, UnicodeString(L"Got info!"), GameSpyColor[GSCOLOR_DEFAULT], -1);
-					
+
 					// also update info for player list in lobby
 					PlayerInfoMap::iterator it = TheGameSpyInfo->getPlayerInfoMap()->begin();
 					while (it != TheGameSpyInfo->getPlayerInfoMap()->end())

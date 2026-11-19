@@ -17,10 +17,10 @@ extern "C" void _WriteBarrier(void);
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-enum EvaMessage
-{
-	EvaMessage_Invalid = -1
-};
+#include "../../Include/Common/Enums/EvaMessage.h"
+
+
+
 
 struct Coord3D;
 

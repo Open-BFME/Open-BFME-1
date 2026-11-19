@@ -11,12 +11,12 @@
 
 #include "../../Include/Common/ScalarTypes.h"
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 namespace _STL
 {

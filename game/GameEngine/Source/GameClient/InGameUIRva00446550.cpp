@@ -20,13 +20,13 @@ inline UnicodeString::~UnicodeString() { ( (StringBase<unsigned short> *)this )-
 
 typedef unsigned short PlayerMaskType;
 
-enum KindOfType
-{
-	KINDOF_CAN_ATTACK = 3,
-	KINDOF_DOZER = 14,
-	KINDOF_HARVESTER = 16,
-	KINDOF_IGNORES_SELECT_ALL = 90,
-};
+#include "../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
 
 enum Rva00446550MessageType
 {

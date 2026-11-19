@@ -16,10 +16,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum Relationship
-{
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 enum KindOfType
 {

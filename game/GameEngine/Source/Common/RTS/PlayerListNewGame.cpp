@@ -9,7 +9,7 @@ template<> inline bool StringBase<char>::isEmpty() const
 { return m_data == 0 || m_data->length == 0; }
 
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
-enum Relationship { ENEMIES, NEUTRAL, ALLIES };
+#include "../../../Include/Common/Enums/Relationship.h"
 enum PlayerType { PLAYER_HUMAN = 0 };
 class StaticNameKey { public: NameKeyType key() const; };
 

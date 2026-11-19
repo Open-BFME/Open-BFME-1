@@ -14,7 +14,7 @@
 enum KindOfType { KINDOF_INVALID = 0 };
 #include "../../Include/Common/ObjectID.h"
 #include "../GameLogic/command_source_type.h"
-enum CanEnterType { CHECK_CAPACITY=0, DONT_CHECK_CAPACITY=1, COMBATDROP_INTO=2 };
+#include "../../Include/Common/Enums/CanEnterType.h"
 class ExitInterface;
 #define BFME_HAVE_OBJECTID
 #define THING_TU_MEMBERS bool isKindOf(KindOfType) const;

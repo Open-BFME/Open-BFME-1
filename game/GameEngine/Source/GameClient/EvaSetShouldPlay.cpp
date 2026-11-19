@@ -4,10 +4,10 @@
 
 // Retail 0x00423460 is Eva::setShouldPlay(EvaMessage), the one-argument
 // sibling of the position-aware overload at 0x004233A0.
-enum EvaMessage
-{
-	EvaMessage_Invalid = -1
-};
+#include "../../Include/Common/Enums/EvaMessage.h"
+
+
+
 
 // EvaCheckInfo records occupy 28 bytes in the parsed table at this+0x0c.
 struct EvaCheckInfo

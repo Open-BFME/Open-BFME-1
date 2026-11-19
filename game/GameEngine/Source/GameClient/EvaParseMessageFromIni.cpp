@@ -92,10 +92,10 @@ typedef _STL::hashtable<Rva004246F0Value, AsciiString, rts::hash<AsciiString>,
 	Rva004246F0ExtractKey, _STL::equal_to<AsciiString>,
 	_STL::allocator<Rva004246F0Value> > AsciiStringKeyedHash004246F0;
 
-enum EvaMessage
-{
-	EVA_MESSAGE_INVALID = -1
-};
+#include "../../Include/Common/Enums/EvaMessage.h"
+
+
+
 
 class Eva
 {

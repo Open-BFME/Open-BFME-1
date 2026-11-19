@@ -37,10 +37,10 @@ extern GameTextInterface *TheGameText;
 
 void GSMessageBoxOk( UnicodeString title, UnicodeString body, void ( *cb )() );
 
-enum GSOverlayType
-{
-	GSOVERLAY_GAMEPASSWORD = 5
-};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
+
+
+
 void GameSpyCloseOverlay( GSOverlayType overlay );
 
 class GenActionSink

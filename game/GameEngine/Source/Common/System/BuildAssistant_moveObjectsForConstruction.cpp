@@ -63,18 +63,18 @@ struct Coord3D
 };
 #define BFME_HAVE_COORD3D
 
-enum KindOfType
-{
-	KINDOF_SELECTABLE = 1,
-	KINDOF_IMMOBILE = 2,
-	KINDOF_SHRUBBERY = 6,
-	KINDOF_CLEARED_BY_BUILD = 50,
-	KINDOF_ALWAYS_SELECTABLE = 57,
-	KINDOF_WALK_ON_TOP_OF_WALL = 59,
-	KINDOF_INERT = 88,
-	KINDOF_BASE_FOUNDATION = 103,
-	KINDOF_MOVE_ONLY = 133
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
+
+
+
+
+
 
 class Rva001CF980Result;
 class Team;
@@ -160,12 +160,12 @@ inline const ThingTemplate *Thing::getTemplate() const
 	return tmpl;
 }
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Player
 {

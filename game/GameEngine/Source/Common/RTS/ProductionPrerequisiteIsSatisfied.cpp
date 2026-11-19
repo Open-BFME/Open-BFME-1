@@ -10,12 +10,12 @@ class ThingTemplate;
 
 
 
-enum UpgradeType
-{
+#include "../../../Include/Common/Enums/UpgradeType.h"
 
-    UPGRADE_TYPE_PLAYER,
-    UPGRADE_TYPE_OBJECT
-};
+
+
+
+
 
 class UpgradeTemplate
 {

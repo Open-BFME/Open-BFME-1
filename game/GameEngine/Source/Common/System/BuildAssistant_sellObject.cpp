@@ -27,11 +27,11 @@
 #include "../../../Include/Common/ObjectID.h"
 #define BFME_HAVE_OBJECTID
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7,			///< retail KindOf name table entry 7
-	KINDOF_NOT_SELLABLE = 153		///< retail KindOf name table entry 153
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 #include "../../GameLogic/command_source_type.h"
 
