@@ -3,9 +3,9 @@
 
 #include <deque>
 
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum CellShroudStatus
 {

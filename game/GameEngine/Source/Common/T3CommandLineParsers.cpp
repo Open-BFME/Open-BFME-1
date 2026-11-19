@@ -34,8 +34,8 @@
 // is what makes it safe to read the rest of it. A key BFME added and Zero Hour
 // has no member for stays an offset name, with the key in its comment.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 

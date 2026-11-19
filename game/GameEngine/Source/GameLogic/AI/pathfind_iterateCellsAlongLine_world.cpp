@@ -27,8 +27,8 @@
 // Frame: two ICoord2D locals in declaration order, start at esp+0xc and end at
 // esp+4 after the saved esi, matching retail.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
