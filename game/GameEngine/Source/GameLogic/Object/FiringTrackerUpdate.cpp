@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef bool Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 enum
 {

@@ -567,3 +567,4 @@ game/GameEngine/Source/Common/S4MakeHeapElem12.cpp	StringBase	game\GameEngine\So
 game/GameEngineDevice/Source/W3DDevice/GameClient/Rva00609940CursorTarget.cpp	UnicodeString	Functions: FAIL 1/1
 game/GameEngine/Source/GameClient/GUI/BfmeAptScreenObjectivesProvide.cpp	AsciiString	game\GameEngine\Source\GameClient\GUI\BfmeAptScreenObjectivesProvide.cpp(206) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
 game/GameEngine/Source/GameNetwork/LANAPIBfmeSerializedGameInfo.cpp	UnicodeString	Functions: FAIL 1/1
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawBfmeConstructor.cpp	AsciiString	game\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\W3DLaserDrawBfmeConstructor.cpp(389) : error C2440: 'initializing' : cannot convert from 'const char *' to 'Char *'

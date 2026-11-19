@@ -12,12 +12,12 @@ enum KindOfType
 	KINDOF_UNRECONSTRUCTED_139 = 139
 };
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Object;
 

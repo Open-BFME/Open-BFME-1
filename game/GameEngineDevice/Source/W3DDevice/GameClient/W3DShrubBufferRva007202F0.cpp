@@ -7,9 +7,9 @@
 #include "scene.h"
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 // retail global: RTS3DScene *W3DDisplay::m_3DScene (0x012F8058),
 // mangled ?m_3DScene@W3DDisplay@@2PAVRTS3DScene@@A. Add_Render_Object is the

@@ -10,11 +10,11 @@ template<class T> inline T rotation_sweep_copy_(T value) { return value; }
 
 #define TRUE 1
 
-typedef char Char;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 typedef int Color;
 
 extern const char Rva006A16B0Empty[];

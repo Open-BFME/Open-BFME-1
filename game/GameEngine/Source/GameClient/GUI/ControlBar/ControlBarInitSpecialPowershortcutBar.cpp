@@ -22,9 +22,9 @@
 
 #include "ascii_string.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 enum { MAX_SPECIAL_POWER_SHORTCUTS = 5 };
 enum { WIN_STATUS_USE_OVERLAY_STATES = 0x00200000 };

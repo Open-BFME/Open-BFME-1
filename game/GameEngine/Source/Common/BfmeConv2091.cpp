@@ -15,7 +15,7 @@ public:
 };
 
 // Retail ILT 0x0003251F lands on Thing::isKindOf (0x000A2CF0).
-enum KindOfType { };
+#include "../../Include/Common/Enums/KindOfType.h"
 
 #define THING_TU_MEMBERS \
 public: bool isKindOf(KindOfType kind) const;

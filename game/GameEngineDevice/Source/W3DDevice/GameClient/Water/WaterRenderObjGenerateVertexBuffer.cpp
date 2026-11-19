@@ -33,9 +33,9 @@
 #define Matrix4x4 Matrix4
 #include "dx8wrapper.h"
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 /// The retail scale both texture coordinates are multiplied by.  Retail reads
 /// the float ?g_bfmeK1266A@@3MB at 0x01075338, whose image value is 3.0f -- the

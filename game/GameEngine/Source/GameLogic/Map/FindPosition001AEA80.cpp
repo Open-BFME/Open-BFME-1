@@ -23,10 +23,10 @@
 #include "Lib/trig.h"
 #undef Overridable
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Rva001AEA80GeometryShape
 {
@@ -374,7 +374,7 @@ Bool Rva001AEA80TryPosition(const Coord3D *center,
 
 	if (options->sourceToPathToDest)
 	{
-		
+
 		if (!TheAI->pathfinder()->slowDoesPathExist(
 				const_cast<Object *>(options->sourceToPathToDest), options->sourceToPathToDest->getPosition(), &pos, (ObjectID)0))
 			return FALSE;

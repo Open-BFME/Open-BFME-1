@@ -14,10 +14,10 @@
 #include "WW3D2/light.h"
 #include "WW3D2/robjlist.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 #ifndef TRUE
 #define TRUE 1
 #define FALSE 0

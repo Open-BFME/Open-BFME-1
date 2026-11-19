@@ -18,9 +18,9 @@
 // "secondary vtable slot" note).  this-0x24 is a second sub-object that both
 // answers getCurrentVictim() and receives the final steering delta.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class Object
 {

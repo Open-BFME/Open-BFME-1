@@ -21,11 +21,11 @@
 #include <vector>
 #include "PreRTS.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern const Real g_rva01075350;
 

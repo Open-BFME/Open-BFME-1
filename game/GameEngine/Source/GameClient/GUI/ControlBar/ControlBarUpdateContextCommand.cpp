@@ -14,10 +14,10 @@
 //
 // Callees without a proven name are called through their retail ILT rows.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #ifndef NULL
 #define NULL 0

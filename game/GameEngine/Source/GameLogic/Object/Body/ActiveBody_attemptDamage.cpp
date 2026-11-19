@@ -29,10 +29,10 @@
 // stlport
 #include <list>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 #include "../../../../Include/Common/ObjectID.h"
 #include "../../../../Include/Common/NameKeyType.h"
 enum KindOfType

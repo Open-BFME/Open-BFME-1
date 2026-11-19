@@ -10,14 +10,14 @@
 #include "../../GameLogic/command_source_type.h"
 
 // BFME KindOfType values proven by the three retail immediate operands.
-enum KindOfType
-{
-	KINDOF_INFANTRY = 8,
-	KINDOF_NO_GARRISON = 0x1B,
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
 
-enum Relationship { ENEMIES = 0, NEUTRAL, ALLIES };
+
+
+
+
+
+#include "../../../Include/Common/Enums/Relationship.h"
 
 class Team;
 

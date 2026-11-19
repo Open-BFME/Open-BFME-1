@@ -100,10 +100,10 @@ public:
 
 #include "../GameLogic/command_source_type.h"
 
-enum CanEnterType
-{
-	CHECK_CAPACITY = 0
-};
+#include "../../Include/Common/Enums/CanEnterType.h"
+
+
+
 
 class BFMEActionManager
 {

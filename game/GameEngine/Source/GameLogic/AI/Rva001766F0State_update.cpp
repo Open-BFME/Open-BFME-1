@@ -7,11 +7,11 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef int Int;
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
+
 typedef unsigned int ObjectID;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

@@ -31,15 +31,15 @@
 #include "../../GameLogic/command_source_type.h"
 
 // KINDOF_STRUCTURE is 7 in the retail enum: the isKindOf call site pushes 7.
-enum KindOfType
-{
-	KINDOF_OBSTACLE = 0, KINDOF_SELECTABLE, KINDOF_IMMOBILE, KINDOF_CAN_ATTACK,
-	KINDOF_STICK_TO_TERRAIN_SLOPE, KINDOF_CAN_CAST_REFLECTIONS,
-	KINDOF_SHRUBBERY, KINDOF_STRUCTURE
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
 
 // NEUTRAL is 1: the getRelationship result is compared against 1.
-enum Relationship { ENEMIES = 0, NEUTRAL, ALLIES };
+#include "../../../Include/Common/Enums/Relationship.h"
 
 class Team;
 

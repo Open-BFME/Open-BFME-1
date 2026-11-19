@@ -24,10 +24,10 @@ enum KindOfType
 	KINDOF_UNRECONSTRUCTED_0E = 0x0E
 };
 
-enum Relationship
-{
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 #include "../../GameLogic/command_source_type.h"
 

@@ -27,10 +27,10 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned short UnsignedShort;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef unsigned char BYTE;
 typedef unsigned int UINT;
 typedef unsigned long DWORD;

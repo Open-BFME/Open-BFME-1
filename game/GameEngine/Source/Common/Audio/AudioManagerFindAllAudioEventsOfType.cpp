@@ -29,10 +29,10 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 
-enum AudioType
-{
-	AT_Music = 0
-};
+#include "../../../Include/Common/Enums/AudioType.h"
+
+
+
 
 namespace rts
 {

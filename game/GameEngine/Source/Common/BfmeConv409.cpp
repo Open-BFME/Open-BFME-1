@@ -2,7 +2,7 @@
 // call at 0x0012F0F4 goes through the ILT thunk at 0x00014FDD to
 // AICommandInterface::aiGuardObject (AICMD 0x1F) at 0x00154670.
 class Object;
-enum GuardMode {};
+#include "../../Include/Common/Enums/GuardMode.h"
 #include "../GameLogic/command_source_type.h"
 class AICommandInterface
 {

@@ -7,10 +7,10 @@
 #include "GameClient/Color.h"
 #include "GameClient/GameText.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 // This pinned IAT slot is MSVCR71.dll!ceil (0x01359394).
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);

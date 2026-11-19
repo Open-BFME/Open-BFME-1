@@ -13,12 +13,12 @@ static inline Rva00367E30Logic *theBfmeGameLogic()
 	return (Rva00367E30Logic *)TheGameLogic;
 }
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY,
-	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD
-};
+#include "../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 class ScriptEngine
 {

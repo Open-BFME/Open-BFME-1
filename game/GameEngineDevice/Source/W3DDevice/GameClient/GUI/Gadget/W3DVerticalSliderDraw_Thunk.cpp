@@ -23,9 +23,9 @@
 // look like allocation noise rather than a source-level fact.  Same fix as
 // IMECandidateMainDraw 0x004C4AB0.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 typedef int Color;
 
 class Image;

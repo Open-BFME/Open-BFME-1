@@ -22,11 +22,11 @@
 #include <coltest.h>
 #include <w3d_file.h>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
-typedef short Short;
-typedef unsigned short UnsignedShort;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
+
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);

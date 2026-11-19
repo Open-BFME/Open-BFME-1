@@ -1,9 +1,9 @@
 #include <vector>
 
-typedef int Int;
-typedef short Short;
-typedef float Real;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
+
 
 struct BfmeGlobalData0074BEB0
 {

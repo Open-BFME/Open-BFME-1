@@ -47,7 +47,7 @@ public:
     int m_a[32],m_aCount,m_b[32],m_bCount;
 };
 #include "../../../Include/Common/NameKeyType.h"
-enum VeterancyLevel { LEVEL_REGULAR=0 };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 struct Rva000D63C0Mapped { float m_value; };
 // Same AsciiString-keyed tables as matched PlayerInit.cpp.
 namespace rts { template<class T> struct hash { unsigned int operator()(T value) const; }; }

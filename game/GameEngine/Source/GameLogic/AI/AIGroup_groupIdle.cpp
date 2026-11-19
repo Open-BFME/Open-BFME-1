@@ -3,9 +3,9 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../command_source_type.h"
 

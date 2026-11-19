@@ -102,10 +102,10 @@ private:
 
 #include "PreRTS.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../Include/Common/Enums/SlotState.h"
 

@@ -9,8 +9,8 @@ inline UnicodeString::~UnicodeString()
 	reinterpret_cast<StringBase<unsigned short> *>(this)->~StringBase();
 }
 
-typedef bool Bool;
-typedef int Int;
+#include "../GameEngine/Include/Common/ScalarTypes.h"
+
 typedef bool WindowedFlag;
 
 typedef LRESULT (CALLBACK *WNDPROC)(HWND, UINT, WPARAM, LPARAM);

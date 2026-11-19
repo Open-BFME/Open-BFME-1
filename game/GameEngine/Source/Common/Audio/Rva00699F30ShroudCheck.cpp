@@ -22,13 +22,13 @@ public:
     unsigned int m_timeOfDay;
 };
 
-enum CellShroudStatus
-{
-    CELLSHROUD_CLEAR,
-    CELLSHROUD_FOGGED,
-    CELLSHROUD_SHROUDED,
-    CELLSHROUD_COUNT
-};
+#include "../../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
+
 
 class PartitionManager
 {

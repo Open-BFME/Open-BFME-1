@@ -32,7 +32,7 @@
 
 
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
-enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
+#include "../../../Include/Common/Enums/Relationship.h"
 enum { TIME_OF_DAY_NIGHT = 4 };
 
 

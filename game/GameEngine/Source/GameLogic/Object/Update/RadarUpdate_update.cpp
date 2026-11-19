@@ -42,9 +42,9 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

@@ -24,9 +24,9 @@
 
 #include <list>
 
-typedef int Int;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 typedef unsigned int FormationID;
 
 enum { NO_FORMATION_ID = 0 };

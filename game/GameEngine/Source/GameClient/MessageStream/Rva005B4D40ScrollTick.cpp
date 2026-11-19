@@ -9,10 +9,10 @@
 // a local assigned after the RMB anchor clamp (and in the other branch). The vec block lets
 // the int-to-float temporary share vec's slot, and one v34() after the if/else-if chain gives
 // retail's tail duplication.
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 struct Coord2D
 {
