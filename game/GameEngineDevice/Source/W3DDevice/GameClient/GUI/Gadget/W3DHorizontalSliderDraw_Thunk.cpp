@@ -38,9 +38,9 @@
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<wchar_t> *)this)->releaseBuffer(); }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class Image
@@ -632,7 +632,7 @@ void W3DGadgetHorizontalSliderImageDrawA( GameWindow *window,
 	start.x = leftEnd.x;
 	start.y = origin.y + size.y - leftSize.y + yOffset;
 	end.y =origin.y + size.y + yOffset;
-	
+
 	clipLeft.lo.x = origin.x;
 	clipLeft.lo.y = rightStart.y;
 	clipLeft.hi.y = leftEnd.y;
@@ -658,7 +658,7 @@ void W3DGadgetHorizontalSliderImageDrawA( GameWindow *window,
 		start.x += centerImageLeft->getImageWidth();
 
 	}  // end for i
-	
+
 	//
 	// how many small repeating pieces will fit in the gap from where the
 	// center repeating bar stopped and the right image, draw them
@@ -682,7 +682,7 @@ void W3DGadgetHorizontalSliderImageDrawA( GameWindow *window,
 		start.x += smallCenterImageLeft->getImageWidth();
 
 	}  // end for i
-	
+
 	// draw left end
 	start.x = origin.x + xOffset;
 	start.y = rightStart.y;

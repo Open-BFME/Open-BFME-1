@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-typedef unsigned long BfmeResult;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/BfmeResult.h"
 
 struct BfmeLockedRect
 {

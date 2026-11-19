@@ -25,8 +25,8 @@ enum WW3DFormat
 
 typedef _D3DPOOL D3DPOOL;
 
-typedef unsigned int UINT;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/UINT.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 enum _D3DFORMAT {};
 

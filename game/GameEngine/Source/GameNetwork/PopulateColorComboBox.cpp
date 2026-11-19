@@ -4,7 +4,7 @@
 // BFME's lobby team list is the Zero Hour PopulateTeamComboBox shape with a
 // fixed four-team loop and the BFME init guard.
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../Include/Common/ScalarTypes.h"
 
 typedef int Color;

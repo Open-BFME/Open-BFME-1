@@ -19,7 +19,7 @@
 // creates the index buffer into g_Va01306E08 and the vertex buffer into
 // g_Va01306E04, and ReleaseResources releases and clears exactly those two.
 
-typedef long HRESULT;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 // The manager holds no pointer to these: retail addresses both buffers as
 // globals, ReAcquireResources filling them and ReleaseResources emptying them.
