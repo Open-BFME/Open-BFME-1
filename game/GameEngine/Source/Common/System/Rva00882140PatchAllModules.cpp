@@ -3,7 +3,7 @@
 // then resolve the target through LoadLibraryA/GetProcAddress regardless.
 
 typedef void *RvaModuleHandle;
-typedef unsigned long RvaDword;
+#include "../../../Include/Common/ScalarTypes/Source/RvaDword.h"
 
 struct RvaModuleEntry32
 {

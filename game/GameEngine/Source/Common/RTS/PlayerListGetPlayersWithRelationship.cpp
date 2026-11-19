@@ -1,6 +1,6 @@
 // BFME extends the Zero Hour player-mask query with a direction flag.
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 class Team;
 

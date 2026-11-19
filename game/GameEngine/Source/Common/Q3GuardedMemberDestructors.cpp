@@ -84,7 +84,36 @@ BFME_EH_BASE( Q3EhBaseTwo )
 	};                                                                        \
 	NAME##Object::~NAME##Object() {}
 
-BFME_EH_DTOR_PADDED( Rva005CE890, Q3EhBaseOne, Q3EhMember005CE820, 0x3C )
+// Address-only views of the two already referenced table starts.
+extern "C" unsigned int __identifier("??_7ParticleInfo@@6B@");
+// Opaque observed prefix, not a recovered full ParticleInfo object layout.
+struct __declspec(novtable) Rva005CE890Object
+{
+    virtual void slot();
+    int m_word;
+    char m_lead[0x3C - 8];
+    unsigned char m_at3C;
+    ~Rva005CE890Object();
+};
+// Local EH carrier models only the observed base-vptr cleanup, both on normal
+// exit and when the known member destructor throws. It is not an engine class.
+struct Rva005CE890BaseGuard
+{
+    Rva005CE890Object *m_object;
+    __declspec(dllimport) __forceinline Rva005CE890BaseGuard(Rva005CE890Object *object) : m_object(object)
+    {
+        *(unsigned int *)object = (unsigned int)&__identifier("??_7ParticleInfo@@6B@");
+    }
+    __forceinline ~Rva005CE890BaseGuard()
+    {
+        ((Q3EhBaseOne *)m_object)->~Q3EhBaseOne();
+    }
+};
+Rva005CE890Object::~Rva005CE890Object()
+{
+    Rva005CE890BaseGuard guard(this);
+    ((Q3EhMember005CE820 *)((char *)this + 0x3C))->~Q3EhMember005CE820();
+}
 BFME_EH_DTOR_TIGHT( Rva00750440, Q3EhBaseOne, Q3EhMember00887940 )
 BFME_EH_DTOR_PADDED( Rva007579F0, Q3EhBaseOne, Q3EhMember000658A0, 0x2C )
 BFME_EH_DTOR_PADDED( Rva007587E0, Q3EhBaseOne, Q3EhMember00887940, 0x44 )

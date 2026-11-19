@@ -20,13 +20,13 @@ template <> inline int StringBase<char>::compare(const StringBase<char> &str) co
 	int result = memcmp(data, otherData, length < otherLength ? length : otherLength);
 	return result ? result : length - otherLength;
 }
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes/Bool.h"
 #include "../../Include/Common/Enums/ObjectScriptStatusBit.h"
 #define OBJECT_TU_MEMBERS void setScriptStatus(ObjectScriptStatusBit status, Bool value);
 #include "GameLogic/Object/object.h"
 
-typedef int Int;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/Bool.h"
 
 class BfmeObjNotify3F0
 {

@@ -21,7 +21,7 @@ class Path;
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef int LocomotorSurfaceTypeMask;
+#include "../../../Include/Common/ScalarTypes/Source/LocomotorSurfaceTypeMask.h"
 
 #include <stdlib.h>
 #define IABS abs
@@ -194,7 +194,7 @@ void Path::optimize(const Object *obj, LocomotorSurfaceTypeMask acceptableSurfac
 			{
 				Int dx = (Int)(node->getPosition()->x - anchor->getPosition()->x);
 				Int dy = (Int)(node->getPosition()->y - anchor->getPosition()->y);
-				
+
 
 				if (dx == 0 && IABS(dy) == distance)
 					passable = true;

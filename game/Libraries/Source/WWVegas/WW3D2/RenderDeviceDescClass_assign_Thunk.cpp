@@ -14,7 +14,7 @@
 // from +0x10 and +0x14 of that subobject, which is DynamicVectorClass's own
 // inline operator= copying ActiveCount and GrowthStep after the base.
 
-typedef char TCHAR;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/TCHAR.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass

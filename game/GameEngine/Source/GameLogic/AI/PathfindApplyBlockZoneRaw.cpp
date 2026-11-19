@@ -5,7 +5,7 @@
 // differ, calls the same-TU static resolveBlockZones.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 static void resolveBlockZones(Int srcZone, Int targetZone, zoneStorageType *zoneEquivalency, Int sizeOfZE)
 {

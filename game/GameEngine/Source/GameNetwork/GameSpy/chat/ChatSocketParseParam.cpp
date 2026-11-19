@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef int CHATBool;
+#include "../../../../Include/Common/ScalarTypes/Source/CHATBool.h"
 enum { CHATFalse, CHATTrue };
 
 struct ciServerMessage

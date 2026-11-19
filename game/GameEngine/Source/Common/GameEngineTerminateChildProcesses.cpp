@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
 
 typedef void *HANDLE;
-typedef int BOOL;
-typedef unsigned char EngineBool;
+#include "../../Include/Common/ScalarTypes/Win32/BOOL.h"
+#include "../../Include/Common/ScalarTypes/Source/EngineBool.h"
 
 struct AsciiStringLayout
 {

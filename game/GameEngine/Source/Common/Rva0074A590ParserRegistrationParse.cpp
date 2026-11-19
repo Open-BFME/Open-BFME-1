@@ -17,7 +17,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 
 #include "../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short DataChunkVersionType;
+#include "../../Include/Common/ScalarTypes/Source/DataChunkVersionType.h"
 
 
 class DataChunkInput

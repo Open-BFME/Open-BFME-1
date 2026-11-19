@@ -3,8 +3,8 @@
 // holder's flags, a stealth refusal, then a final-override kind range check.
 
 typedef unsigned char Bool;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/UnsignedByte.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 #include "../GameLogic/ScriptEngine/game_logic_dispatch.h"
 

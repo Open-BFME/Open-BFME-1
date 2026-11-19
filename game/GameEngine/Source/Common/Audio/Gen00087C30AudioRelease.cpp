@@ -2,7 +2,7 @@
 // cl: /DNDEBUG /MD
 
 typedef unsigned int AudioHandle;
-typedef long Long;
+#include "../../../Include/Common/ScalarTypes/Source/Long.h"
 
 class AudioManager
 {

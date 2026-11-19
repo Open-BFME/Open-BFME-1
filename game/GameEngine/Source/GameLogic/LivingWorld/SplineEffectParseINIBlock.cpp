@@ -19,7 +19,7 @@
 // instance.  Address-derived names.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned int UInt;
+#include "../../../Include/Common/ScalarTypes/Source/UInt.h"
 
 void *operator new( UInt size );
 

@@ -6,11 +6,11 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-typedef unsigned short WCHAR;
-typedef unsigned short WORD;
-typedef unsigned long DWORD;
-typedef unsigned long LCID;
-typedef unsigned int UINT;
+#include "../../Include/Common/ScalarTypes/Win32/WCHAR.h"
+#include "../../Include/Common/ScalarTypes/Win32/WORD.h"
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../Include/Common/ScalarTypes/Source/LCID.h"
+#include "../../Include/Common/ScalarTypes/Win32/UINT.h"
 
 typedef UINT (__stdcall *W3AtlAcpProc)(void);
 

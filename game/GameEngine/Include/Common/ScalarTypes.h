@@ -19,12 +19,12 @@
 
 // Existing EA scalar aliases, also used by BFME1 Precompiled/PreRTS.h.
 // Keep original provider contexts intact; no macros or runtime helpers here.
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef short Short;
-typedef unsigned char UnsignedByte;
-typedef char Byte;
-typedef char Char;
-typedef bool Bool;
+#include "ScalarTypes/Real.h"
+#include "ScalarTypes/Int.h"
+#include "ScalarTypes/UnsignedInt.h"
+#include "ScalarTypes/UnsignedShort.h"
+#include "ScalarTypes/Short.h"
+#include "ScalarTypes/UnsignedByte.h"
+#include "ScalarTypes/Byte.h"
+#include "ScalarTypes/Char.h"
+#include "ScalarTypes/Bool.h"

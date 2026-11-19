@@ -4360,3 +4360,8 @@ the m_ prefix and adopting the existing component spelling preserves all runtime
 sections, relocations and retained rows under the original flags. This is not a
 general position-based rename. Evidence: targets/game/reverse/identity_evidence/
 20261116-fivehundred-adoption-63.md and 20261116-fivehundred-adoption-64.md.
+
+
+### VC7.1: store an owned vptr before activating a local destructor guard
+
+A manual store in a novtable EH destructor body moved after the EH-state write. A local guard constructor that first saves this and then stores the existing owned vptr retains the73-byte primary sequence. Preserve the real guard destructor body for unwind; importing it leaves an invalid helper import. Only its always-inlined constructor uses dllimport plus forceinline suppression. Review the changed LEA-to-local-cleanup unwind path and all other retained sections, SafeSEH and COMDAT mappings, emitted helpers and provider/consumer gates. This is specific to MSVC13.10 EHsc/O2 and the observed opaque prefix, not a recovered full-class ABI. See targets/game/reverse/attempt_support/20261119-next500-1927-particle-vtable-binding.md.

@@ -6,10 +6,10 @@
 // BFME's SurfaceClass methods operate on a four-byte COM handle; the local
 // ABI view is intentional: surfaceclass.h has the incompatible ZH refcount
 // layout and lacks the bool-discard Lock overload used by this body.
-typedef unsigned long DWORD;
-typedef unsigned char BYTE;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/BYTE.h"
 typedef unsigned short WORD;
-typedef long LONG;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/LONG.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 struct LockedRect0079E700 { int Pitch; void *pBits; };
 class SurfaceClass { public:

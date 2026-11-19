@@ -24,7 +24,7 @@ protected:
 	virtual void loadPostProcess();
 };
 
-typedef unsigned int TeamID;
+#include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 enum Rva000D3FA0Relationship
 {
 	Rva000D3FA0_NEUTRAL = 0

@@ -19,7 +19,7 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 typedef void *PEER;
-typedef unsigned int SOCKET;
+#include "../../../../Include/Common/ScalarTypes/Source/SOCKET.h"
 
 #define INVALID_SOCKET ((SOCKET)(~0))
 

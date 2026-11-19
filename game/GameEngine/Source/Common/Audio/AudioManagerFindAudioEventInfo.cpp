@@ -18,7 +18,7 @@
 
 #include "ascii_string.h"
 
-typedef long Long;
+#include "../../../Include/Common/ScalarTypes/Source/Long.h"
 
 namespace rts
 {

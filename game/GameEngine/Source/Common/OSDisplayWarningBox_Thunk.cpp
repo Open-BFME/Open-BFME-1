@@ -2,7 +2,7 @@
 // OSDisplayWarningBox at retail RVA 0x006BB040, 509 bytes.
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 template <typename T> struct StringInlineData
 {

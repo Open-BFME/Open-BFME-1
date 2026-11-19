@@ -3,7 +3,7 @@
 
 extern "C" int __cdecl sprintf(char *buf, const char *fmt, ...);
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 // retail 0x007E8E90
 class Rva007E8810Message

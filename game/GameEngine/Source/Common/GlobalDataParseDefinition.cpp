@@ -12,11 +12,11 @@
 #include <wchar.h>
 
 typedef unsigned char Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef short Short;
-typedef unsigned short UnsignedShort;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/Short.h"
+#include "../../Include/Common/ScalarTypes/UnsignedShort.h"
+#include "../../Include/Common/ScalarTypes/Real.h"
 
 enum INILoadType
 {

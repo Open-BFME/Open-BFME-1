@@ -11,7 +11,7 @@ class Weapon;
 class Rva003EEB50;
 #include "../../Include/Common/ScalarTypes.h"
 
-typedef unsigned char UByte;
+#include "../../Include/Common/ScalarTypes/Source/UByte.h"
 #include "../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class Pathfinder

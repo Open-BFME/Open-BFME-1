@@ -4,7 +4,7 @@
 // vtable/field offsets that drift from BFME's compiled layout for this body.
 
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
-typedef __int64 Int64;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int64.h"
 
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceCounter(Int64 *counter);
 extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(Int64 *freq);

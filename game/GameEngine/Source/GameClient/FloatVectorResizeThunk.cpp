@@ -19,7 +19,7 @@
 // Placement follows the nearest named neighbour and is not a TU claim; see
 // FloatVectorFillInsertThunk.cpp.
 
-typedef unsigned int size_t_;
+#include "../../Include/Common/ScalarTypes/Source/size_t_.h"
 
 // Retail reaches memmove through its MSVCR71 import slot (`ff 15`, IAT
 // 0x0135945C); /MD's <string.h> declares it dllimport, so the call binds to
