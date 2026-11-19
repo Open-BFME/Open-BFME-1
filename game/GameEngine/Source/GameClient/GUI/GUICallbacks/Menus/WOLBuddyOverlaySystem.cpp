@@ -11,7 +11,7 @@
 
 
 typedef int NameKeyType;
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 typedef unsigned int WindowMsgData;
 
 #include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"

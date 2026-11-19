@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME OnlineLogin numeric text filter at retail 0x0054CAA0.
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 typedef unsigned short wchar_t;
 extern "C" __declspec(dllimport) int __cdecl iswdigit(WideChar value);
 

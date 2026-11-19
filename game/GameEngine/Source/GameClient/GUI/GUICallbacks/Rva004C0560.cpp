@@ -23,7 +23,7 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short>*)this)->St
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 typedef unsigned int WindowMsgData;
 
 #include "../../../../Include/Common/Enums/WindowMsgHandledType.h"

@@ -3,7 +3,7 @@
 // BFME text-entry character policy, called by the private IME insertion
 // helper through ILT 0x000275C0 (body 0x000861E0).
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) int __cdecl iswalnum(WideChar character);
 extern "C" __declspec(dllimport) int __cdecl iswascii(WideChar character);

@@ -4,10 +4,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 typedef int Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/UnsignedByte.h"
+#include "../../Include/Common/ScalarTypes/Real.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

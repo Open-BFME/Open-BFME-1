@@ -2,7 +2,7 @@
 // identifies this input route, but no owner name is established.
 // GWM_IME_CHAR is filtered through the landed character policy; all other
 // messages and accepted characters forward through ILT 0x00003DF0.
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 class Rva004BE120Input
 {

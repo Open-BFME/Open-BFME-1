@@ -49,7 +49,7 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 extern "C" __declspec(dllimport) wchar_t *__cdecl wcsncpy(
 	wchar_t *destination, const wchar_t *source, unsigned int count);
 
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 struct BuddyRequest
 {
 	enum

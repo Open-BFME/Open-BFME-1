@@ -7,7 +7,7 @@
 // filename text window at this+0xB0, rather than the ZH header's offset.
 
 typedef int Int;
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 // The shared empty-string sentinels (targets/game/reverse/symbols.csv:
 // _g_bfmeEmptyAscii at 0x0107388B, ?BFMEEmptyUnicodeString at 0x0107388C).  A

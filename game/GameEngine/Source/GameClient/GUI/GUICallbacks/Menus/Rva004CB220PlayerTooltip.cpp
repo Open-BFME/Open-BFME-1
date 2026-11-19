@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Iinputs/reference/shims/stringinline /Iinputs/reference/shims/sweep
 #include "StringInline.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int Bool;
 
 class GameWindow

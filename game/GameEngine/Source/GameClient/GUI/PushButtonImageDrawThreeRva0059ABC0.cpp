@@ -14,10 +14,10 @@
 // copy is ILT 0x0000A114 (0x0040D900).  VC7.1 inlines it in the loop and the
 // two end draws and calls it at the other three sites, as retail does.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 #define NULL 0

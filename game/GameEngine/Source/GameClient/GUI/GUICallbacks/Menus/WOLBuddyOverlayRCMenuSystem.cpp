@@ -18,7 +18,7 @@
 typedef unsigned UnsignedInt;
 typedef unsigned WindowMsgData;
 
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 #include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
 enum { GWM_CREATE = 1, GWM_DESTROY = 2, GGM_CLOSE = 0x4005, GBM_SELECTED = 0x4008 };
 #include "../../../../../Include/Common/Enums/RCItemType.h"

@@ -6,7 +6,7 @@
 // already-published initializer separate so its existing exact body remains
 // immutable.
 
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 typedef int Color;

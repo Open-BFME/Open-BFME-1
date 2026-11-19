@@ -4,7 +4,7 @@
 #include <list>
 
 typedef int Bool;
-typedef unsigned long DWORD;
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
 typedef void *HANDLE;
 typedef void *HMODULE;
 typedef const char *LPCSTR;

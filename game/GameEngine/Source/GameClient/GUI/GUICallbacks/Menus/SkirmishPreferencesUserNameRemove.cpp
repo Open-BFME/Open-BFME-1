@@ -7,7 +7,7 @@
 // address-derived while preserving the proven class and ABI.
 
 #include "../../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 
 // "SkirmishStats.ini" appended to the translated profile name, retail
 // 0x0108066C.  No dir32 record names this address, so it keeps an

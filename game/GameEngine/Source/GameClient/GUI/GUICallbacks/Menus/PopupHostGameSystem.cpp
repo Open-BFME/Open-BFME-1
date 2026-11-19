@@ -9,7 +9,7 @@
 // PopupHostGameInit) matching the pinned textEntryGameName 0x012F3F14 and
 // comboBoxLadderName 0x012F3F28; they are defined by PopupHostGame.cpp.
 
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) int __cdecl iswspace( WideChar c );
 extern const unsigned short BFMEEmptyUnicodeString;

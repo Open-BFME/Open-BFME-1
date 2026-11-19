@@ -6,7 +6,7 @@
 // object as the SOUNDFADE transition.  The field table names StartFrame at
 // +0x10, EndFrame at +0x14, and FadeInUnfrozenSounds at +0x18.
 
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 class AudioClientUpdate

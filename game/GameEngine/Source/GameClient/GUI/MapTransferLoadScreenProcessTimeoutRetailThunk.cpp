@@ -7,7 +7,7 @@
 // buffer extent without retaining the former naked byte dump.
 
 typedef char Bool;
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 extern const WideChar BFMEEmptyUnicodeString;
 

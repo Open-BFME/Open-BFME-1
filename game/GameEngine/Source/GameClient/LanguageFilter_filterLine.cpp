@@ -27,7 +27,7 @@
 
 #include "../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcscpy(WideChar *dest, const WideChar *src);
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsstr(const WideChar *haystack, const WideChar *needle);

@@ -8,7 +8,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 
 #include "../../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 
 // The shared empty UnicodeString payload, retail 0x0107388C
 // (?BFMEEmptyUnicodeString@@3GB), and the wide separator this loop appends

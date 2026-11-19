@@ -12,8 +12,8 @@
 // and m_bold at +0x10. adjustFontSize returns an Int here, which is why the
 // point size goes through fild/fstp before being passed as a Real.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 class GameFont;

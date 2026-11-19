@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../Include/Common/ScalarTypes.h"
 
 

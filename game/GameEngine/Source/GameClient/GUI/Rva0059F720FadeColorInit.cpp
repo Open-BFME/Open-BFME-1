@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob0
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 

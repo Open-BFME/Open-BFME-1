@@ -40,7 +40,7 @@ static __forceinline const wchar_t *unicodeStr( const UnicodeString &string )
 	return (const wchar_t *)((const StringBase<unsigned short> *)&string)->str();
 }
 
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 typedef int Color;
 // Layout independently matched by PeerDefsGroupRoomMapOperator.cpp and
 // the 32-byte copy at 004F97B0. The list only reads the name at offset 0.

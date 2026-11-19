@@ -15,7 +15,7 @@
 typedef int Color;
 
 
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 
 // Retail inlines the null-checked data pointer read at every str() site.
 

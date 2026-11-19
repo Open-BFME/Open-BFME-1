@@ -3,8 +3,8 @@
 // image pointers (+0x30 and +0x34): either one missing finishes the transition at once.
 // Names re-tagged for this address.
 
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 class Display

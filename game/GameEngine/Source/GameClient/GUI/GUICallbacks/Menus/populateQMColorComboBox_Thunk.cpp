@@ -6,7 +6,7 @@
 // The +0x25c color gadget is the member established by the menu constructor
 // and its init-gadgets caller; this TU keeps that ABI view local.
 
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 typedef int Color;

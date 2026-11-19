@@ -4,7 +4,7 @@
 // virtual; this small ABI view preserves the BFME slots without importing the
 // later Zero Hour layout used by the reference header.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
 
 template <typename T> class StringBase
