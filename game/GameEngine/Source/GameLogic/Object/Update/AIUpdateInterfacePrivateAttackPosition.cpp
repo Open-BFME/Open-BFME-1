@@ -17,7 +17,7 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 #include "../../command_source_type.h"
 #include "../../../../Include/Common/Enums/WeaponSlotType.h"
-enum StateID { AI_ATTACK_POSITION = 9 };
+#include "../../../../Include/Common/Enums/StateID.h"
 // class-gate: allow Coord3D ilt_oracle confirms the row's PBVCoord3D (class-keyed) decoration; Lib/Coord3D.h is struct-keyed
 class Coord3D { public: float x,y,z; };
 class Object;

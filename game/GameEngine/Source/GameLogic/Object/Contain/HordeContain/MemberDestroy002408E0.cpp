@@ -78,7 +78,7 @@ struct Rva002408E0Banner { char pad00[4]; Rva002408E0BannerData *data04; };
 struct Rva002408E0GlobalData { char pad00[0xa76]; bool flagA76; };
 class GlobalData;
 extern GlobalData *TheWritableGlobalData;
-enum EvaMessage {};
+#include "../../../../../Include/Common/Enums/EvaMessage.h"
 struct Coord3D;
 class Eva { public: bool setShouldPlay(EvaMessage message, const Coord3D *position); };
 extern Eva *TheEva;

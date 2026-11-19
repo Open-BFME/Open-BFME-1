@@ -27,10 +27,10 @@ enum KindOfType
 
 
 
-enum Relationship
-{
-	ALLIES = 2
-};
+#include "../../../../Include/Common/Enums/Relationship.h"
+
+
+
 #include "../../ScriptEngine/game_logic_dispatch.h"
 enum SpecialPowerType
 {

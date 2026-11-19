@@ -15,10 +15,10 @@ private:
 
 typedef BitFlags<116> KindOfMaskType;
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../../../../../Include/Common/Enums/ScienceType.h"
 

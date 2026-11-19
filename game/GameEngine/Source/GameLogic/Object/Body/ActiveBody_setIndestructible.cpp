@@ -9,10 +9,10 @@ typedef int ObjectID;
 
 class Object;
 
-enum BridgeTowerType
-{
-	BRIDGE_TOWER_0
-};
+#include "../../../../Include/Common/Enums/BridgeTowerType.h"
+
+
+
 
 class Overridable
 {

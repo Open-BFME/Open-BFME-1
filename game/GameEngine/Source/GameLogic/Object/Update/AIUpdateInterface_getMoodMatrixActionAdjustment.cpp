@@ -18,11 +18,11 @@ public:
 	BfmeOverridable *m_nextOverride;
 };
 
-enum KindOfType
-{
-	KINDOF_INFANTRY = 8,
-	KINDOF_IGNORED_IN_GUI = 47
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 class BfmeThingTemplate : public BfmeOverridable
 {

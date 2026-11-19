@@ -25,15 +25,15 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum UpgradeType
-{
-	UPGRADE_TYPE_PLAYER = 0
-};
+#include "../../../../Include/Common/Enums/UpgradeType.h"
 
-enum UpgradeStatusType
-{
-	UPGRADE_STATUS_COMPLETE = 2
-};
+
+
+
+#include "../../../../Include/Common/Enums/UpgradeStatusType.h"
+
+
+
 
 class UpgradeTemplate
 {

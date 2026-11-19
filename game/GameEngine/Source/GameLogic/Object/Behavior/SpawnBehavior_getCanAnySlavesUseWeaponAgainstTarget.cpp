@@ -7,7 +7,7 @@
 
 typedef int ObjectID;
 
-enum AbleToAttackType { ATTACK_TYPE_DUMMY };
+#include "../../../../Include/Common/Enums/AbleToAttackType.h"
 #include "../../command_source_type.h"
 #include "../../../../Include/Common/Enums/WeaponSlotType.h"
 enum CanAttackResult { ATTACK_RESULT_DUMMY };

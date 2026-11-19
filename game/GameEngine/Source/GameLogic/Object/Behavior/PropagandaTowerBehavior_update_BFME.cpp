@@ -10,13 +10,13 @@ typedef int ObjectID;
 
 
 
-enum KindOfType
-{
-	KINDOF_SCORE = 0x27,
-	KINDOF_SCORE_CREATE = 0x28,
-	KINDOF_SCORE_DESTROY = 0x29,
-	KINDOF_MP_COUNT_FOR_VICTORY = 0x25
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
 
 class Thing
 {

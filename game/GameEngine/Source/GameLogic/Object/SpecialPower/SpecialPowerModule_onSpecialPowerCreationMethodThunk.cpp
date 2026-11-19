@@ -7,10 +7,10 @@
 
 typedef int ObjectID;
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class SpecialPowerTemplate;
 class Player;

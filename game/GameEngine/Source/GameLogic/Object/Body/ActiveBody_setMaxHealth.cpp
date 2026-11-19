@@ -3,13 +3,13 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-enum MaxHealthChangeType
-{
-	SAME_CURRENTHEALTH,
-	PRESERVE_RATIO,
-	ADD_CURRENT_HEALTH_TOO,
-	FULLY_HEAL,
-};
+#include "../../../../Include/Common/Enums/MaxHealthChangeType.h"
+
+
+
+
+
+
 
 class BodyModuleInterface
 {

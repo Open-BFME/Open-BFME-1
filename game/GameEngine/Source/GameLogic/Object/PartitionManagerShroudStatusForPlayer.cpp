@@ -7,12 +7,12 @@
 
 struct BfmePointFD;
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED
-};
+#include "../../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 class Gen_008F7CD0
 {

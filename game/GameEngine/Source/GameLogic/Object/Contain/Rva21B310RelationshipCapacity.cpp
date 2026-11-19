@@ -12,12 +12,12 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Object
 {

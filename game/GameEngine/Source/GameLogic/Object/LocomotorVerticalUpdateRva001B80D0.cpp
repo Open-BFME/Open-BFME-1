@@ -91,7 +91,7 @@ virtual void slot81();
 virtual void slot82();
 virtual void slot83();
 virtual Rva002BC310Owner *query001B80D0(); };
-enum BodyDamageType { BODY_OK, BODY_DAMAGED };
+#include "../../../Include/Common/Enums/BodyDamageType.h"
 class BodyModuleInterface { public:
 virtual void slot00();
 virtual void slot01();

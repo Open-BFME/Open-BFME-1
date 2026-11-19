@@ -11,10 +11,10 @@ typedef unsigned int ObjectID;
 
 #include "../../command_source_type.h"
 
-enum StateID
-{
-    INVALID_STATE_ID = 0xF423F
-};
+#include "../../../../Include/Common/Enums/StateID.h"
+
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -2,9 +2,9 @@
 // ?onVeterancyLevelChanged@Rva001CEAD0Object@@QAEXHH@Z
 
 #include "../../../Include/Common/ScalarTypes.h"
-enum VeterancyLevel { LEVEL_REGULAR, LEVEL_VETERAN, LEVEL_ELITE, LEVEL_HEROIC };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 #include "../../../Include/Common/Enums/WorldAnimationOptions.h"
-enum KindOfType { KINDOF_IGNORED_IN_GUI = 0x2f };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 struct Coord3D
 {

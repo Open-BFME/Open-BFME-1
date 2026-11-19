@@ -38,13 +38,13 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
-enum BridgeTowerType
-{
-	BRIDGE_TOWER_0 = 0,
-	BRIDGE_TOWER_1,
-	BRIDGE_TOWER_2,
-	BRIDGE_TOWER_3
-};
+#include "../../../../../Include/Common/Enums/BridgeTowerType.h"
+
+
+
+
+
+
 
 class BridgeBehaviorInterface
 {

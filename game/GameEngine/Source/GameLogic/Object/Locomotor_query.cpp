@@ -5,13 +5,13 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum BodyDamageType
-{
-	BODY_PRISTINE,
-	BODY_DAMAGED,
-	BODY_REALLYDAMAGED,
-	BODY_RUBBLE
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
+
+
+
 
 class BodyModuleInterface
 {

@@ -23,12 +23,12 @@ enum KindOfType
 	KIND_NONE
 };
 
-enum Relationship
-{
-	ENEMIES,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Player;
 class ThingTemplate;

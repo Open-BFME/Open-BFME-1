@@ -981,11 +981,11 @@ public:
 	static Bool findPositionAround(const Coord3D *center, const FindPositionOptions *options, Coord3D *result);
 };
 
-enum BridgeTowerType
-{
-	BRIDGE_TOWER_FROM_LEFT = 0,
-	BRIDGE_MAX_TOWERS = 4
-};
+#include "../../../../../Include/Common/Enums/BridgeTowerType.h"
+
+
+
+
 
 class BridgeBehaviorInterface
 {
@@ -1524,13 +1524,13 @@ struct ObjectStatusMask : public _STL::_Base_bitset<4>
 	void set(ObjectStatusTypes bit) { _M_w[bit >> 5] |= 1U << (bit & 31); }
 };
 
-enum BodyDamageType
-{
-	BODY_PRISTINE,
-	BODY_DAMAGED,
-	BODY_REALLYDAMAGED,
-	BODY_RUBBLE
-};
+#include "../../../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
+
+
+
 
 class BodyModuleInterface
 {

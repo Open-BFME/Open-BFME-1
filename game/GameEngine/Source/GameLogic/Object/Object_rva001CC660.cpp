@@ -8,10 +8,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum Relationship
-{
-	ENEMIES = 0
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 class Object;
 class ThingTemplate;

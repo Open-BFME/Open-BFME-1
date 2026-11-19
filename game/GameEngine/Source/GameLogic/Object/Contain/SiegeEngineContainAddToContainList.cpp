@@ -20,10 +20,10 @@ enum KindOfType
 	KINDOF_RVA0022C160_54 = 0x36
 };
 
-enum WeaponSetType
-{
-	WEAPONSET_RVA0022C160_20 = 0x14
-};
+#include "../../../../Include/Common/Enums/WeaponSetType.h"
+
+
+
 
 class Player;
 

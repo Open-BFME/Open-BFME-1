@@ -9,11 +9,11 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-enum EvaMessage
-{
-	EVA_INVALID = -1,
-	EVA_VALUE_7 = 7
-};
+#include "../../../../Include/Common/Enums/EvaMessage.h"
+
+
+
+
 
 class Player;
 class Module;

@@ -19,7 +19,7 @@
 #include <vector>
 #include <bitset>
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
-enum IterOrderType {};
+#include "../../../../../Include/Common/Enums/IterOrderType.h"
 template<int N> class BitFlags { public: _STL::bitset<N> bits; };
 extern const BitFlags<192> KINDOFMASK_NONE;
 

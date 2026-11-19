@@ -17,10 +17,10 @@ enum Relationship
 	REL_ALLIES = 2
 };
 
-enum KindOfType
-{
-	KINDOF_DISGUISER = 0x57
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../ScriptEngine/game_logic_dispatch.h"
 

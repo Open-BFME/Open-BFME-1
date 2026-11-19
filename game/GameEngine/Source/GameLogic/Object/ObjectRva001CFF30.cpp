@@ -20,11 +20,11 @@
 class Object;
 class Player;
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7,
-	KINDOF_MINE = 54
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 enum ObjectStatusTypes
 {
@@ -35,10 +35,10 @@ enum ObjectStatusTypes
 	OBJECT_STATUS_UNCONTROLLABLY_SCARED = 68
 };
 
-enum Relationship
-{
-	ENEMIES = 0
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 #include "../../../Include/Common/Enums/CrushSquishTestType.h"
 

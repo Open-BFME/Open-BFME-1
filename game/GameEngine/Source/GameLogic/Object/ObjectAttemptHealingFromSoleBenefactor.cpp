@@ -11,7 +11,7 @@
 enum DamageType { DAMAGE_HEALING_BFME = 7 };
 #include "../../../Include/Common/Enums/DeathType.h"
 // Index 15 of the retail KindOf name table at 0x012AA068 is "SWARM_DOZER".
-enum KindOfType { KINDOF_SWARM_DOZER = 15 };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 class ModelConditionFlags { public:
 	__forceinline bool test(int bit) const { return bits.test(bit); }

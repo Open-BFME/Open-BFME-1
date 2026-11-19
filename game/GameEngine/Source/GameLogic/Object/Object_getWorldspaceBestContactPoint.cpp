@@ -110,13 +110,13 @@ private:
 	AsciiString m_name;
 };
 
-enum BodyDamageType
-{
-	BODY_PRISTINE,
-	BODY_DAMAGED,
-	BODY_REALLYDAMAGED,
-	BODY_RUBBLE
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 class BodyModuleInterface

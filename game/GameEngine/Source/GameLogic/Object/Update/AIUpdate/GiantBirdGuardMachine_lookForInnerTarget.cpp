@@ -44,18 +44,18 @@ typedef unsigned int TeamID;
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D
 
-enum KindOfType
-{
-	KINDOF_UNATTACKABLE = 53,
-	KINDOF_HORDE = 108
-};
+#include "../../../../../Include/Common/Enums/KindOfType.h"
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+
+
+
+
+#include "../../../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Team;
 class Player;
@@ -283,12 +283,12 @@ extern TeamFactory *TheTeamFactory;
 extern AI *TheAI;
 extern PartitionManager *ThePartitionManager;
 
-enum GuardMode
-{
-	GUARDMODE_NORMAL = 0,
-	GUARDMODE_GUARD_WITHOUT_PURSUIT = 1,
-	GUARDMODE_GUARD_FLYING_UNITS_ONLY = 2
-};
+#include "../../../../../Include/Common/Enums/GuardMode.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
 // BFME offsets as in AIGuard_getGuardScanPos.cpp.

@@ -24,8 +24,8 @@ enum { BFME_AI_IDLE = 0 };
 
 
 
-enum KindOfType { KINDOF_PROJECTILE = 25 };
-enum WeaponSetType { WEAPONSET_RAMPAGE = 8 };
+#include "../../../../Include/Common/Enums/KindOfType.h"
+#include "../../../../Include/Common/Enums/WeaponSetType.h"
 enum ModelConditionFlagType
 {
 	MODELCONDITION_MOVING = 60,

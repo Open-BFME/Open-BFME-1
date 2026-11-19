@@ -11,7 +11,7 @@
 
 #include "../../../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum KindOfType { };
+#include "../../../../../Include/Common/Enums/KindOfType.h"
 
 class Overridable
 {

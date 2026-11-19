@@ -3,11 +3,11 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum BodyDamageType
-{
-	BODY_OK,
-	BODY_DAMAGED,
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
+
 
 class Overridable
 {

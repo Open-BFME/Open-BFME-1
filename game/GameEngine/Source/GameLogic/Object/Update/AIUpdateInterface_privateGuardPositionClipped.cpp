@@ -7,17 +7,17 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum KindOfType
-{
-	KINDOF_PROJECTILE = 0x19
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../../command_source_type.h"
 
-enum GuardMode
-{
-	GUARDMODE_NORMAL = 0
-};
+#include "../../../../Include/Common/Enums/GuardMode.h"
+
+
+
 
 enum GuardTargetType
 {
@@ -25,10 +25,10 @@ enum GuardTargetType
 	GUARDTARGET_NONE = 4
 };
 
-enum StateID
-{
-	BFME_AI_GUARD = 0x10
-};
+#include "../../../../Include/Common/Enums/StateID.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

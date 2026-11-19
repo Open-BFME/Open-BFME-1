@@ -19,7 +19,7 @@
 extern "C" void __cdecl __identifier("?d_00228050@@YAXXZ")();
 class Player;
 class Object;
-enum Relationship { ENEMIES = 0, NEUTRAL, ALLIES };
+#include "../../../../Include/Common/Enums/Relationship.h"
 
 class Object
 {

@@ -38,10 +38,10 @@ enum ModelConditionFlagType
 	MODELCONDITION_INVALID = -1
 };
 
-enum BodyDamageType
-{
-	BODY_PRISTINE = 0
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
 
 extern void j_00039301();
 extern void j_00012b70();

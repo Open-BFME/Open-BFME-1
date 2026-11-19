@@ -33,12 +33,12 @@ private:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
-enum MaxHealthChangeType
-{
-	SAME_CURRENTHEALTH,
-	PRESERVE_RATIO,
-	ADD_CURRENT_HEALTH_TOO
-};
+#include "../../../../Include/Common/Enums/MaxHealthChangeType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BattlePlanUpdate.h
 class BattlePlanUpdateModuleData : public ModuleData

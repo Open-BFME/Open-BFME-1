@@ -17,7 +17,7 @@ extern "C" void _WriteBarrier();
 template<int N> class BitFlags { _STL::bitset<N> bits; public: enum BogusInitType { INIT=0 }; BitFlags(BogusInitType,int,int,int); bool test(int i) const { return bits.test(i); } void set(int i) { bits.set(i); } };
 typedef BitFlags<304> ModelConditionFlags;
 enum ObjectStatusTypes { OBJECT_STATUS_UNDER_CONSTRUCTION=2, OBJECT_STATUS_RECONSTRUCTING=21 };
-enum KindOfType { KINDOF_BRIDGE_TOWER=24 };
+#include "../../../../../Include/Common/Enums/KindOfType.h"
 #include "../../../../../Include/Common/Enums/RadarEventType.h"
 class Object; class Player; class Drawable; class AIUpdateInterface; class DozerAIInterface;
 class BodyModuleInterface; class AudioEventRTS; class PickAndPlayInfo;
