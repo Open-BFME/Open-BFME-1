@@ -72,7 +72,7 @@ public:
 	void setOrientation( float angle );
 };
 
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../../Include/Common/Enums/ScienceType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
@@ -120,10 +120,10 @@ class DamageInfo
 	} in;
 };
 
-enum Relationship
-{
-	ALLIES = 2
-};
+#include "../../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
 class Object : public Thing

@@ -58,7 +58,7 @@ public:
 extern GenKey GenKey0012A79B8;
 extern GenKey GenKey0012A79C0;
 extern GenKey GenKey0012A79C8;
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 class StaticNameKey { public: NameKeyType key() const; };
 extern StaticNameKey CameraYawAngleKey;
 extern GenKey GenKey0012A79D8;

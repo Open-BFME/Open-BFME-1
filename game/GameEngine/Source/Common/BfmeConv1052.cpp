@@ -49,15 +49,15 @@ struct BfmeG1052
 	int m_bfme18;
 };
 
-enum SlotState
-{
-	SLOT_OPEN,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 #include "string_base.h"
 

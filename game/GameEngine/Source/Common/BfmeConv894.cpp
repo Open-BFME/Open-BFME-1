@@ -34,10 +34,10 @@ public:
 
 // UPDATE_SLEEP_NONE is 1 in EA's UpdateModule.h (bfmeGoFEC below returns
 // it or UPDATE_SLEEP_FOREVER, 0x3fffffff).
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_NONE = 1
-};
+#include "../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
 
 struct BfmeThingFED;
 

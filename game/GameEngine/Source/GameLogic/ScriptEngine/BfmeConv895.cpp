@@ -173,7 +173,7 @@ static inline BfmeGlobFFD *g_bfmeObjFFD_view()
 	return (BfmeGlobFFD *)TheVictoryConditions;
 }
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptConditions.h
 class ScriptConditions

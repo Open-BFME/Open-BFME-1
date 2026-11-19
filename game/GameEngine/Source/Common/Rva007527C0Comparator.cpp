@@ -5,10 +5,10 @@
 #include <math.h>
 #include <algorithm>
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
+#include "../../Include/Common/DrawableID.h"
+
+
+
 
 class Drawable
 {

@@ -25,7 +25,7 @@
 // the ILT thunk at 0x000220C5), declared on the string model below; the
 // pinned ?compare@AsciiStringCompareShim name it used to carry defined nothing.
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class AsciiString;
 

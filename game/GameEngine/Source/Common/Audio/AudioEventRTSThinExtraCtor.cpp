@@ -14,20 +14,20 @@
 // and the callee helper reads info+8, proving this overload takes an info ref.
 struct AudioEventInfoRef { void *ptr; };
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
 
-enum LivingWorldID
-{
-	INVALID_LIVING_WORLD_ID = 0
-};
+
+
+#include "../../../Include/Common/DrawableID.h"
+
+
+
+
+#include "../../../Include/Common/Enums/LivingWorldID.h"
+
+
+
 
 class CountedPtr
 {

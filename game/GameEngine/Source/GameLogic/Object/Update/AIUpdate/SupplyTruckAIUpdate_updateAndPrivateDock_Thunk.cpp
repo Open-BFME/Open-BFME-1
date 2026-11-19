@@ -26,12 +26,12 @@ typedef unsigned int ObjectID;
 
 #include "../../../command_source_type.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID	= 0,
-	UPDATE_SLEEP_NONE		= 1,
-	UPDATE_SLEEP_FOREVER	= 0x3fffffff
-};
+#include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
+
 
 #define UPDATE_SLEEP(numFrames)				((UpdateSleepTime)(numFrames))
 

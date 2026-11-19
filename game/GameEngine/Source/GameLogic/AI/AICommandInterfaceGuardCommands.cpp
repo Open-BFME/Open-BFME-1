@@ -62,7 +62,7 @@ enum AICommandType
 };
 
 #include "../command_source_type.h"
-enum GuardMode {};
+#include "../../../Include/Common/Enums/GuardMode.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo

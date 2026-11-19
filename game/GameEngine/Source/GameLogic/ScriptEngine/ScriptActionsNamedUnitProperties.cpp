@@ -18,12 +18,12 @@
 
 
 
-enum EmotionType
-{
-	EMOTION_INVALID = -1
-};
+#include "../../../Include/Common/Enums/EmotionType.h"
 
-enum GuardMode { GUARDMODE_NORMAL = 0 };
+
+
+
+#include "../../../Include/Common/Enums/GuardMode.h"
 #include "../command_source_type.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

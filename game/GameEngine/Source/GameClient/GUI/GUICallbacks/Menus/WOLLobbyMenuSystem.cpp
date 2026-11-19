@@ -371,11 +371,11 @@ public:
   char opaque00[0x330];
 };
 extern std::list<PeerResponse> TheLobbyQueuedUTMs;
-enum GSOverlayType {
-  GSOVERLAY_BUDDY = 2,
-  GSOVERLAY_GAMEOPTIONS = 4,
-  GSOVERLAY_GAMEPASSWORD = 5
-};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
+
+
+
+
 void GameSpyOpenOverlay(GSOverlayType);
 void GameSpyToggleOverlay(GSOverlayType);
 void GSMessageBoxOk(UnicodeString, UnicodeString, void (*)(void) = 0);

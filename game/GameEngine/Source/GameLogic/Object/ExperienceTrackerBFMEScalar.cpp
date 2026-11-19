@@ -1,6 +1,6 @@
 // Byte-matched BFME ExperienceTracker scalar-table helper.
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ExperienceTracker;
 template <class T> class OVERRIDE;

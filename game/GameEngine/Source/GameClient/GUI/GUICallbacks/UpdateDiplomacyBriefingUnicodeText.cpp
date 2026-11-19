@@ -68,12 +68,12 @@ inline bool operator==(const UnicodeString &left, const UnicodeString &right)
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 class NameKeyGenerator
 {

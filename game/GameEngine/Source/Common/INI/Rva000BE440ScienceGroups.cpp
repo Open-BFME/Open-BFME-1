@@ -13,10 +13,10 @@
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *left, const char *right);
 
-enum ScienceType
-{
-    SCIENCE_INVALID = -1
-};
+#include "../../../Include/Common/Enums/ScienceType.h"
+
+
+
 
 class INI
 {

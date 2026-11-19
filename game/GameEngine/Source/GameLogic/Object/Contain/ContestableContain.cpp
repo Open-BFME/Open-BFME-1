@@ -16,10 +16,10 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-enum AbleToAttackType
-{
-	CONTEST_ATTACK_TYPE = 8
-};
+#include "../../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
 
 #include "../../command_source_type.h"
 
