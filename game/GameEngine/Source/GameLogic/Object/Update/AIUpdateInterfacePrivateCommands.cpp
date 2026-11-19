@@ -73,9 +73,9 @@
 // which it writes out as a padding run rather than a template base. Two bodies,
 // two call directions, two constructions, one number.
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
 
 #include "../../command_source_type.h"
 

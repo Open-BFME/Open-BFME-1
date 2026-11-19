@@ -64,10 +64,10 @@ private:
 typedef StringBase<unsigned short> UnicodeString;
 typedef StringBase<char> AsciiString;
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum NetCommandType
 {
