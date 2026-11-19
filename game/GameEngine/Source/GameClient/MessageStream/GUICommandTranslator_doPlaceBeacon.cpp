@@ -70,11 +70,11 @@ class View;
 extern View *TheTacticalView;
 extern MessageStream *TheMessageStream;
 
-enum CommandStatus
-{
-	COMMAND_INCOMPLETE = 0,
-	COMMAND_COMPLETE
-};
+#include "../../../Include/Common/Enums/CommandStatus.h"
+
+
+
+
 
 static CommandStatus doPlaceBeacon(const CommandButton *command, const ICoord2D *mouse)
 {

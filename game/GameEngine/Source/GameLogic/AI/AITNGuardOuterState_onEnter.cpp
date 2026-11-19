@@ -119,7 +119,7 @@ public:
 	unsigned char m_attackFields[0x54 - 0x20];
 };
 
-enum GuardMode { GUARDMODE_NORMAL = 0, GUARDMODE_GUARD_WITHOUT_PURSUIT = 1 };
+#include "../../../Include/Common/Enums/GuardMode.h"
 
 class AITNGuardMachine : public StateMachine
 {

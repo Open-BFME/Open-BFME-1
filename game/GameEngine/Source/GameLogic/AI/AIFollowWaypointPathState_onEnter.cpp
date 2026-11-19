@@ -58,7 +58,7 @@
 
 
 
-enum KindOfType { KINDOF_PROJECTILE = 0x19 };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 

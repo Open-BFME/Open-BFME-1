@@ -11,15 +11,15 @@
 typedef int ObjectID;
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum Relationship
-{
-	ENEMIES = 0
-};
+#include "../../../Include/Common/Enums/Relationship.h"
 
-enum AbleToAttackType
-{
-	ATTACK_TUNNEL_NETWORK_GUARD = 4
-};
+
+
+
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
 
 #include "../command_source_type.h"
 

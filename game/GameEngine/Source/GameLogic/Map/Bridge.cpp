@@ -5,7 +5,7 @@
 
 
 #include "../../../Include/Common/ObjectID.h"
-enum BodyDamageType { BODY_RUBBLE = 3 };
+#include "../../../Include/Common/Enums/BodyDamageType.h"
 enum DamageType { DAMAGE_FALLING = 11 };
 #include "../../../Include/Common/Enums/DeathType.h"
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"

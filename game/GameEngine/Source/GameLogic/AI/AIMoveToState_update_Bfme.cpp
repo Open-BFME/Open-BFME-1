@@ -74,11 +74,11 @@ struct Coord3D
 
 
 
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2,
-	KINDOF_PROJECTILE = 25
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 enum
 {

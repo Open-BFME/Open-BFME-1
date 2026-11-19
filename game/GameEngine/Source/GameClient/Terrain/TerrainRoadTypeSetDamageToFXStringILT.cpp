@@ -5,10 +5,10 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum BodyDamageType
-{
-	BODY_DAMAGE_TYPE_UNKNOWN = 0
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
 
 class AsciiString
 {

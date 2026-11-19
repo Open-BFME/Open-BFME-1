@@ -9,9 +9,9 @@
 #include "ascii_string.h"
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 #define BFME_HAVE_COORD3D 1
-enum KindOfType {};
+#include "../../../Include/Common/Enums/KindOfType.h"
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
-enum Relationship {};
+#include "../../../Include/Common/Enums/Relationship.h"
 #include "../../../Include/Common/Enums/MoodMatrixAction.h"
 enum StateReturnType { CONTINUE=0, SUCCESS=-1, FAILURE=-2 };
 class Weapon;

@@ -15,10 +15,10 @@
 
 
 
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 enum WhichTurretType
 {

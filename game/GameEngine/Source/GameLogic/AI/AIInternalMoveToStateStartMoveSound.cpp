@@ -66,14 +66,14 @@ public:
 // upstream: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
 // Only the damage enum and the comparison macro this body reads, so the real
 // header -- and the BodyModuleInterface it declares -- stay out of the TU.
-enum BodyDamageType
-{
-	BODY_PRISTINE,
-	BODY_DAMAGED,
-	BODY_REALLYDAMAGED,
-	BODY_RUBBLE,
-	BODYDAMAGETYPE_COUNT
-};
+#include "../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
+
+
+
+
 
 #define IS_CONDITION_WORSE(a, b) (a > b)
 

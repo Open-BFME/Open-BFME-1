@@ -23,10 +23,10 @@ extern "C" void *__cdecl memset(void *, int, unsigned int);
 
 
 
-enum Relationship
-{
-	ENEMIES = 0
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

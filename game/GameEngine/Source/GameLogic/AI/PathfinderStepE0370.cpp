@@ -10,7 +10,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 enum KindOfType { KINDOF_FIRST = 0 };
-enum Relationship { ENEMIES = 0, NEUTRAL = 1, ALLIES = 2 };
+#include "../../../Include/Common/Enums/Relationship.h"
 #include "../../../Include/Common/Enums/CrushSquishTestType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h

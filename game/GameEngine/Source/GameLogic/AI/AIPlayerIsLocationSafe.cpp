@@ -247,11 +247,11 @@ enum BFME_KindOfFromRetailMasks
 #define MAKE_KINDOF_MASK(k) VptrZeroBlock24(VptrZeroBlock24::kInit, (k))
 
 // PlayerList.h relationship flags: ALLOW_ALLIES 0x02, ALLOW_NEUTRAL 0x08.
-enum AllowPlayerRelationship
-{
-	ALLOW_ALLIES = 0x02,
-	ALLOW_NEUTRAL = 0x08
-};
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
+
+
+
+
 
 // PartitionManager.h:155, the immediate retail pushes at 0x00163055.
 #include "../../../Include/Common/Enums/DistanceCalculationType.h"

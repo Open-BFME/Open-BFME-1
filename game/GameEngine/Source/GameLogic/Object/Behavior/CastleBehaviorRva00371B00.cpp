@@ -43,7 +43,7 @@ typedef int ObjectID;
 // The call site pushes 0xE; BFME's own KindOf name table (.data RVA
 // 0x00EAA068: OBSTACLE, SELECTABLE, IMMOBILE, ...) gives index 14 = DOZER,
 // as SelectionInfo_addDrawableToList.cpp and AIUpdatePathPriority.cpp use.
-enum KindOfType { KINDOF_DOZER = 14 };
+#include "../../../../Include/Common/Enums/KindOfType.h"
 
 class ThingTemplate;
 class ProjectileUpdateInterface;

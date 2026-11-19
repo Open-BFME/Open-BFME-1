@@ -1,11 +1,11 @@
 // Retail 0x0027E070: optimized target dispatch.
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

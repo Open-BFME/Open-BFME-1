@@ -16,13 +16,13 @@ class ThingTemplate;
 class Team;
 class Object;
 
-enum BridgeTowerType
-{
-	BRIDGE_TOWER_FROM_LEFT = 0,
-	BRIDGE_TOWER_FROM_RIGHT,
-	BRIDGE_TOWER_TO_LEFT,
-	BRIDGE_TOWER_TO_RIGHT
-};
+#include "../../../Include/Common/Enums/BridgeTowerType.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ObjectStatusTypes.h
 // Retail passes a const reference to a zeroed 86-bit mask (three words).
@@ -135,7 +135,7 @@ class Object : public Thing
 public:
 	Team *getTeam(void) const { return m_team; }
 	BodyModuleInterface *getBodyModule(void) const { return m_body; }
-	
+
 private:
 	unsigned char m_unreconstructed_48[0x200 - 0x48];
 	BodyModuleInterface *m_body;							///< retail this+0x200

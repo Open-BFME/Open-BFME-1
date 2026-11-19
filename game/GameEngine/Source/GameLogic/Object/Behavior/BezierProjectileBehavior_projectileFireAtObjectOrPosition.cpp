@@ -30,10 +30,10 @@ enum KindOfType
 
 
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR = 0
-};
+#include "../../../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
 
 enum ObjectShroudStatus
 {

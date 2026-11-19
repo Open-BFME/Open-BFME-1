@@ -10,10 +10,10 @@ typedef int ObjectID;
 
 #include "../command_source_type.h"
 
-enum Relationship
-{
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
 
 class Object;
 

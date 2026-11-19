@@ -12,10 +12,10 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 class DamageInfo;
-enum BodyDamageType
-{
-	BODY_PRISTINE
-};
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
 
 class Weapon : public Snapshot
 {

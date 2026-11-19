@@ -47,11 +47,11 @@ typedef unsigned int ObjectID;
 
 
 
-enum IterOrderType
-{
-	ITER_FASTEST = 0,
-	ITER_SORTED_NEAR_TO_FAR = 1
-};
+#include "../../../../Include/Common/Enums/IterOrderType.h"
+
+
+
+
 
 // class-gate: allow Coord3D the canonical header is the bare 12-byte layout without members; this body's proven codegen needs the inlined sub/scale/normalize/length spellings (our=0 bytes without them).
 struct Coord3D

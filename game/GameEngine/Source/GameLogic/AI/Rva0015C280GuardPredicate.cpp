@@ -5,8 +5,8 @@
 // Unlike Zero Hour, BFME calls the last-attacker slot once and never clears it.
 // Evidence: identity_evidence/0015c280-native-guard-predicate.md.
 #include "../command_source_type.h"
-enum Relationship { ENEMIES = 0 };
-enum AbleToAttackType { ATTACK_NEW_TARGET = 0 };
+#include "../../../Include/Common/Enums/Relationship.h"
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
 enum CanAttackResult { ATTACKRESULT_NOT_POSSIBLE = 0, ATTACKRESULT_INVALID_SHOT = 1,
     ATTACKRESULT_POSSIBLE_AFTER_MOVING = 2, ATTACKRESULT_POSSIBLE = 3 };
 #define OBJECT_TU_MEMBERS \

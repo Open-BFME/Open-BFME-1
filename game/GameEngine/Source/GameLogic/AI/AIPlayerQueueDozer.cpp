@@ -34,7 +34,7 @@
 #define NULL 0
 #define FALSE 0
 
-enum KindOfType { KINDOF_DOZER = 14 };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 
 // StringBase<char>'s buffer header: refcount, length, capacity, data.

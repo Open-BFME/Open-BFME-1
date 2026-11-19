@@ -21,7 +21,7 @@
 #include "../../../Include/Common/ObjectID.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h
-enum BodyDamageType { BODY_PRISTINE = 0 };
+#include "../../../Include/Common/Enums/BodyDamageType.h"
 
 class BodyModuleInterface
 {

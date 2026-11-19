@@ -6,7 +6,7 @@
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_COMPUTER = 1 };
 enum CrushSquishTestType { TEST_TYPE_2 = 2 };
-enum KindOfType { KINDOF_DONT_AUTO_CRUSH_INFANTRY = 0x5b };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 class Object;
 

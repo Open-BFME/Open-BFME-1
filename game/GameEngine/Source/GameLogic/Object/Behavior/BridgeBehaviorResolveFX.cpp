@@ -50,7 +50,7 @@ class ObjectCreationListStore { public: const ObjectCreationList *findObjectCrea
 class FXListStore { public: const FXList *findFXList(const char*) const; };
 extern ObjectCreationListStore *TheObjectCreationListStore;
 extern FXListStore *TheFXListStore;
-enum BodyDamageType { BODY_PRISTINE=0, BODYDAMAGETYPE_COUNT=4 };
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
 class AudioEventRTS { char m_data[0x70]; public: void setEventName(AsciiString); void setObjectID(ObjectID); };
 class TerrainRoadType { public:
  AsciiString getDamageToOCLString(BodyDamageType,int);

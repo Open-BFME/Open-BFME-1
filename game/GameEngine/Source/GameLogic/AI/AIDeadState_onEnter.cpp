@@ -103,10 +103,10 @@ private:
 
 extern AI *TheAI;
 
-enum KindOfType
-{
-	KINDOF_INFANTRY = 8
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

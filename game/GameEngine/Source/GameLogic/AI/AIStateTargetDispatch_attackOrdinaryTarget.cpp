@@ -149,12 +149,12 @@ public:
 	void attackOrdinaryTarget(Thing *target);
 };
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 enum KindOfType
 {

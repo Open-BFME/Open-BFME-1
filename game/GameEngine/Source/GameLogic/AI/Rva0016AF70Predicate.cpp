@@ -1,7 +1,7 @@
 // ?rva0016AF70@@YA_NPAVRva0016AF70State@@PAX@Z
 // cl: /DNDEBUG /MD /EHsc
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
-enum AbleToAttackType { ATTACK_TYPE_0 = 0 };
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
 enum CanAttackResult { RESULT_2 = 2, RESULT_3 = 3 };
 #include "../command_source_type.h"
 class Weapon;

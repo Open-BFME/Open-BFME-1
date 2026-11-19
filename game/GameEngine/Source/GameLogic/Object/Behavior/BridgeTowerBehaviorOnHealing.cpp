@@ -17,14 +17,14 @@ typedef unsigned int UnsignedInt;
 typedef unsigned char Byte;
 
 #include "../../../../Include/Common/ObjectID.h"
-enum KindOfType
-{
-	KINDOF_BRIDGE = 22,
-	KINDOF_BRIDGE_TOWER = 24
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 #include "../../../../Include/Common/Enums/DeathType.h"
-enum BodyDamageType { BODY_RUBBLE = 3 };
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
 
 class DamageInfo;
 class BodyModuleInterface;
