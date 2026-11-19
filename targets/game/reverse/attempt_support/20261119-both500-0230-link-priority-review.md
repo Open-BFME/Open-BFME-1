@@ -1,0 +1,8 @@
+# Current link priority review
+
+The native link picker still serves the219-byte aiMoveToPosition provider (current census4da772231e;2067 consumer bytes in6 files). Prior attempt logs and aimove-selection-eh-20261107.md / aimove-provider-20261104-0356.md were read. The reviewed pinned BFME2 donor147fd3e52b36ee0306aaeef5b316beb09f7c7671 has different command-buffer/allocator context and provides no verified repair of BFME1's local EH-handler reference / kept-provider selection. No unchanged register/codegen sweep was repeated. No donor address, provider name, pin, source move or measured link gain was imported. The source-consistency operations are independent of that unresolved provider proof.
+
+Native network shadow observation: {"classification_cause_established": false, "evidence": "batch-020/native-after.log; batch-020/private-results.json; batch-020/commit.log", "extra_task_credit": 0, "native_hook_observation": "hatch_counters: SHADOW (not enforced): address_global +2; g_Rva00F36E5C (register grants 0)", "register_modified": false, "reviewed_source_diff": "Only typedef bool Bool; was replaced by the existing Common/ScalarTypes.h include. No address, global declaration or alias was added or changed.", "source": "game/GameEngine/Source/GameNetwork/native_network.cpp"}
+The reported address-global count increase is not presented as a retired or newly admitted escape hatch. Existing address declarations are unchanged; the classification cause has not been established.
+
+Review and required records count zero source operations. Byte-matching and declarations do not prove a complete image or a game start.
