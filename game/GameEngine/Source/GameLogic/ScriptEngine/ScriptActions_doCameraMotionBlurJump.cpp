@@ -6,25 +6,25 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum FilterTypes
-{
-	FT_NULL_FILTER = 0,
-	FT_VIEW_BW_FILTER,
-	FT_VIEW_MOTION_BLUR_FILTER
-};
+#include "../../../Include/Common/Enums/FilterTypes.h"
 
-enum FilterModes
-{
-	FM_NULL_MODE = 0,
-	FM_VIEW_BW_BLACK_AND_WHITE,
-	FM_VIEW_BW_RED_AND_WHITE,
-	FM_VIEW_BW_GREEN_AND_WHITE,
-	FM_VIEW_BW_BLUE_AND_WHITE,
-	FM_VIEW_BW_IN_AND_OUT,
-	FM_VIEW_BW_FADE_AND_RETURN,
-	FM_VIEW_MB_IN_AND_OUT_ALPHA,
-	FM_VIEW_MB_IN_AND_OUT_SATURATE
-};
+
+
+
+
+
+#include "../../../Include/Common/Enums/FilterModes.h"
+
+
+
+
+
+
+
+
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

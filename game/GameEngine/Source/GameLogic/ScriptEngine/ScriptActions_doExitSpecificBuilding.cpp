@@ -9,10 +9,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../command_source_type.h"
 

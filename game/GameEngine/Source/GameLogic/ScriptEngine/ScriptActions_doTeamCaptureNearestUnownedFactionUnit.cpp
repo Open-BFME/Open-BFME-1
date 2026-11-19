@@ -26,13 +26,13 @@ public:
 
 #include "../command_source_type.h"
 
-enum AllowPlayerRelationship
-{
-	ALLOW_SAME_PLAYER = 0x01,
-	ALLOW_ALLIES = 0x02,
-	ALLOW_ENEMIES = 0x04,
-	ALLOW_NEUTRAL = 0x08
-};
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
+
+
+
+
+
+
 
 class PartitionFilter
 {

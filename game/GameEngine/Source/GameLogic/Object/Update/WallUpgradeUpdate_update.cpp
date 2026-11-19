@@ -13,10 +13,10 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_FOREVER = 0x3fffffff
 };
 
-enum BodyDamageType
-{
-	BODY_DAMAGE_PRISTINE = 0
-};
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
+
+
+
 
 class BodyModuleInterface
 {

@@ -161,16 +161,16 @@ extern ParticleSystemManager *TheParticleSystemManager;
 extern AudioManager *TheAudio;
 extern int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 
-enum RepairStates
-{
-	REPAIRSTATE_NONE,
-	REPAIRSTATE_UNPACKING,
-	REPAIRSTATE_PACKING,
-	REPAIRSTATE_READY,
-	REPAIRSTATE_EXTENDING,
-	REPAIRSTATE_RETRACTING,
-	REPAIRSTATE_WELDING
-};
+#include "../../../../Include/Common/Enums/RepairStates.h"
+
+
+
+
+
+
+
+
+
 
 enum ModelConditionFlagType
 {

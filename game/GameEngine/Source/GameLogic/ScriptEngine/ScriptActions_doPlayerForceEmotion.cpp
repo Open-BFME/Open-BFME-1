@@ -15,10 +15,10 @@
 #include "../../../Include/Common/ScalarTypes.h"
 typedef unsigned short PlayerMaskType;
 
-enum EmotionType
-{
-	EMOTION_INVALID = -1
-};
+#include "../../../Include/Common/Enums/EmotionType.h"
+
+
+
 
 class Drawable;
 class Object;

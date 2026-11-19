@@ -104,10 +104,10 @@ typedef BitFlags<192> KindOfMaskType;
 // ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B, VA 0x012ED8B8
 extern const KindOfMaskType KINDOFMASK_NONE;
 
-enum KindOfType
-{
-	KINDOF_MINE = 54
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 // BFME filters (same model as ScriptConditions.cpp Rva00327D30): virtual
 // destructor, allow, getPlayerMask, then next at +4.

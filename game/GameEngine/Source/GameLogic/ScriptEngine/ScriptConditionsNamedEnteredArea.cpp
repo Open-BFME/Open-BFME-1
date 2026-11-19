@@ -46,10 +46,10 @@ public:
 // BFME's ThingTemplate keeps its KindOf bits in three words at +0xC8, read
 // as in Thing_isKindOf.cpp (retail 0x000A2CB0); KINDOF_INERT is word 2
 // (+0xD0) bit 24, also recovered in ObjectFields.cpp.
-enum KindOfType
-{
-	KINDOF_INERT = 88
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class ThingTemplate : public Overridable
 {

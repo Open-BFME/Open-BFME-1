@@ -19,7 +19,7 @@ class Object;
 class Team;
 class Module;
 #include "../../../../Include/Common/NameKeyType.h"
-enum Relationship { ENEMIES };
+#include "../../../../Include/Common/Enums/Relationship.h"
 class NameKeyGenerator { public: NameKeyType nameToKey(const char*); };
 extern NameKeyGenerator* TheNameKeyGenerator;
 template<int N> class BitFlags { _STL::bitset<N> bits; public:
@@ -131,7 +131,7 @@ class Object { public:
  const ThingTemplate* getTemplate() const;
  Player* getControllingPlayer() const;
  void setStatus(const BitFlags<86>&,bool);
- 
+
  void* unidentified_001BFE20() const;
  char pad004[0x8c]; BitFlags<86> status;
  protected:

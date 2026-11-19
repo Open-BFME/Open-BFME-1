@@ -97,11 +97,11 @@ public:
 
 #include "Lib/Coord3D.h"
 
-enum KindOfType
-{
-	KINDOF_INFANTRY = 8,
-	KINDOF_NO_GARRISON = 27
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 class ThingTemplate : public Overridable
 {

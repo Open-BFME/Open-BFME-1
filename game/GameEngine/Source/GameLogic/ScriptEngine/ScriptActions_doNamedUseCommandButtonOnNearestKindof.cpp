@@ -209,18 +209,18 @@ extern ScriptEngine *TheScriptEngine;
 extern ControlBar *TheControlBar;
 extern PartitionManager *ThePartitionManager;
 
-enum AllowPlayerRelationship
-{
-	ALLOW_SAME_PLAYER = 0x01,
-	ALLOW_ALLIES = 0x02,
-	ALLOW_ENEMIES = 0x04,
-	ALLOW_NEUTRAL = 0x08
-};
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
 
-enum CommandOption
-{
-	NEED_TARGET_POS = 0x00000020
-};
+
+
+
+
+
+
+#include "../../../Include/Common/Enums/CommandOption.h"
+
+
+
 
 class ScriptActions
 {

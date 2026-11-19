@@ -8,21 +8,21 @@
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
 
-enum Relationship
-{
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../../Include/Common/Enums/Relationship.h"
 
-enum StealthLookType
-{
-	STEALTHLOOK_NONE = 0,
-	STEALTHLOOK_VISIBLE_FRIENDLY = 1,
-	STEALTHLOOK_DISGUISED_ENEMY = 2,
-	STEALTHLOOK_VISIBLE_DETECTED = 3,
-	STEALTHLOOK_VISIBLE_FRIENDLY_DETECTED = 4,
-	STEALTHLOOK_INVISIBLE = 5
-};
+
+
+
+
+#include "../../../../Include/Common/Enums/StealthLookType.h"
+
+
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
 class Team

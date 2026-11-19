@@ -23,16 +23,16 @@ extern void j_00041894();	// ILT -> Money::withdraw
 extern void j_000450f7();	// ILT -> ProductionUpdate::addToProductionQueue
 extern void j_0000e6e7();	// ILT -> rva0036BB10FindCastleMemberBehavior
 
-enum UpgradeType
-{
-	UPGRADE_TYPE_PLAYER = 0,
-	UPGRADE_TYPE_OBJECT = 1
-};
+#include "../../../../Include/Common/Enums/UpgradeType.h"
 
-enum UpgradeStatusType
-{
-	UPGRADE_STATUS_IN_PRODUCTION = 1
-};
+
+
+
+
+#include "../../../../Include/Common/Enums/UpgradeStatusType.h"
+
+
+
 
 class Object;
 class Player;

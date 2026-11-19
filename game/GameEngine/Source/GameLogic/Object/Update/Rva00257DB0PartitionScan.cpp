@@ -27,8 +27,8 @@
 
 
 #include "../../../../Include/Common/ObjectID.h"
-enum KindOfType { KINDOF_INVALID = -1 };
-enum IterOrderType { ITER_FASTEST, ITER_SORTED_NEAR_TO_FAR, ITER_SORTED_FAR_TO_NEAR, ITER_SORTED_CHEAP_TO_EXPENSIVE, ITER_SORTED_EXPENSIVE_TO_CHEAP };
+#include "../../../../Include/Common/Enums/KindOfType.h"
+#include "../../../../Include/Common/Enums/IterOrderType.h"
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

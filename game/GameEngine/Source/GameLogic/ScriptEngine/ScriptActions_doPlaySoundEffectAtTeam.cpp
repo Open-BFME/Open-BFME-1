@@ -17,10 +17,10 @@
 
 
 // Retail's KindOf name table (VA 0x012AA068) puts HORDE at index 0x6C.
-enum KindOfType
-{
-	KINDOF_HORDE = 108
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class Object;
 

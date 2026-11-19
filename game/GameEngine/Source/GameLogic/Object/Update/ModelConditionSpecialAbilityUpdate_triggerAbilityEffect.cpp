@@ -11,7 +11,7 @@
 
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
-enum IterOrderType { ITER_FASTEST = 0 };
+#include "../../../../Include/Common/Enums/IterOrderType.h"
 
 class Player;
 

@@ -3,10 +3,10 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum RepairStates
-{
-	REPAIRSTATE_NONE = 0
-};
+#include "../../../../Include/Common/Enums/RepairStates.h"
+
+
+
 
 enum ModelConditionFlagType
 {

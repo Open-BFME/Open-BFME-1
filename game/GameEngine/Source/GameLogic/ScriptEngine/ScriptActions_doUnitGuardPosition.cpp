@@ -5,10 +5,10 @@
 
 typedef bool Bool;
 
-enum GuardMode
-{
-	GUARDMODE_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/GuardMode.h"
+
+
+
 
 #include "../command_source_type.h"
 

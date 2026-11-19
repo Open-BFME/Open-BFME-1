@@ -26,10 +26,10 @@
 typedef unsigned short PlayerMaskType;
 
 #include "game_logic_dispatch.h"
-enum KindOfType { KINDOF_STRUCTURE = 7 };
-enum AllowPlayerRelationship { ALLOW_NEUTRAL = 8 };
+#include "../../../Include/Common/Enums/KindOfType.h"
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
 #include "../../../Include/Common/Enums/DistanceCalculationType.h"
-enum IterOrderType { ITER_FASTEST = 0 };
+#include "../../../Include/Common/Enums/IterOrderType.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -13,7 +13,7 @@
 
 
 typedef unsigned int ObjectID;
-enum Relationship { ALLIES = 2 };
+#include "../../../../Include/Common/Enums/Relationship.h"
 class SpecialPowerTemplate;
 class SpecialPowerModuleInterface;
 

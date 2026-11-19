@@ -11,9 +11,9 @@
 #include "ascii_string.h"
 #include "Common/UnicodeString.h"
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
-enum Relationship { ALLIES = 2 };
+#include "../../../Include/Common/Enums/Relationship.h"
 #include "../../../Include/Common/NameKeyType.h"
-enum EvaMessage {};
+#include "../../../Include/Common/Enums/EvaMessage.h"
 struct Coord3D;
 class Team;
 class Player {

@@ -39,10 +39,10 @@ typedef unsigned int AudioHandle;
 
 
 
-enum StealthLookType
-{
-	STEALTHLOOK_NONE = 0
-};
+#include "../../../../Include/Common/Enums/StealthLookType.h"
+
+
+
 
 #include "ascii_string.h"
 

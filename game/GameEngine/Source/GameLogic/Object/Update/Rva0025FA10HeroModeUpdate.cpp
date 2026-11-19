@@ -4,10 +4,10 @@
 // SpecialAbilityUpdate::startUnpacking, ILT 0x4A74B -> 0x001C4920
 // Thing::bfmeHasWeaponTemplateSet, ILT 0x348EC -> 0x001C9A10
 // Gen001C9A10::handle.
-enum WeaponSetType
-{
-	WEAPONSET_INVALID = 0
-};
+#include "../../../../Include/Common/Enums/WeaponSetType.h"
+
+
+
 
 #define THING_TU_MEMBERS \
 	bool bfmeHasWeaponTemplateSet( WeaponSetType type ) const;

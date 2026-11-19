@@ -76,7 +76,7 @@ public:
     const CommandButton *findCommandButton(const AsciiString &name);
 };
 
-enum GUICommandType { GUI_COMMAND_NONE = 0 };
+#include "../../../Include/Common/Enums/GUICommandType.h"
 class Overridable
 {
 public:
@@ -223,13 +223,13 @@ extern ScriptEngine *TheScriptEngine;
 extern ControlBar *TheControlBar;
 extern PartitionManager *ThePartitionManager;
 
-enum AllowPlayerRelationship
-{
-    ALLOW_SAME_PLAYER = 0x01,
-    ALLOW_ALLIES = 0x02,
-    ALLOW_ENEMIES = 0x04,
-    ALLOW_NEUTRAL = 0x08
-};
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
+
+
+
+
+
+
 
 class AIGroup
 {

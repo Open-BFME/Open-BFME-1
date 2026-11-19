@@ -10,12 +10,12 @@
 // callers reach it through ILT 0x000126BB, all in difficulty contexts:
 // GameLogic::prepareNewGame, DifficultySelectSystem, bfmeShutdownAAV.
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY,
-	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD
-};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine

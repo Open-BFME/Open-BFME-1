@@ -17,13 +17,13 @@ extern "C" double fabs(double);
 
 #include "../ScriptEngine/game_logic_dispatch.h"
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7,
-	KINDOF_WALK_ON_TOP_OF_WALL = 59,
-	KINDOF_SIEGE_TOWER = 92,
-	KINDOF_WALL_UPGRADE = 149
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

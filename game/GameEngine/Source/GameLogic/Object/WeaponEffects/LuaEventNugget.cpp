@@ -27,11 +27,11 @@ typedef Int ObjectID;
 
 struct Coord3D;
 
-enum IterOrderType
-{
-	ITER_FASTEST,
-	ITER_SORTED_NEAR_TO_FAR
-};
+#include "../../../../Include/Common/Enums/IterOrderType.h"
+
+
+
+
 
 #include "../../../../Include/Common/NameKeyType.h"
 

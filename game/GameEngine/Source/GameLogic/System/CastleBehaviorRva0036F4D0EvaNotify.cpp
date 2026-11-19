@@ -13,10 +13,10 @@
 
 
 
-enum EvaMessage
-{
-	EVA_INVALID = -1
-};
+#include "../../../Include/Common/Enums/EvaMessage.h"
+
+
+
 
 #include "../../../Include/Common/Enums/RadarEventType.h"
 

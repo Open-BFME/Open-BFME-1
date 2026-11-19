@@ -13,10 +13,10 @@
 
 
 
-enum KindOfType
-{
-	KINDOF_HORDE = 108
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 enum ObjectStatusTypes
 {

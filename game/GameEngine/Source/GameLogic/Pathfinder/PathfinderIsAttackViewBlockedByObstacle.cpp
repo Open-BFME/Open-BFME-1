@@ -46,10 +46,10 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 

@@ -5,7 +5,7 @@
 
 class ModuleData;
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
-enum KindOfType { KINDOF_HULK = 81 };
+#include "../../../../Include/Common/Enums/KindOfType.h"
 
 int GetGameLogicRandomValue(int, int, char *, int);
 

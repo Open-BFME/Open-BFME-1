@@ -14,10 +14,10 @@
 
 
 
-enum AbleToAttackType
-{
-	_ATTACK_FORCED = 0x01
-};
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
 
 inline Bool isForcedAttack( AbleToAttackType t ) { return ( ( (Int)t ) & _ATTACK_FORCED ) != 0; }
 
@@ -32,12 +32,12 @@ enum CanAttackResult
 	ATTACKRESULT_NOT_POSSIBLE = 0
 };
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 enum KindOfType
 {

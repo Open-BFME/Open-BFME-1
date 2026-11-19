@@ -17,10 +17,10 @@ enum ObjectStatusTypes
 	OBJECT_STATUS_STAND_GROUND = 67
 };
 
-enum KindOfType
-{
-	KINDOF_HORDE = 108
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 template<int NUMBITS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

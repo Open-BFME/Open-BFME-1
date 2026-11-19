@@ -213,13 +213,13 @@ enum TransitionStatus
     ACTIVE,
     PACKING
 };
-enum BattlePlanStatus
-{
-    NONE,
-    BOMBARDMENT,
-    HOLDTHELINE,
-    SEARCHANDDESTROY
-};
+#include "../../../../Include/Common/Enums/BattlePlanStatus.h"
+
+
+
+
+
+
 class BattlePlanUpdate
 {
     void *vtable;
