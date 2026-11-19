@@ -33,7 +33,7 @@
 // IDENTITY IS NOT RECOVERED beyond the keywords: nothing here names the struct
 // the instance points at, so its fields carry the keyword and its offset.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h

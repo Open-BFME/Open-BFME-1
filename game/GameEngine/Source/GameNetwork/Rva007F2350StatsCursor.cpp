@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 // Calls name each Rva007E8810Message helper by the ledger row at its pinned
 // address (link_check.py near), the spelling the link resolves.

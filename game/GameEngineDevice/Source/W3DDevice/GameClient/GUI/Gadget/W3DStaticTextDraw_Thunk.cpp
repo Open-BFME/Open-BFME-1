@@ -33,9 +33,9 @@
 // end.y matches either way, which is what kept making this look like
 // allocation noise rather than a source-level fact.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 typedef unsigned char Bool;
 

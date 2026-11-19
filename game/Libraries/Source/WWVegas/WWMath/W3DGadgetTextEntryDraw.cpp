@@ -95,12 +95,12 @@
 // the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 typedef int Color;
-typedef float Real;
-typedef unsigned short WideChar;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/WideChar.h"
 
 enum { WIN_COLOR_UNDEFINED = 0x00FFFFFF };
 enum { WIN_STATUS_ENABLED = 0x00000008 };

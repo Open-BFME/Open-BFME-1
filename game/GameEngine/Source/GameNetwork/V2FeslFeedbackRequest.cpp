@@ -4,7 +4,7 @@
 // helper callees serialize an 8-byte-stride target-id array and 0x208-byte
 // chat-log records (64-bit user id followed by a 0x200-byte string).
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 extern "C" int __cdecl sprintf( char *buffer, const char *format, ... );
 

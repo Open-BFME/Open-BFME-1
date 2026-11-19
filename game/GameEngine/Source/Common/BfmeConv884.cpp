@@ -43,7 +43,7 @@ public:
 // `PlayerList *ThePlayerList` (mangled ?ThePlayerList@@3PAVPlayerList@@A), so
 // both references carry that one name. BfmeGlobESC is this TU's local view of
 // the pointee; cast at each use.
-class PlayerList;
+
 extern PlayerList *ThePlayerList;
 
 struct BfmeThingESCa

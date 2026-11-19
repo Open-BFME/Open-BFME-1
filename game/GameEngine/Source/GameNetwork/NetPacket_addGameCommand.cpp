@@ -49,7 +49,7 @@ extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count)
 
 typedef UnsignedInt ObjectID;
 typedef UnsignedInt DrawableID;
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 enum { MAX_PACKET_SIZE = 0x1DC };
 
 typedef Int GameMessageType;

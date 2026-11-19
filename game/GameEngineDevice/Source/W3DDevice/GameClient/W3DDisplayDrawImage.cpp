@@ -2,7 +2,7 @@
 
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
-typedef unsigned long UnsignedLong;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/UnsignedLong.h"
 
 struct BfmeRect
 {

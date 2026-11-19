@@ -24,7 +24,7 @@
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 
-typedef int GPProfile;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
 typedef wchar_t WideChar;
 
 // Retail inlines the null-checked data pointer read at every str() site.

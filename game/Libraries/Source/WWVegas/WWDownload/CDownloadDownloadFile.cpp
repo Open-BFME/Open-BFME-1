@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 
 typedef const char *LPCSTR;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 enum
 {
@@ -194,7 +194,7 @@ HRESULT CDownload::PumpMessages()
 		// Tell the client that we're starting to connect.
 
 		Listener->OnStatusUpdate( DOWNLOADSTATUS_CONNECTING );
-		
+
 		m_Status = DOWNLOADSTATUS_CONNECTING;
 	}
 
@@ -203,7 +203,7 @@ HRESULT CDownload::PumpMessages()
 	{
 		// Connect to the server
       //////////DBGMSG("Connect to Server");
-				
+
 		iResult = m_Ftp->ConnectToServer( m_Server );
       ////////////DBGMSG("out of FTP connect");
 
@@ -254,7 +254,7 @@ HRESULT CDownload::PumpMessages()
 
 	if(( m_Status == DOWNLOADSTATUS_FINDINGFILE ) && (strlen(m_File)))
 	{
-		
+
 		// Find the file on the server
       ///////////DBGMSG("Find File");
 
@@ -288,7 +288,7 @@ HRESULT CDownload::PumpMessages()
 				m_BytesRead			= 0;
 				m_File[ 0 ]			= '\0';
 				m_LocalFile[ 0 ]	= '\0';
-			
+
 				Listener->OnEnd();
 
 				reenter = 0;
@@ -418,7 +418,7 @@ HRESULT CDownload::PumpMessages()
 		m_BytesRead			= 0;
 		m_File[ 0 ]			= '\0';
 		m_LocalFile[ 0 ]	= '\0';
-	
+
 		Listener->OnEnd();
 	}
 

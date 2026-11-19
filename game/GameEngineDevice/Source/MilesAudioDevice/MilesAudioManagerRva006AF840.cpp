@@ -24,7 +24,7 @@ void __cdecl operator delete( void * ) throw();
 
 #include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+#include "../../../GameEngine/Include/Common/ScalarTypes/WideChar.h"
 
 template <typename T>
 class StringBase

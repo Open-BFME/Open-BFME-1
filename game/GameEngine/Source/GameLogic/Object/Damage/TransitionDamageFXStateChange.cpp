@@ -80,7 +80,7 @@ static Coord3D getLocalEffectPos( const FXLocInfo *locInfo, Drawable *draw )
 
 // ??4Coord3D@@QAEAAU0@ABU0@@Z absent-from-retail
 inline Coord3D &Coord3D::operator=(const Coord3D &other) { x=other.x; y=other.y; z=other.z; return *this; }
-class Matrix3D;
+
 class ParticleSystemTemplate;
 #include "../../../../Include/Common/Enums/BodyDamageType.h"
 #include "../../../../Include/Common/Enums/ParticleSystemID.h"

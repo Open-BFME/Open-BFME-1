@@ -2,10 +2,10 @@
 // readable body of ?isAcceptingExperiencePoints@ExperienceTracker@@: game/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp
 // Byte-matched BFME ExperienceTracker transfer implementation.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
+#include "../../../Include/Common/ScalarTypes/Real.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedByte.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

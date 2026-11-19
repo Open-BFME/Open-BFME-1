@@ -239,7 +239,7 @@ public:
 	_STL::list<BfmeRankEntry> m_list;	//retail +0x04
 };
 
-class BfmeSubBU;
+
 
 struct GameLogicRankView
 {

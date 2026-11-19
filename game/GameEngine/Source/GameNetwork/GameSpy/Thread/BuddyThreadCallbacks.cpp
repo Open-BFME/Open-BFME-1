@@ -52,8 +52,8 @@ private:
 typedef basic_string<wchar_t, char_traits<wchar_t>, allocator<wchar_t> > wstring;
 }
 
-typedef int GPProfile;
-typedef int GPEnum;
+#include "../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
+#include "../../../../Include/Common/ScalarTypes/Source/GPEnum.h"
 
 class GPConnection;
 

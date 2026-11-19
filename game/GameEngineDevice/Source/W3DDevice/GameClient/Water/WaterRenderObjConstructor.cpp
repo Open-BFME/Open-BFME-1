@@ -188,7 +188,7 @@ struct ZeroQuad4
 	unsigned long a, b, c, d;
 };
 
-class SkyBoxRenderObject;
+
 
 struct ZeroBlock250
 {

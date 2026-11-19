@@ -19,11 +19,11 @@
 // DataChunkOutput::~DataChunkOutput at 0x001036C0, whose incremental-link call
 // passes m_pOut and m_contents and so proves which stream each one takes.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedShort.h"
 typedef unsigned char Byte;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes/Bool.h"
 
 #define NULL 0
 

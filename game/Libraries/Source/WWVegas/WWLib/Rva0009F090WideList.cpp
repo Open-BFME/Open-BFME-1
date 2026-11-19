@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned short WideChar;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/WideChar.h"
 
 class UnicodeString;
 

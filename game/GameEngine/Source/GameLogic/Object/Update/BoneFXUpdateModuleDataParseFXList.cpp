@@ -4,7 +4,7 @@
 #include <string.h>
 
 typedef int Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes/Real.h"
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 

@@ -48,7 +48,7 @@ public:
 	const Coord3D *getPosition(void) const { return &m_position; }
 };
 
-class ThingTemplate;
+
 
 class BfmeThingFactory
 {

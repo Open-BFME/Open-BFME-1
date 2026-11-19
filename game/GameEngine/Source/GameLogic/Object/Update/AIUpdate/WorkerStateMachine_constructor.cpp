@@ -30,7 +30,7 @@ private:
 	unsigned char m_stateData[0x20];
 };
 
-class State;
+
 
 class StateMachine
 {

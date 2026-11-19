@@ -36,7 +36,7 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s)
 }
 
 typedef int GPProfile;
-typedef int GPEnum;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPEnum.h"
 #include "../../../../../Include/Common/ScalarTypes.h"
 #define TRUE true
 #define FALSE false
