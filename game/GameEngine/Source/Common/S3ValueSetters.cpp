@@ -12,7 +12,7 @@
 // In both shapes the operand width separates the types -- al is a Bool, eax an
 // int -- and the ret immediate divided by four gives the argument count.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 
 // The manager every notify-setter tail-jumps through is one global pointer at

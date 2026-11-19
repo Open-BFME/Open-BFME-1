@@ -10,7 +10,7 @@
 // As before the size chooses the allocator, and the four bytes the prologue
 // reserves survive because the out-parameter's address escapes into the call.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
 

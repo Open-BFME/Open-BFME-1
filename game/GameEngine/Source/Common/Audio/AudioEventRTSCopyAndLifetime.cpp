@@ -10,20 +10,20 @@
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *lpAddend);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
-enum ObjectID
-{
-	INVALID_ID = 0
-};
+#include "../../../Include/Common/ObjectID.h"
 
-enum DrawableID
-{
-	INVALID_DRAWABLE_ID = 0
-};
 
-enum LivingWorldID
-{
-	INVALID_LIVING_WORLD_ID = 0
-};
+
+
+#include "../../../Include/Common/DrawableID.h"
+
+
+
+
+#include "../../../Include/Common/Enums/LivingWorldID.h"
+
+
+
 
 struct Coord3D
 {

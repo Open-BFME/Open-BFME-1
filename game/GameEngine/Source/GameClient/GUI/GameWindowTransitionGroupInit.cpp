@@ -5,7 +5,7 @@
 
 // Retail ILT 0x0003ADD7 lands on 0x0008FFC0, matched as
 // NameKeyGenerator::nameToKey returning the NameKeyType enum.
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 struct AsciiStringData

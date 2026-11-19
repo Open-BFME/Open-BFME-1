@@ -70,7 +70,7 @@ void __stdcall rva005329A0(int value)
 // takes the fill BY VALUE (IntVectorResizeThunk.cpp has the evidence), so the
 // class is spelled here with just that declaration, like the *ResizeThunk.cpp
 // family that defines each callee.
-enum ObjectID {};
+#include "../../Include/Common/ObjectID.h"
 
 namespace _STL
 {

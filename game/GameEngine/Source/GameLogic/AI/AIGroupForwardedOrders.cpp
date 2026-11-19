@@ -74,14 +74,14 @@ class Waypoint;
 class PolygonTrigger;
 class Module;
 
-enum GuardMode { BFME_GUARD_MODE_NORMAL };
+#include "../../../Include/Common/Enums/GuardMode.h"
 
 #include "../command_source_type.h"
 
 #include "../ScriptEngine/game_logic_dispatch.h"
-enum IterOrderType { ITER_FASTEST = 0, ITER_SORTED_NEAR_TO_FAR = 1 };
-enum KindOfType { KINDOF_IMMOBILE = 2, KINDOF_STRUCTURE = 7, KINDOF_AIRCRAFT = 12 };
-enum PathfindLayerEnum { LAYER_GROUND = 1 };
+#include "../../../Include/Common/Enums/IterOrderType.h"
+#include "../../../Include/Common/Enums/KindOfType.h"
+#include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 
 

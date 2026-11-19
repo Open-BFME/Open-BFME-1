@@ -49,9 +49,9 @@ class Player;
 struct Coord3D;
 
 #include "../command_source_type.h"
-enum AttitudeType {};
+#include "../../../Include/Common/Enums/AttitudeType.h"
 enum SpecialPowerType { SPECIAL_INVALID = 0 };
-enum UpgradeType { UPGRADE_TYPE_PLAYER = 0, UPGRADE_TYPE_OBJECT = 1 };
+#include "../../../Include/Common/Enums/UpgradeType.h"
 enum CanMakeType { CANMAKE_QUEUE_FULL = 4 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h

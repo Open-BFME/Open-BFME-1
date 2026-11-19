@@ -412,14 +412,14 @@ public:
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 extern GameSpyConfigInterface *TheGameSpyConfig;
-enum SlotState {
-  SLOT_OPEN,
-  SLOT_CLOSED,
-  SLOT_EASY_AI,
-  SLOT_MED_AI,
-  SLOT_BRUTAL_AI,
-  SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
 
 struct GameSlotConnectInfo {
   unsigned ip;
@@ -585,7 +585,7 @@ public:
 static bool isShuttingDown, raiseMessageBoxes, buttonPushed;
 static char *nextScreen;
 static NameKeyType buttonBuddiesID;
-enum NATStateType { NATSTATE_DONE = 3, NATSTATE_FAILED = 4 };
+#include "../../../../../Include/Common/Enums/NATStateType.h"
 class NAT {
 public:
   virtual ~NAT();
@@ -625,23 +625,23 @@ public:
   virtual void __cdecl message(AsciiString, ...);
 };
 extern Rva00506720UI *TheInGameUI;
-enum QMStatus {
-  QM_IDLE,
-  QM_JOININGQMCHANNEL,
-  QM_LOOKINGFORBOT,
-  QM_SENTINFO,
-  QM_WORKING,
-  QM_POOLSIZE,
-  QM_WIDENINGSEARCH,
-  QM_MATCHED,
-  QM_INCHANNEL,
-  QM_NEGOTIATINGFIREWALLS,
-  QM_STARTINGGAME,
-  QM_COULDNOTFINDBOT,
-  QM_COULDNOTFINDCHANNEL,
-  QM_COULDNOTNEGOTIATEFIREWALLS,
-  QM_STOPPED
-};
+#include "../../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ECX is the layout; the single stack argument is unused (ret 4).
 
 // Retail 0x0055AE10 (800 bytes): fills the quick-match request's map mask

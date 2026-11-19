@@ -10,7 +10,7 @@
 
 #include "StringInline.h"
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
 
 extern "C" float __cdecl sinf(float);
 extern "C" float __cdecl cosf(float);

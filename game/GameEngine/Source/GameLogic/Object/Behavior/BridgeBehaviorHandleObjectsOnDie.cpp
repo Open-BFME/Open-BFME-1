@@ -19,9 +19,9 @@
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D &Coord3D::operator=(const Coord3D &v) { memcpy(this,&v,12); return *this; }
-enum PathfindLayerEnum { LAYER_GROUND=1 };
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 enum DamageType { DAMAGE_UNRESISTABLE=8 };
-enum DeathType { DEATH_NORMAL=0 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 class BridgeInfo {
 public:
  BridgeInfo();

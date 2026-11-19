@@ -12,7 +12,7 @@
 //
 // Moved from VirtualSlot5CallThunk.cpp (VirtualSlot11SecondArgumentCallThunk).
 
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class Object;
 
