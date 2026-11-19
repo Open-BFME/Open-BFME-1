@@ -7,8 +7,8 @@
 
 #include <string.h>
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes.h"
+
 
 #include "ascii_string.h"
 // Retail calls the length-aware StringBase concat from each accessor below.

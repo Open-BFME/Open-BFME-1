@@ -26,7 +26,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <map>
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 // 0x000A3E50 is map<Int, UnsignedInt>'s copy (IntUnsignedMapCopy.cpp).
 

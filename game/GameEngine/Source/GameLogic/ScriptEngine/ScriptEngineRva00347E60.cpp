@@ -21,8 +21,8 @@ class Xfer;
 class Object;
 class SequentialScript;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
-enum ObjectID { INVALID_ID = 0 };
-enum ScienceType { SCIENCE_INVALID = -1 };
+#include "../../../Include/Common/ObjectID.h"
+#include "../../../Include/Common/Enums/ScienceType.h"
 
 struct ScriptCounter
 {

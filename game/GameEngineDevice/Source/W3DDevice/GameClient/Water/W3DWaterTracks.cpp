@@ -235,18 +235,18 @@ static inline void BFMEAssignWaterTrackTexture(
 	destination = texture.m_texture;
 }
 
-enum waveType
-{
-	WaveTypeFirst,
-	WaveTypePond=WaveTypeFirst,
-	WaveTypeOcean,
-	WaveTypeCloseOcean,	//same as above but appears much closer to beach.
-	WaveTypeCloseOceanDouble,	//same as above but waves much sloser together.
-	WaveTypeRadial,
-	WaveTypeLast = WaveTypeRadial,
-	WaveTypeStationary,
-	WaveTypeMax,
-};
+#include "../../../../../GameEngine/Include/Common/Enums/waveType.h"
+
+
+
+
+
+
+
+
+
+
+
 
 struct waveInfo
 {
@@ -500,7 +500,7 @@ Int WaterTracksObj::render(DX8VertexBufferClass	*vertexBuffer, Int batchStart)
 		else
 		if (m_elapsedMs > (m_timeToReachBeach + m_timeToStop - 1000))
 		{	//start fading up
-			
+
 			waveAlpha = m_elapsedMs-(m_timeToReachBeach + m_timeToStop - 1000);//(m_totalMs-m_timeToRetreat -m_fadeMs - m_elapsedMs)/m_fadeMs;
 			waveAlpha = waveAlpha / m_fadeMs;
 			if (waveAlpha > 1.0f)
@@ -685,7 +685,7 @@ WaterTracksObj *WaterTracksRenderSystem::bindTrack(waveType type)
 				m_usedModules->m_prevSystem=mod;
 			m_usedModules = mod;
 		}
-	
+
 		mod->m_bound=true;
 	}  // end if
 
@@ -728,7 +728,7 @@ void WaterTracksRenderSystem::releaseTrack( WaterTracksObj *mod )
 {
 	if (mod==NULL)
 		return;
-	
+
 	assert(mod->m_bound == false);
 
 	// remove module from used list
@@ -809,7 +809,7 @@ void WaterTracksRenderSystem::ReAcquireResources(void)
 	{
 		DX8IndexBufferClass::WriteLockClass lockIdxBuffer(m_indexBuffer);
 		UnsignedShort *ib=lockIdxBuffer.Get_Index_Array();
-		
+
 		for (i=0,j=0,k=0; i<idxCount; j++)
 		{
 			for (;k<(m_stripSizeX*(j+1)); k++,i+=2)
