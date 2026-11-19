@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 class Rva007E8810Message
 {

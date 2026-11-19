@@ -10,7 +10,7 @@
 // frame slot as retail does (0x14-byte frame).
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 const Bool FALSE_BOOL = 0;
 const Bool TRUE_BOOL = 1;
 

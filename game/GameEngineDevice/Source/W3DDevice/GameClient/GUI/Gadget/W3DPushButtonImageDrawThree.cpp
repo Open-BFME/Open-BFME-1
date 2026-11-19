@@ -11,11 +11,11 @@
 // the retail ECX/EAX private call convention at +0x317.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedByte.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class GameFont;

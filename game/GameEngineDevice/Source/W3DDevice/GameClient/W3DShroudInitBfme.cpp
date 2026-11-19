@@ -5,7 +5,7 @@
 
 #include <string.h>
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 // Retail IAT: MSVCR71.dll!ceil at VA 0x01359394, floor at 0x013593B8.

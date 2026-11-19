@@ -26,7 +26,7 @@
 // default only) all came out 251 B with 45 differing bytes confined to that
 // dispatch.
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 typedef void *HSAMPLE;
 typedef void *H3DSAMPLE;

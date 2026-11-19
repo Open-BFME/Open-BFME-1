@@ -2,9 +2,9 @@
 // Clean reconstruction of WaterRenderObjClass::enableWaterGrid at retail 0x007A1410.
 
 typedef int Bool;
-typedef int Int;
-typedef long HRESULT;
-typedef unsigned int UnsignedInt;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 
 extern "C" void *memset(void *, int, unsigned int);
 

@@ -4,9 +4,9 @@
 // which targets this callback.  Retail reads the terrain floats, force flag,
 // macro texture name, and default texture name into the BaseHeightMap layout.
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Byte;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Bool.h"
 
 #include "string_base.h"
 

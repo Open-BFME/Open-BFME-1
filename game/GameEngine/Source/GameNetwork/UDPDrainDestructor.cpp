@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned int SOCKET;
+#include "../../Include/Common/ScalarTypes/Source/SOCKET.h"
 
 extern "C" __declspec(dllimport) int __stdcall shutdown(SOCKET socket, int how);
 extern "C" __declspec(dllimport) int __stdcall recvfrom(

@@ -61,7 +61,7 @@ public:
 	bool Rva007FBE80( const char *key, char *dest, unsigned destSize );
 };
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 // This is the data-bearing record from the matched Rva007FBC60Game
 // constructor.  Its message is at +8, N/HN/V are at +26/+A6/+130, and the

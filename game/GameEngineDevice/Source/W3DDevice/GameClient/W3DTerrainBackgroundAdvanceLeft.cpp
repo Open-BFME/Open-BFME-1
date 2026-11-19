@@ -4,7 +4,7 @@
 // BFME adds a separate y extent and clamps both walks to the map extent.
 
 typedef unsigned char Byte;
-typedef bool Bool;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Bool.h"
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

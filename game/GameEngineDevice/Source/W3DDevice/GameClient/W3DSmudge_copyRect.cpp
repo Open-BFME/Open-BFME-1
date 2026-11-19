@@ -8,9 +8,9 @@
 #include <string.h>
 
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
-typedef unsigned int UINT;
-typedef unsigned long DWORD;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/UINT.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 #define S_OK 0
 #define D3DLOCK_READONLY 0x00000010L
 #define D3DMULTISAMPLE_NONE 0

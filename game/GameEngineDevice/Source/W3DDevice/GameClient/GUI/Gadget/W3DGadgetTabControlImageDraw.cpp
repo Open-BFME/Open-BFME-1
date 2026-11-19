@@ -3,8 +3,8 @@
 // retail RVA 0x00797EF0.  The tab-data offsets and the callback dispatch are
 // the BFME layouts; no generated body is included here.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 typedef float Real;
 typedef int Color;

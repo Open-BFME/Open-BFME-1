@@ -25,9 +25,9 @@
 class File;
 class ArchiveFile;
 class AsciiString;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
-typedef char Char;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Char.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem

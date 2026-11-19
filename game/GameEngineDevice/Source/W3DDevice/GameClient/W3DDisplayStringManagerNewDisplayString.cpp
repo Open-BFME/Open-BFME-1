@@ -22,7 +22,7 @@ template <> inline bool StringBase<char>::isNotEmpty() const
 	return !isEmpty();
 }
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 class GameFont;

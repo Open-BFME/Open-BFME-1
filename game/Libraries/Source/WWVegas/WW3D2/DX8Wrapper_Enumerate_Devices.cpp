@@ -31,9 +31,9 @@
 #include <stdio.h>
 #include <string.h>
 
-typedef long HRESULT;
-typedef unsigned long DWORD;
-typedef unsigned int UINT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/UINT.h"
 
 #define HIWORD(l) ((unsigned short)((DWORD)(l) >> 16))
 #define LOWORD(l) ((unsigned short)((DWORD)(l) & 0xffff))

@@ -5,7 +5,7 @@
 // body through the retail ILT at 0x00049DD7, but no canonical tree-buffer
 // method name is proven by that call site.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 struct Rva00733F50TreeRecord

@@ -17,7 +17,7 @@
 // cookie store after the constructor-argument push; the plain local reproduces
 // retail's push-ebp-before-cookie-store order at +0x18.
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 class Rva007E88A0
 {

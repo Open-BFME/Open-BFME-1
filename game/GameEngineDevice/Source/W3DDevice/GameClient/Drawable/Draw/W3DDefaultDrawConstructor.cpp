@@ -22,8 +22,8 @@
 // reproduces retail's xor ecx,ecx null arm and shared mov ecx,eax merge.
 
 typedef unsigned char Bool;
-typedef float Real;
-typedef int Int;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 
 class Thing;
 class ModuleData;

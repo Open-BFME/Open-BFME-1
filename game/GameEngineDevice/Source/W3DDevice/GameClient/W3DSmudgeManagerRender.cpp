@@ -8,10 +8,10 @@
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 
-typedef unsigned int UINT;
-typedef unsigned long DWORD;
-typedef unsigned long ULONG;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/UINT.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/ULONG.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 #define SMUDGE_DRAW_SIZE 500
 

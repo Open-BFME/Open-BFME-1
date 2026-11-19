@@ -9,8 +9,8 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 
 struct BfmeStringData3AF0
 {

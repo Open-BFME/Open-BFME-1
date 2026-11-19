@@ -3,7 +3,7 @@
 
 #include <wwmath.h>
 
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Byte;
 
 struct Rva006CB1E0Value

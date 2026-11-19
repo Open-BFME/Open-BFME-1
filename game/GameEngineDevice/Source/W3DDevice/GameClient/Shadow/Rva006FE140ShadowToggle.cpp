@@ -11,10 +11,10 @@
 // reached through the file's g_bfmeTheShadowManager macro. No caller or vtable slot proves the owning
 // method name, so the class and method stay address-derived.
 
-typedef int Int;
-typedef unsigned char UnsignedByte;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedByte.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 
 extern void j_00044968(void); // Gen_006091B0::bfmeSetEnabled(bool), ecx=this
 extern void j_000342a7(void); // BfmeLivingWorldManager::rva00617e30(void), ecx=TheLivingWorldManager

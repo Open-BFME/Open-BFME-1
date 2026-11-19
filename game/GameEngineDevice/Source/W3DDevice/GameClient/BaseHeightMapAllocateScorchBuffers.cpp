@@ -2,7 +2,7 @@
 // Retail 0x006C9530. BFME selects the scorch-buffer capacities from the
 // writable half-height-map setting before constructing the two DX8 buffers.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 // The one global at 0x012ED5C8 is EA's GlobalData *TheWritableGlobalData

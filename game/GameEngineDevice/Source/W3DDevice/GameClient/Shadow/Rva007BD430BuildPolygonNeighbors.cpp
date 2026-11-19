@@ -5,11 +5,11 @@
 
 #include "vector3.h"
 
-typedef int Int;
-typedef short Short;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Short.h"
 typedef unsigned char Byte;
-typedef unsigned short UnsignedShort;
-typedef bool Bool;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedShort.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Bool.h"
 
 struct TriIndex
 {

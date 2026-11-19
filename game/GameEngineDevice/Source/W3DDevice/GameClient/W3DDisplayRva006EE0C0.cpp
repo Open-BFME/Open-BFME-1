@@ -13,9 +13,9 @@
 // The frame-text DisplayString pointer (0x012F806C) and the clear colour
 // (0x012F81AC, guard 0x012F81BC) are referenced by this body alone.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 #include "ascii_string.h"

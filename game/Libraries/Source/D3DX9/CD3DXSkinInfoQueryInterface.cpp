@@ -6,8 +6,8 @@
 // independently separating this implementation from the masked-identical
 // D3DX QueryInterface bodies.
 
-typedef unsigned long ULONG;
-typedef long HRESULT;
+#include "../../../GameEngine/Include/Common/ScalarTypes/Win32/ULONG.h"
+#include "../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 struct _GUID
 {

@@ -48,8 +48,8 @@
 // BoxSetTexture/Draw_Triangles draw loop are all byte-exact as written
 // (probe: 892/892, 57 relocations, shape 1.000, frame 0x20).
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 #define REAL_TO_INT(x) ((Int)(x))

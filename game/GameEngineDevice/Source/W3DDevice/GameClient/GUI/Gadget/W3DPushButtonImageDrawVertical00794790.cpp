@@ -3,8 +3,8 @@
 // Draws a top, a vertically tiled centre and a bottom image; the Zero Hour DrawThree body with the axes swapped.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 typedef int Color;
 

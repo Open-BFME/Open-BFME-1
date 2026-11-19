@@ -2,7 +2,7 @@
 // Retail 0x006B1B40: BFME twin of ZH MilesAudioManager::initFilters, reached from 0x006B3E30.
 // Owners stay address-derived; the argument is one PlayingAudio reference, not ZH's sample/event pair.
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 typedef void *HSAMPLE;
 typedef void *HPROVIDER;

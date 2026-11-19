@@ -10,7 +10,7 @@
 #include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 typedef int Color;
-typedef unsigned short WCHAR;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"

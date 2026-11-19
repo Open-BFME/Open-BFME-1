@@ -1,10 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail delegate ABI and layout: targets/game/reverse/identity_evidence/0078d410-delegate-abi-and-sib.md
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class Image;

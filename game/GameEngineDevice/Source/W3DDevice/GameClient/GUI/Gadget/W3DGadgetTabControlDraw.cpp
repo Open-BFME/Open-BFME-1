@@ -7,10 +7,10 @@
 // contains the BFME default-draw dispatch at +0x1E8/+0x218; calling the ZH
 // W3DGameWinDefaultDraw would produce a call and the wrong frame instead.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class Image;

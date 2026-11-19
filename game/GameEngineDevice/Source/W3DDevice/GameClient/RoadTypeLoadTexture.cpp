@@ -2,10 +2,10 @@
 #include "../../../../Libraries/Source/WWVegas/WW3D2/texturefilter.h"
 // BFME retail 0x00708030: RoadType::loadTexture.
 
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
-typedef unsigned short UnsignedShort;
-typedef char Char;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedShort.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Char.h"
 
 class TextureClass
 {

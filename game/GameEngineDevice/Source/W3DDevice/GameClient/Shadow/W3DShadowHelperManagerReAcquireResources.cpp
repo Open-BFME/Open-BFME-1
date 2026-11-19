@@ -8,7 +8,7 @@
 // constructor for its first manager, and its ReAcquireResources wrapper calls
 // this body through the same global.
 
-typedef long HRESULT;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 #define TRUE true

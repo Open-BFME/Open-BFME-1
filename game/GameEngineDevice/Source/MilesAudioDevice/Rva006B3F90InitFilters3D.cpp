@@ -9,7 +9,7 @@
 // with two owner calls. Layouts follow the landed configure3D and 0x006B1B40
 // views of the same objects; owners stay address-derived.
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_volume(

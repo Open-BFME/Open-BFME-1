@@ -3,7 +3,7 @@
 #include "matrix4.h"
 
 typedef unsigned char Bool;
-typedef unsigned char UnsignedByte;
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedByte.h"
 
 // Retail vftable 0x011284CC for W3DVolumetricShadow, i.e.
 // ??_7W3DVolumetricShadow@@6B@ (targets/game/reverse/dir32_addresses.csv).

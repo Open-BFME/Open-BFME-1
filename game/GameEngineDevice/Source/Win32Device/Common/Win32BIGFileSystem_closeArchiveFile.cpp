@@ -37,13 +37,13 @@ public:
 	virtual ~ArchiveFile();
 };
 
-typedef char Char;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Char.h"
 
 typedef std::map<AsciiString, ArchiveFile *> ArchiveFileMap;
 
 
 class File;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h

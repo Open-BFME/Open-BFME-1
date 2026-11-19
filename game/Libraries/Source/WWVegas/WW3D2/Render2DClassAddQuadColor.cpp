@@ -15,7 +15,7 @@ class RectClass
 	float Bottom;
 };
 
-typedef unsigned long BfmeUInt32;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/BfmeUInt32.h"
 
 struct BfmeRenderVertex
 {
