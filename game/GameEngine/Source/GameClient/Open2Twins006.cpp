@@ -16,10 +16,10 @@ private:
 // Retail cleanup calls PE-exported virtual Snapshot::~Snapshot.
 #include "../Common/System/snapshot.h"
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
 
 class Open2Held880FC0;
 

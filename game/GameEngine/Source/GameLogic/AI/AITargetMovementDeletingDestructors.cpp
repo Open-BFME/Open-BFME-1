@@ -33,7 +33,7 @@ private:
 // with no vptr reset, the shape VC7.1 gives an implicit virtual
 // destructor; every ILT named here is ilt_oracle CONFIRMED exact.
 
-enum StateExitType { EXIT_NORMAL, EXIT_RESET };
+#include "../../../Include/Common/Enums/StateExitType.h"
 
 class AIInternalMoveToState
 {

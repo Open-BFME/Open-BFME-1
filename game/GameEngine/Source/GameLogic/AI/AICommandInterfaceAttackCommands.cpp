@@ -67,12 +67,12 @@ enum AICommandType
 
 #include "../command_source_type.h"
 
-enum DamageType
-{
-	DAMAGE_EXPLOSION = 0,
-	DAMAGE_PARTICLE_BEAM = 0x16,
-	DAMAGE_UNRESISTABLE = 0x0B
-};
+#include "../../../Include/Common/Enums/DamageType.h"
+
+
+
+
+
 
 enum DeathType { DEATH_NORMAL = 0, DEATH_BFME_DEFAULT = 0x0F };
 typedef Int ObjectID;

@@ -14,7 +14,7 @@
 // short ones to plain classes that clear a field at +0x10 in the same slot.
 // The element size pushed to the iterator gives each element type's width.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 // MSVC 7.1 folds `delete []` onto the scalar ??3@YAXPAX@Z unless the array
 // form is declared where it can see it; retail calls ??_V@YAXPAX@Z here.

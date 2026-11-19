@@ -41,10 +41,10 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

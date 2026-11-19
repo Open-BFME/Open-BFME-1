@@ -102,10 +102,10 @@ public:
 	float m_placementViewAngle;
 };
 
-enum DrawableStatus
-{
-	DRAWABLE_STATUS_NO_STATE_PARTICLES = 8
-};
+#include "../../Include/Common/Enums/DrawableStatus.h"
+
+
+
 
 class BFMEThingFactory
 {
@@ -298,12 +298,12 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 // Retail's nameToKey returns this enum by value; MSVC mangles a by-value enum
 // return as ?AW4NameKeyType@@, the matched defining symbol (0x0008FFC0).
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	NAMEKEY_MAX = 1 << 23,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../Include/Common/NameKeyType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
@@ -444,7 +444,7 @@ public:
 	virtual void screenToTerrain(const ICoord2D *pixel, Coord3D *world, Bool clamp) = 0;
 };
 
-enum CellShroudStatus { SHROUD_CLEAR = 0 };
+#include "../../Include/Common/Enums/CellShroudStatus.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager

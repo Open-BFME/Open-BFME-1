@@ -104,10 +104,10 @@ Bfme5TripleSubsystem::Bfme5TripleSubsystem(int a, int b, int c)
 
 struct Coord3D;
 
-enum CellShroudStatus
-{
-	BFME5_CELLSHROUD_ZERO
-};
+#include "../../Include/Common/Enums/CellShroudStatus.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionManager

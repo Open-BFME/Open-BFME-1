@@ -31,7 +31,7 @@
 //   the goal-position copy stays `add`-based (src +0x24, dest +0x44) and the
 //   second getMachineOwner reload can land in ecx.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateReturnType
 {

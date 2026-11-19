@@ -35,7 +35,7 @@
 // Identity is address-derived; the helpers keep the names BigObfHookWrappers.cpp
 // gave them so the two translation units agree on the callees.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C++"
 {

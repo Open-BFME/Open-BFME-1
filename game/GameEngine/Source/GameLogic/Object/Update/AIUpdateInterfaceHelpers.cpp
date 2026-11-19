@@ -37,8 +37,8 @@
 // One more offset lands twice here: Rva002712D0's m_isBlockedAndStuck at
 // +0x326 is the same byte the command handlers clear on every order.
 
-typedef bool Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes.h"
+
 
 #pragma warning(disable : 4716)
 
