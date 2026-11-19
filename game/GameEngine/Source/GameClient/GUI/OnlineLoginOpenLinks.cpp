@@ -2,8 +2,8 @@
 
 typedef void *HWND;
 typedef long LPARAM;
-typedef int BOOL;
-typedef unsigned long DWORD;
+#include "../../../Include/Common/ScalarTypes/Win32/BOOL.h"
+#include "../../../Include/Common/ScalarTypes/Win32/DWORD.h"
 
 extern "C" __declspec(dllimport) DWORD __stdcall GetCurrentThreadId();
 extern "C" __declspec(dllimport) BOOL __stdcall EnumThreadWindows(

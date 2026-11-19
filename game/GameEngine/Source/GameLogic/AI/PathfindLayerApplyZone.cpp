@@ -4,7 +4,7 @@
 // operator delete for the block, which is a different body at 0x00881EB0.
 void __cdecl operator delete[](void *block);
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell

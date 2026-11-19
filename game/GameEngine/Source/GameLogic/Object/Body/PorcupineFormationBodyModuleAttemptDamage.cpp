@@ -52,7 +52,7 @@ public:
 	PorcupineDamageCheckResultSource *m_resultSource;
 };
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes/Real.h"
 
 class Object
 {

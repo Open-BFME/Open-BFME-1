@@ -49,7 +49,7 @@ private:
 extern "C" __declspec(dllimport) unsigned long __stdcall GetModuleFileNameW(
 	void *module, unsigned short *filename, unsigned long size );
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 class __multiple_inheritance FunctorTarget;

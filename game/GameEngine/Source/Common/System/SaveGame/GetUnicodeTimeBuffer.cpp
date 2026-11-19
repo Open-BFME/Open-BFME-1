@@ -2,7 +2,7 @@
 
 #define NULL 0
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 // forward only: used solely as the declared parameter type of
 // UnicodeString::translate so the call mangles to the real matched function

@@ -18,8 +18,8 @@
 #include <stddef.h>
 #include "Common/UnicodeString.h"
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 typedef int Color;
 

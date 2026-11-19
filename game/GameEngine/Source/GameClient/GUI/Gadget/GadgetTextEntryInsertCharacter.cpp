@@ -6,7 +6,7 @@
 // +0x1e, while the draw flag is at +0x13.  Keep the recovered view local until
 // the complete BFME gadget header is reconstructed.
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../../../Include/Common/ScalarTypes.h"
 
 class BfmeEntryString;

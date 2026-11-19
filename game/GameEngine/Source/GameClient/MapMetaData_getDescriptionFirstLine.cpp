@@ -3,7 +3,7 @@
 // The ILT at 0x000036BB and AptMapPreviewSetMapDescription.cpp identify this
 // getter as the MapMetaData map.str description first-line accessor.
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 extern const unsigned short BFMEEmptyUnicodeString;
 

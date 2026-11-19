@@ -23,8 +23,8 @@
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 typedef int Color;
-typedef int GPProfile;
-typedef int GPEnum;
+#include "../../../../../Include/Common/ScalarTypes/Source/GPProfile.h"
+#include "../../../../../Include/Common/ScalarTypes/Source/GPEnum.h"
 
 // The shared headers carry the canonical one-pointer string layout and the
 // matched StringBase declarations. These TU-local definitions keep the

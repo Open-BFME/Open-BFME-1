@@ -2,7 +2,7 @@
 
 #define NULL 0
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 #include "ascii_string.h"
 #include "unicode_string.h"

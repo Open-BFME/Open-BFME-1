@@ -7,7 +7,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 struct GameMessageLocationRaw { Real x, y, z; };
 struct GameMessagePixelRaw { Int x, y; };

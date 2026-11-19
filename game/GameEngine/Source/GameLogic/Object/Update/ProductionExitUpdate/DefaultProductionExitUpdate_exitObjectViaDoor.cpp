@@ -18,8 +18,8 @@
 #include "matrix3d.h"
 #include <vector>
 
-typedef float Real;
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes/Real.h"
+#include "../../../../../Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
 
 #include "../../../../../Include/Common/Enums/ExitDoorType.h"

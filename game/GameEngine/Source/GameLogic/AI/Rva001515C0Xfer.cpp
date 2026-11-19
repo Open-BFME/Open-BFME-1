@@ -7,7 +7,7 @@
 // address-derived name Rva001515C0.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned int ObjectID;
 
 struct XferVersion

@@ -3,7 +3,7 @@
 // VC7.1's retail private calling convention.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 static void __fastcall resolveZones(Int sourceZone, Int targetZone,
 	zoneStorageType *zoneEquivalency, Int sizeOfZones)

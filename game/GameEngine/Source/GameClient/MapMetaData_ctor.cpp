@@ -5,10 +5,10 @@
 #include <list>
 #include <map>
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes/UnsignedShort.h"
 
 template <typename T>
 class StringBase

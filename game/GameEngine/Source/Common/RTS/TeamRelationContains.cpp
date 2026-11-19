@@ -26,7 +26,7 @@
 #define _STLP_USE_STATIC_LIB 1
 #include <hash_map>
 
-typedef unsigned int TeamID;
+#include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 typedef unsigned int PlayerIndex;
 typedef int Relationship;
 

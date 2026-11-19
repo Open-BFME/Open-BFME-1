@@ -35,7 +35,7 @@
 // cells before the call and passes no callback, so the callback ZH hands it is
 // simply not a parameter here.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 class Object;

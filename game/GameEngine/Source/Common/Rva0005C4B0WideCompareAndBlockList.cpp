@@ -4,7 +4,7 @@
 
 #include <stdlib.h>
 
-typedef unsigned short WCHAR;
+#include "../../Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 // Every retail caller (the wide StringBase startsWith/endsWith bodies at
 // 0x008870D0, 0x00887170, 0x00887320 and 0x00887380) loads ECX with a stack

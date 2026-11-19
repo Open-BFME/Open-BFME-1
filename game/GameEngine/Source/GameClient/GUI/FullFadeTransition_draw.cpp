@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

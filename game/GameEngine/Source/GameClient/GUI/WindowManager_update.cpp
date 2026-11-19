@@ -17,7 +17,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 extern "C" __declspec(dllimport) int __cdecl strncmp(const char *, const char *, unsigned int);

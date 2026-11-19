@@ -9,8 +9,8 @@
 #include <vector>
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../Include/Common/ScalarTypes/Int.h"
 
 #include "ascii_string.h"
 

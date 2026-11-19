@@ -35,7 +35,7 @@ public:
 };
 
 typedef int Int;
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 enum PathfindLayerEnum
 {

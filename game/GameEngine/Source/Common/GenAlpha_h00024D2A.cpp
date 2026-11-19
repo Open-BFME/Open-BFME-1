@@ -14,7 +14,7 @@ extern IDirect3DVertexBuffer8 *shadowVertexBufferD3D;
 struct IDirect3DIndexBuffer8;
 extern IDirect3DIndexBuffer8 *shadowIndexBufferD3D;
 
-typedef unsigned long ULONG;
+#include "../../Include/Common/ScalarTypes/Win32/ULONG.h"
 
 void W3DRadarResetLock(void);
 char bfmeUnlock1179(void);

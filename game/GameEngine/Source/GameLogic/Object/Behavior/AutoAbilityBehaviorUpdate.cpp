@@ -22,7 +22,7 @@
 // placeholder name BfmeObjEQT. A DistLODPrototypeClass claim on that table
 // conflicts with its use as a partition filter here and is not identity evidence.
 // Handoff: targets/game/reverse/attempt_support/20261107-001edca0-autoability-update.md
-typedef unsigned int UInt;
+#include "../../../../Include/Common/ScalarTypes/Source/UInt.h"
 class Object;
 class Player;
 #include "Lib/Coord3D.h"

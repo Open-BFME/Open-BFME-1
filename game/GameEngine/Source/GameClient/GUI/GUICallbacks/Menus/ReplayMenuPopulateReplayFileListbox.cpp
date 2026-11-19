@@ -20,7 +20,7 @@
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 typedef unsigned int size_t;
 
 extern "C" size_t strlen(const char *);

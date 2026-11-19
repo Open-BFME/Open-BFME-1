@@ -10,7 +10,7 @@
 // are ABI views, with routes and contracts in the evidence file.
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef unsigned int UInt;
+#include "../../Include/Common/ScalarTypes/Source/UInt.h"
 
 class Rva001BEF20FieldAddress
 {
