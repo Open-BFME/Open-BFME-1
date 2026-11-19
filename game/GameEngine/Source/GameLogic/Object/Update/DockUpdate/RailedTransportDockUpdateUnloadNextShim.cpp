@@ -6,7 +6,7 @@
 
 #include <math.h>
 
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned int ObjectID;
 typedef int Bool;
 

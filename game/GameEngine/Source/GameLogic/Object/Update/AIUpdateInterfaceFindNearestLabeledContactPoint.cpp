@@ -1,7 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-typedef bool Bool; typedef int Int;
+
+#include "../../../../Include/Common/ScalarTypes/Bool.h"
+
+#include "../../../../Include/Common/ScalarTypes/Int.h"
+
 class Overridable { public: virtual ~Overridable(); const Overridable *getFinalOverride()const {if(next)return next->getFinalOverride();return this;} Overridable *next; };
 template<class T>class OVERRIDE {const T*p;public:const T*operator*()const{if(!p)return 0;return(T*)p->getFinalOverride();}operator const T*()const{return operator*();}};
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

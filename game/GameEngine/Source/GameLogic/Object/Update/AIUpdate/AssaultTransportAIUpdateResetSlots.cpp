@@ -13,9 +13,9 @@
 // scalar dwords at +0x380..+0x394, three scalar bytes at +0x39c..+0x39e,
 // and the count itself.
 
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Byte;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 class AssaultTransportAIUpdateBase
 {

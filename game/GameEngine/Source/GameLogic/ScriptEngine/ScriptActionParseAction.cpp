@@ -24,7 +24,7 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short DataChunkVersionType;
+#include "../../../Include/Common/ScalarTypes/Source/DataChunkVersionType.h"
 #include "../../../Include/Common/NameKeyType.h"
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long milliseconds);

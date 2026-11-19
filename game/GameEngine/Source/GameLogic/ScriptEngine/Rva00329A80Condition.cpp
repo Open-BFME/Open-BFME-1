@@ -14,7 +14,7 @@
 enum KindOfType { RVA00329A80_KIND_BIT_119 = 119 };
 typedef BitFlags<192> KindOfMaskType;
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 #include "../../../Include/Common/Enums/DistanceCalculationType.h"
 
 #define BFME_HAVE_COORD3D

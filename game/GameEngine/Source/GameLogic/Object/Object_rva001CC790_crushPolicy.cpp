@@ -2,7 +2,7 @@
 // The lower-level Object::canCrushOrSquish body is at retail 0x001C7600.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 #include "../../../Include/Common/Enums/CrushSquishTestType.h"
 

@@ -12,7 +12,7 @@
 // called on a fresh getObject() read, as retail reloads [this+8].
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 enum DisabledType
 {

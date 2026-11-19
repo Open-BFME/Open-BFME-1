@@ -7,7 +7,7 @@
 
 #include <list>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 class Object;

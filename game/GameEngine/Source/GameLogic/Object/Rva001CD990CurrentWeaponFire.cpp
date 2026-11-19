@@ -13,7 +13,7 @@
 // two-argument Zero Hour declaration.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int ObjectID;
 typedef int Int;
 

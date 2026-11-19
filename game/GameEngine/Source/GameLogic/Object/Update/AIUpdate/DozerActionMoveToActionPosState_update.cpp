@@ -2,7 +2,7 @@
 // BFME retail 0x002B8100: DozerActionMoveToActionPosState::update.
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes/Real.h"
 typedef int ObjectID;
 typedef unsigned int UnsignedInt;
 

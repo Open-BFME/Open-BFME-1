@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 enum ModelConditionFlagType

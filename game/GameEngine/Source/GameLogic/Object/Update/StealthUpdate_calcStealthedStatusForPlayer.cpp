@@ -6,7 +6,7 @@
 // arrangement and therefore cannot be used for this body.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 #include "../../../../Include/Common/Enums/Relationship.h"
 

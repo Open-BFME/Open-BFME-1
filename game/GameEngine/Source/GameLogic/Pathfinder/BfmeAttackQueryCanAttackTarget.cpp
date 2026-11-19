@@ -12,7 +12,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

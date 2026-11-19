@@ -2,10 +2,10 @@
 // Evidence: targets/game/reverse/identity_evidence/003e7b90-coordinate-lifetime.md
 // Address-named Pathfinder movement predicate with visible radius calculation.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 #include "Coord3D.h"
 

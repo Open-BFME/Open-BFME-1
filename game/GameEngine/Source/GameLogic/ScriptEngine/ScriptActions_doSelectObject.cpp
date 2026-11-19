@@ -2,7 +2,7 @@
 // SELECT_OBJECT at retail RVA 0x002F0FD0.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 typedef unsigned int ObjectID;
 
 #include "ascii_string.h"

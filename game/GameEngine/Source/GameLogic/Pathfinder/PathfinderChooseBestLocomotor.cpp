@@ -41,7 +41,7 @@ class Locomotor
 {
 };
 
-typedef int LocomotorSurfaceTypeMask;
+#include "../../../Include/Common/ScalarTypes/Source/LocomotorSurfaceTypeMask.h"
 
 class LocomotorSet
 {

@@ -21,7 +21,7 @@ class BfmeAsciiStringArg;
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 #include "../command_source_type.h"
 

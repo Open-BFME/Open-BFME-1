@@ -7,7 +7,7 @@ class PathfindCell;
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef int LocomotorSurfaceTypeMask;
+#include "../../../Include/Common/ScalarTypes/Source/LocomotorSurfaceTypeMask.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -4,7 +4,7 @@
 // call ABI and object/module field offsets.
 
 typedef unsigned char Byte;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 // Preserve the retail null-return SEH epilogue scheduling under MSVC7.1.
 extern "C" void _ReadWriteBarrier();

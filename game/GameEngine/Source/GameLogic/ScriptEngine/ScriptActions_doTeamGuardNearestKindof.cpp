@@ -10,7 +10,7 @@ extern "C" double sqrt(double value);
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 
 // This declaration keeps the one-pointer BFME AsciiString layout.

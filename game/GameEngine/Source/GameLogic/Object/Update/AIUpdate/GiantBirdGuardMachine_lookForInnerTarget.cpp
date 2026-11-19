@@ -37,7 +37,7 @@
 
 #include "../../../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned int TeamID;
+#include "../../../../../Include/Common/ScalarTypes/Source/TeamID.h"
 
 #define NULL 0
 

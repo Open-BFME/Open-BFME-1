@@ -5,8 +5,8 @@
 // slots while the implementation follows the Zero Hour twin.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../Include/Common/ScalarTypes/Int.h"
 
 #include "../../../../Include/Common/NameKeyType.h"
 

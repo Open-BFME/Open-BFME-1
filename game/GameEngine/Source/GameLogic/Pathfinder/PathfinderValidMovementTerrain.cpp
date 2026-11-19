@@ -54,7 +54,7 @@ private:
 	const T *m_overridable;
 };
 
-typedef int LocomotorSurfaceTypeMask;
+#include "../../../Include/Common/ScalarTypes/Source/LocomotorSurfaceTypeMask.h"
 
 class Locomotor
 {

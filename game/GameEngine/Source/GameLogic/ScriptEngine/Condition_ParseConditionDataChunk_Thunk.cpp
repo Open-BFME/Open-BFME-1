@@ -11,7 +11,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short DataChunkVersionType;
+#include "../../../Include/Common/ScalarTypes/Source/DataChunkVersionType.h"
 #include "../../../Include/Common/NameKeyType.h"
 
 class BfmeStringLiteralBase

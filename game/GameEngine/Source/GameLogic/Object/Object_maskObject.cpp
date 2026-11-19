@@ -2,7 +2,7 @@
 // readable body of ?maskObject@Object@@QAEX_N@Z: game/GameEngine/Source/GameLogic/Object/Object.cpp
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player
