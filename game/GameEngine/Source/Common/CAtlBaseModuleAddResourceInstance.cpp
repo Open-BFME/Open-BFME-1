@@ -2,8 +2,8 @@
 // Open-BFME5: ATL 7.1 CAtlBaseModule::AddResourceInstance.
 
 typedef void *HINSTANCE;
-typedef long HRESULT;
-typedef int BOOL;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
+#include "../../Include/Common/ScalarTypes/Win32/BOOL.h"
 
 #define FAILED(hr) ((hr) < 0)
 #define FALSE 0

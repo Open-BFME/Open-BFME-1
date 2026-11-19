@@ -2,7 +2,7 @@
 // readable body of ?read@StreamingArchiveFile@@: game/GameEngine/Source/Common/System/StreamingArchiveFile.cpp
 // Clean C++ conversion of BFME StreamingArchiveFile::read at retail RVA 0x009D21F0.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
 class AsciiString;
 

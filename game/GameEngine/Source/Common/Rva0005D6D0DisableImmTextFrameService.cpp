@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // Late-bound ImmDisableTextFrameService(-1) call recovered from retail.
 
-typedef unsigned long DWORD;
-typedef int BOOL;
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../Include/Common/ScalarTypes/Win32/BOOL.h"
 typedef void *HMODULE;
 typedef int (__stdcall *FARPROC)(void);
 

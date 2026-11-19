@@ -1,7 +1,7 @@
 // cl: /O2
 // ATL 7.1 AtlWinModuleInit body recovered from the retail 0x007E5920 shape.
 
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 namespace ATL
 {

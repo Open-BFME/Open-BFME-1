@@ -27,7 +27,9 @@
 #include <list>
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
-typedef int Int; const int CREDIT_SPACE_OFFSET=2; const int TRUE=1;
+
+#include "../../Include/Common/ScalarTypes/Int.h"
+ const int CREDIT_SPACE_OFFSET=2; const int TRUE=1;
 enum { CREDIT_STYLE_TITLE, CREDIT_STYLE_POSITION, CREDIT_STYLE_NORMAL, CREDIT_STYLE_COLUMN, CREDIT_STYLE_BLANK };
 #include "../../../Libraries/Include/Lib/ICoord2D.h"
 class GameFont;
@@ -88,10 +90,10 @@ void CreditsManager::update( void )
 		return;
 	if (((int*)this)[0x3c/4]<=0 || ((int*)this)[0x40/4]<=0) return;
 	m_framesSinceStarted++;
-	
+
 	if(m_framesSinceStarted%m_scrollRatePerFrames != 0)
 		return;
-	
+
 
 	Int y = 0;
 	Int yTest = 0;
@@ -119,16 +121,16 @@ void CreditsManager::update( void )
 		else
 			drawIt++;
 	}
-	
+
 	y= y + ((lastHeight + CREDIT_SPACE_OFFSET) * offsetStartMultiplyer);
-	
+
 	// is it time to add a new string?
 	if(!((m_scrollDown && (yTest >= start)) || (!m_scrollDown && (yTest  <= start))))
 		return;
-	
+
 	if(m_displayedCreditLineList.size() == 0 && m_creditLineListIt == m_creditLineList.end())
 		m_isFinished = TRUE;
-	
+
 	if(m_creditLineListIt == m_creditLineList.end())
 		return;
 
@@ -139,7 +141,7 @@ void CreditsManager::update( void )
 	case CREDIT_STYLE_TITLE:
 		{
 			cLine->m_color = m_titleColor;
-			
+
 			if(TheGlobalLanguageData&& !cLine->m_text.isEmpty())
 			{
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
@@ -160,7 +162,7 @@ void CreditsManager::update( void )
 	case CREDIT_STYLE_POSITION:
 		{
 			cLine->m_color = m_positionColor;
-			
+
 			if(TheGlobalLanguageData && !cLine->m_text.isEmpty())
 			{
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
@@ -181,7 +183,7 @@ void CreditsManager::update( void )
 	case CREDIT_STYLE_NORMAL:
 	 {
 			cLine->m_color = m_normalColor;
-			
+
 			if(TheGlobalLanguageData && !cLine->m_text.isEmpty())
 			{
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
@@ -202,7 +204,7 @@ void CreditsManager::update( void )
 	case CREDIT_STYLE_COLUMN:
 		{
 			cLine->m_color = m_normalColor;
-			
+
 			if(TheGlobalLanguageData && !cLine->m_text.isEmpty())
 			{
 				DisplayString *ds = TheDisplayStringManager->newDisplayString();
@@ -232,7 +234,7 @@ void CreditsManager::update( void )
 				cLine->m_pos.x = ((int*)this)[0x3c/4]/2 - pos.x/2 ;
 				cLine->m_pos.y = start + (cLine->m_height * offsetStartMultiplyer);
 				cLine->m_secondDisplayString = ds;
-				
+
 			}
 		}
 		break;
@@ -248,6 +250,6 @@ void CreditsManager::update( void )
 
 	if(m_creditLineListIt != m_creditLineList.end())
 		m_creditLineListIt++;
-	
+
 }
 

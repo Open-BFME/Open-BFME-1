@@ -3,8 +3,8 @@
 // loadType, Xfer pointer and parser callback. Retail callback thunk1F2A3
 // dispatches to the matched INI::parseCredits body40BFC0.
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

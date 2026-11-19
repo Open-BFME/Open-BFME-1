@@ -26,7 +26,11 @@
 #include <math.h>
 #include "../../Include/Common/ScalarTypes.h"
 #define NULL 0
-typedef float Real; typedef bool Bool;
+
+#include "../../Include/Common/ScalarTypes/Real.h"
+
+#include "../../Include/Common/ScalarTypes/Bool.h"
+
 #define PI 3.14159265358979323846f
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 class Overridable { public: void *vtable; const Overridable *m_nextOverride; const Overridable *getFinalOverride() const; };

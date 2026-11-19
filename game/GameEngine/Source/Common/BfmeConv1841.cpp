@@ -1,4 +1,4 @@
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();

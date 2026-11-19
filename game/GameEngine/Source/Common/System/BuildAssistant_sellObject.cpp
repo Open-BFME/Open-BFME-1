@@ -35,7 +35,7 @@
 
 #include "../../GameLogic/command_source_type.h"
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 const PlayerMaskType PLAYERMASK_ALL = 0xffff;
 
 // Retail's LOGICFRAMES_PER_SECOND is 5 (ScriptActions_doNamedFlash_Thunk.cpp).

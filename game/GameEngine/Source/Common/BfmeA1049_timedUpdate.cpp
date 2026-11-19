@@ -7,7 +7,7 @@ extern "C" void __cdecl __identifier("?d_00533ea0@@YAXXZ")(void *);
 
 // Open-BFME5 conversion of the BFME timed update at retail 0x00535150.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 // Retail VA 0x01359544 is WINMM.dll!timeGetTime's import slot.

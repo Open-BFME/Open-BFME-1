@@ -7,8 +7,8 @@
 // converted without changing the shared headers.
 
 typedef void *HINSTANCE;
-typedef long HRESULT;
-typedef int BOOL;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
+#include "../../Include/Common/ScalarTypes/Win32/BOOL.h"
 
 #define FAILED(hr) ((hr) < 0)
 

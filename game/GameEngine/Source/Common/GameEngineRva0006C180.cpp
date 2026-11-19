@@ -9,7 +9,7 @@ extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
 typedef int BOOL;
-typedef unsigned char EngineBool;
+#include "../../Include/Common/ScalarTypes/Source/EngineBool.h"
 
 struct AsciiStringLayout
 {

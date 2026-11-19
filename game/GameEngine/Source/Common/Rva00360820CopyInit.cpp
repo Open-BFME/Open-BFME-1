@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/UnsignedByte.h"
 typedef unsigned char Bool;
 
 #include "string_base.h"

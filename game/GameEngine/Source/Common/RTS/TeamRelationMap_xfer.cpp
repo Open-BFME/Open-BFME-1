@@ -83,7 +83,7 @@ protected:
 	virtual void loadPostProcess();
 };
 
-typedef unsigned int TeamID;
+#include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 enum Relationship
 {
 	NEUTRAL = 0

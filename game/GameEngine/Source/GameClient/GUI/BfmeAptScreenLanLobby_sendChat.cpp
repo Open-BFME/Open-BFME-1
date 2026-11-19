@@ -7,7 +7,7 @@
 // the leading-slash branch is BFME's addition, keyed on L"me" at 0x01105890.
 
 typedef unsigned short wchar_t;
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 template <typename T>
 class StringBase

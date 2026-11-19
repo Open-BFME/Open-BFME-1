@@ -4,7 +4,7 @@
 // identify this body, but the original semantic method name remains unknown.
 
 #include "../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 #include "string_base.h"
 

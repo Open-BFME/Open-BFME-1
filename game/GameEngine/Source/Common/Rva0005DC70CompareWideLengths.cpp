@@ -8,7 +8,7 @@
 // after the min computation and before the guard -- and s2's local is
 // defined first, because MSVC 7.1 hands out registers in definition order.
 
-typedef unsigned short WCHAR;
+#include "../../Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 int __cdecl Rva0005DC70CompareWideLengths( const WCHAR *s1, int len1, const WCHAR *s2, int len2 )
 {

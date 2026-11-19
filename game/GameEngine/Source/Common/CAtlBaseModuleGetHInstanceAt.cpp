@@ -7,7 +7,7 @@
 // shared-header change.
 
 typedef void *HINSTANCE;
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 #define FAILED(hr) ((hr) < 0)
 

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 typedef char Bool;
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 template <typename T> class StringBase
 {

@@ -2,7 +2,7 @@
 
 typedef unsigned short *BSTR;
 typedef short VARIANT_BOOL;
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 extern "C" __declspec(dllimport) BSTR __stdcall SysAllocString(const unsigned short *value);
 extern "C" __declspec(dllimport) unsigned int __stdcall SysStringLen(BSTR value);

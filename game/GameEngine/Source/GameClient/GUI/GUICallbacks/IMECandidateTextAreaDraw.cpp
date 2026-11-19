@@ -17,9 +17,9 @@
 #include "string_base.h"
 typedef unsigned short wchar_t;
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 typedef unsigned char Bool;
 typedef unsigned short WideChar;

@@ -14,7 +14,7 @@
 
 
 
-typedef unsigned short WCHAR;
+#include "../../../../../Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 
 enum { MAX_SLOTS = 8, PLAYERTEMPLATE_OBSERVER = -2 };

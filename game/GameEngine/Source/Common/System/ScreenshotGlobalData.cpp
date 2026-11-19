@@ -20,7 +20,7 @@
 // the 0x0005EEA0 jmp body the out-of-line declaration would bind to.
 inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
 
-typedef int BOOL;
+#include "../../../Include/Common/ScalarTypes/Win32/BOOL.h"
 typedef void *HWND;
 typedef char *LPSTR;
 #define MAX_PATH 260

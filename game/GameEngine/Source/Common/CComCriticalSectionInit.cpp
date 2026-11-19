@@ -1,6 +1,6 @@
 // ATL 7.1 CComCriticalSection::Init recovered at retail RVA 0x007E5860.
 
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(
 	void *section);

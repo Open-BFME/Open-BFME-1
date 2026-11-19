@@ -8,7 +8,7 @@
 #include "Common/Player.h"
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 // Retail ILT 0x0004B290 -> 0x0034CB60; use the thunk ledger owner because
 // another emitter currently competes with the player-selector body name.

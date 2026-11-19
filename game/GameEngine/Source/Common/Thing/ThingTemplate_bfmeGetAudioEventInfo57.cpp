@@ -2,7 +2,7 @@
 // BFME-only ThingTemplate audio-event info getter at retail RVA 0x004172E0.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef long Long;
+#include "../../../Include/Common/ScalarTypes/Source/Long.h"
 
 extern "C" __declspec(dllimport) Long __stdcall InterlockedIncrement(
 	Long volatile *addend );

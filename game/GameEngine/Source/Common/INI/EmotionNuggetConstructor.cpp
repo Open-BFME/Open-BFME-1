@@ -3,7 +3,7 @@
 #include "Common/AsciiString.h"
 #include <string.h>
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 struct ZeroTwenty

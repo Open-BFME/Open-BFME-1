@@ -2,7 +2,7 @@
 // ATL-style HRESULT throw helper shared by the recovered conversion routines.
 // __TI1?AVCAtlException@ATL@@: recorded as __TI1?AVCAtlException@@ at 0x011DF9A0
 
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 class CAtlException
 {

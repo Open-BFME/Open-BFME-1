@@ -4,7 +4,7 @@
 // (0x0005FA60 -> 0x0005EC20) independently anchors this class identity.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned long DWORD;
+#include "../../../Include/Common/ScalarTypes/Win32/DWORD.h"
 typedef void *HGDIOBJ;
 
 struct CriticalSection

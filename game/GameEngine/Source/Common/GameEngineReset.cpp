@@ -3,10 +3,10 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int Bool;
 typedef void *HANDLE;
-typedef unsigned char EngineBool;
+#include "../../Include/Common/ScalarTypes/Source/EngineBool.h"
 
 struct AsciiStringLayout
 {

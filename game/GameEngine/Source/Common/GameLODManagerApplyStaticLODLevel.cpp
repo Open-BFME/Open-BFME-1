@@ -7,7 +7,7 @@
 // clamps it against the level's own reduction with a const-reference max; the
 // out-of-line call is what leaves the recommendation in EAX.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 // Names from retail StaticGameLODNames (0x00EA73E4): VeryLow Low Medium High

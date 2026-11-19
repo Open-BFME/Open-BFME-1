@@ -10,7 +10,7 @@
 // maps NATCONNECTIONSTATE_NOSTATE to a single space.
 
 typedef char Bool;
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 
 #include "string_base.h"
 

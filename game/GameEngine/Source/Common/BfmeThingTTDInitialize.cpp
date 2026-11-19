@@ -1,7 +1,7 @@
 // Windows XP firewall setup, retail RVA 0x006909B0 (313 bytes).
 // The constructor and applicationIsEnabled establish the same 0x14-byte
 // owner; this method obtains the manager, local policy and current profile.
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 void *operator new[](unsigned int);
 struct FirewallInterface;
 struct FirewallVtable {

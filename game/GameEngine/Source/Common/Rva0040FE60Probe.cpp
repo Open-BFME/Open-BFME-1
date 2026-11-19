@@ -2,7 +2,7 @@
 
 #include "StringInline.h"
 
-typedef unsigned long DWORD;
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
 
 struct BfmeOSVersionInfo
 {

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 #define W3_E_OUTOFMEMORY ((HRESULT)0x8007000EL)
 

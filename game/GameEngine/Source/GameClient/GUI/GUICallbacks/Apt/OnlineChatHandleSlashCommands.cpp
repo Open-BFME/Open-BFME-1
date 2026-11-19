@@ -13,7 +13,7 @@
 // The method name stays address-derived; the string model follows
 // BfmeAptScreenLanLobby_sendChat.cpp.
 
-typedef unsigned short WideChar;
+#include "../../../../../Include/Common/ScalarTypes/WideChar.h"
 
 template <typename T>
 class StringBase

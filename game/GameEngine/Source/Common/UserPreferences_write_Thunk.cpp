@@ -6,7 +6,7 @@
 
 struct FILEShim;
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 extern "C" __declspec(dllimport) FILEShim *__cdecl _wfopen(const WideChar *path, const WideChar *mode);
 extern "C" __declspec(dllimport) int __cdecl fprintf(FILEShim *fp, const char *fmt, ...);
 extern "C" __declspec(dllimport) int __cdecl fclose(FILEShim *fp);

@@ -23,8 +23,8 @@
 // screen-offset load at +0x125.
 
 typedef unsigned char Bool;
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/Real.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
