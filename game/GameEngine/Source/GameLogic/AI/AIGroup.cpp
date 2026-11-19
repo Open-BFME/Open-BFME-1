@@ -14,10 +14,10 @@
 
 #include "../command_source_type.h"
 
-enum AbleToAttackType
-{
-	ATTACK_NEW_TARGET = 0
-};
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
 
 enum WeaponSlotType
 {

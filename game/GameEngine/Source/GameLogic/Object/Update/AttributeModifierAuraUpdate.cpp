@@ -16,7 +16,7 @@ template<> inline bool StringBase<char>::isEmpty() const {return m_data == 0 || 
 typedef unsigned UnsignedInt;
 
 struct Coord3D;
-enum IterOrderType {ITER_FASTEST=0};
+#include "../../../../Include/Common/Enums/IterOrderType.h"
 template<unsigned N> class AuraFlags2803 {
  std::bitset<N> bits;
 public:

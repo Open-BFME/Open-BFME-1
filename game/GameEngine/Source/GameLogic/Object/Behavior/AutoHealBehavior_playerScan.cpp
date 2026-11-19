@@ -397,10 +397,10 @@ struct BfmeWideResult : public Gen_uw_0002c471
 
 
 
-enum IterOrderType
-{
-	ITER_FASTEST = 0
-};
+#include "../../../../Include/Common/Enums/IterOrderType.h"
+
+
+
 
 class BfmeWideForwardC
 {

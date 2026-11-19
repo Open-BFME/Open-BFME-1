@@ -38,7 +38,7 @@ struct Coord3D
 #include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 // BFME ordinals: bit 12 and bit 25 of ThingTemplate::m_kindof.
-enum KindOfType { KINDOF_AIRCRAFT = 12, KINDOF_PROJECTILE = 25 };
+#include "../../../../Include/Common/Enums/KindOfType.h"
 
 enum AIDebugOptions { AI_DEBUG_NONE = 0, AI_DEBUG_PATHS = 1 };
 

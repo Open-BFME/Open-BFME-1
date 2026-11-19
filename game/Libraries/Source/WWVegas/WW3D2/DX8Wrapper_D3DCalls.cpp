@@ -19,10 +19,10 @@ enum WW3DFormat
 	WW3D_FORMAT_UNKNOWN_00904CE0
 };
 
-enum _D3DPOOL
-{
-	D3DPOOL_DEFAULT_00904CE0
-};
+#include "../../../../GameEngine/Include/Common/Enums/_D3DPOOL.h"
+
+
+
 typedef _D3DPOOL D3DPOOL;
 
 typedef unsigned int UINT;

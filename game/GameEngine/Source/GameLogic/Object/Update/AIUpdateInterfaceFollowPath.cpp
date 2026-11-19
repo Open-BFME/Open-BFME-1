@@ -39,13 +39,13 @@
 
 #include "../../command_source_type.h"
 
-enum StateID
-{
-    BFME_AI_FOLLOW_PATH = 0x06,
-    BFME_AI_FOLLOW_EXIT_PRODUCTION_PATH = 0x07,
-    BFME_AI_FOLLOW_PATH_STATE_0x36 = 0x36,
-    BFME_AI_FOLLOW_PATH_STATE_0x3D = 0x3D
-};
+#include "../../../../Include/Common/Enums/StateID.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

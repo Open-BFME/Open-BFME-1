@@ -9,20 +9,20 @@
 
 class Team;
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../../Include/Common/Enums/Relationship.h"
 
-enum AllowPlayerRelationship
-{
-	ALLOW_SAME_PLAYER	= 0x01,
-	ALLOW_ALLIES		= 0x02,
-	ALLOW_ENEMIES		= 0x04,
-	ALLOW_NEUTRAL		= 0x08
-};
+
+
+
+
+
+#include "../../../Include/Common/Enums/AllowPlayerRelationship.h"
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

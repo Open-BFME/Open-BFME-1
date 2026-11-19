@@ -39,15 +39,15 @@ private:
 	UnsignedShort m_port;
 };
 
-enum NATStateType
-{
-	NATSTATE_IDLE = 0
-};
+#include "../../Include/Common/Enums/NATStateType.h"
 
-enum NATConnectionState
-{
-	NATCONNECTIONSTATE_NOSTATE = 0
-};
+
+
+
+#include "../../Include/Common/Enums/NATConnectionState.h"
+
+
+
 
 struct NATConnectionNode
 {

@@ -14,7 +14,7 @@
 // its vtable and scalar fields. This preserves retail's lack of an EH frame.
 template<class T> T &at(void *p, unsigned n) { return *(T*)((char*)p+n); }
 class Object;
-enum KindOfType {};
+#include "../../../../../Include/Common/Enums/KindOfType.h"
 #include "../../../command_source_type.h"
 #define THING_TU_MEMBERS \
 public: bool isKindOf(KindOfType) const;
@@ -151,7 +151,7 @@ void Rva00278F20::slot34(Object *target,int shots,CommandSourceType source)
  if(source==0 || source==1) ((BfmeHostXZ*)this)->bfmeFinishXZ(target);
 }
 
-enum WeaponChoiceCriteria {};
+#include "../../../../../Include/Common/Enums/WeaponChoiceCriteria.h"
 class Object { public: bool chooseBestWeaponForTarget(const Object*,WeaponChoiceCriteria,CommandSourceType); };
 class BfmeSubEQT { public: char bfmeAEQT(); };
 class Rva00278D50 {

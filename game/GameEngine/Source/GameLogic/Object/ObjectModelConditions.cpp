@@ -111,17 +111,17 @@ enum WeaponSlotType
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
-enum WeaponSetConditionType
-{
-	WSF_INVALID = -1,
-	WSF_NONE = 0,
-	WSF_FIRING = 1,
-	WSF_BETWEEN = 2,
-	WSF_RELOADING = 3,
-	WSF_UNUSED = 4,
-	WSF_PREATTACK = 5,
-	WSF_COUNT = 6
-};
+#include "../../../Include/Common/Enums/WeaponSetConditionType.h"
+
+
+
+
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponSet

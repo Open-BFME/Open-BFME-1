@@ -32,10 +32,10 @@ struct Coord3D;
 
 #include "../command_source_type.h"
 
-enum GUICommandType
-{
-	GUI_COMMAND_NONE = 0
-};
+#include "../../../Include/Common/Enums/GUICommandType.h"
+
+
+
 
 #include "../../../Include/Common/NameKeyType.h"
 

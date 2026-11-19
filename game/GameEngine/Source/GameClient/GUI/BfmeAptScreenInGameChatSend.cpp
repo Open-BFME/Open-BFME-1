@@ -154,12 +154,12 @@ extern LanguageFilter *TheLanguageFilter;
 
 #include "../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL,
-	ALLIES
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 
 

@@ -7,18 +7,18 @@
 
 #define TRUE true
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7,
-	KINDOF_SPAWNS_ARE_THE_WEAPONS = 83
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
+
 
 #include "../../GameLogic/command_source_type.h"
 
-enum AbleToAttackType
-{
-	ATTACK_NEW_TARGET = 0
-};
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
 
 enum CanAttackResult
 {

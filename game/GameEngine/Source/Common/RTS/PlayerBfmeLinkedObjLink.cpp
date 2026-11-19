@@ -29,12 +29,12 @@ extern "C" int __cdecl memcmp(const void *buf1, const void *buf2,
 	UnsignedInt count);
 #pragma intrinsic(memcmp)
 
-enum UpgradeStatusType
-{
-	UPGRADE_STATUS_INVALID,
-	UPGRADE_STATUS_IN_PRODUCTION,
-	UPGRADE_STATUS_COMPLETE
-};
+#include "../../../Include/Common/Enums/UpgradeStatusType.h"
+
+
+
+
+
 
 class Upgrade;
 

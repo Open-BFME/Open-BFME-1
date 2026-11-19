@@ -18,7 +18,7 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum KindOfType {};
+#include "../../../Include/Common/Enums/KindOfType.h"
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 enum WhichTurretType { TURRET_INVALID = -1 };
 enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };

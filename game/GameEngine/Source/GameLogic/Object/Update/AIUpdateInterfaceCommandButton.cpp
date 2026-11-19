@@ -38,10 +38,10 @@ class AIUpdateInterface;
 
 #include "../../command_source_type.h"
 
-enum KindOfType
-{
-	KINDOF_PROJECTILE = 25				// the 0x02000000 both bodies test
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 template <typename T> class StringBase
 {

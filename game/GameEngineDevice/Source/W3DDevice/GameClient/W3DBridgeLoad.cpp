@@ -23,7 +23,7 @@
 
 
 
-enum BodyDamageType {BODY_PRISTINE,BODY_DAMAGED,BODY_REALLYDAMAGED,BODY_RUBBLE};
+#include "../../../../GameEngine/Include/Common/Enums/BodyDamageType.h"
 class TerrainRoadType {
 public:
  AsciiString getTexture(); AsciiString getBridgeModel();

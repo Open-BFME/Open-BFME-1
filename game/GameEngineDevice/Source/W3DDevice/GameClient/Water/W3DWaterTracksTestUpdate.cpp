@@ -32,18 +32,18 @@ enum { VK_F5=0x74,VK_F6=0x75,VK_F7=0x76,VK_F8=0x77,VK_DELETE=0x2e,VK_INSERT=0x2d
 typedef int Int; typedef float Real; typedef bool Bool;
 struct Coord3D { float x,y,z; Coord3D() {} ~Coord3D() {} };
 struct ICoord2D { int x,y; };
-enum waveType
-{
-	WaveTypeFirst,
-	WaveTypePond=WaveTypeFirst,
-	WaveTypeOcean,
-	WaveTypeCloseOcean,
-	WaveTypeCloseOceanDouble,
-	WaveTypeRadial,
-	WaveTypeLast = WaveTypeRadial,
-	WaveTypeStationary,
-	WaveTypeMax,
-};
+#include "../../../../../GameEngine/Include/Common/Enums/waveType.h"
+
+
+
+
+
+
+
+
+
+
+
 
 struct waveInfo
 {

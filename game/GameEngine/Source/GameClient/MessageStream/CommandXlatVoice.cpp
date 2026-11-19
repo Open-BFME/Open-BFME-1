@@ -66,7 +66,7 @@ class GameMessage { public:
  const GameMessageArgumentType* getArgument(int) const;
  void appendBooleanArgument(bool); void appendObjectIDArgument(unsigned);
 };
-enum GameMessageDisposition { KEEP_MESSAGE, DESTROY_MESSAGE };
+#include "../../../Include/Common/Enums/GameMessageDisposition.h"
 enum CommandEvaluateType { DO_COMMAND, DO_HINT, DO_EVALUATE };
 enum ObjectID { Rva005AA450ObjectID };
 class AudioEventRTS { public:
@@ -903,7 +903,7 @@ static __declspec(noinline) void Rva005A8A10(Drawable* draw,GameMessage::Type ms
    if(TheAudio->rvaSlot5c(choices[0][2]) || TheAudio->rvaSlot5c(choices[0][1])) {
     Rva001BE3F0* q=obj->rva001BE3F0();
     if(q && Rva003723A0(q->field24,obj->getPosition(),&info->m_position)) {
-     
+
 if(obj->field110.rva000D2F40(0x93)) {
       sound=choices[0][1];group=choices[1][1];sound2=choices[2][1];group2=choices[3][1];
      } else {
@@ -914,7 +914,7 @@ if(obj->field110.rva000D2F40(0x93)) {
     }
    }
   }
-  
+
 if(obj->field110.field10&0x80000) {
    sound=choices[0][3];group=choices[1][3];sound2=choices[2][3];group2=choices[3][3];
   } else {
@@ -1272,7 +1272,7 @@ bool pickAndPlayUnitVoiceResponse(const DrawableList* list,GameMessage::Type msg
   Drawable* draw=obj->getDrawable();
   if(!draw) continue;
   const AudioEventRTS *sound=0,*groupSound=0,*sound2=0,*groupSound2=0;
-  
+
   Rva005AA450Rank rank; rank.field08=INT_MIN; rank.field00=0; rank.field0c=ordinal; rank.field10=draw->rva00417060();
   rank.field04=(obj->getTemplate()->m_kindOf[2]&0x02000000)!=0;
   if(rank.field04) {

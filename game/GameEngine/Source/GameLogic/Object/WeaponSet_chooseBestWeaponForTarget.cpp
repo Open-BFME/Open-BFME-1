@@ -12,12 +12,12 @@ enum WeaponStatus
 	OUT_OF_AMMO = 1
 };
 
-enum WeaponChoiceCriteria
-{
-	PREFER_MOST_DAMAGE = 0,
-	PREFER_LONGEST_RANGE = 1,
-	PREFER_SPECIAL = 2
-};
+#include "../../../Include/Common/Enums/WeaponChoiceCriteria.h"
+
+
+
+
+
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 

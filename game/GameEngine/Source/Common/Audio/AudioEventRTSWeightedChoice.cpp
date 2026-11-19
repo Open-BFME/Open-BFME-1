@@ -38,12 +38,12 @@ found: if(soundEntry==range->end){_WriteBarrier();return 0;}
 extern float GetGameAudioRandomValueReal(float lo, float hi, char *file, int line);
 #define AUDIO_EVENT_RTS_FILE "F:\\bfme\\Code\\gameengine\\Source\\Common\\Audio\\AudioEventRTS.cpp"
 
-enum AudioType
-{
-	AT_Music = 0,
-	AT_Streaming = 1,
-	AT_SoundEffect = 2
-};
+#include "../../../Include/Common/Enums/AudioType.h"
+
+
+
+
+
 
 __forceinline AudioType retainAudioType(AudioType type)
 {

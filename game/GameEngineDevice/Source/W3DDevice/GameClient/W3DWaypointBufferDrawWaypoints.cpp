@@ -19,10 +19,10 @@
 
 #define MAX_DISPLAY_NODES 512
 
-enum KindOfType
-{
-	KINDOF_IGNORED_IN_GUI = 47
-};
+#include "../../../../GameEngine/Include/Common/Enums/KindOfType.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

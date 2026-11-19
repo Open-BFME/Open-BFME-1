@@ -8,12 +8,12 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
 
-enum PlayingStatus
-{
-	PS_Playing,
-	PS_Stopped,
-	PS_Paused
-};
+#include "../../../GameEngine/Include/Common/Enums/PlayingStatus.h"
+
+
+
+
+
 
 class RefCountedPlayingAudio
 {

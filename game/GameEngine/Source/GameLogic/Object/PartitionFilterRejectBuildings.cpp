@@ -31,10 +31,10 @@ public:
 	UnsignedInt m_kindOfWord1;
 };
 
-enum KindOfType
-{
-	KINDOF_FS_BASE_DEFENSE = 0x3F
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class Thing
 {

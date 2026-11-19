@@ -25,12 +25,12 @@ enum
 	GBM_SELECTED = 0x4008
 };
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY,
-	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD
-};
+#include "../../../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 #include "string_base.h"
 

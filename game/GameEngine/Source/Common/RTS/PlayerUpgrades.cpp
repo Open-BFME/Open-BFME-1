@@ -30,12 +30,12 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
-enum UpgradeStatusType
-{
-	UPGRADE_STATUS_INVALID,
-	UPGRADE_STATUS_IN_PRODUCTION,
-	UPGRADE_STATUS_COMPLETE
-};
+#include "../../../Include/Common/Enums/UpgradeStatusType.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate

@@ -14,10 +14,10 @@
 typedef int ObjectID;
 typedef unsigned char Bool;
 
-enum KindOfType
-{
-	KINDOF_BRIDGE_TOWER = 0x18
-};
+#include "../../../../../Include/Common/Enums/KindOfType.h"
+
+
+
 
 class Object;
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;

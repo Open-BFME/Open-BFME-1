@@ -7,7 +7,7 @@
 #include "basetype.h"
 #include "../../../Include/Common/NameKeyType.h"
 #include "../../../Include/Common/Enums/AttitudeType.h"
-enum VeterancyLevel { LEVEL_REGULAR=0 };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 class StaticNameKey {
 public: NameKeyType key() const; operator NameKeyType() const { return key(); }
 };

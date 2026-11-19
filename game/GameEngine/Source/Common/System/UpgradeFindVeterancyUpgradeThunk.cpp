@@ -12,7 +12,7 @@
 
 class UpgradeTemplate;
 
-enum VeterancyLevel { LEVEL_REGULAR = 0 };
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
 
 #include "ascii_string.h"
 
