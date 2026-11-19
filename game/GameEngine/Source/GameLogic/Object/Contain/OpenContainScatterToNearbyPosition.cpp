@@ -1,8 +1,8 @@
 
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes/Real.h"
 typedef int Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

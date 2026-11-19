@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // Retail 0x0019A470: address-derived DataChunk callback with BuildListInfo payloads.
 
-typedef int Int;
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/Bool.h"
 typedef unsigned char Byte;
 #include "../../../Include/Common/NameKeyType.h"
 

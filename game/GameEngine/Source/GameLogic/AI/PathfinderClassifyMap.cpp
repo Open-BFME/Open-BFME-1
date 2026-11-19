@@ -1,7 +1,7 @@
 // ?classifyMap@Pathfinder@@IAEXXZ
 
 typedef int Bool;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"

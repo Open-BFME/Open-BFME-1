@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

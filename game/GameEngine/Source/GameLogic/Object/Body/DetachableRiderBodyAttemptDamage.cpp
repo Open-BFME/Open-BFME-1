@@ -9,7 +9,7 @@
 // and 6 of the body interface and the module-data fields keep opaque names.
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../Include/Common/ScalarTypes/Real.h"
 #include "../../ScriptEngine/game_logic_dispatch.h"
 
 class DamageInfo

@@ -2,7 +2,7 @@
 // Retail reads the unit predicates from slots +0x184 and +0x18C.
 // This address-derived interface calls slots +0x10 and +0x114.
 // The list head sits at this interface's address minus 0xAC.
-typedef int Int;
+#include "../../../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 class BfmeObjAS

@@ -13,7 +13,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned char UByte;
+#include "../../../Include/Common/ScalarTypes/Source/UByte.h"
 
 
 

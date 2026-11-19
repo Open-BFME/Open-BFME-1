@@ -13,8 +13,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../Include/Common/ScalarTypes/Real.h"
+#include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Byte;
 
 #include "../../../../Include/Common/ObjectID.h"

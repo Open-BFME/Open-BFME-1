@@ -2,7 +2,7 @@
 //
 // Retail 0x003E5CA0: Pathfinder::bfmeLayerForPosition.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 typedef float Real;
 

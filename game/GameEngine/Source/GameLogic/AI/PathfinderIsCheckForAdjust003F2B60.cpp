@@ -1,9 +1,9 @@
 // Retail 0x003F2B60, 355 bytes: the "Pathfinder_IsCheckForAdjust" cell predicate
 // that 0x003F4F70 and 0x003F5340 call through ILT 00046E6B on the 0x003E6110 record.
 // cl: /DNDEBUG /MD
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 class Object;
 class LocomotorSet;

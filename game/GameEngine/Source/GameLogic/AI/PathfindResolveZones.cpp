@@ -1,4 +1,4 @@
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 void bfmeResolveZones(
 	int sourceZone, int targetZone,

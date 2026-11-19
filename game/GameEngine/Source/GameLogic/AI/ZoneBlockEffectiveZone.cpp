@@ -3,7 +3,7 @@
 // at +0x3c, one for each profile index.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 enum LocomotorSurfaceType
 {

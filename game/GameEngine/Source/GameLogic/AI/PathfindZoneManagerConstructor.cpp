@@ -4,7 +4,7 @@
 #include <memory>
 // Byte-exact reconstruction of the BFME PathfindZoneManager constructor.
 
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 struct BfmeZonePointerMatrix
 {

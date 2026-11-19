@@ -40,7 +40,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

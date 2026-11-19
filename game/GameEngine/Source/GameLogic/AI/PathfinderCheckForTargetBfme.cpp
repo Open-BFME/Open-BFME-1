@@ -2,7 +2,7 @@
 // Clean C++ reconstruction with the helper's observed BFME ABI view.
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned char UByte;
+#include "../../../Include/Common/ScalarTypes/Source/UByte.h"
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 extern "C" void _ReadWriteBarrier(void);

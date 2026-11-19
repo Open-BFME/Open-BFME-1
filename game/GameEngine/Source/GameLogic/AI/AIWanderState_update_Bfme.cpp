@@ -2,7 +2,7 @@
 // BFME layout for the retail AIWanderState::update body at 0x0017B060.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

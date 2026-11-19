@@ -26,7 +26,7 @@
 // _M_fill_insert keeps its `const int&` parameter -- that is what retail hands
 // the address of -- so the divergence is resize's alone.
 
-typedef unsigned int size_t_;
+#include "../../../Include/Common/ScalarTypes/Source/size_t_.h"
 
 // Retail reaches memmove through its MSVCR71 import slot (`ff 15`, IAT
 // 0x0135945C); /MD's <string.h> declares it dllimport, so the call binds to

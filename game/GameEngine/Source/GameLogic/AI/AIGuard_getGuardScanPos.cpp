@@ -3,7 +3,7 @@
 
 typedef float Real;
 typedef int ObjectID;
-typedef unsigned int TeamID;
+#include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)

@@ -5,7 +5,7 @@
 #include <math.h>
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

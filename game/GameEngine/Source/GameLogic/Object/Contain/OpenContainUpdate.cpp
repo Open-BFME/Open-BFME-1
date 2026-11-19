@@ -8,7 +8,7 @@ extern void j_00004953();
 extern void j_0000ba50();
 
 #include "../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

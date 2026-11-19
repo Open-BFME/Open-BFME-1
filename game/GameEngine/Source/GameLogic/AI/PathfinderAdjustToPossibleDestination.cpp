@@ -28,7 +28,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short zoneStorageType;
+#include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 #define PATHFIND_CELL_SIZE 10
 #define PATHFIND_CELL_SIZE_F 10.0f

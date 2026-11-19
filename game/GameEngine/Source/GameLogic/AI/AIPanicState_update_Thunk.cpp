@@ -2,7 +2,7 @@
 // BFME layout for AIPanicState::update at retail RVA 0x0017B840.
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 

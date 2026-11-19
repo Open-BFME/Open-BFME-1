@@ -11,7 +11,7 @@ extern GameLogic *TheGameLogic;
 class TerrainLogic { public: PathfindLayerEnum getLayerForDestination(Object *, const Coord3D *); };
 extern TerrainLogic *TheTerrainLogic;
 class Team;
-typedef unsigned int TeamID;
+#include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 class TeamFactory { public: Team *findTeamByID(TeamID); };
 extern TeamFactory *TheTeamFactory;
 class Gen_001BF490 { public: void bfmeForward(void *); };

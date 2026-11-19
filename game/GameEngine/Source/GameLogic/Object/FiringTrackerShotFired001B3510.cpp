@@ -14,8 +14,8 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 
-typedef unsigned int UnsignedInt;
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 typedef unsigned int AudioHandle;
 

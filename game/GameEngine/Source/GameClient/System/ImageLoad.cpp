@@ -12,7 +12,7 @@
 #include "StringInline.h"
 
 typedef unsigned char Bool;
-typedef unsigned short UnsignedShort;
+#include "../../../Include/Common/ScalarTypes/UnsignedShort.h"
 
 static char *bfmeStringData(const AsciiString &value)
 {

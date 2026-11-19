@@ -5,8 +5,8 @@
 // base assignment, AsciiString assignment at +0x0C, then the BFME weather
 // fields through the 0x78-byte object extent.
 
-typedef int Int;
-typedef float Real;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 #include "ascii_string.h"

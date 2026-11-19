@@ -11,7 +11,7 @@
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) unsigned int __cdecl wcslen(
 	const WideChar *text);

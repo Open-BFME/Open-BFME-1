@@ -7,7 +7,7 @@
 // computer player; the status and active-command checks are BFME additions.
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 typedef int Int;
 
 enum Relationship

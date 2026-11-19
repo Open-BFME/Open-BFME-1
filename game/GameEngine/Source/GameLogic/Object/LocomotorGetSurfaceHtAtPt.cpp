@@ -4,7 +4,7 @@
 // water.  TerrainLogic slots 6 and 19 provide the two calls in the retail body.
 
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 class TerrainLogic
 {

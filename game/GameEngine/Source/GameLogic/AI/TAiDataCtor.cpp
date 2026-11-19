@@ -7,8 +7,8 @@
 // The matched AI::newOverride copy identifies +0xF4 as m_namedLists and
 // +0xF8 as m_next (targets/game/reverse/identity_evidence/0x0014ac60-taidata-destructor.md).
 
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/Real.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 class Xfer;

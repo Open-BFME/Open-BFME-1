@@ -24,8 +24,8 @@
 #include "ascii_string.h"
 #include <string.h>
 
-typedef unsigned int UnsignedInt;
-typedef float Real;
+#include "../../../../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 class FXList;

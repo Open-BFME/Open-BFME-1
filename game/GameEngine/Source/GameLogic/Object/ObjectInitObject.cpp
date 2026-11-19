@@ -29,9 +29,9 @@
 
 #include "ascii_string.h"
 
-typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/Bool.h"
+#include "../../../Include/Common/ScalarTypes/Int.h"
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 enum WeaponSlotType
 {

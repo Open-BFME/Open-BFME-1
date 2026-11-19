@@ -1,9 +1,9 @@
 // BFME's member-ified tighten-path callback, retail 0x003F1840 (127 bytes).
 // cl: /DNDEBUG /MD
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -2,7 +2,7 @@
 // Retail 0x00168660. Player::setPlayerType constructs the 0xA0-byte
 // skirmish AI after the AIPlayer base constructor returns.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 class Player
