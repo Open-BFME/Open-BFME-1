@@ -285,7 +285,7 @@ public:
 	unsigned char m_privateStatus;
 };
 
-class ThingTemplate;
+
 
 #include "../../../../Include/Common/BitFlags/BitFlags.h"
 

@@ -101,7 +101,7 @@ class Thing;
 class ModuleData;
 class BodyModuleInterface;
 class Object;
-class Drawable;
+
 class Player;
 class ThingTemplate;
 
@@ -127,10 +127,10 @@ struct StateConditionInfo
 // Retail StateMachine table at VA 0x00C60740 and its 0x3C-byte object layout.
 // Slots 9 and 10 share the zero-return body; their original names are unknown.
 
-class Object;
+
 class Xfer;
 struct State;
-struct StateConditionInfo;
+
 
 class StateMachine
 {
@@ -1424,7 +1424,7 @@ struct CreateMask : public _STL::_Base_bitset<4>
 	CreateMask() { memset(_M_w, 0, sizeof(_M_w)); }
 };
 
-class Team;
+
 
 class ThingFactory
 {
@@ -1575,7 +1575,7 @@ public:
 
 extern BuildAssistant *TheBuildAssistant;
 
-class GeometryInfo;
+
 
 class TerrainLogic
 {

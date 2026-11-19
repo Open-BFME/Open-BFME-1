@@ -142,7 +142,7 @@ class MidVirtualSlot90Receiver;
 // Typed enum transfers (the 25-byte slot-0x90 forwarders).
 void Rva0010C020(MidVirtualSlot90Receiver *receiver, void *context);
 void Rva0010BE00(MidVirtualSlot90Receiver *receiver, void *context);
-class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+ class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Waypoint
 {

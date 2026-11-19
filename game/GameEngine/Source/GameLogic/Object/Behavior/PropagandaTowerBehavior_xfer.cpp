@@ -65,7 +65,7 @@ public:
 extern void __declspec(noreturn) __stdcall _CxxThrowException(
 	void *object, void *throwInfo);
 extern int g_rva005c5100ThrowInfo;
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 class UpdateModule

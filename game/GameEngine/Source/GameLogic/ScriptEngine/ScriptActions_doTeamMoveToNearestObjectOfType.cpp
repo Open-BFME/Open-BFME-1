@@ -146,7 +146,7 @@ extern ThingFactory *TheThingFactory;
 static inline BfmeThingFactory *localTheThingFactory() { return (BfmeThingFactory *)TheThingFactory; }
 extern AI *TheAI;
 
-class ScriptActions;
+
 extern void j_000414d9(void);
 
 static __forceinline Object *bfmeFindClosestObject(ScriptActions *actions,

@@ -174,7 +174,7 @@ private:
 
 // Retail 0x00943430 is ?unlink@Gen_00943CF0@@AAEXPAX@Z (Gen_00943CF0_Unlink.cpp);
 // the receiver is the spatial-grid object embedded at scene+0x34.
-class SimpleSceneClass;
+
 class Gen_00943CF0
 {
 	friend class SimpleSceneClass;

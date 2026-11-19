@@ -156,7 +156,7 @@ public:
 #undef BFME_AUDIO_SLOT
 
 class ClientSubsystem;
-class AudioManager;
+
 extern AudioManager *TheAudio;
 
 struct UnitCrateCollideModuleData

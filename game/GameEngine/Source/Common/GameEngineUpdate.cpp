@@ -3,7 +3,7 @@
 
 #include "../../Include/Common/ScalarTypes.h"
 typedef void *HANDLE;
-typedef unsigned char EngineBool;
+#include "../../Include/Common/ScalarTypes/Source/EngineBool.h"
 
 struct AsciiStringLayout
 {

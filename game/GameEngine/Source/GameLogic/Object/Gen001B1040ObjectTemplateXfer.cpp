@@ -54,7 +54,7 @@ public:
 	virtual void xferAsciiString(AsciiString &text);
 };
 
-class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+ class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class Drawable;
 

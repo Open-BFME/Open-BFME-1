@@ -64,7 +64,7 @@ class DamageModuleInterface;
 class DestroyModuleInterface;
 class DieModuleInterface;
 class SpecialPowerModuleInterface;
-class UpdateModuleInterface;
+
 
 class BehaviorModuleInterface
 {

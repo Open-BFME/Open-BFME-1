@@ -138,7 +138,7 @@ extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 class GameLogic;
 extern GameLogic *TheGameLogic;
 class PlayerList;
-class PlayerList;
+
 extern PlayerList *ThePlayerList;
 extern GlobalData *TheWritableGlobalData;
 

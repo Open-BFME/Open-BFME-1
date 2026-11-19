@@ -12,7 +12,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 extern const WideChar g_Rva01088AF4EmptyWideString[];
 

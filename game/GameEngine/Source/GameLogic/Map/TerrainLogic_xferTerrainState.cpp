@@ -154,7 +154,7 @@ public:
 	char m_pad20[0xb0 - 0x20];
 };
 
-class Waypoint;
+
 extern Waypoint *g_waypointListHead;
 
 struct Gen_t_001a6d20_p4pod

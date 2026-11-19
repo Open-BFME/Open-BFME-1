@@ -54,7 +54,7 @@ public:
 	virtual Xfer &xferBool(bool *value);
 };
 
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 extern Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 // Retail routes Emotion::xfer and _Rb_tree::insert_unique through ILT thunks.

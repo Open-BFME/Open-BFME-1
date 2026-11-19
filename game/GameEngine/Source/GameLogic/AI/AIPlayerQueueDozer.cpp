@@ -246,7 +246,7 @@ public:
 };
 
 
-class Object;
+
 
 #define BFME_VIRTUAL_SLOT(n) virtual void slot##n();
 

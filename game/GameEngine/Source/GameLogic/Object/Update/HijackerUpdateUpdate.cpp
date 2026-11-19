@@ -200,7 +200,7 @@ public:
 };
 
 
-class Rva00295D70HijackerUpdateModuleData;
+
 
 class Rva00295D70Module
 {

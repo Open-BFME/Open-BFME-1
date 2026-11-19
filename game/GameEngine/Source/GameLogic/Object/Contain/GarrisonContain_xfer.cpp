@@ -139,7 +139,7 @@ protected:
 	virtual void xfer(Xfer *xfer);
 };
 
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 // Retail 0x21DBAF -> ILT 0x08CA1 -> the existing 25-byte 0x10C3E0 body.
 // It takes two stack pointers under cdecl; the caller cleans eight bytes.

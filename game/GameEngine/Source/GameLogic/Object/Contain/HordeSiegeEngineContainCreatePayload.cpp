@@ -23,7 +23,7 @@ class Player;
 #define BFME_HAVE_ASCIISTRING 1
 #define OBJECT_TU_MEMBERS const AsciiString &getName() const { return m_name; } void setName(const AsciiString &name) { m_name = name; } Player *getControllingPlayer() const;
 #include "../object.h"
-class Player;
+
 class Team;
 class ThingTemplate;
 

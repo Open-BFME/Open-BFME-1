@@ -23,7 +23,7 @@ inline bool operator==(const AsciiString &left, const AsciiString &right)
 	return *leftText == *rightText;
 }
 
-typedef long Long;
+#include "../../../Include/Common/ScalarTypes/Source/Long.h"
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	Long volatile *addend);

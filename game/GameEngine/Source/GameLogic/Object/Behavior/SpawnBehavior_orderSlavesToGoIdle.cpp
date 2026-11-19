@@ -50,7 +50,7 @@ public:
 	AICommandInterface m_commands;
 };
 
-class Object;
+
 
 // The observed Object+0x204 pointer load in this body. Retail's out-of-line
 // Object::getAI (0x00477B30) reads +0x19C, so this stays a file-local helper

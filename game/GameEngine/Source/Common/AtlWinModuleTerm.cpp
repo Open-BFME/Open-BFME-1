@@ -2,9 +2,9 @@
 // ATL 7.1 AtlWinModuleTerm from atlbase.h, TU-local so this one ATL runtime
 // body can compile independently of the shared headers.
 
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 typedef unsigned short ATOM;
-typedef unsigned long DWORD;
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
 
 extern "C" __declspec(dllimport) void __cdecl free(void *block);
 extern "C" __declspec(dllimport) int __stdcall UnregisterClassA(const char *name, void *hInst);

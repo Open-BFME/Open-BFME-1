@@ -60,7 +60,7 @@ public:
 	virtual void xferBool(Bool *value);
 };
 
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 void Rva0010BE80(MidVirtualSlot90Receiver *receiver, void *context);
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 // 0x012ACC30 is the next auto-assigned waypoint id. Its address-derived

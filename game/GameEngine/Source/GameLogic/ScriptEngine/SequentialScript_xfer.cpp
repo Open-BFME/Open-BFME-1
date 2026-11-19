@@ -161,7 +161,7 @@ public:
 	int tag;
 };
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 extern "C" int g_guardTargetTypeThrowInfo;
 

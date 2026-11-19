@@ -84,7 +84,7 @@ public:
     virtual void slot15(); virtual void slot16();
     virtual unsigned int addAudioEvent(const AudioEventRTS *);
 };
-class AudioManager;
+
 extern AudioManager *TheAudio;
 
 

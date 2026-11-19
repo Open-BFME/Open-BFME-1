@@ -141,7 +141,7 @@ public:
 extern TeamFactory *TheTeamFactory;
 
 // Existing retail owner for the BFME ObjectID transfer ILT at 0x0000C9B4.
-class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+ class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 class TeamInQueueBase
 {

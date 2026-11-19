@@ -241,7 +241,7 @@ public:
 // previously declared it under the unmangled C-linkage name. It now uses
 // the canonical mangled spelling and casts at each use; the emitted bytes are
 // unchanged because DIR32 relocations are masked by the byte gate.
-class GameLogic;
+
 
 extern GameLogic *TheGameLogic;
 

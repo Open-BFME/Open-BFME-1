@@ -263,7 +263,7 @@ enum
 
 
 #include "Lib/Coord3D.h"
-class Object;
+
 class AIUpdateInterface;
 class Rva0030B719Shape
 {
@@ -380,7 +380,7 @@ friend class XferCRC;
 friend class Xfer;
 
 public:
-	
+
 #ifdef BFME_SNAPSHOT_CONSTRUCTOR_ONLY
 	__declspec(dllimport) __forceinline Snapshot() {}
 	virtual ~Snapshot( void );

@@ -84,7 +84,7 @@ extern const char g_bfmeEmptyAscii[];
 
 #define NULL 0
 
-class View;
+
 
 class Matrix3D
 {
