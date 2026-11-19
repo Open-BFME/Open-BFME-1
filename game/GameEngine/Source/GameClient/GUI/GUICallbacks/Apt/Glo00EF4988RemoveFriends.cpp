@@ -219,7 +219,7 @@ inline __declspec(noinline) Int AptInGameChat::rva00513BF0( GameWindow *list, vo
 }
 
 
-class GameWindow;
+
 typedef AptInGameChat BfmeAptScreenInGameChat;
 void __cdecl operator delete(void *);
 

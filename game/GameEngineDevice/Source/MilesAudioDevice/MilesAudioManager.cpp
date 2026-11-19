@@ -3,7 +3,7 @@
 #include <string.h>
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef __int64 Time64;
 typedef void *HDIGDRIVER;
 typedef void *HMDIDRIVER;

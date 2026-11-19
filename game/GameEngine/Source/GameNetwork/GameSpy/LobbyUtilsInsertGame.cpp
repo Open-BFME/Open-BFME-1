@@ -12,7 +12,7 @@ extern "C" void _ReadWriteBarrier(void);
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 typedef int Color;
 

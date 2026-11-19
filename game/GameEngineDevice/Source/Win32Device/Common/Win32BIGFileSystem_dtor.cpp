@@ -22,8 +22,8 @@
 class AsciiString;
 class ArchiveFile;
 class File;
-typedef char Char;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Char.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 typedef int Bool;
 
 class ArchiveFileMapStandIn

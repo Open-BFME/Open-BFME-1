@@ -7,7 +7,7 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef void *HANDLE;
 
 // SubsystemInterface owns this one-pointer string at this+0x04. Retail's

@@ -2,7 +2,7 @@
 // Retail 0x00899800 (748 B): Apt native (name, value) that erases or stores the name in the lazily built table at 0x01337A28.
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 struct Rva008D2A30Node

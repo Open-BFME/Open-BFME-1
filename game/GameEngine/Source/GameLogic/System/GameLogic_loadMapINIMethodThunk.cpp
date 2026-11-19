@@ -30,7 +30,7 @@
 // StringBase<char>::releaseBuffer (0x00887940), not the ??1AsciiString stub.
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
 
-typedef unsigned long DWORD;
+#include "../../../Include/Common/ScalarTypes/Win32/DWORD.h"
 
 extern "C" __declspec(dllimport) void __stdcall Sleep(DWORD);
 

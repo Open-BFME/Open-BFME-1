@@ -222,7 +222,7 @@ void Path::prependNode( const Coord3D *pos, PathfindLayerEnum layer )
 		m_pathTail = node;
 }
 
-class Object;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 // Pathfinder::getAircraftPath (0x003EDC50) is still a dump with no pinned

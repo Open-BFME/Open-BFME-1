@@ -3,7 +3,7 @@
 // The two adjacent destination-query payload constructors map reciprocally to
 // this original Pathfinder TU.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

@@ -96,7 +96,7 @@ public:
 // (defined in Common/GlobalData.cpp). This TU reads its +0xAA4 string through
 // a view class, so the extern carries the canonical type and the view is cast.
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
-class GlobalData;
+
 extern GlobalData *TheWritableGlobalData;
 
 class BodyModuleGlobalDataView

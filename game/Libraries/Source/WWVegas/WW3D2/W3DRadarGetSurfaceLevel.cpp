@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 typedef unsigned char Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 
 // The value returned by this BFME radar helper is the one-pointer D3D surface
 // wrapper.  The adopting constructor and destructor are already byte-verified

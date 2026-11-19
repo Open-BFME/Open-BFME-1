@@ -31,7 +31,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 
 #define NULL 0

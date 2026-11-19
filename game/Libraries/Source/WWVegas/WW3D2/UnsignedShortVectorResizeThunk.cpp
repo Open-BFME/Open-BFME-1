@@ -24,7 +24,7 @@
 // landed as a byte match, but it is more than enough to name the type this
 // resize was instantiated on.
 
-typedef unsigned int size_t_;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/size_t_.h"
 
 // Retail reaches memmove through its import slot.
 extern "C" __declspec(dllimport) void *__cdecl memmove(void *, const void *, unsigned int);

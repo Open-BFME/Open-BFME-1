@@ -9,7 +9,7 @@
 // BFME retail 0x0072EEB0: update the active terrain-track edges.
 
 typedef unsigned char Bool;
-typedef int Int;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 
 #include "vector3.h"
 #include "vector2.h"

@@ -19,7 +19,7 @@ private:
 	unsigned char m_pad[0x258];
 };
 
-class MultiIniFieldParse;
+
 
 // Retail's module-data factories reach INI through initFromINIMultiProc
 // (0x00852130), which takes the class's buildFieldParse proc; the

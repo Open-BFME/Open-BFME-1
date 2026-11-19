@@ -4,9 +4,9 @@
 // nine-argument callback ABI; the called 0x00434810 constructor proves the
 // concrete SubtitleEntry layout and non-trivial base lifetime.
 
-typedef int Int;
-typedef float Real;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
 
 #include "ascii_string.h"

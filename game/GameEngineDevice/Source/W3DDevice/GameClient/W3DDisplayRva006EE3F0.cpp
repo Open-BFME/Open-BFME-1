@@ -2,8 +2,8 @@
 // Retail slot 23 reads descriptor and product fields at +0x184 and +0x188.
 // Evidence: targets/game/reverse/identity_evidence/006ee3f0-descriptor-reset.md
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 extern "C" void _ReadWriteBarrier(void);

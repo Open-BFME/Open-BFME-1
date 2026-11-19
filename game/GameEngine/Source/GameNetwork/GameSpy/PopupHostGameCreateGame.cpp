@@ -6,7 +6,7 @@
 // exeCRC through AptLivingWorldWindowIndex, and stores an extra CRC/IP dword
 // in the 0x194-byte PeerRequest stagingRoomCreation union.
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 typedef unsigned int size_t;
 
 extern "C" size_t __cdecl strlen( const char *s );

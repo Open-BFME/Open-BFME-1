@@ -2,7 +2,7 @@
 // BFME's implementation follows the released Zero Hour routine, returning
 // the shared empty string when WinSock setup or hostname discovery fails.
 
-typedef unsigned short WORD;
+#include "../../Include/Common/ScalarTypes/Win32/WORD.h"
 
 struct WSADATA
 {

@@ -30,7 +30,7 @@
 // the extra `mov [esp+0xc],0`.
 
 typedef int INT;
-typedef unsigned int UINT;
+#include "../../Include/Common/ScalarTypes/Win32/UINT.h"
 typedef int PixelFormat;
 typedef int Status;
 

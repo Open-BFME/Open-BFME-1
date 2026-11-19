@@ -26,7 +26,7 @@
 
 #include "ascii_string.h"
 
-typedef long Long;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/Long.h"
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 typedef unsigned int AudioHandle;

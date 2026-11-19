@@ -156,7 +156,7 @@ void GadgetButtonDrawInverseClock(GameWindow *window, Int percent, Int color);
 enum KindOfType { KINDOF_FIRST = 0 };
 
 class AsciiString;
-class CommandButton;
+
 
 class Thing
 {

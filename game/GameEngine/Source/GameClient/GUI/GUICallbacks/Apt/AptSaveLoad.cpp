@@ -176,7 +176,7 @@ public:
 	bool m_field259;
 };
 
-class BfmeAptScreenQuitMenu;
+
 extern BfmeAptScreenQuitMenu *g_obj12F4B40;
 
 class AptSaveLoad;

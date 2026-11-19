@@ -2,8 +2,8 @@
 // W3DShrubBuffer constructor, retail 0x00720820: installs vtable 0x01120F94, whose name getter
 // returns "W3DShrubBuffer"; the terrain stores the result at +0x3098.
 
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
 class Rva0094D1E0List

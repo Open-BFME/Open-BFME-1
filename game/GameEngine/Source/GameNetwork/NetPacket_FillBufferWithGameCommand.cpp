@@ -23,7 +23,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 #include "../../../Libraries/Include/Lib/ICoord2D.h"

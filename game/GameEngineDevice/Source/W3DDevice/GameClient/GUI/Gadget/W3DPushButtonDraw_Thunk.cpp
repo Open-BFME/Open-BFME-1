@@ -10,11 +10,11 @@
 // the existing retail thunk at RVA 0x000327A4.  The ABI declarations below
 // are TU-local so the common headers remain untouched.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedByte.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class GameFont;

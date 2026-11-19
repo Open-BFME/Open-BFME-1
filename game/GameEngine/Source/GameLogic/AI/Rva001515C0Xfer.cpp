@@ -68,7 +68,7 @@ class Object
 {
 };
 
-class Xfer; class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
+ class MidVirtualSlot90Receiver;		// 0x0010C3C0, defined in MidVirtualSlot90Forwarders.cpp
 extern Xfer & __cdecl Rva0010C3C0(MidVirtualSlot90Receiver *xfer, void *value);
 
 class AIGroup

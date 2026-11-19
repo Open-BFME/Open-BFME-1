@@ -6,7 +6,7 @@
 // the suspended threads run again.
 
 typedef void *RvaHandle;
-typedef unsigned long RvaDword;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/RvaDword.h"
 typedef RvaHandle(__stdcall *RvaOpenThreadFn)(RvaDword access, int inherit, RvaDword threadId);
 
 struct Rva0088E100Context

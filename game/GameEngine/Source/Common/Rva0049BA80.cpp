@@ -67,7 +67,7 @@ public:
 	int test( UInt bit );
 };
 
-class Object;
+
 
 class Rva0049BA80
 {

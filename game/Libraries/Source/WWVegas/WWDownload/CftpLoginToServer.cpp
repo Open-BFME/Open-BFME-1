@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c- /O2 /Ob2
 // WWDownload FTP.CPP Cftp::LoginToServer.
 
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(
     char *buffer, const char *format, ...);

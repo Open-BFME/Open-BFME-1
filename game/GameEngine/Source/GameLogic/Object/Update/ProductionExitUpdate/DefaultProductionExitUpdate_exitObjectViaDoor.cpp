@@ -124,7 +124,7 @@ public:
 	}
 };
 
-class Thing;
+
 class ModuleData;
 
 class DefaultProductionExitUpdateModuleData

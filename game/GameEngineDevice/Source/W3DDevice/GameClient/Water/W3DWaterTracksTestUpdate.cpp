@@ -29,7 +29,13 @@ extern "C" __declspec(dllimport) short __stdcall GetAsyncKeyState(int);
 extern "C" __declspec(dllimport) int __stdcall GetCursorPos(POINT*);
 extern "C" __declspec(dllimport) int __stdcall ScreenToClient(void*,POINT*);
 enum { VK_F5=0x74,VK_F6=0x75,VK_F7=0x76,VK_F8=0x77,VK_DELETE=0x2e,VK_INSERT=0x2d };
-typedef int Int; typedef float Real; typedef bool Bool;
+
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
+
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
+
+#include "../../../../../GameEngine/Include/Common/ScalarTypes/Bool.h"
+
 struct Coord3D { float x,y,z; Coord3D() {} ~Coord3D() {} };
 struct ICoord2D { int x,y; };
 #include "../../../../../GameEngine/Include/Common/Enums/waveType.h"

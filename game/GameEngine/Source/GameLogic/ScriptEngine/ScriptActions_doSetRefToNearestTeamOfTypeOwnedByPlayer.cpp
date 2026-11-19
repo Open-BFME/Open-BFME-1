@@ -11,7 +11,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 class Object;
 class ObjectTypes;
