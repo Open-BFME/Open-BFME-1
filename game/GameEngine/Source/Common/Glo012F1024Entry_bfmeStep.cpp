@@ -14,7 +14,7 @@
 // and the notification is written out twice rather than shared: it is a tail
 // jump in each arm, so there is no frame here at all.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 class User;
 

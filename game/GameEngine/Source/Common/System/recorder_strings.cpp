@@ -49,21 +49,21 @@ struct IRegion2D {
     ICoord2D hi;
 };
 
-enum GameMessageArgumentDataType {
-    ARGUMENTDATATYPE_INTEGER,
-    ARGUMENTDATATYPE_REAL,
-    ARGUMENTDATATYPE_BOOLEAN,
-    ARGUMENTDATATYPE_OBJECTID,
-    ARGUMENTDATATYPE_DRAWABLEID,
-    ARGUMENTDATATYPE_TEAMID,
-    ARGUMENTDATATYPE_SQUADID,
-    ARGUMENTDATATYPE_LOCATION,
-    ARGUMENTDATATYPE_PIXEL,
-    ARGUMENTDATATYPE_PIXELREGION,
-    ARGUMENTDATATYPE_TIMESTAMP,
-    ARGUMENTDATATYPE_WIDECHAR,
-    ARGUMENTDATATYPE_UNKNOWN
-};
+#include "../../../Include/Common/Enums/GameMessageArgumentDataType.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/MessageStream.h
 class GameMessage {

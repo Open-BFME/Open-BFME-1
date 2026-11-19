@@ -6,7 +6,7 @@
 // Owner, table and ILT stub for every body:
 // targets/game/reverse/identity_evidence/upgrademux-slot7-owner-names.md
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 class UpgradeMux
 {

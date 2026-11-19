@@ -2,10 +2,10 @@
 // readable body of ?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z: game/GameEngine/Source/GameClient/Drawable.cpp
 // readable body of ?replaceModelConditionState@Drawable@@QAEXABVModelConditionFlags@@II@Z: game/GameEngine/Source/GameClient/Drawable.cpp
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef float Real;
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "Common/AsciiString.h"
 

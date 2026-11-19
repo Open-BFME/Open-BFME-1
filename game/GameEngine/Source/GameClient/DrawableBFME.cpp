@@ -40,22 +40,22 @@ struct BfmeRecordOwnerRB
 	ModelConditionFlags m_bfmeRecord;
 };
 
-enum WeaponSlotType { PRIMARY_WEAPON };
+#include "../../Include/Common/Enums/WeaponSlotType.h"
 enum WhichTurretType { TURRET_INVALID };
 class Matrix3D { unsigned char m[48]; };
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 
-enum KindOfType
-{
-	KINDOF_STRUCTURE = 7
-};
+#include "../../Include/Common/Enums/KindOfType.h"
 
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+
+
+
+#include "../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 class Team;
 class Object;

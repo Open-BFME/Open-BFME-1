@@ -10,7 +10,7 @@
 // this, because the mov ecx,eax that redirects it sits AFTER the branch, which
 // is what lets 0x000A0060 answer with its own member rather than a literal.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 
 struct Gen_002EFC30Impl

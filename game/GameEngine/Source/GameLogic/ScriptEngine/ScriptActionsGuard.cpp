@@ -27,10 +27,10 @@ class Team;
 
 #include "../command_source_type.h"
 
-enum GuardMode
-{
-	GUARDMODE_NORMAL = 0
-};
+#include "../../../Include/Common/Enums/GuardMode.h"
+
+
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

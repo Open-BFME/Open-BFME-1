@@ -33,12 +33,12 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_SUCCESS = -1,
-	STATE_FAILURE = -2
-};
+#include "../../../Include/Common/Enums/StateReturnType.h"
+
+
+
+
+
 
 enum
 {

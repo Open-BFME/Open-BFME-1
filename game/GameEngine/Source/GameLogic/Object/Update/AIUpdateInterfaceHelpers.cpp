@@ -62,17 +62,17 @@ inline const T &max( const T &left, const T &right )
 
 #include "../../command_source_type.h"
 
-enum KindOfType
-{
-	KINDOF_AIRCRAFT = 0x0C
-};
+#include "../../../../Include/Common/Enums/KindOfType.h"
 
-enum UpdateSleepTime
-{
-	UPDATE_SLEEP_INVALID	= 0,
-	UPDATE_SLEEP_NONE		= 1,				// retail: cmp edi,1 / jl
-	UPDATE_SLEEP_FOREVER	= 0x3fffffff
-};
+
+
+
+#include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
+
+
+
+
+
 
 #define UPDATE_SLEEP(numFrames)				((UpdateSleepTime)(numFrames))
 
