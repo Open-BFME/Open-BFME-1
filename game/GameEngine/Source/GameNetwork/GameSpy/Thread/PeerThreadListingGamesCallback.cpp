@@ -11,10 +11,10 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ascii_string.h"
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../../../Include/Common/ScalarTypes.h"
+
+
+
 typedef void *PEER;
 typedef int PEERBool;
 enum RoomType { TitleRoom, GroupRoom, StagingRoom };
@@ -71,7 +71,7 @@ public:
 	std::string password;
 	std::string email;
 	std::string id;
-	
+
 	// gameopts
 	std::string options; // full string for UTMs
 	std::string ladderIP;
@@ -92,7 +92,7 @@ public:
 		{
 			Int id;
 		} groupRoom;
-		
+
 		struct
 		{
 			Bool restrictGameList;
@@ -297,12 +297,12 @@ public:
 			Int id;
 			Bool ok;
 		} joinGroupRoom;
-		
+
 		struct
 		{
 			Int result;
 		} createStagingRoom;
-		
+
 		struct
 		{
 			Int id;
@@ -310,7 +310,7 @@ public:
 			Bool isHostPresent;
 			Int result; // for failures
 		} joinStagingRoom;
-		
+
 		struct
 		{
 			Bool isPrivate;

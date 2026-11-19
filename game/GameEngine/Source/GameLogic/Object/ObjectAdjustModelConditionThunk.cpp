@@ -57,17 +57,17 @@ enum WeaponStatus
     WEAPON_STATUS_COUNT
 };
 
-enum WeaponSetConditionType
-{
-    WSF_INVALID = -1,
-    WSF_NONE,
-    WSF_FIRING,
-    WSF_BETWEEN,
-    WSF_RELOADING,
-    WSF_UNUSED,
-    WSF_PREATTACK,
-    WSF_COUNT
-};
+#include "../../../Include/Common/Enums/WeaponSetConditionType.h"
+
+
+
+
+
+
+
+
+
+
 
 template <int Bits>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

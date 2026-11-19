@@ -24,8 +24,8 @@ inline Coord3D::Coord3D(const Coord3D &that) { x = that.x; y = that.y; z = that.
 inline Coord3D::~Coord3D() {}
 extern float __cdecl Cos(float);
 extern float __cdecl Sin(float);
-enum BridgeTowerType { BRIDGE_TOWER_FROM_LEFT, BRIDGE_TOWER_FROM_RIGHT, BRIDGE_TOWER_TO_LEFT, BRIDGE_TOWER_TO_RIGHT, BRIDGE_MAX_TOWERS };
-enum BodyDamageType { BODY_PRISTINE };
+#include "../../../Include/Common/Enums/BridgeTowerType.h"
+#include "../../../Include/Common/Enums/BodyDamageType.h"
 enum PathfindLayerEnum { LAYER_GROUND };
 #include "../../../Include/Common/ObjectID.h"
 const float PATHFIND_CELL_SIZE_F = 10.0f;

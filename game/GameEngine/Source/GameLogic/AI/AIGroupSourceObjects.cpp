@@ -28,7 +28,7 @@
 
 enum { MAX_COMMANDS_PER_SET = 20 };
 
-enum GUICommandType {};
+#include "../../../Include/Common/Enums/GUICommandType.h"
 
 class AsciiString;
 class SpecialPowerTemplate;

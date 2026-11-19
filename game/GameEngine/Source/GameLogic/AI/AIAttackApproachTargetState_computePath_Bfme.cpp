@@ -11,7 +11,7 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum KindOfType {};
+#include "../../../Include/Common/Enums/KindOfType.h"
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 #include "../../../Include/Common/ObjectID.h"

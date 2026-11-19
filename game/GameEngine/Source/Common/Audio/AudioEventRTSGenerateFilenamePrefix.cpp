@@ -4,14 +4,14 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum AudioType
-{
-	AT_Music = 0,
-	AT_Streaming = 1,
-	AT_SoundEffect = 2,
-	AT_AmbientStream = 3,
-	AT_SoundEffectAlt = 4
-};
+#include "../../../Include/Common/Enums/AudioType.h"
+
+
+
+
+
+
+
 
 template <typename T> class StringBase
 {

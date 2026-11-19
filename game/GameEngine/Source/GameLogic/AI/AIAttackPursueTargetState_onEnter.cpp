@@ -4,10 +4,10 @@
 // The static helper canPursue (0x00174CC0, claimed by the Approach TU) is compiled here too so
 // VC7.1 gives the call retail's private register convention (source in ESI, victim in EDI).
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

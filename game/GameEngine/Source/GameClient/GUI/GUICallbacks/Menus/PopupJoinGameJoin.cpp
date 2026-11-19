@@ -198,10 +198,10 @@ class GameWindow;
 namespace PopupJoinGameState { extern GameWindow *parentPopup; }
 using namespace PopupJoinGameState;
 
-enum GSOverlayType
-{
-	GSOVERLAY_GAMEPASSWORD = 5
-};
+#include "../../../../../Include/Common/Enums/GSOverlayType.h"
+
+
+
 
 void GameSpyCloseOverlay( GSOverlayType );
 void SetLobbyAttemptHostJoin( bool );

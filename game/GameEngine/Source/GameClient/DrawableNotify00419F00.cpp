@@ -35,10 +35,10 @@ enum NameKeyType
 {
     NK0 = 0
 };
-enum EvaMessage
-{
-    EVA8 = 8
-};
+#include "../../Include/Common/Enums/EvaMessage.h"
+
+
+
 enum RadarEventType
 {
     RADAR10 = 10

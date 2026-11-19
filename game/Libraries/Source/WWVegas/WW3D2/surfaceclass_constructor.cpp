@@ -6,10 +6,10 @@ enum WW3DFormat
 	WW3D_FORMAT_UNKNOWN_008FC560
 };
 
-enum _D3DPOOL
-{
-	D3DPOOL_DEFAULT_008FC560
-};
+#include "../../../../GameEngine/Include/Common/Enums/_D3DPOOL.h"
+
+
+
 typedef _D3DPOOL D3DPOOL;
 
 class IDirect3DSurface9;

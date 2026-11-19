@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
+#include "../../../../../Include/Common/ScalarTypes.h"
+
 typedef unsigned int WindowMsgData;
-typedef bool Bool;
+
 typedef int NameKeyType;
 
 // Retail keeps the window ids in .bss (0x012F3948): NAMEKEY_INVALID is 0.

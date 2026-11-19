@@ -21,11 +21,11 @@ class Object;
 
 enum DisabledType { DISABLED_HELD = 3 };
 
-enum AbleToAttackType
-{
-    ATTACK_NEW_TARGET = 0,
-    ATTACK_NEW_TARGET_FORCED = 1
-};
+#include "../../../Include/Common/Enums/AbleToAttackType.h"
+
+
+
+
 
 enum CanAttackResult
 {
@@ -35,10 +35,10 @@ enum CanAttackResult
     ATTACKRESULT_POSSIBLE
 };
 
-enum IterOrderType
-{
-    ITER_SORTED_NEAR_TO_FAR = 1
-};
+#include "../../../Include/Common/Enums/IterOrderType.h"
+
+
+
 
 class SimpleObjectIterator
 {

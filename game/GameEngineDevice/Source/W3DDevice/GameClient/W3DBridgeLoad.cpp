@@ -19,9 +19,9 @@
 #include <string.h>
 #include <stdlib.h>
 #include <float.h>
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
+
+
 
 enum BodyDamageType {BODY_PRISTINE,BODY_DAMAGED,BODY_REALLYDAMAGED,BODY_RUBBLE};
 class TerrainRoadType {
@@ -145,7 +145,7 @@ Bool W3DBridge::load(enum BodyDamageType curDamageState)
 			break;
 	}
 
-	
+
 	char left[_MAX_PATH];
 	char section[_MAX_PATH];
 	char right[_MAX_PATH];

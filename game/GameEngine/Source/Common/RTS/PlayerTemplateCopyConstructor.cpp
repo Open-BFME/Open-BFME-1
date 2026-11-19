@@ -27,10 +27,10 @@ inline UnicodeString::UnicodeString() { m_text = 0; }
 
 typedef int NameKeyType;
 
-enum VeterancyLevel
-{
-	VETERANCY_LEVEL_INVALID = -1
-};
+#include "../../../Include/Common/Enums/VeterancyLevel.h"
+
+
+
 
 #include "../../../Include/Common/Enums/ScienceType.h"
 

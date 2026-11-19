@@ -171,11 +171,11 @@ public:
 	void *m_field1c;
 };
 
-enum CommandStatus
-{
-	COMMAND_INCOMPLETE = 0,
-	COMMAND_COMPLETE
-};
+#include "../../../Include/Common/Enums/CommandStatus.h"
+
+
+
+
 
 extern Bool pickAndPlayUnitVoiceResponse(const GuardDrawableList *,
 	GameMessage::Type, PickAndPlayInfo *);

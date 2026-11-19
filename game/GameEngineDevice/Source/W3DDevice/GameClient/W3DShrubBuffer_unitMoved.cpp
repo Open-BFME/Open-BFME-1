@@ -22,10 +22,10 @@ extern GlobalData *TheWritableGlobalData;
 
 #define BFME_WRITABLE_GLOBAL_DATA TheWritableGlobalData
 
-enum KindOfType
-{
-	KINDOF_IMMOBILE = 2
-};
+#include "../../../../GameEngine/Include/Common/Enums/KindOfType.h"
+
+
+
 
 struct Rva00721B20Coord3D
 {

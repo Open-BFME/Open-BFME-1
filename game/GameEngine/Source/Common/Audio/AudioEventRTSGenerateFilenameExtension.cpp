@@ -6,10 +6,10 @@
 
 typedef int Int;
 
-enum AudioType
-{
-	AT_Music = 0
-};
+#include "../../../Include/Common/Enums/AudioType.h"
+
+
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

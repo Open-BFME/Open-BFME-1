@@ -16,12 +16,12 @@ struct Rva008F8110ShroudEntry
 	unsigned char pad[4];
 };
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR = 0,
-	CELLSHROUD_FOGGED = 1,
-	CELLSHROUD_SHROUDED = 2
-};
+#include "../../../GameEngine/Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 class Rva008F8110CellView
 {

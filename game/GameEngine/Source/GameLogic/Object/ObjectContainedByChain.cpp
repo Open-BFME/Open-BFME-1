@@ -40,10 +40,10 @@
 
 class Object;
 
-enum EmotionType
-{
-	EMOTION_INVALID = -1
-};
+#include "../../../Include/Common/Enums/EmotionType.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/EmotionTracker.h
 class EmotionTrackerUpdate

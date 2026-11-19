@@ -70,10 +70,10 @@ enum WW3DFormat
 	WW3D_FORMAT_008FC560 = 0x15
 };
 
-enum _D3DPOOL
-{
-	D3DPOOL_SYSTEMMEM = 2
-};
+#include "../../../../GameEngine/Include/Common/Enums/_D3DPOOL.h"
+
+
+
 typedef _D3DPOOL D3DPOOL;
 
 class SurfaceClass : public W3DRadarResetSurface

@@ -13,8 +13,8 @@ class Pathfinder;
 inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 inline Coord3D::Coord3D(const Coord3D &v) { x=v.x;y=v.y;z=v.z; }
-enum Relationship {};
-enum KindOfType {};
+#include "../../../Include/Common/Enums/Relationship.h"
+#include "../../../Include/Common/Enums/KindOfType.h"
 #include "../../../Include/Common/Enums/SpecialPowerType.h"
 #include "../../../Include/Common/NameKeyType.h"
 enum ObjectShroudStatus {OBJECTSHROUD_FOGGED=3};

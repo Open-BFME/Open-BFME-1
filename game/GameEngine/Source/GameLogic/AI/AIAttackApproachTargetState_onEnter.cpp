@@ -3,10 +3,10 @@
 // Identity: vftable 0x0109A4C0 slot 4 (ILT 0x00448A95); slots 5 and 17 are the landed onExit and computePath.
 // The static helpers canPursue and rva0016B010 are compiled here for their private register ABI.
 
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
+
 
 #include "../../../Include/Common/Enums/StateReturnType.h"
 

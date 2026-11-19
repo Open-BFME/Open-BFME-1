@@ -43,12 +43,12 @@ class Xfer;
 typedef Int PlayerIndex;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
-enum Relationship
-{
-	ENEMIES = 0,
-	NEUTRAL = 1,
-	ALLIES = 2
-};
+#include "../../../Include/Common/Enums/Relationship.h"
+
+
+
+
+
 
 typedef _STL::pair< const PlayerIndex, Relationship > PlayerRelationMapPair;
 typedef _STL::hash_map< PlayerIndex, Relationship, _STL::hash< PlayerIndex >,

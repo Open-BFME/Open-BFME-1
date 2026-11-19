@@ -28,7 +28,7 @@ class Player;
 #include "Lib/Coord3D.h"
 #include "command_source_type.h"
 enum KindOfType { KINDOF_89 = 89 };
-enum IterOrderType { ITER_FASTEST = 0 };
+#include "../../../../Include/Common/Enums/IterOrderType.h"
 
 struct MaskWords001EDCA0 { UInt words[10]; };
 class Rva001ED9A0Mask {

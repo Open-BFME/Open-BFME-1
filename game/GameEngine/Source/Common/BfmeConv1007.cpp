@@ -36,10 +36,10 @@ public:
 class GameClient;
 extern GameClient *TheGameClient;
 
-enum BattlePlanStatus
-{
-	BfmeBattlePlanStatusNone = 0
-};
+#include "../../Include/Common/Enums/BattlePlanStatus.h"
+
+
+
 
 #include "../../Include/Common/DrawableID.h"
 

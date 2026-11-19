@@ -127,7 +127,7 @@ public:
 	static long LoadAndCreateD3DShader(const char *filename, DWORD *shader);
 };
 
-enum ChipsetType { CHIPSET_0, CHIPSET_1, CHIPSET_2, CHIPSET_3 };
+#include "../../../../../GameEngine/Include/Common/Enums/ChipsetType.h"
 
 class W3DShaderManager
 {

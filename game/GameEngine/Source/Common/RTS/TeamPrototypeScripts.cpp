@@ -37,12 +37,12 @@
 
 
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY = 0,
-	DIFFICULTY_NORMAL = 1,
-	DIFFICULTY_HARD = 2
-};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

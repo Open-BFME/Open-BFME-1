@@ -57,24 +57,24 @@ public:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../Libraries/Source/WWVegas/WWMath/color.h"
 
-enum BodyDamageType
-{
-	BODY_PRISTINE = 0,
-	BODY_DAMAGED,
-	BODY_REALLYDAMAGED,
-	BODY_RUBBLE,
+#include "../../../Include/Common/Enums/BodyDamageType.h"
 
-	BODYDAMAGETYPE_COUNT
-};
 
-enum BridgeTowerType
-{
-	BRIDGE_TOWER_FROM_LEFT = 0,
-	BRIDGE_TOWER_FROM_RIGHT,
-	BRIDGE_TOWER_TO_LEFT,
-	BRIDGE_TOWER_TO_RIGHT,
-	BRIDGE_MAX_TOWERS				///< keep this last
-};
+
+
+
+
+
+
+
+#include "../../../Include/Common/Enums/BridgeTowerType.h"
+
+
+
+
+
+
+
 
 enum { MAX_BRIDGE_BODY_FX = 3 };
 

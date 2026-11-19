@@ -206,7 +206,7 @@ class WaterRenderDispatch007A5200 { public:
  virtual void Set_Force_Visible(int);
  char m_pad04[0xc8];
 };
-enum ChipsetType { CHIPSET_0,CHIPSET_1,CHIPSET_2,CHIPSET_3 };
+#include "../../../../../GameEngine/Include/Common/Enums/ChipsetType.h"
 class W3DShaderManager { public: static ChipsetType getChipset(); };
 class WaterTracksRenderSystem { public: WaterTracksRenderSystem(); char m_data[0x28]; };
 class WaterTracksRenderSystemInitShim { public: void init(); };
