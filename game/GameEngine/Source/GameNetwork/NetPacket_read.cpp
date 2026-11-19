@@ -38,10 +38,10 @@
 // at 0x00881F70 rather than the CRT import the /MD default would pull in.
 void *__cdecl operator new[](unsigned int size);
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes.h"
+
+
+
 
 enum { NETCOMMANDTYPE_FRAMEINFO = 3, NETCOMMANDTYPE_ROUTERFALLBACK = 22 };
 

@@ -119,7 +119,7 @@ class BfmeMeshVGT { public: void bfmeSetVGT( BfmeTexVGS **textures, int a, int b
 class BfmeTexVGR;
 class BfmeMeshVGR { public: void bfmeSetVGR( int index, BfmeTexVGR **textures, int a, int b ); };
 class Rva00988F00Owner { public: float field2C() const; };
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../Include/Common/NameKeyType.h"
 class NameKeyGenerator { public: NameKeyType nameToLowercaseKey( const char *name ); };
 class SegLineRendererClass { public: void Reset_Line(); };
 

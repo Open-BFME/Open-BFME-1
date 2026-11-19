@@ -29,7 +29,7 @@
 #include <set>
 #include <string>
 
-typedef bool Bool;
+#include "../../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h
 class PeerRequest
