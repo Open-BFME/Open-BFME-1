@@ -5,11 +5,11 @@
 
 
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY,
-	DIFFICULTY_NORMAL
-};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
 
 enum GameMode
 {

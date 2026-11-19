@@ -31,12 +31,12 @@ enum RoomType
 
 // GameSpy's peer callback ABI includes NoticeMessage even though the common
 // room-message path only uses NormalMessage and ActionMessage.
-enum MessageType
-{
-	NormalMessage,
-	ActionMessage,
-	NoticeMessage
-};
+#include "../../../../Include/Common/Enums/MessageType.h"
+
+
+
+
+
 
 #include "../../../../Include/Common/Enums/QMStatus.h"
 

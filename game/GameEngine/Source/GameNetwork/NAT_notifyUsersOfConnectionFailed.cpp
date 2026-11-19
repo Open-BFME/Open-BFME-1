@@ -91,7 +91,7 @@ public:
 };
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
-enum NATConnectionState { NATCONNECTIONSTATE_FAILED = 6 };
+#include "../../Include/Common/Enums/NATConnectionState.h"
 struct ConnectionNodeType {
     int behavior;
     unsigned slotIndex;

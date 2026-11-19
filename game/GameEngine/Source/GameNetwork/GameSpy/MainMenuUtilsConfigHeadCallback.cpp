@@ -22,7 +22,7 @@ static char *configBuffer;
 void Rva004C5490();
 void Rva0062EA60StartOnline();
 
-enum GHTTPBool { GHTTPFalse, GHTTPTrue };
+#include "../../../Include/Common/Enums/GHTTPBool.h"
 enum GHTTPResult { GHTTPSuccess };
 extern "C" char * __cdecl ghttpGetHeaders(int request);
 typedef GHTTPBool (__cdecl *GHTTPCompletedCallback)(int, GHTTPResult, char *, __int64, void *);

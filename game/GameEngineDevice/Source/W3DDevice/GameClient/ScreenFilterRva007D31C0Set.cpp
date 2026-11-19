@@ -103,7 +103,7 @@ class View;
 extern View *TheTacticalView;
 static inline FadeView *fadeTacticalView() { return (FadeView *)TheTacticalView; }
 extern int ZoomFadeDirection,ZoomFadeFrames,ZoomCurrentFrame;extern float ZoomFadeValue;
-enum FilterModes {FM_NULL_MODE};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 class Rva007D31C0 { protected: virtual int set(FilterModes); };
 int Rva007D31C0::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){

@@ -117,14 +117,14 @@ struct WaterOpacityView
 
 void bfmeDrawFilterUV(int color, int flags, Coord2D *uvScale);
 
-enum FilterTypes
-{
-	FT_NULL_FILTER,
-	FT_VIEW_BW_FILTER,
-	FT_VIEW_MOTION_BLUR_FILTER,
-	FT_VIEW_CROSSFADE,
-	FT_VIEW_DEFAULT
-};
+#include "../../../../GameEngine/Include/Common/Enums/FilterTypes.h"
+
+
+
+
+
+
+
 
 class W3DShaderManager
 {

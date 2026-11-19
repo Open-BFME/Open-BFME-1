@@ -7,10 +7,10 @@
 
 class Dict;
 
-enum BodyDamageType
-{
-	BODY_PRISTINE
-};
+#include "../../../../GameEngine/Include/Common/Enums/BodyDamageType.h"
+
+
+
 
 class BridgeInfo
 {

@@ -17,7 +17,7 @@ extern "C" int __cdecl ghttpHeadA(const char *url, int blocking,
 	GHTTPCompletedCallback completed, void *param);
 extern "C" int __cdecl ghttpSetProxy(const char *server);
 
-enum GHTTPBool { GHTTPFalse, GHTTPTrue };
+#include "../../../Include/Common/Enums/GHTTPBool.h"
 enum GHTTPResult { GHTTPSuccess };
 int Rva0062FE40(int request, int status, char *buffer, int bytes, int stamp, int run);  // MainMenuUtils.cpp
 GHTTPBool __cdecl configHeadCallback(int request, GHTTPResult result, char *buffer, __int64 bufferLen, void *param);

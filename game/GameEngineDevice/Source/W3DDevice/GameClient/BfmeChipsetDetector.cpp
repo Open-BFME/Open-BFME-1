@@ -69,7 +69,7 @@ public:
 	static void detect(void);
 };
 
-enum ChipsetType { DC_UNKNOWN = 0 };
+#include "../../../../GameEngine/Include/Common/Enums/ChipsetType.h"
 
 class W3DShaderManager
 {

@@ -97,7 +97,7 @@ class View;
 extern View *TheTacticalView;
 static inline FadeView *fadeTacticalView() { return (FadeView *)TheTacticalView; }
 extern int Rva007DB820FadeDirection,Rva007DB820FadeFrames,Rva007DB820FadeCurrentFrame;extern float Rva007DB820FadeValue;
-enum FilterModes {FM_NULL_MODE};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 class Rva007DB820 { protected: virtual int set(FilterModes); };
 int Rva007DB820::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){

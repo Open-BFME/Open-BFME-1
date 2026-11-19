@@ -51,7 +51,7 @@ extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(__int64
 
 void HideControlBar(bool immediate);
 
-enum KindOfType { KINDOF_STRUCTURE = 7, KINDOF_INFANTRY = 8, KINDOF_CAVALRY = 9, KINDOF_MONSTER = 10, KINDOF_MACHINE = 11 };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 // Retail 0x001701A0 / 0x001C2B80: the forty-byte model-condition record the
 // draw module is asked about, built and then cleared.

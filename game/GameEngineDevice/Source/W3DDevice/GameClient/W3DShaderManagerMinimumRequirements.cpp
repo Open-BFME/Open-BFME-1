@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // readable body of ?testMinimumRequirements@W3DShaderManager@@SA_NPAW4ChipsetType@@PAW4CpuType@@PAH2PAM33@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/W3DShaderManager.cpp
 
-enum ChipsetType { DC_UNKNOWN = 0 };
+#include "../../../../GameEngine/Include/Common/Enums/ChipsetType.h"
 #include "../../../../GameEngine/Include/Common/Enums/CpuType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/cpudetect.h

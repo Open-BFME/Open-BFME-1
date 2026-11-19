@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
-enum GSOverlayType
-{
-	GSOverlayType_Thunk
-};
+#include "../../Include/Common/Enums/GSOverlayType.h"
+
+
+
 
 void GameSpyCloseOverlayShim(GSOverlayType);
 

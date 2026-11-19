@@ -113,7 +113,7 @@ int ZoomFadeFrames = 0;
 int ZoomCurrentFrame = 0;
 bool ZoomPulseDown = false;
 float ZoomFadeValue = 0.0f;
-enum FilterModes{FM_NULL_MODE};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 class ScreenZoomFilter{public:virtual int set(FilterModes);unsigned shader;TextureBaseClass *texture;int savedMode;};
 int ScreenZoomFilter::set(FilterModes mode){
  ((ZoomSettings *)TheWritableGlobalData)->highlight=false;

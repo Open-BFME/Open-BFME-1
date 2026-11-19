@@ -46,7 +46,7 @@ public:
   ++number_of_DX8_calls; ++ScreenStateChanges;
  }
 };
-enum FilterModes {FM_NULL_MODE};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 class Rva007D6B70 { protected: virtual int set(FilterModes); };
 int Rva007D6B70::set(FilterModes mode) {
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);

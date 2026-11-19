@@ -53,7 +53,7 @@ public:
 static ShaderInterface *W3DShaders[17];
 static FilterInterface *W3DFilters[10];
 
-enum FilterTypes { FT_NULL_FILTER = 0 };
+#include "../../../../GameEngine/Include/Common/Enums/FilterTypes.h"
 
 class W3DShaderManager
 {
@@ -80,7 +80,7 @@ ShaderComResource *W3DShaderManager::m_resource012F9D24 = 0;
 void W3DShaderManager::shutdown()
 {
 	BfmeShaderShutdown::releaseDependentResources();
-	
+
 	m_currentShader = ST_INVALID;
 	m_currentFilter = FT_NULL_FILTER;
 

@@ -17,12 +17,12 @@ enum PlayingAudioType
 	PAT_Invalid
 };
 
-enum PlayingStatus
-{
-	PS_Playing,
-	PS_Stopped,
-	PS_Paused
-};
+#include "../../../GameEngine/Include/Common/Enums/PlayingStatus.h"
+
+
+
+
+
 
 class RefCountClass
 {

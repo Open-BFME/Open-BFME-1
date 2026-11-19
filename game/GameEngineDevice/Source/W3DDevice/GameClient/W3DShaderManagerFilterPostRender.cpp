@@ -3,15 +3,15 @@
 
 struct Coord2D;
 
-enum FilterTypes
-{
-	FT_NULL_FILTER = 0
-};
+#include "../../../../GameEngine/Include/Common/Enums/FilterTypes.h"
 
-enum FilterModes
-{
-	FM_FIRST = 0
-};
+
+
+
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShaderManager.h
 class W3DFilterInterface

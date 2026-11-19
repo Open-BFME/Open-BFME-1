@@ -25,10 +25,10 @@ public:
     char pad[0x38];
     unsigned behavior;
 };
-enum NATConnectionState {
-    NATCONNECTIONSTATE_IDLE = 0,
-    NATCONNECTIONSTATE_WAITINGTOBEGIN = 1
-};
+#include "../../Include/Common/Enums/NATConnectionState.h"
+
+
+
 struct ConnectionNodeType { int behavior; unsigned slotIndex; };
 class EstablishConnectionsMenu {
 public:

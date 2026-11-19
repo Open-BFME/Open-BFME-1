@@ -79,7 +79,7 @@ typedef int (__stdcall *BFMESetRSFn)(Device *, unsigned, unsigned);
 		++DX8WrapperState007D3D40::render_state_changes; \
 	}
 
-enum FilterModes {FM_NULL_MODE=0,FM_VIEW_CROSSFADE_CIRCLE=4};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 enum CustomScenePassModes;
 struct Coord2D;
 class Rva007D3D40CrossFadeFilter {

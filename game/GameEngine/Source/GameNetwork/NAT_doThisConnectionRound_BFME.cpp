@@ -17,12 +17,12 @@ struct NATConnectionNode
 	int m_behavior;
 };
 
-enum NATConnectionState
-{
-	NATCONNECTIONSTATE_NOSTATE = 0,
-	NATCONNECTIONSTATE_WAITINGFORRESPONSE = 4,
-	NATCONNECTIONSTATE_DONE = 5
-};
+#include "../../Include/Common/Enums/NATConnectionState.h"
+
+
+
+
+
 
 class NAT
 {

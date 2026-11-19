@@ -244,10 +244,10 @@ public:
 
 extern MessageStream *TheMessageStream;
 
-enum BfmeMessageType
-{
-	BFME_MSG_NEW_GAME = 0x1e
-};
+#include "../../Include/Common/Enums/BfmeMessageType.h"
+
+
+
 
 enum
 {

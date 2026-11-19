@@ -13,10 +13,10 @@ typedef void (__stdcall *Rva0005C600Iterator)(void *, unsigned int, int, const v
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-enum FilterModes
-{
-	FM_NULL_MODE = 0
-};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
+
+
+
 
 extern Real g_bfmeDefaultBU;
 extern const float g_rva0107533C;

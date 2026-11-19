@@ -18,9 +18,9 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-enum KindOfType
-{
-};
+#include "../../../Include/Common/Enums/KindOfType.h"
+
+
 
 class Player
 {

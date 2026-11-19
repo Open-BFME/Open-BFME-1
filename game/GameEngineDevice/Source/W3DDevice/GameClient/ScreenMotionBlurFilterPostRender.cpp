@@ -16,11 +16,11 @@ struct Coord3D;
 
 #include "../../../../Libraries/Include/Lib/Coord2D.h"
 
-enum FilterModes
-{
-	FM_VIEW_MB_END_PAN_ALPHA = 13,
-	FM_VIEW_MB_PAN_ALPHA = 16
-};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
+
+
+
+
 
 struct BfmeDevice;
 

@@ -44,7 +44,7 @@ public:
   ++number_of_DX8_calls; ++ScreenStateChanges;
  }
 };
-enum FilterModes {FM_NULL_MODE};
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 class ScreenMotionBlurFilter { protected: virtual int set(FilterModes); };
 int ScreenMotionBlurFilter::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){

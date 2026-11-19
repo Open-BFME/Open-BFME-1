@@ -7,12 +7,12 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR = 0,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED
-};
+#include "../../../../GameEngine/Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 class PartitionManager
 {

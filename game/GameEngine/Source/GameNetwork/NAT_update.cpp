@@ -70,14 +70,14 @@ public:
 };
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 
-enum NATStateType {
-    NATSTATE_IDLE = 0,
-    NATSTATE_DOCONNECTIONPATHS = 1,
-    NATSTATE_WAITFORSTATS = 2,
-    NATSTATE_DONE = 3,
-    NATSTATE_FAILED = 4
-};
-enum NATConnectionState { NATCONNECTIONSTATE_FAILED = 6 };
+#include "../../Include/Common/Enums/NATStateType.h"
+
+
+
+
+
+
+#include "../../Include/Common/Enums/NATConnectionState.h"
 
 class NAT {
 public:

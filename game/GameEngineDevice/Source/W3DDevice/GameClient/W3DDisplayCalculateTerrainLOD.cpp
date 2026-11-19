@@ -11,7 +11,7 @@ extern "C" __declspec(dllimport) int __stdcall QueryPerformanceFrequency(Int64 *
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 
-enum WW3DErrorType { WW3D_ERROR_OK };
+#include "../../../../Libraries/Source/WWVegas/WW3D2/w3derr.h"
 
 class WW3D
 {
