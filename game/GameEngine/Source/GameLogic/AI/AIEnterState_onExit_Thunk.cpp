@@ -13,7 +13,7 @@
 // setAllowInvalidPosition(false) is inlined to a single `and [esi+0x40], ~2`,
 // so the flag is bit 1 of the word at Locomotor+0x40 rather than a call.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 enum StateExitType { EXIT_NORMAL = 0 };
 enum ObjectEnterExitType { WANTS_NEITHER = 0, WANTS_TO_ENTER = 1, WANTS_TO_EXIT = 2 };
