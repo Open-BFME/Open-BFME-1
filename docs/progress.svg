@@ -22,15 +22,15 @@
     <rect class="track" x="28" y="148" width="824" height="14" rx="7"/>
     <rect x="28" y="148" width="622.73" height="14" rx="7" fill="#388bfd"/>
     <text x="28" y="182" class="muted" font-size="12.5">6,421,432 / 8,496,907 bytes of the game's own code, now C++ (libraries not counted)</text>
-    <text x="28" y="212" class="strong" font-size="15" font-weight="600">Linking<tspan class="up" dx="10" font-size="13" font-weight="600">▲ 2.28</tspan></text>
+    <text x="28" y="212" class="strong" font-size="15" font-weight="600">Linking</text>
     <text x="852" y="212" class="strong" font-size="20" font-weight="700" text-anchor="end">35.53%</text>
     <rect class="track" x="28" y="222" width="824" height="14" rx="7"/>
     <rect x="28" y="222" width="292.75" height="14" rx="7" fill="#d29922"/>
     <text x="28" y="256" class="muted" font-size="12.5">3,018,762 / 8,496,907 bytes of the game's own code linked (measured 2026-11-18)</text>
-    <text x="28" y="286" class="strong" font-size="15" font-weight="600">Readable names<tspan class="down" dx="10" font-size="13" font-weight="600">▼ 0.06</tspan></text>
-    <text x="852" y="286" class="strong" font-size="20" font-weight="700" text-anchor="end">70.57%</text>
+    <text x="28" y="286" class="strong" font-size="15" font-weight="600">Readable names<tspan class="down" dx="10" font-size="13" font-weight="600">▼ 0.04</tspan></text>
+    <text x="852" y="286" class="strong" font-size="20" font-weight="700" text-anchor="end">70.53%</text>
     <rect class="track" x="28" y="296" width="824" height="14" rx="7"/>
-    <rect x="28" y="296" width="581.50" height="14" rx="7" fill="#a371f7"/>
-    <text x="28" y="330" class="muted" font-size="12.5">346,330 / 490,757 declared names (files, types, functions, members, globals, parameters, locals) that are not placeholders</text>
+    <rect x="28" y="296" width="581.17" height="14" rx="7" fill="#a371f7"/>
+    <text x="28" y="330" class="muted" font-size="12.5">345,659 / 490,086 declared names (files, types, functions, members, globals, parameters, locals) that are not placeholders</text>
   </g>
 </svg>
