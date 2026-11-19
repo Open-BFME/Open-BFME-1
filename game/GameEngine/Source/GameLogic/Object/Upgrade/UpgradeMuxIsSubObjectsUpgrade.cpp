@@ -7,7 +7,7 @@
 // Retail: `32 C0 C3` each. Owner, table and stub for every body:
 // targets/game/reverse/identity_evidence/upgrademux-slot4-issubobjectsupgrade.md
 
-typedef bool Bool;
+#include "../../../../Include/Common/ScalarTypes.h"
 
 // 0x001fb250: slot 4 of FireWeaponWhenDamagedBehavior's table 0x010a3de8
 class FireWeaponWhenDamagedBehavior

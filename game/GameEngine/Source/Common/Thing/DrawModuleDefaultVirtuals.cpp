@@ -7,9 +7,9 @@
 // slot and caller evidence below; the callback remains nonvirtual in this view.
 // This declaration is partial; its order does not reproduce the full retail table.
 
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes.h"
+
+
 
 class DrawModule
 {

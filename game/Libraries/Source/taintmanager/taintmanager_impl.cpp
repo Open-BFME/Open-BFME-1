@@ -4,7 +4,7 @@
 // form is declared where it can see it; retail calls ??_V@YAXPAX@Z here.
 void operator delete[]( void *block );
 
-typedef float Real;
+#include "../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 extern "C" __declspec(dllimport) double __cdecl ceil(double value);
