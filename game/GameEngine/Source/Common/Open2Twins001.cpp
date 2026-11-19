@@ -16,7 +16,7 @@
 
 struct Coord3D;
 
-enum GuardMode { BFME_GUARD_MODE_NORMAL };
+#include "../../Include/Common/Enums/GuardMode.h"
 #include "../GameLogic/command_source_type.h"
 
 struct BfmeListNodeBase

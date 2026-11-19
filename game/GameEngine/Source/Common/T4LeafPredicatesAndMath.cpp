@@ -52,7 +52,7 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name here is derived from an address.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 // ---------------------------------------------------------------------------
 // 0x005FF710

@@ -182,14 +182,14 @@ public:
   GameSpyGroupRoom();
 };
 typedef std::map<int, GameSpyGroupRoom> GroupRoomMap;
-enum SlotState {
-  SLOT_OPEN,
-  SLOT_CLOSED,
-  SLOT_EASY_AI,
-  SLOT_MED_AI,
-  SLOT_BRUTAL_AI,
-  SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
 struct GameSlotConnectInfo {
   unsigned rva0;
   unsigned short rva4;

@@ -26,7 +26,7 @@ class GameMessage { public:
  void appendBooleanArgument(bool); void appendObjectIDArgument(unsigned);
  void appendLocationArgument(const struct Coord3D&);
 };
-enum GameMessageDisposition { KEEP_MESSAGE, DESTROY_MESSAGE };
+#include "../../../Include/Common/Enums/GameMessageDisposition.h"
 enum CommandEvaluateType { DO_COMMAND, DO_HINT, DO_EVALUATE };
 class AudioEventRTS { public: AudioEventRTS(const AsciiString&,int); ~AudioEventRTS(); void* m_vftable; char opaque04[0x6c]; };
 class CommandButton { public: char pad00[0x10]; int m_command; bool isContextCommand() const; int getCommandType() const { return m_command; } };

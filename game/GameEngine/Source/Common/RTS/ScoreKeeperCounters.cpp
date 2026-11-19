@@ -73,7 +73,7 @@
 
 #define MAX(a, b) (((a) > (b)) ? (a) : (b))
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes.h"
 
 class ThingTemplate;
 class BfmeRvaA760Object;

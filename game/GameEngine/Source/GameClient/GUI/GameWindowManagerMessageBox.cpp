@@ -41,7 +41,7 @@
 
 
 
-enum NameKeyType { NAMEKEY_INVALID = 0 };
+#include "../../../Include/Common/NameKeyType.h"
 
 #define FALSE false
 

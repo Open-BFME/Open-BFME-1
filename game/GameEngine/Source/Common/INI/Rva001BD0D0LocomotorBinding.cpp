@@ -26,7 +26,7 @@
 #include <map>
 #include <vector>
 
-enum LocomotorSetType { LOCOMOTORSET_INVALID = -1 };
+#include "../../../Include/Common/Enums/LocomotorSetType.h"
 class LocomotorTemplate;
 
 // This constructor has a ledgered retail thunk in

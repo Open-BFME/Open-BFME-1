@@ -13,7 +13,7 @@
 // ScreenBWFilter's texture-first order; the last two twins only clear the
 // texture, like ScreenDefaultFilter::reset.
 
-enum FilterModes { FM_NULL_MODE };
+#include "../../../../GameEngine/Include/Common/Enums/FilterModes.h"
 
 struct IDirect3DDevice8;
 

@@ -12,7 +12,7 @@
 // the four bytes the prologue reserves with push ecx survive; the byte itself
 // sits at the top of that slot, [esp+0xB] once the arguments are pushed.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 void *bfmeAllocNode(unsigned int bytes);			// retail 0x0082E540
 

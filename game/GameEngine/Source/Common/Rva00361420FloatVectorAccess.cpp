@@ -4,7 +4,7 @@
 // targets the existing retail thunk at RVA 0x0002CC5F.  Class and method names
 // remain descriptive because no trustworthy higher-level identity is known.
 
-typedef unsigned int UnsignedInt;
+#include "../../Include/Common/ScalarTypes.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
