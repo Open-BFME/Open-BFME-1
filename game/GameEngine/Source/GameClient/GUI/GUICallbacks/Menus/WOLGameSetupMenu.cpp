@@ -48,15 +48,15 @@
 #include "GameNetwork/NetworkDefs.h"
 #include "GameNetwork/FirewallHelper.h"
 
-enum SlotState
-{
-	SLOT_OPEN,
-	SLOT_CLOSED,
-	SLOT_EASY_AI,
-	SLOT_MED_AI,
-	SLOT_BRUTAL_AI,
-	SLOT_PLAYER
-};
+#include "../../../../../Include/Common/Enums/SlotState.h"
+
+
+
+
+
+
+
+
 
 enum
 {
@@ -130,7 +130,7 @@ public:
 
 	inline void setNATBehavior( FirewallHelperClass::FirewallBehaviorType NATBehavior) { m_nat = NATBehavior; }
 	inline FirewallHelperClass::FirewallBehaviorType getNATBehavior() const { return m_nat; }
-	
+
 	void saveOffOriginalInfo( void );
 	inline Int getOriginalPlayerTemplate( void ) const	{ return m_origPlayerTemplate; }
 	inline Int getOriginalColor( void ) const						{ return m_origColor; }
@@ -187,7 +187,7 @@ public:
 	GameInfo &operator=( const GameInfo &other );	///< out of line in BFME (0x004F07F0)
 	virtual void slot_000();
 	virtual void slot_004();
-	
+
 	void init( void );
 	virtual void reset( void );
 
@@ -250,14 +250,14 @@ const Money& getStartingCash( void ) const { return m_startingCash; }
 	// CRC checking hack
 	void setCRCInterval( Int val ) { m_crcInterval = (val<100)?val:100; }
 	inline Int getCRCInterval( void ) const { return m_crcInterval; }
-	
+
 	Bool haveWeSurrendered(void) { return m_surrendered; }
 	void markAsSurrendered(void) { m_surrendered = TRUE; }
 
 	Bool isSkirmish(void); // TRUE if 1 human & 1+ AI are present && !isSandbox()
 	Bool isMultiPlayer(void); // TRUE if 2+ human are present
 	Bool isSandbox(void); // TRUE if everybody is on the same team
-	
+
 	Bool isPlayerPreorder(Int index);
 	void markPlayerAsPreorder(Int index);
 
@@ -396,13 +396,13 @@ class PSPlayerStats;
 typedef std::set<AsciiString> IgnoreList;
 typedef std::map<Int, AsciiString> SavedIgnoreMap;
 
-enum RCItemType
-{
-	ITEM_BUDDY,
-	ITEM_REQUEST,
-	ITEM_NONBUDDY,
-	ITEM_NONE,
-};
+#include "../../../../../Include/Common/Enums/RCItemType.h"
+
+
+
+
+
+
 
 class GameSpyRCMenuData
 {
@@ -509,16 +509,16 @@ enum GameSpyColors {
 
 extern Color GameSpyColor[GSCOLOR_MAX];
 
-enum GameSpyBuddyStatus {
-	BUDDY_OFFLINE,
-	BUDDY_ONLINE,
-	BUDDY_LOBBY,
-	BUDDY_STAGING,
-	BUDDY_LOADING,
-	BUDDY_PLAYING,
-	BUDDY_MATCHING,
-	BUDDY_MAX
-};
+#include "../../../../../Include/Common/Enums/GameSpyBuddyStatus.h"
+
+
+
+
+
+
+
+
+
 
 // ---------------------------------------------------
 // this class holds info used in the main thread
@@ -600,13 +600,13 @@ public:
 	virtual Int getPingValue( const AsciiString& otherPing ) = 0;
 
 	static GameSpyInfoInterface* createNewGameSpyInfoInterface( void );
-	
+
 	virtual void addToSavedIgnoreList( Int profileID, AsciiString nick ) = 0;
 	virtual void removeFromSavedIgnoreList( Int profileID ) = 0;
 	virtual Bool isSavedIgnored( Int profileID ) = 0;		
 	virtual SavedIgnoreMap returnSavedIgnoreList( void ) = 0;
 	virtual void loadSavedIgnoreList( void ) = 0;
-	
+
 	virtual IgnoreList returnIgnoreList( void ) = 0;
 	virtual void addToIgnoreList( AsciiString nick ) = 0;
 	virtual void removeFromIgnoreList( AsciiString nick ) = 0;
@@ -687,13 +687,13 @@ void TearDownGameSpy( void );
 #include "GameSpy/Peer/Peer.h"
 #include "GameNetwork/NetworkDefs.h"
 
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 // this class encapsulates a request for the peer thread
 class PeerRequest
@@ -738,7 +738,7 @@ public:
 	std::string password;
 	std::string email;
 	std::string id;
-	
+
 	// gameopts
 	std::string options; // full string for UTMs
 	std::string ladderIP;
@@ -759,7 +759,7 @@ public:
 		{
 			Int id;
 		} groupRoom;
-		
+
 		struct
 		{
 			Bool restrictGameList;
@@ -847,48 +847,48 @@ public:
 
 //-------------------------------------------------------------------------
 
-enum DisconnectReason
-{
-	DISCONNECT_NICKTAKEN = 1,
-	DISCONNECT_BADNICK,
-	DISCONNECT_LOSTCON,
-	DISCONNECT_COULDNOTCONNECT,
-	DISCONNECT_GP_LOGIN_TIMEOUT,
-	DISCONNECT_GP_LOGIN_BAD_NICK,
-	DISCONNECT_GP_LOGIN_BAD_EMAIL,
-	DISCONNECT_GP_LOGIN_BAD_PASSWORD,
-	DISCONNECT_GP_LOGIN_BAD_PROFILE,
-	DISCONNECT_GP_LOGIN_PROFILE_DELETED,
-	DISCONNECT_GP_LOGIN_CONNECTION_FAILED,
-	DISCONNECT_GP_LOGIN_SERVER_AUTH_FAILED,
-	DISCONNECT_SERIAL_INVALID,
-	DISCONNECT_SERIAL_NOT_PRESENT,
-	DISCONNECT_SERIAL_BANNED,
-	DISCONNECT_GP_NEWUSER_BAD_NICK,
-	DISCONNECT_GP_NEWUSER_BAD_PASSWORD,
-	DISCONNECT_GP_NEWPROFILE_BAD_NICK,
-	DISCONNECT_GP_NEWPROFILE_BAD_OLD_NICK,
-	DISCONNECT_MAX,
-};
+#include "../../../../../Include/Common/Enums/DisconnectReason.h"
 
-enum QMStatus
-{
-	QM_IDLE,
-	QM_JOININGQMCHANNEL,
-	QM_LOOKINGFORBOT,
-	QM_SENTINFO,
-	QM_WORKING,
-	QM_POOLSIZE,
-	QM_WIDENINGSEARCH,
-	QM_MATCHED,
-	QM_INCHANNEL,
-	QM_NEGOTIATINGFIREWALLS,
-	QM_STARTINGGAME,
-	QM_COULDNOTFINDBOT,
-	QM_COULDNOTFINDCHANNEL,
-	QM_COULDNOTNEGOTIATEFIREWALLS,
-	QM_STOPPED,
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#include "../../../../../Include/Common/Enums/QMStatus.h"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // this class encapsulates an action the peer thread wants from the UI
 class PeerResponse
@@ -961,12 +961,12 @@ public:
 			Int id;
 			Bool ok;
 		} joinGroupRoom;
-		
+
 		struct
 		{
 			Int result;
 		} createStagingRoom;
-		
+
 		struct
 		{
 			Int id;
@@ -974,7 +974,7 @@ public:
 			Bool isHostPresent;
 			Int result; // for failures
 		} joinStagingRoom;
-		
+
 		struct
 		{
 			Bool isPrivate;
@@ -1566,7 +1566,7 @@ void WOLPositionStartSpots( void )
 		if (listboxMap != NULL) {
 			Int selected;
 			UnicodeString map;
-			
+
 			// get the selected index
 			GadgetListBoxGetSelected( listboxMap, &selected );
 
@@ -1575,8 +1575,8 @@ void WOLPositionStartSpots( void )
 
 				// get text of the map to load
 				map = GadgetListBoxGetText( listboxMap, selected, 0 );
-				
-				
+
+
 				// set the map name in the global data map name
 				AsciiString asciiMap;
 				const char *mapFname = (const char *)GadgetListBoxGetItemData( listboxMap, selected );
@@ -1812,7 +1812,7 @@ void pingTooltip(GameWindow *window, WinInstanceData *instData, UnsignedInt mous
 	x = LOLONGTOSHORT(mouse);
 	y = HILONGTOSHORT(mouse);
 
-	
+
 	Int winPosX, winPosY, winWidth, winHeight;
 
 	window->winGetScreenPosition(&winPosX, &winPosY);
@@ -1964,7 +1964,7 @@ static void handlePlayerTemplateSelection(int index)
 static void handleStartPositionSelection(Int player, int startPos)
 {
 	GameSpyStagingRoom *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
-	
+
 	if (myGame)
 	{
 		GameSpyGameSlot * slot = myGame->getGameSpySlot(player);
@@ -2071,17 +2071,17 @@ static void handleTeamSelection(int index)
 static void handleStartingCashSelection()
 {
   GameInfo *myGame = TheGameSpyInfo->getCurrentStagingRoom();
-  
+
   if (myGame)
   {
     Int selIndex;
     GadgetComboBoxGetSelectedPos(comboBoxStartingCash, &selIndex);
-    
+
     Money startingCash;
     startingCash.deposit( (UnsignedInt)GadgetComboBoxGetItemData( comboBoxStartingCash, selIndex ), FALSE );
     myGame->setStartingCash( startingCash );
     myGame->resetAccepted();
-    
+
     if (myGame->amIHost())
     {
       // send around the new data
@@ -2094,7 +2094,7 @@ static void handleStartingCashSelection()
 static void handleLimitSuperweaponsClick()
 {
   GameInfo *myGame = TheGameSpyInfo->getCurrentStagingRoom();
-  
+
   if (myGame)
   {
     // At the moment, 1 and 0 are the only choices supported in the GUI, though the system could
@@ -2108,7 +2108,7 @@ static void handleLimitSuperweaponsClick()
       myGame->setSuperweaponRestriction( 0 );
     }
     myGame->resetAccepted();
-    
+
     if (myGame->amIHost())
     {
       // send around a new slotlist
@@ -2445,7 +2445,7 @@ void InitWOLGameGadgets( void )
 	//Tooltip Function set 
 	textEntryMapDisplay->winSetTooltipFunc(MapSelectorTooltip);
 	//
-	
+
 	GameWindow *staticTextTitle = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, staticTextTitleID );
 	if (staticTextTitle)
 	{
@@ -2498,7 +2498,7 @@ void InitWOLGameGadgets( void )
 		DEBUG_ASSERTCRASH(comboBoxColor[i], ("Could not find the comboBoxColor[%d]",i ));
 		PopulateColorComboBox(i, comboBoxColor, theGameInfo);
 		GadgetComboBoxSetSelectedPos(comboBoxColor[i], 0);
-		
+
 		tmpString.format("GameSpyGameOptionsMenu.wnd:ComboBoxPlayerTemplate%d", i);
 		comboBoxPlayerTemplateID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxPlayerTemplate[i] = TheWindowManager->winGetWindowFromId( parentWOLGameSetup, comboBoxPlayerTemplateID[i] );
@@ -2565,7 +2565,7 @@ void DeinitWOLGameGadgets( void )
 	checkBoxUseStats = NULL;
   checkBoxLimitSuperweapons = NULL;
   comboBoxStartingCash = NULL;
-  
+
 //	GameWindow *staticTextTitle = NULL;
 	for (Int i = 0; i < MAX_SLOTS; i++)
 	{
@@ -2797,7 +2797,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 		options.format("Ping=%s", ((BfmeWolInitInfo *)TheGameSpyInfo)->getPingString().str());
 		req.options = options.str();
 		TheGameSpyPeerMessageQueue->addRequest(req);
-   
+
 		game->setMapCRC( game->getMapCRC() );		// force a recheck
 		game->setMapSize( game->getMapSize() ); // of if we have the map
 
@@ -2821,7 +2821,7 @@ void WOLGameSetupMenuInit( WindowLayout *layout, void *userData )
 
 	// Show the Menu
 	layout->hide( FALSE );
-	
+
 	// Make sure the text fields are clear
 	GadgetListBoxReset( listboxGameSetupChat );
 	GadgetTextEntrySetText(textEntryChat, UnicodeString::TheEmptyString);	
@@ -3432,7 +3432,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 						// send out new slotlist if I'm host
 						((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 						WOLDisplaySlotList();
-						
+
 						if (game && !((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
 							Int idx = game->getSlotNum(p.m_baseName.str());

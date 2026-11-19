@@ -15,7 +15,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-enum StateExitType { EXIT_NORMAL = 0 };
+#include "../../../Include/Common/Enums/StateExitType.h"
 enum ObjectEnterExitType { WANTS_NEITHER = 0, WANTS_TO_ENTER = 1, WANTS_TO_EXIT = 2 };
 
 class Object;
