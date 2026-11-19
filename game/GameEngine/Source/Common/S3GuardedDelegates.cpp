@@ -16,7 +16,7 @@
 // has to be a plain `return false` after the guarded call rather than an else,
 // or the compiler folds the two exits together and drops the xor.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 class Gen_00730EB0Target
 {

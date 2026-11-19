@@ -14,7 +14,7 @@
 #include <set>
 #include <vector>
 
-typedef unsigned char UnsignedByte;
+#include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 

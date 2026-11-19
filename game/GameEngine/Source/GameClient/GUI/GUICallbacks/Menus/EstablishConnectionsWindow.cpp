@@ -35,11 +35,11 @@ public:
 extern EstablishConnectionsMenu *TheEstablishConnectionsMenu;	///< retail 0x012F363C
 extern int buttonQuitID;										///< retail 0x012F39C0
 
-enum NameKeyType
-{
-	NAMEKEY_INVALID = 0,
-	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
-};
+#include "../../../../../Include/Common/NameKeyType.h"
+
+
+
+
 
 class NameKeyGenerator
 {
@@ -223,11 +223,11 @@ void ShowEstablishConnectionsWindow( void )
 	}
 }
 
-enum WindowMsgHandledType
-{
-	MSG_IGNORED = 0,
-	MSG_HANDLED = 1
-};
+#include "../../../../../Include/Common/Enums/WindowMsgHandledType.h"
+
+
+
+
 
 typedef unsigned int WindowMsgData;
 

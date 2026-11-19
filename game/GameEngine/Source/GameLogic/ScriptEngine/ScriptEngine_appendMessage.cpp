@@ -174,12 +174,12 @@ class ScriptAction;
 class Team;
 class Player;
 
-enum GameDifficulty
-{
-	DIFFICULTY_EASY,
-	DIFFICULTY_NORMAL,
-	DIFFICULTY_HARD
-};
+#include "../../../Include/Common/Enums/GameDifficulty.h"
+
+
+
+
+
 
 enum NameKeyType;
 

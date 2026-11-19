@@ -28,7 +28,7 @@ int GetClientRandomNumberReal(lua_State *state)
 }
 #line 30
 
-enum KindOfType { KINDOF_INVALID = -1 };
+#include "../../../Include/Common/Enums/KindOfType.h"
 
 template<int Bits> class BitFlags
 {

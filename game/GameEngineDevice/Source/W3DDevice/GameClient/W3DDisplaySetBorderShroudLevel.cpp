@@ -76,12 +76,12 @@ class TaintManager;
 extern TaintManager *TheTaintManager;
 
 
-enum CellShroudStatus
-{
-	CELLSHROUD_CLEAR,
-	CELLSHROUD_FOGGED,
-	CELLSHROUD_SHROUDED
-};
+#include "../../../../GameEngine/Include/Common/Enums/CellShroudStatus.h"
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DDisplay.h
 class W3DDisplay

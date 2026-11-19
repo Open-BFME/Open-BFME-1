@@ -43,7 +43,7 @@
 
 
 
-enum NameKeyType {};
+#include "../../../Include/Common/NameKeyType.h"
 
 class Module;
 

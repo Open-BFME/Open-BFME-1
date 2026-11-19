@@ -36,7 +36,7 @@
 // carry their offset.  The vftable dword is a DIR32 site the gate takes from
 // the target, so 17 of 0x005E9800's 21 bytes are concrete.
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 struct V3Block16 { Int m_v[16]; };
 struct V3Block32 { Int m_v[32]; };

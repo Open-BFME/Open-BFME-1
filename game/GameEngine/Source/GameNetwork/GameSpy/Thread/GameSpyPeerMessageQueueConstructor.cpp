@@ -10,13 +10,13 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-enum SerialAuthResult
-{
-	SERIAL_NONEXISTENT,
-	SERIAL_AUTHFAILED,
-	SERIAL_BANNED,
-	SERIAL_OK
-};
+#include "../../../../Include/Common/Enums/SerialAuthResult.h"
+
+
+
+
+
+
 
 class PeerRequest
 {

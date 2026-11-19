@@ -72,10 +72,10 @@ class WindowLayout
     char field0C[0x10];
     WindowLayoutUpdateFunc update;
 };
-enum NameKeyType
-{
-    NAMEKEY_INVALID = 0
-};
+#include "../../../../Include/Common/NameKeyType.h"
+
+
+
 class NameKeyGenerator
 {
   public:
@@ -206,10 +206,10 @@ class AnimateWindowManager
     AnimateWindowManager();
     char bytes[52];
 };
-enum ControlBarContext
-{
-    CB_CONTEXT_NONE = 0
-};
+#include "../../../../Include/Common/Enums/ControlBarContext.h"
+
+
+
 // The old ledger calls this observer-window setup body a destructor. Keep its
 // address identity until the separate 0x004A9CD0 observer claim is audited.
 class Rva004A9980

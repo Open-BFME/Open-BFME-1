@@ -17,12 +17,12 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-enum ObjectID { INVALID_ID = 0 };
-enum KindOfType { KINDOF_BRIDGE_TOWER = 24 };
-enum BodyDamageType { BODY_RUBBLE = 3 };
-enum PathfindLayerEnum {};
+#include "../../../../Include/Common/ObjectID.h"
+#include "../../../../Include/Common/Enums/KindOfType.h"
+#include "../../../../Include/Common/Enums/BodyDamageType.h"
+#include "../../../../Include/Common/Enums/PathfindLayerEnum.h"
 enum DamageType { DAMAGE_UNRESISTABLE = 8 };
-enum DeathType { DEATH_NORMAL = 0 };
+#include "../../../../Include/Common/Enums/DeathType.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"

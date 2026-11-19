@@ -42,7 +42,7 @@
 #include <bitset>
 #undef _strcmpi
 
-typedef int Int;
+#include "../../Include/Common/ScalarTypes.h"
 
 extern "C" __declspec( dllimport ) int __cdecl _strcmpi( const char *, const char * );
 

@@ -11,7 +11,7 @@
 // the three bodies that take two arguments are two bytes longer than the three
 // that take none.
 
-typedef bool Bool;
+#include "../../Include/Common/ScalarTypes.h"
 
 namespace _STL
 {

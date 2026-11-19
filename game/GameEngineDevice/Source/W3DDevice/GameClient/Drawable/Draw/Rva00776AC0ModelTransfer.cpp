@@ -19,7 +19,7 @@
 #include "ascii_string.h"
 #include "xfer.h"
 #include "coord3d.h"
-typedef float Real;
+#include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 #define INT_TO_REAL(x) ((Real)(x))
 #include <string.h>
 
