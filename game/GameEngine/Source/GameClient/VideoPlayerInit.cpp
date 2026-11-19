@@ -67,7 +67,7 @@ extern Video *g_bfmeVideoTableEnd;   // retail 0x0130B1A0
 // pinned spelling carries as an int and retail pushes as zero.
 extern void j_0001bb4e();
 
-class Xfer;
+
 
 class INI
 {

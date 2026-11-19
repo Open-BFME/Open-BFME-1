@@ -14,14 +14,14 @@ extern "C" void __cdecl lua_pushnil(lua_State *L);
 // 0x00990410 is the matched row `_lua_pushnumber` from the vendored Lua 4.0.1
 // (game/Libraries/Source/Lua/lapi.c) -- the C-linkage COFF spelling of
 // lua_pushnumber, as already spelled by the sibling lua_ externs.
-struct lua_State;
+
 extern "C" void lua_pushnumber(lua_State *L, double n);
 extern "C" void __cdecl lua_pushstring(lua_State *L, const char *s);
 extern "C" void __cdecl lua_pushusertag(lua_State *L, void *u, int tag);
 extern "C" void *__cdecl lua_touserdata(lua_State *L, int n);
 
 // 0x0098FDE0 is lua_settop (game/Libraries/Source/Lua/lapi.c, vendored lua-4.0.1).
-struct lua_State;
+
 extern "C" void __cdecl lua_settop(lua_State *state, int index);
 
 extern "C" __declspec(dllimport) void *__cdecl fopen(const char *name, const char *mode);

@@ -95,7 +95,7 @@ protected:
 	UnsignedInt m_attackMachineType;
 };
 
-class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+ class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 // Retail calls AIAttackState::createAttackMachine (RVA 0x00184110) through
 // the incremental-link thunk at 0x0004121d, so the call site references the

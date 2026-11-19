@@ -71,7 +71,7 @@ public:
 	int tagValue;
 };
 
-class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
+ class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 typedef _STL::vector<ObjectID> ObjectIDVector;
 

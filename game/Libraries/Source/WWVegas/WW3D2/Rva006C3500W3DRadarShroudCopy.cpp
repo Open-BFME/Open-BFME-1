@@ -16,7 +16,7 @@
 #include "surfaceclass.h"
 
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 
 extern const char g_bfmeEmptyAscii[];
 

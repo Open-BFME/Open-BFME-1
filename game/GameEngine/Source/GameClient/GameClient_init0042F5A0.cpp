@@ -173,7 +173,7 @@ extern DisplayStringManager *TheDisplayStringManager;
 extern Keyboard *TheKeyboard;
 extern ImageCollection *TheMappedImageCollection;
 extern Anim2DCollection *TheAnim2DCollection;
-class AnimationSoundModuleManager;
+
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 extern MessageStream *TheMessageStream;
 extern FontLibrary *TheFontLibrary;

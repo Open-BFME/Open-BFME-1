@@ -15,7 +15,7 @@ struct tagPALETTEENTRY;
 typedef tagPALETTEENTRY PALETTEENTRY;
 struct tagRECT;
 typedef tagRECT RECT;
-typedef unsigned long DWORD;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
 typedef unsigned UINT;
 enum D3DFORMAT
 {

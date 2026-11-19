@@ -14,7 +14,7 @@
 extern "C" void *__cdecl memcpy(void *dest, const void *src, unsigned int count);
 #pragma intrinsic(memcpy)
 
-typedef char TCHAR;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/TCHAR.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/wwstring.h
 class StringClass

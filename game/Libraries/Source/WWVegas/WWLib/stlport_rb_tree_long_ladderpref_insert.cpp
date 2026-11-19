@@ -22,7 +22,7 @@ typedef int Int;
 
 struct BfmeRbTreeInsertAnchorHelper;
 
-typedef long Long;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/Long.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LadderPreferences.h
 class LadderPref

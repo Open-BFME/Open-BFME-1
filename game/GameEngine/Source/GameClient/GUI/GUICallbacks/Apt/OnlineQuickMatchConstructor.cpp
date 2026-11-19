@@ -207,7 +207,7 @@ private:
 
 class NAT;
 class WindowManager;
-class BfmeAptScreenOnlineQuickMatch;
+
 BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20 = 0;
 class ImageCollection;
 extern ImageCollection *TheMappedImageCollection;

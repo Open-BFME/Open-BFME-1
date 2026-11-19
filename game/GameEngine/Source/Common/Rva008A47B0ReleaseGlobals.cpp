@@ -9,19 +9,19 @@
 
 class Rva00899FC0;
 extern Rva00899FC0 *Va01337A7C;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A80;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A84;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A88;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A8C;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A90;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A94;
-class Rva00899FC0;
+
 extern Rva00899FC0 *Va01337A98;
 
 class Rva008A47B0Item

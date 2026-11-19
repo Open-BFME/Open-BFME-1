@@ -3,9 +3,9 @@
 // The generated row has no direct named caller; the callback boundary and
 // USER32/message relocations are established from the retail body.
 
-typedef int BOOL;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/BOOL.h"
 typedef void *HWND;
-typedef unsigned int UINT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/UINT.h"
 typedef unsigned int WPARAM;
 typedef long LPARAM;
 typedef long LRESULT;

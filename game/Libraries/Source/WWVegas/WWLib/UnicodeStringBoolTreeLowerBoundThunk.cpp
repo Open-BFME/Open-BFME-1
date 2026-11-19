@@ -14,7 +14,7 @@
 
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/WideChar.h"
 
 extern const unsigned short BFMEEmptyUnicodeString;
 

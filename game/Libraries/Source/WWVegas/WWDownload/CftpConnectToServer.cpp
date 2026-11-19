@@ -2,9 +2,9 @@
 // WWDownload FTP.CPP Cftp::ConnectToServer.
 
 typedef const char *LPCSTR;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
-typedef unsigned int SOCKET;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/SOCKET.h"
 
 struct in_addr
 {

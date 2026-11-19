@@ -53,7 +53,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object;
+
 static inline const ThingTemplate *getTemplate(const Object *object);
 
 class Object

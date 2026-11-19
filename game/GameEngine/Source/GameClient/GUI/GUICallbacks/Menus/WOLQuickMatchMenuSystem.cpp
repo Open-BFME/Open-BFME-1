@@ -232,7 +232,7 @@ public:
 
 void PopulateQMLadderComboBox();
 
-class Image;
+
 
 // Incoming ECX owns the gadgets; only message/data1/data2 are on the stack.
 WindowMsgHandledType BfmeAptScreenQuickMatchMenu::system(UnsignedInt msg,

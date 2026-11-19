@@ -162,7 +162,7 @@ public:
 	UnsignedInt m_id0x74;
 };
 
-class Player;
+
 
 class PlayerList;
 

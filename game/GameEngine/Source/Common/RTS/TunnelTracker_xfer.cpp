@@ -62,7 +62,7 @@ public:
 
 class BfmeSeedTarget;
 extern BfmeSeedTarget *bfmeHandOver_0000FFE2(BfmeSeedTarget *target, void *item);
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 struct BfmeObject

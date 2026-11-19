@@ -46,7 +46,7 @@ public:
 
 class LANAPI;
 extern LANAPI *TheLAN;
-class GameEngine;
+
 extern GameEngine *TheGameEngine;
 
 

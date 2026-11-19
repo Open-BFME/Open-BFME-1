@@ -204,7 +204,7 @@ public:
 	float m_bfmeb0;
 };
 
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 class MidVirtualSlot90Receiver;
 void Rva0010C3E0(MidVirtualSlot90Receiver *xfer, void *value);

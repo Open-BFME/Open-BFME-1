@@ -16,7 +16,7 @@
 extern "C" __declspec(dllimport) void *__cdecl realloc(
 	void *pointer, unsigned int bytes);
 
-typedef unsigned long BfmeUInt32;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/BfmeUInt32.h"
 
 struct BfmeRenderVertex
 {

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c-
 // WWDownload FTP.CPP Cftp::LogoffFromServer.
 
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 extern "C" int __stdcall send(int, const char *, int, int);
 extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *);

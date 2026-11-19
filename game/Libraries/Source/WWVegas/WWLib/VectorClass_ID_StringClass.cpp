@@ -6,7 +6,7 @@
 // the CRT's _mbscmp import rather than comparing StringClass object pointers.
 // The VectorClass layout is the retail four-byte Vector/VectorMax/flags form.
 
-typedef char TCHAR;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/TCHAR.h"
 
 extern "C" __declspec( dllimport ) int __cdecl _mbscmp(
 	const unsigned char *left, const unsigned char *right );

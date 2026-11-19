@@ -6,7 +6,7 @@
 // thread at 0x0088E100 already did.
 
 typedef void *RvaHandle;
-typedef unsigned long RvaDword;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/RvaDword.h"
 typedef RvaHandle(__stdcall *RvaOpenThreadFn)(RvaDword access, int inherit, RvaDword threadId);
 
 struct RvaThreadEntry32

@@ -127,7 +127,7 @@ public:
 	Int m_bfme4C;
 };
 
-class ModelConditionFlags;
+
 class Drawable;
 class Object;
 

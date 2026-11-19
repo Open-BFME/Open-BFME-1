@@ -3,7 +3,7 @@
 
 typedef char FILE;
 typedef const char *LPCSTR;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 extern "C" __declspec(dllimport) char *__cdecl strncpy(
 	char *, const char *, unsigned int);

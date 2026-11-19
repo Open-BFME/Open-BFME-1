@@ -22,7 +22,7 @@ public:
 	void h00489410( void );
 };
 
-class GameWindowTransitionsHandler;
+
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 class TransitionHandlerGuard

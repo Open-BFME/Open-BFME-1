@@ -1,6 +1,6 @@
 // Retail body at RVA 0x0009ECA0.
 
-typedef unsigned short WideChar;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) unsigned short __cdecl towlower(unsigned short value);
 

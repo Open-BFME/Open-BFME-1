@@ -19,7 +19,7 @@ class PlayerList { public: unsigned char isLocalAlliedWith(Object *); };
 // Retail VA0x012ED748 is the matched PlayerList.cpp datum.
 extern PlayerList *ThePlayerList;
 
-class Object;
+
 #define OBJECT_TU_MEMBERS friend class Rva00594AD0; protected: Module *findModule(NameKeyType) const; public: Player *getControllingPlayer() const;
 #include "../../../GameLogic/Object/object.h"
 #undef OBJECT_TU_MEMBERS

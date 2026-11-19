@@ -6,7 +6,7 @@
 // Windows 95 does not export it.
 
 typedef void *RvaHandle;
-typedef unsigned long RvaDword;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Source/RvaDword.h"
 
 struct RvaThreadEntry32
 {

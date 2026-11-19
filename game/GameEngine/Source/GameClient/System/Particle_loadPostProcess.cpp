@@ -38,7 +38,7 @@ public:
 	}
 };
 
-class ParticleSystem;
+
 
 // Retail stores the control particle at system+0x1A0 inline here, while the
 // out-of-line ParticleSystem::setControlParticle (0x0021D740) writes +0x330:

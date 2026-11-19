@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHs-c- /O2 /Ob2
 
 typedef const char *LPCSTR;
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 typedef long time_t;
 #define NULL 0
 

@@ -52,7 +52,7 @@ private:
 };
 
 extern SkirmishGameInfo *TheSkirmishGameInfo;
-class BfmeAptScreenSkirmish;
+
 extern BfmeAptScreenSkirmish *Rva012F4B54Skirmish;
 extern WindowManager *g_rva012F19E8WindowManager;	// retail [0x012F19E8]
 

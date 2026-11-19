@@ -4,7 +4,7 @@
 #include "PreRTS.h"
 #include <cstdio>
 
-typedef long HRESULT;
+#include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 
 struct sockaddr_in
 {

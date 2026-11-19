@@ -89,7 +89,7 @@ public:
 	char *text;
 	int tag;
 };
-class Xfer; class MidVirtualSlot90Receiver;
+ class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
 Xfer *xferObjectIDSet(Xfer *xfer, BfmeObjectIDTree *tree)
