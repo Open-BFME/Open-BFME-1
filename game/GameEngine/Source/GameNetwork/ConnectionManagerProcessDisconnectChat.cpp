@@ -38,7 +38,7 @@
 // gate.
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef unsigned short WCHAR;
+#include "../../Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 

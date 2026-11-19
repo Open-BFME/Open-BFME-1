@@ -17,7 +17,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 #define FALSE 0
 

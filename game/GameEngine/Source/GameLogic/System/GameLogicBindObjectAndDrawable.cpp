@@ -4,7 +4,7 @@
 // through ILT 0x0003DCF8 with TheBfmeGameLogic in ECX, an Object*, and a
 // Drawable*.  GameLogic.cpp and the ZH donor name the same reciprocal binding.
 
-typedef unsigned long DWORD;
+#include "../../../Include/Common/ScalarTypes/Win32/DWORD.h"
 
 extern "C" __declspec(dllimport) void __stdcall Sleep( DWORD milliseconds );
 

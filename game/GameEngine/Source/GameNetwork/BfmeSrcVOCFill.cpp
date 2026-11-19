@@ -1,6 +1,6 @@
 // BfmeSrcVOC message fill at retail 0x00686A60.
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(
 	WideChar *destination, const WideChar *source, unsigned int count );

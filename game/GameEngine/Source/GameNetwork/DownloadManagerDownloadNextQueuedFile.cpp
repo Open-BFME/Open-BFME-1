@@ -4,7 +4,7 @@
 #include "StringInline.h"
 #include <list>
 
-typedef long HRESULT;
+#include "../../Include/Common/ScalarTypes/Win32/HRESULT.h"
 #include "../../Include/Common/ScalarTypes.h"
 
 class QueuedDownload

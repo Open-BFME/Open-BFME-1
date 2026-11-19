@@ -20,7 +20,7 @@
 
 
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 class Parameter
 {

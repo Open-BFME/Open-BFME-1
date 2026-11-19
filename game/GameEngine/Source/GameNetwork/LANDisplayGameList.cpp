@@ -23,7 +23,7 @@
 
 typedef Int Color;
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

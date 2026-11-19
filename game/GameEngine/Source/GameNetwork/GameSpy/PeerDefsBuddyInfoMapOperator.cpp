@@ -18,8 +18,8 @@
 // Keep the instantiation isolated from the engine's full AsciiString header.
 // These are the exact data-bearing declarations from the PeerDefs header and
 // GP shim; StringInline supplies the already-proven one-pointer string ABI.
-typedef int GPProfile;
-typedef int GPEnum;
+#include "../../../Include/Common/ScalarTypes/Source/GPProfile.h"
+#include "../../../Include/Common/ScalarTypes/Source/GPEnum.h"
 
 class BuddyInfo
 {

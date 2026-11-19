@@ -4,7 +4,7 @@
 // hostname resolution returns no hostent; normal host entries are then kept
 // in ascending numeric order.
 
-typedef unsigned short WORD;
+#include "../../Include/Common/ScalarTypes/Win32/WORD.h"
 #include "../../Include/Common/ScalarTypes.h"
 
 struct WSADATA

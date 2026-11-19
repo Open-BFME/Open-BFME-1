@@ -16,7 +16,7 @@ extern void j_00042069();
 extern void j_00044733();
 
 typedef void *PEER;
-typedef int PEERBool;
+#include "../../../../Include/Common/ScalarTypes/Source/PEERBool.h"
 
 enum RoomType
 {

@@ -28,7 +28,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 typedef Int Color;
 

@@ -11,7 +11,7 @@
 // player can change between calls.
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

@@ -16,10 +16,10 @@
 // same pattern proven by LANAPIOnGameStartTimer.cpp.  The layout stays local
 // to this TU so the incompatible old lanapi.cpp shims are untouched.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/UnsignedShort.h"
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 typedef char Bool;
 
 extern "C" __declspec(dllimport) WideChar *__cdecl wcsncpy(

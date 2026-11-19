@@ -3,7 +3,7 @@
 // name this member. Lookup goes through Rva007EBCA0; missing keys return
 // the __int64 default; a hit is sscanf("%I64d").
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 char *Rva007EBCA0(const char *record, const char *key);
 // Retail's call at 0x007E8960 is a rel32 call to the six-byte MSVCR71 thunk at

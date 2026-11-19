@@ -30,7 +30,7 @@
 typedef void *PEER;
 #include "../../../../Include/Common/ScalarTypes.h"
 
-typedef int PEERBool;
+#include "../../../../Include/Common/ScalarTypes/Source/PEERBool.h"
 
 
 enum RoomType

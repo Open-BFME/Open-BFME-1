@@ -31,10 +31,10 @@
 
 
 
-typedef unsigned char BYTE;
-typedef unsigned int UINT;
-typedef unsigned long DWORD;
-typedef int BOOL;
+#include "../../../Include/Common/ScalarTypes/Win32/BYTE.h"
+#include "../../../Include/Common/ScalarTypes/Win32/UINT.h"
+#include "../../../Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../../Include/Common/ScalarTypes/Win32/BOOL.h"
 typedef long AsnInteger32;
 typedef long AsnInteger;
 typedef void *HANDLE;

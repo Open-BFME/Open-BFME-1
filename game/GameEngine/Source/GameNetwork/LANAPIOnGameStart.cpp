@@ -26,7 +26,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 
 namespace _STL

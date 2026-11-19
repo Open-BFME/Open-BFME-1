@@ -8,7 +8,7 @@
 // starting-building / old-faction / locked-general filters, and with the side
 // label looked up once to test that it exists before it is added.
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 #include "../../Include/Common/ScalarTypes.h"
 
 typedef int Color;

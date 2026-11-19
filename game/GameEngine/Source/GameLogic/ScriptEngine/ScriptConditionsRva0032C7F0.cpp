@@ -8,7 +8,7 @@
 #include <list>
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 // Retail reaches these four members through incremental-link thunks, so the
 // thunks are referenced directly instead of the stand-in member names.

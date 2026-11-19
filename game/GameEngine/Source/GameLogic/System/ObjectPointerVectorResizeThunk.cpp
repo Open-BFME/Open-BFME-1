@@ -17,7 +17,7 @@
 // Any four-byte POD would mask to these same bytes otherwise, and three such
 // candidates tie on the masked comparison.
 
-typedef unsigned int size_t_;
+#include "../../../Include/Common/ScalarTypes/Source/size_t_.h"
 
 class Object;
 

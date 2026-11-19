@@ -9,7 +9,7 @@
 #include "../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 
 

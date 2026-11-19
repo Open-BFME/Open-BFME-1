@@ -5,7 +5,7 @@
 
 #include <stdio.h>
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 // Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
 // TU only calls that body through the message pointer, so it is spelled

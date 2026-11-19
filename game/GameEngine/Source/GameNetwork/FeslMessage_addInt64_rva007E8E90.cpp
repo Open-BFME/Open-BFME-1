@@ -2,7 +2,7 @@
 // 0x007E8E90: Rva007E8810Message::addInt64. Formats %I64d then stores the
 // field through Rva007ECE60; a negative result writes -100 at +0x24.
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 extern "C" int __cdecl sprintf(char *buf, const char *fmt, ...);
 int Rva007ECE60(char *record, int size, const char *name, const char *value);

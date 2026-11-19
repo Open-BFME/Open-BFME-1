@@ -20,7 +20,7 @@
 
 
 
-typedef unsigned short WideChar;
+#include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 template <class T> struct StringData
 {

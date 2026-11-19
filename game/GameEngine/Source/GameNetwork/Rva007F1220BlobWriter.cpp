@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 // retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
 class Rva007E8AC0

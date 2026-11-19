@@ -23,7 +23,7 @@
 
 
 
-typedef unsigned short PlayerMaskType;
+#include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
 #include "game_logic_dispatch.h"
 #include "../../../Include/Common/Enums/KindOfType.h"

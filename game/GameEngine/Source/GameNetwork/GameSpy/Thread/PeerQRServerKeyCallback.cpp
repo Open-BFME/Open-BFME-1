@@ -68,7 +68,7 @@ extern "C" void qr2_buffer_addA(qr2_buffer_t buffer, const char *value);
 #define qr2_buffer_add qr2_buffer_addA
 extern "C" void qr2_buffer_add_int(qr2_buffer_t buffer, int value);
 
-typedef unsigned short WideChar;
+#include "../../../../Include/Common/ScalarTypes/WideChar.h"
 std::string WideCharStringToMultiByte(const WideChar *orig);
 
 class Rva00647720Host

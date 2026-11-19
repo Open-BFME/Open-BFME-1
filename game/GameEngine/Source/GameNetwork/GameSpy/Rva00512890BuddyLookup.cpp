@@ -9,8 +9,8 @@
 #include <map>
 
 #include "../../../Include/Common/ScalarTypes.h"
-typedef int GPProfile;
-typedef int GPEnum;
+#include "../../../Include/Common/ScalarTypes/Source/GPProfile.h"
+#include "../../../Include/Common/ScalarTypes/Source/GPEnum.h"
 
 template <typename T> class StringBase
 {

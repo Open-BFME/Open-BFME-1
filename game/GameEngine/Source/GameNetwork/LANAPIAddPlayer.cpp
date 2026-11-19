@@ -3,7 +3,7 @@
 // Names are one-pointer StringBase views with a 16-bit header length at +4.
 // The head comparison stays out of line; the loop contains the same operation.
 
-typedef unsigned short WideChar;
+#include "../../Include/Common/ScalarTypes/WideChar.h"
 
 struct Rva0009ECA0NoCaseTraits
 {

@@ -3,7 +3,7 @@
 
 // cl: /GS
 
-typedef __int64 FeslInt64;
+#include "../../Include/Common/ScalarTypes/Source/FeslInt64.h"
 
 extern "C" int __cdecl sprintf(char *buffer, const char *format, ...);
 
