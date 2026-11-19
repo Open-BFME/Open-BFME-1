@@ -29,11 +29,9 @@ public:
  Object *bfmeResolveMeleeTarget(int which);
  void *unidentified_001BFE20() const;
 };
-class ObjectAttemptDamageFlagHook
-{
-public:
- int value();
-};
+// ILT 0x0002CA61 reaches the matched member at 0x001CABE0 (ECX only, result
+// in EAX): call it through its existing shared thiscall declaration.
+#include "../../../../../../GameEngine/Include/GameLogic/BfmeSubBIC.h"
 class Rva0076B6E0ColorSource
 {
 public:
@@ -202,12 +200,12 @@ void Rva0076B6E0View::rva0076B6E0(const RadiusDecalTemplate *decal)
  if (TheWritableGlobalData->m_flagA76)
  {
   if (drawable->m_flag3ac)
-   drawSlot24(object->bfmeGetHordeMemberCount(), ((ObjectAttemptDamageFlagHook *)object)->value());
+   drawSlot24(object->bfmeGetHordeMemberCount(), reinterpret_cast<BfmeSubBIC *>(object)->rva001CABE0());
   return;
  }
  Object *other = object->bfmeResolveMeleeTarget(0);
  bool otherShown = false;
- int color = ((ObjectAttemptDamageFlagHook *)object)->value();
+ int color = reinterpret_cast<BfmeSubBIC *>(object)->rva001CABE0();
  if (other != 0)
  {
   Rva0076B6E0Drawable *otherDrawable = other->thingSlot10();

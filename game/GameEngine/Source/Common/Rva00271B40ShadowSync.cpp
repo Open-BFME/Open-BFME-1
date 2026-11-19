@@ -60,11 +60,9 @@ public:
 	void forward(int a0, int a1);
 };
 
-class ObjectAttemptDamageFlagHook
-{
-public:
-	int value();
-};
+// ILT 0x0002CA61 reaches the matched member at 0x001CABE0 (ECX only, result
+// in EAX): call it through its existing shared thiscall declaration.
+#include "../../Include/GameLogic/BfmeSubBIC.h"
 
 class BfmeTimerF2C
 {
@@ -141,7 +139,7 @@ void BfmeThingEGF::bfmeSyncEGF()
 			return;
 		if (!m_object->isLocallyControlled())
 			return;
-		((Rva004141A0GuardedVCall *)draw)->forward(1, ((ObjectAttemptDamageFlagHook *)m_object)->value());
+		((Rva004141A0GuardedVCall *)draw)->forward(1, reinterpret_cast<BfmeSubBIC *>(m_object)->rva001CABE0());
 	}
 	else if (p->fastActive())
 	{
@@ -167,6 +165,6 @@ void BfmeThingEGF::bfmeSyncEGF()
 			return;
 		if (!m_object->isLocallyControlled())
 			return;
-		((Rva004141A0GuardedVCall *)draw)->forward(1, ((ObjectAttemptDamageFlagHook *)m_object)->value());
+		((Rva004141A0GuardedVCall *)draw)->forward(1, reinterpret_cast<BfmeSubBIC *>(m_object)->rva001CABE0());
 	}
 }
