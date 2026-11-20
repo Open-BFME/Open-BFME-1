@@ -99,7 +99,7 @@ static const char *gadgetsToHide[] =
 	"ButtonSelectMap",
 	"ButtonStart",
 	"StaticTextMapPreview",
-	
+
 	NULL // keep this last
 };
 static const char *perPlayerGadgetsToHide[] =
@@ -110,7 +110,7 @@ static const char *perPlayerGadgetsToHide[] =
 	//"ButtonStartPosition",
 	NULL // keep this last
 };
-void positionStartSpots( AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
+
 
 static void showGameSpyGameOptionsUnderlyingGUIElements( Bool show )
 {
@@ -154,7 +154,7 @@ void Rva00503FA0InitializeMapSelectMenu()
 		GadgetRadioSetSelection( radioButtonSystemMaps, FALSE );
 	else
 		GadgetRadioSetSelection( radioButtonUserMaps, FALSE );
-	
+
 	AsciiString tmpString;
 	for (Int i = 0; i < MAX_SLOTS; i++)
 	{

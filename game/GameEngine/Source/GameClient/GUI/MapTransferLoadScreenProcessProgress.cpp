@@ -57,7 +57,7 @@ public:
 };
 
 extern GameTextInterface *TheGameText;
-extern void GadgetStaticTextSetText(GameWindow *window, UnicodeString text);
+
 
 struct BFMERetailMapTransferProgress
 {

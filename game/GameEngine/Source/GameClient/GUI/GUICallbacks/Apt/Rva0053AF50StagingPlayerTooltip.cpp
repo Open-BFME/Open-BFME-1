@@ -222,7 +222,7 @@ UnicodeString formatLadderRankText(int rank);
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
-class BfmeQueueEUG;
+
 
 extern GameTextInterface *TheGameText;
 extern Mouse *TheMouse;

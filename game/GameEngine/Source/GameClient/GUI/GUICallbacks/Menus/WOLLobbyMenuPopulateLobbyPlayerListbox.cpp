@@ -264,7 +264,7 @@ public:
 	virtual void winSetLoneWindow(GameWindow *window);
 };
 
-class GameSpyInfo;
+
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
 extern GameSpyConfigInterface *TheGameSpyConfig;

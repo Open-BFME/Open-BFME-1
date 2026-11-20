@@ -18,7 +18,7 @@
 #define UNICODESTRING_H
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
-typedef unsigned int SOCKET;
+
 #include <winsock2.h>
 #include <string>
 #include <vector>

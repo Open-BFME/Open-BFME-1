@@ -22,7 +22,7 @@ typedef unsigned short wchar_t;
 #include "../../../../Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 typedef unsigned char Bool;
-typedef unsigned short WideChar;
+
 
 enum { WIN_STATUS_ENABLED = 0x00000008 };
 enum { WIN_STATE_HILITED = 0x00000002 };

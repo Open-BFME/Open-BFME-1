@@ -19,7 +19,7 @@
 // directly instead of copying an AsciiString is what keeps this getter clear of
 // the by-value blocker that gates its siblings.
 
-typedef int Int;
+
 typedef unsigned char Bool;   ///< a byte, not bool: retail never zero-extends the result
 
 extern "C" int __cdecl strcmp(const char *a, const char *b);

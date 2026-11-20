@@ -15,7 +15,7 @@
 // two end draws and calls it at the other three sites, as retail does.
 
 #include "../../../Include/Common/ScalarTypes/Int.h"
-typedef unsigned int UnsignedInt;
+
 typedef unsigned char Bool;
 #include "../../../Include/Common/ScalarTypes/Real.h"
 typedef int Color;

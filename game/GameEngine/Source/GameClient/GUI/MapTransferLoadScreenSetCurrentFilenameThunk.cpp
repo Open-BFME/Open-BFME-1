@@ -6,7 +6,7 @@
 // The retail object uses the BFME eight-byte string header and keeps the
 // filename text window at this+0xB0, rather than the ZH header's offset.
 
-typedef int Int;
+
 #include "../../../Include/Common/ScalarTypes/WideChar.h"
 
 // The shared empty-string sentinels (targets/game/reverse/symbols.csv:

@@ -21,7 +21,7 @@
 
 #include "Common/AsciiString.h"
 
-typedef int Int;
+
 #include "../../../GameLogic/ScriptEngine/game_logic_dispatch.h"
 
 class GameWindow;

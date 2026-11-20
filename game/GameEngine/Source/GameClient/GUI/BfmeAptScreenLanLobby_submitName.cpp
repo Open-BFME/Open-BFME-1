@@ -5,7 +5,7 @@
 // GameWindow pointer belongs to the Gen_00479A60 name-entry helper.  Both
 // offsets match BfmeAptScreenLanLobby::_bfme_onInitGadget.
 
-typedef unsigned short wchar_t;
+
 #include "string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>

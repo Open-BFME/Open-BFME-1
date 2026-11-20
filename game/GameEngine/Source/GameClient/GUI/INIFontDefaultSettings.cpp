@@ -65,7 +65,7 @@ class __declspec( novtable ) FontDefaultSettings : public RefCounted
 	unsigned char m_antialiased;
 };
 
-extern void j_000067a8();
+
 extern void j_0001ab6d();
 extern void j_0002e622();
 

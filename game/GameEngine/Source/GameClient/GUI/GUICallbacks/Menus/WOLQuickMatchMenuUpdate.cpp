@@ -556,7 +556,7 @@ extern Rva00506720Windows *Rva012F4820QuickMatchWindows;
 #define quickmatchTextWindow (Rva012F4820QuickMatchWindows->getTextWindow())
 #define buttonWiden (Rva012F4820QuickMatchWindows->widen)
 #define getLadderInfo() (Rva012F4820QuickMatchWindows->getLadderInfo())
-class WindowLayout;
+
 class Rva00506720Layout {
 public:
   void update(void *);

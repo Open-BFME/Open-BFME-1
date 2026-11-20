@@ -149,7 +149,7 @@ public:
 	void update(void *object);
 };
 
-class Glo012F4B98Type;
+
 
 class AptPalantir;
 extern AptPalantir *TheAptPalantir;

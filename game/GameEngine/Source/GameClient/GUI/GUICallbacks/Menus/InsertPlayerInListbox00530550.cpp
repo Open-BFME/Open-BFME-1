@@ -9,7 +9,7 @@
 
 
 
-typedef int Color;
+
 
 template <typename T>
 inline const T &rva00530550Min(const T &left, const T &right)

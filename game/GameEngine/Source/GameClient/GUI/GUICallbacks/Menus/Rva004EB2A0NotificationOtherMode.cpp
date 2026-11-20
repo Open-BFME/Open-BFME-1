@@ -9,7 +9,7 @@
 #include "StringInline.h"
 
 #include "../../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+
 
 
 inline const unsigned short *UnicodeString::str() const

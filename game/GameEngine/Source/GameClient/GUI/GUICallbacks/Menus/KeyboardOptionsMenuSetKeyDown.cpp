@@ -11,7 +11,7 @@
 #include "string_base.h"
 #undef StringBase
 
-class AsciiString;
+
 
 template <typename T>
 class StringBase

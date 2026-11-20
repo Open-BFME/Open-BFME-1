@@ -41,7 +41,7 @@ static __forceinline int asciiCompare( const AsciiString &left, const AsciiStrin
 	return thisLen - thatLen;
 }
 
-typedef bool Bool;
+
 #include "Common/GameMemory.h"
 #include "Common/Overridable.h"
 #include "Common/OVERRIDE.h"

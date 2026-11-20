@@ -61,7 +61,7 @@ void EnableSlotListUpdates(bool enabled);
 void _bfme_setAptScreenRef(const AsciiString &name,
     Rva0050F840FunctorHolder callback);
 
-extern void j_00021cfb();
+
 extern void j_0004529b();
 
 class AptMapPreview

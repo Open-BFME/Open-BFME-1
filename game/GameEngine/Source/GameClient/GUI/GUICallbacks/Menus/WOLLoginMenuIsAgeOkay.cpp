@@ -8,7 +8,7 @@
 
 // The empty AsciiString fallback, retail 0x0107388B
 // (targets/game/reverse/symbols.csv: ?g_bfmeEmptyAscii@@3QBDB).
-extern const char g_bfmeEmptyAscii[];
+
 
 #include "../../../../../Include/Common/ScalarTypes.h"
 

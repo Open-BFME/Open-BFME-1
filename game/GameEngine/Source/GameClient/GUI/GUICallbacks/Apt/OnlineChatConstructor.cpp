@@ -180,8 +180,8 @@ public:
 	void *m_ptr;
 };
 
-extern void j_000338ed();
-extern void j_0003df14();
+
+
 extern void j_0002567b();
 // The AptOnline selector callbacks this constructor registers are retail ILT
 // thunks: retail stored the thunk address itself in each binding. Each union

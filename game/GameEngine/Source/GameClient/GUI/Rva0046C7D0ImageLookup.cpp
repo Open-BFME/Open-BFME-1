@@ -12,8 +12,8 @@
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 const char *bfmeSkipLevelPrefix(const char *path);
 extern "C" __declspec(dllimport) char *__cdecl strchr(const char *s, int c);

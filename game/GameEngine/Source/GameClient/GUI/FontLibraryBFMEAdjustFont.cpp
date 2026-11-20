@@ -45,7 +45,7 @@
 
 #include "string_base.h"
 
-extern "C" long __ftol2(double value);
+
 
 class AsciiString
 {

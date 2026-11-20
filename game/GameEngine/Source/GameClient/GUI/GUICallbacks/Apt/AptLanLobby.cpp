@@ -11,8 +11,8 @@
 // Full COFF extent is 647 bytes: ret at RVA 0x00517F86, then INT3 padding.
 // All 39 relocation sites follow existing pins; no new pin is introduced.
 
-typedef unsigned short wchar_t;
-typedef unsigned short WideChar;
+
+
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 template <typename T>

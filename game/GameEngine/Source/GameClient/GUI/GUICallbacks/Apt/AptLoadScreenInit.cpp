@@ -27,7 +27,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "../../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+
 
 #include "../../../../../Include/Common/NameKeyType.h"
 
@@ -203,8 +203,8 @@ extern GameSpyInfoInterface *TheGameSpyInfo;
 struct Rva00579160Current;
 // Retail 0x012F7094: use the existing data owner; retain the local pointee view.
 extern class SkirmishGameInfo *TheSkirmishGameInfo;
-extern const unsigned short BFMEEmptyString;
-extern const char Rva006A16B0Empty;
+
+
 
 class PSPlayerStats
 {

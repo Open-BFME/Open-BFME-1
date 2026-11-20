@@ -84,7 +84,7 @@ public:
 	void bfme_setAptText(const AsciiString &, const UnicodeString &);
 };
 extern WindowManager *g_rva012F19E8WindowManager;
-extern unsigned int g_Va012F4C14;
+
 
 class Rva00563F50 { public: static void go(); };
 class Rva00563F80 { public: static void go(); };

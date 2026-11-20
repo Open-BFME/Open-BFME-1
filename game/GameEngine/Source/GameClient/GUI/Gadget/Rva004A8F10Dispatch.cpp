@@ -36,9 +36,9 @@ class PlayerList;
 extern PlayerList *ThePlayerList;
 
 extern void j_00010e88( void );
-extern void j_000330dc( void );
+
 extern void j_00038a23( void );
-extern void j_00044409( void );
+
 
 typedef void *(*Rva004A8F10GetData)( void *window );
 typedef void (*Rva004A8F10SetImage)( void *window, int image );

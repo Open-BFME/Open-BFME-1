@@ -17,8 +17,8 @@
 // ControlBar_getStarImage_Thunk.cpp. nameToKey and the GameWindow overload of
 // setControlCommand are direct calls, ILT 0x0003ADD7 and 0x00015DA7.
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 class GameWindow;
 class CommandButton;
@@ -35,7 +35,7 @@ public:
 extern NameKeyGenerator *TheNameKeyGenerator;			///< retail [0x012ED600]
 
 // BFME's string data header is 8 bytes, so the characters begin at m_data+8.
-struct AsciiStringData;
+
 
 #include "ascii_string.h"
 

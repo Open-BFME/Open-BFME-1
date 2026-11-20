@@ -46,14 +46,14 @@ enum
 	WIN_STATUS_RVA4A5950_80000000 = 0x80000000
 };
 
-extern void j_0003a5b7();
+
 extern void j_0004a1fb();
 extern void j_00027b24();
 extern void j_00027f2a();
-extern void j_00023dda();
-extern void j_0003add7();
+
+
 extern void j_0000238d();
-extern void j_0001ff91();
+
 extern void j_00010e88();
 extern void j_0000bc49();
 extern void j_0003e545();

@@ -26,7 +26,7 @@ struct Rva00522110State
     int m_38;
 };
 
-class BfmeThingCB;
+
 // Retail 0x012F49D0: use the existing data owner; retain the local pointee view.
 extern void *g_rva012F49D0;
 

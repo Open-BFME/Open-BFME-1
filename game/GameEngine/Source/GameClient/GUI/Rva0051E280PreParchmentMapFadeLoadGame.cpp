@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Iinputs/reference/shims/stringinline
 #include "StringInline.h"
 
-typedef bool Bool;
+
 
 // The global at retail 0x012F3330 is EA's singleton, declared and defined once
 // as GameWindowTransitionsHandler *TheTransitionHandler in

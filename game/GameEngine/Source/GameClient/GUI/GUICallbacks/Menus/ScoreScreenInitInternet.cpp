@@ -65,7 +65,7 @@ public:
 };
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
-class GameSpyInfo;
+
 
 // BFME added seven vtable slots before ZH's getLocalProfileID, moving it from
 // slot 28 (+0x70) here to +0x54 in the plain ZH interface; see

@@ -15,7 +15,7 @@
 #include <algorithm>
 
 typedef std::map<AsciiString, GameWindow *> S3WindowTree;
-struct Rva00C6B8A0Init;
+
 // Retire ?g_rva012F19CC@@3URva00C6B8A0Init@@A: retail 0x012F19CC is recorded as
 // ?TheBfmeObject_00C70080@@3VGen_00C70080Target@@A.
 class Gen_00C70080Target;
