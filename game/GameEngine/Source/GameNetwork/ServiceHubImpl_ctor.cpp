@@ -27,7 +27,7 @@ private:
 	int m_04;
 };
 
-extern int vftable_01129CB0;
+
 extern int vftable_011296B0;
 
 class HubSub : public Rva7F4CC0Child

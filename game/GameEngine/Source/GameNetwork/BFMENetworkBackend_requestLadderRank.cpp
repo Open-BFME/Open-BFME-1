@@ -2,7 +2,7 @@
 // ?_bfme_requestLadderRank@BFMENetworkBackend@@QAEXH@Z
 // Retail 0x0065BE50, 183 bytes.
 
-typedef int Int;
+
 
 template <typename T> class StringBase
 {

@@ -20,7 +20,7 @@ public:
 
 extern void j_000391c6();
 
-class Drawable;
+
 
 class Object
 {

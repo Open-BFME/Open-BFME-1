@@ -9,7 +9,7 @@
 // retail image does not prove. Char Base set887C90/release887940 and
 // the narrow-text virtual slot establish the local AsciiString.
 
-extern const char g_bfmeEmptyAscii[];
+
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

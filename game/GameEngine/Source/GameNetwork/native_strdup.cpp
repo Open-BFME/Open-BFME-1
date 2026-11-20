@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-typedef unsigned int UnsignedInt;
+
 
 extern "C" __declspec(dllimport) void *__cdecl malloc(unsigned int size);
 

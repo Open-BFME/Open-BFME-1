@@ -12,7 +12,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+
 
 
 #include "string_base.h"

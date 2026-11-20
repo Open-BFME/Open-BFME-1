@@ -20,7 +20,7 @@ public:
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 typedef int (__cdecl *LookupFn)(const char *, const char *);
 
-extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
+
 extern "C" int __cdecl strcmp(const char *, const char *);
 
 class INIException

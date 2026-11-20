@@ -99,7 +99,7 @@ public:
 	~Rva006C23B0Lock() { bfmeUnlock1179(); }
 };
 
-extern float g_bfmeUint32Scale;
+
 extern float g_bfmeDefaultBU;
 extern const float g_rva0107533C;
 

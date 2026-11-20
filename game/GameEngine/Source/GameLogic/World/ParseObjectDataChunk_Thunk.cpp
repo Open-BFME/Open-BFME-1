@@ -80,7 +80,7 @@ public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-class BfmeThingFactory;
+
 // Retail 0x012EF1D8: use the existing data owner; retain the local pointee view.
 extern class ThingFactory *TheThingFactory;
 

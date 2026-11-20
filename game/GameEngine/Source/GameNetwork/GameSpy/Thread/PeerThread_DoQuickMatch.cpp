@@ -14,7 +14,7 @@
 
 
 typedef void *PEER;
-typedef int PEERBool;
+
 enum RoomType { TitleRoom, GroupRoom, StagingRoom };
 enum { MAX_SLOTS=8 };
 enum { PEER_ADD, PEER_UPDATE, PEER_REMOVE, PEER_CLEAR };

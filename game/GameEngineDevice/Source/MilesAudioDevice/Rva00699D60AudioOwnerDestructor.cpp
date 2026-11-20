@@ -20,7 +20,7 @@ void __cdecl operator delete[](void *block);
 // their published zero-argument spelling reflects the thunk's actual COFF
 // name and stack arity.
 void j_000298e8(void);
-void j_000351b6(void);
+
 
 class Rva00691200RefBase
 {

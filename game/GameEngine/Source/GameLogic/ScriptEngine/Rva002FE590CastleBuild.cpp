@@ -4,13 +4,13 @@
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
-class PartitionManager;
+
 #include "game_logic_dispatch.h"
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern void j_000022bb();
-extern void j_0001b185();
+
+
 extern void j_0002ae23();
-extern void j_0002c471();
+
 extern void j_0003add7();
 
 class Rva002FE590Calls {};

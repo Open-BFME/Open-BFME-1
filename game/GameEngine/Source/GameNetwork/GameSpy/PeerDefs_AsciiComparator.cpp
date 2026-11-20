@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-extern const char g_bfmeEmptyAscii[];
+
 
 struct AsciiStringData
 {

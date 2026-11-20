@@ -50,7 +50,7 @@ extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 // Retail calls go through incremental-link thunks; call those directly.
 extern void j_0002e5e1();
 extern void j_0000c234();
-extern void j_000041c9();
+
 extern void j_00003ce2();
 extern void j_00003b66();
 

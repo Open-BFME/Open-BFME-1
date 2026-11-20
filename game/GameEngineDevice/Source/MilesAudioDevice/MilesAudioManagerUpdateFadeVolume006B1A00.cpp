@@ -27,7 +27,7 @@
 // dispatch.
 
 #include "../../../GameEngine/Include/Common/ScalarTypes/Real.h"
-typedef unsigned char Bool;
+
 typedef void *HSAMPLE;
 typedef void *H3DSAMPLE;
 typedef void *HSTREAM;

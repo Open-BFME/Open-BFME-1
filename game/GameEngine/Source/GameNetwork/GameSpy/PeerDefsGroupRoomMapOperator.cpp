@@ -33,7 +33,7 @@ public:
 	Int m_bfmeExtra;
 };
 
-extern void j_00035f03();
+
 #pragma comment(linker, "/alternatename:??0GameSpyGroupRoom@@QAE@ABV0@@Z=?j_00035f03@@YAXXZ")
 
 typedef std::map<Int, GameSpyGroupRoom> GroupRoomMap;

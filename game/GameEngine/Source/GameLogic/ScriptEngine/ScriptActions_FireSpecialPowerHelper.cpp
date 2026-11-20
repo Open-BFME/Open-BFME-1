@@ -88,7 +88,7 @@ public:
 	BfmePlayerTeamListNode *m_playerTeamPrototypes;
 };
 
-class BfmePlayerObjectDlinkObject;
+
 class BfmePlayerTeamView;
 
 class Rva002F48B0TeamInstanceIterator

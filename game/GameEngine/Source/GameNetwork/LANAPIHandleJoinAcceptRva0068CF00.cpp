@@ -18,7 +18,7 @@
 
 
 
-extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime(void);
+
 
 template <typename T> struct BfmeStringData
 {

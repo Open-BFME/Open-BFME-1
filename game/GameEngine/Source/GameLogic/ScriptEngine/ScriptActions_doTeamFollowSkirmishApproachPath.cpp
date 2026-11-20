@@ -274,7 +274,7 @@ public:
 extern ScriptEngine *TheScriptEngine;
 extern TerrainLogic *TheTerrainLogic;
 extern AI *TheAI;
-extern float g_bfmeDefaultBU;
+
 
 class ScriptActions
 {

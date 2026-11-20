@@ -126,7 +126,7 @@ extern UnsignedInt bfmeInternAttributeEntry(Gen00043699 *entry);
 struct Gen_t_0039e9d0_p128pod {
  unsigned char operator==(const Gen_t_0039e9d0_p128pod &) const;
 };
-extern void bfmeDestroyAttributeEntry(Gen_t_0039e9d0_p128pod *entry);
+
 struct Rva0039D770Vector;
 class Rva0039D770Owner {
 public: void xfer(Xfer *, Rva0039D770Vector *, Rva0039D770Vector *);
@@ -147,7 +147,7 @@ class AsciiString;
 class Rva0039E8D0Xfer;
 namespace _STL { template <class T> class allocator; template <class T, class A> class vector; }
 typedef _STL::vector<AsciiString, _STL::allocator<AsciiString> > Rva0039E8D0StringVector;
-void __stdcall Rva0039E8D0StringVectorXfer(Rva0039E8D0Xfer *xfer, Rva0039E8D0StringVector *vector);
+
 extern void j_0001082f();
 class Route0001082F {};
 static __forceinline void callRva0039E8D0StringVectorXfer(void *self, Xfer *xfer, void *vector)

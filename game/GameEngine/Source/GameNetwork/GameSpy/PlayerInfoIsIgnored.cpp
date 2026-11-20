@@ -28,7 +28,7 @@ public:
     virtual bool isIgnored(AsciiString nick);
 #undef GS_SLOT
 };
-class GameSpyInfo;
+
 // Retail VA 0x012F7194 is PeerDefs.cpp's GameSpyInfoInterface pointer.
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;

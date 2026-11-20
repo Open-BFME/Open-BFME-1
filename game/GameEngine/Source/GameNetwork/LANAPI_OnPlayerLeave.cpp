@@ -4,7 +4,7 @@
 
 
 
-typedef unsigned short WideChar;
+
 
 
 namespace _STL

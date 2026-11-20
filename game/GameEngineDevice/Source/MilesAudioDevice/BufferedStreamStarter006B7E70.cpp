@@ -18,7 +18,7 @@ extern "C" __declspec(dllimport) void* __stdcall AIL_register_3D_EOS_callback(un
 extern "C" __declspec(dllimport) int __stdcall AIL_set_3D_sample_info(unsigned,const void*);
 extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_loop_count(unsigned,int);
 extern void j_0003b741(); extern void j_00001ece(); extern void j_00016f86(); extern void j_000311bf();
-extern void j_0001dff2(); extern void j_00029910(); extern void j_00047519(); extern void j_0002e668();
+ extern void j_00029910(); extern void j_00047519(); extern void j_0002e668();
 template<class M> inline M member006B7E70(void (*fn)()) { union { void(*f)(); M m; } u; u.f=fn; return u.m; }
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

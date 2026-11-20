@@ -6,7 +6,7 @@
 
 #include "../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+
 
 
 

@@ -11,7 +11,7 @@
 class Object;
 class CommandButton;
 class CommandSet;
-class Team;
+
 
 // Slot 27 takes the target through BFME's one-word by-value string view.
 class BfmeAsciiStringArg : public AsciiString

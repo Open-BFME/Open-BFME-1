@@ -25,8 +25,8 @@
 
 #include "AsciiString.h"
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 class DataChunkInput;
 

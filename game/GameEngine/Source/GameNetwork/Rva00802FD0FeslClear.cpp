@@ -3,7 +3,7 @@
 // service list while pending, free the 0x10-stride request block, clear the
 // DirtySock ping ref at +8.
 
-struct Rva00807BA0Ping;
+
 struct Rva00808140Ref;
 void Rva00808140( Rva00808140Ref *ref );
 

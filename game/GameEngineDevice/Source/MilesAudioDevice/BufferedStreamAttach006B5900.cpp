@@ -6,15 +6,15 @@ void *__cdecl operator new[](unsigned int);
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(volatile long*);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(volatile long*);
 extern "C" __declspec(dllimport) int __stdcall AIL_3D_sample_status(unsigned);
-extern "C" __declspec(dllimport) void __stdcall AIL_start_timer(int);
-extern "C" __declspec(dllimport) void __stdcall AIL_start_3D_sample(unsigned);
-extern "C" __declspec(dllimport) void* __stdcall AIL_register_3D_EOS_callback(unsigned,void*);
-extern "C" __declspec(dllimport) int __stdcall AIL_set_3D_sample_info(unsigned,const void*);
-extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_sample_loop_count(unsigned,int);
+
+
+
+
+
 extern void j_0003b741(); extern void j_00001ece(); extern void j_00016f86(); extern void j_000311bf();
-extern void j_0001dff2(); extern void j_00029910(); extern void j_00047519(); extern void j_0002e668();
+ extern void j_00029910(); extern void j_00047519(); extern void j_0002e668();
 extern void j_0000268a(); extern void j_0001079e(); extern void j_00021ff3();
-extern void j_000298e8(); extern void j_0003aa6c(); extern void j_0004066f(); extern void j_00046a33();
+ extern void j_0003aa6c(); extern void j_0004066f(); extern void j_00046a33();
 template<class M> inline M member006B7E70(void (*fn)()) { union { void(*f)(); M m; } u; u.f=fn; return u.m; }
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 struct WaveInfo006B7E70 { int format; void *data; unsigned size; int rate,bits,channels; unsigned extra[3]; };

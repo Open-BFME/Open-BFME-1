@@ -16,8 +16,8 @@ template <typename T> struct StringInlineData
 	T m_text[1];
 };
 class AsciiString;
-class UnicodeString;
-class BfmeAsciiStringArg;
+
+
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "../../../Include/Common/ScalarTypes.h"
 
@@ -140,7 +140,7 @@ extern ActionManager *TheActionManager;
 extern void j_000230b5(void);
 extern void j_0001dde5(void);
 extern void j_00005a6a(void);
-extern void j_00020f04(void);
+
 extern void j_0001478b(void);
 extern void j_0002990b(void);
 extern void j_00011914(void);

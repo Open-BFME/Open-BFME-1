@@ -4,10 +4,10 @@
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void*,unsigned long);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void*);
-extern void j_00041006();
+
 extern void j_00029695();
 extern void j_00023f79();
-extern void j_00024e97();
+
 struct Info006AD790 { char pad[0x84]; int dword_84; };
 class AudioEventRTS { public:
     unsigned int getSoundClass() const;

@@ -19,7 +19,7 @@ class S4Sink004135C0
 {
 };
 
-class Drawable;
+
 
 class Object
 {

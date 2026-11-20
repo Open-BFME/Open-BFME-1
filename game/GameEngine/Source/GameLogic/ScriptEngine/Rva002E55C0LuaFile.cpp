@@ -12,7 +12,7 @@ extern "C" void lua_settop(lua_State *state, int index);
 
 extern void *operator new[](unsigned int size);
 extern void operator delete[](void *memory);
-extern const char g_bfmeEmptyAscii[];
+
 
 class File
 {

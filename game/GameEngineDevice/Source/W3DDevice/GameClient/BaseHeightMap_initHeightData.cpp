@@ -139,7 +139,7 @@ extern void j_00034d56(void);
 class GlobalData;
 // The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
 extern GlobalData *TheWritableGlobalData;
-extern char *Rva006A16B0Empty;
+
 extern "C" char bfmeTagBNH[];
 struct BfmeObjRB;
 extern BfmeObjRB *g_bfmeGlobRB;

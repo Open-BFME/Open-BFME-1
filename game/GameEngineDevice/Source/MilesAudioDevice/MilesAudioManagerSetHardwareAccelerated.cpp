@@ -164,7 +164,7 @@ extern "C" __declspec(dllimport) void __stdcall AIL_set_3D_speaker_type(
 extern "C" __declspec(dllimport) const char *__stdcall AIL_last_error(void);
 
 extern void j_00017d3c(void);
-extern void j_0001cce7(void);
+
 extern void j_0002214c(void);
 extern void j_00033d89(void);
 extern void j_0003da23(void);
