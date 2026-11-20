@@ -54,8 +54,8 @@ struct Rva009F4130Range
 	float x0, y0, unused08, x1, y1;
 };
 
-struct Rva009F4130Node;
-struct Rva009F4130DistanceContext;
+
+
 class BfmeThingEQ;
 typedef float (__cdecl *Rva009F4130Distance)(void *, void *, float);
 extern Rva009F4130Distance g_Va012DBD60[];

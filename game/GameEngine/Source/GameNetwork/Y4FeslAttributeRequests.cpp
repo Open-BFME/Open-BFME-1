@@ -17,7 +17,7 @@
 // [base + i*8 + 4], i.e. a { key, value } pair of pointers -- also hard
 // evidence, from the scaled index.  The pair's C++ member names are not.
 
-typedef __int64 FeslInt64;
+
 
 // Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
 // TU only calls that body through the message pointer, so it is spelled

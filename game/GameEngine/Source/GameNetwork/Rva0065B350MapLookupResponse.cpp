@@ -32,7 +32,7 @@ public:
     virtual void slotC(); virtual void slot10(); virtual void slot14();
     virtual void slot18(const Rva0065B350Response &);
 };
-class BfmeQueueEUG;
+
 class GameSpyPSMessageQueueInterface;
 extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
 class Gen_00654130 { public: void bfmeErase(void *); };

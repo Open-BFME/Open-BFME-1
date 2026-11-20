@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /O2
 
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 struct lua_State;
 

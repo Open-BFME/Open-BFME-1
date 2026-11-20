@@ -3,7 +3,7 @@
 // Byte-matched BFME ExperienceTracker transfer implementation.
 
 #include "../../../Include/Common/ScalarTypes/Int.h"
-typedef int Bool;
+
 #include "../../../Include/Common/ScalarTypes/Real.h"
 #include "../../../Include/Common/ScalarTypes/UnsignedByte.h"
 

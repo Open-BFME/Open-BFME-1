@@ -41,7 +41,7 @@
 
 
 
-class NetCommandMsg;
+
 
 // BFME's header is four bytes, not six: the reference's TransportMessageHeader
 // carries a CRC and a magic number, and retail's data run starts at +4. The

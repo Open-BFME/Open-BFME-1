@@ -11,7 +11,7 @@
 // into the message at +0x10 and +0x14, the buffer/size pair the V2 lane
 // recovered for this object, so it is modelled with those two members named.
 
-typedef __int64 FeslInt64;
+
 
 // Calls name each Rva007E8810Message helper by the ledger row at its pinned
 // address (link_check.py near), the spelling the link resolves.

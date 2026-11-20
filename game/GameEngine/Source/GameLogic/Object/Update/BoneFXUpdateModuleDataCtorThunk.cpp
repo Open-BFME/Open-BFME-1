@@ -41,7 +41,7 @@ struct BaseBoneListInfo
 // Retail 0x00288280 proves this element has no base: its 16-byte ctor only
 // zeroes boneName and gameClientDelay, so the layout is flat (0x24 bytes,
 // onlyOnce at +0x1c, pointer at +0x20) and the remaining members are trivial.
-struct BfmeAsciiStringData;
+
 #include "ascii_string.h"
 struct GameClientRandomVariable
 {

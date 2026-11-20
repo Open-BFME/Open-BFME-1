@@ -10,7 +10,7 @@
 
 
 
-extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
+
 
 struct BfmeAsciiStringData
 {

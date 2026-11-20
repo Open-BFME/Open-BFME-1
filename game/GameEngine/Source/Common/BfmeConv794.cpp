@@ -5,7 +5,7 @@
 #include "StringInline.h"
 #include <algorithm>
 
-extern "C" unsigned char bfmeVftDXG[];
+
 extern void (__cdecl *g_bfmeFreeDXG)(void *what);
 
 // retail 0x00893990: the cleanup bfmeGoDXG runs on itself.

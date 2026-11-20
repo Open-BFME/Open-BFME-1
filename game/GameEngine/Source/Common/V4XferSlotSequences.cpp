@@ -73,7 +73,7 @@ public:
 	virtual void slot8C( void * field );
 };
 
-class Gen003BB8F0Member;
+
 
 class Rva00064390
 {

@@ -15,14 +15,14 @@
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
-extern "C" __declspec(dllimport) __int64 __cdecl _time64(__int64 *timer);
 
-extern void j_0003e045();
-extern void j_0000a3fd();
-extern void j_0002cda9();
-extern void j_00029a64();
-extern void j_0002f1d5();
-extern void j_00044661();
+
+
+
+
+
+
+
 
 class Rva006B86D0MutexGuard
 {
