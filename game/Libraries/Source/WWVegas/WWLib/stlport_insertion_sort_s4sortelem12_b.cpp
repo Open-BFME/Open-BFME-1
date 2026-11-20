@@ -22,7 +22,7 @@
 // of the temporary's address into the now-dead first parameter slot -- four
 // bytes -- does not appear.
 
-class BfmeStringBaseChar;
+
 struct S4Name;
 
 template <class T>

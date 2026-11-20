@@ -8,7 +8,7 @@
 #include <vector>
 #include "ascii_string.h"
 
-typedef bool Bool;
+
 
 class BfmeOwnVUG
 {

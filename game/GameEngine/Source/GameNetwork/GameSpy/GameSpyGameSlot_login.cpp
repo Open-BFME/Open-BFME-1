@@ -12,10 +12,10 @@
 // they are out of line here. See NetCommandMsg_text.cpp for why AsciiString is
 // StringBase<char> itself and why holders have to be friends of it.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
-typedef unsigned char UnsignedByte;
+
+
+
+
 
 template <typename T>
 class StringBase

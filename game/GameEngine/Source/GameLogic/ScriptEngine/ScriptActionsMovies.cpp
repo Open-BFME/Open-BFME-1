@@ -25,7 +25,7 @@
 
 
 
-extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
+ // retail 0x01075358 (2^32 conversion fixup)
 
 #include "ascii_string.h"
 

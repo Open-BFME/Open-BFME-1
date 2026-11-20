@@ -28,7 +28,7 @@
 #include <stddef.h>
 #include "string_base.h"
 
-typedef int Int;
+
 typedef int Bool;
 
 // The delegating shim, as in Win32BIGFileOpenArchived.cpp: the constructor is

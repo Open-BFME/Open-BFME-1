@@ -62,7 +62,7 @@ extern GlobalData *TheWritableGlobalData;
 extern ScriptEngine *TheScriptEngine;
 
 typedef void (__cdecl *Rva002E5090VoidCallback)(void);
-extern "C" int __cdecl _atexit(Rva002E5090VoidCallback);
+
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 

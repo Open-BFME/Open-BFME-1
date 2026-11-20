@@ -27,13 +27,13 @@
 #include "rendobj.h"
 #include "meshmdl.h"
 
-class MeshBuilderClass;
-class MeshLoadInfoClass;
+
+
 class DecalMeshClass;
 class MaterialPassClass;
 class IndexBufferClass;
-class ChunkLoadClass;
-struct W3dMeshHeaderStruct;
+
+
 
 class LightEnvironmentClass
 {

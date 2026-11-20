@@ -20,8 +20,8 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *buf1, const void *buf2, unsigned int count);
 

@@ -24,8 +24,8 @@ __declspec(noinline) inline int StringBase<char>::compare(const char *str) const
 }
 inline __declspec(noinline) bool operator==(const StringBase<char> &a,const char *b) { return a.compare(b)==0; }
 template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
-typedef int Int;
-typedef bool Bool;
+
+
 typedef int Color;
 const int MAX_SLOTS = 8;
 class GameWindow;

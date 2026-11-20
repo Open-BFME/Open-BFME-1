@@ -15,7 +15,7 @@ public:
 };
 
 class Script;
-class ScriptGroup;
+
 class OrCondition;
 class ScriptAction;
 

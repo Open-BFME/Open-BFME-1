@@ -32,9 +32,9 @@
 #include <set>
 #include "ascii_string.h"
 #include <stdlib.h>
-typedef int Int;
+
 typedef unsigned long UnsignedInt;
-typedef float Real;
+
 
 #include "rect.h"
 #include "texture.h"

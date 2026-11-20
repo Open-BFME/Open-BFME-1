@@ -18,7 +18,7 @@
 // the otherwise identical loop in Y4FeslAttributeRequests.cpp, which uses
 // signed `jle`/`jl`.
 
-typedef __int64 FeslInt64;
+
 
 // Retail 0x007E8AC0 is matched as Rva007E8AC0::run (functions.csv).  This
 // TU only calls that body through the message pointer, so it is spelled

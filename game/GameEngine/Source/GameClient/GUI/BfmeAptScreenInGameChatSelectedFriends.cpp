@@ -5,7 +5,7 @@
 #include "GameClient/BfmeAptScreenBaseLayout.h"
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned short WideChar;
+
 
 #include <vector>
 

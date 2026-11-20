@@ -126,7 +126,7 @@ protected:
 	void acquireEnemy(void);
 };
 
-class g_rva01075350Type;
+
 
 extern PlayerList *ThePlayerList;
 extern NameKeyGenerator *TheNameKeyGenerator;

@@ -6,7 +6,7 @@
 namespace _STL
 {
 
-typedef int ptrdiff_t;
+
 typedef int streamsize;
 
 class ios_base

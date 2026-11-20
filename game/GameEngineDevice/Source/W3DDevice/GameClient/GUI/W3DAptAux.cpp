@@ -12,7 +12,7 @@
 // invented placeholder spellings that address carried, none of them defined.
 static const float bfmeOneFloat = 1.0f;
 
-extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
+ // retail 0x01075358 (2^32 conversion fixup)
 
 class BfmeThingIH
 {

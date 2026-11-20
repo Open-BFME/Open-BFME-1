@@ -504,7 +504,7 @@ struct Rva007AA820Call {
  void node(Rva007AA820Node*);
  void quad(Rva007AA820Node*,Vector3*);
 };
-extern void j_0003a8d2(); extern void j_0003cb2d(); extern void j_00015c26();
+ extern void j_0003cb2d(); extern void j_00015c26();
 class BFMECameraCullBox { public: bool Cull_Box(const AABoxClass&) const; };
 template<class T> static __forceinline T rva007AA820Member(void(*raw)()) {
  union {void(*p)();T m;} u;u.p=raw;return u.m;

@@ -152,7 +152,7 @@ public:
 };
 }
 
-extern void __cdecl j_00018246();
+
 extern void __cdecl j_0002b314();
 extern void __cdecl dup_00894A90(int);
 

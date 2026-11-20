@@ -13,8 +13,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AIGroup

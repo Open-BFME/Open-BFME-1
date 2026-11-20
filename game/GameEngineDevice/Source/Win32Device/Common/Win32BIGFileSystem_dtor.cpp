@@ -19,7 +19,7 @@
 // matter for these two bodies, but getting the count wrong would silently move
 // slot 0.
 
-class AsciiString;
+
 class ArchiveFile;
 class File;
 #include "../../../../GameEngine/Include/Common/ScalarTypes/Char.h"

@@ -58,8 +58,8 @@ class GameWindow;
 class WinInstanceData;
 typedef void (__cdecl *GameWinDrawFunc)(GameWindow *, WinInstanceData *);
 
-class GameWindow;
-class WinInstanceData;
+
+
 typedef void (__cdecl *GameWinTooltipFunc)(GameWindow *, WinInstanceData *, unsigned int);
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/FunctionLexicon.h

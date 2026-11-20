@@ -20,7 +20,7 @@ private:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 #include "../../../../../Libraries/Source/WWVegas/WWLib/hash.h"
 
-struct AsciiStringData;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "ascii_string.h"

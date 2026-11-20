@@ -167,13 +167,13 @@ public:
 extern LANAPI *TheLAN;
 extern GameEngine *TheGameEngine;
 extern GameWindowManager *TheWindowManager;
-extern void j_0000b42e();
+
 extern void j_00010f8c();
 extern void j_0001d9cb();
-extern void j_000204c3();
-extern void j_00036485();
-extern void j_00040db3();
-extern void j_0004598f();
+
+
+
+
 void _bfme_closeAptScreen(const AsciiString &name);
 
 

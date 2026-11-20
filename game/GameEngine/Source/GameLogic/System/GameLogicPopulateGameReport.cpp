@@ -209,7 +209,7 @@ extern char g_binaryDeepCRC;
 extern Int NET_CRC_INTERVAL;
 extern Int g_debugCRCFromFrame;
 extern Int g_debugCRCUntilFrame;
-extern const char *g_crcLogFile;
+
 
 extern UnsignedByte Rva00882F40GetFlag( void );
 

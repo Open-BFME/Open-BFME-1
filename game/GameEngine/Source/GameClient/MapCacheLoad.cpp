@@ -89,7 +89,7 @@ extern GlobalData *TheWritableGlobalData;
 bool bfmeLocalUserMapsReady(void);
 extern void j_000312eb();
 
-class Xfer;
+
 
 enum INILoadType
 {

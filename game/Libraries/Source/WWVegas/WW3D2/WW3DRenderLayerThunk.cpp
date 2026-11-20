@@ -24,7 +24,7 @@
 // Its own TU because ww3d.cpp declares the enum-returning overload and lands 25
 // rows against it.
 
-typedef float Real;
+
 
 class SceneClass;
 class CameraClass;

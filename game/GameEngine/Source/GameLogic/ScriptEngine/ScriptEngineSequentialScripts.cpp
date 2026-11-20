@@ -15,7 +15,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-extern const char g_bfmeEmptyAscii[]; // retail 0x0107388B
+ // retail 0x0107388B
 
 #include "ascii_string.h"
 template<> inline void StringBase<char>::concat(const StringBase<char> &str)

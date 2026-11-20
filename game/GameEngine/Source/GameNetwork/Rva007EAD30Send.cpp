@@ -11,7 +11,7 @@ void __cdecl rva007EADA0BindCallback(Rva007EA380Owner *owner, void *first, void 
 
 class BfmeThingUNB;
 class Rva007F9B80;
-class Rva00803080;
+
 
 class Rva007EAA70Owner
 {

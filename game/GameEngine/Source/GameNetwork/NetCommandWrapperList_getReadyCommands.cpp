@@ -62,7 +62,7 @@ public:
 	static NetCommandRef *ConstructNetCommandMsgFromRawData(UnsignedByte *data, UnsignedShort dataLength);
 };
 
-class NetWrapperCommandMsg;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetCommandWrapperList.h
 class NetCommandWrapperListNode

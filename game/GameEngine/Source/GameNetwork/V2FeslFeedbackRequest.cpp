@@ -8,7 +8,7 @@
 
 extern "C" int __cdecl sprintf( char *buffer, const char *format, ... );
 
-extern const char g_Rva012DAC14[];
+
 // retail 0x007E8AC0: ?run@Rva007E8AC0@@QAEXXZ
 class Rva007E8AC0
 {

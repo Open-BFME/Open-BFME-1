@@ -37,8 +37,8 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class AsciiString;
-class Team;
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface
@@ -62,7 +62,7 @@ public:
 
 class PlayerTemplate;
 
-typedef unsigned short PlayerMaskType;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

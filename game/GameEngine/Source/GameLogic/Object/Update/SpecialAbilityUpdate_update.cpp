@@ -165,7 +165,7 @@ struct BfmeA999 {char bfmeGo999A();};
 // Retail 0x002A59F0: ZH SpecialAbilityUpdate::needToFace (Bool return: the
 // constant false is a byte xor, the logical tail a full-width 0/1). The update body below
 // matches only with its definition visible here.
-typedef unsigned char Bool;
+
 
 class BfmeAi59F0
 {
