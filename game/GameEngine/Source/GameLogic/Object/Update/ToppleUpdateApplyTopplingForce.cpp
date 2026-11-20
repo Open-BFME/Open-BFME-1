@@ -59,11 +59,11 @@ static const Real ANGULAR_LIMIT = PI / 2 - PI / 64;
 class Object;
 class ModuleData;
 class Coord3D;
-class Pathfinder;
+
 class ThingTemplate;
 class Team;
-class Drawable;
-class ClientUpdateModule;
+
+
 
 struct Coord3D
 {

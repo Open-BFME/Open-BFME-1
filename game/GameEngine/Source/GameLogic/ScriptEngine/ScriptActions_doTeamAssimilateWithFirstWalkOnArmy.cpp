@@ -6,9 +6,9 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class Team;
-class BfmeGlobFEA;
-class ScriptActions;
+
+
+
 
 template<class OBJCLASS>
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h

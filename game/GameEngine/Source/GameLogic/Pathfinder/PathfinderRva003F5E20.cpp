@@ -17,7 +17,7 @@
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 class LocomotorSet;
-class Pathfinder;
+
 
 #include "object.h"
 

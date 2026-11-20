@@ -10,7 +10,7 @@
 
 
 
-class ScriptActions;
+
 class Drawable;
 class Object;
 

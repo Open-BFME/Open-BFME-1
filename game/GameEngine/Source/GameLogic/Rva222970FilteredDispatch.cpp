@@ -1,4 +1,4 @@
-class Object;
+
 class Player;
 
 // Retail Object::getControllingPlayer (0x001BE3F0), pinned at the 0x00020824

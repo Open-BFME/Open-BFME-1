@@ -15,7 +15,7 @@
 
 
 
-class Object;
+
 class Player;
 class Parameter;
 class ThingTemplate;

@@ -11,7 +11,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-class Team;
+
 class Object;
 
 class Overridable

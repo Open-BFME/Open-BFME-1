@@ -7,7 +7,7 @@
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 
 class PathfindCell;
-class PathfindCellInfo;
+
 
 class Rva003F7380State
 {

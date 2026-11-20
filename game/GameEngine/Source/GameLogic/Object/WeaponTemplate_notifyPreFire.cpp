@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 class Weapon;
-class Object;
+
 
 class ThingTemplate
 {

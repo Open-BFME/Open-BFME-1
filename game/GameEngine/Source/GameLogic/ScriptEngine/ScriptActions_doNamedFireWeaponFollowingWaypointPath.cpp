@@ -5,7 +5,7 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Object;
+
 class Weapon;
 class Waypoint;
 

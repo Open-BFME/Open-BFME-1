@@ -54,7 +54,7 @@ public:
 	Player *getPlayerFromMask( PlayerMaskType mask );
 };
 
-class BfmeThingFactory;
+
 class ThingTemplate;
 
 

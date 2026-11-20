@@ -69,7 +69,7 @@ struct BfmePlayerTeamListNode
 	class BfmePlayerTeamPrototypeInstances *m_prototype;
 };
 
-class BfmePlayerTeamPrototypeInstances;
+
 // ILT 0x00022A70 reaches the ledger's four-byte Team instance-list advance at
 // 0x000C8A30.
 class Team

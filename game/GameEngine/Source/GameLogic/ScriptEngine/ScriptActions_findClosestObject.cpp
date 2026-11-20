@@ -13,7 +13,7 @@
 
 
 
-class Object;
+
 class Player;
 class ThingTemplate;
 

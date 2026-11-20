@@ -7,7 +7,7 @@
 
 #include "ascii_string.h"
 
-class Team;
+
 class Script;
 
 // BFME keeps the by-value AsciiString argument shape used by the retail

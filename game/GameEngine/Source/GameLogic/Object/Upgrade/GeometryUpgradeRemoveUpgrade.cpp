@@ -19,7 +19,7 @@
 // PathfindMapObjectWrappers.cpp), and BfmeHostCL::bfmeResetCL (landed,
 // BfmeConv1924.cpp).
 
-class BfmeHostCL;
+
 
 class BfmeBaseZJ
 {

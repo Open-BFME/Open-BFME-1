@@ -19,7 +19,7 @@ enum KindOfType
 };
 
 class Object;
-class Weapon;
+
 class DamageInfo;
 
 class Thing

@@ -23,9 +23,9 @@ enum GUICommandType {};
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
-class Player;
+
 class CommandButton;
-class SpecialPowerTemplate;
+
 
 class ScriptEngine
 {
@@ -244,12 +244,12 @@ void ScriptActions::doSkirmishCommandButtonOnMostValuable(
 	Coord3D pos;
 	theGroup->getCenter(&pos);
 
- 
+
  if (commandButton->needsPosition()) {
   BfmeWideResult result=ThePartitionManager->iterate(&pos,range,(IterOrderType)0,
    PartitionFilterPlayerAffiliation(team->getControllingPlayer(),ALLOW_ENEMIES,true).link(&PartitionFilterSameMapStatus(srcObj)),false);
   Object *target=result.first();
-  
+
   while((srcObj=result.next())!=0) {
    const ThingTemplate *otherTemplate=srcObj->getTemplate();
    const ThingTemplate *targetTemplate=target->getTemplate();
@@ -261,7 +261,7 @@ void ScriptActions::doSkirmishCommandButtonOnMostValuable(
    PartitionFilterPlayerAffiliation(team->getControllingPlayer(),ALLOW_ENEMIES,true).link(
     PartitionFilterValidCommandButtonTarget(srcObj,commandButton,true,CMD_FROM_SCRIPT).link(&PartitionFilterSameMapStatus(srcObj))),false);
   Object *target=result.first();
-  
+
   while((srcObj=result.next())!=0) {
    const ThingTemplate *otherTemplate=srcObj->getTemplate();
    const ThingTemplate *targetTemplate=target->getTemplate();

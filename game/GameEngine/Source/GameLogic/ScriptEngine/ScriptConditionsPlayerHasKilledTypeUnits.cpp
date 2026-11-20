@@ -10,7 +10,7 @@
 
 
 class Player;
-class ScriptConditions;
+
 
 class Parameter
 {

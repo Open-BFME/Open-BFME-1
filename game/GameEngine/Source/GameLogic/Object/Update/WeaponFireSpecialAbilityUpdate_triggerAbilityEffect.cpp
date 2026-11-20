@@ -7,8 +7,8 @@
 inline Coord3D::Coord3D(float x_, float y_, float z_) { x = x_; y = y_; z = z_; }
 // ??1Coord3D@@QAE@XZ absent-from-retail
 inline Coord3D::~Coord3D() {}
-class Object;
-class Weapon;
+
+
 class FiringTracker { friend struct Tracker0026DA00; void coolDown(bool); };
 class Overridable { public: const Overridable* getFinalOverride() const; };
 class Object { public: void* unidentified_001BFE20() const; void rva001CE6F0(int); };

@@ -25,9 +25,9 @@ enum KindOfType
 	RVA00365DF0_KIND_127 = 127
 };
 
-class Rva00365DF0Player;
+
 class Player;
-class BfmeLivingWorldPlayerArmyCollection;
+
 
 class GameLogic
 {

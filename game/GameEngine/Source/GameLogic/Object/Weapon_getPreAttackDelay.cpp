@@ -61,7 +61,7 @@ private:
 	char m_fields[12];
 };
 
-class Object;
+
 
 class AIUpdateInterface
 {

@@ -3,7 +3,7 @@
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Object;
+
 
 #include "game_logic_dispatch.h"
 extern NameKeyGenerator *TheNameKeyGenerator;

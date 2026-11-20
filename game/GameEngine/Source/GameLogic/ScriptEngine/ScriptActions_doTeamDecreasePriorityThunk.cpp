@@ -14,7 +14,7 @@
 
 class Team;
 class TeamPrototype;
-class ScriptEngine;
+
 
 // Retail passes the BFME one-word string through an out-of-line copy
 // constructor when the ScriptEngine vcall takes it by value.

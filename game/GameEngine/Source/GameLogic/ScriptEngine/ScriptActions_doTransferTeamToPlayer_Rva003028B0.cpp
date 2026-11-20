@@ -13,7 +13,7 @@
 
 
 class Player;
-class Object;
+
 
 // Retail reaches each of the operations below through the already-emitted
 // image thunks (ILT stubs), so the callsites name the thunk directly through

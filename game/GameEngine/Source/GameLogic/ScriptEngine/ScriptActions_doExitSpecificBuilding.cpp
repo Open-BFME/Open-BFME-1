@@ -16,7 +16,7 @@
 
 #include "../command_source_type.h"
 
-class Object;
+
 
 class Overridable
 {

@@ -19,7 +19,7 @@
 
 
 
-class Object;
+
 class Module {};
 
 // The retail Object+0x68/vbtable walk is represented explicitly here.  This

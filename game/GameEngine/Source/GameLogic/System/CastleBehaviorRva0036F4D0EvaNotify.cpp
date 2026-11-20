@@ -32,9 +32,9 @@ enum Relationship
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Player;
+
 class Team;
-class Module;
+
 
 class Player
 {

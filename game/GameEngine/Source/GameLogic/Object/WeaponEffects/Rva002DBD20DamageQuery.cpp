@@ -25,7 +25,7 @@ extern GameLogic* TheGameLogic;
 class Rva002DF120 { public: unsigned char test(void*,void*); };
 class Rva003679D0FrameDeadline { public: unsigned char isPending(int) const; };
 class Rva002DBD20Calls {};
-class Rva002DBD20Weapon;
+
 extern void j_000384f6();
 extern void j_0003dccb();
 extern void j_00043fae();

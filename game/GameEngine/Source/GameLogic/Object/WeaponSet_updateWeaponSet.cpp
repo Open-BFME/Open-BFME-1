@@ -16,11 +16,11 @@
 
 
 
-class Weapon;
-class WeaponTemplate;
+
+
 class WeaponTemplateSet;
-class Object;
-class GameLogic;
+
+
 
 // Existing address-derived provider: ILT 0x000209FA -> RVA 0x001BEF20.
 class Rva001BEF20FieldAddress

@@ -20,7 +20,7 @@ extern void j_0002369b(void);
 extern void j_0002990b(void);
 extern void j_00029c08(void);
 
-class Object;
+
 class Player;
 class Team;
 class PartitionManager;

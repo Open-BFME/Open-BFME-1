@@ -4,7 +4,7 @@
 #include "ascii_string.h"
 
 class TeamPrototype;
-class ScriptEngine;
+
 
 // ILT 0x00036336 -> matched BfmeScriptEngineSlashName::bfmeName (0x003398F0).
 class BfmeScriptEngineSlashName

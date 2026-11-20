@@ -17,7 +17,7 @@
 
 class Player;
 class SpecialPowerTemplate;
-class SpecialPowerStore;
+
 
 // Slot +0x48 is getSkirmishEnemyPlayer in the ScriptEngine vtable used by
 // this action.  The non-virtual mask view below is the existing 0x0004B290

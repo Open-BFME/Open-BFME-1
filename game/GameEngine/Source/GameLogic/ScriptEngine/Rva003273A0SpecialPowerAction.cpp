@@ -44,7 +44,7 @@ class Player;
 class Team;
 class Object;
 class SpecialPowerTemplate;
-class SpecialPowerStore;
+
 class ActionManager
 {
 public:

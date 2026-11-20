@@ -21,7 +21,7 @@ public:
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Team;
+
 
 class AIGroup
 {

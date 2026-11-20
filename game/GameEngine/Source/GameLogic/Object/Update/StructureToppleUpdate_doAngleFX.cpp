@@ -5,7 +5,7 @@
 
 
 
-class Object;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfo

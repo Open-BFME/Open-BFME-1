@@ -50,8 +50,8 @@ public:
 	Player *getPlayerFromMask( PlayerMaskType mask );
 };
 
-class BfmeThingFactory;
-class ThingTemplate;
+
+
 
 
 
@@ -113,7 +113,7 @@ public:
 	virtual void bfmeObjectSlot0();
 };
 
-class BfmePlayerObjectDlinkObject;
+
 
 class BfmeObjectDlinkBase
 {

@@ -18,7 +18,7 @@
 #include "Common/AsciiString.h"
 #include "Common/BitFlags.h"
 #include <vector>
-class Rva002D5980Owner;
+
 class Rva002D9F30Owner { public: void setCondition(); };
 class BfmeR1094 { public: char pad[0x8c]; BitFlags<192> flags; };
 class BfmeK1094 { public: BfmeR1094 *bfmeCur1094(); };

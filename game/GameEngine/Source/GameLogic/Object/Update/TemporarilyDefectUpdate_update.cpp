@@ -15,7 +15,7 @@ enum UpdateSleepTime
 
 class Drawable;
 class Player;
-class GameMessage;
+
 
 class Object
 {

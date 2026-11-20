@@ -13,10 +13,10 @@
 
 #include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
-class Object;
+
 class ObjectTypes;
 class Player;
-class Team;
+
 class ThingTemplate;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

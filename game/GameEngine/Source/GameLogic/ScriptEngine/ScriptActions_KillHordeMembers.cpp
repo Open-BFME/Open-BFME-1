@@ -12,7 +12,7 @@
 
 class ScriptActionParameter;
 class Object;
-class ContainModuleInterface;
+
 class HordeContainInterface;
 
 class ScriptEngine

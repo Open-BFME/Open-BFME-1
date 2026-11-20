@@ -20,7 +20,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-class Player;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow
