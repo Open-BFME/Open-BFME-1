@@ -492,7 +492,7 @@ extern "C" void lua_pushnumber( lua_State *state, double value );
 #pragma intrinsic( _ReadWriteBarrier )
 extern "C" void _ReadWriteBarrier( void );
 
-class LuaScriptEngine;
+
 extern LuaScriptEngine *TheLuaScriptEngine;
 
 

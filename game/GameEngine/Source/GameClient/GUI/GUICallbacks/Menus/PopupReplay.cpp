@@ -94,7 +94,7 @@ GameWindow *messageBoxWin = NULL;
 using namespace PopupReplayState;
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
-extern void PopulateReplayFileListbox(GameWindow *listbox);
+
 extern void ScoreScreenEnableControls(Bool enable);
 extern UnicodeString GetReplayFilenameFromListbox(GameWindow *listbox, Int index);
 extern std::string LastReplayFileName;
@@ -139,7 +139,7 @@ static void closeSaveMenu( GameWindow *window )
 /** Initialize the SaveLoad menu */
 //-------------------------------------------------------------------------------------------------
 // Retail initialization is emitted by PopupReplayInit_Thunk.cpp.
-extern void PopupReplayInit(WindowLayout *, void *);
+
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu shutdown method */
@@ -193,7 +193,7 @@ WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt msg, Wind
 				// ----------------------------------------------------------------------------------------
 				case KEY_ESC:
 				{
-					
+
 					//
 					// send a simulated selected event to the parent window of the
 					// back/exit button
@@ -221,7 +221,7 @@ WindowMsgHandledType PopupReplayInput( GameWindow *window, UnsignedInt msg, Wind
 }
 
 extern void saveReplay( UnicodeString filename );
-extern void reallySaveReplay(void);
+
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu system callback */
@@ -324,7 +324,7 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 				saveReplay(filename);
 
       }
-	
+
 			break;
 
 		}  // end selected
@@ -355,7 +355,7 @@ WindowMsgHandledType PopupReplaySystem( GameWindow *window, UnsignedInt msg,
 				ScoreScreenEnableControls(TRUE);
 
 			}  // end if
-	
+
 			break;
 
 		}  // end selected

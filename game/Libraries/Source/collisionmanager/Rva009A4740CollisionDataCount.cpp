@@ -56,7 +56,7 @@ public:
 	bool m_bfmeBusy;
 };
 
-void bfmeGlobalCGD();
+
 
 // The BFME2 twin is 0x0075A1A0; WorldBuilder's 0x018062E0 adds
 // "collisionmanager_stat" / "Contacts:" / "max on obj " debug output.

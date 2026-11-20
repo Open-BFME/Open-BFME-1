@@ -22,7 +22,7 @@
 // The linker left twelve separate copies, so each takes its name from its own
 // address.
 
-typedef int Int;
+
 
 // Exact matched auxiliary declarations; keep these calls out of line.
 class Gen_00089d90;

@@ -74,11 +74,11 @@ public:
 	int winSetOwner(GameWindow *owner);
 };
 
-void j_00002e69();
+
 void j_000194a7();
 void j_000272fa();
 void j_0002d939();
-void j_00047230();
+
 class Rva007996A0VptrCtor;
 class Rva00799730VptrCtor;
 class Rva00790C40VptrCtor;
