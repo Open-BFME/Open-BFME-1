@@ -1029,7 +1029,7 @@ void WaterTracksRenderSystem::update()
 
 
 void TestWaterUpdate(void);
-void setFPMode( void );
+
 
 //=============================================================================
 // WaterTracksRenderSystem::flush
@@ -1072,7 +1072,7 @@ public:
 	virtual AsciiString getSourceFilename() = 0;
 };
 
-extern const char Rva010896AC[];	// ".wak", the suffix loadTracks copies inline
+	// ".wak", the suffix loadTracks copies inline
 extern void *bfmeGoEMEb(void *);
 extern void Rva009EBAC0(int);
 class Rva009EB960;

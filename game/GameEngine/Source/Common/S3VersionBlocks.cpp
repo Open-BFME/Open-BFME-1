@@ -75,7 +75,7 @@ public:
 };
 
 class Xfer;
-class FlagPairTarget;
+
 class AICommandParmsStorage { public: void doXfer(Xfer *target); };
 class Gen0016B140 { public: void handle(FlagPairTarget *target); };
 class Gen0020F330 { public: void handle(FlagPairTarget *target); };
