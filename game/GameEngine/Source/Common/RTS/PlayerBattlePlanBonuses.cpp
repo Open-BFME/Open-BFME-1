@@ -39,7 +39,7 @@
 
 
 
-class Object;
+
 class Player;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h

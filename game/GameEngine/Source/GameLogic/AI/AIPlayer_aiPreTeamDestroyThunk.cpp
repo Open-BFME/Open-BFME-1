@@ -10,7 +10,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 class Team;
-class TeamInQueue;
+
 
 template <class OBJCLASS> class DLINK_ITERATOR
 {

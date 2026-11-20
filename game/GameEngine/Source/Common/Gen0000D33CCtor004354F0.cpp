@@ -15,7 +15,7 @@
 #include "../../Include/Common/ScalarTypes.h"
 #include "../../Include/Common/ScalarTypes/WideChar.h"
 
-class BfmeItemKA;
+
 class GameFont;
 class UnicodeString;
 class DisplayString;

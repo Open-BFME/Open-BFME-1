@@ -11,7 +11,7 @@
 #define BFME_HAVE_COORD3D
 
 class UpgradeTemplate;
-class Drawable;
+
 class CountermeasuresBehaviorInterface;
 
 class ModuleData;

@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: GateOpenAndCloseBehavior::friend_newModuleInstance MI factory.
 
-class Module;
+
 class Thing;
 class ModuleData;
 

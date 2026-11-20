@@ -23,7 +23,7 @@
 
 typedef _STL::vector<ObjectID> VecObjectID;
 
-class AIGroup;
+
 
 // Retail's Squad vftable at 0x01083E78 (dir32_addresses.csv).  A vftable is
 // emitted, never spellable from C++, so reference it by its exact decorated

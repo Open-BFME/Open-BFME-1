@@ -25,7 +25,7 @@ public:
 	unsigned int bfmeGetID();
 };
 
-struct BfmeSinkCSNode;
+
 
 struct BfmeSinkCSEntry
 {

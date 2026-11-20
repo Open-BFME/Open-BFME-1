@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-struct BfmeSlotJA;
+
 
 // Retail spells this accessor ?getFinalOverride@Overridable@@QBEPBV1@XZ
 // (public const, upstream Overridable.h); the TU-local stand-in is the class

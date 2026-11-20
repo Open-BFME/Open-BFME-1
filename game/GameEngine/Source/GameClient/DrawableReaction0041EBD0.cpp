@@ -14,7 +14,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include "../../../Libraries/Include/Lib/Coord3D.h"
-class Object;
+
 class Drawable;
 class Team;
 class Module;

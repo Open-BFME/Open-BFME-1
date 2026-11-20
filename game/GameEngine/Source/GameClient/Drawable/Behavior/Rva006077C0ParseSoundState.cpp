@@ -13,7 +13,7 @@
 #include <new>
 #include <vector>
 
-class INI;
+
 class AsciiString;
 struct FieldParse;
 

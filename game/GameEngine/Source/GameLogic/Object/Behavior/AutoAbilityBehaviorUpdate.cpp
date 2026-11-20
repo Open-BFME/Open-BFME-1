@@ -23,7 +23,7 @@
 // conflicts with its use as a partition filter here and is not identity evidence.
 // Handoff: targets/game/reverse/attempt_support/20261107-001edca0-autoability-update.md
 #include "../../../../Include/Common/ScalarTypes/Source/UInt.h"
-class Object;
+
 class Player;
 #include "Lib/Coord3D.h"
 #include "command_source_type.h"

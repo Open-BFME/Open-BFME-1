@@ -3,7 +3,7 @@
 #include <bitset>
 #include "Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-class BfmeAgentBH;
+
 
 // Retail ILT 0x000044C1 (targets/game/reverse/functions.csv, gen-thunk row
 // ?j_000044c1@@YAXXZ) is a 5-byte `jmp 0x6b2080`, i.e. RVA 0x002B2080, which

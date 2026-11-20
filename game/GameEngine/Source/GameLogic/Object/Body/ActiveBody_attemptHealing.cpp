@@ -9,7 +9,7 @@
 // The linked-body local preserves the retail virtual-call receiver lifetime.
 // cl: /DNDEBUG /MD /EHsc
 class DamageInfo { public: char prefix[0x10]; int damageType; char gap14[0x3c]; float actual,clipped; };
-class Object; class FXList;
+ class FXList;
 enum KindOfType { KINDOF_HEALING_149=149,KINDOF_HEALING_22=22,KINDOF_HEALING_24=24,KINDOF_HEALING_7=7 };
 #define THING_TU_MEMBERS \
 public: bool isKindOf(KindOfType) const;

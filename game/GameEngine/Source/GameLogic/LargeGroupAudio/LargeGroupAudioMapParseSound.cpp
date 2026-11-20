@@ -7,7 +7,7 @@
 #include <vector>
 
 class LargeGroupAudioMap;
-class SoundKeyPair;
+
 
 class SoundKeyPair
 {

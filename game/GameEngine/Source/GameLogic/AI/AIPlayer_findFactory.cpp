@@ -21,7 +21,7 @@
 // so the call names it through a member pointer.
 extern void j_000022bb(void);
 
-class ThingTemplate;
+
 class Object;
 class Player;
 class ProductionUpdateInterface;

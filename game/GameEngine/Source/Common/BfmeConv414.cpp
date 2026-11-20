@@ -4,7 +4,7 @@
 // and 0x307CE -> 0x61B100. The imported vector move is MSVCR71 memmove.
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
-class BfmeSubAQA;
+
 
 
 class BfmeOneAQA

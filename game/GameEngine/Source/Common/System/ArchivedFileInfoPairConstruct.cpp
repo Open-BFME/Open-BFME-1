@@ -4,7 +4,7 @@
 #include <utility>
 #include <memory>
 
-class AsciiString;
+
 
 #include "string_base.h"
 

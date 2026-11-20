@@ -47,7 +47,7 @@ public:
 
 
 class Object;
-class Player;
+
 
 struct TCreateUnitsInfo
 {

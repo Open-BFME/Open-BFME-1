@@ -29,7 +29,7 @@ enum WeaponStatus
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
 class Object;
-class AIUpdateInterface;
+
 
 #define THING_TU_MEMBERS \
 public: Real bfmeRelativeAngleTo(const Coord3D *position) const;

@@ -30,7 +30,7 @@ extern const Real g_rva01075350;
 extern const Real g_bfmeDefaultBU;
 extern const float g_rva0107533C;
 
-class Pathfinder;
+
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
