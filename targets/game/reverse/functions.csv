@@ -38290,7 +38290,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00c20b7b@@YAXXZ,,0x00C20B7B,22,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01020b7b
 ?d_00c22158@@YAXXZ,,0x00C22158,17,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01022158
 ?d_00c22240@@YAXXZ,,0x00C22240,25,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01022240
-?d_00c23289@@YAXXZ,,0x00C23289,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01023289
 ?d_00c23357@@YAXXZ,,0x00C23357,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01023357
 ?d_00c233c3@@YAXXZ,,0x00C233C3,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@010233c3
 ?d_00c25300@@YAXXZ,,0x00C25300,25,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01025300
@@ -173474,3 +173473,4 @@ _DXTraceA@20,,0x00AFD388,374,game/Libraries/Source/DirectX/dxtracea.cpp,matched,
 ?dup_00C23208@@YAXXZ,,0x00C23208,39,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10559;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C2325B@@YAXXZ,,0x00C2325B,22,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10564;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C23271@@YAXXZ,,0x00C23271,24,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10565;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
+?dup_00C23289@@YAXXZ,,0x00C23289,24,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10566;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
