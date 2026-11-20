@@ -34,7 +34,7 @@
 // and Rva89A110DeletingDestructorThunk.cpp. Only the shape and the two calls are
 // claimed.
 
-struct _EXCEPTION_POINTERS;
+
 
 // Unknown identity; named for its address.  Rva00899F00Base ctor at 0x00899F00,
 // subobject size 0x20 (vptr + 0x1C).  Local ABI-slice replica, same as the

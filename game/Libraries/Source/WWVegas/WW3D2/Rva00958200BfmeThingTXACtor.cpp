@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00958200: BFME's TXA AVI-stream constructor.
 
-typedef unsigned char BYTE;
+
 #include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/WORD.h"
 #include "../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
 typedef int LONG;
-typedef unsigned int UINT;
+
 
 struct IAVIFile;
 struct IAVIStream;
@@ -92,7 +92,7 @@ extern "C" int __stdcall AVIFileReadData(PAVISTREAM stream, unsigned long positi
 void __stdcall bfmeReleaseATXA(void *stream);
 void __stdcall bfmeReleaseBTXA(void *file);
 void *operator new[](unsigned int size);
-extern "C" long __ftol2(double value);
+
 
 class BfmeThingTXA
 {

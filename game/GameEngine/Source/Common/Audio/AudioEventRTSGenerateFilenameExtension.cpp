@@ -4,7 +4,7 @@
 // Empty string, then for every AudioType except AT_Music set "." and concat
 // AudioSettings::m_soundsExtension at +0x14 via TheAudio vslot 0x120.
 
-typedef int Int;
+
 
 #include "../../../Include/Common/Enums/AudioType.h"
 

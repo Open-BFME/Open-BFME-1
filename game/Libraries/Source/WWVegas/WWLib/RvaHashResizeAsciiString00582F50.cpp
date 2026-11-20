@@ -6,7 +6,7 @@
 
 #include "string_base.h"
 
-typedef int Int;
+
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);

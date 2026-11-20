@@ -22,7 +22,7 @@
 // changing the shared ABI.
 
 typedef unsigned long D3DCOLOR;
-typedef long HRESULT;
+
 
 enum {
 	D3DFMT_D15S1 = 0x49,

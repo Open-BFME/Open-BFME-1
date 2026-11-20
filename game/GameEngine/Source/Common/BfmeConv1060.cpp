@@ -10,7 +10,7 @@ struct BfmeP1060
 extern class AptPalantir *TheAptPalantir;
 extern const char g_rva01080FC0[2];
 
-class BfmeX1060;
+
 
 // The global at 0x012B7D80 is EA's `int g_aptPalantirWindow` (defined once in
 // game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/AptPalantir.cpp). This
@@ -18,7 +18,7 @@ class BfmeX1060;
 // the int is cast at the use and the pushed bytes stay identical.
 extern int g_aptPalantirWindow;
 
-class BfmeR1060;
+
 
 // Retail 0x012F19E8 is the game-wide manager pointer EA defines as
 // `WindowManager *g_rva012F19E8WindowManager` in

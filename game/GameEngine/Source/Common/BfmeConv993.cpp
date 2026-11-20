@@ -109,8 +109,8 @@ extern void j_00015235();
 // Both calls take their object through ECX only, so both go through a
 // pointer-to-member taken out of a union; the tree's other matched bodies use
 // the same pattern for retail thunks.
-class BfmeAskB993;
-class BfmeLog993;
+
+
 
 // VC7.1 has no __thiscall function-pointer type, so each call is spelled as a
 // pointer-to-member taken out of a union; the tree's other matched bodies use

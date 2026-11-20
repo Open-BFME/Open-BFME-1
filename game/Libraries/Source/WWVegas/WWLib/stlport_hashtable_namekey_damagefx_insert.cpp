@@ -19,7 +19,7 @@
 // There is no unwind frame, so this translation unit is built without
 // exceptions and STLport's try around the construct is gone.
 
-typedef int Int;
+
 
 #include "../../../../GameEngine/Include/Common/NameKeyType.h"
 

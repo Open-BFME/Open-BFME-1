@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-class BfmeX1085;
+
 
 // retail ILT 0x0002144A -> 0x00467460 and ILT 0x00012733 -> 0x00465C50 are
 // the matched WindowManager::hideAptWindow and showAptWindow rows

@@ -21,7 +21,7 @@
 // of the temporary's address into the now-dead first parameter slot -- four
 // bytes -- does not appear.
 
-class BfmeStringBaseChar;
+
 
 template <class T>
 class StringBase

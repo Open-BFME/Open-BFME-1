@@ -5,8 +5,8 @@
 
 #include "string_base.h"
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)

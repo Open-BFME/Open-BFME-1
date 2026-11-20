@@ -14,7 +14,7 @@
 #include "../../Include/Common/ScalarTypes.h"
 
 
-class Object;
+
 
 class Overridable
 {

@@ -66,7 +66,7 @@ class BfmeHandleCX
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *, int, int);
 void *PeekHashMapValue008FF850(int);
 bool Render_Obj_Exists(const char *);
-void bfmeRegisterCX(const char *, int, int);
+
 void bfmeRegisterCY(const char *, int, int);
 class ShaderClass
 {

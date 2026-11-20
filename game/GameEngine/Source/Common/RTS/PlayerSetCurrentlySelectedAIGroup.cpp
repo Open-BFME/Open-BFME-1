@@ -13,8 +13,8 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef int Int;
-typedef unsigned char Bool;
+
+
 
 #include "../../../Include/Common/ObjectID.h"
 

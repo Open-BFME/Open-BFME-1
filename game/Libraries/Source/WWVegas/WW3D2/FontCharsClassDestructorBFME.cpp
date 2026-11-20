@@ -54,7 +54,7 @@ typedef _STL::pair<const int, Gen_t_0093fa90_p4pod> FontCharsTree00940010Pair;
 typedef _STL::_Rb_tree<int, FontCharsTree00940010Pair, _STL::_Select1st<FontCharsTree00940010Pair>,
 	_STL::less<int>, _STL::allocator<FontCharsTree00940010Pair> > FontCharsTree00940010;
 
-struct FontCharsClassCharDataStruct;
+
 class FontCharsBuffer;
 
 // A BufferList entry as this body reads it: the array at +0 is deleted with

@@ -24,7 +24,7 @@
 // the value construction: _Construct is a call here, so it is declared and left
 // undefined rather than written as placement new.
 
-typedef int Int;
+
 
 struct BfmeRbTreeInsertAnchorHelper;
 

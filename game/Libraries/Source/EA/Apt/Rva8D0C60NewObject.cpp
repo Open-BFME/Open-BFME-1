@@ -92,7 +92,7 @@ public:
 };
 
 struct Rva8D0D80Context { void *m_zero; void *m_owner; void *m_scope; };
-extern char g_rva8D0D80CreateTag;
+
 // 0x013379BC is the fallback value database pointer, defined as AptValue *
 // by Bfme5AppendFallback8CAFF0.cpp (?g_bfmeFallbackDB@@3PAVAptValue@@A).
 class AptValue;

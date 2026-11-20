@@ -50,9 +50,9 @@ public:
 	unsigned char m_bfmePad[7];
 };
 
-extern bool BfmeDynamicSortingVertexArrayInUse;
-extern unsigned short BfmeDynamicSortingVertexArrayOffset;
-extern unsigned short BfmeDynamicSortingVertexArraySize;
+
+
+
 extern SortingVertexBufferClass *BfmeDynamicSortingVertexArray;
 
 extern bool BfmeDynamicDX8VertexBufferInUse[];

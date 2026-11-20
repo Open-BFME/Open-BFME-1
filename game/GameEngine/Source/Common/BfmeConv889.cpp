@@ -17,7 +17,7 @@ struct BfmeThingEZA
 	BfmeNodeEZA *m_bfmeList;
 };
 
-extern "C" const float bfmeKEZC;
+
 
 struct BfmeResEZC
 {

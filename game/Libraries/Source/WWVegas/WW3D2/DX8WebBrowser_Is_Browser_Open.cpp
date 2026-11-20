@@ -2,7 +2,7 @@
 
 struct _GUID { unsigned char bytes[16]; };
 typedef _GUID GUID;
-struct IUnknown;
+
 
 extern void __stdcall _com_issue_error(long error);
 

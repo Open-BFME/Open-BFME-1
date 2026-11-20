@@ -115,7 +115,7 @@ struct Rva006A7AD0Node
 
 extern void j_0000691a(void);
 extern void j_00027e03(void);
-extern void j_00041669(void);
+
 
 class AudioEventInfoMap : public Rva006A7AD0Map
 {

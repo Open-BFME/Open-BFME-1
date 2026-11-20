@@ -11,7 +11,7 @@
 
 class LargeGroupAudioMap;
 
-extern void j_0000d0b7(void);
+
 extern void j_00023a74(void);
 
 class AsciiString;

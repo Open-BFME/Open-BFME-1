@@ -142,7 +142,7 @@ private:
 	int HasTexture;
 };
 
-class IDirect3DSurface9;
+
 class D3DDeviceInterface;
 
 typedef long (__stdcall *UpdateSurfaceProc)(

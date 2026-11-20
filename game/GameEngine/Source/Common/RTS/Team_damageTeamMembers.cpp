@@ -199,8 +199,8 @@ Bool Team::damageTeamMembers(Real amount)
 	return false;
 }
 
-extern void j_00001140();
-extern void j_0002c9d5();
+
+
 
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@@Z=?j_00001140@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0BFMEDamageInfo@@QAE@XZ=?j_0002c9d5@@YAXXZ")

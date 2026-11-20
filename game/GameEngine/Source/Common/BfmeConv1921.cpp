@@ -85,7 +85,7 @@ public:
 };
 
 extern float g_bfmeDefaultBU;
-extern float g_bfmeUint32Scale;
+
 extern const float g_rva01075350;
 
 bool BfmeSubBX::bfmeQueryBX(int *first, int *second)

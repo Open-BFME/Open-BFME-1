@@ -18,7 +18,7 @@
 // There is no unwind frame, so this translation unit is built without
 // exceptions and STLport's try around the construct is gone.
 
-typedef int Int;
+
 
 // Retail ILT 0x0000266C -> resize at 0x0048A970 uses ECX and RET4.
 extern "C" void __cdecl __identifier("?j_0000266c@@YAXXZ")();
