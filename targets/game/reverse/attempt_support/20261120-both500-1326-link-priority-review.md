@@ -1,0 +1,133 @@
+# Link priority and evidence boundary
+
+{
+  "project": "bfme1",
+  "source_base": "fc05a78570a8969aec5f5e6efc046a43d881e21a",
+  "pinned_reference": "147fd3e52b36ee0306aaeef5b316beb09f7c7671",
+  "upstream_primary_link": {
+    "commit": "2567a2141382e54ca4c8897252962803040ee2d4",
+    "run_id": "44733363828",
+    "when": "2026-11-20 12:32 UTC",
+    "build": "success",
+    "refusal": null,
+    "authoritative": true,
+    "link_seconds_with_proofs": 246,
+    "linker_exit": 0,
+    "image_written": true,
+    "unresolved": 0,
+    "duplicates": 0,
+    "objects": 17499,
+    "initializers_bridged": 468,
+    "vtables_bridged": 3044,
+    "vtable_slots_bridged": 45180,
+    "omitted_funclets": []
+  },
+  "bounded_image_analysis": {
+    "schema_version": 1,
+    "complete": false,
+    "g2_pass": false,
+    "counts": {
+      "pointers_equal": 9471,
+      "wrong_pointers": 2,
+      "pointers_unchecked": 8898,
+      "globals_compared": 6291,
+      "globals_extent_unanalyzed": 41,
+      "globals_retail_extent_unanalyzed": 620,
+      "vtable_slots_equal": 32575,
+      "vtable_slots_wrong": 21,
+      "vtable_slots_unanalyzed": 2726,
+      "no_object_retail_nonzero": 31,
+      "storage_undersized": 6,
+      "storage_split": 0,
+      "storage_unanalyzed": 88,
+      "initializers_unanalyzed": 487,
+      "ambiguous_map_locations": 21034,
+      "proven_exact_byte_fold_groups": 6,
+      "global_ledger_entries": 7039,
+      "import_ledger_entries": 742,
+      "import_unanalyzed": 742,
+      "string_ledger_entries": 17557,
+      "pooled_constant_rows_compared": 22808,
+      "mapping_ambiguous": 831,
+      "float_ledger_entries": 662,
+      "vtable_ledger_entries": 3843,
+      "vtable_slots_expected": 35322,
+      "string_compared": 17547,
+      "vtable_slot": 21,
+      "wstring_ledger_entries": 4566,
+      "wstring_compared": 4565,
+      "float_compared": 653,
+      "static_data_placed": 2782,
+      "untyped_pointer_candidates": 455,
+      "pointers_ledger_literal_aliases": 994,
+      "pointers_end_unchecked": 60,
+      "vtable_short": 1,
+      "global_pointer": 2,
+      "pointers_literal_aliases": 5,
+      "rtti_ledger_entries": 10,
+      "rtti_unanalyzed": 10,
+      "string_contents": 1,
+      "split_storage_rows": 19,
+      "absent_zero_globals_unanalyzed": 44,
+      "global_unanalyzed": 748,
+      "string_unanalyzed": 10,
+      "wstring_unanalyzed": 1,
+      "float_unanalyzed": 9,
+      "initializers_retail": 1166,
+      "initializers_image": 1613,
+      "initializers_missing_or_unresolved": 40,
+      "initializer_order": 1,
+      "initializers_runtime_execution_unanalyzed": 1166,
+      "initializers_slotless": 434,
+      "initializers_unmatched_in_slotted_unit": 53,
+      "initializers_slotless_units": 335,
+      "initializer_bridge_public_symbols_seen": 0,
+      "initializer_bridge_entries_unanalyzed": 1166,
+      "storage_initializers_considered": 1166,
+      "storage_member_calls_with_access": 366,
+      "storage_member_calls_unanalyzed": 0,
+      "storage_objects_with_proven_access": 265,
+      "storage_globals_without_proven_access": 6774,
+      "storage_accesses_proven": 366,
+      "out_of_object_pointer": 1,
+      "unrelocated_retail_address": 2
+    },
+    "limitations": [
+      "Static tables do not prove initializer execution.",
+      "Retail data extents and vtable runs are ledger-bounded, not recovered layouts.",
+      "Unknown pointer correspondence fails analysis; no shape-only alias credit.",
+      "Unmapped MAP string literals receive pooled-value credit only against ledger-typed retail strings, with both full terminated values bounded by their own extents.",
+      "Global pointer fields require PE HIGHLOW or winning COFF DIR32 evidence; untyped candidates stay unchecked and unmasked.",
+      "Vtable slot equality requires complete table and target-code extents; equal length alone earns no credit.",
+      "Storage scan proves only straight-line ECX stores before first control transfer.",
+      "No reachability census, indirect calls, inherited constructors or shared-field ownership proof."
+    ],
+    "analysis_scope": "bounded image comparison",
+    "map_symbols": 226472
+  },
+  "game_queue_receipt_retrieved": false,
+  "bfme2_current_link_priority_input_review": {
+    "source_base": "28038b2bedd59b218e511e6c30a962380bdf36cd",
+    "selected_queue": "Rva0033FF2B table at0x00810DE8;17 missing-source slots",
+    "reviewed_input_sha256": {
+      "Code/GameEngine/Source/Common/Rva0033FF2BDtor.cpp": "5f2319e101e5980f9c3717eb3fae2da6218b03dc185be36589e9c7facef9bc61",
+      "Code/GameEngine/Include/GameLogic/AIInternalMoveToState.h": "fa2ec45c9155ea6b6c9375307b661857b878574ee507380a7fd2da2ae2401f9f",
+      "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateOnExit_AIInternalMoveToState.cpp": "fd104201f292f1898120a50d48df096b21fb4288f4ffc976e5f075902e984740",
+      "tools/rename.py": "a1f00ee7403bc8680167a71d2e1157f3de52dcd1247c4c94e0e6ea93b817e892"
+    },
+    "prior_native_refusal": "??1Rva00340D1F@@UAE@XZ\t0x00340D1F\t75\tblocked\tvtable bridge fold Rva00340D1F into AIFollowPathAsTeamState (0x008121E8; also Rva00345CAB/AIAttackMoveToState 0x00813548, Rva00345F21/AIAttackFollowWaypointPathState 0x00813638), LINK-618: the destructors chain to ??1Rva0033FF2B 0x0033FF2B, AIInternalMoveToState's destructor; rename.py class --fold Rva0033FF2B --into AIInternalMoveToState refuses (registered class: Rva0033FF2BDtor.cpp, Rva00340461Xfer.cpp, Rva00340BDCDtor.cpp must come --prepared on its header), and that header needs LINK-513's GetSnapshotName 0x0033F2F7 and _bfme_state_slot7 0x0033F2D7 moved first; rename.py function --to-class for 0x0033F2F7 refuses while installer AIInternalMoveToStateOnExit_AIInternalMoveToState.cpp keeps a private view (slot 2 __purecall). t=30 model=claude-opus-5-5",
+    "observed_current_prerequisite": "The constructor/onExit installer still declares its own AIInternalMoveToState class rather than including the complete canonical class; the canonical header also declares GetSnapshotName and _bfme_state_slot7. The recorded class-fold preparation dependency is not retired by the new unrelated rename.py multi-alias/same-body enhancements.",
+    "new_fold_trial": false,
+    "body_or_table_edit": false,
+    "task_credit": 0,
+    "conclusion": "Reuse the recorded preparation blocker; no slot/table coverage deletion or speculative header/class adoption"
+  }
+}
+
+BFME1 still serves AICommandInterface::aiMoveToPosition at the unchanged4da772231e census. The pinned147fd donor and previously reviewed EH/COMDAT-selection evidence are unchanged, so the supported prior provider/consumer review is reused without repeating rejected codegen experiments. BFME2 current link picker serves the Rva0033FF2B table bridge with17 missing-source slots; no supported complete-class/slot repair is inferred from forward-declaration cleanup. No slot or table coverage row is removed.
+
+Upstream primary run44733363828 at2567a2141382e54ca4c8897252962803040ee2d4 reports linker exit0, image_written=True, unresolved=0, duplicates=0. Remaining bridges: initializers=468, vtables=3044, slots=45180. This is upstream evidence and is not a link measurement of the new source-cleanup commits.
+
+The bounded static image comparison is incomplete and G2 fails. Its counts and limitations are preserved above. These static findings are not proof of an executed crash path. No srv1 runtime receipt is available in this environment, and no game boot, menu, skirmish or save/load result is claimed. No restricted workflow was started.
+
+The PC remains switched on as requested; this session issues no shutdown command.
