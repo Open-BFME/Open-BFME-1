@@ -17,7 +17,7 @@ struct Coord3D{Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){}float 
 enum KindOfType{INFANTRY=8, BFME108=108,BFME115=115,BFME124=124};
 extern void j_00021017();
 extern void j_0002760b();
-class Object; class AIUpdateInterface;
+ class AIUpdateInterface;
 class BfmeSub1CC_EC3 {
 public: // Called through existing ILT 0x000230AB; receiver is Object AI+0x1CC.
 float effectiveMaxSpeed(void *); bool isMovingBackwards()const{return (flags>>7)&1;}

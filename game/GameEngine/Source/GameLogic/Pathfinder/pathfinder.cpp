@@ -15,7 +15,7 @@ typedef unsigned char Bool;
 
 
 class Object;
-class Pathfinder;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

@@ -115,7 +115,7 @@ public:
 
 class ThingTemplate;
 class Team;
-class Object;
+
 
 #include "../../../../Include/Common/BitFlags/BitFlags.h"
 

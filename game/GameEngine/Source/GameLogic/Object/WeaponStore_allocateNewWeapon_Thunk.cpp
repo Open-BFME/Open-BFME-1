@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: WeaponStore::allocateNewWeapon factory.
 
-class Weapon;
+
 class WeaponTemplate;
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 

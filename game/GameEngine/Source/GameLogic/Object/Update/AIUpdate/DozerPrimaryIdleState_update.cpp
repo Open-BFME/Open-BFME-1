@@ -22,9 +22,9 @@
 #include "Lib/Coord3D.h"
 
 class Object;
-class Player;
+
 class AIUpdateInterface002B9970;
-class DozerAIInterface002B9970;
+
 
 class StateMachine002B9970
 {

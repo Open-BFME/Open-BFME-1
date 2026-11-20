@@ -10,7 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
-class Object; class SpecialAbilityUpdate;
+ class SpecialAbilityUpdate;
 enum CommandSourceType { DummyCommand002AA9D0 }; enum SpecialPowerType { DummyPower002AA9D0 };
 class AICommandInterface {public:void aiIdle(CommandSourceType);};
 class AI002AA9D0 {public:

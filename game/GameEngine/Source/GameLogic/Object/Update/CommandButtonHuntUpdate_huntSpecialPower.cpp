@@ -21,7 +21,7 @@ enum SpecialPowerType
 };
 
 class Object;
-class SpecialAbilityUpdate;
+
 
 // Route class for the member-pointer call below: it only names a signature,
 // the call itself goes to the retail ILT thunk.

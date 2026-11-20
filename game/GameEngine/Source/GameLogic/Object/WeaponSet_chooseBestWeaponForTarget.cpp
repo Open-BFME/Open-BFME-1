@@ -31,10 +31,10 @@ enum KindOfType
 	KINDOF_NONE = 0
 };
 
-class Object;
-class WeaponTemplate;
+
+
 class AIUpdateInterface;
-class WeaponSet;
+
 
 struct Coord3D
 {

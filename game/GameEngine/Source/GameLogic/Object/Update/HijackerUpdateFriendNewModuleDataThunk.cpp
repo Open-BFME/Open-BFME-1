@@ -4,7 +4,7 @@
 // word. The offsets were derived from this class's declaration sequence and
 // type sizes, never read out of the old placeholder names.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

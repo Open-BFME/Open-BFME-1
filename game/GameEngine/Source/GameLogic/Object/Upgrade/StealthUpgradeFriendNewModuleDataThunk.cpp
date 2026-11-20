@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

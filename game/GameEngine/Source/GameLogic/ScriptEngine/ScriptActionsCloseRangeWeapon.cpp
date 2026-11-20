@@ -17,7 +17,7 @@
 
 class Object;
 class Module;
-class Team;
+
 
 // Both lookups take the name by value through this wrapper.
 class BfmeAsciiStringArg
