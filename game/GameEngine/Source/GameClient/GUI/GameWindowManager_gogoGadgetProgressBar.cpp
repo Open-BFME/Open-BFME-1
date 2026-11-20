@@ -21,7 +21,7 @@
 // source tree also retains the larger upstream declaration, but this body is
 // the three-argument vslot-21 entry selected by the BFME gadget path.
 
-class GameWindow;
+
 class GameFont;
 
 class WinInstanceData

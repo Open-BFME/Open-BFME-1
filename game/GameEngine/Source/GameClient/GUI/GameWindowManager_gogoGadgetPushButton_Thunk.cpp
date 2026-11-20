@@ -5,7 +5,7 @@
 // larger Zero Hour spelling, but retail ends with ret 0xc and uses the
 // vslot-25 look arguments at stack offsets for this three-argument method.
 
-class GameWindow;
+
 class GameFont;
 
 template <typename T> class StringBase

@@ -36,7 +36,7 @@ public:
 	void __cdecl format( AsciiString format, ... );
 };
 
-class BfmeAptScreenSkirmish;
+
 
 struct LevelBarTextTarget
 {

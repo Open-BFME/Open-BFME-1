@@ -2,7 +2,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 class AsciiString;
-class S4Sub004135C0;
+
 
 class S4Sub004135C0
 {

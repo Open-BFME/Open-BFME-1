@@ -1,4 +1,4 @@
-struct RvaC4390First;
+
 struct RvaC4390Second;
 
 struct RvaC4390Interface

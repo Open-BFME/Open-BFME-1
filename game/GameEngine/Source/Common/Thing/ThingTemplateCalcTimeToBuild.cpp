@@ -11,7 +11,7 @@
 // existing address-derived names: their complete semantic identities are unknown.
 #include "PreRTS.h"
 #include <vector>
-class Player; class ThingTemplate;
+ class ThingTemplate;
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 class Overridable {
 public:

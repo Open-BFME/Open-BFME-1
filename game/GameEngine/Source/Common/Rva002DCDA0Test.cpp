@@ -7,8 +7,8 @@ public:
 };
 
 class Object;
-class Weapon;
-class BfmeX1004;
+
+
 class BfmeItemMD;
 class BfmeX1004
 {

@@ -20,7 +20,7 @@
 
 enum { MAX_COMMANDS_PER_SET = 20 };
 
-class Object;
+
 class CommandButton;
 
 template <class Type>

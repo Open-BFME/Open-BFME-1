@@ -23,7 +23,7 @@ class ThingTemplate : public Overridable
 {
 };
 
-class Object;
+
 
 class BfmeObjectVirtualTail
 {

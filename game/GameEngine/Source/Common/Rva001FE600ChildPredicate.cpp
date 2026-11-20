@@ -8,7 +8,7 @@ public:
 	bool hasNoBlockingChild();
 };
 
-struct Rva001FE600Child;
+
 
 struct Rva001FE600Child
 {

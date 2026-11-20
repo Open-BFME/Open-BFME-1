@@ -31,7 +31,7 @@ struct Rva21ABF0List
 	}
 };
 
-class Rva21ABF0Worker;
+
 
 
 

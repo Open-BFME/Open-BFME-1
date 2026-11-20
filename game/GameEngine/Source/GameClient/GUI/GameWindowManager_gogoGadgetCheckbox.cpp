@@ -5,7 +5,7 @@
 // sets style bit 4, and the push-button sibling has the same three-argument
 // ABI and owner, look, and label sequence.
 
-class GameWindow;
+
 class GameFont;
 
 template <typename T> class StringBase

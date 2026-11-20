@@ -2,7 +2,7 @@
 
 #include "Common/INIException.h"
 
-class ThingTemplate;
+
 class Rva001354D0ModuleDataView;
 
 struct Rva001354D0StringView

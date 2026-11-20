@@ -129,7 +129,7 @@ public:
 
 
 class Drawable;
-class Object;
+
 
 class ObjectDrawInterface
 {

@@ -19,7 +19,7 @@ template <typename T> struct StringData
 	T m_text[ 1 ];
 };
 
-class UnicodeString;
+
 class AsciiString;
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"

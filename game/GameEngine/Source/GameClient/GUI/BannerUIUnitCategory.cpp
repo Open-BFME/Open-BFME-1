@@ -18,7 +18,7 @@
 #include "string_base.h"
 #include "ascii_string.h"
 
-class INI;
+
 
 #include "../../../Include/Common/FieldParse.h"
 

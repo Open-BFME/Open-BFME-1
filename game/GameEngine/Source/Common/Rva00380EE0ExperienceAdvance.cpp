@@ -19,7 +19,7 @@
 
 
 class ExperienceLevelCollection;
-class ExperienceLevel;
+
 
 class ExperienceTracker
 {

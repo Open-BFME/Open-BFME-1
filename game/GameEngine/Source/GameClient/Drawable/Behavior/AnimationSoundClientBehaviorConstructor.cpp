@@ -73,7 +73,7 @@ public:
 };
 
 struct Rva004091C0Node;
-class AnimationSoundClientBehavior;
+
 
 // ILT 0x0001B7A7 reaches the pinned registry insert at 0x004091C0.
 class Rva004091C0Registry

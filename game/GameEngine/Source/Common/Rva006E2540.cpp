@@ -193,7 +193,7 @@ public:
     virtual void slot228(int);
 };
 extern Display006E2540 *g_012F7FE0;
-class FXList;
+
 class Matrix3D;
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 class FXList { public: static void doFXPos(const FXList *,const Coord3D *,const Matrix3D *,float,const Coord3D *); };

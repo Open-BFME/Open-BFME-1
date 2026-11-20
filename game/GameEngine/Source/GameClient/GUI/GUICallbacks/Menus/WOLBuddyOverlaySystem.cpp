@@ -45,7 +45,7 @@ enum
 
 
 
-class GameWindow;
+
 class WindowLayout;
 class UnicodeString;
 class AsciiString;

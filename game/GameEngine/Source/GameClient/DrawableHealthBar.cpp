@@ -17,7 +17,7 @@ enum KindOfType
 };
 
 class Drawable;
-class Object;
+
 
 struct BfmeBody
 {

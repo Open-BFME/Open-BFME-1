@@ -6,7 +6,7 @@
 // ordinary two-vptr-store shape of a constructor with a polymorphic base. The
 // flag at +0x0C is written as a byte, so it is a bool.
 
-class BfmeLinkedSingleton;
+
 
 // Retail 0x012F3350: use the existing data owner; retain the local pointee view.
 extern class Gen_004902A0 *g_bfmeHeadCA;			// 0x012F3350

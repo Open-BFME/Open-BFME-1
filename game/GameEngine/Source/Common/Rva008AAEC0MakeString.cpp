@@ -14,9 +14,9 @@ struct AptStringPool
 	void (__cdecl *m_free)(void *);
 };
 
-class Rva008A9B00;
 
-struct AptValueRegistry;
+
+
 
 // The shared empty EA string block at 0x012D5298 is defined once, with its
 // proven type, in game/GameEngine/Source/Common/Data/Rva012D5298.cpp.  It is

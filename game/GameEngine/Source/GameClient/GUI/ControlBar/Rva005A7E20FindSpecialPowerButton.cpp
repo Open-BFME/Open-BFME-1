@@ -2,9 +2,9 @@
 
 class AsciiString;
 class Object;
-class CommandSet;
+
 class CommandButton;
-class ControlBar;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable

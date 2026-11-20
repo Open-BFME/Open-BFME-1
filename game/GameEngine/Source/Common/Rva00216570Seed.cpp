@@ -47,7 +47,7 @@ public:
 	virtual void takeAt8C(void *item);
 };
 
-class Rva00216570;
+
 
 // ILT 0x00036714 -> 0x00216170, matched as
 // ?invoke@Rva00216170Caller@@QAEXPAVFlagPairTarget@@@Z (FlagPairThenDirectCallers.cpp)

@@ -10,7 +10,7 @@ extern "C" int strcmp(const char *left, const char *right);
 
 
 
-class GameWindow;
+
 extern void j_000336ae();
 extern void j_00016239();
 class BfmeObjENK;

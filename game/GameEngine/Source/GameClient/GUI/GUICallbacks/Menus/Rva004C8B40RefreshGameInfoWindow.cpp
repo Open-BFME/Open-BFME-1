@@ -69,7 +69,7 @@ public:
     int winBringToTop();
 };
 
-class GameInfo;
+
 class GameSlot
 {
 public:

@@ -17,7 +17,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 
-class Drawable;
+
 
 class BuffManager
 {

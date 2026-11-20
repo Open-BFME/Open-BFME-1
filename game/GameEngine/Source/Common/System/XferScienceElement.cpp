@@ -61,7 +61,7 @@ extern ScienceStore *TheScienceStore;
 
 // Retail 0x009D6220 uses the canonical cdecl formatter ABI.
 // Inline construction preserves the native exception type and throw graph.
-class XferException;
+
 
 class XferException
 {

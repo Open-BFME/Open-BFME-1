@@ -18,7 +18,7 @@
 
 
 class WindowLayout;
-class GameWindow;
+
 class GameSpyStagingRoom;
 class AsciiString;
 class UnicodeString;

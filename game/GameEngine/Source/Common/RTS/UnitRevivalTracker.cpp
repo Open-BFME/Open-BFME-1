@@ -65,8 +65,8 @@ struct Rva000F9FF0Block14
 	int m_f28;
 };
 
-class Rva000FB210Element;
-class Object;
+
+
 class ThingTemplate;
 
 extern void j_00004345();

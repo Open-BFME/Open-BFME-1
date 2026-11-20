@@ -9,7 +9,7 @@
 // RefCountClass counter at +4 and Delete_This at primary slot 0.
 
 class MaterialInfoClass;
-class MeshModelClass;
+
 
 class RefCountClass {
 public:

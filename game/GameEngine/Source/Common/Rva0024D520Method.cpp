@@ -51,7 +51,7 @@ public:
 	int get();
 };
 
-class Locomotor;
+
 
 class Object
 {

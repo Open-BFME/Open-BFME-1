@@ -51,7 +51,7 @@ public:
 	const BfmeAsciiStringData *m_data;
 };
 
-class TerrainLogic;
+
 
 class BfmeWaypointNameString
 {

@@ -29,9 +29,9 @@
 //     findContainedObject(window), then draw using slot 0x30's return as the
 //     percent over the contained object's own +0x74 field.
 
-class GameWindow;
+
 class Object;
-class ThingTemplate;
+
 
 class GameWindow
 {

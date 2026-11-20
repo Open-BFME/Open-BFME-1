@@ -59,7 +59,7 @@ extern void j_0000bc49();
 extern void j_0003e545();
 extern void j_00005669();
 
-class GameWindow;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h
 class GameWindow

@@ -7,7 +7,7 @@
 #include "../../Include/Common/ScalarTypes.h"
 
 
-class BfmeSeedTarget;
+
 class Rva00286C40Self;
 
 // The inherited accept this body calls is retail's shared flag-pair dispatcher

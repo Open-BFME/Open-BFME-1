@@ -18,9 +18,9 @@ extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_WriteBarrier)
 #pragma intrinsic(_ReadWriteBarrier)
 
-class Rva00417060Query;
-class Rva00417060Entry;
-class Rva00417060Parent;
+
+
+
 
 class Overridable
 {

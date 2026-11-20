@@ -27,7 +27,7 @@ public:
 	unsigned int m_kind;
 };
 
-class Rva006AE150Owner;
+
 
 class Rva006AE150Entry
 {

@@ -103,7 +103,7 @@ public:
 // Retail 0x012F7194: use the existing data owner; retain the local pointee view.
 extern class GameSpyInfoInterface *TheGameSpyInfo;
 
-class GameSpyStagingRoom;
+
 
 // The BFME +0x418 staging-room wide-string accessor (matched
 // OnlineCustomMatchRva0053E870.cpp spelling; ILT 0x0002C7B4).
