@@ -27,7 +27,7 @@ enum ModelConditionFlagType
 };
 
 class SpecialPowerTemplate;
-class ModuleData;
+
 
 // The target calls the ninth slot of the ModuleInterface subobject at +0x20.
 // Keep all preceding slots so the indirect call is a real interface dispatch.

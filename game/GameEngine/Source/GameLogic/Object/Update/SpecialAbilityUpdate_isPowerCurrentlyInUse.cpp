@@ -49,10 +49,10 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-class Thing;
-class ModuleData;
+
+
 class Object;
-class Coord3D;
+
 class CommandButton;
 class SpecialPowerTemplate;
 

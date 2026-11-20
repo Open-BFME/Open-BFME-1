@@ -67,7 +67,7 @@ template<> __declspec(dllimport) inline bool StringBase<unsigned short>::isEmpty
 struct _iobuf;
 typedef struct _iobuf FILE;
 
-extern "C" int __cdecl fprintf(FILE *stream, const char *format, ...);
+
 
 // BFME's logic random log file (data ledger 0x00DFEFF0).
 extern "C" FILE *theLogicRandomLogFile;
@@ -76,7 +76,7 @@ extern "C" FILE *theLogicRandomLogFile;
 // This command body does not reference them; do not emit another definition.
 
 // Logic random log switch (data ledger 0x00A03745).
-extern unsigned char g_00E03745;
+
 
 #include "Lib/Coord2D.h"
 
@@ -391,11 +391,11 @@ class DamageInfo;
 struct Rva00264D81Arg;
 class PolygonTrigger;
 class CommandButton;
-class Rva00263404Source;
-class PathfindServicesInterface;
+
+
 class UnicodeString;
 class PooledString;
-struct XferUnknown11;
+
 class Coord3DBase;
 class ICoord3D;
 class Region3D;
@@ -1735,7 +1735,7 @@ public:
 };
 
 // LOGICFRAMES_PER_SECOND.
-extern int BfmeLogicFramesPerSecond;
+
 
 static const Real CONSTRUCTION_COMPLETE = -1.0f;
 

@@ -1,8 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: SiegeDeploySpecialPower dtor.
 
-class Thing;
-class ModuleData;
+
+
 class Object;
 class MemoryPool
 {

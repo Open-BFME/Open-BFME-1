@@ -11,7 +11,7 @@
 //
 // Layout: the owning Object at +0x08 (UpdateModule).
 
-typedef int Int;
+
 
 #include "../../ScriptEngine/game_logic_dispatch.h"
 

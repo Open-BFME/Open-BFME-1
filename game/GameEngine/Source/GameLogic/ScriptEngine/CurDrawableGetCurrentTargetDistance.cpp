@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-typedef float Real;
+
 
 struct lua_State;
 

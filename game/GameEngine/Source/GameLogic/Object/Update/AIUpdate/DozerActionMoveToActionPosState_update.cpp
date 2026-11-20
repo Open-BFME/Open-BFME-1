@@ -4,7 +4,7 @@
 typedef unsigned char Bool;
 #include "../../../../../Include/Common/ScalarTypes/Real.h"
 typedef int ObjectID;
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../../../Include/Common/Enums/StateReturnType.h"
 

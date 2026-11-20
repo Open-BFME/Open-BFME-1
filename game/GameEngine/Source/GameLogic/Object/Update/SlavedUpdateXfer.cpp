@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef float Real;
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

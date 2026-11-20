@@ -11,7 +11,7 @@
 
 
 class Thing;
-class ModuleData;
+
 class Team;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h

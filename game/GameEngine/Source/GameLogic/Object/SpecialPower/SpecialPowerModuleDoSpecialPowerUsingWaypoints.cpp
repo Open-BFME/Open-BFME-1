@@ -23,7 +23,7 @@
 
 class Object;
 class Coord3D;
-class Waypoint;
+
 
 class SpecialPowerModule
 {

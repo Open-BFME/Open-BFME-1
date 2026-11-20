@@ -44,7 +44,7 @@ extern AudioManager* TheAudio;
 namespace _STL { template<> _List_base<Drawable*,allocator<Drawable*> >::~_List_base(); }
 class GameMessage { public: enum Type { DummyMessage002A8940 }; };
 class PickAndPlayInfo;
-void pickAndPlayUnitVoiceResponse(const _STL::list<Drawable*>*,GameMessage::Type,PickAndPlayInfo*);
+
 
 enum KindOfType { DummyKind002A8CE0 };
 enum NameKeyType { NAMEKEY_NONE };

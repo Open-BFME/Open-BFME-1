@@ -56,7 +56,7 @@ private:
 };
 
 extern void j_0002852e();
-extern void j_00033870();
+
 extern void j_00037a56();
 extern void j_0003fa30();
 

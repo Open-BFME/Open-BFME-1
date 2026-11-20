@@ -10,7 +10,7 @@
 // it is read from the owning Object's own field at +0x7c. Address-derived
 // name: real identity unknown.
 
-class BfmeX1011;
+
 
 #include "../../../../Include/Common/Enums/DamageType.h"
 

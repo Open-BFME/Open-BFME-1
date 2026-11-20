@@ -37,7 +37,7 @@ extern void j_0000e6e7();	// ILT -> rva0036BB10FindCastleMemberBehavior
 class Object;
 class Player;
 class Module;
-class ModuleData;
+
 class Money;
 class ThingTemplate;
 

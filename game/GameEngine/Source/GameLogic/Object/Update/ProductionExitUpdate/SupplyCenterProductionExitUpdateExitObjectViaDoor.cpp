@@ -170,12 +170,12 @@ public:
     void aiFollowExitProductionPath(const std::vector<Coord3D> *path, Object *creationObject, CommandSourceType source);
 };
 
-extern void j_0000b81b();
-extern void j_00010a05();
-extern void j_00035f8f();
-extern void j_0003a1a7();
-extern void j_000399a5();
-extern void j_00070cc();
+
+
+
+
+
+
 
 typedef void (Rva002D2790Object::*SetPositionCall)(const Coord3D *position);
 typedef void (Rva002D2790Object::*SetOrientationCall)(Real angle);

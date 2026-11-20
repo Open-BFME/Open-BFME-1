@@ -13,7 +13,7 @@
 #include <bitset>
 #include <list>
 typedef unsigned char Bool;
-typedef unsigned int UnsignedInt;
+
 class ThingTemplate;
 class Object;
 class Team;

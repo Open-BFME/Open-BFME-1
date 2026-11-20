@@ -40,7 +40,7 @@ struct Rva002A23B0Record {
  bool operator<(const Rva002A23B0Record& v)const{return level<v.level;}
 };
 typedef _STL::set<Rva002A23B0Record> Records;
-extern void j_00022bba();
+
 // bfmeIsBlocked is retail's non-const row ?bfmeIsBlocked@FXList@@QAE_NXZ.
 class FXList { public: static void applyFX(FXList* fx,Object* obj){if (fx && !fx->bfmeIsBlocked()) fx->doFXObj(obj,0);} bool bfmeIsBlocked(); void doFXObj(const Object*,const Object*)const; };
 struct Rva002A30D0Data { char p00[12]; BfmeConditionFlags flags; char p34[0x84-0x34]; FXList* fx; FXList* fx88;FXList* fx8c;unsigned f90,f94,f98,f9c; Records levels; };

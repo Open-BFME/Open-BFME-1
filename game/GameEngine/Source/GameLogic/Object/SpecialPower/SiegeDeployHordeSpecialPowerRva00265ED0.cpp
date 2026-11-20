@@ -27,7 +27,7 @@
 
 
 
-class Thing;
+
 class ModuleData;
 class SpecialPowerTemplate;
 

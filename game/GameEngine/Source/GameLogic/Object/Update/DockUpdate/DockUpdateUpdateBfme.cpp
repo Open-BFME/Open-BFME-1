@@ -167,7 +167,7 @@ public:
 };
 
 extern void j_0000156e();
-extern void j_000022bb();
+
 extern void j_0000b95b();
 extern void j_0001f253();
 extern void j_00026f62();

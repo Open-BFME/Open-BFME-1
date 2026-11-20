@@ -160,7 +160,7 @@ public:
     char rva000000c0[0x204-0xc0];
     char *rva00000204;
 };
-extern const float g_bfmeK1266A;
+
 class Rva002B26C0Owner {
 public:
     void method();

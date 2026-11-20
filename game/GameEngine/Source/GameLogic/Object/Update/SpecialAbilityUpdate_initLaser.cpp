@@ -31,7 +31,7 @@ struct BfmeAsciiStringData
 	unsigned short m_pad;
 };
 
-extern const char g_emptyString[];
+
 
 #include "ascii_string.h"
 

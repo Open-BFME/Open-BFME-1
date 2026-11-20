@@ -102,7 +102,7 @@ friend class XferCRC;
 friend class Xfer;
 
 public:
-	
+
 #ifdef BFME_SNAPSHOT_CONSTRUCTOR_ONLY
 	__declspec(dllimport) __forceinline Snapshot() {}
 	virtual ~Snapshot( void );
@@ -172,8 +172,8 @@ protected:
 
 #endif // __SNAPSHOT_H_
 class UnicodeString;
-class PooledString;
-struct XferUnknown11;
+
+
 class Coord3DBase;
 class ICoord3D;
 class Region3D;
@@ -300,8 +300,8 @@ public:
 };
 
 typedef bool Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
+
+
 
 class Coord3DBase
 {
@@ -318,7 +318,7 @@ typedef bool Bool;
 
 
 
-void XferObjectID( Xfer *xfer, ObjectID *value );
+
 
 class XferException
 {
@@ -722,11 +722,11 @@ struct Rva00336283Element;
 class LuaScriptEngine;
 class Rva001D0610Lua { public: void *rva002EBF60(const AsciiString &); };
 extern LuaScriptEngine *TheLuaScriptEngine;
-void XferCommandSourceType(Xfer *, int *);
+
 Xfer *Rva00263569Xfer(Xfer *, int *);
-void XferLocomotorSetType(Xfer *, int *);
-void XferWhichTurretType(Xfer *, int *);
-void XferAttitudeType(Xfer *, int *);
+
+
+
 class PolygonTrigger { public: char m_pad[0x8]; AsciiString m_name; };
 class AttackPriorityInfo { public: AsciiString getName() const; };
 class Waypoint { public: char m_pad[4]; unsigned int m_id; };

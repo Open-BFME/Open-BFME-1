@@ -314,7 +314,7 @@ public:
 	void bfmeGo1274();
 };
 
-class AutoHealBehavior;
+
 
 class SpecialAbilityUpdate
 {

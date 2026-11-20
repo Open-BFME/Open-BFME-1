@@ -201,7 +201,7 @@ struct BfmeWideResultItem
 	UnsignedInt m_distance;
 };
 
-void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
+
 
 struct BfmeWideResultPayload
 {

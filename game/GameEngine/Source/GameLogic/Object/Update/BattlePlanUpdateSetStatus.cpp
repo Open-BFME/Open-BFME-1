@@ -78,10 +78,10 @@ static __forceinline void setCondition(Object *o, int bit)
         o->notifyModelConditionChanged();
     }
 }
-extern void j_00019a6a();
+
 extern void j_00040a52();
 extern void j_00001e88();
-extern void j_0002d5c4();
+
 extern void j_00018b4c();
 extern void j_0002a53b();
 extern void j_00037ab0();

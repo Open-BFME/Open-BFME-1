@@ -2,7 +2,7 @@
 // BFME RainOfFireUpdate destructor; the vtable family and base call are
 // identified by the retail body at 0x002A0C90.
 
-class Thing;
+
 class Object;
 class ModuleData
 {

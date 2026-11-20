@@ -4,7 +4,7 @@
 
 typedef int ObjectID;
 
-class ModuleData;
+
 class SpecialPowerTemplate;
 
 class Object

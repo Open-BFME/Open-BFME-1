@@ -15,7 +15,7 @@
 typedef unsigned char Bool;
 #include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int ObjectID;
-typedef int Int;
+
 
 class Object;
 class Weapon;

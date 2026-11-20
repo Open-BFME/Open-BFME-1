@@ -23,7 +23,7 @@
 
 class Object;
 class ParticleSystemTemplate;
-class ModuleData;
+
 class Drawable;
 
 class DamageInfo

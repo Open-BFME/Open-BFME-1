@@ -153,7 +153,7 @@ public:
 		UnsignedInt commandOptions, Bool checkSourceRequirements);
 };
 
-class BFMEActionManager;
+
 // Retail 0x012ED700: use the existing data owner; retain the local pointee view.
 extern class ActionManager *TheActionManager;
 

@@ -290,7 +290,7 @@ extern void j_00032dee();
 extern void j_0003aa8f();
 extern void j_0003d424();
 extern void j_0003fa53();
-extern void j_000399a5();
+
 extern void j_00041894();
 extern void j_0004494a();
 extern void j_00049d2d();

@@ -1,7 +1,7 @@
 // BFME retail 0x001CC790: crush-policy wrapper called by wantToSquishTarget.
 // The lower-level Object::canCrushOrSquish body is at retail 0x001C7600.
 
-typedef unsigned char Bool;
+
 #include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 
 #include "../../../Include/Common/Enums/CrushSquishTestType.h"

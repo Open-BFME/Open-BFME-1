@@ -138,7 +138,7 @@ public:
 };
 extern void *__cdecl operator new(unsigned int size);
 
-class BfmeSeedTarget;
+
 class Xfer; class MidVirtualSlot90Receiver; Xfer &Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *value);
 
 extern "C" void *bfmeVftVG[];

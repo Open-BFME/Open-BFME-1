@@ -28,7 +28,7 @@ typedef unsigned int ObjectID;
 
 const ObjectID INVALID_ID = 0;
 
-extern "C" __declspec(dllimport) double __cdecl floor(double);
+
 
 #include "coord.h"
 #define BFME_HAVE_COORD3D

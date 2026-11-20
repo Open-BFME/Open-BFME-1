@@ -18,7 +18,7 @@
 #include "GameLogic/ObjectIter.h"
 
 class Object;
-class Player;
+
 class FXList;
 enum ObjectID;
 typedef BitFlags<86> Rva0025AEE0ObjectStatusMask;
