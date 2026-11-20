@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWSaveLoad /Igame/Libraries/Source/WWVegas/WW3D2 /Igame/Libraries/Source/WWVegas/Wwutil /Igame/Libraries/Source/WWVegas/WWDownload /Igame/Libraries/Source/Compression /Igame/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/shims/sweep
 #define Matrix4x4 Matrix4
 #include "winbase_shim.h"
-class CameraClass;
+
 // Westwood vector template instances that retail took from an object built
 // without always.h's operator new[]/delete[]: their array new/delete call
 // ::operator new/delete (??2 0x00881F30, ??3 0x00881EB0), unlike meshmdl.obj and

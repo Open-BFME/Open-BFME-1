@@ -44,7 +44,7 @@ public:
 	void bfmeReset( void );
 };
 
-class Gen00587600;
+
 Gen00587600 *g_bfmeSubsystem012F4B78 = 0;
 extern unsigned char g_aptLivingWorldInitialized;
 

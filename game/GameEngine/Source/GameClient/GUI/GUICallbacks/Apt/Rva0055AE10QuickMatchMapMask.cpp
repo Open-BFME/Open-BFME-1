@@ -564,7 +564,7 @@ extern Rva00506720Windows *Rva012F4820QuickMatchWindows;
 #define quickmatchTextWindow (Rva012F4820QuickMatchWindows->getTextWindow())
 #define buttonWiden (Rva012F4820QuickMatchWindows->widen)
 #define getLadderInfo() (Rva012F4820QuickMatchWindows->getLadderInfo())
-class WindowLayout;
+
 class Rva00506720Layout {
 public:
   void update(void *);
@@ -594,10 +594,10 @@ public:
 };
 extern NAT *TheNAT;
 
-void HandleBuddyResponses();
-void HandlePersistentStorageResponses();
-void SendStatsToOtherPlayers(const GameInfo *);
-void TearDownGameSpy();
+
+
+
+
 class MapMetaData {
 public:
   char opaque00[0x20];

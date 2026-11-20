@@ -53,9 +53,9 @@
 // row are concrete.
 
 typedef int Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned short UnsignedShort;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/UnsignedShort.h"
 
 struct Rva00402400Packed
 {

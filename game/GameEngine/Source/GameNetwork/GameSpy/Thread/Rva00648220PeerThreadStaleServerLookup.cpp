@@ -18,7 +18,7 @@
 #include <string.h>
 
 typedef void *PEER;
-typedef int PEERBool;
+
 #include "../../../../Include/Common/ScalarTypes.h"
 
 

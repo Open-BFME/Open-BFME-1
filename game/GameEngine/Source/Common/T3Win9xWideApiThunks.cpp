@@ -36,9 +36,9 @@
 // rows carry Rva-prefixed names. Only the three DIR32 operands per body are
 // unproven, and those are copied from retail rather than resolved.
 
-typedef long LONG;
-typedef unsigned long DWORD;
-typedef unsigned short WCHAR;
+#include "../../Include/Common/ScalarTypes/Win32/LONG.h"
+#include "../../Include/Common/ScalarTypes/Win32/DWORD.h"
+#include "../../Include/Common/ScalarTypes/Win32/WCHAR.h"
 
 extern "C"
 {

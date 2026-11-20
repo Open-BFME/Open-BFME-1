@@ -204,7 +204,7 @@ public:
 };
 
 class WaterGridRef;
-class WaterComRef;
+
 struct WaterMeshData;
 
 struct ListSlot4
