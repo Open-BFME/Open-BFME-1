@@ -40,7 +40,7 @@ struct Gen_t_003ab360_p12cd;
 
 namespace _STL
 {
-struct Rva003B20C0Element;
+
 
 template <class T>
 class allocator

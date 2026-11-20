@@ -204,7 +204,7 @@ public:
     virtual void slotC();
     virtual void reset();
 };
-class Glo012F4B98Type;
+
 extern void showReplayControls();
 // name_oracle witnesses ControlBar::m_UIDirty at +24.
 struct Rva004C0E10DirtyView { char opaque0[0x24]; bool m_UIDirty; };

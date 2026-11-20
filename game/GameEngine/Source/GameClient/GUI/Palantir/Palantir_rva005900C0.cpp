@@ -6,7 +6,7 @@
 // use slots +4 (UnicodeString by value) and +3C (two integer out pointers).
 #include "unicode_string.h"
 
-extern const char g_bfmeEmptyUnicode[];
+
 template<class T> inline bool StringBase<T>::isEmpty() const { return !m_data || !m_data->length; }
 template<class T> inline bool StringBase<T>::isNotEmpty() const { return m_data && m_data->length; }
 inline UnicodeString::UnicodeString() { m_text=0; }

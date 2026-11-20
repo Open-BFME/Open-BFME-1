@@ -14,9 +14,9 @@
 // Layout: the window at this+0x04, the buffer at +0x08, and an AsciiString at
 // +0x0C that the destructor releases last.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+
+
+
 
 #include "../../../Include/Common/Enums/WindowVideoPlayType.h"
 

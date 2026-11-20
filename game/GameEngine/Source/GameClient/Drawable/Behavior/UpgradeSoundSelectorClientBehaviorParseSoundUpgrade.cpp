@@ -10,9 +10,9 @@ class INI;
 
 // Retail reaches every Rva00608FE0Element operation through an
 // incremental-link thunk; parseSoundUpgrade calls its own thunk directly.
-extern void j_0002a48c();
-extern void j_00042339();
-extern void j_00034158();
+
+
+
 extern void j_00044210();
 
 struct Rva00608FE0Element

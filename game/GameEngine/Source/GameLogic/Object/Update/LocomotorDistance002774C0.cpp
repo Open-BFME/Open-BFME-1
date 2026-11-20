@@ -24,7 +24,7 @@ extern void j_0003251f();
 extern void j_00048e4b();
 extern void j_00024d1b();
 extern void j_00008a9e();
-extern void j_00008a26();
+
 class BfmeVec3EJ { public: float x,y,z; };
 class Gen_000E5A50 {
 public:

@@ -20,7 +20,7 @@ public:
     int m_at0C;
 };
 
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
+
 
 // 0x013071D4 is recorded (DIR32) as ?Rva00F071D4Target986B@@3PADA;
 // define the storage under that symbol.

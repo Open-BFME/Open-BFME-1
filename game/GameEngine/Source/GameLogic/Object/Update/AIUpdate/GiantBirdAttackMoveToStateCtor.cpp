@@ -49,7 +49,7 @@ public:
 	void *getOwner() { return m_owner; }
 };
 
-extern int g_GiantBirdAttackMoveToStateVTable;
+
 
 class GiantBirdAttackMoveToState : public Rva000A19E0StateBase
 {

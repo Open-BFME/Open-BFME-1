@@ -4,7 +4,7 @@
 // Their caller-visible ABI is two four-byte ICoord2D slots; the proven object
 // offsets are start +0x08/+0x0c and end +0x10/+0x14 after the class prefix.
 
-typedef int Int;
+
 
 #include "../../../../Libraries/Include/Lib/ICoord2D.h"
 

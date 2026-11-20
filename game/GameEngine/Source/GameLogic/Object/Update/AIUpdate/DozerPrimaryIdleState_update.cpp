@@ -244,7 +244,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 extern InGameUI *TheInGameUI;
-extern float g_bfmeUint32Scale;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilter

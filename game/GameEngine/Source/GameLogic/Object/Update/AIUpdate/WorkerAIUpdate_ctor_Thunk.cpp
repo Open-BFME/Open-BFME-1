@@ -8,7 +8,7 @@ class AsciiString;
 #include "../../../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int Bool;
 typedef int ObjectID;
-typedef float Real;
+
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)

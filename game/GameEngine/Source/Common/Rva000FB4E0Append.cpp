@@ -14,7 +14,7 @@
 #include <vector>
 
 class ThingTemplate;
-class Rva000D9680Player;
+
 
 // The +0x44 subobject is copied by the proven 0x000F9FF0 body but destroyed
 // through the AudioEventRTS ILT at 0x0002671F.  Keep its copy identity opaque;

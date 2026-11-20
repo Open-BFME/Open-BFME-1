@@ -12,7 +12,7 @@
 // once instead of once per thunk.
 
 struct Coord3D;
-struct Region2D;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 class Bridge

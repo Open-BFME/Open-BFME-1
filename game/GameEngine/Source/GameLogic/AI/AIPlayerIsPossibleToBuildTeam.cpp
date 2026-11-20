@@ -222,7 +222,7 @@ class ThingFactory;
 extern ThingFactory *TheThingFactory;
 
 extern void j_00028560();
-extern void j_000237d1();
+
 extern void j_0002b62f();
 extern void j_0000da8a();
 

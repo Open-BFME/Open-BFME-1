@@ -165,7 +165,7 @@ extern SnowManager *TheSnowManager;
 extern CloudEffectSystem *TheCloudEffectSystem;
 extern CloudSystem *TheCloudSystem;
 
-void Gen_00510b50();	// 0x00510B50, BFME shutdown step run first
+	// 0x00510B50, BFME shutdown step run first
 
 class CommandTranslator;
 

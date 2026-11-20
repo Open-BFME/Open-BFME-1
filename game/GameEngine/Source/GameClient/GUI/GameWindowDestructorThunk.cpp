@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /EHsc
 
-typedef bool Bool;
+
 
 class GameWindow;
 

@@ -4,7 +4,7 @@
 // The 20-byte record and the eight-byte BFME AsciiString header are fixed by
 // the release and findRecordIndex siblings at the same table family.
 
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);
 #pragma intrinsic(memcmp)

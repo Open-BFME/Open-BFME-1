@@ -36,7 +36,7 @@
 // simply not a parameter here.
 
 #include "../../../Include/Common/ScalarTypes/Int.h"
-typedef unsigned char Bool;
+
 
 class Object;
 class Weapon;

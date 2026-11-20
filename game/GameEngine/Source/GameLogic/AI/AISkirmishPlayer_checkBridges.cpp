@@ -34,7 +34,7 @@ public:
     Waypoint *getNext() const { return *(Waypoint **)((const char *)this + 0x1c); }
 };
 
-typedef int Int;
+
 #include "../../../Include/Common/ScalarTypes/Source/zoneStorageType.h"
 
 enum PathfindLayerEnum

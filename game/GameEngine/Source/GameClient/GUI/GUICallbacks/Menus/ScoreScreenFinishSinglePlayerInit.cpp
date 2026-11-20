@@ -257,7 +257,7 @@ extern GameWindowTransitionsHandler *TheTransitionHandler;
 
 void GadgetRadioSetText( GameWindow *window, UnicodeString text );
 
-class VideoPlayer;
+
 class VideoStreamInterface;
 class Display;
 class GameEngine;

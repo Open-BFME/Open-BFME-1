@@ -20,8 +20,8 @@
 class Thing;
 class ModuleData;
 class Object;
-class ObjectCreationList;
-class FXList;
+
+
 
 #include "../../../../Include/Common/ObjectID.h"
 

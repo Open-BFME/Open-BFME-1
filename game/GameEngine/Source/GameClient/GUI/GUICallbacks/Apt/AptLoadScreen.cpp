@@ -145,14 +145,14 @@ public:
 	virtual UnicodeString fetch(AsciiString label, bool *exists);
 };
 
-class GameSpyInfo;
+
 class GameSpyStagingRoom
 {
 public:
 	char m_pad[0x43C];
 	bool m_43C;
 };
-struct Rva00579160Current;
+
 class BfmeH1065;
 
 extern WindowManager *g_rva012F19E8WindowManager;

@@ -14,7 +14,7 @@ class GameFont;class DisplayString;class DisplayStringManager;
 extern DisplayStringManager *TheDisplayStringManager;
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 extern void j_0001d0a2();extern void j_00004e67();extern void j_0000abc3();
-class GlobalLanguageData;class FontLibrary;
+class FontLibrary;
 class GlobalLanguage;
 extern GlobalLanguage *TheGlobalLanguageData;extern FontLibrary *TheFontLibrary;
 class Rva00441D30Calls {};

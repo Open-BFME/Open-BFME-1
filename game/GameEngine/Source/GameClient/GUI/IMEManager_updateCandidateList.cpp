@@ -11,7 +11,7 @@
 // UnicodeString array is +0x3040, and the candidate controls are +0x304C
 // through +0x305C.
 
-typedef unsigned int UnsignedInt;
+
 
 void *__cdecl operator new[](unsigned int size);
 void __cdecl operator delete[](void *memory);

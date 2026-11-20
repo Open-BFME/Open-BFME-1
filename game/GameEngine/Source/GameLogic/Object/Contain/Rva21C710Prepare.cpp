@@ -174,8 +174,8 @@ float g_rva00EAEB48 = 3.0f;
 extern void j_00008337();
 extern void j_0000d81e();
 extern void j_000107ad();
-extern void j_0001364c();
-extern void j_00016c93();
+
+
 extern void j_0002191d();
 extern void j_0002a284();
 extern void j_0002bd82();

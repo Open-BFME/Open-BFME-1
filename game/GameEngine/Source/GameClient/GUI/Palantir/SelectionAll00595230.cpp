@@ -153,8 +153,8 @@ enum KindOfType;
 public: bool isKindOf(KindOfType) const;
 #include "../../../Common/Thing/thing.h"
 #undef THING_TU_MEMBERS
-void j_00001c03();
-void j_00014c6d();
+
+
 class BFMERopeDrawable { public: const Coord3D *getPosition() const; };
 typedef bool (__fastcall *Predicate00595230)(Object *);
 typedef bool (__fastcall *Kind00595230)(Object *,int);

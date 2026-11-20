@@ -17,7 +17,7 @@
 #include "coord.h"
 #include "../../../command_source_type.h"
 
-typedef float Real;
+
 
 class Object;
 class Weapon;

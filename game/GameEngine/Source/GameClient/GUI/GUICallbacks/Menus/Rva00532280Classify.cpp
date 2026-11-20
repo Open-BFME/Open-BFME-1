@@ -23,7 +23,7 @@ public:
     int Rva00531DE0RefreshSelectedIndices(GameWindow *, std::vector<int> *);
 };
 class BfmeStateXC { public: void bfmeNotifyXC(int); };
-class GameSpyInfo;
+
 class GameSpyConfigInterface;
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;

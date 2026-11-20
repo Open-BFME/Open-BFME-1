@@ -6,8 +6,8 @@
 // Complete destructor 0x00207580 also emits scalar wrapper 0x002076E0;
 // constructor 0x00207300 and vtable 0x010A64DC identify this class.
 
-class Thing;
-class ModuleData;
+
+
 
 enum DamageType
 {
