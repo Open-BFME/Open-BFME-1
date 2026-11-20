@@ -91349,3 +91349,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x001CABE0,pin
 __controlfp,0x009F7DF2,route=MSVCR71.dll!_controlfp;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-fp8-atonexit-members.md
 ___dllonexit,0x009F7EE0,route=MSVCR71.dll!__dllonexit;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-fp8-atonexit-members.md
+__CRT_RTC_INIT,0x009F8088,route=MSVCR71.dll!_CRT_RTC_INIT;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-rtc-init-member.md
