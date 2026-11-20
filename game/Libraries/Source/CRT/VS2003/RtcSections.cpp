@@ -1,5 +1,5 @@
 // cl: /O1 /G7 /Oy- /Ob1 /MD
-// Initializer stage of native RunTmChk.lib initsect.obj, reconstructed from original
+// Complete native RunTmChk.lib initsect.obj, reconstructed from original
 // COFF identities, retail code and the verified BFME2 RtcSections.cpp context.
 // COFF code: __RTC_Initialize, __RTC_Terminate.
 // COFF data: ___rtc_iaa, ___rtc_izz, ___rtc_taa, ___rtc_tzz.
@@ -25,7 +25,13 @@ void __cdecl _RTC_Initialize()
  }
 }
 
-
+void __cdecl _RTC_Terminate()
+{
+ for(const RtcCallback *p=__rtc_taa+1;p<__rtc_tzz;++p) {
+  __try { if(*p) (*p)(); }
+  __except(1) {}
+ }
+}
 }
 typedef char RtcCallbackMustBeFourBytes[(sizeof(RtcCallback)==4)?1:-1];
 typedef char RtcInitStartSize[(sizeof(__rtc_iaa)==4)?1:-1];

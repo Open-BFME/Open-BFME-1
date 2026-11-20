@@ -177,3 +177,25 @@ review: four data admissions, two function admissions with real identity
 correction, the exact Terminate debt pass-test, normal data/source checks and
 original startup-consumer build. Root decides coherent preparation/commits.
 This worker ran NONE of those writers, commits, production gates or claims.
+
+## Root staged normal admission outcome
+
+The initializer was admitted and committed independently first, with all
+four typed4-byte data objects. The termination body was then added as its
+own source change and admitted with the exact old identity named above.
+Both complete normal rows pass2/2 with all4 DIR32 references; all4 data
+objects pass. Native repair_queue pass-test removes exactly the preexisting
+__RTC_Terminate code-address debt line. The original511-byte startup plus
+the completed RTC unit pass together3/3 and32 DIR32 references; declared-
+unmatched reports no remaining definition. The final source matches the
+private full-member source SHA256 above. Publish the coupled member only
+after its separate termination commit is verified.
+
+The historical deletion record for __RTC_Terminate at009F7F4E forbade
+restoring an identity inferred only from archive order/masked twins. The
+original PE-entry atexit DIR32 relocation plus the independently different
+TAA/TZZ references now distinguish that identity, as documented above.
+Following check_csv's explicit revival requirement, Root removed exactly
+that one old deletion record through terminator-preserving ledger_io.
+The generated placeholder and superseded opaque-twin deletion records
+remain. No reusable gate exemption or new alias/pin was introduced.
