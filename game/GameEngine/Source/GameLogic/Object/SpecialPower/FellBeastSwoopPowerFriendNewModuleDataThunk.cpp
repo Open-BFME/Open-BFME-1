@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: FellBeastSwoopPower::friend_newModuleData factory.
 
-class INI;
+
 class ModuleData;
 class MultiIniFieldParse;
 

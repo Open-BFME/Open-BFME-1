@@ -22,7 +22,7 @@ public:
     static int scanInt(const char *text);
 };
 
-class AsciiString;
+
 
 #include "string_base.h"
 

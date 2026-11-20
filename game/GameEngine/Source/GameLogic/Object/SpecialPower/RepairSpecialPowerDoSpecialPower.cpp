@@ -23,7 +23,7 @@ enum KindOfType
 #include "../../../Common/Thing/thing.h"
 #undef THING_TU_MEMBERS
 
-class BfmeThingHF;
+
 
 // Retail ILT 0x000022BB lands on 0x00087A80, matched as
 // Overridable::getFinalOverride() const.

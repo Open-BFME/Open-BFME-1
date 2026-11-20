@@ -38,7 +38,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class Object;
+
 
 #include "../../../Include/Common/Enums/EmotionType.h"
 

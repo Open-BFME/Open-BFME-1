@@ -5,7 +5,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class PartitionManagerImpl008F8D60;
+
 
 // The per-cell sweep target at 0x008FC3B0 is owned by the ShroudManager
 // pimpl element class (see game/GameEngine/Source/Common/RTS/

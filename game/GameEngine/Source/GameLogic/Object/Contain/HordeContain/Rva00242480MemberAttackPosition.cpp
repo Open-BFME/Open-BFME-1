@@ -20,7 +20,7 @@
 
 
 class Object;
-class Weapon;
+
 #include "../../../../../Include/Common/Enums/WeaponSlotType.h"
 
 template<int N>

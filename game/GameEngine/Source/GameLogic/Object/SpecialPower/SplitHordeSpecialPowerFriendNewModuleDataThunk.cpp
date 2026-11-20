@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: SplitHordeSpecialPower::friend_newModuleData factory
 
-class INI;
+
 class ModuleData;
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);

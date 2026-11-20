@@ -59,7 +59,7 @@ public:
 	unsigned int m_status;
 };
 
-class Xfer;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 #include "ascii_string.h"

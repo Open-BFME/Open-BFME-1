@@ -23,7 +23,7 @@ struct Rva001B95B0Flags {
     unsigned test(unsigned i) const { return m_bits[i>>5] & (1u<<(i&31)); }
     void set(unsigned i) { m_bits[i>>5] |= (1u<<(i&31)); }
 };
-class Weapon;
+
 enum WeaponSlotType { SLOT_ZERO };
 enum WeaponStatus { READY_ZERO };
 class Weapon { public: WeaponStatus getStatus() const; };

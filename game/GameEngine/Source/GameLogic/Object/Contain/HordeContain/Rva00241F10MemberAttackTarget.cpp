@@ -15,7 +15,7 @@
 #include "../../../../../Include/Common/ScalarTypes.h"
 
 class Object;
-class Weapon;
+
 #include "../../../../../Include/Common/Enums/WeaponSlotType.h"
 
 template<int N>

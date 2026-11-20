@@ -3,7 +3,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 class Object;
-class Player;
+
 
 // The reference names this callback. Its BFME implementation is the empty
 // ret-4 body at RVA 0x000EA900. Use the existing neutral ILT binding with the

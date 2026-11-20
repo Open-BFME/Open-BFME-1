@@ -9,8 +9,8 @@ enum StateExitType { STATE_EXIT_UNKNOWN = 0 };
 enum { DOZER_TASK_INVALID = -1 };
 
 class Object;
-class AIUpdateInterface;
-class DozerAIInterface;
+
+
 
 template <int N>
 class DozerAIInterfaceSlots : public DozerAIInterfaceSlots<N - 1>
