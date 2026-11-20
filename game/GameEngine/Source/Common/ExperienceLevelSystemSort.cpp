@@ -42,7 +42,7 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern const char g_bfmeEmptyAscii[];
+
 
 struct BfmeAsciiStringData
 {

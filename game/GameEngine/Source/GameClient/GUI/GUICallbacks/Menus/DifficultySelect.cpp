@@ -81,7 +81,7 @@ static GameWindow *   radioButtonEasyAI       = NULL;
 static GameWindow *   radioButtonMediumAI       = NULL; 
 static GameWindow *   radioButtonHardAI       = NULL; 
 
-void setupGameStart(AsciiString mapName, GameDifficulty diff);
+
 //-----------------------------------------------------------------------------
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
@@ -119,10 +119,10 @@ static void SetDifficultyRadioButton( void )
 			{
 				DEBUG_CRASH(("unrecognized difficulty level in the script engine"));
 			}
-			
+
 		}
 	} // if (TheScriptEngine)
-	
+
 }
 
 
@@ -131,7 +131,7 @@ void DifficultySelectInit( WindowLayout *layout, void *userData )
 	AsciiString parentName( "DifficultySelect.wnd:DifficultySelectParent" );
 	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
 	GameWindow *parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
-   
+
 	buttonOkID = TheNameKeyGenerator->nameToKey( "DifficultySelect.wnd:ButtonOk" );
 	buttonOk = TheWindowManager->winGetWindowFromId( parent, buttonOkID );
 	buttonCancelID = TheNameKeyGenerator->nameToKey( "DifficultySelect.wnd:ButtonCancel" );
@@ -163,7 +163,7 @@ void DifficultySelectInit( WindowLayout *layout, void *userData )
 //
 	parent->winBringToTop();
 	TheWindowManager->winSetModal(parent);
-	
+
 }  // end SkirmishMapSelectMenuInit
 
 

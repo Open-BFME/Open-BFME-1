@@ -22,9 +22,9 @@
 // setFinished never reach past +0x34, so the flag and the padding that carries
 // it to +0x41 change none of their bytes.
 
-typedef unsigned int UnsignedInt;
+#include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef float Real;
+#include "../../../Include/Common/ScalarTypes/Real.h"
 
 struct Coord2D
 {

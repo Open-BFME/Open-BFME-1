@@ -15,7 +15,7 @@
 
 #include "StringInline.h"
 
-typedef bool Bool;
+
 
 class Object;
 

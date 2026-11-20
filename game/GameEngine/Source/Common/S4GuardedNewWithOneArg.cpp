@@ -79,7 +79,7 @@ private:
 	int m_storage[ 31 ];
 };
 
-class BfmeAptScreenOnlineQuickMatch;
+
 extern BfmeAptScreenOnlineQuickMatch *g_s4Guard0055BC20;
 
 BfmeAptScreenOnlineQuickMatch *s4mk0055BC20( int a )

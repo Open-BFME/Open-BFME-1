@@ -488,11 +488,11 @@ class GameSpyBuddyMessageQueueInterface;
 extern GameSpyBuddyMessageQueueInterface *TheGameSpyBuddyMessageQueue;
 class Rva005127A0InGameChat;
 extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
-void rva00511CC0(int);
-void HideInGameChat();
-void rva0052B2A0();
-void rva00569D80();
-void Rva004C1040(int);
+
+
+
+
+
 int Rva00459060(bool);
 int rva005A9B00(Object*,void*);
 bool pickAndPlayUnitVoiceResponse(const DrawableList*,GameMessage::Type,PickAndPlayInfo* = 0);

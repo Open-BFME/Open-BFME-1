@@ -190,12 +190,12 @@ extern bool Glo012F0239;
 class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 extern AI *TheAI;
-extern void j_0000e570();
-extern void j_00015d02();
-extern void j_0002191d();
-extern void j_00021e27();
+
+
+
+
 extern void j_0002b355();
-extern void j_0002bd82();
+
 extern void j_000309f4();
 extern void j_0003a17a();
 extern void j_0003bcff();

@@ -89,7 +89,7 @@ public:
 };
 
 // Retail calls getMissionObjectiveCount through ILT 0x0002A62B.
-extern void j_0002a62b();
+
 
 extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;

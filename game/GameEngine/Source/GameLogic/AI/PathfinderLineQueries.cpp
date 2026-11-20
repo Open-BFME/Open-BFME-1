@@ -60,7 +60,7 @@
 // the predicates return H (int), and worldToCell returns _N (bool). They are
 // written out below rather than hidden behind a typedef that meant two things.
 
-typedef int Int;
+#include "../../../Include/Common/ScalarTypes/Int.h"
 typedef int Bool;								// the predicates mangle as H
 typedef unsigned int size_t;
 

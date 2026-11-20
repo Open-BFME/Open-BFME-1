@@ -247,7 +247,7 @@ private:
 	int m_capacity, m_count;
 	void **m_items;
 };
-struct Registry008C3F10;
+
 extern Registry008C3F10 *g_registry01337814;
 
 class Rva00893030Manager

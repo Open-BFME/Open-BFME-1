@@ -37,10 +37,10 @@ public:
 // Each is cdecl and returns 1 in EAX. BfmeInnerIterable::bfmeVisit casts
 // its opaque callback slot back to an int-returning callback before calling
 // it; it supplies two dwords, of which the refresh callback uses only one.
-class BfmeAgentBS;
-class BfmeInfoBS;
-struct BfmeObjectD120;
-struct BfmeObjectD150;
+
+
+
+
 // ?bfmeApplyBS@@YAHPAVBfmeAgentBS@@PAVBfmeInfoBS@@@Z: retail 0x00425301 is ?bfmeTeamGiveExperienceLevelVisitor@@YAXPAVObject@@PAX@Z
 extern void __cdecl bfmeTeamGiveExperienceLevelVisitor(Object *, void *);
 // ?bfmeRva0037D120AddExperience@@YAHPAUBfmeObjectD120@@H@Z: retail 0x0041ACB7 is ?bfmeTeamGiveExperiencePointsVisitor@@YAXPAVObject@@PAX@Z

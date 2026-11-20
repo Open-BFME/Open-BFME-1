@@ -106,7 +106,7 @@ protected:
 // Retail 0x0078D810 initializes the border images in this window TU.
 // The enum order is the vendored Gadget.h order: right pieces precede top
 // pieces in the static pointer array, despite the lookup-call order below.
-class Image;
+
 #include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class ImageCollection
