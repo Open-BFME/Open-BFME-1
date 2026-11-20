@@ -147,3 +147,24 @@ admission for this TU. Root gives each verified body its own commit and keeps
 the whole member publication coherent. This worker ran none of those writers,
 normal production gates or Git actions. A full-image link/runtime result remains
 outside this private matching proof.
+
+## Root final normal admission and native type correction
+
+Both functions now pass ordinary replace-existing admission in this complete
+unit. The helper's independent body commit precedes the entry admission.
+Cross-member CodeView comparison caught and corrected the initial table
+pointer alias: original atonexit and crtexew both require pointer-to-pointer
+to void-return/cdecl(), with both pointer attributes0xA. The corrected
+Startup source SHA256 is
+6b90ce4933635624cc967145a3a43080d79848f5e74a3a4b19f481b8ad2867cf.
+This supersedes the initial candidate hash/type above. The same explicit
+callback-table type replaces the previous void* declaration in the existing
+CRT shims; their20 existing rows are retained, not newly recovered bodies.
+
+Normal provider/consumer verification passes27/27 rows across5 code sources,
+14 data objects and56 DIR32 references. Original/corrected private native
+objects have identical raw code and relocation graphs, and all four
+original/corrected CodeView pointer chains agree. Existing source EOLs
+were preserved; full LF-normalized files equal the measured candidates.
+See the separate 20261120-startup-exit-type-correction.md evidence.
+No runtime, boot or full-image link was run or inferred.

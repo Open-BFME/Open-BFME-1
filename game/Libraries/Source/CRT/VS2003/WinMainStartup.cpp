@@ -10,7 +10,7 @@
 int __cdecl Rva009F7EEC_XcptFilter(unsigned long,void *);
 extern "C" {
 typedef void (__cdecl *InitProc)();
-typedef int (__cdecl *ExitProc)();
+typedef void (__cdecl *ExitProc)();
 extern ExitProc *__onexitbegin, *__onexitend;
 extern int _fmode, _commode, _adjust_fdiv, __defaultmatherr, _newmode, _dowildcard;
 extern InitProc __xi_a[], __xi_z[], __xc_a[], __xc_z[];
