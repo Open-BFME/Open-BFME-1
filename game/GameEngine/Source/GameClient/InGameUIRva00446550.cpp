@@ -34,7 +34,7 @@ enum Rva00446550MessageType
 };
 
 class GameMessage;
-class Object;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

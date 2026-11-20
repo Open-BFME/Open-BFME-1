@@ -44,9 +44,9 @@ struct Region2D
 };
 
 class Team;
-class Player;
-class Object;
-class PartitionFilter;
+
+
+
 
 class Overridable
 {

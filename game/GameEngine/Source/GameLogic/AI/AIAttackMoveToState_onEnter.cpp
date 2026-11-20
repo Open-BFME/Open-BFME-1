@@ -10,7 +10,7 @@ struct Rva0017A370Coord3D
     int z;
 };
 
-class Object;
+
 
 template <int N>
 class Rva0017A370VirtualSlots : public Rva0017A370VirtualSlots<N - 1>

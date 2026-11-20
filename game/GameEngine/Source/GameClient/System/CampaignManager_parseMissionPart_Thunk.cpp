@@ -6,7 +6,7 @@
 // the by-value AsciiString copy visible so VC7.1 reproduces the retail unwind
 // state and temporary construction order.
 
-class AsciiString;
+
 
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)

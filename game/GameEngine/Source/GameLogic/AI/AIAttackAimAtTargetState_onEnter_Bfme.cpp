@@ -68,7 +68,7 @@ typedef BitFlags<86> ObjectStatusMaskType;
 #define MAKE_OBJECT_STATUS_MASK(k) ObjectStatusMaskType(ObjectStatusMaskType::kInit, (k))
 
 class Object;
-class Weapon;
+
 class BfmeOutOfWeaponRangeTemplate;
 class AIUpdateInterface;
 class ContainModuleInterface;

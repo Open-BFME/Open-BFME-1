@@ -4,8 +4,8 @@
 // with the inline StringBase member before the member is replaced and the
 // widget notification is dispatched.
 
-class UnicodeString;
-class Rva004101B0TextWidget;
+
+
 
 #include "string_base.h"
 

@@ -17,7 +17,7 @@ typedef int ObjectID;
 
 
 class Object;
-class Player;
+
 
 class GameLogic
 {

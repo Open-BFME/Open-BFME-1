@@ -18,7 +18,7 @@
 
 typedef unsigned int NameKeyType;
 
-class GameWindow;
+
 class WindowLayoutInfo;
 
 class NameKeyGenerator

@@ -67,10 +67,10 @@
 class Object;
 class Team;
 class Waypoint;
-class AIGroup;
+
 class AIUpdateInterface;
 class Locomotor;
-class LocomotorSet;
+
 class Pathfinder;
 
 template <int N>

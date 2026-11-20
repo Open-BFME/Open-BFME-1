@@ -7,7 +7,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
-class Drawable;
+
 class Object;
 
 class BfmeThingIK

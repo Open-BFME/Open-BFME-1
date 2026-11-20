@@ -21,7 +21,7 @@ typedef int ObjectID;
 
 
 class Object;
-class Player;
+
 class AIUpdateInterface;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h

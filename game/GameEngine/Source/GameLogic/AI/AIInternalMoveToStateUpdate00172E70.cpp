@@ -64,7 +64,7 @@ enum ModelConditionFlagType
 
 class Object;
 
-class Pathfinder;
+
 
 class StateMachine
 {

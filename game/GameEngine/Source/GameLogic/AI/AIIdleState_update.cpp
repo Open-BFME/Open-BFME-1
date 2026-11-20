@@ -36,10 +36,10 @@ enum MoodMatrixAction
 	MM_ACTION_IDLE = 0
 };
 
-class StateMachine;
+
 class Object;
-class Weapon;
-class WeaponTemplate;
+
+
 class AIUpdateInterface;
 
 class StateMachine

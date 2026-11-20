@@ -34,12 +34,12 @@ enum CanAttackResult
 
 class Object;
 class Team;
-class TeamPrototype;
+
 class Player;
 class TunnelTracker;
-class StateMachine;
-class AIUpdateInterface;
-class BodyModuleInterface;
+
+
+
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo

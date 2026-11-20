@@ -16,7 +16,7 @@ struct XferVersion
 	UnsignedByte m_currentVersion;
 };
 
-class Xfer;
+
 class Object;
 
 class StateMachine

@@ -27,9 +27,9 @@
 
 
 class ScriptAction;
-class Script;
+
 class Team;
-class TeamInQueue;
+
 
 // The local output object is the BFME AsciiString ABI whose release body is
 // already landed at 0x00887940.  The private base and inline forwarding

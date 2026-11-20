@@ -51,7 +51,7 @@ public:
     char *m_text;
 };
 
-class GameWindow;
+
 
 class WinInstanceData
 {

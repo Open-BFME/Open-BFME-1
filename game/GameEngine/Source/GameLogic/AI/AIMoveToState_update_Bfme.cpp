@@ -86,8 +86,8 @@ enum
 	NO_MAX_SHOTS_LIMIT = 0x7fffffff
 };
 
-class Object;
-class StateMachine;
+
+
 
 // upstream layout: .../GameLogic/AICommandInterface.h
 class AICommandInterface

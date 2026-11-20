@@ -5,7 +5,7 @@
 // after its call through ILT 0x00040E7B, and both exits leave the callee's AL
 // (the predicate's false, or apply's result) in EAX.
 
-class SkirmishScreenState;
+
 // The predicate behind ILT 0x0003029C is matched as
 // ?rva00529BE0@SkirmishScreenState@@QAE_NXZ (0x00529BE0).
 class SkirmishScreenState

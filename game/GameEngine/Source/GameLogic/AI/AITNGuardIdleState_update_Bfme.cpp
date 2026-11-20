@@ -18,9 +18,9 @@ typedef int ObjectID;
 
 
 class Object;
-class Player;
+
 class AIUpdateInterface;
-class ContainModuleInterface;
+
 
 class GameLogic
 {

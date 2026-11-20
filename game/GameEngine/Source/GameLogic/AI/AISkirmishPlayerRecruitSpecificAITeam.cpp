@@ -52,15 +52,15 @@ static inline void bfmeConcat(AsciiString &dst, const AsciiString &text)
     dst.StringBase<char>::concat(text.str(), text.getLength());
 }
 
-class TeamPrototype;
-class Team;
-class TeamFactory;
-class ThingFactory;
+
+
+
+
 class ThingTemplate;
 class Object;
-class ScriptEngine;
-class AIUpdateInterface;
-class TeamInQueue;
+
+
+
 
 struct BfmeUnitInfoRecord
 {

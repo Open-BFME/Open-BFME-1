@@ -47,7 +47,7 @@ extern const Real g_rva01075350;
 
 class Object;
 class Player;
-class Weapon;
+
 class BfmeOutOfWeaponRangeObject;
 
 template <Int N>

@@ -16,7 +16,7 @@
 
 class AIGroup;
 
-class Object;
+
 
 class BfmeKindOfMask
 {

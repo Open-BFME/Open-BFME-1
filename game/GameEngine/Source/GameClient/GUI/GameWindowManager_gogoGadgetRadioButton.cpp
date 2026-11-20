@@ -14,7 +14,7 @@
 
 #include <string.h>
 
-class GameWindow;
+
 class GameFont;
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"

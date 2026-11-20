@@ -12,7 +12,7 @@ extern "C" void _ReadWriteBarrier(void);
 
 class Object;
 class Team;
-class PolygonTrigger;
+
 
 class GameLogic
 {

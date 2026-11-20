@@ -2,8 +2,8 @@
 // BFME layout reconstruction of AITNGuardOuterState::update at 0x0018A7E0.
 
 class Object;
-class Team;
-class TeamPrototype;
+
+
 
 typedef int ObjectID;
 

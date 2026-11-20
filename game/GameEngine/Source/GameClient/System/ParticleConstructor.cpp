@@ -26,7 +26,7 @@
 
 class ParticleSystem;
 class Particle;
-class RenderObjClass;
+
 
 // The model-name getter returns an AsciiString by value; its removeLastChar
 // and destructor are the matched StringBase<char> bodies.

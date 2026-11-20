@@ -97,7 +97,7 @@ public:
 
 class Object;
 class Player;
-class Team;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate

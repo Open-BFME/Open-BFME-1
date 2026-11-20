@@ -10,7 +10,7 @@
 
 
 
-class HarvestRecord;
+
 
 class HarvestTarget
 {

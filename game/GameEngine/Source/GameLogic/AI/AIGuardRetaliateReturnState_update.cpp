@@ -39,7 +39,7 @@ enum CanAttackResult
 	ATTACKRESULT_POSSIBLE = 3
 };
 
-class Object;
+
 
 class BodyModuleInterface
 {

@@ -18,8 +18,8 @@ enum StateExitType
 	STATE_EXIT_RESET = 1
 };
 
-class StateMachine;
-class AIUpdateInterface;
+
+
 class CRCParameterCheck;
 class GameLogic;
 

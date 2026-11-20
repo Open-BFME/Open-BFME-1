@@ -16,7 +16,7 @@ typedef unsigned char Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Object;
+
 
 template<int N>
 class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>

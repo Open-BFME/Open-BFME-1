@@ -74,9 +74,9 @@ typedef BitFlags<86> ObjectStatusMaskType;
 
 class Object;
 class Player;
-class StateMachine;
-class AIUpdateInterface;
-class Team;
+
+
+
 class Weapon;
 class BfmeThingEQT;
 class BfmeHoldEQT;

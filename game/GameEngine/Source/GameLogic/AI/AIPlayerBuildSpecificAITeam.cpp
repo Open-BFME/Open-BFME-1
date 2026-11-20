@@ -73,7 +73,7 @@ static inline void bfmeConcat(AsciiString &dst, const AsciiString &src)
 	((StringBase<char> *)&dst)->concat(s.str(), s.getLength());
 }
 
-class Team;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate;

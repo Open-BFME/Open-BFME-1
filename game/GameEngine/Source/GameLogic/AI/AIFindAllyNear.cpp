@@ -9,7 +9,7 @@
 // Canonical basetype.h supplies struct Coord3D and the fundamental typedefs.
 #include "basetype.h"
 
-class Object;
+
 
 class Object
 {

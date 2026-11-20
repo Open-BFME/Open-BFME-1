@@ -24,7 +24,7 @@
 
 class Object;
 class Thing;
-class AIUpdateInterface;
+
 
 template<int N>
 class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>
@@ -62,7 +62,7 @@ public:
 	unsigned int getCurrentStateID() const;
 };
 
-class Path;
+
 class Rva001B7200Locomotor;
 
 struct Rva001B7200PathPoint

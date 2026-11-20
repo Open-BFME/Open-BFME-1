@@ -25,7 +25,7 @@ enum PlayerType { PLAYER_HUMAN, PLAYER_COMPUTER };
 enum { INVALID_STATE_ID = 999999 };
 
 class Object;
-class Weapon;
+
 class State;
 class CRCParameterCheck;
 class BfmeOutOfWeaponRangeObject;
