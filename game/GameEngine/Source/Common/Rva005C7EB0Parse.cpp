@@ -17,7 +17,7 @@ extern const char g_bfmeEmptyAscii[];
 
 namespace FXParticleSystem
 {
-struct PointEmissionVolumeModuleTag;
+
 template <class Tag> class ConcreteModuleClass;
 }
 

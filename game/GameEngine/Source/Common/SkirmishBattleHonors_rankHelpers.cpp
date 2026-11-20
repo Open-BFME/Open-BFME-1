@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef int Int;
+
 
 #include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

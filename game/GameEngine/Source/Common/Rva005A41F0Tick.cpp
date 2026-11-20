@@ -8,7 +8,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef unsigned char UnsignedByte;
+
 
 struct Rva005A41F0InputEvent
 {

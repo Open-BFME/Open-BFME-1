@@ -17,7 +17,7 @@ struct BfmeStringPool1286
 
 struct BfmeStringPool3AF0;
 extern BfmeStringPool3AF0 *g_rva01337A30AllocPair;
-extern char g_bfmeDerived1286Vtable;
+
 extern char g_bfmeSpecialBlock1286;
 extern void (__cdecl *g_bfmeFreePair1286)(void *storage, int count);
 extern void (__cdecl *g_bfmeFreeDWF)(void *storage);

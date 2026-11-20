@@ -5,7 +5,7 @@ typedef unsigned char Bool;
 extern void j_000022bb();
 extern void j_0003251f();
 extern void j_000102a8();
-extern void j_00015b09();
+
 extern void j_0003b0b1();
 extern void j_000369a8();
 extern void j_00011df1();

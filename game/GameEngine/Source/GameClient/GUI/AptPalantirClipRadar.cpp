@@ -1,4 +1,4 @@
-extern "C" long __ftol2( double value );
+
 
 struct PalantirPoint
 {

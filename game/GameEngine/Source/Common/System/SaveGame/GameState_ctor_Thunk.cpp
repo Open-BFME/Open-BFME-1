@@ -39,7 +39,7 @@ public:
 
 // The thunk is the existing incremental-link route to the matched
 // SaveGameInfo constructor at 0x0010D680; it preserves ECX as the destination.
-extern void j_0000f218(void) throw();
+
 
 class SaveGameInfo
 {

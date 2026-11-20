@@ -6,9 +6,9 @@
 
 extern "C" int strcmp(const char *left, const char *right);
 #pragma intrinsic(strcmp)
-extern "C" void *memset(void *destination, int value, unsigned int size);
-extern "C" __declspec(dllimport) int __stdcall IsBadReadPtr(
-	const void *address, unsigned long size);
+
+
+
 
 class GameWindow;
 extern void j_000336ae();
@@ -20,7 +20,7 @@ public:
 	char m_unmodelled00[0x50];
 	AsciiString m_mapName;
 };
-void _bfme_closeAptScreen(const AsciiString &screenName);
+
 class Image
 {
 public:
@@ -67,8 +67,8 @@ public:
 	void call( MapMetaData *map );
 };
 
-void bfmeGoENK( BfmeObjENK *window, char enable );
-void BfmeGadgetListBoxSetAudioFeedback( GameWindow *listbox, Bool enable );
+
+
 
 class Display
 {

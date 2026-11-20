@@ -17,7 +17,7 @@
 // the init() test.
 #include "StringInline.h"
 
-class GameWindow;
+
 
 class Shell
 {

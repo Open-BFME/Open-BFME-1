@@ -8,7 +8,7 @@ extern BfmeColorAdjust_00783070 g_bfmeColorAdjust_00783070;
 extern const float g_0107C64C;
 
 
-extern "C" long __ftol2(double value);
+
 
 static int bfmeColorComponent_00783070(unsigned int value, int index) {
     unsigned int channel = value;

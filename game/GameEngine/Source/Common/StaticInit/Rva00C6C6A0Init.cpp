@@ -18,4 +18,3 @@ public:
 // define the storage under that symbol.
 // Retire ?g_rva01307284Object@@3VScreenHilightFilter@@A
 extern "C" { ScreenHilightFilter __identifier("?TheBfmeObject_00C70B60@@3VGen_00C70B60Target@@A"); }
-extern "C" int __cdecl atexit(void (__cdecl *callback)());

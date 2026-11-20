@@ -17,7 +17,7 @@ extern "C" __declspec(dllimport) unsigned short __cdecl fputwc(unsigned short ch
 #include "../../../Include/Common/ScalarTypes.h"
 
 
-typedef unsigned short WideChar;
+
 
 static const Int MAX_REPLAY_FILE_NUMBER = 99999999;
 

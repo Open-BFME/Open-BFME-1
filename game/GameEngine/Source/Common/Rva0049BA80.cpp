@@ -26,7 +26,7 @@ public:
 	RvaC4390First *resolve( Int id );
 };
 
-class BfmeX1004;
+
 
 // Address-derived ABI view of the borrowed interface queried at slot +0xD8.
 // No concrete implementation, owner identity, or object lifetime is claimed.

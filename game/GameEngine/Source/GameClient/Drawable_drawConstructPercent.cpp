@@ -292,7 +292,7 @@ union ConstructCenterValue
 extern void j_00004e67();
 extern void j_0000abc3();
 extern void j_000084b8();
-extern void j_0001c3dc();
+
 extern void j_000351d9();
 extern void j_0003ee55();
 extern void j_000239ed();

@@ -7,7 +7,7 @@
 class BfmeListCU;
 class BfmeLinkCU;
 
-class ParticleSystem;
+
 
 template <class T>
 class TrackingPtr

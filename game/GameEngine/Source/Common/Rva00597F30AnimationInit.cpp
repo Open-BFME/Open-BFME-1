@@ -16,8 +16,8 @@ struct Rva00597F30Item
 	unsigned char y;
 };
 
-void bfmeFillPart( Rva00597F30Item *, Rva00597F30Item *,
-	const Rva00597F30Item * );
+
+
 
 typedef void (__cdecl *Rva00597F30FillCall)( Rva00597F30Item *,
 	Rva00597F30Item *, const Rva00597F30Item * );

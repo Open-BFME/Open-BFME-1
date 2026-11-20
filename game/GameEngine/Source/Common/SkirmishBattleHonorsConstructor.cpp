@@ -16,7 +16,7 @@ inline UnicodeString::~UnicodeString() { ((StringBase<unsigned short> *)this)->r
 // empty-name compare reads the real object and no stand-in global is needed.
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+
 
 
 #define TRUE 1

@@ -5,7 +5,7 @@
 // +0x270 == 2 enables or disables the Load and Delete APT buttons through
 // the same GenActionSink used by S3ActionSinkStringForwarders.cpp.
 
-class BfmeX1065;
+
 class BfmeH1065;
 // retail ILT 0x0004A1FB -> 0x004782E0 is the matched GameWindow::winEnable row
 class GameWindow

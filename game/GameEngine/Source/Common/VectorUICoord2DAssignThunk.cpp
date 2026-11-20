@@ -3,7 +3,7 @@
 
 #include <vector>
 
-typedef int Int;
+
 
 #include "../../../Libraries/Include/Lib/ICoord2D.h"
 

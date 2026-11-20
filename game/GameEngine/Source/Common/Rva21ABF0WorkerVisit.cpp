@@ -33,7 +33,7 @@ struct Rva21ABF0List
 
 class Rva21ABF0Worker;
 
-extern void j_00003288(void);
+
 
 struct Rva21ABF0WorkerCallView
 {

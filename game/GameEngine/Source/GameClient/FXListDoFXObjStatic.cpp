@@ -7,7 +7,7 @@
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include "FXListRetail.h"
-class Object;
+
 struct Coord3D;
 class Matrix3D;
 

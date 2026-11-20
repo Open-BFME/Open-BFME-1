@@ -14,6 +14,6 @@ public:
     ~Rva007D6B70();
     unsigned char m_storage[0x48];
 };
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
+
 
 Rva007D6B70 Rva007D6B70Instance01307228;

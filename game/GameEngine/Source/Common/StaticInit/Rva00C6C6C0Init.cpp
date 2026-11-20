@@ -14,7 +14,7 @@ public:
     ~Rva007D85C0() {}
     unsigned char m_storage[0x2C];
 };
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
+
 
 // 0x013072B8 is recorded (DIR32) as ?TheBfmeObject_00C70B70@@3VGen_00C70B70Target@@A;
 // define the storage under that symbol.

@@ -3,7 +3,7 @@
 // EH cleanup uses the actual retail thunks for the string at +0x0C and
 // four-byte vectors at +0x24/+0x30; helper identities stay local.
 
-extern void j_0000d828(void);
+
 extern void j_0002874a(void);
 
 class LargeGroupAudioMap;

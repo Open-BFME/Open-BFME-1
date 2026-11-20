@@ -19,7 +19,7 @@ public:
 	void rva_004091C0(Rva004091C0Node *node);
 };
 
-class BfmeResetSubsystem;
+
 class AnimationSoundModuleManager;
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 

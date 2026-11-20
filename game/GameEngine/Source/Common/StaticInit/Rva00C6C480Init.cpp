@@ -16,7 +16,7 @@ public:
     void *m_handle;
     unsigned m_locked;
 };
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
+
 
 // 0x012F878C is recorded (DIR32) as ?TheBfmeObject_00C709A0@@3VGen_00C709A0Target@@A.
 // Retire ?g_rva012F878CObject@@3VCriticalSectionClass@@A: define the storage under that symbol.

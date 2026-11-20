@@ -8,7 +8,7 @@
 
 #include "../../Include/Common/ScalarTypes.h"
 
-extern double Gen01085F58;
+
 
 struct BfmeCoord6DF110
 {

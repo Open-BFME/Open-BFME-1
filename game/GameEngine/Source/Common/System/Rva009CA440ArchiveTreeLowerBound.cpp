@@ -5,7 +5,7 @@
 
 class AsciiString;
 class Rva009CA440Owner;
-class ArchivedDirectoryInfo;
+
 struct Rva009C9CE0Value;
 struct Rva009C9CE0KeyOfValue;
 namespace _STL {

@@ -1,5 +1,5 @@
 // ?addTriples@Rva0018EF90Owner@@QAEXPBM@Z
-extern "C" long __ftol2(double value);
+
 
 struct Rva0018EF90Triple { int x; int y; int z; };
 struct Rva0018EF90Owner {

@@ -219,20 +219,20 @@ struct Keyboard0040F780;
 class BfmeGlobal_012f142c;
 class Mouse;
 class GenFallback;
-class Rva00367810VirtualGate;
+
 struct MovieControl0040F780;
 struct MovieFactory0040E3B0;
 class FadeView;
-class BfmeGlobal_012f076c;
+
 class GameLogic;
 struct Players005999B0;
 struct Engine007629F0;
 class GhostObjectManager;
-class Gen_00409040Registry;
-class Rva001A8820TerrainVisual;
+
+
 class ParticleSystemManager;
-class Rva0048EC80Manager;
-class Gen000290D2;
+
+
 class InGameUI;
 extern BfmeOwnVVD *g_bfmeSingletonVVD;
 extern Gen_005B42F0 *g_bfmeInstanceXE;

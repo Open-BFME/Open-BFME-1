@@ -86,7 +86,7 @@ public:
 // (?TheAudio@@3PAVAudioManager@@A); only the null test is needed here.
 class AudioManager;
 extern AudioManager *TheAudio;
-class BfmeResetSubsystem;
+
 class AnimationSoundModuleManager;
 extern AnimationSoundModuleManager *TheAnimationSoundModuleManager;
 

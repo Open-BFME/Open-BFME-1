@@ -14,7 +14,7 @@ public:
     ~Rva007E4960() {}
     void *m_vptr;
 };
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
+
 
 // 0x01309C18 is recorded (DIR32) as ?TheBfmeObject_00C70BC0@@3VGen_00C70BC0Target@@A;
 // define the storage under that symbol.

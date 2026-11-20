@@ -89,7 +89,7 @@ private:
 	unsigned char m_active25c;
 };
 
-class BfmeLivingWorldManagerIcons;
+
 // Retail 0x012F1028 is EA's LivingWorldLogic *TheLivingWorldLogic;
 // Rva012F1028Owner is this TU's view of the object.
 class LivingWorldLogic;

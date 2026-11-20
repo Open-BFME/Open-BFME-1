@@ -12,7 +12,7 @@ bool operator<(const AsciiString &left, const AsciiString &right);
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
-extern void __stdcall initializeRva006B3C50(void *buffer);
+
 
 class Rva006B3D50MutexGuard
 {

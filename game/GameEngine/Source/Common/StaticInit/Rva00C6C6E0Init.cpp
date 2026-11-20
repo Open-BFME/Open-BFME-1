@@ -15,4 +15,3 @@ public:
     unsigned char m_storage[0x1C];
 };
 ScreenMotionBlurFilter g_rva013072FCObject;
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
