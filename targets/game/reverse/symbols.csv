@@ -91347,3 +91347,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0N@GKGGOADM@ArmorSetFlag?$AA@,0x00C8D6A0,g_bfmeTableABF field-parse table VA 0x012AC188 entry 2 token; compiler string literal ArmorSetFlag equals retail at VA 0x0108D6A0
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x001CABE0,pin
+__controlfp,0x009F7DF2,route=MSVCR71.dll!_controlfp;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-fp8-atonexit-members.md
