@@ -10,7 +10,7 @@
 // (pos = pos - Vector3(...); pos *= 0.25f) with WWMath-style inline operators,
 // and 0.25f is a literal (VA 0x01083B6C) so the multiply keeps retail's
 // operand order.
-extern const float g_bfmeScaleEW;
+
 
 #include "../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

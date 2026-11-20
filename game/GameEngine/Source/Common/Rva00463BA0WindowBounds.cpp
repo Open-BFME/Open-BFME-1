@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-typedef float Real;
+
 
 #include "../../../Libraries/Include/Lib/Coord2D.h"
 

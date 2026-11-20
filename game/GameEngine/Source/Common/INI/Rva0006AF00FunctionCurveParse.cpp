@@ -4,7 +4,7 @@
 // the three field names and the BFME padding-name table are the shipped
 // literals used by this loader.
 
-typedef int Int;
+
 
 struct FieldParse;
 

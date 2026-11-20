@@ -14,9 +14,9 @@ struct Rva000FAA30Elem
     char m_body[0x60];
 };
 
-extern void j_0002013a();
-extern void j_0001b9d7();
-extern void j_0004845f();
+
+
+
 #pragma comment(linker, "/alternatename:??0?$_Vector_base@URva000FAA30Elem@@V?$allocator@URva000FAA30Elem@@@_STL@@@_STL@@QAE@IABV?$allocator@URva000FAA30Elem@@@1@@Z=?j_0001b9d7@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0Rva000FAA30Elem@@QAE@ABU0@@Z=?j_0004845f@@YAXXZ")
 #pragma comment(linker, "/alternatename:?get_allocator@?$vector@URva000FAA30Elem@@V?$allocator@URva000FAA30Elem@@@_STL@@@_STL@@QBE?AV?$allocator@URva000FAA30Elem@@@2@XZ=?j_0002013a@@YAXXZ")

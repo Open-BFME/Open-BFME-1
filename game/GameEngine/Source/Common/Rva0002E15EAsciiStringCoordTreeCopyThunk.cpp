@@ -7,7 +7,7 @@
 
 #include "ascii_string.h"
 
-typedef float Real;
+
 
 #include "../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef float Real;
+
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -8,7 +8,7 @@ extern "C" __declspec(dllimport) void __cdecl free(void *);
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
-typedef int BOOL;
+
 #include "../../Include/Common/ScalarTypes/Source/EngineBool.h"
 
 struct AsciiStringLayout

@@ -1,6 +1,6 @@
 // cl: /O2
 
-class AsciiString;
+
 
 class Rva0019A260Owned
 {

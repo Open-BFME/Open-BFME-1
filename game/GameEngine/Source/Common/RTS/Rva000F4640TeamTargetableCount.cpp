@@ -3,7 +3,7 @@
 #include "ObjectDlinkPmf.h"
 
 // Retail ILT thunks these bodies route their calls through.
-extern void j_00001140();
+
 extern void j_000022bb();
 
 class Rva000F4640Overridable

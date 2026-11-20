@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc
 
-extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *, const void *, unsigned int);
+
 
 class AsciiString;
 

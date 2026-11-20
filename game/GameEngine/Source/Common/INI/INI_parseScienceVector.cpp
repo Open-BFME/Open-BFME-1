@@ -12,7 +12,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-typedef int Int;
+
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *string1, const char *string2);
 

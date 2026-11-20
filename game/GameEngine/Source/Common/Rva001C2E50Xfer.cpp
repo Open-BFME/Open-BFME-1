@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 #include "../../Include/Common/ScalarTypes.h"
-typedef unsigned short WideChar;
+
 
 #include "ascii_string.h"
 

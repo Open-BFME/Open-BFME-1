@@ -27,7 +27,7 @@ extern void j_0001036b();
 extern void j_0002e898();
 extern void j_0003688b();
 extern void j_00028cf9();
-extern void j_00045408();
+
 
 class Rva003A5450
 {

@@ -14,7 +14,7 @@ void __cdecl bfmeSetSize(unsigned int value)
 	g_bfmeHalfBX = value >> 1;
 }
 
-extern int g_bfmeSeedBX;					// retail 0x0133F420
+					// retail 0x0133F420
 
 class Gen_0095C7F0
 {

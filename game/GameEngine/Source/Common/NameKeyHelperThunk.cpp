@@ -12,7 +12,7 @@
 // DIR32: TheNameKeyGenerator
 extern NameKeyGenerator *g_theNameKeyGenerator;
 // empty string literal for null AsciiString data
-extern "C" char g_NAMEKEY_empty_string;
+
 
 // ?NAMEKEY@@YA?AW4NameKeyType@@ABVAsciiString@@@Z
 NameKeyType NAMEKEY(const AsciiString &s)

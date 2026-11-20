@@ -59,7 +59,7 @@ public:
 	unsigned char m_pad[ 0x64 ];
 };
 
-extern void j_00001140();
+
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
 
 class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,

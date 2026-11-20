@@ -22,7 +22,7 @@ struct Q3SortCompare
 Gen8ByteElement *GenPartition00261010( Gen8ByteElement *first, Gen8ByteElement *last,
 	Gen8ByteElement value, Gen8ByteElementLess comp );
 void gen00261920( void *first, void *middle, void *last, int zero, void *comp );
-void gen002616d0( void *first, void *last, void *comp );
+
 
 inline const Q3SortElem8 *GenMedian00261AE0( const Q3SortElem8 *a,
 	const Q3SortElem8 *b, const Q3SortElem8 *c, Q3SortElementLess comp )

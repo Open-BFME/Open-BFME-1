@@ -6,9 +6,9 @@
 #include "PreRTS.h"
 #include "Common/Player.h"
 
-class TeamPrototype;
-class Object;
-class BehaviorModule;
+
+
+
 
 struct BfmePlayerScienceFields
 {

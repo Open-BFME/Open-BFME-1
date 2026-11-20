@@ -19,7 +19,7 @@
 extern "C" unsigned int __cdecl strlen(const char *text);
 #pragma intrinsic(strlen)
 
-typedef int Int;
+
 
 #include "ascii_string.h"
 

@@ -4,7 +4,7 @@
 // BfmeScoreEntryLess>, retail 0x005724D0, 192 bytes.  Pointer comparator
 // already named by the AptScoreScreen pin at 0x00570420; 16-byte iter_swap.
 
-class Team;
+
 class Player;
 class BfmeScoreObject;
 

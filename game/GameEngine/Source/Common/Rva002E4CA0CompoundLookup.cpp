@@ -1,6 +1,6 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-typedef bool Bool;
+
 
 struct BfmeEntryBB
 {

@@ -43,7 +43,7 @@ struct Shadow
 	void setOpacity(int value);
 };
 
-extern float g_bfmeUint32Scale;
+
 extern const float g_01075954;
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)

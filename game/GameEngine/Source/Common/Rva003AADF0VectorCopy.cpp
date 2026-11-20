@@ -37,8 +37,8 @@ public:
 	bool m_bfmeFlag;
 };
 
-extern void j_000404fd();
-extern void j_0003d16d();
+
+
 
 namespace _STL
 {

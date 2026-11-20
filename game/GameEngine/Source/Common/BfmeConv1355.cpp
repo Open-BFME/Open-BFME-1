@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-extern "C" long __ftol2(double v);
+
 
 class Rva00894D90Accessor
 {

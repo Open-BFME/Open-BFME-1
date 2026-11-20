@@ -52,7 +52,7 @@ private:
 	unsigned char m_bytes[0x6a4];
 };
 
-extern void j_00041943();
+
 extern void j_00030e90();
 
 // The ctor call still needs the alias: `new Rva000DFBD0PlayerStorage(i)` is the

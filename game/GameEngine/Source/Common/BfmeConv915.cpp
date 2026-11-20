@@ -7,7 +7,7 @@ struct BfmeNode915A
 	void *m_bfmeKey;
 };
 
-void bfmeFree915A(void *p, unsigned int n);
+
 
 class BfmeThing915A
 {

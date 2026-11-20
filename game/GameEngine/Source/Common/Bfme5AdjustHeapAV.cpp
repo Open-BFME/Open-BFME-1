@@ -6,7 +6,7 @@
 // 0x00513190). Everything else -- the class shapes, the xor "exactly one has a thing"
 // test, the _memicmp compare -- is identical to the twin.
 
-extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
+
 extern "C" __declspec(dllimport) int __cdecl _memicmp(const void *left, const void *right, unsigned int count);
 
 class BfmeNameAU

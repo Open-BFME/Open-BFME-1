@@ -2,7 +2,7 @@
 // Address-derived STLport vector<unsigned short>::resize body at 0x003C2EE0.
 // stlport
 
-typedef unsigned int size_t_;
+
 extern void j_000417f9();
 
 namespace Gen003C2EE0Stl
