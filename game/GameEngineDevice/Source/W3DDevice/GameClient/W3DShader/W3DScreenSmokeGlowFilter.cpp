@@ -15,7 +15,7 @@ struct DeviceVtable {
 };
 struct Device {DeviceVtable *v;};
 struct Rect {long left,top,right,bottom;};
-extern "C" long __stdcall D3DXLoadSurfaceFromMemory(Surface*,const void*,const Rect*,const void*,unsigned,unsigned,const void*,const Rect*,unsigned,unsigned);
+
 extern unsigned HighlightVertexSupport,HighlightPixelSupport;
 // Retail 0x012F9CE0. ScreenHilightFilter::init stores a sibling at 0x012F9CDC
 // under the same HighlightActive name.

@@ -41,7 +41,7 @@ extern void (*TheBfmeFree)(void *, unsigned int);
 
 extern void bfmeGoDWG();
 void bfmeCall936F(int);
-extern void j_00894110();
+
 extern void rva00897360(bool);
 void AptValueShutdown(int);
 extern void d_008acac0();

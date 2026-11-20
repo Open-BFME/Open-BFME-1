@@ -44,7 +44,7 @@ typedef std::map<AsciiString, ArchiveFile *> ArchiveFileMap;
 
 class File;
 #include "../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
-typedef int Bool;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFileSystem.h
 class Win32BIGFileSystem

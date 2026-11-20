@@ -19,7 +19,7 @@
 #include <string.h>
 #include "string_base.h"
 
-typedef int Int;
+
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 

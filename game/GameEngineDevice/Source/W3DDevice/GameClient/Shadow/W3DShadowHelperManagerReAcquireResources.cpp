@@ -71,7 +71,7 @@ public:
 		unsigned format, unsigned pool, void **indexBuffer, void *sharedHandle);
 };
 
-struct IDirect3DDevice8;
+
 struct IDirect3DIndexBuffer8;
 struct IDirect3DVertexBuffer8;
 

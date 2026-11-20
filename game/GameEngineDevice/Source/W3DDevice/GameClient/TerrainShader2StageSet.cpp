@@ -3,9 +3,9 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 #define HEAP_ZERO_MEMORY 8
-extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
-extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
-extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
+
+
+
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -205,7 +205,7 @@ namespace {
 // BFME hoisted the per-stage min/mag/mip filter selection (TheGlobalData's
 // bilinear/trilinear flags, plus an anisotropy cap check) out of every shader
 // pass into one helper each pass calls once per texture stage.
-void __cdecl setTerrainTextureFilters(unsigned stage);
+
 
 #define BFME_SET_RS(state_, value_)                                                          \
 	if (DX8Wrapper::RenderStates[state_] != (unsigned)(value_)) {                            \

@@ -9,7 +9,7 @@
 // +0x3064/+0x3078/+0x3088, and there is no name->compare() gate: this body
 // always re-sets and re-fetches the texture. Identity is not recovered.
 
-typedef bool Bool;
+
 
 class TextureClass
 {

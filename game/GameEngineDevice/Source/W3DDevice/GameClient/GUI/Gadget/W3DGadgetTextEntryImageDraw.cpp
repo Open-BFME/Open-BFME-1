@@ -76,7 +76,7 @@
 #include "W3DDevice/GameClient/W3DGadget.h"
 #include "W3DDevice/GameClient/W3DDisplay.h"
 
-extern "C" void _ReadWriteBarrier(void);
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -334,7 +334,7 @@ void W3DGadgetTextEntryDraw( GameWindow *window, WinInstanceData *instData )
 	drawTextEntryText( window, instData, textColor, textBorder, compositeColor, compositeBorder,
 										 start.x, start.y, width, fontHeight );
 
-	
+
 
 }  // end W3DGadgetTextEntryDraw
 
@@ -501,6 +501,6 @@ void W3DGadgetTextEntryImageDraw( GameWindow *window, WinInstanceData *instData 
 	Rva007986C0( window, textColor, textBorder, compositeColor, compositeBorder,
 										 start.x, start.y );
 
-	
+
 
 }  // end W3DGadgetTextEntryImageDraw

@@ -5,8 +5,8 @@
 #include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 
-extern const float g_rva01075350;
-extern const float BfmeShadowTanScale;
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h
 class DX8Wrapper

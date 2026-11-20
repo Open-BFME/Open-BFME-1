@@ -181,12 +181,12 @@ typedef unsigned int (BfmeShadowCall4::*BfmeShadowCall4Fn)(
 class W3DShadowHelperManager;
 extern W3DShadowHelperManager *TheW3DShadowHelperManager;
 
-extern void j_00021030();
-extern void j_00034be9();
+
+
 extern void j_000494fe();
 extern void j_00045b83();
 extern void j_00028baa();
-extern void j_0000553d();
+
 
 struct BfmeShadowVector3
 {

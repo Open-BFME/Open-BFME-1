@@ -5,7 +5,7 @@
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 typedef int Color;
 
-typedef unsigned short WideChar;
+
 
 class AsciiString;
 

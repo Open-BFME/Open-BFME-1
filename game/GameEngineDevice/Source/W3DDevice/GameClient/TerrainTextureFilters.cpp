@@ -3,9 +3,9 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 #define HEAP_ZERO_MEMORY 8
-extern "C" __declspec(dllimport) void * __stdcall GetProcessHeap(void);
-extern "C" __declspec(dllimport) void * __stdcall HeapAlloc(void *, unsigned long, unsigned long);
-extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, void *);
+
+
+
 #include "dx8wrapper.h"
 
 // ?setTerrainTextureFilters@@YAXI@Z

@@ -13,7 +13,7 @@
 class Vector3;
 
 
-extern "C" long __ftol2(double value);
+
 
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

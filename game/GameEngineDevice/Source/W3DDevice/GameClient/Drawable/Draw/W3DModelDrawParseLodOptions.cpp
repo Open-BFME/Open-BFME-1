@@ -5,7 +5,7 @@
 // Field table tokens: AllowMultipleModels MaxRandomTextures MaxRandomAnimations
 // MaxAnimFrameDelta RandomStartFramePercent. No named caller.
 
-typedef int Int;
+
 
 extern "C" int __cdecl strcmp(const char *, const char *);
 #pragma intrinsic(strcmp)

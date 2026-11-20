@@ -84,8 +84,8 @@ struct LocalGlobalDataView
 
 extern GlobalData *TheWritableGlobalData;
 extern void j_0002c458(void);
-extern void j_000312a0(void);
-extern void j_00001555(void);
+
+
 
 class View
 {

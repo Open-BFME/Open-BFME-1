@@ -6,7 +6,7 @@
 
 #include "../../../../GameEngine/Include/Common/ScalarTypes.h"
 
-struct IDirect3DBaseTexture8;
+
 
 struct BfmeVertexElement
 {

@@ -3,7 +3,7 @@
 // view follows RTS2DScene_Ctor_Thunk.cpp. Both vptrs are compiler-generated;
 // retail installs the primary table at VA 0x01121018 and secondary at 0x01121010.
 // The shader word is at DC; the two preceding floats initialize to -1.
-typedef bool Bool;
+
 class SceneClass;
 #include "../../../../Libraries/Source/WWVegas/WWMath/vector3.h"
 

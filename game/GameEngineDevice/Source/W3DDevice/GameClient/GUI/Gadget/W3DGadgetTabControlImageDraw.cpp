@@ -6,7 +6,7 @@
 #include "../../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 #include "../../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
 typedef unsigned char Bool;
-typedef float Real;
+
 typedef int Color;
 
 class Image;

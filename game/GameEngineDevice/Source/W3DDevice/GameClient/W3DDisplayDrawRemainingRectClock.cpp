@@ -50,7 +50,7 @@ public:
 
 extern const float g_rva01075350;
 extern float g_bfmeScaleBC;
-extern const float g_rva0107533C;
+
 extern float g_bfmeDefaultBU;
 
 extern const float g_01076C24;

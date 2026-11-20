@@ -104,7 +104,7 @@ struct GlobalDataSoftWaterView
 };
 
 // Global at 0x012F7FE0; only the minimum water opacity at +0x301C is used here.
-class BfmeGlobal_012f7fe0;
+
 // Retail 0x012F7FE0: use the existing data owner; retain the local pointee view.
 extern class BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 

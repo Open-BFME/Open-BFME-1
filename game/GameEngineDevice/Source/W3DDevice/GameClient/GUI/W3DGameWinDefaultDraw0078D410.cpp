@@ -3,12 +3,12 @@
 
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"
-typedef unsigned char Bool;
+
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Real.h"
 typedef int Color;
 
 class Image;
-class VideoBuffer;
+
 
 #include "../../../../../Libraries/Include/Lib/ICoord2D.h"
 

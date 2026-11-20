@@ -17,7 +17,7 @@
 // parameter `const void *` and so mangled to PAXPBX, which nothing defines.
 #include "Common/INI/INI.h"
 
-class ModuleData;
+
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);

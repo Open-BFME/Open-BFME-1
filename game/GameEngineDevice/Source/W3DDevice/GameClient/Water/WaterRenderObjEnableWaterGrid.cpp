@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Clean reconstruction of WaterRenderObjClass::enableWaterGrid at retail 0x007A1410.
 
-typedef int Bool;
+
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Int.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/HRESULT.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/UnsignedInt.h"

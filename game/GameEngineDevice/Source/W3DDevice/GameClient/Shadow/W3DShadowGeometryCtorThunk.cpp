@@ -24,7 +24,7 @@ private:
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/hash.h
 #include "../../../../../Libraries/Source/WWVegas/WWLib/hash.h"
 
-struct AsciiStringData;
+
 
 // BFME drift: the geometry name is a StringBase-derived string object at +0x10,
 // not Zero Hour's inline char[2*W3D_NAME_LEN].

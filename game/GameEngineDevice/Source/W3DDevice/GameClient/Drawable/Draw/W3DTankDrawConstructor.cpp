@@ -5,7 +5,7 @@
 // constructor's own retail stores prove the BFME dual-vtable base and the
 // two intrusive particle handles, so this TU keeps that ABI view local.
 
-typedef bool Bool;
+
 
 class Thing;
 class ModuleData;

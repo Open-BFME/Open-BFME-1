@@ -6,8 +6,8 @@
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/ww3d.h"
 #define BFME_FASTCRITICALSECTION_DEFINED
 #include "../../../../../Libraries/Source/WWVegas/WWLib/wwstring.h"
-class FrustumClass;
-class CameraClass;
+
+
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/rinfo.h"
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/rendobj.h"
 

@@ -142,8 +142,8 @@ extern const float g_rva01075350;
 #define g_rva01075350 BfmeBoundaryZero3D
 
 void j_00008d5f();
-void j_0003d5a0();
-void j_00046759();
+
+
 
 struct Rva00726290Vector3
 {

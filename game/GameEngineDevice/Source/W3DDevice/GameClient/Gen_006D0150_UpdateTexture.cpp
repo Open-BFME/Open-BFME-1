@@ -4,7 +4,7 @@
 // BFME height-map terrain subobject.  The paired 0x006D0280 body has the
 // same operation with the second terrain slot shifted by four bytes.
 
-typedef bool Bool;
+
 
 class TextureClass
 {

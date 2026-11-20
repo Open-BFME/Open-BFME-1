@@ -42,7 +42,7 @@ class BfmeScriptEngineFreezeExtra
 extern ScriptEngine *TheScriptEngine;
 class GameLogic;
 extern GameLogic *TheGameLogic;
-struct Rva00367E30Logic;
+
 class BfmeGameLogicPause
 {
   public:

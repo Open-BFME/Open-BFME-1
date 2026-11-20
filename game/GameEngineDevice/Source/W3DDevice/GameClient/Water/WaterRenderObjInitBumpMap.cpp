@@ -8,7 +8,7 @@
 // layout and lacks the bool-discard Lock overload used by this body.
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/DWORD.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/BYTE.h"
-typedef unsigned short WORD;
+
 #include "../../../../../GameEngine/Include/Common/ScalarTypes/Win32/LONG.h"
 #include "../../../../../GameEngine/Include/Common/ScalarTypes.h"
 struct LockedRect0079E700 { int Pitch; void *pBits; };

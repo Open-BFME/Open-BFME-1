@@ -266,7 +266,7 @@ public:
 };
 
 class MapObject { public: static Dict TheWorldDict; };
-extern char g_Va012A7A48[];
+
 extern unsigned int *RvaGlobal012A7A48;
 class View
 {

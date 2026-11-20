@@ -7,7 +7,7 @@ public:
 	void Release_Ref(void);
 };
 
-void b_0094cbf0(void);
+
 
 class Rva0094CDF0Handle
 {

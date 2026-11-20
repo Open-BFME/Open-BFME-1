@@ -43,7 +43,7 @@ struct BfmeDevice
 	BfmeDeviceVt *vt;
 };
 
-struct IDirect3DDevice8;
+
 
 
 class BfmeTacticalView

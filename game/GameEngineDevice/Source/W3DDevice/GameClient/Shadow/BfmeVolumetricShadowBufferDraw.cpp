@@ -6,7 +6,7 @@
 // address-derived: retail exposes the two write-lock destructors and the
 // buffer layout, but no named caller for this wrapper.
 
-typedef bool Bool;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8vertexbuffer.h
 

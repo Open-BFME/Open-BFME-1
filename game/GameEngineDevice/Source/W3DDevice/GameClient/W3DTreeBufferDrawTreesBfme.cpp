@@ -42,7 +42,7 @@ public:
 extern ScriptEngine *TheScriptEngine;
 class GameLogic;
 extern GameLogic *TheGameLogic;
-struct Rva00367E30Logic;
+
 class BfmeGameLogicPause {
 public:
   bool isGamePaused();
@@ -73,7 +73,7 @@ struct Rva002EE330PlayerList {
 // The field view above is TU-local and cast at each use.
 class PlayerList;
 extern PlayerList *ThePlayerList;
-struct Rva002EEDA0ShroudManager;
+
 class PartitionManager;
 extern PartitionManager *ThePartitionManager;
 class ShroudManager;

@@ -201,7 +201,7 @@ extern TerrainLogic *TheTerrainLogic;
 
 extern RenderObjClass *Create_Render_Obj(const char *name);
 extern HAnimClass *Get_HAnim(const char *name);
-extern void makeAlignToNormalMatrix(Real angle, const Coord3D &pos, const Coord3D &normal, Matrix3D &mtx);
+
 
 // Retail inlines AsciiString::str(): the text follows an 8-byte header and an
 // empty string reads the shared 0x0107388B literal.
