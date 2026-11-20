@@ -1922,7 +1922,7 @@ AIAttackMoveStateMachine::~AIAttackMoveStateMachine()
 // ??0AIMoveToState@@QAE@PAVStateMachine@@@Z: retail body is in game/GameEngine/Source/GameLogic/AI/AIMoveToStateCtorThunk.cpp
 
 //----------------------------------------------------------------------------------------------------------
-// ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ: retail body is in game/GameEngine/Source/GameLogic/AI/AIMoveToState_onEnter_Thunk.cpp
+// ?onEnter@AIMoveToState@@UAE?AW4StateReturnType@@XZ: readable retail body is implemented in this TU below.
 
 //----------------------------------------------------------------------------------------------------------
 void AIMoveToState::onExit( StateExitType status )
@@ -7031,3 +7031,76 @@ void AIFaceState::onExit( StateExitType status )
 //----------------------------------------------------------------------------------------------------------
 // AIFaceState::update: retail's body (0x00189660) is AIFaceState_update_Bfme.cpp;
 // Zero Hour's version is not defined here.
+
+
+// Native BFME1 fields used by AIMoveToState::onEnter. Shared Zero Hour
+// classes retain their existing providers; these views do not change them.
+class Gen_0026f940 { public: int m(); }; // existing address-derived getter provider
+extern Bool Glo012F0239;
+extern "C" void __cdecl bfmeRetailCritterDesyncLog(CRCParameterCheck*,const char*,...);
+namespace Rva00173470 {
+struct ObjectView {
+ unsigned char pad000[4];
+ OVERRIDE<ThingTemplate> m_template;
+ unsigned char pad008[0x30];
+ Coord3D m_position;
+ unsigned char pad044[0x30];
+ UnsignedInt m_id;
+ unsigned char pad078[0x18c];
+ Gen_0026f940 *m_ai;
+};
+struct MachineView {
+ unsigned char pad000[0x10];
+ Object *m_owner;
+ unsigned char pad014[0x10];
+ Coord3D m_goalPosition;
+};
+struct GeometryView {
+ unsigned char pad000[0xac];
+ GeometryInfo m_geometry;
+};
+static __forceinline const GeometryInfo &geometry(const GeometryView *view) { return view->m_geometry; }
+struct StateView {
+ unsigned char pad000[0x1c];
+ StateMachine *m_machine;
+ unsigned char pad020[4];
+ Coord3D m_goalPosition;
+ unsigned char pad030[0x1c];
+ Bool m_adjustDestinations;
+};
+}
+StateReturnType AIMoveToState::onEnter()
+{
+ using namespace Rva00173470;
+ StateView *self=reinterpret_cast<StateView*>(this);
+ if(Glo012F0239 && TheCRCParameterCheck)
+  bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(TRUE) 4");
+ self->m_adjustDestinations=true;
+ Gen_0026f940 *ai=reinterpret_cast<ObjectView*>(reinterpret_cast<MachineView*>(self->m_machine)->m_owner)->m_ai;
+ if(self->m_machine->getGoalObject()) {
+  if(ai) {
+   UnsignedInt goalID=reinterpret_cast<ObjectView*>(self->m_machine->getGoalObject())->m_id;
+   if(goalID==ai->m()) {
+   if(Glo012F0239 && TheCRCParameterCheck)
+    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"CritterDesync: setAdjustDestination(FALSE) 5");
+   self->m_adjustDestinations=false;
+   }
+  }
+ }
+ StateMachine *machine;
+ if(self->m_machine->getGoalObject()) {
+  self->m_goalPosition=reinterpret_cast<ObjectView*>(self->m_machine->getGoalObject())->m_position;
+  machine=self->m_machine;
+  const ThingTemplate *ownerTemplate=reinterpret_cast<ObjectView*>(reinterpret_cast<MachineView*>(machine)->m_owner)->m_template;
+  if(*reinterpret_cast<const UnsignedInt*>(reinterpret_cast<const char*>(ownerTemplate)+0xc8)&0x02000000) {
+   Real halfHeight=geometry(reinterpret_cast<GeometryView*>(machine->getGoalObject())).getMaxHeightAbovePosition()*0.5f;
+   self->m_goalPosition.z+=halfHeight;
+   if(reinterpret_cast<ObjectView*>(self->m_machine->getGoalObject())->m_position.z<self->m_goalPosition.z)
+    self->m_goalPosition.z+=halfHeight;
+  }
+ } else {
+  machine=self->m_machine;
+  self->m_goalPosition=reinterpret_cast<MachineView*>(machine)->m_goalPosition;
+ }
+ return AIInternalMoveToState::onEnter();
+}

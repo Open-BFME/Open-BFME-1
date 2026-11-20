@@ -4397,3 +4397,25 @@ same-name providers. Other TUs still emit an EH variant of the primary
 symbol, so this finding does not establish full-image COMDAT selection.
 See `game/Libraries/Source/WWVegas/WWLib/VectorICoord2DAllocateAndCopy.cpp`
 and `targets/game/reverse/identity_evidence/20261120-009f5370-vector-allocate-copy.md`.
+
+
+## Preserve OVERRIDE's member object and the inline recursive walker (2026-11-20)
+
+AIMoveToState::onEnter,0x00173470 (322B,MSVC7.1 13.10.3077,/O2 /MD /EHsc)
+was banked at331B with an early-EDI-push mismatch. Normal member declarations
+alone were byte-neutral. After correcting an extra null guard and retaining
+the witnessed machine local for the first geometry lookup,the remaining
+wrapper load folded to `[ecx+4]` instead of retail's `add eax,4;mov eax,[eax]`.
+The actual GeneralsMD Thing member is OVERRIDE<ThingTemplate>. Keeping that
+member object and the visible inline recursive getFinalOverride gives the
+complete322B exactly; declaring the walker only gives317B. This also fixes the
+fallback copy's register context. It is an observed result for this TU,not a
+general claim about wrapper classes or a semantic layout proof from bytes alone.
+
+The complete AIStates.cpp integration uses existing shared types plus scoped
+BFME field views. A static __forceinline accessor returning the geometry member
+by const reference gives retail's LEA and emits no helper body; direct pointer
+arithmetic or direct member access gave MOV+ADD and324B. All103 existing rows
+remain strict-exact in the private whole-TU control. See
+identity_evidence/20261120-00173470-native-override-and-tu.md and the landed
+AIStates.cpp body; ordinary gates still establish production acceptance.
