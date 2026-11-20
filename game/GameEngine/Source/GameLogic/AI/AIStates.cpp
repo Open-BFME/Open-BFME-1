@@ -5178,119 +5178,119 @@ StateReturnType AIAttackState::onEnter()
  * Execute one frame of "attack enemy" behavior.
  */
 
-// ?update@AIAttackState@@UAE?AW4StateReturnType@@XZ present-unmatched
-StateReturnType AIAttackState::update()
-{
-	USE_PERF_TIMER(AIAttackState)
-	// if we've met the conditions specified by m_attackParameters, we consider ourselves "successful."
-	if (m_attackParameters && m_attackParameters->shouldExit(getMachine())) 
-	{
-		return STATE_SUCCESS;
-	}
+// AIAttackState::update is implemented below using native BFME1 views.
 
-	Object* source = getMachineOwner();
-	
-	// if all of our weapons are out of ammo, can't attack.
-	// (this can happen for units which never auto-reload, like the Raptor)
-	if (source->isOutOfAmmo() && !source->isKindOf(KINDOF_PROJECTILE))
-	{
-		return STATE_FAILURE;
-	}
 
-	if (m_isAttackingObject)
-	{
-		Object* victim = getMachineGoalObject();
 
-		if (victim == NULL || victim->isEffectivelyDead()) 	
-		{
-			source->getAI()->notifyVictimIsDead();
-			return STATE_SUCCESS;	// my, that was easy
-		}
 
-		if (victim) 
-		{
-			source->getAI()->setCurrentVictim(victim);
-		}
 
-		if( victim->getTeam() != m_victimTeam )
-		{
-			// If, while I have been attacking my victim, it has lost its ability to attack 
-			//(a recently de-garrisoned building) I should bail here... 
-			// We are not sure whether the problem occurs here or sometime before, but this is an edge case failsafe for it
-			// Steven calls this hack 'greasy,' and I agreesy.-Lorenzen
-			AIUpdateInterface *ai = source->getAI();
-			if (ai)
-			{
-				if( !victim->getStatusBits().test( OBJECT_STATUS_CAN_ATTACK ) )
-				{
-					if ( victim->getContain() != NULL )
-					{
-						if (victim->getContain()->isGarrisonable() && (victim->getContain()->getContainCount() == 0) )
-						{
-							if ( source->getRelationship( victim ) == NEUTRAL )
-							{
-								ai->friend_setGoalObject(NULL);
-								if (victim==source->getTeam()->getTeamTargetObject()) {
-									source->getTeam()->setTeamTargetObject(NULL);
-								}
-								ai->notifyVictimIsDead();	// well, not "dead", but longer attackable
-								return STATE_FAILURE;
-							}
-						}
-					}
-				}
-			}
-			//The team of the victim has changed since we began attacking it. Evaluate
-			//whether or not we should keep attacking it.
-			// order matters: we want to know if I consider it to be an enemy, not vice versa
-			if( source->getRelationship( victim ) != ENEMIES)
-			{
-				ai->friend_setGoalObject(NULL);
-				if (victim==source->getTeam()->getTeamTargetObject()) {
-					source->getTeam()->setTeamTargetObject(NULL);
-				}
-				ai->notifyVictimIsDead();	// well, not "dead", but longer attackable
-				return STATE_FAILURE;
-			}
-		}	
 
-		if (victim != m_attackMachine->getGoalObject()) 
-		{
-			// Our parent machine has changed the goal.  We need to reset to the new goal.  jba.
-			m_attackMachine->setGoalObject( victim );
-		}
-	}
 
-	// re-evaluate our weapon choice every frame, so the sub-states don't have to.
 
-	// Something can happen to make none of our weapons work.  Return failure, or we will start shooting
-	// our Primary (default pick) regardless of legality.
-	Bool weaponPicked = chooseWeapon();
-	if( !weaponPicked )
-		return STATE_FAILURE;
 
-	Weapon* curWeapon = source->getCurrentWeapon();
 
-	// if we entered with a locked weapon (ie, a special weapon), then we will
-	// only keep attacking as long as that weapon remains the cur weapon...
-	// if anything ever changes that weapon, we exit attack mode immediately.
-	if (m_lockedWeaponOnEnter != NULL && m_lockedWeaponOnEnter != curWeapon)
-		return STATE_FAILURE;
 
-	// we've shot as many times as we are allowed to
-	if (curWeapon == NULL || curWeapon->getMaxShotCount() <= 0)
-		return STATE_FAILURE;
 
-	/**
-	 * Run the attack state sub-machine.
-	 * If the attack state machine returns anything other than CONTINUE,
-	 * it has finished. Propagating the return code will cause
-	 * the containing state machine to do the right thing.
-	 * Note the use of CONVERT_SLEEP_TO_CONTINUE; even if the sub-machine
-	 * sleeps, we still need to be called every frame.
-	 */
-	return CONVERT_SLEEP_TO_CONTINUE(m_attackMachine->updateStateMachine());
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //----------------------------------------------------------------------------------------------------------
 // byte-exact reconstruction: game/GameEngine/Source/Common/AIAttackState_onExit_Thunk.cpp
@@ -7103,4 +7103,215 @@ StateReturnType AIMoveToState::onEnter()
   self->m_goalPosition=reinterpret_cast<MachineView*>(machine)->m_goalPosition;
  }
  return AIInternalMoveToState::onEnter();
+}
+
+// Native 0x0017CAE0 views. Shared Zero Hour classes and their existing
+// providers retain their layout. The comparison's retail 90-byte body is
+// a read-only strlen/memcmp operation and cannot throw a C++ exception.
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+template<> inline bool StringBase<char>::isEmpty() const { return m_data==0 || m_data->length==0; }
+template<> int StringBase<char>::compare(const char *) const throw();
+extern void j_0002191d();
+extern void j_0002dd2b();
+class BfmeUnit1001 { public: char bfmeReady1001(); };
+class BFMEActionObject { public: bool testStatus(int) const; };
+class Gen_0016A1B0 { public: bool bfmeQuery(); };
+class Rva001E1770ByteField { public: unsigned char get() const; };
+class Rva0016F9E0WeaponNameShim { public: AsciiString getName() const; };
+class ObjectGetRelationshipShim { public: Relationship get(const Object *other) const; };
+
+namespace Rva0017CAE0 {
+class NativeObject;
+class NativeWeapon;
+class NativeMachine;
+class NativeString {
+ void *m_data;
+public:
+ bool isEmpty() const { return reinterpret_cast<const StringBase<char>*>(this)->isEmpty(); }
+ int compare(const char *p) const { return reinterpret_cast<const StringBase<char>*>(this)->compare(p); }
+};
+static __forceinline const char *nativeStr(const AsciiString &s) { return reinterpret_cast<const StringBase<char>*>(&s)->str(); }
+class NativeTeam {
+public:
+ NativeObject *getTeamTargetObject() { return reinterpret_cast<NativeObject*>(reinterpret_cast<Team*>(this)->getTeamTargetObject()); }
+ void setTeamTargetObject(const NativeObject *o) { reinterpret_cast<Team*>(this)->setTeamTargetObject(reinterpret_cast<const Object*>(o)); }
+};
+class NativeAI : public BFMEVirtualSlots<128> {
+public:
+ virtual CommandSourceType getLastCommandSource() const=0;
+ virtual void notifyVictimIsDead()=0;
+ virtual void s130()=0; virtual void s131()=0; virtual void s132()=0; virtual void s133()=0;
+ virtual void s134()=0; virtual void s135()=0;
+ virtual bool querySlot136()=0;
+ void setCurrentVictim(const NativeObject *o) { reinterpret_cast<AIUpdateInterface*>(this)->setCurrentVictim(reinterpret_cast<const Object*>(o)); }
+ void friend_setGoalObject(NativeObject *o) { reinterpret_cast<AIUpdateInterface*>(this)->friend_setGoalObject(reinterpret_cast<Object*>(o)); }
+};
+class NativeContain : public BFMEVirtualSlots<2> {
+public:
+ virtual bool isGarrisonable() const=0;
+ virtual void c03()=0; virtual void c04()=0; virtual void c05()=0; virtual void c06()=0; virtual void c07()=0;
+ virtual void c08()=0; virtual void c09()=0; virtual void c10()=0; virtual void c11()=0; virtual void c12()=0;
+ virtual void c13()=0; virtual void c14()=0; virtual void c15()=0; virtual void c16()=0; virtual void c17()=0;
+ virtual void c18()=0; virtual void c19()=0; virtual void c20()=0; virtual void c21()=0; virtual void c22()=0;
+ virtual void c23()=0; virtual void c24()=0; virtual void c25()=0; virtual void c26()=0; virtual void c27()=0;
+ virtual void c28()=0; virtual void c29()=0; virtual void c30()=0; virtual void c31()=0; virtual void c32()=0;
+ virtual void c33()=0; virtual void c34()=0; virtual void c35()=0; virtual void c36()=0; virtual void c37()=0;
+ virtual void c38()=0; virtual void c39()=0; virtual void c40()=0; virtual void c41()=0; virtual void c42()=0;
+ virtual bool vetoesAttack(NativeObject *source,NativeObject *victim) const=0;
+ virtual void c44()=0; virtual void c45()=0; virtual void c46()=0; virtual void c47()=0; virtual void c48()=0;
+ virtual void c49()=0; virtual void c50()=0; virtual void c51()=0; virtual void c52()=0; virtual void c53()=0;
+ virtual void c54()=0; virtual void c55()=0; virtual void c56()=0; virtual void c57()=0; virtual void c58()=0;
+ virtual void c59()=0; virtual void c60()=0; virtual void c61()=0; virtual void c62()=0; virtual void c63()=0;
+ virtual unsigned getContainCount(int) const=0;
+};
+class NativeMachine {
+public:
+ virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
+ virtual StateReturnType updateStateMachine(); virtual void s5(); virtual void s6(); virtual void s7();
+ virtual StateReturnType setState(unsigned); virtual void s9(); virtual void s10(); virtual void s11(); virtual void s12(); virtual void s13();
+ virtual void setGoalObject(const NativeObject*);
+ char pad04[12]; NativeObject *m_owner; char pad14[4]; unsigned m_defaultStateID;
+ NativeObject *getGoalObject() { return reinterpret_cast<NativeObject*>(reinterpret_cast<StateMachine*>(this)->getGoalObject()); }
+};
+class NativeExit { public: virtual bool shouldExit(const NativeMachine*) const=0; };
+class NativeWeapon {
+public:
+ char pad00[4]; Rva001E1770ByteField *m_field04; char pad08[0x2c]; int m_field34;
+};
+struct TemplateView { char pad00[0x20]; NativeString m_name; };
+class NativeObject {
+public:
+ char pad000[4]; OVERRIDE<ThingTemplate> m_template;
+ char pad008[0x108]; unsigned m_modelConditionFlags[10];
+ char pad138[0xc4]; NativeContain *m_contain; char pad200[4]; NativeAI *m_ai;
+ char pad208[0xc]; NativeObject *m_containedBy; char pad218[0x24]; NativeTeam *m_team;
+ char pad240[0x104]; unsigned char m_privateStatus;
+ NativeAI *getAI() const { return m_ai; }
+ NativeTeam *getTeam() const { return m_team; }
+ NativeContain *getContain() const { return m_contain; }
+ bool isKindOf(KindOfType k) const { return reinterpret_cast<const Thing*>(this)->isKindOf(k); }
+ Relationship getRelationship(const NativeObject *o) const { return reinterpret_cast<const ObjectGetRelationshipShim*>(this)->get(reinterpret_cast<const Object*>(o)); }
+ NativeWeapon *getCurrentWeapon(WeaponSlotType *slot) { return reinterpret_cast<NativeWeapon*>(reinterpret_cast<Object*>(this)->getCurrentWeapon(slot)); }
+};
+static __forceinline unsigned nativeCurrentStateID(const NativeMachine *machine) {
+ typedef unsigned (NativeMachine::*Getter)() const;
+ union { void (*f)(); Getter m; } u={j_0002dd2b};
+ return (machine->*u.m)();
+}
+static __forceinline void nativeNotifyModelConditionChanged(NativeObject *object) {
+ typedef void (NativeObject::*Notify)();
+ union { void (*f)(); Notify m; } u={j_0002191d};
+ (object->*u.m)();
+}
+class NativeStateSlots {
+public:
+ virtual void s0(); virtual void s1(); virtual void s2(); virtual void s3();
+ virtual StateReturnType onEnter(); virtual void onExit(StateExitType); virtual StateReturnType update();
+};
+struct StateView {
+ char pad00[0x1c]; NativeMachine *m_machine; char pad20[8]; NativeMachine *m_attackMachine;
+ NativeExit *m_attackParameters; NativeTeam *m_victimTeam; Coord3D m_originalVictimPos; NativeString m_lockedWeaponOnEnter;
+ bool m_follow,m_isAttackingObject,m_isForceAttacking; char pad47;
+ unsigned m_bfmeAttackState48; bool m_bfmeAttackState4C,m_bfmeAttackState4D; char pad4e[2]; unsigned m_attackMachineType;
+ NativeMachine *getMachine() const { return m_machine; }
+};
+typedef char NativeStringSize[(sizeof(NativeString)==4)?1:-1];
+typedef char TemplateOffset[(offsetof(NativeObject,m_template)==4)?1:-1];
+typedef char ModelConditionOffset[(offsetof(NativeObject,m_modelConditionFlags)==0x110)?1:-1];
+typedef char ContainOffset[(offsetof(NativeObject,m_contain)==0x1fc)?1:-1];
+typedef char AIOffset[(offsetof(NativeObject,m_ai)==0x204)?1:-1];
+typedef char ContainedByOffset[(offsetof(NativeObject,m_containedBy)==0x214)?1:-1];
+typedef char TeamOffset[(offsetof(NativeObject,m_team)==0x23c)?1:-1];
+typedef char PrivateStatusOffset[(offsetof(NativeObject,m_privateStatus)==0x344)?1:-1];
+typedef char MachineOwnerOffset[(offsetof(NativeMachine,m_owner)==0x10)?1:-1];
+typedef char MachineDefaultIDOffset[(offsetof(NativeMachine,m_defaultStateID)==0x18)?1:-1];
+typedef char WeaponTemplateOffset[(offsetof(NativeWeapon,m_field04)==4)?1:-1];
+typedef char ShotCountOffset[(offsetof(NativeWeapon,m_field34)==0x34)?1:-1];
+typedef char TemplateNameOffset[(offsetof(TemplateView,m_name)==0x20)?1:-1];
+typedef char StateMachineOffset[(offsetof(StateView,m_machine)==0x1c)?1:-1];
+typedef char AttackMachineOffset[(offsetof(StateView,m_attackMachine)==0x28)?1:-1];
+typedef char LockedWeaponNameOffset[(offsetof(StateView,m_lockedWeaponOnEnter)==0x40)?1:-1];
+typedef char AttackObjectOffset[(offsetof(StateView,m_isAttackingObject)==0x45)?1:-1];
+typedef char WeaponFlagOffset[(offsetof(StateView,m_bfmeAttackState4C)==0x4c)?1:-1];
+typedef char StateSize[(sizeof(StateView)==0x54)?1:-1];
+}
+StateReturnType AIAttackState::update()
+{
+ using namespace Rva0017CAE0;
+ StateView *self=reinterpret_cast<StateView*>(this);
+ NativeObject *source=self->m_machine->m_owner;
+ NativeObject *victim=self->m_machine->getGoalObject();
+ if(self->m_attackParameters && self->m_attackParameters->shouldExit(self->getMachine())) return STATE_SUCCESS;
+ NativeAI *ai=source->getAI();
+ if(ai && ai->querySlot136()) return STATE_CONTINUE;
+ if(reinterpret_cast<BfmeUnit1001*>(source)->bfmeReady1001() && !source->isKindOf((KindOfType)25)) return STATE_FAILURE;
+ if(self->m_isAttackingObject) {
+  if(!victim || (victim->m_privateStatus&1) || reinterpret_cast<BFMEActionObject*>(victim)->testStatus(49)) {
+   source->getAI()->notifyVictimIsDead();
+   if(source->isKindOf((KindOfType)150)) return STATE_SUCCESS;
+   StateReturnType status=self->m_attackMachine->updateStateMachine();
+   return CONVERT_SLEEP_TO_CONTINUE(status);
+  }
+  NativeAI *activeAI=source->getAI();
+  unsigned commandSource=static_cast<unsigned>(activeAI->getLastCommandSource());
+  bool sourceFlag=reinterpret_cast<BFMEActionObject*>(source)->testStatus(28);
+  const bool &enemy=source->getRelationship(victim)==ENEMIES;
+  if(!enemy && self->m_bfmeAttackState4D && (commandSource&2) && !sourceFlag && !victim->isKindOf((KindOfType)93)) {
+   activeAI->friend_setGoalObject(0);
+   if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
+   activeAI->notifyVictimIsDead();
+   return STATE_FAILURE;
+  }
+  source->getAI()->setCurrentVictim(victim);
+  if(victim->getTeam()!=self->m_victimTeam) {
+   if(ai && !reinterpret_cast<BFMEActionObject*>(victim)->testStatus(1) && victim->getContain() &&
+      victim->getContain()->isGarrisonable() && victim->getContain()->getContainCount(0)==0 &&
+      source->getRelationship(victim)==NEUTRAL) {
+    ai->friend_setGoalObject(0);
+    if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
+    ai->notifyVictimIsDead();
+    return STATE_FAILURE;
+   }
+   if(source->getRelationship(victim)!=ENEMIES) {
+    ai->friend_setGoalObject(0);
+    if(victim==source->getTeam()->getTeamTargetObject()) source->getTeam()->setTeamTargetObject(0);
+    ai->notifyVictimIsDead();
+    return STATE_FAILURE;
+   }
+  }
+  if(victim!=self->m_attackMachine->getGoalObject()) self->m_attackMachine->setGoalObject(victim);
+ }
+ NativeObject *related=source->m_containedBy;
+ if(related && related->getContain() && related->getContain()->vetoesAttack(source,victim)) return STATE_FAILURE;
+ if(!chooseWeapon()) return STATE_FAILURE;
+ NativeWeapon *weapon=source->getCurrentWeapon(0);
+ if(!self->m_lockedWeaponOnEnter.isEmpty() && weapon && self->m_lockedWeaponOnEnter.compare(nativeStr(reinterpret_cast<const Rva0016F9E0WeaponNameShim*>(weapon)->getName()))) {
+  const ThingTemplate *tmpl=source->m_template;
+  if(reinterpret_cast<const TemplateView*>(tmpl)->m_name.compare("GondorTrebuchet")) return STATE_FAILURE;
+ }
+ if(!weapon || weapon->m_field34<=0) return STATE_FAILURE;
+ if(weapon->m_field04->get()!=self->m_bfmeAttackState4C) {
+  reinterpret_cast<NativeStateSlots*>(this)->onExit(EXIT_NORMAL);
+  if(ai) {
+   ai->setCurrentVictim(victim);
+   ai->friend_setGoalObject(victim);
+   self->m_machine->setGoalObject(victim);
+  }
+  return reinterpret_cast<NativeStateSlots*>(this)->onEnter();
+ }
+ if(nativeCurrentStateID(self->m_attackMachine)==0xe4) {
+  if(reinterpret_cast<unsigned char*>(source->m_modelConditionFlags)[4]&0x20) {source->m_modelConditionFlags[1]&=~0x20; nativeNotifyModelConditionChanged(source);}
+  if(reinterpret_cast<unsigned char*>(source->m_modelConditionFlags)[4]&0x40) {source->m_modelConditionFlags[1]&=~0x40; nativeNotifyModelConditionChanged(source);}
+ } else {
+  if(!(reinterpret_cast<unsigned char*>(source->m_modelConditionFlags)[4]&0x20)) {source->m_modelConditionFlags[1]|=0x20; nativeNotifyModelConditionChanged(source);}
+  if(victim && victim->isKindOf((KindOfType)7)) {
+   if(!(reinterpret_cast<unsigned char*>(source->m_modelConditionFlags)[4]&0x40)) {source->m_modelConditionFlags[1]|=0x40; nativeNotifyModelConditionChanged(source);}
+  }
+ }
+ if(reinterpret_cast<Gen_0016A1B0*>(self->m_attackMachine)->bfmeQuery()) {
+  unsigned defaultID=self->m_attackMachine->m_defaultStateID;
+  if(self->m_attackMachine->setState(defaultID)==STATE_FAILURE) return STATE_FAILURE;
+ }
+ StateReturnType status=self->m_attackMachine->updateStateMachine();
+ return CONVERT_SLEEP_TO_CONTINUE(status);
 }

@@ -4419,3 +4419,40 @@ arithmetic or direct member access gave MOV+ADD and324B. All103 existing rows
 remain strict-exact in the private whole-TU control. See
 identity_evidence/20261120-00173470-native-override-and-tu.md and the landed
 AIStates.cpp body; ordinary gates still establish production acceptance.
+
+
+
+## A true override wrapper and nonthrowing comparison restore conditional-string temporary scheduling (2026-11-20)
+
+AIAttackState::update, 0x0017CAE0, 1108 B, native MSVC 7.1
+13.10.3077 /O2 /DNDEBUG /MD /EHsc in AIStates.cpp. The old private
+/EHs-c- bank was 1100 B with 433 positional differences. Replacing its
+manual template/nextOverride unwrapping with the actual OVERRIDE<ThingTemplate>
+member and visible recursive Overridable walker gives 1108 B/15 differences
+under that old profile; reference-receiver aliases alone are neutral.
+
+The proper TU uses /EHsc. With StringBase<char>::compare(const char*) declared
+potentially throwing it emits a 1230-B body/EH frame. The entire native 90-B
+comparison at 0x000A2BB0 contains only pointer/length reads, a byte length loop,
+inline repe cmpsb and return arithmetic: no calls, allocation, callback or
+C++ throw. A TU-local explicit specialization declaration `template<> int
+StringBase<char>::compare(const char*) const throw();` before the new native
+view's uses preserves the real provider/mangling and /EHsc and gives 1108 B
+without an EH frame. It also moves the conditional temporary cleanup-bit store
+from before getName to after the successful call/load/test, matching retail.
+This contract is supported by that complete native provider; do not apply it
+to allocating comparisons or unrelated getters by analogy.
+
+The last four EAX/EDX differences in virtual setState disappear when the
+proven native default-state ID at machine+0x18 is materialized in an unsigned
+value local before the call. A const-reference-returning accessor is neutral;
+the value accessor is exact. Preserving the native getMachine accessor at the
+earlier shouldExit call also preserves its reload and instruction size in the
+proper TU. These are measured effects, not general register-allocation laws.
+
+Whole-TU proof: main 1108 B, 37 relocations, strict/unmasked and no unresolved
+symbols; 104 existing rows remain strict/exact in fresh control/candidate
+objects. Eighteen emitted small helper definitions were independently compared
+under their own emitted names against the current evidenced native providers.
+No new pins, aliases, compiler flags, imported helper names or gate changes.
+Evidence: targets/game/reverse/identity_evidence/20261120-0017cae0-native-attack-update.md.

@@ -22310,5 +22310,15 @@
   "after_sha256": "9e2e87f5e014f912006666f8b38f8a7a5bb5ae1dca1ee4a8826fc43deffa043b",
   "evidence": "targets/game/reverse/identity_evidence/001cabe0-colour-callers-retired-name.md",
   "reason": "Callee through ILT 0x0002CA61: the retired pin ?value@ObjectAttemptDamageFlagHook@@QAEHXZ (removed in 221a96741) is refuted by the matched body at 0x001CABE0, which returns a player/indicator colour (default 0xff000000), not a damage flag; the caller now uses the ledger's existing row ?rva001CABE0@BfmeSubBIC@@QAEHXZ, as 94adfea7e did for BfmeConv553.cpp."
- }
+ },
+{
+ "old_path": "targets/game/reverse/attempts/0x0017cae0.cpp",
+ "new_path": "game/GameEngine/Source/GameLogic/AI/AIStates.cpp",
+ "old_name": "y",
+ "new_name": "bfmeReady1001",
+ "before_sha256": "8233089a30a724acc3f702ac937427c86e72014b5bbe5c9ce58f37c5df81114b",
+ "after_sha256": "2c8a3b24ce6d732ad72812d899fec4a769330b0f7e1194fd179ee715c684b3d8",
+ "evidence": "targets/game/reverse/identity_evidence/20261120-0017cae0-native-attack-update.md",
+ "reason": "False token alignment: bank Coord3D::y is a float coordinate now supplied by the shared header, whereas bfmeReady1001 was already declared and called in that same bank and keeps the unchanged 0x000331C7 native pin. No coordinate member was renamed to a function."
+}
 ]
