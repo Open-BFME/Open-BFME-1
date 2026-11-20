@@ -28,9 +28,12 @@ Every `__imp_` reference an object emits falls in one class:
                witness proves a retail IAT slot. Refused: the native import
                library must provide the cell; STATIC cells need a DIR32 witness
 
-and a definition in one of our objects of a name that an import library also
-defines as the call stub of a retail import is a DUPLICATE THUNK: it links only
-under /FORCE. Its address-owned name is `?j_XXXXXXXX@@YAXXZ` (AGENTS.md) when
+and an unproved definition of an import library's callable name is a DUPLICATE
+THUNK. A current authored C++ row can instead own the exact native public
+six-byte FF25 callable only with full code/relocation/import identity proof.
+That link receives private IAT-only providers and must select the proved C++
+object and exact PE DLL/export slot. Original libraries keep their CODE facts.
+An unproved definition's address-owned name is `?j_XXXXXXXX@@YAXXZ` (AGENTS.md) when
 the body is the 6-byte `jmp [slot]`, else `RvaXXXXXXXX_<name>`.
 
   python3 tools/import_binding.py measure [--objects RSP] [--json OUT]
@@ -45,10 +48,11 @@ stamp their write for the pre-commit check (tools/gate_writers.py).
 
 `check` compiles the TU with build.py (the scoped byte gate), then requires
 of the fresh object: no alias/invented/conflict/wrong-slot import and no
-duplicate thunk; every DIR32 site of every matched row that reads an
+unproved duplicate thunk; every DIR32 site of every matched row that reads an
 `__imp_` name reads, in retail, the IAT slot of that name's real import; and
 a link with no /FORCE, /NODEFAULTLIB, against the retail import libraries
-(data_scaffold.retail_libraries) plus labelled link-only stubs for every
+(data_scaffold.retail_libraries, scoped IAT-only copies only for proved owners)
+plus labelled link-only stubs for every
 non-import external, succeeds and imports only what retail imports, from the
 same DLL. Stubs never define an `__imp_` name or an import library's call
 stub, so an import can only be resolved by the real library. Receipt:
@@ -186,6 +190,8 @@ class Imports:
     """What the real import libraries provide, bound to retail's slots."""
 
     def __init__(self, slots, libs):
+        self.libraries = tuple(libs)                 # original CODE facts, never a projected catalog
+        libs = self.libraries
         self.slots = slots                          # rva -> (dll, name)
         self.by_import = {v: k for k, v in slots.items()}
         imported = set(slots.values())
@@ -480,6 +486,373 @@ def file_digest(path):
     return digest.hexdigest()
 
 
+def native_short_members(path, data=None):
+    """Strict archive framing for native short-import ownership/projection."""
+    data = path.read_bytes() if data is None else data
+    from coffar import read_archive_bytes
+    read_archive_bytes(data, str(path))
+    if data[:8] != b"!<arch>\n":
+        raise Refused(f"{path}: invalid import archive")
+    at = 8
+    while at < len(data):
+        if at + 60 > len(data) or data[at + 58:at + 60] != b"`\n":
+            raise Refused(f"{path}: truncated archive header")
+        size = int(data[at + 48:at + 58].decode("ascii").strip())
+        start, end = at + 60, at + 60 + size
+        if size < 0 or end + (size & 1) > len(data):
+            raise Refused(f"{path}: truncated archive member")
+        body = data[start:end]
+        if len(body) >= 20 and body[:4] == b"\0\0\xff\xff":
+            yield start, body
+        at = end + (size & 1)
+
+
+def supported_short_code(body):
+    """Only an original x86 named CODE short import, not an alias or ordinal."""
+    version, machine = struct.unpack_from("<HH", body, 4)
+    kind = struct.unpack_from("<H", body, 18)[0]
+    strings = bytes(body[20:]).split(b"\0")
+    return (version == 0 and machine == 0x14C and kind & 3 == 0 and not kind & ~0x1F
+            and (kind >> 2) & 7 in (1, 2, 3) and len(strings) == 3 and strings[-1] == b""
+            and struct.unpack_from("<I", body, 12)[0] == len(body) - 20)
+
+
+def archive_provider_indexes(data):
+    """Both native COFF linker indexes, resolved to immutable member bytes.
+
+    lib.exe may reorder archive members. Public-provider order, unlike member
+    offsets, must stay the same for every symbol not deliberately removed.
+    """
+    from coffar import read_archive_bytes
+    read_archive_bytes(data)  # Validate names, framing, sizes and long-name references.
+    members, indexes, at = {}, [], 8
+    while at < len(data):
+        name = data[at:at + 16].rstrip()
+        size = int(data[at + 48:at + 58])
+        body = data[at + 60:at + 60 + size]
+        if name == b"/":
+            indexes.append(body)
+        elif name != b"//":
+            members[at] = hashlib.sha256(body).hexdigest()
+        at += 60 + size + (size & 1)
+    if len(indexes) != 2:
+        raise Refused("native IAT projection requires both COFF archive linker indexes")
+    result = []
+    for number, body in enumerate(indexes):
+        if number == 0:
+            count = struct.unpack_from(">I", body)[0]
+            offsets = struct.unpack_from(">" + str(count) + "I", body, 4)
+            names_at = 4 + 4 * count
+        else:
+            member_count = struct.unpack_from("<I", body)[0]
+            member_offsets = struct.unpack_from("<" + str(member_count) + "I", body, 4)
+            cursor = 4 + 4 * member_count
+            count = struct.unpack_from("<I", body, cursor)[0]
+            ids = struct.unpack_from("<" + str(count) + "H", body, cursor + 4)
+            if any(i < 1 or i > member_count for i in ids):
+                raise Refused("native import archive has an invalid member index")
+            offsets = [member_offsets[i - 1] for i in ids]
+            names_at = cursor + 4 + 2 * count
+        names = body[names_at:].split(b"\0")
+        if len(names) <= count or any(names[count:]) or any(not n for n in names[:count]):
+            raise Refused("native import archive has malformed linker names")
+        by_name = collections.defaultdict(list)
+        for name, offset in zip(names, offsets):
+            if offset not in members:
+                raise Refused("native import archive index does not point at a real member")
+            by_name[name.decode("latin-1")].append(members[offset])
+        result.append(dict(by_name))
+    return result
+
+
+def verify_iat_archive(raw, target, removed):
+    """All member bytes retained; only proved callable index entries removed."""
+    from coffar import read_archive_bytes
+    raw, target = bytes(raw), bytes(target)
+    expected = read_archive_bytes(raw)
+    actual = read_archive_bytes(target)
+    if collections.Counter(expected) != collections.Counter(actual):
+        raise Refused("native librarian changed or dropped an unrelated archive member")
+    original_indexes, selected_indexes = archive_provider_indexes(raw), archive_provider_indexes(target)
+    for before, after in zip(original_indexes, selected_indexes):
+        if {name: providers for name, providers in before.items() if name not in removed} != after:
+            raise Refused("native librarian changed an unowned provider or callable/IAT index")
+    return {"members_preserved": len(expected), "retained_publics": len(selected_indexes[1]),
+            "removed_callable_publics": sorted(removed), "both_provider_indexes_preserved": True}
+
+
+def source_owned_thunks(source, obj, imports):
+    """Current authored C++ definitions of native callable import thunks.
+
+    This is a pre-link proof, not selected-provider evidence. A raw definition,
+    pin, matched six-byte prefix or caller-supplied name set cannot grant it.
+    Unproved candidates stay duplicate-thunk under the existing rules.
+    """
+    import progress
+    import selected_import_audit as audit
+    libs = tuple(getattr(imports, "libraries", ()))
+    if not libs:
+        return {}
+    try:
+        source = canonical_source(source)
+        path, obj = ROOT / source, Path(obj)
+        if (not source.startswith("game/") or path.suffix.lower() not in progress.CPP_SUFFIXES
+                or build.resolved(obj) != build.resolved(build.obj_path(path))):
+            return {}
+        _, defined = object_facts(obj)
+        candidates = defined & imports.thunk.keys()
+        if not candidates:
+            return {}
+        if any(n.startswith("__imp_") for n in defined) or static_iat_symbols(obj) or weak_import_records(obj):
+            return {}  # Source-owned cells/weak routes keep their independent refusal.
+        if not build.compile_is_current(path, obj):
+            return {}
+        rows = tu_rows(source)
+        all_rows = build.load_function_rows()
+        preflight = build._compile_receipt_preflight(path, obj)
+        if preflight is None:
+            return {}
+        deps = [Path(p) if Path(p).is_absolute() else ROOT / p for p in preflight[0]["deps"]]
+        paths = [path, obj, build._deps_sidecar(obj), build.FUNCTIONS, build.EXE, *libs, *deps]
+        inputs = {str(p): file_digest(p) for p in paths}
+        # A native function type and code section are also required below.
+        # Be conservative about inline/raw assembly, including macro definitions
+        # in a header: it cannot buy authored-C++ import ownership.
+        texts = [p.read_text(encoding="utf-8-sig", errors="replace") for p in [path, *deps]]
+        # C/C++ joins physical lines before recognizing comments/literals.
+        # Otherwise split naked/asm/emit tokens or ## evade this provenance guard.
+        codes = [NOT_CODE.sub(" ", re.sub(r"\\(?:\r\n|\n|\r)", "", text)) for text in texts]
+        if any(re.search(r"\b(?:__asm|_asm|__emit|_emit|naked)\b", code) or "##" in code for code in codes):
+            return {}
+        cells, thunks = audit.oracle(imports.slots, libs)
+        headers = collections.defaultdict(list)
+        for lib in libs:
+            for _, member in native_short_members(lib):
+                name_end = member.index(0, 20)
+                headers[bytes(member[20:name_end]).decode("latin-1")].append((lib, member))
+        native_indexes = {}
+        native_slots = retail_slots()
+        result = {}
+        for name in sorted(candidates):
+            owners = [r for r in rows if r["name"] == name and build.ledger_object_symbol(r) == name]
+            if len(owners) != 1 or sum(r["name"] == name for r in all_rows) != 1:
+                continue
+            row = owners[0]
+            notes = row.get("notes") or ""
+            if (progress.source_lane(source, notes, False) != "authored"
+                    or build.gen_alias_marked(notes) or build.is_scaffold_row(row)
+                    or int(row["target_size"]) != 6):
+                continue
+            # The public callable is the native import-library identifier, not
+            # an arbitrary C++ alias which happens to compile to FF25.
+            identifier(name)
+            expected = imports.thunk[name]
+            if cells.get("__imp_" + name) != {expected} or thunks.get(name) != {expected}:
+                continue
+            code_headers = [(lib, b) for lib, b in headers[name] if struct.unpack_from("<H", b, 18)[0] & 3 == 0]
+            if not code_headers or not all(supported_short_code(b) for lib, b in code_headers):
+                continue
+            indexed = True
+            for lib in {lib for lib, b in code_headers}:
+                if lib not in native_indexes:
+                    native_indexes[lib] = archive_provider_indexes(lib.read_bytes())
+                hashes = {hashlib.sha256(b).hexdigest() for p, b in code_headers if p == lib}
+                if any(not index.get(public) or not set(index[public]) <= hashes
+                       for index in native_indexes[lib] for public in (name, "__imp_" + name)):
+                    indexed = False
+            if not indexed:
+                continue
+            slots = [slot for slot, identity in native_slots.items() if identity == expected]
+            if len(slots) != 1:
+                continue
+            slot = slots[0]
+            rva = int(row["target_rva"], 16)
+            native = build.read_target_bytes(rva, 6)
+            if native != b"\xff\x25" + struct.pack("<I", BASE + slot):
+                continue
+            body, relocs, detail = build.read_object_symbol_bytes(obj, name, require_code=True, detail=True)
+            symbols = [s for s in detail["symbols"] if s["name"] == name and s["section"] > 0]
+            if (len(symbols) != 1 or symbols[0].get("storage") != EXTERNAL
+                    or symbols[0].get("type") != 0x20
+                    or not detail["sections"][detail["section"] - 1]["characteristics"] & 0x20000000):
+                continue
+            # read_object_symbol_bytes returns a section tail. Bound it by the
+            # next real function; a six-byte prefix of a longer body is refused.
+            next_functions = [s["value"] - detail["value"] for s in detail["symbols"]
+                              if s["section"] == detail["section"] and s.get("type") == 0x20
+                              and s.get("storage") in (EXTERNAL, STATIC) and s["value"] > detail["value"]]
+            extent = min(next_functions, default=len(body))
+            if extent != 6 or body[:6] != b"\xff\x25" + bytes(4):
+                continue
+            local_relocs = [r for r in relocs if r[0] < extent]
+            if local_relocs != [(2, DIR32, "__imp_" + name)]:
+                continue
+            referent = detail["reloc_symbols"][relocs.index(local_relocs[0])]
+            if (referent.get("storage") != EXTERNAL or referent["section"] != 0
+                    or referent["value"] != 0 or referent.get("aux", 0)):
+                continue
+            verified = build.compile_function(row, {}, obj)
+            if (verified["masked"] or verified["unresolved"] or verified["bytes"] != native
+                    or verified["target"] != native):
+                continue
+            result[name] = {"source": source, "object": str(obj), "rva": rva, "size": 6,
+                            "slot": slot, "expected": list(expected), "iat_symbol": "__imp_" + name,
+                            "input_sha256": inputs}
+        if (not build.compile_is_current(path, obj)
+                or any(file_digest(p) != digest for p, digest in inputs.items())):
+            return {}
+        return result
+    except (OSError, ValueError, KeyError, IndexError, struct.error, Refused, SystemExit):
+        return {}
+
+
+def source_owned_imports(objects, imports):
+    """Find owners only among the exact normal source objects in this link."""
+    paths = {build.resolved(p) for p in objects}
+    sources = {build.obj_path(ROOT / source): source for source in
+               {r["source"] for r in build.load_function_rows()
+                if Path(r["source"]).suffix.lower() in (".cpp", ".c", ".cc", ".cxx")}}
+    owned = {}
+    for obj, source in sources.items():
+        if build.resolved(obj) not in paths:
+            continue
+        for name, proof in source_owned_thunks(source, obj, imports).items():
+            if name in owned:
+                raise Refused(f"{name}: more than one current source-owned callable in link inputs")
+            owned[name] = proof
+    return owned
+
+
+def scoped_import_libraries(libs, objects, work):
+    """Private IAT-only providers for independently proved C++ callable owners.
+
+    Original archives and Imports.thunk retain their CODE facts. Other members
+    stay byte-for-byte in the librarian input; no unowned thunk is synthesized.
+    Ownership is recomputed here, never accepted as a caller's whitelist.
+    """
+    libs, objects = list(map(Path, libs)), list(map(Path, objects))
+    imports = Imports(retail_slots(), [p for p in libs if p.suffix.lower() == ".lib"])
+    owners = source_owned_imports(objects, imports)
+    context = {"owners": owners, "objects": list(map(str, objects)),
+               "original_libraries": list(map(str, libs)), "libraries": list(map(str, libs)),
+               "input_sha256": {}}
+    if not owners:
+        return libs, context
+    work = build.resolved(work)
+    if not work.is_relative_to(build.resolved(ROOT / "build")):
+        raise Refused("source-owned import projections must be disposable build outputs")
+    work.mkdir(parents=True, exist_ok=True)
+    before = {str(p): file_digest(p) for p in libs}
+    for proof in owners.values():
+        before.update(proof["input_sha256"])
+    frozen_paths = {build.resolved(p) for p in before}
+    result, projected, archive_proofs = [], collections.Counter(), []
+    for i, lib in enumerate(libs):
+        if lib.suffix.lower() != ".lib":
+            result.append(lib)
+            continue
+        data = bytearray(lib.read_bytes())
+        changed, removed = False, set()
+        for start, body in native_short_members(lib, data):
+            kind = struct.unpack_from("<H", body, 18)[0]
+            name_end = body.index(0, 20)
+            name = bytes(body[20:name_end]).decode("latin-1")
+            if name in owners and kind & 3 == 0:
+                if not supported_short_code(body):
+                    raise Refused(f"{name}: unsupported native short-import header")
+                actual = {(dll, exported) for symbol, dll, exported, typ in short_imports(lib)
+                          if symbol == name and typ == 0}
+                if actual != {tuple(owners[name]["expected"])}:
+                    raise Refused(f"{name}: native library import identity changed")
+                struct.pack_into("<H", data, start + 18, kind | 1)
+                projected[name] += 1
+                removed.add(name)
+                changed = True
+        if not changed:
+            result.append(lib)
+            continue
+        raw, target = work / f"iat{i:03d}.raw.lib", work / f"iat{i:03d}.lib"
+        if any(build.resolved(p) in frozen_paths for p in (raw, target)):
+            raise Refused("source-owned import output collides with a frozen input")
+        # Do not write through a hard link/symlink left by another invocation.
+        raw.unlink(missing_ok=True)
+        target.unlink(missing_ok=True)
+        raw.write_bytes(data)
+        root = build.vc71_root()
+        cmd = [str(root / "Vc7/bin/lib.exe"), "/NOLOGO", "/MACHINE:X86", "/OUT:" + target.name, raw.name]
+        if os.name != "nt":
+            cmd.insert(0, "wine")
+        proc = subprocess.run(cmd, cwd=work, env=build.compiler_environment(root),
+                              capture_output=True, text=True, errors="replace")
+        if proc.returncode or not target.exists():
+            raise Refused("source-owned IAT archive failed: " + proc.stdout + proc.stderr)
+        expected = [(s, d, n, 1 if s in owners and t == 0 else t) for s, d, n, t in short_imports(lib)]
+        if sorted(short_imports(target)) != sorted(expected):
+            raise Refused("native librarian changed import identities or unowned providers")
+        archive_proofs.append({"original": str(lib), "projected": str(target),
+                               **verify_iat_archive(data, target.read_bytes(), removed)})
+        result.append(target)
+    if set(projected) != set(owners):
+        raise Refused("not every source-owned CODE import has an IAT-only provider")
+    if any(file_digest(p) != digest for p, digest in before.items()):
+        raise Refused("source-owned import inputs changed during library preparation")
+    context.update(libraries=list(map(str, result)), archive_proofs=archive_proofs, input_sha256={
+        **before, **{str(p): file_digest(p) for p in result}})
+    return result, context
+
+
+def source_owned_selected_proof(context, map_path, image_path):
+    """Fresh native MAP owner + direct FF25 + exact PE IAT, bound to inputs."""
+    import pefile
+    import selected_import_audit as audit
+    original = list(map(Path, context["original_libraries"]))
+    libs = list(map(Path, context["libraries"]))
+    objects = list(map(Path, context["objects"]))
+    owners = context["owners"]
+    before = {**context["input_sha256"], **{str(p): file_digest(p) for p in (map_path, image_path)}}
+    if not owners or any(file_digest(p) != h for p, h in before.items()):
+        raise Refused("source-owned import proof has no owners or changed inputs")
+    current = source_owned_imports(objects, Imports(retail_slots(), [p for p in original if p.suffix.lower() == ".lib"]))
+    if current != owners:
+        raise Refused("source-owned callable proof is no longer current")
+    original_cells, original_thunks = audit.oracle(retail_slots(), [p for p in original if p.suffix.lower() == ".lib"])
+    cells, thunks = audit.oracle(retail_slots(), [p for p in libs if p.suffix.lower() == ".lib"])
+    selected = audit.map_symbols(Path(map_path).read_text(encoding="latin-1").splitlines())
+    try:
+        native = pefile.PE(str(image_path), fast_load=True)
+    except pefile.PEFormatError as why:
+        raise Refused("source-owned selected image is not a complete PE: " + str(why)) from why
+    try:
+        native.parse_data_directories(directories=[pefile.DIRECTORY_ENTRY["IMAGE_DIRECTORY_ENTRY_IMPORT"]])
+        slots, read, execute = audit.pe_slots(native), audit.virtual_reader(native), audit.executable_reader(native)
+        bindings = []
+        for name, proof in owners.items():
+            expected, iat = tuple(proof["expected"]), proof["iat_symbol"]
+            if (original_thunks.get(name) != {expected} or original_cells.get(iat) != {expected}
+                    or cells.get(iat) != {expected} or thunks.get(name)):
+                raise Refused(f"{name}: original CODE/projected IAT identity differs")
+            records = selected.get(name, set())
+            basename = Path(proof["object"]).name.lower()
+            if (len(records) != 1 or sum(p.name.lower() == basename for p in objects) != 1
+                    or next(iter(records))[1].split()[-1].lower() != basename):
+                raise Refused(f"{name}: MAP does not select its unique proved source object")
+            callable_proof = audit.audit_binding(name, {}, {name: {expected}}, selected, slots, read, execute)
+            cell_proof = audit.audit_binding(iat, cells, {}, selected, slots, read)
+            if (not callable_proof["proved"] or not cell_proof["proved"]
+                    or callable_proof.get("slot_va") != cell_proof.get("selected_va")):
+                raise Refused(f"{name}: selected FF25/IAT is not the exact native DLL/export")
+            bindings.append({**callable_proof, "source": proof["source"], "object": proof["object"],
+                             "iat_binding": cell_proof})
+        if (any(file_digest(p) != h for p, h in before.items())
+                or any(not build.compile_is_current(ROOT / p["source"], Path(p["object"])) for p in owners.values())):
+            raise Refused("source-owned import inputs changed during selected proof")
+        return {"input_sha256": before, "input_hash_equality": True, "bindings": bindings}
+    except pefile.PEFormatError as why:
+        raise Refused("source-owned selected import directory is malformed: " + str(why)) from why
+    finally:
+        native.close()
+
+
 def weak_selection_inputs(source, obj):
     """Inputs whose unchanged bytes bind the pending native weak-import proof."""
     libs = libraries()
@@ -570,7 +943,7 @@ def measure(objects, imports, found):
     seen = collections.defaultdict(set)
     detail = {}
     by_object = rows_by_object()
-    source_objects = {path.resolve() for path in census_objects()}
+    source_objects = {path.resolve(): source for path, source in census_objects().items()}
     for path in objects:
         if not path.exists():
             continue
@@ -608,12 +981,19 @@ def measure(objects, imports, found):
                 refs["unproved-weak-import"] += 1
                 seen["unproved-weak-import"].add(symbol)
                 detail[symbol + " @ " + path.name] = ["unproved-weak-import", route, route["slot"]]
-        thunks = sorted(defined & imports.thunk.keys())
+        owners = (source_owned_thunks(source_objects[path.resolve()], path, imports)
+                  if source_owned and defined & imports.thunk.keys() else {})
+        thunks = sorted((defined & imports.thunk.keys()) - owners.keys())
+        for name in owners:
+            refs["source-owned-thunk"] += 1
+            seen["source-owned-thunk"].add(name)
         for t in thunks:
             dup.append((path.name, t))
             refs["duplicate-thunk"] += 1
-        if classes or thunks:
+        if classes or thunks or owners:
             per_object[path.name] = {"imports": classes, "duplicate_thunks": thunks}
+            if owners:
+                per_object[path.name]["source_owned_thunks"] = sorted(owners)
     distinct = {c: len(v) for c, v in seen.items()}
     distinct["duplicate-thunk"] = len({t for _, t in dup})
     return {"references": dict(refs), "distinct": distinct, "names": {k: list(v) for k, v in names.items()},
@@ -722,7 +1102,8 @@ def plan(source, obj, imports, found):
             continue
         steps.append(("bind", symbol, {"to": target, "slot": slot, "import": detail,
                                        "old": old, "new": new, "linkage": linkage}))
-    for symbol in sorted(defined & imports.thunk.keys()):
+    source_owned = source_owned_thunks(source, obj, imports)
+    for symbol in sorted((defined & imports.thunk.keys()) - source_owned.keys()):
         owners = [r for r in rows if build.ledger_object_symbol(r) == symbol]
         if len(owners) != 1:
             refused.append(f"{symbol}: duplicate thunk with {len(owners)} ledger rows in this TU")
@@ -800,7 +1181,7 @@ def fresh_object(source):
 def verify_object(source, obj, imports, found, steps, weak_proof=None):
     """[problem] for the rebuilt object: every import correct and witnessed
     as its retail slot where a matched body reads it, no source-owned IAT cell
-    or duplicate thunk, and each owned name defined."""
+    or unproved duplicate thunk, and each owned name defined."""
     problems = []
     rows = tu_rows(source)
     routes = weak_import_routes(obj, imports, lambda: site_witnesses(obj, rows))
@@ -819,7 +1200,8 @@ def verify_object(source, obj, imports, found, steps, weak_proof=None):
         kind, detail, slot = classify(symbol, imports, found, sites)
         if kind != "correct":
             problems.append(f"{symbol}: still {kind} ({detail})")
-    for symbol in sorted(defined & imports.thunk.keys()):
+    source_owned = source_owned_thunks(source, obj, imports)
+    for symbol in sorted((defined & imports.thunk.keys()) - source_owned.keys()):
         problems.append(f"{symbol}: still defines an import library's call stub")
     for kind, symbol, d in steps:
         if kind == "bind" and d["to"] not in undefined and symbol in undefined:
@@ -831,7 +1213,8 @@ def verify_object(source, obj, imports, found, steps, weak_proof=None):
 
 def strict_link(obj, imports, work, label):
     """Link the object alone with no /FORCE and /NODEFAULTLIB against the
-    retail import libraries and oldnames.lib. Labelled link-only stubs define
+    retail import libraries and oldnames.lib, with private IAT-only copies for
+    independently proved native C++ callable owners. Labelled link-only stubs define
     every other external; never an `__imp_` name or a library's call stub, so
     an import resolves through the real library or not at all.
     (ok, output, linked imports)."""
@@ -853,8 +1236,17 @@ def strict_link(obj, imports, work, label):
     undefined, _ = external_symbols(records)
     stubbed = {n for n in undefined if not n.startswith("__imp_") and n not in provided}
     work.mkdir(parents=True, exist_ok=True)
+    proof_file = work / f"{label}_source_owned.json"
+    proof_file.unlink(missing_ok=True)
+    try:
+        libs, owned_context = scoped_import_libraries(libs, [obj], work / f"{label}_imports")
+    except (OSError, ValueError, KeyError, IndexError, struct.error, Refused) as why:
+        return False, "source-owned import preparation refused: " + str(why), [], sorted(stubbed)
     stubs = link_census.stub_object(stubbed, work / f"{label}_stubs.obj")
     out = work / f"{label}.dll"
+    if owned_context["owners"]:
+        out.unlink(missing_ok=True)
+        (work / (label + ".map")).unlink(missing_ok=True)
     r = provider_repair._link(["/DLL", "/NOENTRY", "/OPT:NOREF", "/SAFESEH:NO", f"/OUT:{out}",
                                f"/MAP:{work / (label + '.map')}", obj, stubs, *libs])
     text = (r.stdout or "") + (r.stderr or "")
@@ -867,6 +1259,12 @@ def strict_link(obj, imports, work, label):
             for entry in dll.imports:
                 linked.append((dll.dll.decode("latin-1").lower(), entry.name.decode("latin-1") if entry.name else None))
         pe.close()
+        if owned_context["owners"]:
+            try:
+                proof = source_owned_selected_proof(owned_context, work / (label + ".map"), out)
+            except (OSError, ValueError, KeyError, IndexError, struct.error, Refused, pefile.PEFormatError) as why:
+                return False, "source-owned selected import proof refused: " + str(why), linked, sorted(stubbed)
+            proof_file.write_text(json.dumps(proof, indent=1), encoding="utf-8")
     return r.returncode == 0, text.strip()[-1500:], linked, sorted(stubbed)
 
 
@@ -1059,6 +1457,9 @@ def cmd_check(args):
     else:
         ok, text, linked, stubbed = False, "not run: " + preparation_error, [], []
     receipt["strict_link"] = {"ok": ok, "output": text, "imports": linked, "stubbed_non_imports": len(stubbed)}
+    source_owned_receipt = work / "after_source_owned.json"
+    if source_owned_receipt.exists():
+        receipt["source_owned_import_proof"] = json.loads(source_owned_receipt.read_text(encoding="utf-8"))
     failures += link_verdict(ok, linked, imports)
     if routes:
         try:
