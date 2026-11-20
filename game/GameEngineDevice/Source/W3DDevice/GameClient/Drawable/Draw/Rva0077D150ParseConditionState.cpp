@@ -20,7 +20,7 @@ extern "C" void _ReadWriteBarrier(void);
 #include "../../../../../../GameEngine/Include/Common/ScalarTypes.h"
 
 class GenItem;
-class INI;
+
 
 #include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 

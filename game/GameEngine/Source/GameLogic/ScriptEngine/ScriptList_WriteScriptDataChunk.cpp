@@ -16,8 +16,8 @@ public:
 
 class Script;
 
-class OrCondition;
-class ScriptAction;
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
 class OrCondition

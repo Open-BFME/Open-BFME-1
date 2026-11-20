@@ -27,7 +27,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 #include "../../../Include/Common/ScalarTypes/Source/PlayerMaskType.h"
 
-class Object;
+
 class Player;
 class AIGroup;
 class Drawable;

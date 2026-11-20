@@ -282,7 +282,7 @@ public:
 };
 extern TerrainRoadCollection *TheTerrainRoads;
 
-class Object;
+
 
 class BodyModuleInterface
 {

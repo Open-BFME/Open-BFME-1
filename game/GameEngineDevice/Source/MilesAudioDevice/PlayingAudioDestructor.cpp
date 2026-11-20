@@ -64,7 +64,7 @@ public:
 	void *m_pointer;
 };
 
-class PlayingAudio;
+
 extern void j_000207a2();
 
 // Retail global at 0x012ED668 is AudioManager *TheAudio (GameAudio.cpp);

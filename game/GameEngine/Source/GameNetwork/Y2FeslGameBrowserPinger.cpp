@@ -24,7 +24,7 @@ struct Rva007EAServiceList
 	void remove( Rva00803080 *owner );
 };
 
-class Rva00803320Reply;
+
 class Rva00803320Callback
 {
 public:

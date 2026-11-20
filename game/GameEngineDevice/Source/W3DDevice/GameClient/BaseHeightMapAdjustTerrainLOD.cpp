@@ -2,9 +2,9 @@
 // readable body of ?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z: game/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp
 
 class BaseHeightMapRenderObjClass;
-class HeightMapRenderObjClass;
-class RTS3DScene;
-class View;
+
+
+
 
 #define UNUSED_VIRTUALS_16(prefix) \
 	virtual void prefix##0(); virtual void prefix##1(); virtual void prefix##2(); virtual void prefix##3(); \

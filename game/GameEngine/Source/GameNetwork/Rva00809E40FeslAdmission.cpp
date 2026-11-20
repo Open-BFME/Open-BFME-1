@@ -45,7 +45,7 @@ public:
 	int m_category;
 };
 
-class Rva00802040Owner;
+
 
 class Rva00802680Owner
 {
