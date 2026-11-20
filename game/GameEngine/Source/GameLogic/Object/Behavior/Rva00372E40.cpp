@@ -28,7 +28,7 @@ class NameKeyGenerator { public: NameKeyType nameToKey(const char *); };
 extern NameKeyGenerator *TheNameKeyGenerator;
 class Module;
 class Player;
-class ProjectileUpdateInterfaceView;
+
 class ProjectileUpdateInterface;
 class CastleBehavior { public: Bool isPendingObjectUnavailable() const; };
 class ThingTemplate : public Overridable {

@@ -22,9 +22,9 @@ inline Coord3D::Coord3D() {}
 inline Coord3D::~Coord3D() {}
 
 class Object;
-class MemberAI;
-class Pathfinder;
-class Overridable;
+
+
+
 struct LocomotorSet;
 
 template <class T> __forceinline T rva00242c90Member(void (*raw)())

@@ -18,7 +18,7 @@
 
 extern "C" void __cdecl __identifier("?d_00228050@@YAXXZ")();
 class Player;
-class Object;
+
 #include "../../../../Include/Common/Enums/Relationship.h"
 
 class Object

@@ -61,8 +61,8 @@ template <> inline void vector<Coord3D>::push_back(const Coord3D &value) {
 class Object;
 class Matrix3D;
 class LocomotorSet;
-class Pathfinder;
-class TerrainLogic;
+
+
 
 template <int N>
 class Rva002284D0VirtualSlots : public Rva002284D0VirtualSlots<N - 1>

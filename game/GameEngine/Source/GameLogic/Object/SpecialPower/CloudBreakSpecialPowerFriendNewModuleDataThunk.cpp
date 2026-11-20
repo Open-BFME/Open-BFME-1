@@ -10,7 +10,7 @@
 // Retail allocates 0x220 bytes, which is sizeof(CloudBreakSpecialPowerModuleData) with its
 // vptr, and calls the constructor through 0x0002DF3D.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

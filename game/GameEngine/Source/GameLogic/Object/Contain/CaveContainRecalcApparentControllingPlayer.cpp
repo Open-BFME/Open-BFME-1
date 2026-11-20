@@ -32,7 +32,7 @@ typedef Int Color;
 
 
 class Team;
-class Player;
+
 class Drawable;
 class Object;
 

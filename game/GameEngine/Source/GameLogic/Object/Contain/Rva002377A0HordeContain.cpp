@@ -18,7 +18,7 @@
 #include <list>
 
 class Player;
-class Object;
+
 class Rva002377A0DrawableView;
 
 class Object

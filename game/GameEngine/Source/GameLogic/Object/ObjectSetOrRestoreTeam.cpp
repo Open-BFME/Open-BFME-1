@@ -26,9 +26,9 @@ template <typename T> __declspec(noinline) bool StringBase<T>::isNotEmpty() cons
 
 class Object;
 class Team;
-class Player;
-class Drawable;
-class AttackPriorityInfo;
+
+
+
 #include "../../../Include/Common/Enums/AttitudeType.h"
 
 

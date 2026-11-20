@@ -22,7 +22,7 @@ enum Relationship
 };
 
 class Player;
-class Team;
+
 class Module;
 
 class NameKeyGenerator

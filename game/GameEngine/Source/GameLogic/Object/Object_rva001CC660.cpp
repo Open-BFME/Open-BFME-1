@@ -14,7 +14,7 @@
 
 
 class Object;
-class ThingTemplate;
+
 
 class Overridable
 {

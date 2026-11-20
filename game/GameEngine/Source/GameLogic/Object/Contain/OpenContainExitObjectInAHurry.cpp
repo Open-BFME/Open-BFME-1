@@ -49,8 +49,8 @@ enum ModelConditionFlagType
 class Object;
 class Matrix3D;
 class LocomotorSet;
-class Pathfinder;
-class TerrainLogic;
+
+
 
 template <int N>
 class Rva002289F0VirtualSlots : public Rva002289F0VirtualSlots<N - 1>

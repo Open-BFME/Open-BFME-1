@@ -21,7 +21,7 @@ typedef unsigned int ObjectID;
 
 
 
-class Object;
+
 class Team;
 
 template<int NUMBITS>

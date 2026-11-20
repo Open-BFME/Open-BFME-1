@@ -10,7 +10,7 @@
 #include "../../../Include/Common/ScalarTypes/Int.h"
 typedef unsigned char Bool;
 
-class Object;
+
 class BfmeRva493A0Object;
 
 class BfmeObjectList : public _STL::list<BfmeRva493A0Object *>

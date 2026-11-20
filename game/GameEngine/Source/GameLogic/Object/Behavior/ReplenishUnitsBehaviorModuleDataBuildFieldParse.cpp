@@ -10,7 +10,7 @@
 // The body adds the table at 0x010A5D68 (the seven Replenish* keys) at offset 0,
 // then the upgrade-mux table at 0x010898A0 at offset 8.
 
-class INI;
+
 
 #include "../../../../Include/Common/FieldParse.h"
 

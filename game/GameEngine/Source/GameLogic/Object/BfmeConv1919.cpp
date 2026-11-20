@@ -1,5 +1,5 @@
 class BfmeHostBU;
-class BfmeThingBU;
+
 
 class BfmeThingBU
 {

@@ -31,7 +31,7 @@ public:
     AsciiString getName() const;
 };
 
-class Object;
+
 
 class Owner
 {

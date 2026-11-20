@@ -60,7 +60,7 @@ class Rva001D0610AudioInfo {public: virtual ~Rva001D0610AudioInfo(); long refs;
  void addRef(){InterlockedIncrement(&refs);} void releaseRef(){if(InterlockedDecrement(&refs)<=0)delete this;}
 };
 template<class T> class Rva001D0610Ref {public: T *p; Rva001D0610Ref():p(0){} Rva001D0610Ref(const Rva001D0610Ref& r):p(r.p){if(p)p->addRef();} ~Rva001D0610Ref(){if(p)p->releaseRef();} };
-class Rva001D0610Drawable;
+
 class Rva001D0610Horde {public:
 virtual void slot00();
 virtual void slot01();
@@ -397,7 +397,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 			ai->rva0027DEF0(valInt);
 		}
 	}
-	
+
 	// set recruitable
 	valBool = properties->getBool(Rva012A7870, &exists);
 	if (exists) {
@@ -406,7 +406,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 			rva001D0610Field<bool>(o->ai(),0x32c)=valBool;
 		}
 	}
-	
+
 	// set selectable
 	valBool = properties->getBool(Rva012A7878, &exists);
 	if (exists) {
@@ -414,7 +414,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 			o->selectable(valBool);
 		}
 	}
-	
+
 	// set the stopping distance
 	valReal = properties->getReal(Rva012A78A8, &exists);
 	if (exists && valReal >= 0.5f)
@@ -425,7 +425,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 			rva001D0610Field<float>(loco,0x38)=valReal;
 		}
 	}
-	
+
 	// set the disabledness of this object
 	valBool = properties->getBool(Rva012A7810, &exists);
 	if (exists) {
@@ -500,7 +500,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
 
 		++upgradeNum;
 	} while (!valStr.isEmpty());
-	
+
 	Rva001D0610Drawable *drawable = o->slot28();
   if ( drawable )
   {
@@ -521,7 +521,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
         break;
       }
     }
-    
+
     valInt = properties->getInt(Rva012A7890, &exists);
     if (exists)
     {
@@ -537,7 +537,7 @@ void Object::updateObjValuesFromMapProperties(Dict* properties)
         break;
       }
     }
-    
+
 
     valStr=properties->getAsciiString(Rva012A7848,&exists);
     if(exists && !valStr.isEmpty()){

@@ -4,7 +4,7 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-class BfmeRva49250Object;
+
 class BfmeRva49250AI;
 class BfmeRva49250HordeInterface;
 class BfmeRva491F0Object;

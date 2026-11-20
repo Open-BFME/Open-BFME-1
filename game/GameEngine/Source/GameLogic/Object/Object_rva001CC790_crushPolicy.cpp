@@ -14,7 +14,7 @@ enum Relationship
 	RELATIONSHIP_ALLIES = 2
 };
 
-class Object;
+
 
 class Rva001E1770ByteField
 {

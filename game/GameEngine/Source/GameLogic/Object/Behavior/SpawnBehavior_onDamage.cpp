@@ -11,7 +11,7 @@ typedef int ObjectID;
 
 class DamageInfo;
 class Object;
-class SlavedUpdateInterface;
+
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
 

@@ -10,7 +10,7 @@
 // Retail allocates 0x14 bytes, which is sizeof(ReflectDamageModuleData) with its
 // vptr, and calls the constructor through 0x0003E4A5.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

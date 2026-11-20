@@ -11,7 +11,7 @@
 // at 0x0108B560: UpgradeRequired (+0x34), BuildingRequired (+0x3C) and
 // RefundPercent (+0x38), the three keys RefundDie::onDie reads.
 
-class INI;
+
 
 #include "../../../../Include/Common/FieldParse.h"
 

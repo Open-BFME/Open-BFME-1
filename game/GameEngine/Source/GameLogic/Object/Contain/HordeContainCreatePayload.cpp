@@ -8,7 +8,7 @@
 #include <list>
 
 class Object;
-class ContainModuleInterface;
+
 
 class HordeContainInterface
 {

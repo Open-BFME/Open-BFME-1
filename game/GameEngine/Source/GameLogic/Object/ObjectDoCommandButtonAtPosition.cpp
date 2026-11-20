@@ -6,7 +6,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 class Drawable;
-class Object;
+
 class SpecialPowerTemplate;
 class Waypoint;
 

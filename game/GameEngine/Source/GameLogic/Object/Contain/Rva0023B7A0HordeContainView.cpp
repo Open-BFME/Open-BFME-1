@@ -37,7 +37,7 @@
 #include "../../ScriptEngine/game_logic_dispatch.h"
 
 class AttributeModifierPoolUpdate;
-class ContainModuleInterface;
+
 class Matrix3DTN;
 class Module;
 class Object;

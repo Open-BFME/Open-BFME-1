@@ -25,9 +25,9 @@ enum Relationship
 #include "../ScriptEngine/game_logic_dispatch.h"
 
 class Object;
-class Team;
+
 class Player;
-class Module;
+
 
 
 

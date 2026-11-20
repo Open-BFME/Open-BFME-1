@@ -43,7 +43,7 @@ public:
 };
 
 class Object;
-class BfmeThingVKP;
+
 
 class HordeContainInterface
 {

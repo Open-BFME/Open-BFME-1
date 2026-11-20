@@ -10,7 +10,7 @@
 // Retail allocates 0x8 bytes, which is sizeof(HordeMemberCollideModuleData) with its
 // vptr, and calls the constructor through 0x000317C8.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

@@ -18,7 +18,7 @@ typedef int ObjectID;
 
 
 class Object;
-class Weapon;
+
 
 enum WeaponStatus
 {

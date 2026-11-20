@@ -62,7 +62,7 @@ public:
 };
 
 class Object;
-class Player;
+
 class ThingTemplate;
 
 class Player

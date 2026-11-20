@@ -15,7 +15,7 @@
 
 
 
-class Object;
+
 class Player;
 
 class AsciiString
@@ -74,7 +74,7 @@ class Rva2225E0Filter
 public:
 };
 
-struct BfmeMemberIndexNode;
+
 
 struct BfmeMemberIndexNode
 {

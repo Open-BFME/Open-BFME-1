@@ -2,7 +2,7 @@
 // Zero Hour TransportContain::killRidersWhoAreNotFreeToExit against BFME's
 // retail list module-data and virtual-slot layout.
 
-class Object;
+
 
 enum DamageType
 {

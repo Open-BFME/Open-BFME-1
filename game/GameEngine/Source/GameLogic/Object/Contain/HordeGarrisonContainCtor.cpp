@@ -14,7 +14,7 @@
 // the bit was clear, reapplies the model through
 // Object::notifyModelConditionChanged, reached via ILT 0x0002191D.
 
-class Thing;
+
 class ModuleData;
 
 #include "../../../../Include/Common/ScalarTypes.h"

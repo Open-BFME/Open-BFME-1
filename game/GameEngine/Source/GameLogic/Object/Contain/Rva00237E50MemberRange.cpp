@@ -17,7 +17,7 @@
 #include <hash_map>
 #include <list>
 
-class Object;
+
 class Weapon;
 
 #include "../../../../Include/Common/Enums/WeaponSlotType.h"
