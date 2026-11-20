@@ -39,8 +39,8 @@ struct BfmeAsciiStringData
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-class Drawable;
-class ClientUpdateModule;
+
+
 
 class ClientUpdateModule
 {

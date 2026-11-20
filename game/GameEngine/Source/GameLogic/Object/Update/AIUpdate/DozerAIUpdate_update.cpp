@@ -6,7 +6,7 @@
 // view at +0x10 (object at this-8); the DozerAIInterface sits at +0x340 and the
 // dozer state machine at +0x35C, as DozerAIUpdateCreateMachinesBfme.cpp has it.
 
-class Object;
+
 
 #include "../../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 #include "../../../command_source_type.h"

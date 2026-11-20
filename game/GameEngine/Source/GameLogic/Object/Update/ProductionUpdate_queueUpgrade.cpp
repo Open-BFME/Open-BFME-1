@@ -34,12 +34,12 @@ extern void j_0000e6e7();	// ILT -> rva0036BB10FindCastleMemberBehavior
 
 
 
-class Object;
-class Player;
-class Module;
 
-class Money;
-class ThingTemplate;
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Upgrade.h
 class UpgradeTemplate

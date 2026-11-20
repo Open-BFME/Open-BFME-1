@@ -12,9 +12,9 @@ typedef int ObjectID;
 
 
 
-class SpecialPowerTemplate;
-class Player;
-class Object;
+
+
+
 
 class Overridable
 {

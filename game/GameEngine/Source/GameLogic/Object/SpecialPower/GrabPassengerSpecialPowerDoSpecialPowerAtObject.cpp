@@ -76,7 +76,7 @@ public:
 	Int m_pausedCount;
 };
 
-class BFMEContainResultShim;
+
 
 class BFMEContainSlotShim
 {

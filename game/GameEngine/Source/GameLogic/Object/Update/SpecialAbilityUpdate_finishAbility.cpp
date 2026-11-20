@@ -8,7 +8,7 @@
 
 class Player;
 class Object;
-class PartitionFilter;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
 class AICommandInterface

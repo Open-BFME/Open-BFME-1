@@ -29,7 +29,7 @@ public:
 	int m_a;
 };
 
-class Gen00296F90;
+
 
 // ILT 0x4A66A -> 0x003D0FA0, the matched 45-byte Rva003D0FA0::run
 // (Y1MemberVectorForEach.cpp), called on TheLargeGroupAudio with this update.

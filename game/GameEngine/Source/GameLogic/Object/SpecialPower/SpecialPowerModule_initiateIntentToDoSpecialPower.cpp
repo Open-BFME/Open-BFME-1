@@ -39,7 +39,7 @@ enum SpecialPowerType
 #include "../../command_source_type.h"
 
 class Object;
-class Player;
+
 class BfmeE5B30Object;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

@@ -22,7 +22,7 @@ struct Coord3D
 	}
 };
 
-class OpenContain;
+
 
 class ContainModuleInterface
 {

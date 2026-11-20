@@ -14,7 +14,7 @@
 // test is the Zero Hour StateMachine inline shape
 // (m_currentState ? m_currentState->isX() : true); written as that bool inline
 // accessor it puts both vtable temporaries in retail's registers.
-class BfmeCurCB;
+
 
 class BfmeItemCB
 {

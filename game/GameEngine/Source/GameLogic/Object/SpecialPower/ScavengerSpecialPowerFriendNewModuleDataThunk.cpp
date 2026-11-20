@@ -10,7 +10,7 @@
 // Retail allocates 0x214 bytes, which is sizeof(ScavengerSpecialPowerModuleData) with its
 // vptr, and calls the constructor through 0x00019461.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

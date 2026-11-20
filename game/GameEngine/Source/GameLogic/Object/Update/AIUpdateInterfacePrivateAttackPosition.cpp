@@ -20,7 +20,7 @@
 #include "../../../../Include/Common/Enums/StateID.h"
 // class-gate: allow Coord3D ilt_oracle confirms the row's PBVCoord3D (class-keyed) decoration; Lib/Coord3D.h is struct-keyed
 class Coord3D { public: float x,y,z; };
-class Object;
+
 class WeaponSetFlags { public: Bool test(int type) const { return (word & (1U << type)) != 0; } unsigned int word; };
 class BfmeOutOfWeaponRangeTemplate {
 public:

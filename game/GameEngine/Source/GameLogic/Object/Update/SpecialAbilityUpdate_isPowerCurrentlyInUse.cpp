@@ -53,8 +53,8 @@
 
 class Object;
 
-class CommandButton;
-class SpecialPowerTemplate;
+
+
 
 enum SpecialPowerType
 {

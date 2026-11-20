@@ -20,7 +20,7 @@ enum ObjectStatusTypes { OBJECT_STATUS_UNDER_CONSTRUCTION=2, OBJECT_STATUS_RECON
 #include "../../../../../Include/Common/Enums/KindOfType.h"
 #include "../../../../../Include/Common/Enums/RadarEventType.h"
 class Object; class Player; class Drawable; class AIUpdateInterface; class DozerAIInterface;
-class BodyModuleInterface; class AudioEventRTS; class PickAndPlayInfo;
+ class AudioEventRTS; class PickAndPlayInfo;
 template<typename T> class StringBase {
     friend class AsciiString; friend class UnicodeString;
     struct Data { int refs; unsigned short length,capacity; T text[1]; };

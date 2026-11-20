@@ -1434,7 +1434,7 @@ public:
 
 extern ThingFactory *TheThingFactory;
 
-class Rva0039B795;
+
 class Rva0039B7AD;
 
 struct Rva0039BAD2Input;

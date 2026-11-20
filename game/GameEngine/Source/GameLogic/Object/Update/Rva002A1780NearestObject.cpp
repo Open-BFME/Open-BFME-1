@@ -32,7 +32,7 @@
 
 #include "basetype.h"
 
-class Object;
+
 class Player;
 
 class Object

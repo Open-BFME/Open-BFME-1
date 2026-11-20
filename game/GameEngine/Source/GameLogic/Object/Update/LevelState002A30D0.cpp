@@ -36,7 +36,7 @@ template <int N> class BitFlags
 // Canonical reference types at the Object boundary.
 template <int N> class BitFlags;
 class Player;
-class BfmeConditionFlags;
+
 enum DisabledType
 {
 	Disabled4 = 4

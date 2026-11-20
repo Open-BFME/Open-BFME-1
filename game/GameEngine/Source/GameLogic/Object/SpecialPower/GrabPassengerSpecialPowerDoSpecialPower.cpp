@@ -13,7 +13,7 @@
 #include "Common/BitFlags.h"
 
 class Object;
-class SpecialPowerModuleInterface;
+
 
 typedef BitFlags<192> Rva0025F2D0KindOfMask;
 typedef BitFlags<86> Rva0025F2D0ObjectStatusMask;

@@ -10,7 +10,7 @@
 // Retail allocates 0xF0 bytes, which is sizeof(BloodthirstyUpdateModuleData) with its
 // vptr, and calls the constructor through 0x0001C684.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

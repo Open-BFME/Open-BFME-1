@@ -6,7 +6,7 @@
 
 
 class Object;
-class Drawable;
+
 
 struct AICommandParms
 {

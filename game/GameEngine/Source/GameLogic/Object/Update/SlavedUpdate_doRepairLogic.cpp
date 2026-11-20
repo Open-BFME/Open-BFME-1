@@ -15,7 +15,7 @@ struct Coord3D
     void addZ(Real amount) { z += amount; }
 };
 
-class Object;
+
 // Only TheGameLogic's pointer value is used here. The pad byte keeps the class
 // non-empty: on a zero-size class this compiler emits the this-adjustment
 // sequence for a call through a member pointer instead of folding it to a

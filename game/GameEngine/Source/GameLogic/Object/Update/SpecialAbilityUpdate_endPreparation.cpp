@@ -28,7 +28,7 @@ enum SpecialPowerType
 typedef BitFlags<86> ObjectStatusMaskType;
 typedef BitFlags<320> ModelConditionFlags;
 
-class Overridable;
+
 class SpecialAbilityUpdate;
 
 typedef void (__fastcall *SpecialAbilityCleanupCall)(SpecialAbilityUpdate *);

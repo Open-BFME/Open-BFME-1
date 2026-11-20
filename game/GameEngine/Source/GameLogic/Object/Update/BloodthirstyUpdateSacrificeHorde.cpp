@@ -27,7 +27,7 @@
 	void setStatusBit(Int bit, Bool set); \
 	void unidentified_000F20F0(Int index, Int value);
 
-class AIUpdateInterface;
+
 
 #include "../object.h"
 

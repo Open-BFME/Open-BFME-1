@@ -8,8 +8,8 @@
 #define BFME_VSLOT(n) virtual void slot##n();
 
 class Player;
-class Drawable;
-class ObjectStatusMaskType;
+
+
 
 // Retail calls ILT 0x000316FB -> 0x00216600, defined in BfmeFlagsZXAny.cpp as
 // BfmeFlagsZX::bfmeAnyZX(const BfmeFlagsZX *) const; the test forwards to it.

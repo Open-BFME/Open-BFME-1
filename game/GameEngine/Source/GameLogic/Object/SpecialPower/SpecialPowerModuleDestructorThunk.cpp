@@ -5,7 +5,7 @@
 typedef int ObjectID;
 
 
-class SpecialPowerTemplate;
+
 
 class Object
 {

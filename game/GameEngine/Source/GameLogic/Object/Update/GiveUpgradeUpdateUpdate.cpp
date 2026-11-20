@@ -11,7 +11,7 @@ typedef int ObjectID;
 
 
 
-class Object;
+
 
 class AICommandInterface
 {

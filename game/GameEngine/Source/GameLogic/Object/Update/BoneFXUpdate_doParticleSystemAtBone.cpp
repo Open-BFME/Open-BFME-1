@@ -21,10 +21,10 @@
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Object;
+
 class ParticleSystemTemplate;
 
-class Drawable;
+
 
 class DamageInfo
 {

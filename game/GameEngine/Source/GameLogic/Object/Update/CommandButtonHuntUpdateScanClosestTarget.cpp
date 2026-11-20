@@ -69,11 +69,11 @@
 
 class Object;
 class Player;
-class ThingTemplate;
-class SpecialAbilityUpdate;
+
+
 class SpecialPowerModuleInterface;
 class SpecialPowerTemplate;
-class AttackPriorityInfo;
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

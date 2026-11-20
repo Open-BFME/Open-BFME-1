@@ -86,7 +86,7 @@ public:
 	TAiData *m_aiData;
 };
 
-class Team;
+
 
 class TeamFactory
 {

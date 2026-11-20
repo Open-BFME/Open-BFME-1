@@ -15,7 +15,7 @@
 struct ContactString002A79B0 { struct Data {int refs;unsigned short length,capacity;char text[1];}; Data* data;
  bool empty() const {return !data || !data->length;} const char* str() const {return data?data->text:"";}
 };
-class Object;
+
 struct BfmePt951;
 class BfmeGap951 { public: float bfmeGapB951(const BfmePt951*) const; };
 class Gen_000ED3B0 { public: float bfmeGapSq(const Gen_000ED3B0*) const; };

@@ -30,7 +30,7 @@
 extern const Real g_rva01075350;
 
 class Player;
-class Object;
+
 class Thing;
 
 // The BFME module mask occupies six words. Zero Hour's KindOfMaskType is

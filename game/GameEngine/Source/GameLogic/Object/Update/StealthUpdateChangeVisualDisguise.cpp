@@ -23,9 +23,9 @@ typedef BitFlags<320> ModelConditionFlags;
 class Drawable;
 class Player;
 class Team;
-class ThingTemplate;
+
 class AudioEventRTS;
-class BFMERetailAsciiString;
+
 
 template <class T> class StringBase
 {
@@ -46,7 +46,7 @@ public:
 // game/GameEngine/Source/Common/Bfme/Rva00C6DC10StaticInit.cpp.
 extern AsciiString Rva01336E50EmptyString;
 
-class FXList;
+
 class AIUpdateInterface;
 
 class Overridable

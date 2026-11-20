@@ -17,7 +17,7 @@ enum AttitudeType
 class Object;
 class AINotify;
 class Slot38Target;
-class AICommandInterface;
+
 class GameLogic;
 
 class AIUpdateInterface

@@ -34,7 +34,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 
 typedef BitFlags<320> ModelConditionFlags;
 
-class Object;
+
 
 class Rva00369240Body
 {

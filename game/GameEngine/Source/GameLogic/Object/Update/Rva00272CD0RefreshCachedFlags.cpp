@@ -27,7 +27,7 @@
 #include "../../../../Include/Common/ScalarTypes.h"
 
 
-class Object;
+
 class LuaScriptEngine;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ModelConditionFlags.h
