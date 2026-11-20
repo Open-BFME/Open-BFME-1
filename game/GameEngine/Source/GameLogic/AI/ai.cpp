@@ -76,7 +76,7 @@ public:
 #include "GameLogic/AIPathfind.h"
 #include "GameLogic/Weapon.h"
 
-extern void addIcon(const Coord3D *pos, Real width, Int numFramesDuration, RGBColor color);
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -161,7 +161,7 @@ void AISideBuildList::addInfo(BuildListInfo *info)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 static const FieldParse TheAIFieldParseTable[] = 
 {
-																	 
+
 	{ "StructureSeconds",				INI::parseReal,NULL,		offsetof( TAiData, m_structureSeconds ) },
 	{ "TeamSeconds",						INI::parseReal,NULL,		offsetof( TAiData, m_teamSeconds ) },
 	{ "Wealthy",								INI::parseInt,NULL,			offsetof( TAiData, m_resourcesWealthy ) },
@@ -193,7 +193,7 @@ static const FieldParse TheAIFieldParseTable[] =
 	{ "AttackUsesLineOfSight",	INI::parseBool,NULL,		offsetof( TAiData, m_attackUsesLineOfSight ) },
 	{ "AttackIgnoreInsignificantBuildings",	INI::parseBool,NULL,		offsetof( TAiData, m_attackIgnoreInsignificantBuildings ) },
 
-	
+
 	{ "AttackPriorityDistanceModifier", INI::parseReal,NULL, offsetof( TAiData, m_attackPriorityDistanceModifier) },
  	{ "MaxRecruitRadius",				INI::parseReal,NULL,		offsetof( TAiData, m_maxRecruitDistance ) },
 	{ "SkirmishBaseDefenseExtraDistance",	INI::parseReal,NULL,	offsetof( TAiData, m_skirmishBaseDefenseExtraDistance ) },
@@ -774,7 +774,7 @@ Object *AI::findClosestEnemy( const Object *me, Real range, UnsignedInt qualifie
 
 	// (optional) only stuff that is significant
 	PartitionFilterInsignificantBuildings filterInsignificant(true, false);
-	
+
 	// (optional) only stuff clear of fog
 	PartitionFilterFreeOfFog filterFogged(me->getControllingPlayer()->getPlayerIndex());
 

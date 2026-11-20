@@ -37,9 +37,9 @@
 // all 31 bytes of every row are concrete.
 
 typedef int Bool;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
+#include "../../Include/Common/ScalarTypes/Int.h"
+#include "../../Include/Common/ScalarTypes/UnsignedInt.h"
+#include "../../Include/Common/ScalarTypes/UnsignedByte.h"
 
 class Rva008A0F20Header
 {

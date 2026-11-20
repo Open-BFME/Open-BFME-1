@@ -54,7 +54,7 @@ public:
 	void bfmeGo1172( int value );
 };
 
-class AssetManagerImpl;
+
 class AssetRegistry;
 extern AssetRegistry *g_theAssetRegistry;
 

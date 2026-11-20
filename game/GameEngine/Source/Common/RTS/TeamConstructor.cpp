@@ -54,7 +54,7 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-class Xfer;
+
 
 // BFME's relation pools are one polymorphic base, unlike the later Zero Hour
 // MemoryPoolObject + Snapshot pair.  Both pools are 0x18 bytes: retail pushes
