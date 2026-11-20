@@ -185,7 +185,7 @@ public:
 	virtual void destroyDrawable(Drawable *draw);
 };
 
-void j_00012418();
+
 void j_00041349();
 void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 extern const char g_Rva0107301CEmptyString[];
@@ -221,7 +221,7 @@ GameClient::GameClient()
 		m_translators[ i ] = TRANSLATOR_ID_INVALID;
 	m_numTranslators = 0;
 	m_commandTranslator = NULL;
-	
+
 	// Added By Sadullah Nader
 	// Initializations missing and needed
 	m_drawableTOC.clear();
@@ -231,7 +231,7 @@ GameClient::GameClient()
 	m_frame = 0;
 
 	m_drawableList = NULL;
-	
+
 	m_nextDrawableID = (DrawableID)1;
 	TheDrawGroupInfo = new DrawGroupInfo;
 }
@@ -253,7 +253,7 @@ void GameClient::init( void )
 	INI ini;
 	// Load the DrawGroupInfo here, before the Display Manager is loaded.
 	ini.load("Data\\INI\\DrawGroupInfo.ini", INI_LOAD_OVERWRITE, NULL);
-	
+
 	// Override the ini values with localized versions:
 	if (TheGlobalLanguageData && TheGlobalLanguageData->m_drawGroupInfoFont.name.isNotEmpty())
 	{
@@ -268,7 +268,7 @@ void GameClient::init( void )
 		TheDisplayStringManager->init();
 		TheDisplayStringManager->setName("TheDisplayStringManager");
 	}
-	
+
 	// create the keyboard
 	TheKeyboard = createKeyboard();
 	TheKeyboard->init();
@@ -332,7 +332,7 @@ void GameClient::init( void )
 		TheDisplay->init();
  		TheDisplay->setName("TheDisplay");
 	}
-	
+
 	TheHeaderTemplateManager = MSGNEW("GameClientSubsystem") HeaderTemplateManager;
 	if(TheHeaderTemplateManager){
 		TheHeaderTemplateManager->init();
@@ -600,7 +600,7 @@ void GameClient::update( void )
 				}
 				TheWritableGlobalData->m_breakTheMovie = TRUE;
 
-				
+
 			}
 
 			TheShell->showShellMap(TRUE);
@@ -634,7 +634,7 @@ void GameClient::update( void )
 		TheMouse->createStreamMessages();
 
 	}  // end if
-	
+
 
   if (TheInGameUI->isCameraTrackingDrawable())
   {
@@ -780,10 +780,10 @@ void GameClient::update( void )
 
 	{
 		USE_PERF_TIMER(GameClient_draw)
-			
+
 	// redraw all views, update the GUI
 	//if(TheGameLogic->getFrame() >= 2)
-		
+
 		TheDisplay->DRAW();
 	}
 
@@ -907,7 +907,7 @@ void GameClient::assignSelectedDrawablesToGroup( Int group )
 	Drawable *draw = firstDrawable();
 	while( draw )
 	{
-	
+
 		if( draw->isSelected() && draw->getObject()->isLocallyControlled())
 		{
 			draw->setDrawableGroup( group );
@@ -941,7 +941,7 @@ void GameClient::selectDrawablesInGroup( Int group )
 	while( draw )
 	{
 		int counter = 0;
-	
+
 		const Object *object = draw->getObject();
 
 		if( object && draw->getDrawableGroup() == group && object->isLocallyControlled() && !object->isContained() )
@@ -1063,7 +1063,7 @@ void GameClient::preloadAssets( TimeOfDay timeOfDay )
 			 tTemplate;
 			 tTemplate = tTemplate->friend_getNextTemplate() )
 	{
-			
+
 		// if this isn't one of the objects that can be preloaded ignore it
 		if( tTemplate->isKindOf( KINDOF_PRELOAD ) == FALSE && !TheGlobalData->m_preloadEverything )
 			continue;
@@ -1286,7 +1286,7 @@ void GameClient::xfer( Xfer *xfer )
 	ObjectID objectID;
 	if( xfer->getXferMode() == XFER_SAVE )
 	{
-	
+
 		// iterate all drawables
 		for( draw = getDrawableList(); draw; draw = draw->getNextDrawable() )
 		{
@@ -1416,7 +1416,7 @@ void GameClient::xfer( Xfer *xfer )
 				// whole brand new drawable now
 				//
 				draw = TheThingFactory->newDrawable( thingTemplate );
-				
+
 				// sanity
 				if( draw == NULL )
 				{
@@ -1438,7 +1438,7 @@ void GameClient::xfer( Xfer *xfer )
 		}  // end for, i
 
 	}  // end else, load
-	
+
 	// xfer the in-game mission briefing history list
 	if (version >= 2)
 	{
