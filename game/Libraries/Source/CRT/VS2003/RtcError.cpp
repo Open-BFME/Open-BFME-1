@@ -63,8 +63,9 @@ static char *IntToString(int value) {
  return buf+i;
 }
 // ?WinGetDebugContext@@YAPAXXZ
+static __inline void *WinGetDebugContext() {return GetCurrentTib()->debugContext;}
 // ?Win95IsDebuggerPresent@@YGHXZ
-static int WINAPI Win95IsDebuggerPresent() {return GetCurrentTib()->debugContext!=0;}
+static int WINAPI Win95IsDebuggerPresent() {return WinGetDebugContext()!=0;}
 // ?Initialize@@YAHXZ
 static int Initialize() {
  HMODULE kernel=LoadLibraryA("Kernel32.dll");
