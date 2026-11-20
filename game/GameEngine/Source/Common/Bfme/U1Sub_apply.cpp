@@ -9,7 +9,7 @@
 // ledger's harvested name spells the return void, which a call site cannot see.
 // The row is claimed under the spelling the bytes support.
 
-class U1CachedHolder;
+
 
 class U1Target
 {

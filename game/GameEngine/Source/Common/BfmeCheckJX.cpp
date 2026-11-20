@@ -1,6 +1,6 @@
 // Retail 009A89C0. Existing bfmeInitCodecJX caller establishes this name.
 // Fields are offset-derived; sizes and helper ABIs were checked against retail.
-struct CodecState;
+
 struct Rva009A8910Context;
 class Bucket { public: enum BucketMagicEnum { Zero = 0 }; static void* operator new(unsigned, BucketMagicEnum); };
 void Rva009A4E50Configure(void*,unsigned,int);

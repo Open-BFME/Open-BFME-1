@@ -1,4 +1,4 @@
-class ThingTemplate;
+
 
 // The chain walk retail calls through ILT 0x000022BB is
 // Overridable::getFinalOverride, the out-of-line copy of the recursive inline

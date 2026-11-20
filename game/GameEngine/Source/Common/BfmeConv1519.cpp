@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-class BfmeMgrVNR;
+
 
 // Retail's per-cell shroud update body lives on the shroud manager element:
 // game/GameEngine/Source/Common/RTS/ShroudManagerImpl008FBA40.cpp

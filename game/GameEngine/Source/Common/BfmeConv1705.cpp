@@ -1,4 +1,4 @@
-class BfmeSubFW;
+
 
 class BfmeXferFW
 {

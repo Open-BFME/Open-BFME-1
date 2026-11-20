@@ -1,4 +1,4 @@
-class BfmeCtxBS;
+
 
 // retail walks the override chain through ILT 0x000022BB, which targets
 // Overridable::getFinalOverride (matching row 0x00087A80).

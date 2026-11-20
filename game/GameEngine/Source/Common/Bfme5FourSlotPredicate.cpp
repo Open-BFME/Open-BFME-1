@@ -1,7 +1,7 @@
 // Checks four enabled slots and succeeds when one slot's object accepts the
 // supplied value for the owner's current source.
 
-class BfmeFourSlotSource;
+
 
 class Object;
 
