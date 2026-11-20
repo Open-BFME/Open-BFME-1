@@ -8,7 +8,7 @@
 // retail bytes, matching docs/matching.md's near-twin recipe rather than
 // editing the shared header.
 
-extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
+ // retail 0x01075358 (2^32 conversion fixup)
 
 class Rva0020A900Ai
 {

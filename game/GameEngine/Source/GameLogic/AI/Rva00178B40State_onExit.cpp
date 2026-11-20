@@ -1,6 +1,6 @@
 // BFME layout reconstruction for retail RVA 0x00178B40.
 
-typedef bool Bool;
+
 
 #include "../../../Include/Common/Enums/StateExitType.h"
 
@@ -56,7 +56,7 @@ struct Rva00178B40Fields
 };
 
 extern void j_00048ca7();
-extern void j_00019c54();
+
 extern void j_00032dee();
 
 class Rva00178B40State : public AIInternalMoveToState

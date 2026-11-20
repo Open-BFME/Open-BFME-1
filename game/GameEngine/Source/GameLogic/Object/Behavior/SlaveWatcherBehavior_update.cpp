@@ -1,7 +1,7 @@
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
 // Open-BFME5: SlaveWatcherBehavior update.
 
-typedef unsigned char Bool;
+
 
 enum UpdateSleepTime
 {

@@ -296,18 +296,18 @@ private:
 	Rva003C3850Vector m_missionObjectiveStates;
 };
 
-extern void j_0001b333();
-extern void j_000299ce();
-extern void j_000295d7();
-extern void j_000495da();
+
+
+
+
 extern void j_0001d8c7();
 extern void j_00035ff3();
-extern void j_000156b3();
-extern void j_0003a4a4();
-extern void j_000475a5();
-extern void j_00032a56();
+
+
+
+
 extern void j_00002e46();
-extern void j_000012e4();
+
 
 // 0x012ED668: retail's global is AudioManager *TheAudio; ClientSubsystem above
 // is this TU's view of the same pointer's vtable.

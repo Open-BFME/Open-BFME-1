@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 #include "../../../../Include/Common/ScalarTypes.h"
-typedef unsigned short WCHAR;
+
 
 class Thing;
 class ModuleData;

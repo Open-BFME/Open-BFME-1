@@ -1,6 +1,6 @@
 // BFME layout reconstruction for the state-exit body at retail RVA 0x00179A90.
 
-typedef bool Bool;
+
 
 #include "../../../Include/Common/Enums/StateExitType.h"
 

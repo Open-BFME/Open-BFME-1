@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD
 // Retail 0x0016D330.  The owning state and method names remain unresolved.
 
-typedef int Bool;
+
 
 class Object;
 

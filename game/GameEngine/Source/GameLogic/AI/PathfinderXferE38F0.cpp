@@ -14,21 +14,21 @@ struct IRegion2D
 	Int hiY;
 };
 
-class Snapshot;
-struct ICoord3D;
-struct Region3D;
-struct IRegion3D;
-class Coord2D;
-struct ICoord2D;
-struct Region2D;
-struct RealRange;
-struct RGBColor;
-struct RGBAColorReal;
-struct RGBAColorInt;
-struct XferReservedTag;
-class AsciiString;
-class UnicodeString;
-struct Coord3DBase;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
 class Xfer

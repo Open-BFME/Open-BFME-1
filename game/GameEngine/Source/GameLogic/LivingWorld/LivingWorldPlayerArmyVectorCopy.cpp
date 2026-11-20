@@ -21,7 +21,7 @@ public:
 };
 
 extern void j_0000f015();
-extern void j_00038140();
+
 
 namespace _STL
 {

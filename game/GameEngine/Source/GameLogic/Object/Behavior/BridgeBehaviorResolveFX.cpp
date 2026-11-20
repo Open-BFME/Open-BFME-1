@@ -57,7 +57,7 @@ class TerrainRoadType { public:
  AsciiString getDamageToSoundString(BodyDamageType);
  AsciiString getRepairedToSoundString(BodyDamageType);
 };
-void j_0004a83b();
+
 void j_0001dafc(); void j_0002fc39(); void j_0003fef9();
 class BridgeBehavior {
  char pad00[8]; Object *m_object; char pad0c[0x30];

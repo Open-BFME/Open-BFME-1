@@ -6,7 +6,7 @@
 #include <hash_map>
 #include <list>
 
-typedef bool Bool;
+
 typedef int ObjectID;
 
 class DamageInfo;

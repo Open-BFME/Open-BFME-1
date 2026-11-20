@@ -48,11 +48,11 @@ extern PathfindCellInfo *g_bfmePathfindFreeList;
 #define TRACE(msg) if (bfmeRetailCritterDesyncFlag && bfmeRetailCritterDesyncSink) bfmeRetailCritterDesyncLog(bfmeRetailCritterDesyncSink, "CritterDesync:    Pathfinder::InternalFindPath() " msg)
 
 extern void j_00042a37();
-extern void j_0001fbbd();
-extern void j_00036b33();
+
+
 extern void j_0002f798();
-extern void j_00049f3f();
-extern void j_00036642();
+
+
 extern void j_0004a980();
 extern void j_00005e48();
 

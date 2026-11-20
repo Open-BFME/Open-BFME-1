@@ -228,7 +228,7 @@ public:
 extern PartitionManager *ThePartitionManager;
 
 // ---- module ----
-class ModuleData;
+
 
 struct BezierProjectileBehaviorModuleData
 {

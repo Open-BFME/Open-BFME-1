@@ -5,7 +5,7 @@
 // (0x003B43D0) and bfmeReplenishPair (0x003B4510). Inlined AsciiString
 // compare against the name at record+4; empty fallback 0x0107388B.
 
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 

@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../../Include/GameLogic/Module/UpdateSleepTime.h"
 

@@ -12,8 +12,8 @@
 // visible here. `this` is never touched, which is why the store's own model is
 // empty; the frame's `push ecx` is allocation, not an argument.
 
-typedef int Int;
-typedef bool Bool;
+
+
 
 class LocomotorTemplate;
 

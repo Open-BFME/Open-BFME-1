@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: Horde transport member cleanup, retail 0x0024BA00.
 
-typedef bool Bool;
+
 
 // Opaque AI and view types; retail calls reach 0x00227B60 (ILT 0x0002CE44),
 // 0x0022E340 (ILT 0x00041E34), 0x001C9AC0 (ILT 0x000122AB), 0x00410BA0

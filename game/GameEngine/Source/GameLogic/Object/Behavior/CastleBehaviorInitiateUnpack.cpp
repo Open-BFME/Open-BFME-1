@@ -6,7 +6,7 @@
 
 
 
-extern const char g_bfmeEmptyAscii[];
+
 
 class ObjectStatus
 {
@@ -142,7 +142,7 @@ extern CRCParameterCheck *TheCRCParameterCheck;
 extern void j_000084d6(void);
 extern void j_0002191d(void);
 extern void j_000022bb(void);
-extern void j_00020824(void);
+
 extern void j_0003a17a(void);
 
 typedef void (CastleBehavior::*BoolCall)(Int);

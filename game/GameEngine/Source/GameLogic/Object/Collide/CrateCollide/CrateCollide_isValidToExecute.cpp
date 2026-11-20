@@ -90,7 +90,7 @@ public:
 	};
 };
 
-class ModuleData;
+
 class BehaviorModule
 {
 public:

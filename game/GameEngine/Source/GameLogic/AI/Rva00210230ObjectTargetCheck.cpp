@@ -8,7 +8,7 @@
 
 typedef unsigned char Bool;
 #include "../../../Include/Common/ScalarTypes/Real.h"
-typedef int Int;
+
 
 enum Relationship
 {

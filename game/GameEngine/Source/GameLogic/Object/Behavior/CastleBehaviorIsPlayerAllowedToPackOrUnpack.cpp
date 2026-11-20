@@ -86,7 +86,7 @@ class CRCParameterCheck;
 extern CRCParameterCheck *TheCRCParameterCheck;
 #define g_012ED4FC ( (void *)TheCRCParameterCheck )
 extern GameLogic *TheGameLogic;
-extern void b_0036fd20(void);
+
 extern "C" void bfmeRetailCritterDesyncLog(void *context,
 	const char *format, ...);
 

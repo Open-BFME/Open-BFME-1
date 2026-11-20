@@ -183,7 +183,7 @@ public:
 
 // Module data +0x20c: its member at 0x003A04A0 (ILT 0x0001DA34) decides
 // whether the rider fades.
-void j_0001da34();
+
 class Rva2225E0Filter
 {
 public:

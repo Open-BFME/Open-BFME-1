@@ -8,7 +8,7 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-extern const char g_bfmeEmptyAscii[];
+
 
 #include "ascii_string.h"
 

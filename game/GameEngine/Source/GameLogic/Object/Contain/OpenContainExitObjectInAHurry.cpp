@@ -155,7 +155,7 @@ private:
 	ConditionBits002289F0 m_conditionFlags;
 };
 
-void j_00011252(); // ILT to 003EAC80; thiscall Object/set/destination; ret12.
+ // ILT to 003EAC80; thiscall Object/set/destination; ret12.
 class Pathfinder
 {
 public:

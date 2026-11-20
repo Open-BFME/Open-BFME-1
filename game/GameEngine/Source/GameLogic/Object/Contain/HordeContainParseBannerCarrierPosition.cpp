@@ -13,7 +13,7 @@
 // Retail's final _CxxThrowException call ends at +0x147 (327 bytes);
 // the following int3 byte is alignment padding, not part of the body.
 
-typedef float Real;
+
 
 extern "C" int __cdecl strcmp( const char *a, const char *b );
 

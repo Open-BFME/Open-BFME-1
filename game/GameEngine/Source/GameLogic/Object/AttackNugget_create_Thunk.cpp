@@ -36,7 +36,7 @@ class Waypoint;
 class PolygonTrigger;
 class CommandButton;
 class Path;
-class OCLUpdate;
+
 class Module;
 
 enum AICommandType

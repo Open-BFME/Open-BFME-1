@@ -14,7 +14,7 @@
 
 #include "../../../../Include/Common/ScalarTypes/Real.h"
 #include "../../../../Include/Common/ScalarTypes/UnsignedInt.h"
-typedef unsigned char Byte;
+
 
 #include "../../../../Include/Common/ObjectID.h"
 #include "../../../../Include/Common/Enums/KindOfType.h"

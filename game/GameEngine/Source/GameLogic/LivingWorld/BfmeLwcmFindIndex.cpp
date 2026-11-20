@@ -4,7 +4,7 @@
 // Same 32-byte record vector at this+0x10 and inlined AsciiString compare
 // against the name at record+4; returns the matching index or -1.
 
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" int __cdecl memcmp(const void *left, const void *right, unsigned int count);
 #pragma intrinsic(memcmp)
 

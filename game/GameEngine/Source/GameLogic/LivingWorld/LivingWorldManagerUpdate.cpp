@@ -108,7 +108,7 @@ public:
 
 extern unsigned char Rva00563970GetFlag();
 // ILT 0x00024848 reaches the verified ShowControlBar(bool) at 0x004C0E10.
-extern void ShowControlBar(bool immediate);
+
 extern void j_00004c3c();
 extern void j_00024848();
 extern void j_000284a2();

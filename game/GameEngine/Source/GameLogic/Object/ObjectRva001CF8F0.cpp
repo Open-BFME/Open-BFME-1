@@ -11,7 +11,7 @@
 
 
 
-extern "C" void *memset(void *destination, int value, unsigned int size);
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameClient/DrawModule.h
 class ModelConditionFlags

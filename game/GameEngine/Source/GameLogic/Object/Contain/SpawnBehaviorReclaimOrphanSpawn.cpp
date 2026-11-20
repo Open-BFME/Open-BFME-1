@@ -8,7 +8,7 @@
 
 #include "../../../../Include/Common/ScalarTypes.h"
 
-typedef unsigned int ObjectID;
+
 
 template <typename T> class StringBase
 {

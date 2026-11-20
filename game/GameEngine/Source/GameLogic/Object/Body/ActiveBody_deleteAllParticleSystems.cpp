@@ -4,7 +4,7 @@
 // lookup returns BFME's intrusive 12-byte particle-system handle by value;
 // the handle is released at the end of every iteration.
 
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../../Include/Common/Enums/ParticleSystemID.h"
 

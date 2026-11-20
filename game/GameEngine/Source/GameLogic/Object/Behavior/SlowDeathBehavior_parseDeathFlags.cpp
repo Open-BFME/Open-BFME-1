@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
-typedef bool Bool;
+
 
 class INI;
 
