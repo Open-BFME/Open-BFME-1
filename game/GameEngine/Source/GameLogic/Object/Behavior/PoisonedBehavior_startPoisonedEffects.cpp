@@ -9,8 +9,8 @@
 
 typedef int DeathType;
 
-class Object;
-class Drawable;
+
+
 
 class GameLogic
 {

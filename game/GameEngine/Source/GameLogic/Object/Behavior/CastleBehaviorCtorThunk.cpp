@@ -34,7 +34,7 @@
 
 class Thing;
 class ModuleData;
-class Object;
+
 
 #include "../../../../Include/Common/ScalarTypes.h"
 

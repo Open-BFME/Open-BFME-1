@@ -9,7 +9,7 @@
 // the matched ReplenishUnitsBehavior::friend_newModuleInstance at 0x001173A0.
 // See identity_evidence/00117420-replenishunits-friend-newmoduledata.md.
 
-class INI;
+
 class ModuleData;
 class MultiIniFieldParse;
 

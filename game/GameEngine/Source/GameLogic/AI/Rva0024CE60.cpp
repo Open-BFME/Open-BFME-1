@@ -33,8 +33,8 @@
 // The explicit `else { return; }` is what lets both arms fall into that tail.
 // The secondary base is still recomputed per arm: hoisting the cast above the
 // branch computes `add esi,-0x20` once and breaks both arms.
-class Rva0024CE60Thing;
-class BfmeSrcCK;
+
+
 
 // Reached through Rva0024CE60Owner's vslot 0x68; only its vslot 0x100 is called.
 class Rva0024CE60Thing

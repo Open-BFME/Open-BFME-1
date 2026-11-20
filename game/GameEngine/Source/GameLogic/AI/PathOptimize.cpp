@@ -15,7 +15,7 @@
 // The ground-or-bridge test is a named Bool, which keeps retail's block
 // order for the bridge-layer branch.
 
-class Object;
+
 class PathfindCell;
 class Path;
 

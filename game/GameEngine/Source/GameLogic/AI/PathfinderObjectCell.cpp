@@ -24,8 +24,8 @@
 #include "../../../Include/Common/ScalarTypes/Real.h"
 typedef unsigned char Bool;
 
-class Object;
-class Pathfinder;
+
+
 class PathfindCell;
 
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"

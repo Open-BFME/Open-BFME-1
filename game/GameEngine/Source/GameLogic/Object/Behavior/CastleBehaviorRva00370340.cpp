@@ -14,7 +14,7 @@ typedef int ObjectID;
 // Retail ILT thunk reached in place of the Overridable::getFinalOverride call.
 extern void j_000022bb();
 
-class ThingTemplate;
+
 
 class Overridable
 {

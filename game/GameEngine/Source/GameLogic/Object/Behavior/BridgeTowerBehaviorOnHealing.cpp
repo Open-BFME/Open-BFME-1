@@ -26,8 +26,8 @@ enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 #include "../../../../Include/Common/Enums/DeathType.h"
 #include "../../../../Include/Common/Enums/BodyDamageType.h"
 
-class DamageInfo;
-class BodyModuleInterface;
+
+
 class BehaviorModule;
 class BridgeBehaviorInterface;
 

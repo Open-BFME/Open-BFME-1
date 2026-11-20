@@ -87,7 +87,7 @@ public:
 
 #include "../../../Include/Common/FieldParse.h"
 
-class AI;
+
 
 class Gen_0014B790
 {

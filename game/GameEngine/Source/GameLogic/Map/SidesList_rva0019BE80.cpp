@@ -7,7 +7,7 @@
 // wider than the old Zero Hour header).  The add body is the adjacent
 // 0x0019BA40 body reached through its 0x00045DC7 thunk.
 
-class DataChunkInput;
+
 struct DataChunkInfo;
 extern void j_0002df65();
 

@@ -10,7 +10,7 @@
 
 
 
-class Object;
+
 class GameLogic
 {
 public:

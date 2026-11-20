@@ -12,8 +12,8 @@ typedef unsigned int ObjectID;
 
 
 class Object;
-class Player;
-class Team;
+
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

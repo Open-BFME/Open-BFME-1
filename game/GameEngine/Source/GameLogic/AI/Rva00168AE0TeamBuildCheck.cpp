@@ -44,7 +44,7 @@ public:
     }
 };
 
-class TeamPrototype;
+
 class Team;
 
 class TeamInQueue

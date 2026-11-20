@@ -5,7 +5,7 @@
 typedef unsigned char Bool;
 #include "../../../Include/Common/ScalarTypes/Real.h"
 
-class Object;
+
 class LocomotorSet;
 class PathfindCell;
 #include "../../../../Libraries/Include/Lib/Coord3D.h"

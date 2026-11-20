@@ -30,7 +30,7 @@ enum TurretStateType
 
 class Weapon;
 class Object;
-class AIUpdateInterface;
+
 
 #define OBJECT_TU_MEMBERS \
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);

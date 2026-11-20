@@ -13,8 +13,8 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_UNREADY = 5
 };
 
-class Object;
-class ModuleData;
+
+
 
 #include "../../../../../Libraries/Include/Lib/Coord3D.h"
 

@@ -2,7 +2,7 @@
 
 // Open-BFME5: AutoHealBehavior::friend_newModuleData factory.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

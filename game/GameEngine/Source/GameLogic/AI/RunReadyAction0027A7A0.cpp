@@ -43,7 +43,7 @@ public: void setPosition(const Coord3D*);
 class BfmeObjAS { public: BfmeObjAS *bfmeParentAS(int); };
 class Rva001BEC40DwordSlot { public: void set(int); };
 class AIUpdateInterface { public: void destroyPath(); };
-class ReadyRelation0027A7A0;
+
 struct ModelFlags0027A7A0 {
  unsigned words[10];
  __forceinline unsigned test(unsigned n) const { return words[n>>5]&(1u<<(n&31)); }
@@ -63,7 +63,7 @@ struct Gen_t_00272aa0_p12cd;
 typedef _STL::vector<Gen_t_00272aa0_p12cd> RetailObjectIDs;
 typedef _STL::hash_map<int,Object*,_STL::hash<int>,_STL::equal_to<int> > ObjectHash;
 class GameLogic { public:
- 
+
  Object *findObjectByID(int id) { if(id==0) return 0; ObjectHash::iterator it=objects.find(id); if(it==objects.end()) return 0; return (*it).second; }
  char pad[0xb0]; ObjectHash objects;
 };

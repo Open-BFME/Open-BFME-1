@@ -19,7 +19,7 @@ typedef int ObjectID;
 
 
 
-class Object;
+
 class CountermeasuresBehaviorInterface;
 
 class StructureCompletionInterface

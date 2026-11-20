@@ -26,7 +26,7 @@ enum MoodMatrixAction
 #include "../command_source_type.h"
 
 class Object;
-class AIUpdateInterface;
+
 
 class StateMachine
 {

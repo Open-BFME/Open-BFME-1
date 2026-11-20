@@ -19,7 +19,7 @@ typedef Coord3D Rva001676A0Coord3D;
 
 class Rva001676A0Object;
 class Rva001676A0DozerAI;
-class Rva001676A0Pathfinder;
+
 class Rva001676A0LocomotorSet
 {
 	char m_pad00[0x10];

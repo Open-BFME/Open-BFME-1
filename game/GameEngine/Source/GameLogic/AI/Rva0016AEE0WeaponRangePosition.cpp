@@ -11,7 +11,7 @@
 
 class Weapon;
 class AIUpdateInterface;
-class Pathfinder;
+
 
 class Object
 {

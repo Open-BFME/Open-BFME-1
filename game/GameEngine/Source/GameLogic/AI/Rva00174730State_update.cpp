@@ -15,7 +15,7 @@ typedef unsigned char Bool;
 
 #include "../../../../Libraries/Include/Lib/Coord3D.h"
 
-class Object;
+
 
 struct Rva00174730PathNode
 {

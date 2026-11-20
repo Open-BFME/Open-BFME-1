@@ -28,7 +28,7 @@ inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer()
 
 #define ERROR_CORRUPT_FILE_FORMAT 0xDEAD0005
 
-class BfmeSubVE;
+
 
 class UserParser {
 };

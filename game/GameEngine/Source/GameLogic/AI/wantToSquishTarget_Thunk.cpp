@@ -8,7 +8,7 @@ enum PlayerType { PLAYER_COMPUTER = 1 };
 enum CrushSquishTestType { TEST_TYPE_2 = 2 };
 #include "../../../Include/Common/Enums/KindOfType.h"
 
-class Object;
+
 
 class Player
 {

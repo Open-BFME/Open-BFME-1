@@ -19,7 +19,7 @@
 // The factory at 0x00125D70 allocates 0x20 bytes and instead pushes 0x0040A727 -> 0x0020D260,
 // whose table (0x010A6FE8) is { "UnitName", ... } -- SpawnUnitBehavior.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

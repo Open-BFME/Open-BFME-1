@@ -2,7 +2,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class Rva00249310Object;
+
 
 class Rva00249310Result
 {

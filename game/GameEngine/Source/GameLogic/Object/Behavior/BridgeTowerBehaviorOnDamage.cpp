@@ -28,9 +28,9 @@ enum DamageType { DAMAGE_UNRESISTABLE = 8 };
 #include "../../../../Include/Common/Enums/BodyDamageType.h"
 #include "../../../../Include/Common/Enums/BridgeTowerType.h"
 
-class DamageInfo;
-class BodyModuleInterface;
-class BehaviorModule;
+
+
+
 class BridgeBehaviorInterface;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/BodyModule.h

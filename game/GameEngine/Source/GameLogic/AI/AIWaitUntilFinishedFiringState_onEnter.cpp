@@ -28,7 +28,7 @@ enum WeaponStatus
 	READY_TO_FIRE = 0
 };
 
-class Object;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
 class WeaponTemplate

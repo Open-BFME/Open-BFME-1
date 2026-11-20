@@ -9,7 +9,7 @@ typedef unsigned char Bool;
 
 class Object;
 class LocomotorSet;
-class PathfindCell;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 // The call at 0x3F1890 reaches the incremental-link thunk at retail 0x0002AA04,

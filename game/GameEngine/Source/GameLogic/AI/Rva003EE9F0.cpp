@@ -29,7 +29,7 @@ public:
 	unsigned int m_word;
 };
 
-class Pathfinder;
+
 class Object;
 
 class Pathfinder

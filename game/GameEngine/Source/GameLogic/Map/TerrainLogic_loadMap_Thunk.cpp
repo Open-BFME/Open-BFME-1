@@ -10,7 +10,7 @@
 
 
 
-class ChunkInputStream;
+
 
 #include "string_base.h"
 
@@ -102,7 +102,7 @@ private:
 	char m_layout[0x28];
 };
 
-class TerrainLogic;
+
 extern void j_000241e5(void);
 extern void j_00026940(void);
 extern void j_0000299b(void);

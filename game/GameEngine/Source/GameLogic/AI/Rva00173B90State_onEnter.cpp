@@ -16,7 +16,7 @@
 
 
 
-class Object;
+
 
 class ModelConditionFlags
 {

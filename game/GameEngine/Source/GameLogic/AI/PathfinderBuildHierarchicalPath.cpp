@@ -14,7 +14,7 @@ struct Rva003DDF00Element
 	unsigned int m_value[3];
 };
 
-class Path;
+
 
 struct PathfindCellInfo
 {

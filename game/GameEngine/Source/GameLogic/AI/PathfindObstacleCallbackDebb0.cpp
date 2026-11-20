@@ -36,7 +36,7 @@ typedef int ObjectID;
 
 enum KindOfType { KINDOF_FIRST = 0 };
 
-class Object;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCellInfo

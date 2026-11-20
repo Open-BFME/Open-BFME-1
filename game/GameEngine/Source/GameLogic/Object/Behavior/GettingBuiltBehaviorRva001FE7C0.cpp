@@ -32,7 +32,7 @@ typedef unsigned int ObjectID;
 
 
 
-class Object;
+
 class Module;
 
 class BodyModuleInterface

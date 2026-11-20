@@ -18,7 +18,7 @@ enum Relationship { ENEMIES = 2 };
 enum DamageType { DAMAGE_UNRESISTABLE_8 = 8 };
 enum DeathType { DEATH_0x16 = 0x16 };
 
-class Object;
+
 class Rva001FF060AIUpdate
 {
 public:

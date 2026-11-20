@@ -12,7 +12,7 @@
 // table at 0x010898A0 at offset 8. The keys are Zero Hour's
 // FireWeaponWhenDamagedBehavior set at BFME offsets.
 
-class INI;
+
 
 #include "../../../../Include/Common/FieldParse.h"
 

@@ -22,9 +22,9 @@ enum KindOfType
 	KINDOF_0014CA60_SIEGE_TARGET = 0x5c
 };
 
-class Object;
+
 class BfmeOutOfWeaponRangeObject;
-class Module;
+
 
 class BfmeOutOfWeaponRangeTemplate
 {
