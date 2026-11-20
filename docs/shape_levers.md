@@ -4381,3 +4381,19 @@ a measured effect in this TU, not a general optimizer rule or proof of the
 original source. See `game/GameEngine/Source/GameLogic/Object/Upgrade/
 Rva002D9F90ClearCondition.cpp` and
 `targets/game/reverse/attempt_support/20261120-002d9f90-one-bit-invariant.md`.
+
+### STLport vector copy: reconcile both linkage and exception context
+
+The native STLport 4.6 vector<ICoord2D>::_M_allocate_and_copy implementation
+reproduces RVA 0x009F5370's complete 94-byte loop only when both TU-local
+`_STLP_USE_STATIC_LIB` and `_STLP_NO_EXCEPTIONS` are defined. Original VC7.1
+`/DNDEBUG /MD /EHsc` and base options remain unchanged. Controls emit 143
+bytes with neither macro, 161 with static linkage alone, and 78 with only
+STL exceptions disabled. Both macros select retail's node allocator and
+non-unwinding loop; they are not substitutes for proving its element layout
+and allocation targets. Canonical ICoord2D is eight bytes, and both retail
+call relocations verify. The six extra template helpers match existing
+same-name providers. Other TUs still emit an EH variant of the primary
+symbol, so this finding does not establish full-image COMDAT selection.
+See `game/Libraries/Source/WWVegas/WWLib/VectorICoord2DAllocateAndCopy.cpp`
+and `targets/game/reverse/identity_evidence/20261120-009f5370-vector-allocate-copy.md`.
