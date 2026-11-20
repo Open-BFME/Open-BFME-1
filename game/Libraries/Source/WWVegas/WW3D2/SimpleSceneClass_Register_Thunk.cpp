@@ -18,7 +18,7 @@
 // them and emits an out-of-line call per arm, which is not what retail has --
 // there the whole body is one flat switch over Internal_Add. The bytes decide
 // the shape; the wrapper is where the name lives, not where the code does.
-class RenderObjClass;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass

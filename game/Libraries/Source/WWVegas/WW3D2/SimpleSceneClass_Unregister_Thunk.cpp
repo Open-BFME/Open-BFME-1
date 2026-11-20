@@ -11,7 +11,7 @@
 // to the list-node base at offset 8. That difference is what says the two groups
 // are different list types: a Ref-counting one whose Remove is not inline, and a
 // plain one whose Remove is.
-class RenderObjClass;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/multilist.h
 class MultiListObjectClass

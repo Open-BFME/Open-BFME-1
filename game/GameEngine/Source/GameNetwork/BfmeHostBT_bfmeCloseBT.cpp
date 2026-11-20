@@ -1,4 +1,4 @@
-class BfmeResBT;
+
 
 class BfmeResBT
 {

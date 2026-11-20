@@ -14,9 +14,9 @@
 // loop's shape after the aligner has run, and the head stays at +0x29 with no
 // pad -- 72 bytes, matching retail instruction for instruction.
 
-class BfmeBBP;
-class BfmeUBM;
-class BfmeItemBP;
+
+
+
 
 class BfmeUBM
 {

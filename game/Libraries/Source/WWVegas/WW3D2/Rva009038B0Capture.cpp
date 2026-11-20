@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-struct Rva009038B0Device;
+
 
 struct Rva009038B0Device
 {

@@ -45,7 +45,7 @@ public:
 	const char *str(void) const { return m_data ? m_data->m_text : ""; }
 };
 
-class INI;
+
 
 #include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 

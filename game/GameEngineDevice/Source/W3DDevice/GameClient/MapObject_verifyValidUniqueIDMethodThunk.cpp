@@ -55,7 +55,7 @@ public:
     char pad1[0x20-8];
     AsciiString name;
 };
-class MapObject;
+
 // Retail VA 0x012ED5DC holds the map-list holder pointer.
 // WorldHeightMap.cpp owns it; this use retains its local view.
 class BfmeMapObjectListHolder;

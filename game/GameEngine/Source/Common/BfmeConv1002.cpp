@@ -1,7 +1,7 @@
 // Open-BFME5 conversions.
 
 class Object;
-struct BfmeArg1002;
+
 
 struct BfmeSub1002
 {

@@ -34,7 +34,7 @@ public:
 	}
 };
 
-class MeshClass;
+
 
 extern void j_0002c43a();
 

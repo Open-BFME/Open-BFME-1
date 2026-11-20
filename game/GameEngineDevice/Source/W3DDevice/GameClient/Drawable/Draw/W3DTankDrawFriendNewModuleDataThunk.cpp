@@ -10,7 +10,7 @@
 // Retail allocates 0x170 bytes, which is sizeof(W3DTankDrawModuleData) counting
 // its vptr, and calls the constructor through link thunk 0x0003D451.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

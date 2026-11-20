@@ -10,7 +10,7 @@ typedef unsigned char Bool;
 typedef int Color;
 
 class Image;
-class GameWindow;
+
 class WinInstanceData;
 
 #include "../../../../../../Libraries/Include/Lib/ICoord2D.h"

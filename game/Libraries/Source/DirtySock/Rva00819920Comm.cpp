@@ -1,7 +1,7 @@
 // _Rva00819920
 // cl: /Od /GZ /GS /MD /DNDEBUG
 
-struct Rva00819920Comm;
+
 
 struct Rva00819920Message
 {

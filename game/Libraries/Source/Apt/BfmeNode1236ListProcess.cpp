@@ -10,7 +10,7 @@
 // that view's +0x10 row table: assigning the row first swaps ESI for EAX.
 
 struct Rva008D3860Command;
-struct Rva008D3860Owner;
+
 
 struct Rva008D3860Frame
 {

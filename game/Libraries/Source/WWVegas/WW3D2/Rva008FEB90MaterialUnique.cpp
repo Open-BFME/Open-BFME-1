@@ -8,7 +8,7 @@
 // or emitter proves the production owner.
 
 class MaterialInfoClass;
-class MeshModelClass;
+
 class MeshClass;
 
 class RefCountClass {

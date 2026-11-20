@@ -4,7 +4,7 @@
 // pointer at 0x0134B0E8. The body also inlines the static-sort-list helper
 // after flushing the mesh renderer.
 
-class CameraClass;
+
 class RenderInfoClass;
 class LightEnvironmentClass;
 

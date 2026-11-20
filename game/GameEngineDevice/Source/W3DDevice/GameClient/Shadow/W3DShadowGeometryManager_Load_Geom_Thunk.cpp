@@ -87,7 +87,7 @@ private:
 	int m_opaque[13];
 };
 
-class W3DShadowGeometry;
+
 
 // Only the two virtual slots reached by this body are named.  The class-id
 // slot is +0x0c.  Mesh slot +0x14 is a borrowed identity view: its MeshClass

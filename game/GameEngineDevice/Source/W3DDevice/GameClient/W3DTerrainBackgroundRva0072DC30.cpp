@@ -31,8 +31,8 @@ public:
 	}
 };
 
-class WorldHeightMap;
-class W3DTerrainBackground;
+
+
 
 struct Rva0072E150Region
 {

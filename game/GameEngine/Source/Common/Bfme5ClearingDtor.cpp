@@ -20,7 +20,7 @@ struct BfmeClearNodeB
 	void *m_bfmeValue;					// +0x08
 };
 
-class BfmeClearListB;
+
 
 // The list nodes come from the STLport node pool: 0x0082E5F0 is the private
 // static _STL::__node_alloc<true, 0>::_M_deallocate. The public deallocate

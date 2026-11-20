@@ -25,7 +25,7 @@ private:
 	char m_bfmeHead[0x0C];
 };
 
-struct crateCreationEntry;
+
 
 namespace _STL
 {

@@ -11,7 +11,7 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib /Igame/GameEngine/Source/GameLogic/Object
 #include "ascii_string.h"
 class Rva001CF980Result;
-class ThingTemplate;
+
 class Overridable { public: const Overridable *getFinalOverride() const; void *vtable; Overridable *m_nextOverride; };
 class ThingTemplate : public Overridable { public: char pad08[0x470]; unsigned short m_templateID; unsigned short getTemplateID() const { return m_templateID; } };
 #define THING_TU_MEMBERS const ThingTemplate *getTemplate() const { if(!m_template) return 0; if(m_template->m_nextOverride) return (const ThingTemplate *)m_template->m_nextOverride->getFinalOverride(); return m_template; } bool isSignificantlyAboveTerrain() const;

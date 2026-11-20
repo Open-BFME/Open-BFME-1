@@ -10,7 +10,7 @@
 // Retail allocates 0x14 bytes, which is sizeof(W3DFloorDrawModuleData) with its
 // vptr, and calls the constructor through 0x0003B0A7.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

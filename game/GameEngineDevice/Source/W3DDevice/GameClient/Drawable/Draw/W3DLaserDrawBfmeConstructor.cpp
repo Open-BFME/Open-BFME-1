@@ -55,8 +55,8 @@ private:
 	unsigned short m_refCount;
 };
 
-class W3DRadarResetTexture;
-class W3DRadarResetSurface;
+
+
 
 #include "WW3D2/surfaceclass.h"
 

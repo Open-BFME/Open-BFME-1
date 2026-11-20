@@ -5,7 +5,7 @@ extern void j_00014dee(void);
 extern void j_00006a5f(void);
 extern void j_00022822(void);
 
-class Gen006C6300Owner;
+
 
 class WaterRenderObjClass
 {

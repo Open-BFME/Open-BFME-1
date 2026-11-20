@@ -8,7 +8,7 @@
 
 struct IDirect3DDevice8;
 struct IDirect3DDevice9;
-struct IDirect3DSurface9;
+
 struct _D3DXIMAGE_INFO;
 typedef _D3DXIMAGE_INFO D3DXIMAGE_INFO;
 struct tagPALETTEENTRY;

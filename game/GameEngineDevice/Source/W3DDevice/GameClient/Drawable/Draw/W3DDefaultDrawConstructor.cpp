@@ -28,7 +28,7 @@ typedef unsigned char Bool;
 class Thing;
 class ModuleData;
 class RenderObjClass;
-class Drawable;
+
 
 // The string payload BFME allocates, as
 // game/GameEngine/Source/Common/SmallGaps/lookupNameNoCase.cpp reads it: the

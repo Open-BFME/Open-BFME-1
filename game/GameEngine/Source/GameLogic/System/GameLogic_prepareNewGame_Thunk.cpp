@@ -16,7 +16,7 @@ enum GameMode
 	GAME_SHELL = 4
 };
 
-class AsciiString;
+
 
 #include "string_base.h"
 

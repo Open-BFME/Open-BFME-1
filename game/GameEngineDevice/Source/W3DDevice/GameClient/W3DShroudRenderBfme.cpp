@@ -116,7 +116,7 @@ extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
 // These are the two BFME call-site contracts used by the retail body.  Both
 // retail call sites go through incremental-link thunks, so the calls are made
 // against the thunk addresses directly.
-class W3DShroud;
+
 
 extern void j_0001494d();
 extern void j_00045c46();

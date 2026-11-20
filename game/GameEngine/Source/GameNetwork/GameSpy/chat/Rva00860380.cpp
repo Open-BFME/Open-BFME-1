@@ -6,7 +6,7 @@
 extern "C" int __cdecl ciSocketSendf(void *socket, const char *format, ...);
 extern "C" __declspec(dllimport) char *__cdecl strncpy(char *, const char *, unsigned int);
 
-struct Rva00860380Connection;
+
 typedef void (__cdecl *Rva00860380Callback)(void *, const char *, int, void *);
 
 struct Rva00860380Connection

@@ -10,7 +10,7 @@
 // Retail allocates 0x198 bytes, which is sizeof(W3DHordeModelDrawModuleData) with its
 // vptr, and calls the constructor through 0x00037187.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

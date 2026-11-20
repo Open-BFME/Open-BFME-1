@@ -14,7 +14,7 @@
 
 
 class MeshClass;
-class RenderObjClass;
+
 
 #include "vector3.h"
 #include "matrix3d.h"

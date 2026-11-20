@@ -1,9 +1,9 @@
 // cl: /O2 /Ob2 /GR- /EHsc /MD /DNDEBUG /DWIN32 /D_WINDOWS
 // BFME layout reconstruction of W3DGhostObject::snapShot at retail RVA 0x006BDE00.
 
-class Drawable;
-class DrawModule;
-class RenderObjClass;
+
+
+
 
 class GhostObjectManager
 {

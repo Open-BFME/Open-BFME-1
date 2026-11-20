@@ -14,7 +14,7 @@ typedef unsigned char Bool;
 typedef int Color;
 
 class Image;
-class GameWindow;
+
 class WinInstanceData;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

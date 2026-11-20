@@ -78,7 +78,7 @@ public:
 
 // PeerDefs.cpp defines GameSpyInfoInterface *TheGameSpyInfo (VA 0x012F7194).
 // Keep that spelling and cast to this TU's view for its BFME slots.
-class GameSpyInfo;
+
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;
 

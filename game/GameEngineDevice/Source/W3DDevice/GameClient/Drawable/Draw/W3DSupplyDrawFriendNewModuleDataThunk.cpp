@@ -10,7 +10,7 @@
 // The constructor is reached through link thunk 0x0001E76D, landing on
 // 0x0077DD50.
 
-class INI;
+
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);

@@ -105,7 +105,7 @@ void parseModelConditionFlags(
 	Rva0076A580ModelConditionFlags *all,
 	Rva0076A580ModelConditionFlags *positive);
 
-class INI;
+
 
 #include "../../../../../../GameEngine/Include/Common/FieldParse.h"
 

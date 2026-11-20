@@ -1,6 +1,6 @@
 // cl: /O2 /MD /EHs-c-
 
-class Rva00881B90Class;
+
 
 // Declared (not defined) here: bfmeRasterCircleFC's fourth parameter is passed
 // by value, so this TU only needs the name for the mangling and the 12-byte
