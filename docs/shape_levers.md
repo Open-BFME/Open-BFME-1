@@ -4365,3 +4365,19 @@ general position-based rename. Evidence: targets/game/reverse/identity_evidence/
 ### VC7.1: store an owned vptr before activating a local destructor guard
 
 A manual store in a novtable EH destructor body moved after the EH-state write. A local guard constructor that first saves this and then stores the existing owned vptr retains the73-byte primary sequence. Preserve the real guard destructor body for unwind; importing it leaves an invalid helper import. Only its always-inlined constructor uses dllimport plus forceinline suppression. Review the changed LEA-to-local-cleanup unwind path and all other retained sections, SafeSEH and COMDAT mappings, emitted helpers and provider/consumer gates. This is specific to MSVC13.10 EHsc/O2 and the observed opaque prefix, not a recovered full-class ABI. See targets/game/reverse/attempt_support/20261119-next500-1927-particle-vtable-binding.md.
+
+### VC7.1: a proved one-bit invariant selects the retail TEST encoding
+
+The 67-byte RVA 0x002D9F90 bank differed only by `test eax,edx` instead of
+`test edx,eax`. Immediately after `const unsigned int mask = 1u <<
+(condition & 31)`, `__assume((mask & (mask - 1u)) == 0)` produces the retail
+operand order without changing the remaining instructions. On the pinned
+32-bit VC7.1 compiler the count is 0..31 and mask has exactly one set bit,
+so this assumption is true for every input; it imposes no extra precondition.
+The ordinary build retains the original default optimization settings and
+existing notifier ILT binding. Nonzero, range and extraction-domain hints,
+and adding nonzero to the one-bit hint, did not close the mismatch. This is
+a measured effect in this TU, not a general optimizer rule or proof of the
+original source. See `game/GameEngine/Source/GameLogic/Object/Upgrade/
+Rva002D9F90ClearCondition.cpp` and
+`targets/game/reverse/attempt_support/20261120-002d9f90-one-bit-invariant.md`.

@@ -1,17 +1,26 @@
 // ?clearConfiguredModelCondition@Rva002D9F90Behavior@@QAEXXZ
-// partial score=0.985 date=2026-09-08
+// The class names keep the address because the original owning class is unknown.
+// These are partial field-access views, not recovered complete class sizes.
 // BFME retail RVA 0x002D9F90. The owning behavior's lexical identity is not
-// recovered; three matched callers reach this body through address-derived
+// recovered; four matched callers reach this body through address-derived
 // names. The layout and operation are explicit in the retail instructions:
 // module-data +0x64 supplies a ModelConditionFlagType, owner +0x110 is the
 // corresponding bit array, and a changed bit tail-calls the Object notifier.
+
+// Existing ILT binding at RVA 0x0002191D; it forwards to the rowed
+// Object::notifyModelConditionChanged body at 0x001BE1C0. This declaration
+// preserves that recorded __thiscall/no-stack-argument ABI, not a new name.
+class Object
+{
+public:
+    void notifyModelConditionChanged();
+};
 
 typedef unsigned int UnsignedInt;
 
 class Rva002D9F90Owner
 {
 public:
-	void notifyModelConditionChanged();
 
 private:
 	unsigned char m_pad[0x110];
@@ -47,9 +56,13 @@ void Rva002D9F90Behavior::clearConfiguredModelCondition()
 
 	const UnsignedInt condition = static_cast<UnsignedInt>(data->m_condition);
 	const UnsignedInt mask = 1u << (condition & 31);
+	// The 32-bit unsigned mask is 1u shifted by 0..31, hence has one bit set.
+	// The compiler hint is true for every possible condition; it adds no code.
+	// It preserves retail TEST edx,eax instead of the otherwise reversed form.
+	__assume((mask & (mask - 1u)) == 0);
 	if (owner->m_modelConditionFlags[condition >> 5] & mask)
 	{
 		owner->m_modelConditionFlags[condition >> 5] &= ~mask;
-		owner->notifyModelConditionChanged();
+		reinterpret_cast<Object *>(owner)->notifyModelConditionChanged();
 	}
 }
