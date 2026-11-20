@@ -24,8 +24,8 @@ typedef unsigned int ObjectID;
 
 #include "ascii_string.h"
 
-class ExperienceLevelData;
-class ExperienceTracker;
+
+
 class Module;
 class UpgradeTemplate;
 
@@ -37,7 +37,7 @@ public:
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 
-class ExperienceLevelSystem;
+
 
 extern void j_00038843();
 

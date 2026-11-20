@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-class BfmeTarget952;
+
 
 class BfmeHolder952
 {

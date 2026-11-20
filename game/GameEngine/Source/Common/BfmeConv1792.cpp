@@ -1,4 +1,4 @@
-class BfmeThingWQ;
+
 
 // ILT 0x000022BB -> matched 0x00087A80 Overridable::getFinalOverride.
 class Overridable

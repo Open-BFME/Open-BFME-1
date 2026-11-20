@@ -4,7 +4,7 @@
 class GameLogic;
 extern GameLogic *TheGameLogic;
 
-class BfmeThingBTC;
+
 
 // retail ILT 0x00023D30 -> 0x001CBAE0 is the matched Object::onRemovedFrom row
 // and ILT 0x0001D0DE -> 0x0038B0C0 the matched GameLogic::destroyObject row

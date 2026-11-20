@@ -1,4 +1,4 @@
-class BfmeHostXP;
+
 
 class Gen_004674E0
 {

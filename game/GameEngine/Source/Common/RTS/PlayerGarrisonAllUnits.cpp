@@ -174,7 +174,7 @@ public:
 	}
 };
 
-class BfmePlayerTeamInstanceIterator;
+
 
 struct BfmePlayerTeamPrototypeInstances
 {

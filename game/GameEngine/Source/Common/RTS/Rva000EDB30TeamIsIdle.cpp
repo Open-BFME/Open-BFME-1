@@ -7,7 +7,7 @@
 #include "../../../Include/Common/ScalarTypes.h"
 
 class AIUpdateInterface;
-class Object;
+
 class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
 class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
 {

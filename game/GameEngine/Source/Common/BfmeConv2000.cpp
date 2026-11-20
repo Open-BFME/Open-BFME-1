@@ -13,7 +13,7 @@ extern "C" void *bfmeVftAEVJ[];
 extern "C" void *bfmeVftBEVJ[];
 extern "C" void *bfmeVftCEVJ[];
 
-class BfmeHostEVJ;
+
 
 class BfmeSubEVJ
 {

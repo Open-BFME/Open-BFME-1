@@ -6,7 +6,7 @@
 
 extern "C" void __cdecl TableMap(void *table, void *each, void *param);
 
-class BfmeRoomXM;
+
 
 extern "C" void __cdecl bfmeVisitXM(void *entry, void *param);
 

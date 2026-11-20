@@ -9,7 +9,7 @@
 // helper not converted here.
 
 class Object;
-class ContainModuleInterface;
+
 
 typedef void (*ContainIterateFunc)(Object *obj, void *userData);
 

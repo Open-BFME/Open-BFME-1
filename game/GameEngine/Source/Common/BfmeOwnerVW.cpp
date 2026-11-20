@@ -20,7 +20,7 @@ private:
 	char *m_bfmeData;
 };
 
-class BfmeBaseVW;
+
 
 // Retail 0x012F3350: use the existing data owner; retain the local pointee view.
 extern class Gen_004902A0 *g_bfmeHeadCA;				// retail 0x012F3350

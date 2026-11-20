@@ -33,7 +33,7 @@ enum SpecialPowerType
 
 class SpecialPowerTemplate;
 class ThingTemplate;
-class Object;
+
 
 // The matched Thing body and the named Object callers establish the first
 // Thing subobject: a vptr at +0 and the template pointer at +4.

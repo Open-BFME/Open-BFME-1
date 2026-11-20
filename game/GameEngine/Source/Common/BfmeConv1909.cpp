@@ -1,4 +1,4 @@
-class BfmeAgentBD;
+
 
 // The one call this body makes into the seed family is retail's shared
 // flag-pair dispatcher `Gen002B2080::handle(FlagPairTarget *)` at ILT
@@ -74,7 +74,7 @@ class BfmeHostBD
 {
 public:
 	void bfmeSaveBD(BfmeAgentBD *ag);
-	
+
 
 	unsigned char m_bfmeHeadBD[0x20];
 	unsigned char m_bfmeSlotABD[4];

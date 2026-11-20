@@ -1,4 +1,4 @@
-class BfmeThingBNH;
+
 class BFMEWaterTrackTextureHandle;
 
 BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *name, int mipCount, int format);

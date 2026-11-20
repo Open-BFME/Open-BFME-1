@@ -11,7 +11,7 @@
 // stays balanced.
 void __cdecl j_0000ad85(void);
 
-struct BfmeNodeIC;
+
 
 class BfmeThingIC
 {

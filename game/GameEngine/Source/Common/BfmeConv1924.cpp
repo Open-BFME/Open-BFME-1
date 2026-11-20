@@ -4,7 +4,7 @@
 //   ILT 0x00006D7F -> Pathfinder::removeObjectFromPathfindMap (PathfindMapObjectWrappers.cpp)
 //   ILT 0x0000B81B -> Pathfinder::addObjectToPathfindMap    (PathfindMapObjectWrappers.cpp)
 
-class BfmeHostCL;
+
 class Object;
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h

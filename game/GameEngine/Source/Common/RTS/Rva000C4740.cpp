@@ -4,7 +4,7 @@
 
 
 class Player;
-class Object;
+
 
 class ContainModuleInterface
 {

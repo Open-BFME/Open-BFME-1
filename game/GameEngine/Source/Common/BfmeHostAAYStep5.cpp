@@ -35,8 +35,8 @@ struct Rva005A00B0AudioClient
 class AudioManager;
 extern AudioManager *TheAudio;
 
-class BfmeThingKB;
-class BfmeThingNA;
+
+
 class Rva0061C1D0Object;
 
 typedef _STL::hash_map<AsciiString, Rva0061C1D0Object *,

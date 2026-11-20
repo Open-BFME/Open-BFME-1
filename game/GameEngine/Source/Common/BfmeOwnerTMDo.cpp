@@ -7,7 +7,7 @@
 // the declaration (its body stays in Thing/GameLogicFindObjectByID.cpp).
 #include "Thing/GameLogicObjectLookup.h"
 
-class BfmeThingTM;
+
 
 // Retail's override-chain getter (row ?getFinalOverride@Overridable@@QBEPBV1@XZ, 0x00087A80, ILT 0x000022BB).
 class Overridable

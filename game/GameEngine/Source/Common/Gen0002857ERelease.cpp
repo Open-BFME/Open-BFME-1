@@ -8,7 +8,7 @@ extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
 extern "C" __declspec(dllimport) unsigned int __stdcall AIL_ms_count(void);
 
-class Gen0002857E;
+
 
 // The owner notification goes through ILT 0x00008A62, the ledger's 5-byte row
 // ?j_00008a62@@YAXXZ (game/gen_small/thunks_003.cpp), jmp to 0x00693EC0, as

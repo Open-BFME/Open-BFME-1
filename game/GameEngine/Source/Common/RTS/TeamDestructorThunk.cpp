@@ -11,7 +11,7 @@
 
 class Team;
 class Player;
-class ScriptEngine;
+
 
 // The calls below are incremental-link thunks at the exact retail call sites.
 // The receiver and argument types are carried by the local shims; their

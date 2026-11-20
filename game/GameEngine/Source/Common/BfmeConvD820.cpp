@@ -12,8 +12,8 @@ public:
 	void *m_bfmeMod;
 };
 
-class BfmeHelpD820;
-class BfmeTailD820;
+
+
 
 // The two callees of the tail body are reached through the retail five-byte
 // incremental-link thunks at 0x00002B49 and 0x00044B0C, so the only names

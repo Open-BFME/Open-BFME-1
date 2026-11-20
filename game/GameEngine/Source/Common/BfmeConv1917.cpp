@@ -1,6 +1,6 @@
 class BfmeThingBS;
-class BfmeAgentBS;
-class BfmeInfoBS;
+
+
 
 class BfmeSubBS;
 

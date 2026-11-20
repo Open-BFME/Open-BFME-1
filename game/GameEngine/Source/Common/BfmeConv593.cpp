@@ -3,7 +3,7 @@
 #include "PreRTS.h"
 #include "Common/Player.h"
 
-class BfmeThingCFF;
+
 
 class BfmeOwnerCFF;
 

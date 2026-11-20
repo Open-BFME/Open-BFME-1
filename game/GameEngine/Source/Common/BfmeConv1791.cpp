@@ -1,4 +1,4 @@
-class BfmeThingVQ;
+
 
 // The +4 link is an Overridable chain: retail calls ILT 0x000022BB ->
 // 0x00087A80, matched as Overridable::getFinalOverride (INIWater.cpp).

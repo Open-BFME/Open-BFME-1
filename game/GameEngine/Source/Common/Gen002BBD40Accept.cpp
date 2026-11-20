@@ -54,7 +54,7 @@ public:
 class Xfer; class MidVirtualSlot90Receiver;
 Xfer & Rva0010C3C0(MidVirtualSlot90Receiver *receiver, void *context);
 
-class Gen_002BBD40;
+
 
 // Retail ILT 0x00022363 reaches this matched StateMachine-family transfer.
 class Rva000A1510Owner

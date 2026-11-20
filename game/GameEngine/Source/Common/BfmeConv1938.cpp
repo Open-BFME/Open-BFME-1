@@ -1,4 +1,4 @@
-class UnicodeString;
+
 
 struct BfmeBufDF
 {

@@ -57,7 +57,7 @@ public:
 	Relationship getRelationship(const Team *that) const;
 };
 
-class BfmeRelationEntry;
+
 
 class BfmeRelationTest
 {

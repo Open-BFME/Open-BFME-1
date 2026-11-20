@@ -1,4 +1,4 @@
-class BfmeThingCFE;
+
 class Object;
 
 class GarrisonContain

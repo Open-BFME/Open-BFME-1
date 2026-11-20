@@ -1,4 +1,4 @@
-class BfmeThingYT;
+
 
 // The template's override link at +4: retail calls Overridable::getFinalOverride
 // (ILT 0x000022BB -> 0x00087A80) on it.

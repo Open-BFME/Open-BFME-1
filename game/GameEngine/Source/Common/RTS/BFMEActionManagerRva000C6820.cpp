@@ -24,7 +24,7 @@ enum SpecialPowerType
 };
 
 class AsciiString;
-class Object;
+
 
 class Overridable
 {

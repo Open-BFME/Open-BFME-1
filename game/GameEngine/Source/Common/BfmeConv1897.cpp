@@ -8,8 +8,8 @@
 // a pointer-to-member call emits; this is the routing idiom Object.cpp uses
 // for the same 0x0003C8E9 thunk.
 
-class BfmeThingAN;
-class BfmeHandlerAN;
+
+
 
 class BfmeMapAN
 {

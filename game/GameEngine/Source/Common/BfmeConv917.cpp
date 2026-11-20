@@ -1,6 +1,6 @@
 // Open-BFME5 conversions.
 
-struct BfmeSubFHH;
+
 
 // The thunk at 0x00017A12 reaches the matched ThingTemplate row 0x00144DC0.
 class AssetList;

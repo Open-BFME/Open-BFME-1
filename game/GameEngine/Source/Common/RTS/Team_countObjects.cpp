@@ -40,7 +40,7 @@ private:
 	KindOfMaskType m_kindOf;
 };
 
-class Object;
+
 
 class BfmeObjectVirtualTail
 {

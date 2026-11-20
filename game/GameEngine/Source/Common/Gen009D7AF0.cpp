@@ -26,7 +26,7 @@ struct BfmeHashNode
 	BfmeHashPair pair;
 };
 
-class Gen009D76F0;
+
 
 class BfmeHashBuckets
 {

@@ -7,7 +7,7 @@ typedef unsigned char Bool;
 #include "../../../Include/Common/ScalarTypes/UnsignedInt.h"
 typedef int ObjectID;
 
-class UnicodeString;
+
 
 #include "string_base.h"
 

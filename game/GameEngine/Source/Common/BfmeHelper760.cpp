@@ -3,7 +3,7 @@
 // Retail 0x002ED760. ScriptActions::doMergeTeamIntoTeam and
 // bfmeAttachSubAF0 both call this helper after attaching an object's subobject.
 
-class Object;
+
 
 class Radar
 {

@@ -53,7 +53,7 @@ extern "C" const FieldParse bfmeInfoDCE[] =
 	{ 0,	0,	0,	0 }
 };
 
-class BfmeThingDCE;
+
 
 class BfmeOtherDCE;
 

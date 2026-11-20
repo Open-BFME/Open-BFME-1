@@ -48,7 +48,7 @@ extern "C" const FieldParse bfmeInfoDCG[] =
 	{ 0,	0,	0,	0 }
 };
 
-class BfmeThingDCG;
+
 
 class BfmeOtherDCG;
 

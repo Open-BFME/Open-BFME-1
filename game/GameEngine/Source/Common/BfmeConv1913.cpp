@@ -1,4 +1,4 @@
-class BfmeAgentBI;
+
 
 struct BfmeInfoBI
 {

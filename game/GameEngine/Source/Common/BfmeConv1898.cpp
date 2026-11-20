@@ -1,4 +1,4 @@
-class BfmeAgentAR;
+
 class BfmeSeedTarget;
 
 // The two calls this body makes besides ?handle@Gen002B2080 are read out of its
