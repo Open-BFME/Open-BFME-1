@@ -3527,7 +3527,7 @@ game/GameEngine/Source/Common/Q2ScatteredFieldConstructor.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Q2TemporaryKeyStores.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Q3FpsPreferenceGetters.cpp,no,0,1,3,0,1,0,0
-game/GameEngine/Source/Common/Q3GuardedMemberDestructors.cpp,no,17,0,6,0,6,0,0
+game/GameEngine/Source/Common/Q3GuardedMemberDestructors.cpp,no,16,0,6,0,6,0,0
 game/GameEngine/Source/Common/Q3HeapAlgorithmFamily.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Q3IndexedVectorAccessors.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Q3InsertionSort00754430.cpp,no,1,0,1,0,1,0,0
@@ -3736,7 +3736,7 @@ game/GameEngine/Source/Common/RTS/Player_resetOrStartSpecialPowerReadyFrame.cpp,
 game/GameEngine/Source/Common/RTS/Player_resetSciences.cpp,no,0,0,2,0,1,0,0
 game/GameEngine/Source/Common/RTS/Player_setDefaultTeam.cpp,no,0,0,0,0,2,0,0
 game/GameEngine/Source/Common/RTS/Player_setRankLevel.cpp,no,1,0,0,0,1,0,0
-game/GameEngine/Source/Common/RTS/Player_update_Thunk.cpp,no,1,0,0,0,2,0,0
+game/GameEngine/Source/Common/RTS/Player_update_Thunk.cpp,no,0,0,0,0,2,0,0
 game/GameEngine/Source/Common/RTS/PrereqUnitRecAllocateAndCopyBody.cpp,no,1,0,0,0,1,0,0
 game/GameEngine/Source/Common/RTS/PrereqUnitRecConstruct.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/RTS/PrereqUnitRecCopyBody.cpp,yes,0,0,0,0,0,0,0
@@ -3840,6 +3840,7 @@ game/GameEngine/Source/Common/RTS/TeamFactory_xfer.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/RTS/TeamGiveUpgrade.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/RTS/TeamHealAllObjects.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/RTS/TeamMemberQueries.cpp,yes,0,0,0,0,0,0,0
+game/GameEngine/Source/Common/RTS/TeamNextInInstanceList.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/RTS/TeamPrototypeConstructor.cpp,no,0,0,2,0,4,0,0
 game/GameEngine/Source/Common/RTS/TeamPrototypeDestructor.cpp,no,4,2,3,0,2,0,0
 game/GameEngine/Source/Common/RTS/TeamPrototypeHealAllObjects.cpp,yes,0,0,0,0,0,0,0
@@ -4427,7 +4428,7 @@ game/GameEngine/Source/Common/Rva000FAA30VectorCopy.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FAF90VectorErase.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FB2E0Insert.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FB3F0Insert.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/Common/Rva000FB4E0Append.cpp,no,0,0,1,0,0,0,0
+game/GameEngine/Source/Common/Rva000FB4E0Append.cpp,no,1,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FBFF0ReturnThis.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FC000Noop.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/Common/Rva000FC2A0Tally.cpp,yes,0,0,0,0,0,0,0
@@ -11368,10 +11369,10 @@ game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomeConstructor.cpp
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineHomePeerResponses.cpp,no,0,0,0,0,3,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginCheckLogin.cpp,no,0,1,9,0,7,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginGadgetMessage00552AA0.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginLogin.cpp,no,1,0,0,0,0,0,0
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginLogin.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginPopulateCountryList.cpp,no,0,1,10,0,1,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva00552C40.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva005536F0.cpp,no,1,0,0,0,0,0,0
+game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginRva005536F0.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginSubmitNew00551060.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineLoginUpdate.cpp,no,1,0,0,0,4,0,0
 game/GameEngine/Source/GameClient/GUI/GUICallbacks/Apt/OnlineProfileRankTooltip00554510.cpp,no,0,0,3,0,1,0,0
@@ -11842,7 +11843,7 @@ game/GameEngine/Source/GameClient/GUI/OnlineHomeMessageOfTheDay.cpp,yes,0,0,0,0,
 game/GameEngine/Source/GameClient/GUI/OnlineHomeOpenLadder.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/OnlineHomeShowOnlineHomeMovies.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/OnlineHomeTooltipPlayerLevel.cpp,no,2,0,3,0,1,0,0
-game/GameEngine/Source/GameClient/GUI/OnlineLoginAcceptLocale.cpp,no,1,0,0,0,0,0,0
+game/GameEngine/Source/GameClient/GUI/OnlineLoginAcceptLocale.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/OnlineLoginApplyGadgets0054FB10.cpp,no,0,0,3,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/OnlineLoginConstructor.cpp,no,3,3,3,0,0,0,0
 game/GameEngine/Source/GameClient/GUI/OnlineLoginDestructor.cpp,no,2,0,0,0,0,0,0
@@ -13408,7 +13409,7 @@ game/GameEngine/Source/GameLogic/AI/AIPlayerFindSupplyCenter.cpp,no,2,1,4,0,3,0,
 game/GameEngine/Source/GameLogic/AI/AIPlayerGetPlayerSuperweaponValue.cpp,no,1,1,0,0,0,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerIsLocationSafe.cpp,no,2,0,1,0,5,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerIsPossibleToBuildTeam.cpp,no,1,0,0,0,1,0,0
-game/GameEngine/Source/GameLogic/AI/AIPlayerIsSupplySourceAttacked.cpp,no,1,0,0,0,0,0,0
+game/GameEngine/Source/GameLogic/AI/AIPlayerIsSupplySourceAttacked.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerOnStructureProduced.cpp,no,1,1,0,0,5,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerOnUnitProduced.cpp,no,1,2,6,0,5,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerQueueDozer.cpp,no,1,1,2,0,4,0,0
@@ -13416,9 +13417,9 @@ game/GameEngine/Source/GameLogic/AI/AIPlayerQueueTeardown.cpp,no,0,0,1,0,1,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerQueueUnits.cpp,no,0,1,1,0,3,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerRecruitSpecificAITeam.cpp,no,1,0,4,0,1,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerRepairStructure.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp,no,1,0,0,0,0,0,0
+game/GameEngine/Source/GameLogic/AI/AIPlayerRva00164750TeamUnitCost.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToBuild.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToReinforce.cpp,no,3,1,3,0,3,0,0
+game/GameEngine/Source/GameLogic/AI/AIPlayerSelectTeamToReinforce.cpp,no,2,1,3,0,3,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayerSupply.cpp,no,0,2,3,0,3,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayer_aiPreTeamDestroyThunk.cpp,no,0,1,3,0,2,0,0
 game/GameEngine/Source/GameLogic/AI/AIPlayer_findFactory.cpp,no,0,1,2,0,1,0,0
@@ -17558,7 +17559,7 @@ game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineSetPriorityThing.cpp,n
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineSetToppleDirection.cpp,no,1,0,2,0,0,0,0
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineSlotDeletingDestructor.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_addActionTemplate.cpp,yes,0,0,0,0,0,0,0
-game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_appendMessage.cpp,no,3,0,7,0,1,0,0
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_appendMessage.cpp,no,2,0,7,0,1,0,0
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_appendSequentialScript.cpp,no,2,1,0,0,0,0,0
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_didUnitExist.cpp,yes,0,0,0,0,0,0,0
 game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine_disableScript.cpp,no,3,0,1,0,0,0,0
@@ -20245,7 +20246,7 @@ game/Libraries/Source/EA/Apt/Rva008937A0GetField18.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva008937C0GetChainField8.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva008937E0GetFlag25.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva008981E0AptTypeChecks.cpp,yes,0,0,0,0,0,0,0
-game/Libraries/Source/EA/Apt/Rva008985C0ValueString.cpp,no,1,0,0,0,0,0,0
+game/Libraries/Source/EA/Apt/Rva008985C0ValueString.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva00898D80KeyValuePairs.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva00898F60UnderscoreFields.cpp,yes,0,0,0,0,0,0,0
 game/Libraries/Source/EA/Apt/Rva00899560AptValueCtor.cpp,no,1,1,0,0,0,0,0
