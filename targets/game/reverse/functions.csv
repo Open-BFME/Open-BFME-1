@@ -38303,7 +38303,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00c43f90@@YAXXZ,,0x00C43F90,11,game/gen_asm/d_00c33460.asm,matched,gen-dump;ghidra=Unwind@01043f90
 ?d_00c43f9b@@YAXXZ,,0x00C43F9B,11,game/gen_asm/d_00c33460.asm,matched,gen-dump;ghidra=Unwind@01043f9b
 ?d_00c46e56@@YAXXZ,,0x00C46E56,22,game/gen_asm/d_00c44ba8.asm,matched,gen-dump;ghidra=Unwind@01046e56
-?d_00c471e8@@YAXXZ,,0x00C471E8,25,game/gen_asm/d_00c44ba8.asm,matched,gen-dump;ghidra=Unwind@010471e8
 ?d_00c47201@@YAXXZ,,0x00C47201,11,game/gen_asm/d_00c44ba8.asm,matched,gen-dump;ghidra=Unwind@01047201
 ?d_00c486c8@@YAXXZ,,0x00C486C8,25,game/gen_asm/d_00c44ba8.asm,matched,gen-dump;ghidra=Unwind@010486c8
 ?d_00c48778@@YAXXZ,,0x00C48778,11,game/gen_asm/d_00c44ba8.asm,matched,gen-dump;ghidra=Unwind@01048778
@@ -173474,3 +173473,4 @@ _DXTraceA@20,,0x00AFD388,374,game/Libraries/Source/DirectX/dxtracea.cpp,matched,
 ?dup_00C23357@@YAXXZ,,0x00C23357,24,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10580;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C233C3@@YAXXZ,,0x00C233C3,24,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10587;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C44730@@YAXXZ,,0x00C44730,11,game/GameEngine/Source/GameNetwork/native_connection_timing.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L11231;parent=?update@ConnectionManager@@UAEX_NH@Z;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
+?dup_00C471E8@@YAXXZ,,0x00C471E8,25,game/GameEngineDevice/Source/MilesAudioDevice/MilesAudioCacheReadAudioFile00694230.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L6447;parent=?rva00693B90@Rva00694710AudioWorker@@QAE?AVRva006910F0Handle@@ABVAsciiString@@H@Z;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
