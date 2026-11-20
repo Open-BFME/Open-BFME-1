@@ -38290,7 +38290,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?d_00c20b7b@@YAXXZ,,0x00C20B7B,22,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01020b7b
 ?d_00c22158@@YAXXZ,,0x00C22158,17,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01022158
 ?d_00c22240@@YAXXZ,,0x00C22240,25,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01022240
-?d_00c2325b@@YAXXZ,,0x00C2325B,22,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@0102325b
 ?d_00c23271@@YAXXZ,,0x00C23271,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01023271
 ?d_00c23289@@YAXXZ,,0x00C23289,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01023289
 ?d_00c23357@@YAXXZ,,0x00C23357,24,game/gen_asm/d_009f6921.asm,matched,gen-dump;ghidra=Unwind@01023357
@@ -173474,3 +173473,4 @@ _DXTraceA@20,,0x00AFD388,374,game/Libraries/Source/DirectX/dxtracea.cpp,matched,
 ??$_M_allocate_and_copy@PBUICoord2D@@@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEPAUICoord2D@@IPBU2@0@Z,,0x009F5370,94,game/Libraries/Source/WWVegas/WWLib/VectorICoord2DAllocateAndCopy.cpp,matched,Native STLport4.6 readable vector allocation/copy; canonical8B ICoord2D; static allocator/no-STL-exception context; full94B RET12 boundary; evidence=targets/game/reverse/identity_evidence/20261120-009f5370-vector-allocate-copy.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C10768@@YAXXZ,,0x00C10768,22,game/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCtorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L15456;parent=??0AIUpdateInterface@@QAE@PAVThing@@PBVModuleData@@@Z;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
 ?dup_00C23208@@YAXXZ,,0x00C23208,39,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10559;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
+?dup_00C2325B@@YAXXZ,,0x00C2325B,22,game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp,matched,authored C++ cleanup;gen-funclet;object-symbol=$L10564;parent=??1InGameUI@@UAE@XZ;retail parent unwind state uniquely proven; evidence=targets/game/reverse/attempt_support/20261120-ten-native-parent-cleanups.md;model=codex;launched=gpt-6;host=Michael-PC
