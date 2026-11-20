@@ -129,7 +129,6 @@ extern int g_Va01346E48;
 namespace Debug_Statistics { extern int last_frame_sorting_vertices; }
 namespace Debug_Statistics { extern int last_frame_dx8_skin_renders; }
 extern int g_Va0134B20C;
-extern int g_Va0134FBB0;
 extern unsigned int FreeCount;
 extern unsigned int AllocateCount;
 
@@ -409,10 +408,6 @@ int Rva00956A80Get( void )
 	return g_Va0134B20C;
 }
 
-int Rva009F8081Get( void )
-{
-	return g_Va0134FBB0;
-}
 
 int Rva00AFE950Get( void )
 {
