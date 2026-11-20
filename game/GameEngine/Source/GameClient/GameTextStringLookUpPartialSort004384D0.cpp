@@ -5,11 +5,11 @@
 // make_heap, adjust_heap, and sort_heap siblings at 0x00437D80, 0x004379B0,
 // and 0x004382D0.
 
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
-class AsciiStringData;
+
 #include "ascii_string.h"
 
 struct StringInfo;

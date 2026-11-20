@@ -165,11 +165,11 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
 Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
-extern void j_0000142e();
-extern void j_0000b8ac();
-extern void j_0000ebab();
-extern void j_0001041a();
-extern void j_00032b46();
+
+
+
+
+
 extern void j_0000e7dc();
 
 class Rva00182360Receiver {};

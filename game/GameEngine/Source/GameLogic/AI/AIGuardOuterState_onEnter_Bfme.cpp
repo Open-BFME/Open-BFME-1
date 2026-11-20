@@ -168,13 +168,13 @@ public:
 	AIAttackState *m_attackState;
 };
 
-extern void j_0000bf3c();
+
 extern void j_00004c37();
 extern void j_00007ad6();
-extern void j_0001f253();
+
 extern void j_000241fe();
 extern void j_0003a391();
-extern void j_00044c2e();
+
 
 typedef Object *(GameLogic::*FindObjectByIDCall)(Int);
 typedef Team *(TeamFactory::*FindTeamByIDCall)(UnsignedInt);

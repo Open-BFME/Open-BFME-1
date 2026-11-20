@@ -2,11 +2,11 @@
 // STLport push-heap pass for BFME's StringLookUp records. The caller-cleaned
 // stack has six words: first/hole/top, the two-word value, and comparator state.
 
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
-class AsciiStringData;
+
 #include "ascii_string.h"
 
 struct StringInfo;

@@ -9,7 +9,7 @@
 // stack argument (ret 4) is the object. No owning class or caller identifies
 // this body, so it is placed address-derived per naming policy.
 
-typedef int Int;
+
 
 class Object;
 

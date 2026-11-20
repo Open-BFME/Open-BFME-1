@@ -123,7 +123,7 @@ public:
 };
 // The defined global is ?TheWritableGlobalData@@3PAVGlobalData@@A (data_rows).
 extern GlobalData *TheWritableGlobalData;
-extern const float g_bfmeK1253;
+
 
 // ?flash@Rva0041A2E0@@QAEXPBURGBColor@@@Z
 void Rva0041A2E0::flash(const RGBColor *color)

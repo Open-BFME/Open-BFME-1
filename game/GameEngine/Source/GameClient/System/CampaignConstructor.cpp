@@ -4,7 +4,7 @@
 
 #include <list>
 
-typedef int Int;
+
 
 #include "ascii_string.h"
 

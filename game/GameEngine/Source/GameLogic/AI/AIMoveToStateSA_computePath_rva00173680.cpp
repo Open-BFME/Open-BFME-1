@@ -129,11 +129,11 @@ public:
 extern AI *TheAI;
 extern GameLogic *TheGameLogic;
 extern void j_0000e570();
-extern void j_00027bc9();
-extern void j_00032b46();
-extern void j_0003bc05();
-extern void j_0003bcff();
-extern void j_0001246d();
+
+
+
+
+
 
 typedef Object *(__fastcall *GetGoalObject)(StateMachine *);
 bool Rva00173620State::computePath()

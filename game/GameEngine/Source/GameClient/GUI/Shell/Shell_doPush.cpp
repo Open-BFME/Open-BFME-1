@@ -69,7 +69,7 @@ public:
 	virtual void detatch() = 0;
 };
 
-class GameSpyInfo;
+
 
 class GameSpyInfoInterface;
 extern GameSpyInfoInterface *TheGameSpyInfo;

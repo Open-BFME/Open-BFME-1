@@ -17,7 +17,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-class GameWindow;
+
 class WindowLayout;
 
 typedef void (*WindowLayoutInitFunc)(WindowLayout *, void *);

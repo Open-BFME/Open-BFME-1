@@ -16,7 +16,7 @@ extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_KEY[1];
 extern const char SPHERICAL_EMISSION_VELOCITY_MODULE_NAME[1];
 class SphericalEmissionVelocityModule;
 class SphericalEmissionVelocityModuleTemplate;
-class SphericalEmissionVelocityInfo;
+
 template<int Category> class DefaultParticleModule;
 template<int Category> class DefaultParticleModuleTemplate;
 template<int Category, const char (&Key)[1], const char (&Name)[1], class Module,

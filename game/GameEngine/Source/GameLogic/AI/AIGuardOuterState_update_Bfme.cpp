@@ -149,13 +149,13 @@ public:
 	unsigned char m_unusedFlag;
 };
 
-extern void j_0000e570();
+
 extern void j_00004c37();
-extern void j_0001f253();
-extern void j_000241fe();
-extern void j_000317a5();
+
+
+
 extern void j_00043892();
-extern void j_00044c2e();
+
 
 typedef Bool (__cdecl *BfmeCallENJCall)(void *, void *);
 typedef Real (__cdecl *GetStdGuardRangeCall)(const Object *);

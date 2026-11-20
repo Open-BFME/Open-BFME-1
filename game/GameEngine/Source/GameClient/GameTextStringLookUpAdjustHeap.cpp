@@ -3,11 +3,11 @@
 // STLport's sift-down helper for BFME's GameText StringLookUp records. The
 // comparator's original spelling is unavailable; its name records the matched
 // make_heap caller that supplies its one-word state.
-extern const char g_bfmeEmptyAscii[];
+
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(
 	const char *left, const char *right);
 
-class AsciiStringData;
+
 #include "ascii_string.h"
 
 struct StringInfo;

@@ -45,7 +45,7 @@ public:
 
 #include "command_source_type.h"
 
-extern const char g_bfmeEmptyAscii[];
+
 
 static inline void bfmeConcat(AsciiString &dst, const AsciiString &text)
 {
@@ -300,7 +300,7 @@ private:
 extern void j_0000d15c();
 extern void j_0001478b();
 extern void j_0001a2b2();
-extern void j_00022057();
+
 extern void j_00028560();
 extern void j_00028ce0();
 extern void j_0003436a();

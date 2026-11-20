@@ -113,12 +113,12 @@ extern int GadgetComboBoxAddEntry(
 extern void GadgetComboBoxSetSelectedPos(
 	GameWindow *comboBox, int selected, bool dontHide );
 
-extern void j_00007004();
-extern void j_00008bc0();
-extern void j_00010898();
-extern void j_0002f338();
-extern void j_000439c3();
-extern void j_000480f4();
+
+
+
+
+
+
 
 #pragma comment(linker, "/alternatename:?GadgetComboBoxReset@@YAXPAVGameWindow@@@Z=?j_00007004@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z=?j_000439c3@@YAXXZ")

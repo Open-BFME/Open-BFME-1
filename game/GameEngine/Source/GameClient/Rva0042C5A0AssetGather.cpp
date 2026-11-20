@@ -8,7 +8,7 @@
 // The empty-string fallback at VA 0x0107388B is recorded as
 // ?g_bfmeEmptyAscii@@3QBDB (pinned in targets/game/reverse/symbols.csv) and this
 // declaration mangles to exactly that name.
-extern const char g_bfmeEmptyAscii[];
+
 
 #include "ascii_string.h"
 

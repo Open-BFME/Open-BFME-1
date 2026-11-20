@@ -22,7 +22,7 @@
 // StringBase<char>::releaseBuffer (callees.py), and the
 // unwind state around it is there to destroy that member if it throws.
 
-typedef int Int;
+
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 #include "../../../../../Libraries/Include/Lib/ICoord2D.h"

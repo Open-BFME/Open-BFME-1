@@ -97,7 +97,7 @@ private:
     Int m_difficulty;
 };
 
-extern void j_000189df();
+
 
 // ?xfer@CampaignManager@@UAEXPAVXfer@@@Z
 void CampaignManager::xfer(Xfer *xfer)

@@ -40,9 +40,9 @@ struct FileInfo { unsigned sizeHigh,sizeLow,timestampHigh,timestampLow; };
 class StaticNameKey { public: NameKeyType key() const; };
 class Dict { public: bool getBool(NameKeyType,bool *) const; AsciiString getAsciiString(NameKeyType,bool *) const; };
 extern void j_000263d7();
-extern void j_000331ef();
-extern void j_0001c9c2();
-extern void j_0002756b();
+
+
+
 extern void j_00026bcf();
 extern void j_000044f8();
 extern void j_00031e99();

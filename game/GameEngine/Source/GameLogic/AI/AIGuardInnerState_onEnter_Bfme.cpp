@@ -214,7 +214,7 @@ protected:
 
 typedef Real (PolygonTrigger::*GetAreaValueCall)() const;
 
-extern void j_0000bf3c();
+
 extern void j_00007ad6();
 extern void j_0001f253();
 extern void j_000241fe();

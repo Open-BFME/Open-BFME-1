@@ -1,7 +1,7 @@
 // ?getGuardScanPos@AIGuardMachine@@QAEXPAUCoord3D@@@Z
 // Open-BFME: clean reconstruction of retail 0x0015C330.
 
-typedef float Real;
+
 typedef int ObjectID;
 #include "../../../Include/Common/ScalarTypes/Source/TeamID.h"
 

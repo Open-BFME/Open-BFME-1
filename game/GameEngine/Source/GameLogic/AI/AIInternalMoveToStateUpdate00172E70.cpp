@@ -63,7 +63,7 @@ enum ModelConditionFlagType
 
 
 class Object;
-class PathfindCell;
+
 class Pathfinder;
 
 class StateMachine

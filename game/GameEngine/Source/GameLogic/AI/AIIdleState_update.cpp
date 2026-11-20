@@ -168,17 +168,17 @@ public:
 	void doInitIdleState();
 };
 
-extern void j_00003f58();
+
 extern void j_00014b4b();
 extern void j_0001a735();
-extern void j_0001c882();
+
 extern void j_000265a8();
 extern void j_00028f74();
-extern void j_0002b30f();
-extern void j_0002bdb4();
-extern void j_0002edcf();
+
+
+
 extern void j_00031a7f();
-extern void j_0003251f();
+
 extern void j_0003fb1b();
 extern void j_00041074();
 

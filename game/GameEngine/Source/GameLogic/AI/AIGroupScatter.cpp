@@ -60,7 +60,7 @@ class PolygonTrigger;
 #include "../../../Include/Common/Enums/PathfindLayerEnum.h"
 
 extern const float g_01076C24;
-extern const float g_bfmeK1266B;
+
 
 class NameKeyGenerator
 {

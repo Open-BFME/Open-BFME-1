@@ -4,7 +4,7 @@
 // handle is inserted into the particle system's handle chain before return.
 // cl: /DNDEBUG /MD /EHsc
 
-typedef unsigned int UnsignedInt;
+
 
 #include "../../../Include/Common/Enums/ParticleSystemID.h"
 

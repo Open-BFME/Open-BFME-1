@@ -33,9 +33,9 @@ class Waypoint;
 extern void j_000022bb();
 extern void j_0000ab1e();
 extern void j_00012ebd();
-extern void j_00014b4b();
+
 extern void j_00019dc1();
-extern void j_0002bdb4();
+
 extern void j_0002d24f();
 extern void j_0003a17a();
 extern int GetGameLogicRandomValue(int, int, char *, int);

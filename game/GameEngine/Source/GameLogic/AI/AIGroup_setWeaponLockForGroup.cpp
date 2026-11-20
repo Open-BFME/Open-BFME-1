@@ -11,7 +11,7 @@
 
 #include "../../../Include/Common/ScalarTypes.h"
 
-typedef int WeaponLockType;
+
 
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 

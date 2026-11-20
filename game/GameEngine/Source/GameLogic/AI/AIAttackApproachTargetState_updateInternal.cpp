@@ -10,7 +10,7 @@ inline Coord3D::Coord3D(const Coord3D &v) { x=v.x; y=v.y; z=v.z; }
 inline Coord3D &Coord3D::operator=(const Coord3D &v) { x=v.x; y=v.y; z=v.z; return *this; }
 inline Coord3D &Coord3D::operator+=(const Coord3DBase &v) {x+=v.x; y+=v.y; z+=v.z; return *this;}
 inline Coord3D &Coord3D::Scale(float s) {x*=s; y*=s; z*=s; return *this;}
-typedef bool Bool;
+
 #include "../../../Include/Common/Enums/StateReturnType.h"
 #include "../../../Include/Common/Enums/WeaponSlotType.h"
 class Object; class Weapon; class Player;

@@ -11,7 +11,7 @@
 // game/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageStateCtor.cpp).
 #include "ascii_string.h"
 
-class StateMachine;
+
 
 class Rva002C11E0StateBase
 {

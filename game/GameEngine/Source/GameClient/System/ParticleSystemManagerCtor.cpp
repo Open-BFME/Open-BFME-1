@@ -34,7 +34,7 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-class ParticleSystem;
+
 class ParticleSystemTemplate;
 
 struct BfmeParticleSystemHandle

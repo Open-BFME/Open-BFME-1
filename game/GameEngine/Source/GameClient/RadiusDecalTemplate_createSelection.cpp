@@ -4,7 +4,7 @@
 
 #include <string.h>
 
-extern const char g_bfmeEmptyAscii[];
+
 
 #include "ascii_string.h"
 

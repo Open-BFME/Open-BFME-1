@@ -9,9 +9,9 @@
 // frame is set up for exactly that. So it is modelled as a small handle, which
 // is all the body says about it.
 
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef bool Bool;
+
+
+
 
 #include "../../../Include/Common/Enums/ParticleSystemID.h"
 

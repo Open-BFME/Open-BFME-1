@@ -223,7 +223,7 @@ extern void j_0001a36b(void);
 extern void j_0001c26f(void);
 extern void j_0001c675(void);
 extern void j_0001c7e2(void);
-extern void j_0002191d(void);
+
 extern void j_00027ffc(void);
 extern void j_000294e2(void);
 extern void j_0002b3f0(void);

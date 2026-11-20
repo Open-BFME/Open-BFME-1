@@ -110,7 +110,7 @@ extern Mouse *TheMouse;
 extern StatsCollector *TheStatsCollector;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
-void j_000174c7(void);
+
 
 static int g_bfmeV1095;
 
