@@ -1,0 +1,51 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+    "/NOLOGO",
+    "/DLL",
+    "/NOENTRY",
+    "/NODEFAULTLIB",
+    "/MACHINE:X86",
+    "/INCREMENTAL:NO",
+    "/OPT:REF",
+    "/OUT:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\link\\pair-cpp-backend.dll",
+    "/MAP:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\link\\pair-cpp-backend.map",
+    "/VERBOSE:LIB",
+    "/EXPORT:_RTC_CheckEsp",
+    "/EXPORT:@_RTC_CheckStackVars@8",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\objects\\RtcStack.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\objects\\RTC_CheckEsp.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\libc.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\kernel32.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\user32.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\version.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\psapi.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^error.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^get^error^func.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^pdb^lookup.obj"
+  ],
+  "exit": 0,
+  "read_only_cpp_dependencies": [
+    {
+      "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\CRT\\VS2003\\RtcError.cpp",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^error.obj",
+      "source_sha256": "52ee37b8ac954d97f5e88e370c51ea66f258ba5f4bff9a891617864acc7c8f50",
+      "object_sha256": "d146a6cbef44dd8f5f6d709307da4766d184cfcded97b6143d7e57fef3def0c3"
+    },
+    {
+      "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\CRT\\VS2003\\RtcGetErrorFunc.cpp",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^get^error^func.obj",
+      "source_sha256": "a7384598f475ea0b3e04d73363a35e60a9be104c0dfc0c814ba8d687606e6274",
+      "object_sha256": "b1667e5aa8075a322e567f085aed189d9a26fa601d805d0c9a11a710ad12fdbb"
+    },
+    {
+      "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\CRT\\VS2003\\RtcPdbLookup.cpp",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_^rtc^pdb^lookup.obj",
+      "source_sha256": "839bdb8fa5cd961b0715487862a1033417710c3cb9248ad6747ed4d28967b354",
+      "object_sha256": "e65c4e33121bb6f1d6767503fbf303f88ea6ee419c6c3b4a21d8977d3eb99468"
+    }
+  ],
+  "no_test_doubles": true,
+  "not_full_game": true
+}

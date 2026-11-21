@@ -1,0 +1,25 @@
+
+Searching libraries
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\lib\libc.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\lib\msvcrt.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\lib\kernel32.lib:
+
+Finished searching libraries
+   Creating library W:\OpenBFME\Open-BFME-1\build\agent-melee-20261120\rtc-stack-pair-20261121\link\cpp-only-negative.lib and object W:\OpenBFME\Open-BFME-1\build\agent-melee-20261120\rtc-stack-pair-20261121\link\cpp-only-negative.exp
+
+Searching libraries
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\lib\libc.lib:
+libc.lib(stack.obj) : error LNK2005: @_RTC_CheckStackVars@8 already defined in RtcStack.obj
+
+Finished searching libraries
+
+Searching libraries
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\lib\libc.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\lib\msvcrt.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\lib\kernel32.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\lib\user32.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\lib\version.lib:
+    Searching W:\OpenBFME\Open-BFME-1\inputs\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\lib\psapi.lib:
+
+Finished searching libraries
+W:\OpenBFME\Open-BFME-1\build\agent-melee-20261120\rtc-stack-pair-20261121\link\cpp-only-negative.dll : fatal error LNK1169: one or more multiply defined symbols found
