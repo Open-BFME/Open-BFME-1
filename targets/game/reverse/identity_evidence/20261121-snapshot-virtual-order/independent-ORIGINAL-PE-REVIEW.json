@@ -1,0 +1,938 @@
+{
+  "scope": "Independent read-only original PE exports/table/caller evidence; no compiler, production/tool/Git/claim writes",
+  "original_image": "W:\\OpenBFME\\Open-BFME-1\\inputs\\baselines\\bfme1\\retail-1.03-unpacked\\files\\lotrbfme.exe",
+  "original_image_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+  "PE_named_exports": 1820,
+  "complete_three_method_PE_export_families": {
+    "ButterflyDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x3967b",
+        "resolved_target_rva": "0x5f0c70"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@ButterflyDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x204e1",
+        "resolved_target_rva": "0x5d46e0"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x73fb",
+        "resolved_target_rva": "0x5d46d0"
+      }
+    },
+    "DefaultAlphaModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x2ee88",
+        "resolved_target_rva": "0x5ee540"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@DefaultAlphaModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x35ca6",
+        "resolved_target_rva": "0x5d4540"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@DefaultAlphaModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x2379f",
+        "resolved_target_rva": "0x5d4530"
+      }
+    },
+    "DefaultColorModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@DefaultColorModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x49d64",
+        "resolved_target_rva": "0x5ef830"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@DefaultColorModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x1b3ce",
+        "resolved_target_rva": "0x5d4560"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@DefaultColorModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x4b65a",
+        "resolved_target_rva": "0x5d4550"
+      }
+    },
+    "DefaultDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@DefaultDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x201fd",
+        "resolved_target_rva": "0x5f30a0"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@DefaultDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x145c4",
+        "resolved_target_rva": "0x5d4580"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@DefaultDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x2eb90",
+        "resolved_target_rva": "0x5d4570"
+      }
+    },
+    "DefaultPhysicsModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0xe53e",
+        "resolved_target_rva": "0x5fda60"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x3bb1",
+        "resolved_target_rva": "0x5d4620"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x48f27",
+        "resolved_target_rva": "0x5d4610"
+      }
+    },
+    "DefaultUpdateModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@DefaultUpdateModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x1f087",
+        "resolved_target_rva": "0x5ff840"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@DefaultUpdateModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0xa894",
+        "resolved_target_rva": "0x5d4640"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@DefaultUpdateModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x24e9c",
+        "resolved_target_rva": "0x5d4630"
+      }
+    },
+    "EmissionVelocityInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@EmissionVelocityInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x3c5b",
+        "resolved_target_rva": "0x5bd7c0"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@EmissionVelocityInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x1da43",
+        "resolved_target_rva": "0x5bd7b0"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@EmissionVelocityInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x1edc1",
+        "resolved_target_rva": "0x5bd7a0"
+      }
+    },
+    "EmissionVolumeInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@EmissionVolumeInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x3d924",
+        "resolved_target_rva": "0x5bd670"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x35198",
+        "resolved_target_rva": "0x5bd660"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x3aed1",
+        "resolved_target_rva": "0x5bd650"
+      }
+    },
+    "LifeEventModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@LifeEventModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x16b85",
+        "resolved_target_rva": "0x5fc3f0"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@LifeEventModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x1e8d",
+        "resolved_target_rva": "0x5d4660"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@LifeEventModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x1fbd6",
+        "resolved_target_rva": "0x5d4650"
+      }
+    },
+    "LightningDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@LightningDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x3ea86",
+        "resolved_target_rva": "0x5f4260"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@LightningDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x26323",
+        "resolved_target_rva": "0x5d4740"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@LightningDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x2997e",
+        "resolved_target_rva": "0x5d4730"
+      }
+    },
+    "ParticleSystemInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@ParticleSystemInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x28c1d",
+        "resolved_target_rva": "0x5c3230"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@ParticleSystemInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0xd896",
+        "resolved_target_rva": "0x5c990"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@ParticleSystemInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x1464b",
+        "resolved_target_rva": "0x5c980"
+      }
+    },
+    "QuadDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@QuadDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x1b3ab",
+        "resolved_target_rva": "0x5f5460"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@QuadDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x24839",
+        "resolved_target_rva": "0x5d46b0"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@QuadDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x205e5",
+        "resolved_target_rva": "0x5d46a0"
+      }
+    },
+    "RenderObjectDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@RenderObjectDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x328ee",
+        "resolved_target_rva": "0x5f6670"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@RenderObjectDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x26f99",
+        "resolved_target_rva": "0x5d4710"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@RenderObjectDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x4615f",
+        "resolved_target_rva": "0x5d4700"
+      }
+    },
+    "RenderObjectUpdateModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@RenderObjectUpdateModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x18926",
+        "resolved_target_rva": "0x600620"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@RenderObjectUpdateModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x1c837",
+        "resolved_target_rva": "0x5d4770"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@RenderObjectUpdateModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x1271f",
+        "resolved_target_rva": "0x5d4760"
+      }
+    },
+    "StreakDrawModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@StreakDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x1b1a3",
+        "resolved_target_rva": "0x5f7f00"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@StreakDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x4009d",
+        "resolved_target_rva": "0x5d4680"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@StreakDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x3d88e",
+        "resolved_target_rva": "0x5d4670"
+      }
+    },
+    "TerrainCollisionModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@TerrainCollisionModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0x320a1",
+        "resolved_target_rva": "0x5fcf10"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@TerrainCollisionModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x18d36",
+        "resolved_target_rva": "0x5d4790"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@TerrainCollisionModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x3d208",
+        "resolved_target_rva": "0x5d4780"
+      }
+    },
+    "WindModuleInfo@FXParticleSystem": {
+      "DoXfer": {
+        "name": "?DoXfer@WindModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+        "real_PE_export_rva": "0xb235",
+        "resolved_target_rva": "0x5fe750"
+      },
+      "GetSnapshotName": {
+        "name": "?GetSnapshotName@WindModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "real_PE_export_rva": "0x3ca1",
+        "resolved_target_rva": "0x5bd950"
+      },
+      "LoadPostProcess": {
+        "name": "?LoadPostProcess@WindModuleInfo@FXParticleSystem@@UAEXXZ",
+        "real_PE_export_rva": "0x1b518",
+        "resolved_target_rva": "0x5bd940"
+      }
+    }
+  },
+  "complete_family_count": 17,
+  "selected_original_PE_exports": {
+    "??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z": {
+      "name": "??0ParticleSystemInfo@FXParticleSystem@@QAE@ABV01@@Z",
+      "real_PE_export_rva": "0x199e8",
+      "resolved_target_rva": "0x5ef60"
+    },
+    "??0ParticleSystemInfo@FXParticleSystem@@QAE@XZ": {
+      "name": "??0ParticleSystemInfo@FXParticleSystem@@QAE@XZ",
+      "real_PE_export_rva": "0x3128c",
+      "resolved_target_rva": "0x5c1dd0"
+    },
+    "??0Snapshot@@QAE@ABV0@@Z": {
+      "name": "??0Snapshot@@QAE@ABV0@@Z",
+      "real_PE_export_rva": "0x21d0",
+      "resolved_target_rva": "0x5c530"
+    },
+    "??0Snapshot@@QAE@XZ": {
+      "name": "??0Snapshot@@QAE@XZ",
+      "real_PE_export_rva": "0x24c80",
+      "resolved_target_rva": "0x6b180"
+    },
+    "??1Snapshot@@UAE@XZ": {
+      "name": "??1Snapshot@@UAE@XZ",
+      "real_PE_export_rva": "0x1c80",
+      "resolved_target_rva": "0x5c520"
+    },
+    "??8Xfer@@UAEAAV0@AAVSnapshot@@@Z": {
+      "name": "??8Xfer@@UAEAAV0@AAVSnapshot@@@Z",
+      "real_PE_export_rva": "0x9d6410",
+      "resolved_target_rva": "0x9d6410"
+    },
+    "?DoXfer@ParticleSystemInfo@FXParticleSystem@@UAEXAAVXfer@@@Z": {
+      "name": "?DoXfer@ParticleSystemInfo@FXParticleSystem@@UAEXAAVXfer@@@Z",
+      "real_PE_export_rva": "0x28c1d",
+      "resolved_target_rva": "0x5c3230"
+    },
+    "?GetSnapshotName@ParticleSystemInfo@FXParticleSystem@@UAEPBDXZ": {
+      "name": "?GetSnapshotName@ParticleSystemInfo@FXParticleSystem@@UAEPBDXZ",
+      "real_PE_export_rva": "0xd896",
+      "resolved_target_rva": "0x5c990"
+    },
+    "?LoadPostProcess@ParticleSystemInfo@FXParticleSystem@@UAEXXZ": {
+      "name": "?LoadPostProcess@ParticleSystemInfo@FXParticleSystem@@UAEXXZ",
+      "real_PE_export_rva": "0x1464b",
+      "resolved_target_rva": "0x5c980"
+    },
+    "?SkipBadBlock@Xfer@@UAEXAAVSnapshot@@I@Z": {
+      "name": "?SkipBadBlock@Xfer@@UAEXAAVSnapshot@@I@Z",
+      "real_PE_export_rva": "0x48b44",
+      "resolved_target_rva": "0x6b1d0"
+    }
+  },
+  "original_vtables": {
+    "Snapshot": {
+      "va": "0x1073744",
+      "bounded_slot_count": 4,
+      "slots": [
+        "0x5c550",
+        "0x88c500",
+        "0x88c500",
+        "0x88c500"
+      ],
+      "first4_raw_va": [
+        "0x43fa3a",
+        "0xc8c500",
+        "0xc8c500",
+        "0xc8c500"
+      ],
+      "next_after_declared_extent": "0x0"
+    },
+    "ParticleSystemInfo": {
+      "va": "0x1073878",
+      "bounded_slot_count": 4,
+      "slots": [
+        "0x5f1a0",
+        "0x5c980",
+        "0x5c990",
+        "0x5c3230"
+      ],
+      "first4_raw_va": [
+        "0x43d140",
+        "0x41464b",
+        "0x40d896",
+        "0x428c1d"
+      ],
+      "next_after_declared_extent": "0x0"
+    },
+    "ObjectModule": {
+      "va": "0x1089774",
+      "bounded_slot_count": 10,
+      "slots": [
+        "0x113f20",
+        "0x113d20",
+        "0x113d30",
+        "0x113d50",
+        "0x88c500",
+        "0x113b40",
+        "0x113b50",
+        "0x113b60",
+        "0x113b70",
+        "0x113d10"
+      ],
+      "first4_raw_va": [
+        "0x402c9d",
+        "0x44ae6c",
+        "0x41c058",
+        "0x433a3c"
+      ],
+      "next_after_declared_extent": "0x0"
+    },
+    "Foundation": {
+      "va": "0x10c734c",
+      "bounded_slot_count": 15,
+      "slots": [
+        "0x2ba130",
+        "0x2b9f40",
+        "0x2b9e00",
+        "0x2b9ec0",
+        "0x2b9f80",
+        "0x113b40",
+        "0x113b50",
+        "0x113b60",
+        "0x113b70",
+        "0x113d10",
+        "0x11a120",
+        "0x2b9e50",
+        "0x2b9ea0",
+        "0x2ba160",
+        "0x2baa40"
+      ],
+      "first4_raw_va": [
+        "0x423da3",
+        "0x42d600",
+        "0x438983",
+        "0x449e9a"
+      ],
+      "next_after_declared_extent": "0x0"
+    }
+  },
+  "original_bodies": {
+    "0x5c520": {
+      "bytes": "c70144370701c3",
+      "disassembly": [
+        {
+          "rva": "0x5c520",
+          "insn": "mov dword ptr [ecx], 0x1073744"
+        },
+        {
+          "rva": "0x5c526",
+          "insn": "ret "
+        }
+      ]
+    },
+    "0x5c530": {
+      "bytes": "8bc1c70044370701c20400",
+      "disassembly": [
+        {
+          "rva": "0x5c530",
+          "insn": "mov eax, ecx"
+        },
+        {
+          "rva": "0x5c532",
+          "insn": "mov dword ptr [eax], 0x1073744"
+        },
+        {
+          "rva": "0x5c538",
+          "insn": "ret 4"
+        }
+      ]
+    },
+    "0x6b180": {
+      "bytes": "8bc1c70044370701c3",
+      "disassembly": [
+        {
+          "rva": "0x6b180",
+          "insn": "mov eax, ecx"
+        },
+        {
+          "rva": "0x6b182",
+          "insn": "mov dword ptr [eax], 0x1073744"
+        },
+        {
+          "rva": "0x6b188",
+          "insn": "ret "
+        }
+      ]
+    },
+    "0x9d6410": {
+      "bytes": "568bf18b4c24088b0156ff500c8bc65ec20400",
+      "disassembly": [
+        {
+          "rva": "0x9d6410",
+          "insn": "push esi"
+        },
+        {
+          "rva": "0x9d6411",
+          "insn": "mov esi, ecx"
+        },
+        {
+          "rva": "0x9d6413",
+          "insn": "mov ecx, dword ptr [esp + 8]"
+        },
+        {
+          "rva": "0x9d6417",
+          "insn": "mov eax, dword ptr [ecx]"
+        },
+        {
+          "rva": "0x9d6419",
+          "insn": "push esi"
+        },
+        {
+          "rva": "0x9d641a",
+          "insn": "call dword ptr [eax + 0xc]"
+        },
+        {
+          "rva": "0x9d641d",
+          "insn": "mov eax, esi"
+        },
+        {
+          "rva": "0x9d641f",
+          "insn": "pop esi"
+        },
+        {
+          "rva": "0x9d6420",
+          "insn": "ret 4"
+        }
+      ]
+    },
+    "0x5c990": {
+      "bytes": "b864370701c3",
+      "disassembly": [
+        {
+          "rva": "0x5c990",
+          "insn": "mov eax, 0x1073764"
+        },
+        {
+          "rva": "0x5c995",
+          "insn": "ret "
+        }
+      ]
+    }
+  },
+  "exact_object_delta_review": {
+    "identical_objects": 84,
+    "changed_objects": 15,
+    "changed_vtable_sections": 41,
+    "every_delta_exact_slot1_slot2_exchange": true,
+    "details": [
+      {
+        "source": "game/GameEngine/Source/GameClient/DrawableConstructor.cpp",
+        "section_index": 48,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@Drawable@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@Drawable@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@Drawable@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@Drawable@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/DrawableDestructor.cpp",
+        "section_index": 24,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@Drawable@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@Drawable@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@Drawable@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@Drawable@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/InGameUIConstructor.cpp",
+        "section_index": 113,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@InGameUI@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@InGameUI@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@InGameUI@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@InGameUI@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp",
+        "section_index": 75,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@InGameUI@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@InGameUI@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@InGameUI@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@InGameUI@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultPhysicsModuleInfoCtorThunk.cpp",
+        "section_index": 10,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LifeEventModuleInfoCtorThunk.cpp",
+        "section_index": 14,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@LifeEventModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@LifeEventModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@LifeEventModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@LifeEventModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleInfoCtorThunk.cpp",
+        "section_index": 9,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@LightningDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@LightningDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@LightningDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@LightningDrawModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionInfoCtor.cpp",
+        "section_index": 10,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionInfoCtor.cpp",
+        "section_index": 14,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/T1Base005FDE80Ctor.cpp",
+        "section_index": 14,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleInfoCtorThunk.cpp",
+        "section_index": 14,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@TerrainCollisionModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@TerrainCollisionModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@TerrainCollisionModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@TerrainCollisionModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 32,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@ButterflyDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@ButterflyDrawModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 40,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@QuadDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@QuadDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@QuadDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@QuadDrawModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 109,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 382,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 385,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 388,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 391,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 394,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 435,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 441,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+        "section_index": 447,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 21,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 24,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 27,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 30,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 33,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 414,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@ButterflyDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@ButterflyDrawModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 428,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@DefaultPhysicsModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 445,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 463,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 468,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@QuadDrawModuleInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@QuadDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@QuadDrawModuleInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@QuadDrawModuleInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 476,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 492,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 497,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 507,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 512,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+        "section_index": 758,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@EmissionVolumeInfo@FXParticleSystem@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@EmissionVolumeInfo@FXParticleSystem@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameClient/System/ParticleConstructor.cpp",
+        "section_index": 82,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@Particle@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@Particle@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@Particle@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@Particle@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp",
+        "section_index": 621,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@Object@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@Object@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@Object@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@Object@@UAEPBDXZ"
+      },
+      {
+        "source": "game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObjectDoXfer.cpp",
+        "section_index": 11,
+        "size": 16,
+        "before_slot1": "?GetSnapshotName@W3DRenderObjectSnapshot@@UAEPBDXZ",
+        "before_slot2": "?LoadPostProcess@W3DRenderObjectSnapshot@@UAEXXZ",
+        "candidate_slot1": "?LoadPostProcess@W3DRenderObjectSnapshot@@UAEXXZ",
+        "candidate_slot2": "?GetSnapshotName@W3DRenderObjectSnapshot@@UAEPBDXZ"
+      }
+    ]
+  },
+  "original_typed_Xfer_exports": [
+    {
+      "name": "??8Xfer@@UAEAAV0@AAVSnapshot@@@Z",
+      "real_PE_export_rva": "0x9d6410",
+      "resolved_target_rva": "0x9d6410"
+    },
+    {
+      "name": "?SkipBadBlock@Xfer@@UAEXAAVSnapshot@@I@Z",
+      "real_PE_export_rva": "0x48b44",
+      "resolved_target_rva": "0x6b1d0"
+    }
+  ],
+  "package_hashes": {
+    "snapshot-order-only-CANDIDATE.patch": "d4d2d3df1ec0622c8254c9c05b0566e83f4da2988cff785aacfbbee9edc259fb",
+    "snapshot-order-only-CANDIDATE.h": "37b054017a8321b5151f8a332fd6faa12be7e28de832bddf93e883b1b4bbdd1e",
+    "snapshot-core-probe.json": "8b974d867c820a2f99f01122cc230224eab0e84b4292bc64be9db5dee9dfd45d",
+    "snapshot-core-before.json": "c5028b69bd9381bd7e5c22f53c86a343e8e9257844fa1dad87adc99c547ed7f2",
+    "snapshot-core-candidate.json": "fc6acb0a96e8c4a8984410fa28fc0eccc5beba30919817a441ae4326cd325596",
+    "snapshot-core-inputs.json": "2442d80aba5b9f8026e345d8b6b81cad1ba9b62df87fa4fbd86860b25abb565e",
+    "snapshot-export-contract.json": "b771e4da0ecd516af269c22eb00a230c496cd06f50a503f15dd219d3e31555e9"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "reviewed_at_utc": "2026-11-21T02:29:24.825706+00:00",
+  "verdict": "Boundedly positive; no concrete P1/P2 finding in the two-declaration swap",
+  "phases_read_from_supplied_private_measurements": {
+    "before": {
+      "source_count": 99,
+      "row_count": 1126,
+      "all_rows_pass": true,
+      "actual_System_header_users": 76,
+      "unchanged_other_context_controls": 23,
+      "Foundation_header_trace": [],
+      "private_guards": {
+        "strings": {
+          "pass_": true
+        },
+        "dir32": {
+          "pass_": false,
+          "error": "1"
+        }
+      },
+      "layout": {
+        "exit": 0,
+        "debug_addition_only": true,
+        "Snapshot": {
+          "fwd": false,
+          "key": "class",
+          "size": 4,
+          "bases": [],
+          "fields": [],
+          "statics": [],
+          "methods": [
+            "DoXfer",
+            "GetSnapshotName",
+            "LoadPostProcess",
+            "Snapshot",
+            "__local_vftable_ctor_closure",
+            "__vecDelDtor",
+            "~Snapshot"
+          ],
+          "virtual": [
+            "DoXfer",
+            "GetSnapshotName",
+            "LoadPostProcess",
+            "__vecDelDtor",
+            "~Snapshot"
+          ],
+          "vslots": {
+            "0": "__vecDelDtor(uint)",
+            "1": "GetSnapshotName()",
+            "2": "LoadPostProcess()",
+            "3": "DoXfer(Xfer*)"
+          },
+          "vfptr": true
+        },
+        "runtime_equal_to_plain": true
+      }
+    },
+    "candidate": {
+      "source_count": 99,
+      "row_count": 1126,
+      "all_rows_pass": true,
+      "actual_System_header_users": 76,
+      "unchanged_other_context_controls": 23,
+      "Foundation_header_trace": [],
+      "private_guards": {
+        "strings": {
+          "pass_": true
+        },
+        "dir32": {
+          "pass_": false,
+          "error": "1"
+        }
+      },
+      "layout": {
+        "exit": 0,
+        "debug_addition_only": true,
+        "Snapshot": {
+          "fwd": false,
+          "key": "class",
+          "size": 4,
+          "bases": [],
+          "fields": [],
+          "statics": [],
+          "methods": [
+            "DoXfer",
+            "GetSnapshotName",
+            "LoadPostProcess",
+            "Snapshot",
+            "__local_vftable_ctor_closure",
+            "__vecDelDtor",
+            "~Snapshot"
+          ],
+          "virtual": [
+            "DoXfer",
+            "GetSnapshotName",
+            "LoadPostProcess",
+            "__vecDelDtor",
+            "~Snapshot"
+          ],
+          "vslots": {
+            "0": "__vecDelDtor(uint)",
+            "1": "LoadPostProcess()",
+            "2": "GetSnapshotName()",
+            "3": "DoXfer(Xfer*)"
+          },
+          "vfptr": true
+        },
+        "runtime_equal_to_plain": true
+      }
+    }
+  },
+  "ordinary_Root_baseline": {
+    "source_count": 99,
+    "failures": 0,
+    "batches": 9,
+    "run_log": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\bfme1\\snapshot-native-baseline-run.log",
+    "run_sha256": "f874ec2a5ff944cf3bdec284e33223c905dec82bff610bdb335483a09fc0ea25",
+    "logs": {
+      "snapshot-native-baseline-01.log": {
+        "sha256": "68394974e50e8930be39c4ab45d9e01742770cb12ce2acafd6d3bff702d9cca8",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-02.log": {
+        "sha256": "70ae485915dc7b2c17c3fa77eee1d564b0a109a84031b27b87d7d6e9a1d0481f",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-03.log": {
+        "sha256": "d6897d63bc974b1cceee16f5f0197e012f754050e1a2183cce761d23e244a3b6",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-04.log": {
+        "sha256": "57adf1dda51f74e3eee0b976b07c53e5b8aaaf5401a93fbe99c230222e9b1fad",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-05.log": {
+        "sha256": "8dc760b0325a786da5cbc976ab65b09efda951da51e92d8d540be88603cea0bc",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-06.log": {
+        "sha256": "d091366763f71638dc840dc0532508f1f092c8592b32fd1bba586bc2460360e5",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-07.log": {
+        "sha256": "1258718425bec153081f2ea0df8d946c5bd905bb0f592f0e14763d1bfda44742",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-08.log": {
+        "sha256": "4675badd3e20d902b56f955cc0d075b358495565f905f5e8f7cac9ce8fd0e7b2",
+        "DIR32_OK": true
+      },
+      "snapshot-native-baseline-09.log": {
+        "sha256": "36ae2eb0dcb5749d911d52404c2e0ec44f9ed51c23796157d22848a923ef2c69",
+        "DIR32_OK": true
+      }
+    }
+  },
+  "guard_correction": "Private harness30 unowned-name findings do not prove red master; ordinary unchanged Root build has DIR32 OK in all9 batches. Ordinary candidate verification remains separate.",
+  "candidate_patch": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\foundation-002bb170\\snapshot-order-only-CANDIDATE.patch",
+  "candidate_patch_sha256": "d4d2d3df1ec0622c8254c9c05b0566e83f4da2988cff785aacfbbee9edc259fb",
+  "candidate_header_raw_sha256": "37b054017a8321b5151f8a332fd6faa12be7e28de832bddf93e883b1b4bbdd1e",
+  "reported_input_header_sha256": {
+    "before_sha256": "96299e295f364de1695ccb59693fbb47f2d975c534b04e8085c0d0715c1b891d",
+    "candidate_sha256": "37b054017a8321b5151f8a332fd6faa12be7e28de832bddf93e883b1b4bbdd1e"
+  },
+  "findings": [],
+  "remaining_boundaries": [
+    "No independent authentication by this reviewer of every41 emitted table copy runtime address/secondary-this thunk. Melee final original-table binding remains separate.",
+    "No full1871-context/151 stale closure, full-image/runtime proof or recovered1261B Foundation body.",
+    "Foundation657B is a control without System header inclusion; shared hierarchy/Behavior41 types remain open."
+  ],
+  "reviewer_compiler_calls": 0,
+  "reviewer_production_tool_git_claim_writes": false,
+  "new_body_byte_credit": 0,
+  "review_artifact_sha256": {
+    "REVIEW.md": "5377b453b4d2ed8807d5ab81276d9fede29ab5a52bfcc00dcf5c3456e0d638a4",
+    "ORIGINAL-PE-REVIEW.json": "30358108f6ea925c61f619bc78b0bad6efcebe8ebb15b098cc3c8dceb3804227"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "previous_verified_checkout": "147fd3e52b36ee0306aaeef5b316beb09f7c7671",
+  "official_fetched_upstream": "1e864b34e05f68568db539537b6959d94d104f57",
+  "changed_paths": 3861,
+  "body_trial_status": "Refresh required; no stale receipt promoted",
+  "source_proof": "COM and CRT donor source families unchanged",
+  "changed_build_tools": [
+    "tools/rename.py",
+    "tools/tests/test_rename_fold.py"
+  ],
+  "native_scan": {
+    "bodies": 53284,
+    "receipts_current": true,
+    "exact_unique": 4820,
+    "servable_unclaimed": 0
+  },
+  "historical_trial_audit": "bfme1/donor-refresh-trial-currency.json;2 native receipts current,2 historic stale inputs retained and fail closed; no stale trial promoted",
+  "status": "Official donor checkout and native placement inputs verified; proper shared Module/Snapshot repair lead identified; no new body or runtime credit"
+}

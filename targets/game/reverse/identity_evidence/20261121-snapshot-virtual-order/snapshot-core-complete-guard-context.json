@@ -1,0 +1,25 @@
+{
+  "compiler_invoked": false,
+  "new_source_variant": false,
+  "baseline_changed": false,
+  "private_metadata_input_completed": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\foundation-shared-core-20261121\\mirror\\targets\\game\\reverse\\body_guard_baseline.csv",
+  "original_baseline_sha256": "31a6829e788dc1302fa1fce2fdece8db66cd02e4968505bc695cfec56b48db12",
+  "private_baseline_sha256": "31a6829e788dc1302fa1fce2fdece8db66cd02e4968505bc695cfec56b48db12",
+  "guard": "build.verify_dir32_consistency(rows, propose=False)",
+  "phases": {
+    "before": {
+      "pass_": true,
+      "error": null,
+      "log": "DIR32 consistency: OK (689 symbols; 7 whitelisted, 0 new)\n"
+    },
+    "candidate": {
+      "pass_": true,
+      "error": null,
+      "log": "DIR32 consistency: OK (689 symbols; 7 whitelisted, 0 new)\n"
+    }
+  },
+  "actual_native_body_guard_root": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\foundation-shared-core-20261121\\mirror",
+  "actual_native_body_guard_baseline": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\foundation-shared-core-20261121\\mirror\\targets\\game\\reverse\\body_guard_baseline.csv",
+  "root_current_baseline_still_identical": true,
+  "not_full_gate": true
+}
