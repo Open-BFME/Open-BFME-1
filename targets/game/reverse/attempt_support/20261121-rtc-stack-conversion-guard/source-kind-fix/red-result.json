@@ -1,0 +1,13 @@
+{
+  "mode": "red",
+  "exit": 1,
+  "module_path": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\conversion_gate.baseline.py",
+  "pytest_args": [
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\pytest-red",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\tools\\tests\\test_conversion_gate_source_kind.py"
+  ]
+}

@@ -45,7 +45,7 @@ import sys
 from pathlib import Path
 
 from list_naked_candidates import NAKED_RE
-from progress import CPP_SUFFIXES, naked_cpp_rows
+from progress import CPP_SUFFIXES, naked_cpp_rows, source_kind
 import layout_history
 
 LIFT_RE = re.compile(r"\b__?emit\b")
@@ -1352,8 +1352,11 @@ def clean_coverage_lost(old, new):
         return []
 
     def clean_sources(rva, rows_by_rva, naked, missing):
+        # Use the same code-axis classification as progress.py: prebuilt
+        # archives and assembly own no clean C++ coverage. In either
+        # direction, moving a row to .lib cannot retain C++ coverage.
         return sorted({r["source"] for r in rows_by_rva[rva]
-                       if not r["source"].endswith(".asm")
+                       if source_kind(r["source"]) == "cpp"
                        and r["source"] not in missing
                        and (r["name"], r["target_rva"]) not in naked})
 

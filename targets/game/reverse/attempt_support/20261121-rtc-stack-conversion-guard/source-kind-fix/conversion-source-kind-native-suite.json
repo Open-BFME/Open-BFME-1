@@ -1,0 +1,42 @@
+{
+  "exit": 1,
+  "new_tests": 26,
+  "new_test_failures": [],
+  "failures": [
+    {
+      "node": "tools.tests.test_conversion_gate_dump_apply::test_tool_reproduced_conversion_is_accepted",
+      "kind": "error",
+      "message": "failed on setup with \"assert (None is not None)\""
+    },
+    {
+      "node": "tools.tests.test_conversion_gate_dump_apply::test_tool_output_with_one_byte_changed_is_refused",
+      "kind": "error",
+      "message": "failed on setup with \"assert (None is not None)\""
+    },
+    {
+      "node": "tools.tests.test_conversion_gate_dump_apply::test_tool_output_from_a_different_base_is_refused",
+      "kind": "error",
+      "message": "failed on setup with \"assert (None is not None)\""
+    },
+    {
+      "node": "tools.tests.test_conversion_gate_outside::test_symlink_to_vendor_emit_header_refused",
+      "kind": "failure",
+      "message": "OSError: [WinError 1314] Dem Client fehlt ein erforderliches Recht: '../../inputs/vendor/v/e.h' -> 'W:\\\\OpenBFME\\\\diagnostics\\\\continue-20261105-1800\\\\shell-temp\\\\tmpe01kv6te\\\\game\\\\G\\\\e.h'"
+    },
+    {
+      "node": "tools.tests.test_conversion_gate_outside::test_symlink_to_anything_refused",
+      "kind": "failure",
+      "message": "OSError: [WinError 1314] Dem Client fehlt ein erforderliches Recht: 'a.cpp' -> 'W:\\\\OpenBFME\\\\diagnostics\\\\continue-20261105-1800\\\\shell-temp\\\\tmpabpex0qn\\\\game\\\\G\\\\l.h'"
+    }
+  ],
+  "unexpected_failures": [],
+  "known_baseline_failure_limit": [
+    "tools.tests.test_conversion_gate_dump_apply::test_tool_output_from_a_different_base_is_refused",
+    "tools.tests.test_conversion_gate_dump_apply::test_tool_output_with_one_byte_changed_is_refused",
+    "tools.tests.test_conversion_gate_dump_apply::test_tool_reproduced_conversion_is_accepted",
+    "tools.tests.test_conversion_gate_outside::test_symlink_to_anything_refused",
+    "tools.tests.test_conversion_gate_outside::test_symlink_to_vendor_emit_header_refused"
+  ],
+  "whole_suite_green": false,
+  "tools_classifier_sha256": "1b6407653866f504c67ec6d69087312a4fb5a4474a5915132752904aaecdf794"
+}
