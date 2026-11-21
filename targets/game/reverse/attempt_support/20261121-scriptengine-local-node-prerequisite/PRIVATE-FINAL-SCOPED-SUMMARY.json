@@ -1,0 +1,23 @@
+{
+  "native_code_rows_control_proper": [
+    8,
+    8
+  ],
+  "native_code_rows_candidate_proper": [
+    9,
+    9
+  ],
+  "native_code_rows_control_helper": [
+    1,
+    1
+  ],
+  "candidate_helper_data_only": true,
+  "applicable_normal_dir32_refusals": 0,
+  "same_FPO_package": true,
+  "same_external_unresolved_closure": true,
+  "helper_and_ctor_raw_and_bound_referents_transfer": true,
+  "final_normal_DataRow_writer_and_intended_path_gate_pending": true,
+  "compiler_invocations_total": 4,
+  "production_writes": 0,
+  "new_body_credit": 0
+}

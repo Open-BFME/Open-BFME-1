@@ -1,0 +1,8 @@
+Source claims: OK (2 sources, scoped byte-verified)
+Data rows: OK (3 row(s) byte-verified)
+Compile: 0 of 1 TU(s) (deps-cache: 1 current)
+Functions: OK 9/9 matched across 1 source file(s)
+String-ref verify: OK (3 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (2 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (6 reference(s) checked against 17231 recorded symbols)
+Body guard: OK (9 row(s); 0 baselined finding(s); {'static_skip': 2})

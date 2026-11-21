@@ -1,0 +1,29 @@
+{
+  "source_head": "8e26a687c615d174f372d4c834b1dc1c1742a738",
+  "proof": [
+    {
+      "private_path": "agents/transport/module-closure-diagnosis-20261121/ctor-identity-002/MANIFEST.json",
+      "sha256": "33031c52f8d5c70e20c186fec1a8dfabea5470116b2375957a8ae460fcd65dd2",
+      "tracked_copy": "1-MANIFEST.json"
+    },
+    {
+      "private_path": "agents/transport/module-closure-diagnosis-20261121/census-refs-003/MANIFEST.json",
+      "sha256": "64207563c52fc6a3707b50e924d93bf5d1d0c45b322a78eb531bad979a09731a",
+      "tracked_copy": "2-MANIFEST.json"
+    },
+    {
+      "private_path": "agents/transport/behavior-callers-private-20261121/HANDOFF.md",
+      "sha256": "0d780ed82cf8085420e5ee9557e1551ffa46a2cf2b30ed2184d1eb4547dca501",
+      "tracked_copy": "3-HANDOFF.md"
+    },
+    {
+      "private_path": "agents/thing/b1-module-tu-api-plan-20261121/HANDOFF.md",
+      "sha256": "c30b4a98918e250172089aa27aaac01247703f6be1422cbf54e6e4eabfd2e73e",
+      "tracked_copy": "4-HANDOFF.md"
+    }
+  ],
+  "private_trials_only": true,
+  "source_edits": 0,
+  "new_bodies": 0,
+  "new_unique_bytes": 0
+}

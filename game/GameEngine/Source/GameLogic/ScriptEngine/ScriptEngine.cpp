@@ -237,3 +237,61 @@ void ScriptEngine::adjustTimer(ScriptAction *action,
 		counter->m_value += value;
 	}
 }
+
+extern "C" unsigned char __identifier("??_7Rva0033C070TailDtor@@6B@")[];
+#define g_bfmeVftRva0033C070TailDtor __identifier("??_7Rva0033C070TailDtor@@6B@")
+
+class Rva00339A80ParticleNode;
+// Internal node cell used only by this original ScriptEngine TU.
+// The pre-existing table model is unchanged in this preparatory rehome.
+static Rva00339A80ParticleNode *g_rva00339a80Node;
+
+class Rva00339A80ParticleNode
+{
+public:
+	Rva00339A80ParticleNode()
+	{
+		m_vtable = g_bfmeVftRva0033C070TailDtor;
+		m_value = 0;
+		m_flag = 0;
+	}
+
+	void *m_vtable;
+	int m_value;
+	char m_flag;
+};
+
+class Rva00339A80ParticleSink
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void attach(void *p) = 0;
+	virtual void adopt(Rva00339A80ParticleNode *node) = 0;
+	virtual void start() = 0;
+};
+
+class ParticleSystemManager
+{
+public:
+	unsigned char m_unported[0x84];
+	void *m_sinkData;
+};
+
+extern Rva00339A80ParticleSink *g_rva00339a80Sink;
+extern ParticleSystemManager *TheParticleSystemManager;
+
+void Rva00339A80ParticleSystemSinkStart()
+{
+	if (g_rva00339a80Sink == 0)
+		return;
+
+	if (g_rva00339a80Node == 0)
+	{
+		g_rva00339a80Node = new Rva00339A80ParticleNode;
+		g_rva00339a80Sink->adopt(g_rva00339a80Node);
+	}
+
+	g_rva00339a80Sink->attach(TheParticleSystemManager->m_sinkData);
+	g_rva00339a80Sink->start();
+}

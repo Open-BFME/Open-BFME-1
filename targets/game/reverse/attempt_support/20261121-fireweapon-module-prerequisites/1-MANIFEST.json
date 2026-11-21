@@ -1,0 +1,27 @@
+{
+  "read_only": true,
+  "compiler_actions": 0,
+  "production_mutations": 0,
+  "files": [
+    {
+      "file": "BOUNDED-CALLERS.json",
+      "bytes": 15612,
+      "sha256": "5fd8107a4781e05bf0c14fd4e85064277bfcb56e09cccca7cf1d48de6c73d3c9"
+    },
+    {
+      "file": "DIRECT-PROVIDER-SCOPE.json",
+      "bytes": 43791,
+      "sha256": "7091f5bec56d9ec62d08668991bced9f8c7b5d7253da5f264c851a2b10691296"
+    },
+    {
+      "file": "HANDOFF.md",
+      "bytes": 8117,
+      "sha256": "582db4e75882a1760ee9b5c938118c12d07e7214da91322cb0ea6b94a8cb2068"
+    },
+    {
+      "file": "scope-run.log",
+      "bytes": 2620,
+      "sha256": "b284e902fc9ee68f994bbd3a19dda800161d353cd12f718d675a3c0e76307039"
+    }
+  ]
+}
