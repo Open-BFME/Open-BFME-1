@@ -1,0 +1,33 @@
+{
+  "cpp_pp_calls": 0,
+  "production_mutations": 0,
+  "new_cpp_bytes_or_body_credit": 0,
+  "new_tests_baseline": {
+    "passed": 25,
+    "failed": 4,
+    "skipped": 0
+  },
+  "new_tests_candidate": {
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0
+  },
+  "relevant_suite": {
+    "passed": 86,
+    "failed": 2,
+    "skipped": 1
+  },
+  "existing_failures_baseline_identical": [
+    "tools/tests/test_data_rows_probe_includes.py::test_missing_include_retries_with_the_sweep_dirs",
+    "tools/tests/test_data_rows_probe_includes.py::test_other_compile_errors_are_not_retried"
+  ],
+  "no_new_pytest_deselections": true,
+  "real_current_normal_coff_sizing": [
+    52
+  ],
+  "normal_admission_not_executed": true,
+  "required_root_tool_commit_before_frontdoor_retry": true,
+  "tool_sha256": "b2fa197dc19d5bc4b69253e65f6065dc482dfd560024a961fcf687e118b0939c",
+  "tests_sha256": "a27a39f2b3586ecc8091320bbfd5cfcd8a708f9bbe90fc20aaa47c5ce756e45c",
+  "patch_sha256": "1846a196957df76e5e74258bf374ff085b87260ae26ccfc354c21a46850dc1a2"
+}

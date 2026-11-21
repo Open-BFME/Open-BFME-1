@@ -1,0 +1,46 @@
+{
+  "changed_existing_top_level": [
+    "symbol_size"
+  ],
+  "added_top_level": [
+    "_vftable_size"
+  ],
+  "all_other_existing_top_level_text_identical": [
+    "Resolver",
+    "_bounded_probe",
+    "_cpp_data_access",
+    "_data_scopes",
+    "_protected_probe_name",
+    "_run_probe",
+    "_tools",
+    "_type_probe",
+    "check",
+    "compiled_arithmetic",
+    "compiled_size",
+    "cpp_name",
+    "load",
+    "main",
+    "parse",
+    "retail_sections",
+    "va_of",
+    "verify",
+    "verify_row"
+  ],
+  "verify_row_Resolver_all_byte_pointer_policy_unchanged": true,
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "donor_path": "tools/data_rows.py",
+  "donor_helper": "_vftable_size",
+  "donor_file_sha256": "b3435336f1b811aa4ac157c23d6f86649a8ad27f26363f5402c2e243e685a813",
+  "adaptations": [
+    "pre-sizeof early COFF route avoids unnecessary unnameable sizeof probe",
+    "require READ and DATA type, complete actual raw length, DIR32 kind and existing relocation target record",
+    "allow only exact actual section-symbol metadata, reject arbitrary dot-prefixed aliases",
+    "no donor weak or resolver exceptions copied; no data/table address/name whitelist"
+  ],
+  "limits": [
+    "sizing is not original vtable identity/class API/slot contract proof",
+    "structural COMDAT flag and dedicated payload are used by size helper; actual normal-object aux ANY independently documented",
+    "retail bytes, each target/addend and normal source owner gates still mandatory"
+  ],
+  "cpp_or_pp_invocations": 0
+}

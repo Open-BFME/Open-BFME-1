@@ -1,0 +1,209 @@
+{
+  "source": "W:\\OpenBFME\\Open-BFME-1\\game\\GameEngine\\Source\\GameLogic\\ScriptEngine\\ScriptEngine.cpp",
+  "source_sha256": "118dfe4e7ca3e52b488628c81f10db6a6987a2087e2ff829537aa58b64cba6b3",
+  "shared_object_read_only": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^game^engine_^source_^game^logic_^script^engine_^script^engine.obj",
+  "shared_object_sha256": "4fe5ee8613c6eb3fcd912fcae6a5e9d94eef0fa87d4d7f7bc7294e3fd943b2f3",
+  "private_snapshot": "actual-normal-source.obj",
+  "compile_is_current_native_read_only": true,
+  "symbol": {
+    "index": 146,
+    "name": "??_7Rva0033C070TailDtor@@6B@",
+    "value": 0,
+    "section": 43,
+    "type": 0,
+    "storage": 2
+  },
+  "section": {
+    "number": 43,
+    "name": ".rdata",
+    "size": 52,
+    "flags": 1076891712,
+    "raw": "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "relocations": [
+      {
+        "offset": 0,
+        "kind": 6,
+        "target": {
+          "index": 143,
+          "name": "?rva00339120@Rva0033C070TailDtor@@UAEXPBDPAX@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 4,
+        "kind": 6,
+        "target": {
+          "index": 142,
+          "name": "?bfmeMakeERD@Rva0033C070TailDtor@@UAEPAVBfmeSysERD@@PBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 8,
+        "kind": 6,
+        "target": {
+          "index": 141,
+          "name": "?bfmeSpawnCW@Rva0033C070TailDtor@@UAEXPBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 12,
+        "kind": 6,
+        "target": {
+          "index": 140,
+          "name": "?rva00340980VisitFXListNames@Rva0033C070TailDtor@@UAEXPAVRva00340980Sink@@@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 16,
+        "kind": 6,
+        "target": {
+          "index": 139,
+          "name": "?bfmeDumpCG_00347DA0@Rva0033C070TailDtor@@UAEXPAVBfmeSinkCG@@@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 20,
+        "kind": 6,
+        "target": {
+          "index": 138,
+          "name": "?rva00336860Get@Rva0033C070TailDtor@@UAEHXZ",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 24,
+        "kind": 6,
+        "target": {
+          "index": 137,
+          "name": "?Rva003392B0FindParticleTemplate@Rva0033C070TailDtor@@UAEPAXPBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 28,
+        "kind": 6,
+        "target": {
+          "index": 136,
+          "name": "?bfmeGo939A@Rva0033C070TailDtor@@UAEXXZ",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 32,
+        "kind": 6,
+        "target": {
+          "index": 135,
+          "name": "?Rva00339330LoadFXParticleSystem@Rva0033C070TailDtor@@UAEXPBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 36,
+        "kind": 6,
+        "target": {
+          "index": 134,
+          "name": "?bfmeSpawnEAU@Rva0033C070TailDtor@@UAEXPBDPAX@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 40,
+        "kind": 6,
+        "target": {
+          "index": 133,
+          "name": "?_writeOutINI@Rva0033C070TailDtor@@UAEXXZ",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 44,
+        "kind": 6,
+        "target": {
+          "index": 132,
+          "name": "?set@Rva0033C070TailDtor@@UAEXH@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      },
+      {
+        "offset": 48,
+        "kind": 6,
+        "target": {
+          "index": 131,
+          "name": "?rva0033C120@Rva0033C070TailDtor@@UAEXPBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      }
+    ]
+  },
+  "actual_comdat_selection": 2,
+  "actual_all_section_symbols": [
+    {
+      "index": 144,
+      "name": ".rdata",
+      "value": 0,
+      "section": 43,
+      "type": 0,
+      "storage": 3
+    },
+    {
+      "index": 146,
+      "name": "??_7Rva0033C070TailDtor@@6B@",
+      "value": 0,
+      "section": 43,
+      "type": 0,
+      "storage": 2
+    }
+  ],
+  "old_sizes": [],
+  "old_refusal": "??_7Rva0033C070TailDtor@@6B@ cannot be named from its TU",
+  "candidate_sizes": [
+    52
+  ],
+  "candidate_proof": "the vftable's complete dedicated COFF COMDAT section size = 52 (allocation extent 52)",
+  "extra_compiler_calls": 0,
+  "private_row_or_resolver_overrides": 0,
+  "actual_data_admission_executed": false
+}

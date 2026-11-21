@@ -1,0 +1,111 @@
+{
+  "private_package": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121",
+  "files": {
+    "ACTUAL-NORMAL-COFF-SIZING-PROOF.json": {
+      "sha256": "082800ead7e0aeef05b0d2c7f5c73ea79825a92c5547a76a64bb577591b3c0cd",
+      "bytes": 5222
+    },
+    "BEFORE.json": {
+      "sha256": "e228678ea1cb1b869e99133bf88f345c2f9721e09748a97ef8e09724f6591592",
+      "bytes": 1946
+    },
+    "FINAL-GUARD.json": {
+      "sha256": "091176c77e6dc0587b4fb0d415a72e33315101b797f88988eecaa89195c6dded",
+      "bytes": 1498
+    },
+    "FINAL-RESULT.json": {
+      "sha256": "06c80d67f9bbb6e7ab496e3d246770e3c8da355b0cf52a4f825a6e8fef4d6fe5",
+      "bytes": 1028
+    },
+    "HANDOFF.md": {
+      "sha256": "49bd0571b08402038194c866b40e21e9d7f9339cf6b33ef5fd7a2822cee77bb8",
+      "bytes": 6028
+    },
+    "NEW-TESTS.txt": {
+      "sha256": "c46b0d45fdf6e504a8f327abf0022a9cf3020948f89b70bd55fd76af6deeafda",
+      "bytes": 7161
+    },
+    "UNCHANGED-GUARD-AND-DONOR-PROVENANCE.json": {
+      "sha256": "a03c7d87c45f69b787c8087d558afecb35e5239c1a06029c6efeef3184aca310",
+      "bytes": 1537
+    },
+    "actual-normal-source.obj": {
+      "sha256": "4fe5ee8613c6eb3fcd912fcae6a5e9d94eef0fa87d4d7f7bc7294e3fd943b2f3",
+      "bytes": 9896
+    },
+    "baseline-existing-path-setup.RESULT.json": {
+      "sha256": "f74a03c7a79ecee3e45d31ed9019981602ce247939dafabaea79c7d61efd3992",
+      "bytes": 1250
+    },
+    "baseline-existing-path-setup.log": {
+      "sha256": "dd0558c064fd82845b8f692ade6acedc5d757bdbe4448e3f02d07d9ff8202ba0",
+      "bytes": 306
+    },
+    "baseline-existing.RESULT.json": {
+      "sha256": "106ec58ee80b73b88f4530afea39d62890fa3850c466f67a541084e1e2af649f",
+      "bytes": 1571
+    },
+    "baseline-existing.log": {
+      "sha256": "727bee166ba41cad0b83b798584b1393a43c880175ee5191cefe8f38d98fe8ce",
+      "bytes": 5848
+    },
+    "baseline-new.RESULT.json": {
+      "sha256": "3331e34fc76121b02dd3f3be7c2ab25e34df949b85e188b374a9a5e4b7a74ebb",
+      "bytes": 10022
+    },
+    "baseline-new.log": {
+      "sha256": "5a337971e75fb5374bff016a32322bab39416a0996b9e9b1d40ab9c2d35a9ab7",
+      "bytes": 6485
+    },
+    "candidate-new.RESULT.json": {
+      "sha256": "f54e097638de70e0f90b3484266992544c837091e0091fe1ba585556f9fe253f",
+      "bytes": 10021
+    },
+    "candidate-new.log": {
+      "sha256": "8497f3e4c18d881dec43f2fa05a36b5a6502eaa6208913572b240e2b6b2d4018",
+      "bytes": 233
+    },
+    "candidate-suite.RESULT.json": {
+      "sha256": "d9eb7169527e429a64c5ba818762cc712c647221bb2cc6a437c8d79de241ac8e",
+      "bytes": 23277
+    },
+    "candidate-suite.log": {
+      "sha256": "58bf646c31c970fcda47d1926c5090462c1891b52c785783b948264c169acac0",
+      "bytes": 5934
+    },
+    "data_rows.baseline.py": {
+      "sha256": "64a9eb329abd32d08e3973ef1d3acbfe32cc497a2f890ce0beb6cd5ea5792240",
+      "bytes": 29467
+    },
+    "finalize.py": {
+      "sha256": "a76968d3e8036210c6f238e8bc0f04555c0f345b7badf6daf32a4374b2978d10",
+      "bytes": 9822
+    },
+    "prove_actual_coff_and_diff.py": {
+      "sha256": "4739c49990161bcf578a301e99f8b87e92a52832df255ce6de30a42c9f34dec7",
+      "bytes": 5020
+    },
+    "run_checks.py": {
+      "sha256": "f35c1f45f86b6d0beff8d7b8024b8daaed6045db680fb66da0ad9677a010df00",
+      "bytes": 3889
+    },
+    "test_data_rows.baseline.py": {
+      "sha256": "5bc3f6025d9c601ece6f8758bec3eda7e942defd9b586079c50bb36ac676bbf7",
+      "bytes": 20706
+    },
+    "tools/data_rows.py": {
+      "sha256": "b2fa197dc19d5bc4b69253e65f6065dc482dfd560024a961fcf687e118b0939c",
+      "bytes": 31464
+    },
+    "tools/tests/test_data_rows.py": {
+      "sha256": "a27a39f2b3586ecc8091320bbfd5cfcd8a708f9bbe90fc20aaa47c5ce756e45c",
+      "bytes": 27866
+    },
+    "vftable-coff-sizing.patch": {
+      "sha256": "1846a196957df76e5e74258bf374ff085b87260ae26ccfc354c21a46850dc1a2",
+      "bytes": 11598
+    }
+  },
+  "production_writes": 0,
+  "cpp_pp_calls": 0
+}

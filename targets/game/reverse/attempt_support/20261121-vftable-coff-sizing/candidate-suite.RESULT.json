@@ -1,0 +1,501 @@
+{
+  "mode": "candidate-suite",
+  "exit_code": 1,
+  "seconds": 2.703,
+  "paths": [
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_own_comdat_proves_size_without_a_sizeof_compile",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_pointer_addends_need_not_be_zero_but_each_must_match_retail",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_size_proof_does_not_relax_pointer_ownership",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_existing_weak_external_policy_still_refuses_the_slot",
+    "tools/tests/test_data_rows.py::test_a_clean_ledger_passes_and_rva_and_va_mean_the_same_place",
+    "tools/tests/test_data_rows.py::test_integrity_refusals",
+    "tools/tests/test_data_rows.py::test_initialised_symbol_needs_retail_bytes_and_retail_pointers",
+    "tools/tests/test_data_rows.py::test_initializer_bytes_must_equal_retail",
+    "tools/tests/test_data_rows.py::test_zero_filled_symbols_are_checked_alone_at_their_own_address",
+    "tools/tests/test_data_rows.py::test_a_relocation_to_a_tu_local_cannot_be_placed",
+    "tools/tests/test_data_rows.py::test_provider_repair_data_mode_names_globals_and_ranks_the_queue",
+    "tools/tests/test_data_rows.py::test_allocation_padding_is_not_a_size",
+    "tools/tests/test_data_rows.py::test_no_compiler_sizeof_no_size",
+    "tools/tests/test_data_rows.py::test_data_check_fails_closed_when_verification_exits_or_says_nothing",
+    "tools/tests/test_data_rows.py::test_hooks_keep_a_data_only_source_under_verification",
+    "tools/tests/test_data_rows.py::test_delta_sources_reports_changed_data_rows",
+    "tools/tests/test_data_rows.py::test_cpp_names_reach_namespaced_and_member_data_only",
+    "tools/tests/test_data_rows.py::test_template_static_data_access_decodes_literals_and_nested_types",
+    "tools/tests/test_data_rows.py::test_data_next_reads_the_worklist_and_names_c_globals",
+    "tools/tests/test_data_rows.py::test_data_next_refuses_a_zh_line_that_defines_another_type",
+    "tools/tests/test_data_rows.py::test_data_next_uses_the_input_it_is_given",
+    "tools/tests/test_data_rows_probe_timeout.py",
+    "tools/tests/test_data_rows_probe_includes.py",
+    "tools/tests/test_add_data_match_hatch_admit.py",
+    "tools/tests/test_data_scaffold.py",
+    "tools/tests/test_target_data_rows.py",
+    "tools/tests/test_gate_exploits.py"
+  ],
+  "no_cpp_scope_excluded_explicit_node_names": [
+    "test_compiler_sizes_real_protected_static_member_and_private_stays_inaccessible",
+    "test_only_a_compiler_proven_arithmetic_type_is_a_number",
+    "test_prime_table_words_are_upstream_declared_unsigned_shorts",
+    "test_reference_definitions_count_only_file_scope",
+    "test_reference_lookup_refuses_a_file_it_cannot_preprocess_no_raw_fallback",
+    "test_the_compiler_sizes_what_a_textual_lookup_gets_wrong",
+    "test_the_sizeof_probe_refuses_a_macro_named_like_the_symbol"
+  ],
+  "reports": [
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_own_comdat_proves_size_without_a_sizeof_compile",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_pointer_addends_need_not_be_zero_but_each_must_match_retail",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_size_proof_does_not_relax_pointer_ownership",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change0]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change1]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change2]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change3]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change4]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change5]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change6]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change7]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change8]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change9]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change10]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change11]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change12]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change13]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change14]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change15]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change16]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change17]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change18]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change19]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change20]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[truncated]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[missing]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[unknown-relocation-target]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[function-type]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_existing_weak_external_policy_still_refuses_the_slot",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_a_clean_ledger_passes_and_rva_and_va_mean_the_same_place",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_integrity_refusals",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_initialised_symbol_needs_retail_bytes_and_retail_pointers",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_initializer_bytes_must_equal_retail",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_zero_filled_symbols_are_checked_alone_at_their_own_address",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_a_relocation_to_a_tu_local_cannot_be_placed",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_provider_repair_data_mode_names_globals_and_ranks_the_queue",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_allocation_padding_is_not_a_size",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_no_compiler_sizeof_no_size",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_data_check_fails_closed_when_verification_exits_or_says_nothing",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_hooks_keep_a_data_only_source_under_verification",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_delta_sources_reports_changed_data_rows",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_cpp_names_reach_namespaced_and_member_data_only",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_template_static_data_access_decodes_literals_and_nested_types",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_data_next_reads_the_worklist_and_names_c_globals",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_data_next_refuses_a_zh_line_that_defines_another_type",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows.py::test_data_next_uses_the_input_it_is_given",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows_probe_timeout.py::test_probe_timeout_resets_wine_and_retries",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows_probe_timeout.py::test_last_probe_timeout_returns_the_bounded_failure",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows_probe_includes.py::test_missing_include_retries_with_the_sweep_dirs",
+      "when": "call",
+      "outcome": "failed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_rows_probe_includes.py::test_other_compile_errors_are_not_retried",
+      "when": "call",
+      "outcome": "failed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_add_data_match_hatch_admit.py::test_address_token[?g_Va012BA084@@3GA-g_Va012BA084]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_add_data_match_hatch_admit.py::test_address_token[_g_VA00123456-g_VA00123456]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_add_data_match_hatch_admit.py::test_address_token[?OurLanguage@@3W4LanguageID@@A-None]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_add_data_match_hatch_admit.py::test_the_tool_row_passes_and_a_hand_written_one_is_refused",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_reloc_overflow_round_trips",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_alignment_follows_the_retail_address",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_blocks_merge_contiguous_items_and_split_gaps_and_bss",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_emitted_scaffold_reproduces_retail_and_moves_every_field",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_an_unlisted_in_image_literal_fails_verification",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_unpinned_residue_groups_by_cause_most_referenced_first",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_queue_suggests_an_owner_by_address_or_by_qualified_name",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_symbolic_masm_object_with_a_literal_address_is_rejected",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_relocated_original_object_is_kept",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_missing_original_object_is_rejected",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_an_incomplete_trial_fails_the_run",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_queue_reports_a_va_rva_ambiguous_pin_instead_of_picking",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_data_scaffold.py::test_queue_names_every_kind_of_pin_evidence",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_missing_ledger_is_empty",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_witnessed_row_is_accepted",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_unwitnessed_address_is_rejected[0x1003-not a HIGHLOW]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_unwitnessed_address_is_rejected[0x1022-addresses 0x2000]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_unwitnessed_address_is_rejected[0x1002;0x1002-duplicate witness]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_section_must_match_and_hold_data",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_crlf_ledger_is_rejected",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_relocation_uses_data_row",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_relocation_without_row_still_needs_export",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_target_data_rows.py::test_relocation_to_another_address_is_rejected",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_a_new_decorated_name_must_resolve_by_retail_address[?g_anyNameAtAll@@3PAXA-19864040-already recorded as ?TheWindowManager]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_a_new_decorated_name_must_resolve_by_retail_address[?g_rva012F19E8WindowManager@@3PAVWindowManager@@A-19864048-encodes 0x012F19E8]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_a_new_decorated_name_must_resolve_by_retail_address[?g_notTheSnapshotName@@3QBDB-17825792-nothing in the ledger owns]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_resolved_names_pass[?TheWindowManager@@3PAVGameWindowManager@@A-19864040]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_resolved_names_pass[?TheShell@@3PAVShell@@A-19876564]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_resolved_names_pass[?g_rva01300000Thing@@3PAVThing@@A-19922944]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_the_record_cannot_be_moved_or_grown_by_hand",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_a_mnemonic_asm_body_counts_as_a_lift_not_cpp",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_conversion_gate_refuses_an_added_asm_only_body",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_identity_keys_refuse_a_swap_that_keeps_the_count",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_a_cl_directive_is_read_from_the_whole_file_and_conflicts_fail",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "Open-BFME-1/tools/tests/test_gate_exploits.py::test_audit_red_team_escapes[NOTSET]",
+      "when": "setup",
+      "outcome": "skipped"
+    }
+  ],
+  "deselected": [],
+  "counts": {
+    "passed": 86,
+    "failed": 2,
+    "skipped": 1
+  },
+  "unexpected_compiler_attempts": [],
+  "private_tool_path": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\data_rows.py",
+  "actual_repository_context_file": "W:\\OpenBFME\\Open-BFME-1\\tools\\data_rows.py"
+}
