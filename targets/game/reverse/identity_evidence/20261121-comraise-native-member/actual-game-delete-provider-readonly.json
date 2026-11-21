@@ -1,0 +1,18 @@
+{
+  "row": {
+    "name": "??3@YAXPAX@Z",
+    "export_rva": "",
+    "target_rva": "0x00881EB0",
+    "target_size": "21",
+    "source": "game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp",
+    "status": "matched",
+    "notes": "operator delete"
+  },
+  "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^w^w^vegas_^w^w^lib_mem_ops.obj",
+  "normal_receipt_current": true,
+  "source_sha256": "09ff0ab24c70dd6520a8990f2feb8e721d90c20bbc5e4201acc1c47a7d9b9c69",
+  "object_sha256": "77d22d2e90e9cc7de1857677454f413b18fe2fcc4150ec0896f794ca1d024428",
+  "no_compile_or_source_change": true,
+  "actual_game_delete21_strict_unmasked": true,
+  "unresolved": []
+}

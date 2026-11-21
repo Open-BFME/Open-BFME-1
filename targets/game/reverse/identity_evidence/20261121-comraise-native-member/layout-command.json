@@ -1,0 +1,23 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-O2",
+    "-G6",
+    "-Ob2",
+    "-EHsc",
+    "-GR",
+    "-DNDEBUG",
+    "-MD",
+    "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+    "-Fobuild/agent-melee-20261120/comraise-whole-member-20261121/objects/ComRaise-layout.obj",
+    "build/agent-melee-20261120/comraise-whole-member-20261121/source/ComRaise.cpp",
+    "-Z7",
+    "-showIncludes"
+  ],
+  "exit": 0
+}

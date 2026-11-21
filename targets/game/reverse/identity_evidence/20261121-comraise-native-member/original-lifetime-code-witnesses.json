@@ -1,0 +1,467 @@
+[
+  {
+    "rva": "0xafda10",
+    "size": 54,
+    "instructions": [
+      [
+        "0xefda10",
+        "mov",
+        "eax, dword ptr [esp + 4]"
+      ],
+      [
+        "0xefda14",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefda15",
+        "mov",
+        "esi, ecx"
+      ],
+      [
+        "0xefda17",
+        "mov",
+        "dword ptr [esi + 4], eax"
+      ],
+      [
+        "0xefda1a",
+        "mov",
+        "eax, dword ptr [esp + 0xc]"
+      ],
+      [
+        "0xefda1e",
+        "test",
+        "eax, eax"
+      ],
+      [
+        "0xefda20",
+        "mov",
+        "dword ptr [esi], 0x11bc358"
+      ],
+      [
+        "0xefda26",
+        "mov",
+        "dword ptr [esi + 8], eax"
+      ],
+      [
+        "0xefda29",
+        "mov",
+        "dword ptr [esi + 0xc], 0"
+      ],
+      [
+        "0xefda30",
+        "je",
+        "0xefda40"
+      ],
+      [
+        "0xefda32",
+        "mov",
+        "cl, byte ptr [esp + 0x10]"
+      ],
+      [
+        "0xefda36",
+        "test",
+        "cl, cl"
+      ],
+      [
+        "0xefda38",
+        "je",
+        "0xefda40"
+      ],
+      [
+        "0xefda3a",
+        "mov",
+        "ecx, dword ptr [eax]"
+      ],
+      [
+        "0xefda3c",
+        "push",
+        "eax"
+      ],
+      [
+        "0xefda3d",
+        "call",
+        "dword ptr [ecx + 4]"
+      ],
+      [
+        "0xefda40",
+        "mov",
+        "eax, esi"
+      ],
+      [
+        "0xefda42",
+        "pop",
+        "esi"
+      ],
+      [
+        "0xefda43",
+        "ret",
+        "0xc"
+      ]
+    ]
+  },
+  {
+    "rva": "0xafda90",
+    "size": 50,
+    "instructions": [
+      [
+        "0xefda90",
+        "mov",
+        "eax, dword ptr [esp + 4]"
+      ],
+      [
+        "0xefda94",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefda95",
+        "mov",
+        "esi, ecx"
+      ],
+      [
+        "0xefda97",
+        "mov",
+        "dword ptr [esi], 0x11bc358"
+      ],
+      [
+        "0xefda9d",
+        "mov",
+        "ecx, dword ptr [eax + 4]"
+      ],
+      [
+        "0xefdaa0",
+        "mov",
+        "dword ptr [esi + 4], ecx"
+      ],
+      [
+        "0xefdaa3",
+        "mov",
+        "edx, dword ptr [eax + 8]"
+      ],
+      [
+        "0xefdaa6",
+        "mov",
+        "eax, edx"
+      ],
+      [
+        "0xefdaa8",
+        "test",
+        "eax, eax"
+      ],
+      [
+        "0xefdaaa",
+        "mov",
+        "dword ptr [esi + 8], edx"
+      ],
+      [
+        "0xefdaad",
+        "mov",
+        "dword ptr [esi + 0xc], 0"
+      ],
+      [
+        "0xefdab4",
+        "je",
+        "0xefdabc"
+      ],
+      [
+        "0xefdab6",
+        "mov",
+        "ecx, dword ptr [eax]"
+      ],
+      [
+        "0xefdab8",
+        "push",
+        "eax"
+      ],
+      [
+        "0xefdab9",
+        "call",
+        "dword ptr [ecx + 4]"
+      ],
+      [
+        "0xefdabc",
+        "mov",
+        "eax, esi"
+      ],
+      [
+        "0xefdabe",
+        "pop",
+        "esi"
+      ],
+      [
+        "0xefdabf",
+        "ret",
+        "4"
+      ]
+    ]
+  },
+  {
+    "rva": "0xafdad0",
+    "size": 38,
+    "instructions": [
+      [
+        "0xefdad0",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefdad1",
+        "mov",
+        "esi, ecx"
+      ],
+      [
+        "0xefdad3",
+        "mov",
+        "eax, dword ptr [esi + 8]"
+      ],
+      [
+        "0xefdad6",
+        "test",
+        "eax, eax"
+      ],
+      [
+        "0xefdad8",
+        "mov",
+        "dword ptr [esi], 0x11bc358"
+      ],
+      [
+        "0xefdade",
+        "je",
+        "0xefdae6"
+      ],
+      [
+        "0xefdae0",
+        "mov",
+        "ecx, dword ptr [eax]"
+      ],
+      [
+        "0xefdae2",
+        "push",
+        "eax"
+      ],
+      [
+        "0xefdae3",
+        "call",
+        "dword ptr [ecx + 8]"
+      ],
+      [
+        "0xefdae6",
+        "mov",
+        "esi, dword ptr [esi + 0xc]"
+      ],
+      [
+        "0xefdae9",
+        "test",
+        "esi, esi"
+      ],
+      [
+        "0xefdaeb",
+        "je",
+        "0xefdaf4"
+      ],
+      [
+        "0xefdaed",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefdaee",
+        "call",
+        "dword ptr [0x1358e84]"
+      ],
+      [
+        "0xefdaf4",
+        "pop",
+        "esi"
+      ],
+      [
+        "0xefdaf5",
+        "ret",
+        ""
+      ]
+    ]
+  },
+  {
+    "rva": "0xafdb00",
+    "size": 58,
+    "instructions": [
+      [
+        "0xefdb00",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefdb01",
+        "mov",
+        "esi, ecx"
+      ],
+      [
+        "0xefdb03",
+        "mov",
+        "eax, dword ptr [esi + 8]"
+      ],
+      [
+        "0xefdb06",
+        "test",
+        "eax, eax"
+      ],
+      [
+        "0xefdb08",
+        "mov",
+        "dword ptr [esi], 0x11bc358"
+      ],
+      [
+        "0xefdb0e",
+        "je",
+        "0xefdb16"
+      ],
+      [
+        "0xefdb10",
+        "mov",
+        "ecx, dword ptr [eax]"
+      ],
+      [
+        "0xefdb12",
+        "push",
+        "eax"
+      ],
+      [
+        "0xefdb13",
+        "call",
+        "dword ptr [ecx + 8]"
+      ],
+      [
+        "0xefdb16",
+        "mov",
+        "eax, dword ptr [esi + 0xc]"
+      ],
+      [
+        "0xefdb19",
+        "test",
+        "eax, eax"
+      ],
+      [
+        "0xefdb1b",
+        "je",
+        "0xefdb24"
+      ],
+      [
+        "0xefdb1d",
+        "push",
+        "eax"
+      ],
+      [
+        "0xefdb1e",
+        "call",
+        "dword ptr [0x1358e84]"
+      ],
+      [
+        "0xefdb24",
+        "test",
+        "byte ptr [esp + 8], 1"
+      ],
+      [
+        "0xefdb29",
+        "je",
+        "0xefdb34"
+      ],
+      [
+        "0xefdb2b",
+        "push",
+        "esi"
+      ],
+      [
+        "0xefdb2c",
+        "call",
+        "0xc81eb0"
+      ],
+      [
+        "0xefdb31",
+        "add",
+        "esp, 4"
+      ],
+      [
+        "0xefdb34",
+        "mov",
+        "eax, esi"
+      ],
+      [
+        "0xefdb36",
+        "pop",
+        "esi"
+      ],
+      [
+        "0xefdb37",
+        "ret",
+        "4"
+      ]
+    ]
+  },
+  {
+    "rva": "0xafda50",
+    "size": 51,
+    "instructions": [
+      [
+        "0xefda50",
+        "sub",
+        "esp, 0x10"
+      ],
+      [
+        "0xefda53",
+        "mov",
+        "eax, dword ptr [esp + 0x14]"
+      ],
+      [
+        "0xefda57",
+        "mov",
+        "ecx, dword ptr [esp + 0x18]"
+      ],
+      [
+        "0xefda5b",
+        "push",
+        "0x125187c"
+      ],
+      [
+        "0xefda60",
+        "lea",
+        "edx, [esp + 4]"
+      ],
+      [
+        "0xefda64",
+        "push",
+        "edx"
+      ],
+      [
+        "0xefda65",
+        "mov",
+        "dword ptr [esp + 8], 0x11bc358"
+      ],
+      [
+        "0xefda6d",
+        "mov",
+        "dword ptr [esp + 0xc], eax"
+      ],
+      [
+        "0xefda71",
+        "mov",
+        "dword ptr [esp + 0x10], ecx"
+      ],
+      [
+        "0xefda75",
+        "mov",
+        "dword ptr [esp + 0x14], 0"
+      ],
+      [
+        "0xefda7d",
+        "call",
+        "0xdf6d00"
+      ],
+      [
+        "0xefda82",
+        "int3",
+        ""
+      ]
+    ]
+  }
+]
