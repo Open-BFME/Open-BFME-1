@@ -122697,7 +122697,6 @@ $L314,,0x00C1FC1D,24,game/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
 ?ji_009f7e28@@YAXXZ,,0x009F7E28,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x01359408;target=isalpha
 ?ji_009f7e40@@YAXXZ,,0x009F7E40,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x01359328;target=setjmp3
 ?ji_009f7e4c@@YAXXZ,,0x009F7E4C,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x01359448;target=longjmp
-?ji_009f7ed4@@YAXXZ,,0x009F7ED4,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x0135921C;target=~type_info
 ?ji_009f7ee0@@YAXXZ,,0x009F7EE0,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x01359260;target=__dllonexit
 ?ji_009f7efe@@YAXXZ,,0x009F7EFE,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x0135928C;target=_amsg_exit
 ?ji_009f7f92@@YAXXZ,,0x009F7F92,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x013592EC;target=initterm
@@ -173475,3 +173474,4 @@ __RTC_UninitUse,,0x009F7AE7,166,game/Libraries/Source/CRT/VS2003/RtcError.cpp,ma
 ?_com_issue_errorex@@YGXJPAUIUnknown@@ABU_GUID@@@Z,,0x00AFD550,110,game/Libraries/Source/COM/ComSupp.cpp,matched,BFME2 donor147fd3 original COM native member;complete COFF CV SDK ABI code data graph and real imports;evidence=targets/game/reverse/identity_evidence/20261121-authored-com-members.md;model=codex;launched=gpt-6;host=Michael-PC
 ?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ,,0x00AFD5C0,73,game/Libraries/Source/COM/ComSupp.cpp,matched,BFME2 donor147fd3 original COM native member;complete COFF CV SDK ABI code data graph and real imports;evidence=targets/game/reverse/identity_evidence/20261121-authored-com-members.md;model=codex;launched=gpt-6;host=Michael-PC
 ?_com_dispatch_propput@@YAJPAUIDispatch@@JGZZ,,0x00AFD640,104,game/Libraries/Source/COM/ComSupp.cpp,matched,BFME2 donor147fd3 original COM native member;complete COFF CV SDK ABI code data graph and real imports;evidence=targets/game/reverse/identity_evidence/20261121-authored-com-members.md;model=codex;launched=gpt-6;host=Michael-PC
+?ji_009f7ed4@@YAXXZ,,0x009F7ED4,6,game/gen_small/imports_000.cpp,matched,gen-import;slot=0x0135921C;target=??1type_info@@UAE@XZ;native FF25 PE CODE import metadata reconciled;identity and source unchanged;evidence=targets/game/reverse/identity_evidence/20261121-typeinfo-original-member/IMPORT-METADATA.md;model=codex;launched=gpt-6;host=Michael-PC
