@@ -1,0 +1,15 @@
+{
+  "source_commit": "e8f21c87e26899e778582742d32689992506bba3",
+  "native_command": "python3 tools/link_check.py --refresh --refresh-compile <proper ScriptEngine> <retained data-only fragment>",
+  "stale_objects_recompiled": 129,
+  "objects_refreshed": 22997,
+  "data_rows_verified": 1888,
+  "sources_LINKS": 2,
+  "source_package_linked_before": 1049,
+  "source_package_linked_after": 1049,
+  "new_linked_bytes_claimed": 0,
+  "new_body_credit": 0,
+  "current_selection_preview": true,
+  "actual_census_or_image_link": false,
+  "runtime_executed": false
+}

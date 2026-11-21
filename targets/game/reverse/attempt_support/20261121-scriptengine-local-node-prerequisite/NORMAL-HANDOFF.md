@@ -17,3 +17,12 @@ This is zero new-body/unique-byte credit. The928B ScriptEngine destructor, real
 13-operation node API and12B loader ownership remain unfinished. The accompanying
 Fire-family blocked record preserves independently scoped earlier work and is
 not a second recovery. No complete-image/runtime/crash/memory result is claimed.
+
+Post-commit current-selection check at source e8f21c87e26899e778582742d32689992506bba3:
+the normal --refresh path first requested129 current objects; --refresh-compile
+rebuilt them in88s and refreshed all22997ledger objects against current retail
+truth. All1888data rows pass. Both source previews now say LINKS, preserving
+the same1049linked package bytes. This resolves the preceding stale-selection
+UNKNOWN; it is a current object-selection preview, not a new global census,
+successful full image, runtime or additional1049bytes of recovered coverage.
+The original UNKNOWN/exit1 is preserved as historical evidence, not overwritten.
