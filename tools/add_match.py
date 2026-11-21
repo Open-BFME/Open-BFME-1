@@ -20,6 +20,8 @@ changes the name (`?d_000a8940@@YAXXZ` -> `?addr@SpikeAccessor@@QAEPADXZ`), so
 rows at the same range. With identity and boundary evidence, it can also retire
 a matched wrong identity when the old range lies inside the corrected full
 body. Verification restores the old row if it fails.
+A verified same-source identity correction also carries exact existing
+gen-funclet parent references in that transaction; compiler labels stay unchanged.
 `--replace-archive-import OLD_NAME` is a separate verified provider repair:
 only an existing vendored archive's six-byte private dispatch thunk, table
 field, and independently matched initializer may replace a gen-import row.
@@ -259,6 +261,60 @@ def ledger_key(fields):
         return fields[0], int(fields[2], 16)
     except ValueError:
         return None
+
+
+def retarget_funclet_parents(raw, rows, old, name, rva, size, source, *, verified):
+    """Carry exact dependent parent tokens with a verified same-body rename.
+
+    Labels and funclet identities stay untouched. Plan this before any write;
+    the normal whole-source build and existing full-blob rollback still decide.
+    """
+    if (old["source"] != source or old["rva"] != rva or old["size"] != size
+            or old["status"] != "matched"
+            or not source.startswith("game/") or source.startswith(GENERATED_ROOTS)
+            or Path(source).suffix.lower() not in COMPILED_SOURCE_SUFFIXES):
+        return raw, 0
+    parent = f"parent={old['name']}"
+    edits = {}
+    for row in rows:
+        tokens = row["notes"].split(";")
+        if (row["source"] != source or row["status"] != "matched"
+                or "gen-funclet" not in tokens or parent not in tokens):
+            continue
+        objects = [t[len("object-symbol="):] for t in tokens if t.startswith("object-symbol=")]
+        if len(objects) > 1:
+            fail(f"{row['name']}: ambiguous funclet object-symbol tokens; nothing changed")
+        symbol = objects[0] if objects else row["name"]
+        if re.fullmatch(r"\$L\d+", symbol) is None:
+            continue  # Not a native compiler-label funclet.
+        if sum(t.startswith("parent=") for t in tokens) != 1:
+            fail(f"{row['name']}: ambiguous funclet parent tokens; nothing changed")
+        key = row["name"], row["rva"]
+        if key in edits:
+            fail(f"{row['name']}: duplicate dependent funclet identity; nothing changed")
+        edits[key] = ";".join(f"parent={name}" if t == parent else t for t in tokens)
+    if not edits:
+        return raw, 0
+    if not verified:
+        fail("--no-verify cannot retarget dependent funclet parents; nothing changed")
+    if any(c in token for token in (old["name"], name) for c in ";="):
+        fail("a funclet parent name contains a note-token delimiter; nothing changed")
+    if sum(row["name"] == old["name"] for row in rows) != 1:
+        fail(f"{old['name']}: ambiguous parent identity; nothing changed")
+    out, seen = [], set()
+    for payload, term in ledger_io.split_records(raw):
+        fields = ledger_io.fields(payload)
+        key = ledger_key(fields)
+        if key in edits:
+            if key in seen or len(fields) != 7 or ",".join(fields).encode("utf-8") != payload:
+                fail("dependent funclet row cannot be rewritten losslessly; nothing changed")
+            fields[6] = edits[key]
+            payload = ",".join(fields).encode("utf-8")
+            seen.add(key)
+        out.append(payload + term)
+    if seen != edits.keys():
+        fail("dependent funclet row disappeared during planning; nothing changed")
+    return b"".join(out), len(edits)
 
 
 def strip_marker(source_path, name):
@@ -1056,6 +1112,11 @@ def main():
     export_rva = lookup_export_rva(root, name)
     ledger_row = f"{name},{export_rva},0x{rva:08X},{size},{source_rel},matched,{args.notes}"
 
+    replacement_raw, retargeted_parents = raw, 0
+    if args.correct_identity:
+        replacement_raw, retargeted_parents = retarget_funclet_parents(
+            raw, rows, replaced, name, rva, size, source_rel, verified=not args.no_verify)
+
     saved_source = source_path.read_bytes()
     saved_deleted = deleted_csv.read_bytes() if needs_tombstone else None
 
@@ -1084,7 +1145,7 @@ def main():
             # bare-\n row onto its neighbour and deletes both.
             key = (replaced["name"], replaced["rva"])
             new_raw, dropped = ledger_io.rewrite(
-                raw, lambda f: ledger_key(f) != key)
+                replacement_raw, lambda f: ledger_key(f) != key)
             if dropped != 1:
                 fail(f"internal error: {dropped} ledger rows match {key} — "
                      "expected exactly one")
@@ -1102,6 +1163,8 @@ def main():
             print(f"add_match: replaced row {replaced['line']}: "
                   f"0x{replaced['rva']:08X}/{replaced['size']}B {replaced['source']}")
             print(f"add_match: with: {ledger_row}")
+            if retargeted_parents:
+                print(f"add_match: retargeted {retargeted_parents} dependent funclet parent token(s)")
         else:
             ledger_io.atomic_write_bytes(
                 functions_csv, raw + ledger_row.encode("utf-8") + b"\r\n")

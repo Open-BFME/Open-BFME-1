@@ -1,0 +1,19 @@
+{
+  "tool_sha256": "21effeef10c46ce265328a8b818625c8ae701c80ee355aef9f11fff621f986d6",
+  "test_sha256": "b707a3a377b348676aa88caae4ecdcca59e25433bbc0af83f801523e979d2336",
+  "candidate_exit": 1,
+  "tests_passed": 301,
+  "unchanged_baseline_failures": [
+    "tools/tests/test_add_match_gen_small.py::test_both_gen_dtor_families_are_admitted[game/gen_small/dtors_004.cpp-??_GGen_dtor_0070a000@@UAEPAXI@Z-??_GThing@@UAEPAXI@Z]",
+    "tools/tests/test_add_match_gen_small.py::test_both_gen_dtor_families_are_admitted[game/gen_small/dtorsv_000.cpp-??_EGen_dtorv_0070a000@@UAEPAXI@Z-??_EThing@@UAEPAXI@Z]",
+    "tools/tests/test_add_match_gen_small.py::test_gen_dtor_repoint_lands_and_reverifies_frozen_tu_and_callers",
+    "tools/tests/test_add_match_gen_small.py::test_last_row_repoint_deletes_the_emptied_tu",
+    "tools/tests/test_add_match_gen_small.py::test_s1_symlinked_successor_refused"
+  ],
+  "existing_empty_fixture_skip": 1,
+  "deselected": 0,
+  "new_supersede_cases": 24,
+  "independent_review_no_findings": true,
+  "normal_source_retry_not_run": true,
+  "completed_credit": 0
+}

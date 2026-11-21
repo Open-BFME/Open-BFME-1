@@ -1,0 +1,168 @@
+........................................................................ [ 23%]
+...................................................FFF.................. [ 46%]
+.......................F..........................................F..... [ 70%]
+........................................................................ [ 93%]
+..................s                                                      [100%]
+================================== FAILURES ===================================
+______ test_gen_dtor_repoint_lands_and_reverifies_frozen_tu_and_callers _______
+
+tmp_path = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_gen_dtor_repoint_lands_an0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022ABF40E720>
+
+    def test_gen_dtor_repoint_lands_and_reverifies_frozen_tu_and_callers(tmp_path, monkeypatch):
+        callers = ["row:0x00012345:20:?caller@@YAXXZ"]
+        files, recorder, seen = arrange(tmp_path, monkeypatch, rows=[DTOR_ROW, SIBLING_ROW],
+                                        callers=callers)
+        add_match.main()
+        ledger = files[0].read_text()
+        assert DTOR_OLD not in ledger
+        assert f"{REAL},,{RVA},84,{SOURCE_REL},matched," in ledger
+        assert ledger.count(RVA) == 1
+        (command,) = recorder.builds
+>       assert command[1:] == [SOURCE_REL, *callers, DTOR_TU]
+E       AssertionError: assert ['W:\\OpenBFM...orsv_000.cpp'] == ['game/GameEn...orsv_000.cpp']
+E         
+E         At index 0 diff: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_gen_dtor_repoint_lands_an0\\tools\\build.py' != 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Left contains one more item: 'game/gen_small/dtorsv_000.cpp'
+E         Use -v to get more diff
+
+tools\tests\test_add_match_gen_small.py:143: AssertionError
+---------------------------- Captured stdout call -----------------------------
+add_match: note: targets/game/reverse/exports.csv not present � export_rva left empty
+add_match: replaced row 2: 0x00707E60/84B game/gen_small/dtorsv_000.cpp
+add_match: with: ??_ERoadType@@QAEPAXI@Z,,0x00707E60,84,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp row:0x00012345:20:?caller@@YAXXZ game/gen_small/dtorsv_000.cpp
+add_match: verified OK � row is live
+_ test_both_gen_dtor_families_are_admitted[game/gen_small/dtors_004.cpp-??_GGen_dtor_0070a000@@UAEPAXI@Z-??_GThing@@UAEPAXI@Z] _
+
+tmp_path = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_both_gen_dtor_families_ar0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022ABF40EF60>
+tu = 'game/gen_small/dtors_004.cpp', old = '??_GGen_dtor_0070a000@@UAEPAXI@Z'
+new = '??_GThing@@UAEPAXI@Z'
+
+    @pytest.mark.parametrize("tu,old,new", [
+        ("game/gen_small/dtors_004.cpp", "??_GGen_dtor_0070a000@@UAEPAXI@Z", "??_GThing@@UAEPAXI@Z"),
+        ("game/gen_small/dtorsv_000.cpp", "??_EGen_dtorv_0070a000@@UAEPAXI@Z",
+         "??_EThing@@UAEPAXI@Z"),
+    ])
+    def test_both_gen_dtor_families_are_admitted(tmp_path, monkeypatch, tu, old, new):
+        row = f"{old},,0x0070A000,30,{tu},matched,gen-dtor"
+        files, recorder, _ = arrange(tmp_path, monkeypatch, rows=[row], rva="0x0070A000",
+                                     size="30", replace_rva="0x0070A000", name=new)
+        add_match.main()
+        assert old not in files[0].read_text()
+        # last row of its TU: nothing left there to re-verify or to shadow the new body
+>       assert recorder.builds[0][1:] == [SOURCE_REL]
+E       AssertionError: assert ['W:\\OpenBFM...adBuffer.cpp'] == ['game/GameEn...adBuffer.cpp']
+E         
+E         At index 0 diff: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_both_gen_dtor_families_ar0\\tools\\build.py' != 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Left contains one more item: 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Use -v to get more diff
+
+tools\tests\test_add_match_gen_small.py:165: AssertionError
+---------------------------- Captured stdout call -----------------------------
+add_match: note: targets/game/reverse/exports.csv not present � export_rva left empty
+add_match: replaced row 2: 0x0070A000/30B game/gen_small/dtors_004.cpp
+add_match: with: ??_GThing@@UAEPAXI@Z,,0x0070A000,30,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp
+add_match: verified OK � row is live
+_ test_both_gen_dtor_families_are_admitted[game/gen_small/dtorsv_000.cpp-??_EGen_dtorv_0070a000@@UAEPAXI@Z-??_EThing@@UAEPAXI@Z] _
+
+tmp_path = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_both_gen_dtor_families_ar1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022ABF40DDC0>
+tu = 'game/gen_small/dtorsv_000.cpp', old = '??_EGen_dtorv_0070a000@@UAEPAXI@Z'
+new = '??_EThing@@UAEPAXI@Z'
+
+    @pytest.mark.parametrize("tu,old,new", [
+        ("game/gen_small/dtors_004.cpp", "??_GGen_dtor_0070a000@@UAEPAXI@Z", "??_GThing@@UAEPAXI@Z"),
+        ("game/gen_small/dtorsv_000.cpp", "??_EGen_dtorv_0070a000@@UAEPAXI@Z",
+         "??_EThing@@UAEPAXI@Z"),
+    ])
+    def test_both_gen_dtor_families_are_admitted(tmp_path, monkeypatch, tu, old, new):
+        row = f"{old},,0x0070A000,30,{tu},matched,gen-dtor"
+        files, recorder, _ = arrange(tmp_path, monkeypatch, rows=[row], rva="0x0070A000",
+                                     size="30", replace_rva="0x0070A000", name=new)
+        add_match.main()
+        assert old not in files[0].read_text()
+        # last row of its TU: nothing left there to re-verify or to shadow the new body
+>       assert recorder.builds[0][1:] == [SOURCE_REL]
+E       AssertionError: assert ['W:\\OpenBFM...adBuffer.cpp'] == ['game/GameEn...adBuffer.cpp']
+E         
+E         At index 0 diff: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_both_gen_dtor_families_ar1\\tools\\build.py' != 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Left contains one more item: 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Use -v to get more diff
+
+tools\tests\test_add_match_gen_small.py:165: AssertionError
+---------------------------- Captured stdout call -----------------------------
+add_match: note: targets/game/reverse/exports.csv not present � export_rva left empty
+add_match: replaced row 2: 0x0070A000/30B game/gen_small/dtorsv_000.cpp
+add_match: with: ??_EThing@@UAEPAXI@Z,,0x0070A000,30,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp
+add_match: verified OK � row is live
+_____________________ test_s1_symlinked_successor_refused _____________________
+
+tmp_path = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_s1_symlinked_successor_re0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022AC00F6D20>
+
+    def test_s1_symlinked_successor_refused(tmp_path, monkeypatch):
+        files, recorder, _ = arrange(tmp_path, monkeypatch, rows=[DTOR_ROW, SIBLING_ROW])
+        real = tmp_path / "game/gen_small/RoadType.cpp"
+        real.parent.mkdir(parents=True, exist_ok=True)
+        real.write_text("void body() {}\n")
+        link = tmp_path / "game/GameEngine/Link.cpp"
+        link.parent.mkdir(parents=True, exist_ok=True)
+>       link.symlink_to(real)
+
+tools\tests\test_add_match_gen_small.py:348: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_s1_symlinked_successor_re0/game/GameEngine/Link.cpp')
+target = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_s1_symlinked_successor_re0/game/gen_small/RoadType.cpp')
+target_is_directory = False
+
+    def symlink_to(self, target, target_is_directory=False):
+        """
+        Make this path a symlink pointing to the target path.
+        Note the order of arguments (link, target) is the reverse of os.symlink.
+        """
+        if not hasattr(os, "symlink"):
+            raise NotImplementedError("os.symlink() not available on this system")
+>       os.symlink(target, self, target_is_directory)
+E       OSError: [WinError 1314] Dem Client fehlt ein erforderliches Recht: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_s1_symlinked_successor_re0\\game\\gen_small\\RoadType.cpp' -> 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_s1_symlinked_successor_re0\\game\\GameEngine\\Link.cpp'
+
+C:\Users\micha\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py:1386: OSError
+________________ test_last_row_repoint_deletes_the_emptied_tu _________________
+
+tmp_path = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/funclet-parent-writer-tooling-20261121/candidate-full/test_last_row_repoint_deletes_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000022AC00FA0C0>
+
+    def test_last_row_repoint_deletes_the_emptied_tu(tmp_path, monkeypatch):
+        files, recorder, _ = arrange(tmp_path, monkeypatch, rows=[DTOR_ROW])
+        tu = frozen_tu(tmp_path)
+        add_match.main()
+        assert not tu.exists()
+        assert f"{REAL},,{RVA},84,{SOURCE_REL},matched," in files[0].read_text()
+        # nothing is left in the TU to re-verify
+>       assert recorder.builds[0][1:] == [SOURCE_REL]
+E       AssertionError: assert ['W:\\OpenBFM...adBuffer.cpp'] == ['game/GameEn...adBuffer.cpp']
+E         
+E         At index 0 diff: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full\\test_last_row_repoint_deletes_0\\tools\\build.py' != 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Left contains one more item: 'game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp'
+E         Use -v to get more diff
+
+tools\tests\test_add_match_gen_small.py:582: AssertionError
+---------------------------- Captured stdout call -----------------------------
+add_match: note: targets/game/reverse/exports.csv not present � export_rva left empty
+add_match: replaced row 2: 0x00707E60/84B game/gen_small/dtorsv_000.cpp
+add_match: with: ??_ERoadType@@QAEPAXI@Z,,0x00707E60,84,game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp,matched,host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp
+add_match: deleted game/gen_small/dtorsv_000.cpp: this change moved its last matched row out (source claims and check_csv refuse a game/ .cpp that owns no row). Stage it with `git rm --cached game/gen_small/dtorsv_000.cpp`; if you abandon this landing, restore it with `git checkout -- game/gen_small/dtorsv_000.cpp`
+add_match: verified OK � row is live
+=========================== short test summary info ===========================
+FAILED tools/tests/test_add_match_gen_small.py::test_gen_dtor_repoint_lands_and_reverifies_frozen_tu_and_callers
+FAILED tools/tests/test_add_match_gen_small.py::test_both_gen_dtor_families_are_admitted[game/gen_small/dtors_004.cpp-??_GGen_dtor_0070a000@@UAEPAXI@Z-??_GThing@@UAEPAXI@Z]
+FAILED tools/tests/test_add_match_gen_small.py::test_both_gen_dtor_families_are_admitted[game/gen_small/dtorsv_000.cpp-??_EGen_dtorv_0070a000@@UAEPAXI@Z-??_EThing@@UAEPAXI@Z]
+FAILED tools/tests/test_add_match_gen_small.py::test_s1_symlinked_successor_refused
+FAILED tools/tests/test_add_match_gen_small.py::test_last_row_repoint_deletes_the_emptied_tu
+5 failed, 301 passed, 1 skipped in 19.93s
+{"receipt": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\funclet-parent-writer-tooling-20261121\\candidate-full.RESULT.json", "exit_code": 1, "counts": {"passed": 301, "failed": 5, "skipped": 1}}
