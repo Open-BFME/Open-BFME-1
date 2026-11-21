@@ -47,6 +47,7 @@ import bisect
 import calendar
 import csv
 import gzip
+import hashlib
 import io
 import json
 import os
@@ -255,6 +256,99 @@ def shell_quote(text):
     return "'" + text.replace("'", "'\"'\"'") + "'"
 
 
+def _compiler_vtable_source(name):
+    """A unique current B1 COFF owner, never a name/comment or stale-index guess.
+
+    This only locates a source for the normal pass test. It proves no vtable
+    extent, slot ABI, relocation or runtime correctness. Reusable native build
+    receipts are required: no refresh, preprocessor, compiler or network fallback.
+    Any census-input change makes the definer set unknown until another census.
+    """
+    try:
+        tools = str(ROOT / "tools")
+        if tools not in sys.path:       # the HEAD-copy hook also runs via stdin
+            sys.path.insert(0, tools)
+        import build
+        import link_check
+        import link_census
+        import reloc_ledger
+
+        root = ROOT.resolve()
+        if any(module.ROOT.resolve() != root for module in (build, link_check, link_census)):
+            return None
+        index = link_check.load_index()  # local only; never fetch or refresh
+        if (not link_check._prediction_tables_valid(index)
+                or index.get("weak_root") != str(root)):
+            return None
+        inventory = index.get("weak_inventory")
+        if not isinstance(inventory, dict) or set(inventory) != set(index["objects"]):
+            return None
+        commit = index["meta"]["commit"]
+
+        def unchanged_inputs():
+            changed = link_check.changed_since(commit)
+            if changed is None:
+                return None
+            if any(path == prefix or path.startswith(prefix + "/")
+                   for path in changed for prefix in link_census.CENSUS_INPUTS):
+                return None
+            return changed
+
+        changed = unchanged_inputs()
+        if changed is None:
+            return None
+        positions = set(index["strong"].get(name, ()))
+        positions.update(entry[0] for entry in index["comdat"].get(name, ()))
+        if len(positions) != 1:
+            return None
+        holder = index["objects"][next(iter(positions))]
+        owners = {source for source, entry in index["blockers"].items()
+                  if entry.get("object") == holder}
+        if len(owners) != 1:
+            return None
+        source = next(iter(owners))
+        relative = Path(source)
+        if (not source.startswith(SOURCE_PREFIX) or "\\" in source
+                or ".." in relative.parts or relative.suffix.lower() not in (".c", ".cpp")
+                or changed.tracked is None or source not in changed.tracked):
+            return None
+        path = ROOT / relative
+        if not path.is_file() or not path.resolve().is_relative_to(root):
+            return None
+        stored, digest = inventory[holder]
+        obj = Path(stored)
+        if (not obj.is_file() or obj.name != holder
+                or not obj.resolve().is_relative_to(root)
+                or obj.resolve() != build.obj_path(path).resolve()):
+            return None
+        payload = obj.read_bytes()
+        if hashlib.sha256(payload).hexdigest() != digest:
+            return None
+        # This API only checks normal command/source/header/search-path receipts.
+        # In particular, do not use object_current's fresh-PP receipt fallback.
+        if not build.compile_is_current(path, obj):
+            return None
+        build.validate_coff(payload)
+        sections, symbols = reloc_ledger.parse_coff(payload)
+        definitions = [symbol for symbol in symbols.values()
+                       if symbol["name"] == name and symbol["storage"] == 2
+                       and 0 < symbol["section"] <= len(sections)]
+        if len(definitions) != 1:
+            return None             # undefined and weak symbols do not own data
+        symbol = definitions[0]
+        section = sections[symbol["section"] - 1]
+        if (symbol["type"] != 0 or section["body"] is None
+                or not 0 <= symbol["value"] < section["size"]):
+            return None
+        # Close the bounded read against inputs/objects changing during lookup.
+        if (obj.read_bytes() != payload or not build.compile_is_current(path, obj)
+                or unchanged_inputs() is None):
+            return None
+        return source
+    except (Exception, SystemExit):
+        return None                  # missing/invalid evidence is never an owner
+
+
 def locate_source(name):
     owners = {row["source"] for row in csv.DictReader(io.StringIO(_read(f"{REV}/data_rows.csv")))
               if row.get("name") == name and row.get("status") == "matched" and row.get("source")}
@@ -273,6 +367,8 @@ def locate_source(name):
                 or not (ROOT / source).is_file()):
             return None
         return source
+    if BFME1 and name.startswith("??_7"):
+        return _compiler_vtable_source(name)
     got = subprocess.run(["git", "grep", "-l", "-F", "--", name, SOURCE_PREFIX], cwd=ROOT,
                          capture_output=True, text=True)
     files = got.stdout.split()

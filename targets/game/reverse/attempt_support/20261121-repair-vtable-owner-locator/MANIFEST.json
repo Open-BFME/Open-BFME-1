@@ -1,0 +1,91 @@
+{
+  "production_paths": [
+    "tools/repair_queue.py",
+    "tools/tests/test_repair_queue_vtable_owner.py"
+  ],
+  "production_writes": 0,
+  "compiler_calls": 0,
+  "body_credit": 0,
+  "artifacts": [
+    {
+      "path": "HANDOFF.md",
+      "bytes": 7772,
+      "sha256": "ef18a57980a1a25e66b5ca7573ed2e5ac167761a84eeb1327ebcae2b70692085"
+    },
+    {
+      "path": "PREPARE.json",
+      "bytes": 296,
+      "sha256": "52f271b6a3df2f77acc6f825202622b722069bb9c334d83d968375785238fec0"
+    },
+    {
+      "path": "AST-SCOPE.json",
+      "bytes": 1204,
+      "sha256": "f4821f4f28280d4f8bfc3ab388b2447a2b14e730bd767a03112e8aad98732b1d"
+    },
+    {
+      "path": "FINAL-CURRENCY.json",
+      "bytes": 3343,
+      "sha256": "630e5f348d01ea3f6100324d688ce65b96e46bdb081ee25323d3960d750f70d5"
+    },
+    {
+      "path": "ACTUAL-READONLY-LOCATOR.json",
+      "bytes": 322,
+      "sha256": "0605069ab260be940b753dff8800bbe93c8df71f44f429936007bedc9f6f1c05"
+    },
+    {
+      "path": "repair-owner-locator.patch",
+      "bytes": 16129,
+      "sha256": "3594b4e9cffead19085c4329eaf1ef331f7a8dd59c19007977ea2fd248ab7bed"
+    },
+    {
+      "path": "green.log",
+      "bytes": 678,
+      "sha256": "99f298a6639c0e881c0f9e0f3878759de76d07175ea319309425bad7aeebc781"
+    },
+    {
+      "path": "green-result.json",
+      "bytes": 508,
+      "sha256": "77213c0e25ed2c134d703ff6cb74aa6499248300cc883221bc25c5752c250bc4"
+    },
+    {
+      "path": "red.log",
+      "bytes": 14090,
+      "sha256": "435feef50f2aa632e05bc4ab17728ccac0110ec7dd1cc94c40904176878aaa57"
+    },
+    {
+      "path": "red-result.json",
+      "bytes": 526,
+      "sha256": "b0a723cc6957886d94b761457e5893eebd5a4d4d03ae47186620a5ad00151cae"
+    },
+    {
+      "path": "run_tests.py",
+      "bytes": 1404,
+      "sha256": "14f2de085cc6a5492506e928c30cbdc81558866cf929815e433bdefa41553517"
+    },
+    {
+      "path": "prepare_private.py",
+      "bytes": 5624,
+      "sha256": "b855380d9c0fe5ba1495efca0ff0f8d6ad707f86c5eec62e9c5cb0861a2c8534"
+    },
+    {
+      "path": "tools/repair_queue.py",
+      "bytes": 56081,
+      "sha256": "299f17749eb412ef0d010fe648cb811c66d4aad90a7db7a2d4e7a97e67ebbc63"
+    },
+    {
+      "path": "tools/tests/test_repair_queue_vtable_owner.py",
+      "bytes": 10601,
+      "sha256": "a249524d6b660f45097dda118bf5fde6e0ee3a8393b31151102044b5acf27a66"
+    },
+    {
+      "path": "tools/tests/test_repair_queue.py",
+      "bytes": 20019,
+      "sha256": "fb378b6996c950b38b4ef95c7d40050662a690526cc63224e53ce9a290cef892"
+    },
+    {
+      "path": "baseline/tools/repair_queue.py",
+      "bytes": 51729,
+      "sha256": "44e7b3196d7681eb108beca4b5157c43518c3af82560ba8a8b69d8811120a92a"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "mode": "red",
+  "pytest_exit": 1,
+  "repair_queue": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py",
+  "sha256": "44e7b3196d7681eb108beca4b5157c43518c3af82560ba8a8b69d8811120a92a",
+  "final_loaded_module": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py",
+  "all_reload_routing_frozen": true
+}
