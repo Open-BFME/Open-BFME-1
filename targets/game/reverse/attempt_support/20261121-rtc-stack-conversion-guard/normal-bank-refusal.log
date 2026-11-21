@@ -1,0 +1,69 @@
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/callees.py 0x9f7525 90
+  0x9f7a5b  x1  ?_RTC_StackFailure@@YAXPAXPBD@Z
+
+1 distinct call target(s), 0 unnamed in function ledger
+  Every direct call target above has a ledger name, not necessarily a proven signature.
+  Ledger names, especially generated/thunk placeholders, are not ABI proof. Verify full callee bodies and typed declarations before adding or reusing pins.
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/callees.py 0x9f7502 35
+  0x9f7889  x1  ?_RTC_Failure@@YAXPAXH@Z
+
+1 distinct call target(s), 0 unnamed in function ledger
+  Every direct call target above has a ledger name, not necessarily a proven signature.
+  Ledger names, especially generated/thunk placeholders, are not ABI proof. Verify full callee bodies and typed declarations before adding or reusing pins.
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/add_match.py @_RTC_CheckStackVars@8 0x9f7525 90 game/Libraries/Source/CRT/VS2003/RtcStack.cpp --replace-existing --model codex --notes BFME2 donor1e864 whole native stack.obj pair;exact90B CPP plus essential35B compiler ZF MASM;only90B earns CPP credit;0data;evidence=targets/game/reverse/identity_evidence/20261121-rtc-stack-pair/RTC_STACK_BANK_HANDOFF.md
+add_match: replaced row 135131: 0x009F7525/90B inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/libc.lib
+add_match: with: @_RTC_CheckStackVars@8,,0x009F7525,90,game/Libraries/Source/CRT/VS2003/RtcStack.cpp,matched,BFME2 donor1e864 whole native stack.obj pair;exact90B CPP plus essential35B compiler ZF MASM;only90B earns CPP credit;0data;evidence=targets/game/reverse/identity_evidence/20261121-rtc-stack-pair/RTC_STACK_BANK_HANDOFF.md;model=codex;launched=gpt-6;host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/Libraries/Source/CRT/VS2003/RtcStack.cpp
+Source claims: OK (1 sources, scoped byte-verified)
+Functions: OK 1/1 matched
+  @_RTC_CheckStackVars@8 (game/Libraries/Source/CRT/VS2003/RtcStack.cpp)
+String-ref verify: OK (0 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (0 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (0 reference(s) checked against 17232 recorded symbols)
+Body guard: OK (1 row(s); 0 baselined finding(s); {})
+add_match: verified OK — row is live
+add_match: recorded `landed` in targets/game/reverse/re_attempts.log -- stage it with the ledger
+add_match: claim kept until the row is on origin/master; after your push run `python3 tools/claims.py release --landed`
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/add_match.py __RTC_CheckEsp 0x9f7502 35 game/masm_dumps/RTC_CheckEsp.asm --replace-existing --model codex --notes BFME2 donor1e864 whole native stack.obj pair;exact90B CPP plus essential35B compiler ZF MASM;only90B earns CPP credit;0data;evidence=targets/game/reverse/identity_evidence/20261121-rtc-stack-pair/RTC_STACK_BANK_HANDOFF.md
+add_match: replaced row 138465: 0x009F7502/35B inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/libc.lib
+add_match: with: __RTC_CheckEsp,,0x009F7502,35,game/masm_dumps/RTC_CheckEsp.asm,matched,BFME2 donor1e864 whole native stack.obj pair;exact90B CPP plus essential35B compiler ZF MASM;only90B earns CPP credit;0data;evidence=targets/game/reverse/identity_evidence/20261121-rtc-stack-pair/RTC_STACK_BANK_HANDOFF.md;model=codex;launched=gpt-6;host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/masm_dumps/RTC_CheckEsp.asm
+Source claims: OK (0 sources, scoped byte-verified)
+Functions: OK 1/1 matched
+  __RTC_CheckEsp (game/masm_dumps/RTC_CheckEsp.asm)
+String-ref verify: OK (0 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (0 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (0 reference(s) checked against 17232 recorded symbols)
+Body guard: OK (1 row(s); 0 baselined finding(s); {})
+add_match: verified OK — row is live
+add_match: recorded `landed` in targets/game/reverse/re_attempts.log -- stage it with the ledger
+add_match: claim kept until the row is on origin/master; after your push run `python3 tools/claims.py release --landed`
+RUN cmd.exe /d /c build.cmd game/Libraries/Source/CRT/VS2003/RtcStack.cpp game/masm_dumps/RTC_CheckEsp.asm
+Source claims: OK (1 sources, scoped byte-verified)
+Compile: 0 of 2 TU(s) (deps-cache: 2 current)
+Functions: OK 2/2 matched across 2 source file(s)
+String-ref verify: OK (0 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (0 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (0 reference(s) checked against 17232 recorded symbols)
+Body guard: OK (2 row(s); 0 baselined finding(s); {})
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/find_declared_unmatched.py game/Libraries/Source/CRT/VS2003/RtcStack.cpp
+All defined functions are already matched.
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/pin_consistency.py --check
+Pin consistency: OK (87 multi-pinned symbols of 91179; 0 baselined, 0 new, 0 stale; 358 route= row(s) re-derived from the image)
+CRT import pins: OK (5 guarded pins)
+DIR32 pins: OK (3438 pin(s) agree with targets\game\reverse\dir32_addresses.csv)
+Pin coverage: 90750 of 91179 symbols pin a single address (one-name-one-body never compares them); 112 more candidate-list violation(s) (`--candidates`; `--delta` refuses new ones)
+RUN git add -- game/Libraries/Source/CRT/VS2003/RtcStack.cpp game/masm_dumps/RTC_CheckEsp.asm targets/game/reverse/identity_evidence/20261121-rtc-stack-pair targets/game/reverse/functions.csv targets/game/reverse/re_attempts.log
+RUN git -c core.hooksPath=.githooks commit -m [BFME 2 donor] Recover the RTC stack check with its required compiler helper
+conversion gate: 0x009F7502 (__RTC_CheckEsp) was clean C++ at inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/libc.lib, repointed to game/masm_dumps/RTC_CheckEsp.asm.
+C++ exact never goes backward: retract the row in its own commit if the
+claim is wrong; never swap a dump under a live claim.
+PRE-COMMIT FAILED: conversion direction (see above)
+Traceback (most recent call last):
+  File "W:\OpenBFME\diagnostics\continue-20261120-body-recovery-1656\bank-bfme1-rtc-stack-pair.py", line 58, in <module>
+    run(['git','-c','core.hooksPath=.githooks','commit','-m',
+  File "W:\OpenBFME\diagnostics\continue-20261120-body-recovery-1656\bank-bfme1-rtc-stack-pair.py", line 10, in run
+    subprocess.run(args,check=True)
+  File "C:\Users\micha\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', '-c', 'core.hooksPath=.githooks', 'commit', '-m', '[BFME 2 donor] Recover the RTC stack check with its required compiler helper']' returned non-zero exit status 1.
