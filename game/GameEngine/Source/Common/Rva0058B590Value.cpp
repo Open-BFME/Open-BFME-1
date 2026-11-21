@@ -9,8 +9,16 @@ extern const float g_rva0107533C;
 class Player
 {
 public:
-	float getUpgradeCostChange() const;
 	long  getRva0058B590Value( int value ) const;
+};
+
+// The original call uses ILT0x000225BB ->0x000C9C20, the existing seven-byte
+// float getter at receiver+0x644. Use its owned address-derived call view,
+// as UpgradeTemplate_calcCostToBuild.cpp does; Player's layout is not inferred.
+class Rva000C9C20FloatField
+{
+public:
+	float get() const;
 };
 
 __forceinline long rva0058B590FloatToLong( float value )
@@ -47,7 +55,7 @@ long Rva0058B590Value::get( Player *player ) const
 	Player *valueOwner = player;
 	if( scaled )
 	{
-		float value = valueOwner->getUpgradeCostChange() * 100.0f + g_rva0107533C;
+		float value = ((const Rva000C9C20FloatField *)valueOwner)->get() * 100.0f + g_rva0107533C;
 		return rva0058B590FloatToLong( (float)floor( (double)value ) );
 	}
 
