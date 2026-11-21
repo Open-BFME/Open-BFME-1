@@ -1,0 +1,6 @@
+  0xafd540  x1  ?_com_issue_error@@YGXJ@Z
+      inferred ABI: __stdcall, 1 stack slot(s), result unused at every site (void?) [eax read at 0/27 sites] | ghidra: void __stdcall _com_issue_error(long)
+
+1 distinct call target(s), 0 unnamed in function ledger
+  Every direct call target above has a ledger name, not necessarily a proven signature.
+  Ledger names, especially generated/thunk placeholders, are not ABI proof. Verify full callee bodies and typed declarations before adding or reusing pins.

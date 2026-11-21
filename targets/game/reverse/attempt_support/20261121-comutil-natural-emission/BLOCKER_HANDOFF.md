@@ -1,0 +1,44 @@
+# ComUtil small-family handoff: blocked at authentic emission
+
+**Sicher, scoped result:0 bankable new bodies /0 new C++ bytes.** Three texts144B are byte-exact and their full consumed type/API contracts are independently proven, but neither of the two justified source forms preserves both authentic emission and original COMDAT selection. No production source/header, claims, Git/index, ledger, pin, generator or normal-object cache was changed. No tool/gate change or header-only commit is proposed.
+
+Root's published base was7a52d01ed1 (67 bodies/+9398 C++ bytes/+90 total), as reported. This private package was authorized by claim snapshot R/bfme1/comutil-small-claim-scope.json, three exact RVA keys AFD6B0/15,AFD6C0/111,AFD730/18, leasebec4c8c487c040eeb5c10e059ee1bde0. Claim mutation/release remains Root's job. Official donor remains1e864b34e05f68568db539537b6959d94d104f57, authored Code/Libraries/Source/COM/_com_util.cpp SHA6569f089db61e7e7e95e62d3c2381499787ba66ce5526b143b736f01915bfa15. Original Release\comutil.obj SHAa4e82e871bdfdd14760c6eb72ed544a38eaa9e13083ea342c57d75c0325270f6 is unchanged.
+
+## Proven before source writing
+
+AGENTS reread; native check_csv passed. Native callees was executed on all three complete extents before any body source; the recorded logs show the real _com_issue_error atAFD540 for each, and OLEAUT32!VariantClear at IAT F591B4 in the destructor. The full original COFF/CodeView records, rather than placeholder names or equal bytes, establish cdecl void CheckError(long), thiscall _variant_t(long,unsigned short), and nonvirtual thiscall destructor(), both this_adjust0. Original long/HRESULT primitive8 is normalized only to the public SDK's signed LONG32; pointer/modifier attrs, arguments, access and all other flags are retained.
+
+Original LF_BCLASS explicitly proves _variant_t public base tagVARIANT at0 (access attr3), full size16, no own fields, no vfptr/slots. The new declaration VariantNative.h uses the actual public SDK base, declares exactly the two consumed APIs without default arguments, and has both16B size checks. Complete original/candidate tagVARIANT field summaries agree. Both used API records match original access and full method types; the extra compiler-generated debug-only __vecDelDtor record also matches the original exactly and emits no runtime body. The original32-method surface is not reconstructed or copied. This is not a private flat variant view.
+
+The private compiler trace resolves71 actual local VS2003 SDK headers, including oaidl/oleauto and canonical VariantNative.h, with frozen hashes. No sweep variant declaration, comdef.h or comutil.h implementation header was read or included. Only authored BFME2 C++ bodies and independently examined native binary metadata provide the implementation.
+
+## Exactly two source hypotheses
+
+1. `source/ComUtil.cpp`, preserved as diagnostic ComUtil.cpp: plain authored out-of-line definitions with real SDK field names scode/boolVal/lVal. Under the unchanged COM recipe /O2/G6/Ob2/EHsc/DNDEBUG/MD, all3 functions emit and their full unmasked bytes, raw original bytes and exact relocation names/addends match15+111+18=144B. The +Z7 runtime footprint is identical. Exactly3 code sections and2 undefined symbols exist; no data, EH, extra function, global initialization or lifetime code is emitted. **But all3 sections are NODUPLICATES1, unlike original ANY2.** The full selection audit therefore returns exit1/bankablefalse. No normal admission was attempted.
+2. `source-inline/ComUtil.cpp`: add only ordinary inline at the three definitions, justified by original ANY2 and unchanged flags. No added caller, address-taking, fake global or force-emission device. The compiler succeeds but emits **0 runtime sections /0 definitions /0 requested symbols**. This proves that this narrow file form lacks a natural emission root. It is not a successful conversion.
+
+There was no name/register/flag sweep, forceinline, dllexport, wrapper, pragma, asm, symbol alias, discarded baseline or synthetic address anchor. The source/header are evidence snapshots, **not an integration patch**. Do not copy the3/3 byte proof into a claim of complete footprint or link correctness.
+
+## Actual provider/lifetime and both-order real link controls
+
+The original-member-only focused DLL baseline succeeds under the existing COM SDK/LIB recipe, with unchanged OPT:NOREF/NOICF and no execution. Current normal ComRaise5 and ti_inst3 objects are read-only inputs, verified current and hash-unchanged before/after. Their8 existing bodies are strict unmasked controls, not new work. The generated AFD540 issue-error owner remains unchanged and separately normal-current/strict16B exact; it is never copied/re-homed. The bounded link itself selects original comsupp.obj for that dependency, which is a retained-native scope. It does not establish the selected provider in the game census. The type_info provider is the current authored ti_inst object; CRT operator-delete selection is bounded and differs from the game's mem_ops provider.
+
+Adding the non-inline144B candidate to the same retained original comutil object fails with **LNK2005 on all three names and fatal LNK1169 in both input orders**. The diagnostics identify the first object appropriately; reordering does not solve the conflict. This is a real compiler/linker rejection, not a hypothetical duplicate. No FORCE/INCLUDE, alias, COMDAT edit, library filtering or provider expansion was used to turn it green.
+
+In the passing unchanged baseline, actual MAP/PE proof retains vtMissing16 with all original initial bytes, E1/12 and E2/22 from native-comutil.obj. Their full placed bytes and all five relocation bindings are exact. The complete4B CRT section points to actual E1; E1 registers actual E2, and E2 reaches the same genuine vtMissing storage, VariantClear IAT and issue-error provider. No duplicate storage/lifetime was emitted by either C++ candidate.
+
+## Concrete remaining prerequisite
+
+The3 functions have no direct runtime reference to C61F80 or vtMissing; this was correctly established in the earlier read-only scope. Their scoped source definitions nevertheless cannot currently reproduce the original ANY2/emission together while the original member must remain selected. Their authentic source-emission context must be recovered without inventing anchors before retrying.
+
+The whole-original-file remainder stays blocked: C61F80 is a generated EH-stub owner with no normal current native rehome route;343B conversion and handler/xdata are associated, and both343/352B conversions are NODUPLICATES1. A later whole-member migration also needs one real typed16B vtMissing owner and coherent retained E1/E2/CRT lifetime; current BfmeConv793.cpp still has a pointer-mangled placeholder at EE6010. Do not create a second object, private class, live pin alias or C++0 generator workaround. No verifier change is requested. The direct dependency matrix and future RVAs/touched-source scope remain in the preceding COMUTIL_MINIMAL_READONLY_SCOPE.json package.
+
+Root may record these three candidates as blocked with the concrete original-ANY2/natural-emission prerequisite, citing this evidence. This child performs no re_log or claim write. Revisit only after that real source/ownership context changes; do not repeat the two unchanged forms. No memory/crash/runtime gain or new LINKED coverage is claimed.
+
+## Reproduction and artifacts
+
+Private objects/sources: W:/OpenBFME/Open-BFME-1/build/agent-melee-20261120/comutil-small-20261121. All probes set BFME_OBJSTORE=off, explicit private outputs, at most one compiler process; no Qwen. Private dependency caching is intentionally unavailable outside watched source roots, so these fresh witnesses are not normal-current game-source receipts.
+
+Native-driver order: prepare_original_contract.py; probe_three_bodies.py; audit_three_bodies.py (expected exit1 on selection mismatch); probe_original_inline_provenance.py (compile succeeds, no emitted bodies); link_both_orders.py (baseline0, both candidates1169); prove_retained_lifetime.py. The two private-audit parser assertions corrected during evidence extraction were list-vs-tuple representation and counting the real compiler debug-only vecDelDtor record; neither changed either C++ source hypothesis or relaxed a production checker.
+
+Key evidence: original-contract-before-source.json; normal-three-body-proof.json; full-class-and-procedure-ABI.json; complete-consumed-method-contracts.json; runtime-COMDAT-selections.json; full-small-runtime-footprint.json; resolved-sdk-header-closure.json; ordinary-inline-provenance.json; retained-generated-issue-error-readonly.json; both-orders-real-link.json; retained-native-lifetime-closure.json; three actual native callees logs and both LNK2005/LNK1169 logs. BLOCKER_MANIFEST.json closes all diagnostic hashes.

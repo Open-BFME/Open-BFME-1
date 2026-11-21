@@ -1,0 +1,60 @@
+{
+  "baseline_native_lifetime": [
+    {
+      "name": "_$E1",
+      "provider": "native-comutil.obj",
+      "size": 12,
+      "va": "0x10002100",
+      "all_placed_bytes_and_actual_bindings_exact": true,
+      "relocations": [
+        {
+          "offset": 1,
+          "kind": 6,
+          "target": "_$E2",
+          "selected_va": "0x10002110"
+        },
+        {
+          "offset": 6,
+          "kind": 20,
+          "target": "_atexit",
+          "selected_va": "0x10001f4c"
+        }
+      ]
+    },
+    {
+      "name": "_$E2",
+      "provider": "native-comutil.obj",
+      "size": 22,
+      "va": "0x10002110",
+      "all_placed_bytes_and_actual_bindings_exact": true,
+      "relocations": [
+        {
+          "offset": 1,
+          "kind": 6,
+          "target": "?vtMissing@@3V_variant_t@@A",
+          "selected_va": "0x10004000"
+        },
+        {
+          "offset": 7,
+          "kind": 6,
+          "target": "__imp__VariantClear@4",
+          "selected_va": "0x10003050"
+        },
+        {
+          "offset": 17,
+          "kind": 20,
+          "target": "?_com_issue_error@@YGXJ@Z",
+          "selected_va": "0x10001500"
+        }
+      ]
+    }
+  ],
+  "complete_CRT_section_size": 4,
+  "CRT_pointer_to_actual_E1": "0x10002100",
+  "vtMissing_size": 16,
+  "vtMissing_initial_bytes": "0a000000000000000400028000000000",
+  "native_lifetime_and_global_retained": true,
+  "no_CPP_lifetime_or_global_emitted_by_either_candidate": true,
+  "DLL_executed": false,
+  "scope": "Only genuine successful original baseline is inspected; both C++ out-of-line cases are failed links. Original16B storage and34B callbacks remain original, no credit."
+}

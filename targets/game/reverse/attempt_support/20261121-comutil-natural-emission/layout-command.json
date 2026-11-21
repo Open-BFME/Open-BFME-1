@@ -1,0 +1,22 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-O2",
+    "-G6",
+    "-Ob2",
+    "-EHsc",
+    "-DNDEBUG",
+    "-MD",
+    "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+    "-Fobuild/agent-melee-20261120/comutil-small-20261121/objects/ComUtil-layout.obj",
+    "build/agent-melee-20261120/comutil-small-20261121/source/ComUtil.cpp",
+    "-Z7",
+    "-showIncludes"
+  ],
+  "exit": 0
+}

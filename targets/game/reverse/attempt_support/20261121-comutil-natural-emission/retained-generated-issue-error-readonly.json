@@ -1,0 +1,16 @@
+{
+  "row": {
+    "name": "?_com_issue_error@@YGXJ@Z",
+    "export_rva": "",
+    "target_rva": "0x00AFD540",
+    "target_size": "16",
+    "source": "game/gen_small/named_000.cpp",
+    "status": "matched",
+    "notes": "gen-named;family=com-issue-error;ghidra=_com_issue_error"
+  },
+  "source_sha256": "e543aaaf637f6d3520fa03bc0c9b993337370780bd62e59869c5b33debb04ff8",
+  "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_gen_small_named_000.obj",
+  "normal_object_sha256": "02e744ac719713ecfeec83cb7fa00bb01affe6d396f44700e8f2eac7392d82a2",
+  "normal_current": true,
+  "strict_unmasked_retail_exact": true
+}
