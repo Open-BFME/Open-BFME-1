@@ -1,0 +1,113 @@
+{
+  "scope": "Current isolated intRTTI provider/consumer graph and native two-object COMDAT selection model; no global census/actual linked selection claim",
+  "provider_source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\string\\StringBaseCaseOps.cpp",
+  "provider_source_sha256": "3937bec92294ea863e5809a0fac327b394700d765a212bdcf826cff86ff32df0",
+  "objects": {
+    "ti_inst.obj": {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\ti_inst.obj",
+      "sha256": "553dc5d5819a92bc09cd2634347a660d85c1d23166e15b1fdecc2a7f13f0840f",
+      "name": "??_R0H@8",
+      "size": 11,
+      "raw": "00000000000000002e4800",
+      "relocation": {
+        "offset": 0,
+        "kind": 6,
+        "target": "??_7type_info@@6B@"
+      },
+      "COMDAT_selection": 2,
+      "native_comdat_digest": "7066978f02da",
+      "native_retail_truth_verdict": "retail",
+      "retail_rva": "0xec83b0",
+      "retail_raw": "68581401000000002e4800",
+      "strict_native_equal": true,
+      "inbound_relocations_in_this_object": [
+        {
+          "source_section": 13,
+          "offset": 1,
+          "referent": "??_R0H@8"
+        }
+      ]
+    },
+    "provider-StringBaseCaseOps.obj": {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\provider-StringBaseCaseOps.obj",
+      "sha256": "ae185b44d11cbe8b12a5d4107a5aee3e50c5c42cf3770930106df0ef3576f019",
+      "name": "??_R0H@8",
+      "size": 11,
+      "raw": "00000000000000002e4800",
+      "relocation": {
+        "offset": 0,
+        "kind": 6,
+        "target": "??_7type_info@@6B@"
+      },
+      "COMDAT_selection": 2,
+      "native_comdat_digest": "7066978f02da",
+      "native_retail_truth_verdict": "retail",
+      "retail_rva": "0xec83b0",
+      "retail_raw": "68581401000000002e4800",
+      "strict_native_equal": true,
+      "inbound_relocations_in_this_object": [
+        {
+          "source_section": 5,
+          "offset": 4,
+          "referent": "??_R0H@8"
+        }
+      ]
+    }
+  },
+  "both_native_selection_model_orders": [
+    {
+      "order": [
+        "ti_inst.obj",
+        "provider-StringBaseCaseOps.obj"
+      ],
+      "native_model_selected_provider": [
+        "ti_inst.obj",
+        "7066978f02da"
+      ],
+      "selected_verdict": "retail",
+      "native_keep_rule": "retail",
+      "losers": {
+        "ti_inst.obj": false,
+        "provider-StringBaseCaseOps.obj": false
+      },
+      "scope": "fresh two-object native selection model only; not an executed linker map or global current census"
+    },
+    {
+      "order": [
+        "provider-StringBaseCaseOps.obj",
+        "ti_inst.obj"
+      ],
+      "native_model_selected_provider": [
+        "provider-StringBaseCaseOps.obj",
+        "7066978f02da"
+      ],
+      "selected_verdict": "retail",
+      "native_keep_rule": "retail",
+      "losers": {
+        "provider-StringBaseCaseOps.obj": false,
+        "ti_inst.obj": false
+      },
+      "scope": "fresh two-object native selection model only; not an executed linker map or global current census"
+    }
+  ],
+  "native_catchable_type": {
+    "rva": "0x00E4549C",
+    "size": 28,
+    "raw": "01000000b0832c0100000000ffffffff000000000400000000000000",
+    "descriptor_pointer_offset": 4,
+    "descriptor_va": "0x012C83B0"
+  },
+  "existing_pinned_int_descriptor": {
+    "name": "??_R0H@8",
+    "rva": "0x00EC83B0",
+    "size": 11,
+    "new_coverage_claimed": false
+  },
+  "correction": "No unreferenced descriptor claim: the extra default-argument closure in ti_inst.obj DOES reference the compiler-emitted int descriptor. Actual native catchable metadata and current existing providers also reference this same already pinned native int datum. Source-generated intRTTI is an additional exact SELECT_ANY copy, not a new independent datum or an unimportant isolated extra.",
+  "limits": [
+    "Historical index is an old name/definer lead only, not current provider selection.",
+    "Fresh selected-data model passes either pair order because both real current objects have identical exact native SELECT_ANY data.",
+    "Actual full NOENTRY link remains unproven due independent uuid.lib prerequisite. No linker/provider success is inferred from this model.",
+    "No existing native data identity, pin or owner was changed; no new task credit or native address was invented."
+  ]
+}

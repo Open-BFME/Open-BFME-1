@@ -1,0 +1,19 @@
+# Native MSVC7.1 ti_inst.obj member
+
+Root explicitly assigned `game/Libraries/Source/CRT/VS2003/ti_inst.cpp` as the authored whole original CRT member. The old tu_map displaced type_info.cpp lead is not an EA home-TU mandate; no tu_map change is needed.
+
+Original msvcrt.lib member `build\intel\dll_obj\ti_inst.obj` SHA256 a03833b45869b6b2396e8e44c3ebccc59af1c18d1bae29cb42cd24da8768c0ba independently defines:
+
+- `??0type_info@@AAE@ABV0@@Z`,11B at009F6CA4: constructor sets the real vtableVA01145868 and returns with one-word cleanup. Original CodeView has the same11B procedure, private const-reference argument, unadjusted thiscall receiver.
+- `??_Etype_info@@UAEPAXI@Z`,75B at009F6CAF: original compiler vector deleting destructor. Its callbackDIR32+15 and callREL32+52 name real `??1type_info@@UAE@XZ`; helperREL32+28 is `??_M@YGXPAXIHP6EX0@Z@Z`,009F6D76; both scalar freesREL32+39/+63 reach `??3@YAXPAX@Z`,00881EB0. Original CV proves void* result/unsigned flags/thiscall. Existing75B library row, source conversion only.
+- `??4type_info@@AAEAAV0@ABV0@@Z`,5B at009F6CFA: exact original complete procedure and COFF private assignment. Native raw8BC1C20400 returns this and cleans its const-reference argument. Original CV procedure type_index0 does not prove a full debug prototype; public typeinfo.h provides private type_info& operator=(const type_info&).11/75/5 form the contiguous original member placement. The5B end is followed by INT3 then a distinct six-byte _CxxThrowException import at009F6D00, not an interior body.
+
+The public VS2003 typeinfo.h declaration plus original full CodeView independently prove class12B/vfptr0/private void*+4/private char[1]+8, retained methods/access/slot0. The public header SHA256 is ffbdae1216f3931935db753f35c595f44a92076079756279991746c9cfa468ab. No Microsoft CRT implementation source was read. Authored donor1e864b34, Code/Libraries/Source/CRT/TypeInfoCopyConstructor.cpp SHA2566b4b7ca2440d23abfc80f3dec8faec5b01f299506d899a6ffdc854455c777471 supplies a disclosed compiler-emission lead, not B1 native identity/layout authority.
+
+Actual native FF25 at009F7ED4 reads IATVA0135921C. Both original short CODE import (SHA256 b6ad83a5803a541d3dc3571af881ad7ec9979c160efa08bc6a2103f424690994; x86/NAME/hint16) and actual PE identify MSVCR71.dll!??1type_info@@UAE@XZ. Corrected gen-import metadata retains ?ji_009f7ed4@@YAXXZ, source,6B extent and code. The one genuine CODE-route pin does not supply a second function identity or invented IAT cell.
+
+The source profile /O1/G7/MD/EHsc/GR strictly matches all91B and every relocation. The full native original97B RTTI/vtable physical graph, including anonymous COL prefix, also matches independently. Compiler-generated data have no admitted data rows because unchanged native size grammar cannot name them; private exact data evidence is not normal data coverage. No anonymous-prefix identity or four supporting RTTI pins are added.
+
+The source's default argument/unreachable array-new emit the native vector-delete helper without a new constructor overload, parameter or vslot. Extra compiler closureF/11B calls the copy constructor with existing int descriptorR0H/11B. R0H is already pinnedEC83B0 and used by native CatchableTypeE4549C+4; it is not globally unreferenced. A fresh existing StringBaseCaseOps provider and the new R0H copy are identical SELECT_ANY2/native-retail data. Both local object-order models agree, with no current global selected-provider claim. Extra closure has no native address/body credit; int descriptor has no new coverage.
+
+Original/control and authored/candidate NOENTRY attempts both fail LNK1104 uuid.lib using the unchanged authored ehvecdtr provider. No suppressing flag/library alias is applied. Source/data exactness, normal body admission, linked coverage and runtime are distinct results; no full-game link, startup, memory or runtime improvement is established.

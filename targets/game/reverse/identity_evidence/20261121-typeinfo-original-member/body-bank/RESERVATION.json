@@ -1,0 +1,40 @@
+{
+  "scope": "Whole original MSVC7.1 ti_inst.obj, planning only; no reconstruction or compilation before Root reservation and assignment",
+  "source_proposal": "game/Libraries/Source/CRT/VS2003/TypeInfoCopyConstructor.cpp",
+  "source_status": "Root must explicitly assign this authored CRT path; current tu_map only has the displaced library/type_info.cpp origin lead",
+  "original_member": "build\\intel\\dll_obj\\ti_inst.obj",
+  "original_member_sha256": "a03833b45869b6b2396e8e44c3ebccc59af1c18d1bae29cb42cd24da8768c0ba",
+  "claims": [
+    {"rva": "0x009F6CAF", "kind": "code", "size": 75, "symbol": "??_Etype_info@@UAEPAXI@Z", "status": "existing matched original library body, primary C++ conversion; no new total exact coverage"},
+    {"rva": "0x009F6CA4", "kind": "code", "size": 11, "symbol": "??0type_info@@AAE@ABV0@@Z", "status": "conditional unrowed complete original member body; vtable operand independently binds this class; native admission still required"},
+    {"rva": "0x009F6CFA", "kind": "code", "size": 5, "symbol": "??4type_info@@AAEAAV0@ABV0@@Z", "status": "conditional unrowed complete original member body; exact bytes plus original member placement, no task credit until native boundary and identity admission"},
+    {"rva": "0x009F7ED4", "kind": "dependency", "size": 6, "symbol": "?ji_009f7ed4@@YAXXZ", "true_import": "??1type_info@@UAE@XZ", "slot_va": "0x0135921C", "status": "retain existing generated name/source/range/code; only normal same-source metadata repair and independently proven true-name route pin, no C++ replacement"},
+    {"rva": "0x00D45864", "kind": "compiler_data_prefix", "size": 4, "symbol": null, "status": "anonymous COL-pointer prefix in the original 8B vtable section; no invented address-named global or separate identity", "value_va": "0x011DED08"},
+    {"rva": "0x00D45868", "kind": "compiler_data", "size": 4, "symbol": "??_7type_info@@6B@", "status": "existing symbols.csv identity retained; symbol is at +4 of the same original 8B section", "value_va": "0x00DF6CAF"},
+    {"rva": "0x00DDED08", "kind": "compiler_data", "size": 20, "symbol": "??_R4type_info@@6B@", "status": "native COL reached by original relocation graph"},
+    {"rva": "0x00EDBD90", "kind": "compiler_data", "size": 24, "symbol": "??_R0?AVtype_info@@@8", "status": "existing symbols.csv TypeDescriptor identity retained"},
+    {"rva": "0x00DDECF8", "kind": "compiler_data", "size": 16, "symbol": "??_R3type_info@@8", "status": "native CHD reached by original relocation graph"},
+    {"rva": "0x00DDECF0", "kind": "compiler_data", "size": 5, "symbol": "??_R2type_info@@8", "status": "original complete BaseClassArray extent includes final zero byte"},
+    {"rva": "0x00DDECD8", "kind": "compiler_data", "size": 24, "symbol": "??_R1A@?0A@A@type_info@@8", "status": "native BaseClassDescriptor reached by original relocation graph"}
+  ],
+  "data_total_original_physical_bytes": 97,
+  "existing_unchanged_providers": [
+    {"rva": "0x009F6D76", "size": 96, "symbol": "??_M@YGXPAXIHP6EX0@Z@Z", "source": "game/Libraries/Source/CRT/VS2003/ehvecdtr.cpp"},
+    {"rva": "0x00881EB0", "size": 21, "symbol": "??3@YAXPAX@Z", "source": "game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp"}
+  ],
+  "donor": {
+    "root_reported_revision": "1e864b34",
+    "source": "inputs/reference/open-bfme-2/Code/Libraries/Source/CRT/TypeInfoCopyConstructor.cpp",
+    "source_sha256": "6b4b7ca2440d23abfc80f3dec8faec5b01f299506d899a6ffdc854455c777471",
+    "evidence": "inputs/reference/open-bfme-2/reverse/attempt_support/typeinfo-vector-delete-20261024.md",
+    "evidence_sha256": "583c760a8c8ee3c8d60608c9b93873643c41fb481dcb1586506a733410eb397f",
+    "public_header": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/typeinfo.h",
+    "public_header_sha256": "ffbdae1216f3931935db753f35c595f44a92076079756279991746c9cfa468ab",
+    "limits": "B2 emitter source covers 11B/75B only. Original B1 assignment5B, full RTTI, closure/primitive-int RTTI extras and current B1 compiler/provider contracts still require independent whole-member checks. No Microsoft CRT implementation source was read."
+  },
+  "eligibility": "Native eligibility.retired false, latest verdict absent, attempt count0 on the three requested code RVAs. The 75B original library row is not an ordinary dump-tier claim; Root explicit CRT-source assignment required. Neither unrowed body overlaps a matched current row. No unrowed credit is pre-approved.",
+  "claim_freshness": "Local native claim mirror read only, no live holder seen at planning time. Root must refresh and reserve authoritative remote scopes.",
+  "evidence_files": ["SCOPE.json", "ROUTE-NATIVE.json", "ORIGINAL-ti_inst.obj"],
+  "no_production_mutation": true,
+  "no_compiler_invoked": true
+}

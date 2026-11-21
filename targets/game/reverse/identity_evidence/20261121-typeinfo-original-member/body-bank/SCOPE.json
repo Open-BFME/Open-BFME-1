@@ -1,0 +1,335 @@
+{
+  "scope": "read-only native library whole-member planning; no C++ candidate or compiler invoked",
+  "library": "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+  "member": "build\\intel\\dll_obj\\ti_inst.obj",
+  "member_sha256": "a03833b45869b6b2396e8e44c3ebccc59af1c18d1bae29cb42cd24da8768c0ba",
+  "functions": [
+    {
+      "name": "??0type_info@@AAE@ABV0@@Z",
+      "extent": 11,
+      "raw": "8bc1c70000000000c20400",
+      "relocs": [
+        {
+          "offset": 4,
+          "kind": 6,
+          "target": "??_7type_info@@6B@",
+          "target_section": 9,
+          "target_value": 4
+        }
+      ]
+    },
+    {
+      "name": "??_Etype_info@@UAEPAXI@Z",
+      "extent": 75,
+      "raw": "538a5c2408f6c302568bf174245768000000008d7efcff376a0c56e800000000f6c301740757e800000000598bc75feb158bcee800000000f6c301740756e800000000598bc65e5bc20400",
+      "relocs": [
+        {
+          "offset": 15,
+          "kind": 6,
+          "target": "??1type_info@@UAE@XZ",
+          "target_section": 0,
+          "target_value": 0
+        },
+        {
+          "offset": 28,
+          "kind": 20,
+          "target": "??_M@YGXPAXIHP6EX0@Z@Z",
+          "target_section": 0,
+          "target_value": 0
+        },
+        {
+          "offset": 39,
+          "kind": 20,
+          "target": "??3@YAXPAX@Z",
+          "target_section": 0,
+          "target_value": 0
+        },
+        {
+          "offset": 52,
+          "kind": 20,
+          "target": "??1type_info@@UAE@XZ",
+          "target_section": 0,
+          "target_value": 0
+        },
+        {
+          "offset": 63,
+          "kind": 20,
+          "target": "??3@YAXPAX@Z",
+          "target_section": 0,
+          "target_value": 0
+        }
+      ]
+    },
+    {
+      "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+      "extent": 5,
+      "raw": "8bc1c20400",
+      "relocs": []
+    }
+  ],
+  "native": {
+    "0x9f6ca4": {
+      "bytes": "8bc1c70068581401c20400",
+      "current_rows": [],
+      "native_retired": false,
+      "latest_verdict": null,
+      "attempt_count": 0,
+      "local_live_claim": null
+    },
+    "0x9f6caf": {
+      "bytes": "538a5c2408f6c302568bf174245768d47edf008d7efcff376a0c56e8a7000000f6c301740757e8d6b1e8ff598bc75feb158bcee8ed110000f6c301740756e8beb1e8ff598bc65e5bc20400",
+      "current_rows": [
+        {
+          "name": "??_Etype_info@@UAEPAXI@Z",
+          "export_rva": "",
+          "target_rva": "0x009F6CAF",
+          "target_size": "75",
+          "source": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/msvcrt.lib",
+          "status": "matched",
+          "notes": "vendored=msvc71-crt;member=build\\intel\\dll_obj\\ti_inst.obj"
+        }
+      ],
+      "native_retired": false,
+      "latest_verdict": null,
+      "attempt_count": 0,
+      "local_live_claim": null
+    },
+    "0x9f6cfa": {
+      "bytes": "8bc1c20400",
+      "current_rows": [],
+      "native_retired": false,
+      "latest_verdict": null,
+      "attempt_count": 0,
+      "local_live_claim": null
+    },
+    "0x9f7ed4": {
+      "bytes": "ff251c923501",
+      "current_rows": [
+        {
+          "name": "?ji_009f7ed4@@YAXXZ",
+          "export_rva": "",
+          "target_rva": "0x009F7ED4",
+          "target_size": "6",
+          "source": "game/gen_small/imports_000.cpp",
+          "status": "matched",
+          "notes": "gen-import;slot=0x0135921C;target=~type_info"
+        }
+      ],
+      "native_retired": false,
+      "latest_verdict": null,
+      "attempt_count": 0,
+      "local_live_claim": null
+    }
+  },
+  "native_data": {
+    "vtable_va_from_constructor_operand": "0x1145868",
+    "vtable_first8": "af6cdf0000000000",
+    "word_before_vtable": "0x11ded08",
+    "first_entry_target_rva": "0x9f6caf",
+    "original_named_data_graph": [
+      {
+        "name": "??_7type_info@@6B@",
+        "symbol_va": "0x1145868",
+        "symbol_rva": "0xd45868",
+        "section_base_va": "0x1145864",
+        "symbol_offset_in_section": 4,
+        "original_section_extent": 8,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "0000000000000000",
+        "retail_raw": "08ed1d01af6cdf00"
+      },
+      {
+        "name": "??_R4type_info@@6B@",
+        "symbol_va": "0x11ded08",
+        "symbol_rva": "0xdded08",
+        "section_base_va": "0x11ded08",
+        "symbol_offset_in_section": 0,
+        "original_section_extent": 20,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "0000000000000000000000000000000000000000",
+        "retail_raw": "00000000000000000000000090bd2d01f8ec1d01"
+      },
+      {
+        "name": "??_R0?AVtype_info@@@8",
+        "symbol_va": "0x12dbd90",
+        "symbol_rva": "0xedbd90",
+        "section_base_va": "0x12dbd90",
+        "symbol_offset_in_section": 0,
+        "original_section_extent": 24,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "00000000000000002e3f4156747970655f696e666f404000",
+        "retail_raw": "68581401000000002e3f4156747970655f696e666f404000"
+      },
+      {
+        "name": "??_R3type_info@@8",
+        "symbol_va": "0x11decf8",
+        "symbol_rva": "0xddecf8",
+        "section_base_va": "0x11decf8",
+        "symbol_offset_in_section": 0,
+        "original_section_extent": 16,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "00000000000000000100000000000000",
+        "retail_raw": "000000000000000001000000f0ec1d01"
+      },
+      {
+        "name": "??_R2type_info@@8",
+        "symbol_va": "0x11decf0",
+        "symbol_rva": "0xddecf0",
+        "section_base_va": "0x11decf0",
+        "symbol_offset_in_section": 0,
+        "original_section_extent": 5,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "0000000000",
+        "retail_raw": "d8ec1d0100"
+      },
+      {
+        "name": "??_R1A@?0A@A@type_info@@8",
+        "symbol_va": "0x11decd8",
+        "symbol_rva": "0xddecd8",
+        "section_base_va": "0x11decd8",
+        "symbol_offset_in_section": 0,
+        "original_section_extent": 24,
+        "all_nonrelocation_bytes_equal": true,
+        "original_raw": "000000000000000000000000ffffffff0000000000000000",
+        "retail_raw": "90bd2d010000000000000000ffffffff0000000000000000"
+      }
+    ]
+  },
+  "candidate_member_placements": {
+    "??0type_info@@AAE@ABV0@@Z": {
+      "candidate_rva": "0x9f6ca4",
+      "size": 11,
+      "all_nonrelocation_bytes_equal": true
+    },
+    "??_Etype_info@@UAEPAXI@Z": {
+      "candidate_rva": "0x9f6caf",
+      "size": 75,
+      "all_nonrelocation_bytes_equal": true
+    },
+    "??4type_info@@AAEAAV0@ABV0@@Z": {
+      "candidate_rva": "0x9f6cfa",
+      "size": 5,
+      "all_nonrelocation_bytes_equal": true
+    }
+  },
+  "data_definitions": [
+    {
+      "symbol": {
+        "index": 18,
+        "name": "??_R1A@?0A@A@type_info@@8",
+        "value": 0,
+        "section": 4,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".rdata$r",
+        "size": 24,
+        "raw": "000000000000000000000000ffffffff0000000000000000"
+      }
+    },
+    {
+      "symbol": {
+        "index": 21,
+        "name": "??_R2type_info@@8",
+        "value": 0,
+        "section": 5,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".rdata$r",
+        "size": 5,
+        "raw": "0000000000"
+      }
+    },
+    {
+      "symbol": {
+        "index": 24,
+        "name": "??_R3type_info@@8",
+        "value": 0,
+        "section": 6,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".rdata$r",
+        "size": 16,
+        "raw": "00000000000000000100000000000000"
+      }
+    },
+    {
+      "symbol": {
+        "index": 27,
+        "name": "??_R0?AVtype_info@@@8",
+        "value": 0,
+        "section": 7,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".data",
+        "size": 24,
+        "raw": "00000000000000002e3f4156747970655f696e666f404000"
+      }
+    },
+    {
+      "symbol": {
+        "index": 30,
+        "name": "??_R4type_info@@6B@",
+        "value": 0,
+        "section": 8,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".rdata$r",
+        "size": 20,
+        "raw": "0000000000000000000000000000000000000000"
+      }
+    },
+    {
+      "symbol": {
+        "index": 33,
+        "name": "??_7type_info@@6B@",
+        "value": 4,
+        "section": 9,
+        "type": 0,
+        "storage": 2
+      },
+      "section": {
+        "name": ".rdata",
+        "size": 8,
+        "raw": "0000000000000000"
+      }
+    }
+  ],
+  "current_named_data_owners": [
+    {
+      "ledger": "symbols.csv",
+      "row": {
+        "name": "??_7type_info@@6B@",
+        "address": "0x00D45868",
+        "notes": "type_info vftable: first dword of every retail RTTI type descriptor (e.g. INIException TD VA 0x012A6FD4 holds VA 0x01145868)"
+      }
+    },
+    {
+      "ledger": "symbols.csv",
+      "row": {
+        "name": "??_R0?AVtype_info@@@8",
+        "address": "0x00EDBD90",
+        "notes": "type_info RTTI type descriptor: .?AVtype_info@@ at VA 0x012DBD90 holds type_info vftable VA 0x01145868"
+      }
+    }
+  ],
+  "overlapping_current_rows_for_unrowed_candidates": [],
+  "undefined": [
+    "??3@YAXPAX@Z",
+    "??_M@YGXPAXIHP6EX0@Z@Z",
+    "??1type_info@@UAE@XZ"
+  ],
+  "eligibility_note": "75B is current library asm, not an ordinary dump-tier item; explicitly assigned CRT-library reconciliation is required.11/5 candidates are unrowed and not pre-approved new tasks. Native retired/coverage checks are reported, never replaced.",
+  "claims_note": "Read-only existing local native claim mirror only; no fetch/claim/renew/release. Root must perform the authoritative fresh reservation.",
+  "proper_cpp_destination_proposal": "game/Libraries/Source/CRT/VS2003/TypeInfoCopyConstructor.cpp; requires Root explicit CRT-source assignment, tu_map currently only has displaced library/type_info.cpp lead",
+  "current_library_source_kind": "asm"
+}

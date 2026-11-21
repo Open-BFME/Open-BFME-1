@@ -1,0 +1,165 @@
+{
+  "snapshot-copy-first": {
+    "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\snapshot-copy-first.cpp",
+    "source_sha256": "45604a510fc0acb0a839ac5e260db302110ac19b279ab012351f5880757e1900",
+    "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\snapshot-copy-first.obj",
+    "object_sha256": "9e036f7f8e62719fabaf4bac124296e07963e4dca841154663935f6196668293",
+    "all_retained_code_and_data_raw_flags_extents_named_relocations_identical": true,
+    "retained_definitions": 10,
+    "undefined": [
+      "??1type_info@@UAE@XZ",
+      "??3@YAXPAX@Z",
+      "??_M@YGXPAXIHP6EX0@Z@Z"
+    ]
+  },
+  "diagnostic-types": {
+    "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\diagnostic-types.cpp",
+    "source_sha256": "72c5e2862c1720b0fe933b668f54fb2b44ca4d60cb1b9911e14a679446bbcfac",
+    "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\diagnostic-types.obj",
+    "object_sha256": "4401474ee7c7d7419fcf51564cb52843072fe13f52f6afbeb324f6744621dec4",
+    "all_retained_code_and_data_raw_flags_extents_named_relocations_identical": true,
+    "retained_definitions": 11,
+    "undefined": [
+      "??1type_info@@UAE@XZ",
+      "??3@YAXPAX@Z",
+      "??_M@YGXPAXIHP6EX0@Z@Z"
+    ],
+    "classes": {
+      "type_info": {
+        "fwd": false,
+        "key": "class",
+        "size": 12,
+        "bases": [],
+        "fields": [
+          [
+            4,
+            "_m_data",
+            "void*",
+            4
+          ],
+          [
+            8,
+            "_m_d_name",
+            "char[1]",
+            1
+          ]
+        ],
+        "statics": [],
+        "methods": [
+          "__copy_ctor_closure",
+          "__dflt_ctor_closure",
+          "__local_vftable_ctor_closure",
+          "__vecDelDtor",
+          "before",
+          "name",
+          "operator!=",
+          "operator==",
+          "raw_name",
+          "type_info",
+          "~type_info"
+        ],
+        "virtual": [
+          "__vecDelDtor",
+          "~type_info"
+        ],
+        "vslots": {
+          "0": "__vecDelDtor(uint)"
+        },
+        "vfptr": true
+      }
+    },
+    "native_type_records": {
+      "0x1000": {
+        "kind": "0x1504",
+        "raw": "000080000000000000000000000000000000747970655f696e666f00"
+      },
+      "0x1001": {
+        "kind": "0x1001",
+        "raw": "001000000100f2f1"
+      },
+      "0x1002": {
+        "kind": "0x1002",
+        "raw": "011000002a000000"
+      },
+      "0x1003": {
+        "kind": "0xa",
+        "raw": "010050f1"
+      },
+      "0x1004": {
+        "kind": "0x1002",
+        "raw": "031000000a000000"
+      },
+      "0x1005": {
+        "kind": "0x1201",
+        "raw": "00000000"
+      },
+      "0x1006": {
+        "kind": "0x1002",
+        "raw": "001000000a040000"
+      },
+      "0x1007": {
+        "kind": "0x1009",
+        "raw": "0300000000100000061000000b0000000510000000000000"
+      },
+      "0x1008": {
+        "kind": "0x1201",
+        "raw": "0100000002100000"
+      },
+      "0x1009": {
+        "kind": "0x1002",
+        "raw": "011000000a040000"
+      },
+      "0x100a": {
+        "kind": "0x1009",
+        "raw": "7400000000100000091000000b0001000810000000000000"
+      },
+      "0x100b": {
+        "kind": "0x1001",
+        "raw": "700000000100f2f1"
+      },
+      "0x100c": {
+        "kind": "0x1002",
+        "raw": "0b1000000a000000"
+      },
+      "0x100d": {
+        "kind": "0x1009",
+        "raw": "0c10000000100000091000000b0000000510000000000000"
+      },
+      "0x100e": {
+        "kind": "0x1503",
+        "raw": "7000000011000000010000f1"
+      },
+      "0x100f": {
+        "kind": "0x1009",
+        "raw": "0300000000100000061000000b0001000810000000000000"
+      },
+      "0x1010": {
+        "kind": "0x1009",
+        "raw": "0300000000100000061000000b0001000810000000000000"
+      },
+      "0x1011": {
+        "kind": "0x1201",
+        "raw": "0100000075000000"
+      },
+      "0x1012": {
+        "kind": "0x1009",
+        "raw": "0304000000100000061000000b0001001110000000000000"
+      },
+      "0x1013": {
+        "kind": "0x1203",
+        "raw": "09140000041000001115130007100000000000007e747970655f696e666f00f1111503000a1000006f70657261746f723d3d00f1111503000a1000006f70657261746f72213d00f1111503000a1000006265666f726500f1111503000d1000006e616d6500f3f2f1111503000d1000007261775f6e616d6500f3f2f10d1501000304000004005f6d5f6461746100f2f10d1501000e10000008005f6d5f645f6e616d6500111501000f100000747970655f696e666f00f2f111150301071000005f5f64666c745f63746f725f636c6f737572650011150301071000005f5f6c6f63616c5f76667461626c655f63746f725f636c6f7375726500f3f2f111150301101000005f5f636f70795f63746f725f636c6f73757265001115130112100000000000005f5f76656344656c44746f7200f3f2f1"
+      },
+      "0x1014": {
+        "kind": "0xa",
+        "raw": "010050f1"
+      },
+      "0x1015": {
+        "kind": "0x1504",
+        "raw": "0e0006001310000000000000141000000c00747970655f696e666f00"
+      }
+    },
+    "layout_matches_native": true,
+    "diagnostic_only_extra_flag": "/Z7; complete retained code/data footprint independently verified unchanged; not a production profile change",
+    "original_assignment_cv_limit": "Original assignment procedure has type_index0; no complete original CV prototype is claimed. Public header declaration and original decorated COFF provide its limited signature evidence."
+  }
+}

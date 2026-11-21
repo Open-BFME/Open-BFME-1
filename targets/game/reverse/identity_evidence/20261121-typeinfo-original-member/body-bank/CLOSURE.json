@@ -1,0 +1,84 @@
+{
+  "scope": "Private, non-executed NOENTRY link controls. Native original versus authored full ti_inst; both use fresh unchanged actual authored ehvecdtr and mem_ops providers, original CRT libraries, and labelled link-only non-import callback-state fixture.",
+  "closure_passed": false,
+  "no_FORCE_NODEFAULTLIB_alias_DEF_or_custom_import_libraries": true,
+  "actual_provider_inputs": {
+    "game/Libraries/Source/CRT/VS2003/ehvecdtr.cpp": {
+      "sha256": "a207ee4d801dbc1624319565dfebb1f02542ea85c24bec945d42211c8f7e3999",
+      "object_sha256": "73b4a1fcc16de2b1a0f9afd81d743b90e934283d23667a6154a193710f6e7478"
+    },
+    "game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp": {
+      "sha256": "09ff0ab24c70dd6520a8990f2feb8e721d90c20bbc5e4201acc1c47a7d9b9c69",
+      "object_sha256": "180947e45fc916c0ab08b974cad52d733afbba8d265d011bfeb984e2c4423f56"
+    }
+  },
+  "original_library_hashes": {
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib": "e888617fbd2e153645b92122deab1c6ec437905431243c43aa7310164c0e7779",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\oldnames.lib": "ace6ebf2ef319936a64b7e1a27f508a2c03c4838908f12e790b6c198845cc6cb"
+  },
+  "link_only_nonimport_fixture": {
+    "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\LINK_ONLY_memory_callback_state.cpp",
+    "sha256": "8588687732e11ee34d4048959aa09da31c1f8f9bff493654628e89279cccd284",
+    "data_only": true,
+    "names": [
+      "___gameMemFreePtr",
+      "___gameMemAllocPtr"
+    ],
+    "limit": "Null initializers are fixture values, not original game state or an actual game-data owner reconciliation. No code, __imp_ cell or native import is replaced."
+  },
+  "links": {
+    "original-control": {
+      "exit_code": 1104,
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "/NOLOGO",
+        "/MACHINE:X86",
+        "/DLL",
+        "/NOENTRY",
+        "/INCREMENTAL:NO",
+        "/OPT:NOICF",
+        "/OPT:NOREF",
+        "/OUT:W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\original-control.dll",
+        "/MAP:W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\original-control.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\ORIGINAL-ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\provider-ehvecdtr.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\provider-mem-ops.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\LINK_ONLY_memory_callback_state.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\oldnames.lib"
+      ],
+      "log": "LINK : fatal error LNK1104: cannot open file 'uuid.lib'\n",
+      "runtime_executed": false,
+      "passed": false
+    },
+    "authored-candidate": {
+      "exit_code": 1104,
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "/NOLOGO",
+        "/MACHINE:X86",
+        "/DLL",
+        "/NOENTRY",
+        "/INCREMENTAL:NO",
+        "/OPT:NOICF",
+        "/OPT:NOREF",
+        "/OUT:W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\authored-candidate.dll",
+        "/MAP:W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\authored-candidate.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\provider-ehvecdtr.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\provider-mem-ops.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-20261120\\ti-inst\\LINK_ONLY_memory_callback_state.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\oldnames.lib"
+      ],
+      "log": "LINK : fatal error LNK1104: cannot open file 'uuid.lib'\n",
+      "runtime_executed": false,
+      "passed": false
+    }
+  },
+  "limits": [
+    "Not a full-program, production source-closure, final-layout, startup or runtime proof.",
+    "The Root normal import metadata and route-pin admission remain separate.",
+    "This test verifies actual selected function providers and linked RTTI graph; two memory callback globals are explicitly fixture-only."
+  ]
+}
