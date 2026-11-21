@@ -1,7 +1,7 @@
 // cl: /O1 /G6 /Zc:wchar_t /Oi /Ob1 /MD /GX- /GS- /Iinputs/toolchains/vs2003/native/Vc7/PlatformSDK/Include
 // Whole native B1 libc st_obj/error.obj; authored BFME2 donor147fd3.
 // B1 native COFF/CV/retail establish original identities, extents, data and
-// callback/SEH contracts independently; this remains a private candidate.
+// callback/SEH contracts independently; normal byte gates verify this source.
 // Shared external int[4] ErrorLevels is defined exactly once here; callback
 // state and all userapi routines belong to their complete separate owner.
 // TIB is only the consumed prefix exposing its evidenced pointer at+20h.

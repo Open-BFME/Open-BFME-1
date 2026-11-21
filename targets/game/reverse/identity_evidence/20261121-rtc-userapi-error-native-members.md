@@ -2,6 +2,31 @@
 
 Status: **private verified candidate; root admission and individual commits pending**. Root holds all28 primary code/data RVAs under lease `06faa64bed18434498f8fd2f5fa75d39`. Rating: **sicher** for the bounded original-object/code/type/data/import/control-link observations below. No game runtime, full-image linking, crash or memory improvement is claimed.
 
+## Completed ordinary root follow-up
+
+All17 new procedures were subsequently admitted through the ordinary native
+writers and banked as individual new-body commits, ending at bd3275fed0.
+The three previously unrowed procedures passed native eligibility, admission
+and byte checks. The existing6B callback getter was correctly rehomed and typed
+with zero new-body credit; the other57 GlobalDwordGetters rows remain exact.
+The first Error snapshot used the independently verified direct7B-helper
+expression; the next10B-body commit restored the complete original helper
+relationship. No markers, substitute bodies or partial-index gates were used.
+
+The sole actual external ErrorLevels int[4] owner was admitted normally as16B.
+All other private storage and generated scope tables remain private. The old
+unreferenced opaque callback DIR32 record remains untouched; it was not a data
+owner and is not reported as retired.
+
+The final combined normal build verifies188/188 rows across10 sources,34
+literals plus one empty-string reference and200 DIR32 references. This covers
+both whole files, all57 retained getter rows, existing RTC/PDB dependencies,
+the five complete EH-vector procedures and both real typed import providers.
+Native original stack.obj consumers CheckEsp and CheckStackVars also pass2/2.
+The only subsequent Error source edit removes its stale private-candidate
+comment; normal commit gates reverify the complete13-row reporting source.
+No whole-image link or runtime result is inferred from these source checks.
+
 ## Ready files and ownership
 
 - `RtcGetErrorFunc.cpp.txt` -> `game/Libraries/Source/CRT/VS2003/RtcGetErrorFunc.cpp`; SHA256 `a7384598f475ea0b3e04d73363a35e60a9be104c0dfc0c814ba8d687606e6274`.
