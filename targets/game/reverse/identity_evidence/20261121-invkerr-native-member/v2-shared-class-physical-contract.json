@@ -1,0 +1,102 @@
+{
+  "original": {
+    "fwd": false,
+    "key": "class",
+    "size": 16,
+    "bases": [],
+    "fields": [
+      [
+        4,
+        "m_hresult",
+        "p8",
+        0
+      ],
+      [
+        8,
+        "m_perrinfo",
+        "IErrorInfo*",
+        4
+      ],
+      [
+        12,
+        "m_pszMsg",
+        "char*",
+        4
+      ]
+    ],
+    "statics": [],
+    "methods": [
+      "Description",
+      "Error",
+      "ErrorInfo",
+      "ErrorMessage",
+      "GUID",
+      "HRESULTToWCode",
+      "HelpContext",
+      "HelpFile",
+      "Source",
+      "WCode",
+      "WCodeToHRESULT",
+      "__vecDelDtor",
+      "_com_error",
+      "~_com_error"
+    ],
+    "virtual": [
+      "__vecDelDtor",
+      "~_com_error"
+    ],
+    "vslots": {
+      "0": "__vecDelDtor(uint)"
+    },
+    "vfptr": true
+  },
+  "candidate": {
+    "fwd": false,
+    "key": "class",
+    "size": 16,
+    "bases": [],
+    "fields": [
+      [
+        4,
+        "result",
+        "long",
+        4
+      ],
+      [
+        8,
+        "info",
+        "IErrorInfo*",
+        4
+      ],
+      [
+        12,
+        "message",
+        "char*",
+        4
+      ]
+    ],
+    "statics": [],
+    "methods": [
+      "WCodeToHRESULT",
+      "__vecDelDtor",
+      "_com_error",
+      "~_com_error"
+    ],
+    "virtual": [
+      "__vecDelDtor",
+      "~_com_error"
+    ],
+    "vslots": {
+      "0": "__vecDelDtor(uint)"
+    },
+    "vfptr": true
+  },
+  "size16_base0_vfptr0_fields4_8_12_and_single_slot0": true,
+  "logical_field_name_roles": [
+    "m_hresult -> result",
+    "m_perrinfo -> info",
+    "m_pszMsg -> message"
+  ],
+  "first_field_width": "native original ctor/mangled long and SDK HRESULT=LONG=long prove4; candidate CV explicitly4",
+  "slot_note": "Header virtual destructor occupies slot0; original compiler-produced deleting destructor owns same sole slot. No vtable or constructor emitted by this source."
+}

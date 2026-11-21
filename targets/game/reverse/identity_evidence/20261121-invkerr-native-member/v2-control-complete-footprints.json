@@ -1,0 +1,18 @@
+[
+  {
+    "source": "game/Libraries/Source/COM/ComInvoke.cpp",
+    "private_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComInvoke-control.obj",
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+    "complete_code_data_undefined_footprint_equal": true,
+    "private_object_sha256": "8c030729f0d68125b606163e91c3785d12c78954fbf3158ce529d24beff99226",
+    "normal_object_unchanged_sha256": "9d5b9d75081ed10a792f517864a2e07a296df2a93e1e3f23d3739937a554b05b"
+  },
+  {
+    "source": "game/Libraries/Source/COM/ComSupp.cpp",
+    "private_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComSupp-control.obj",
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+    "complete_code_data_undefined_footprint_equal": true,
+    "private_object_sha256": "2425f8777b62dd4b096ef278fd2a8188f529e0a299b7e34744d1c160e8289fa6",
+    "normal_object_unchanged_sha256": "bc90609448e63e717cfd6099d32b44ce511ce8baf696de91ae2bd146ba80f690"
+  }
+]

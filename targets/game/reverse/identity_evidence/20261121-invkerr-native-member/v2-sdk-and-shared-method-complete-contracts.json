@@ -1,0 +1,3220 @@
+[
+  {
+    "class": "_com_error",
+    "original_method_records": 15,
+    "candidate_method_records": 5,
+    "complete_used_method_attrs_slots_types_equal": true,
+    "original": [
+      {
+        "name": "_com_error",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "class",
+                  "_com_error"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1162"
+      },
+      {
+        "name": "_com_error",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          3,
+          [
+            [
+              "primitive",
+              "long32/HRESULT",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "IErrorInfo"
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x30",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1164"
+      },
+      {
+        "name": "~_com_error",
+        "attr": 19,
+        "access": 3,
+        "property": 4,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1166"
+      },
+      {
+        "name": "Error",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1168"
+      },
+      {
+        "name": "WCode",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x21",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1169"
+      },
+      {
+        "name": "ErrorInfo",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "pointer",
+            "0xa",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116a"
+      },
+      {
+        "name": "Description",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "class_ref",
+            "class",
+            "_bstr_t"
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116b"
+      },
+      {
+        "name": "HelpContext",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x22",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116c"
+      },
+      {
+        "name": "HelpFile",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "class_ref",
+            "class",
+            "_bstr_t"
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116b"
+      },
+      {
+        "name": "Source",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "class_ref",
+            "class",
+            "_bstr_t"
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116b"
+      },
+      {
+        "name": "GUID",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "class_ref",
+            "struct",
+            "_GUID"
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x116d"
+      },
+      {
+        "name": "ErrorMessage",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "pointer",
+            "0xa",
+            [
+              "modifier",
+              "0x1",
+              [
+                "primitive",
+                "primitive:0x70",
+                0
+              ]
+            ]
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "modifier",
+              "0x1",
+              [
+                "class_ref",
+                "class",
+                "_com_error"
+              ]
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1170"
+      },
+      {
+        "name": "WCodeToHRESULT",
+        "attr": 11,
+        "access": 3,
+        "property": 2,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "primitive",
+            "primitive:0x0",
+            0
+          ],
+          0,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1172"
+      },
+      {
+        "name": "HRESULTToWCode",
+        "attr": 11,
+        "access": 3,
+        "property": 2,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x21",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "primitive",
+            "primitive:0x0",
+            0
+          ],
+          0,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "long32/HRESULT",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1174"
+      },
+      {
+        "name": "__vecDelDtor",
+        "attr": 275,
+        "access": 3,
+        "property": 4,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            4
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1178"
+      }
+    ],
+    "candidate": [
+      {
+        "name": "_com_error",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "class",
+                  "_com_error"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1081"
+      },
+      {
+        "name": "_com_error",
+        "attr": 3,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          3,
+          [
+            [
+              "primitive",
+              "long32/HRESULT",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "IErrorInfo"
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x30",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1083"
+      },
+      {
+        "name": "~_com_error",
+        "attr": 19,
+        "access": 3,
+        "property": 4,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1085"
+      },
+      {
+        "name": "WCodeToHRESULT",
+        "attr": 11,
+        "access": 3,
+        "property": 2,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "primitive",
+            "primitive:0x0",
+            0
+          ],
+          0,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1087"
+      },
+      {
+        "name": "__vecDelDtor",
+        "attr": 275,
+        "access": 3,
+        "property": 4,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            4
+          ],
+          [
+            "class_ref",
+            "class",
+            "_com_error"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "class",
+              "_com_error"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1089"
+      }
+    ]
+  },
+  {
+    "class": "IUnknown",
+    "original_method_records": 5,
+    "candidate_method_records": 5,
+    "complete_used_method_attrs_slots_types_equal": true,
+    "original": [
+      {
+        "name": "QueryInterface",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          2,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x3",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x113b"
+      },
+      {
+        "name": "AddRef",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 4,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x22",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x113c"
+      },
+      {
+        "name": "Release",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 8,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x22",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x113c"
+      },
+      {
+        "name": "IUnknown",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IUnknown"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1140"
+      },
+      {
+        "name": "IUnknown",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1141"
+      }
+    ],
+    "candidate": [
+      {
+        "name": "QueryInterface",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 0,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          2,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x3",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x125e"
+      },
+      {
+        "name": "AddRef",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 4,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x22",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x125f"
+      },
+      {
+        "name": "Release",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 8,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x22",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          7,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x125f"
+      },
+      {
+        "name": "IUnknown",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IUnknown"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1263"
+      },
+      {
+        "name": "IUnknown",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IUnknown"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IUnknown"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1264"
+      }
+    ]
+  },
+  {
+    "class": "IErrorInfo",
+    "original_method_records": 7,
+    "candidate_method_records": 7,
+    "complete_used_method_attrs_slots_types_equal": true,
+    "original": [
+      {
+        "name": "GetGUID",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "_GUID"
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x114d"
+      },
+      {
+        "name": "GetSource",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x114f"
+      },
+      {
+        "name": "GetDescription",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x114f"
+      },
+      {
+        "name": "GetHelpFile",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x114f"
+      },
+      {
+        "name": "GetHelpContext",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 28,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x22",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1151"
+      },
+      {
+        "name": "IErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IErrorInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1155"
+      },
+      {
+        "name": "IErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1156"
+      }
+    ],
+    "candidate": [
+      {
+        "name": "GetGUID",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "_GUID"
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x104f"
+      },
+      {
+        "name": "GetSource",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1051"
+      },
+      {
+        "name": "GetDescription",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1051"
+      },
+      {
+        "name": "GetHelpFile",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1051"
+      },
+      {
+        "name": "GetHelpContext",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 28,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x22",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1053"
+      },
+      {
+        "name": "IErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IErrorInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1057"
+      },
+      {
+        "name": "IErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1059"
+      }
+    ]
+  },
+  {
+    "class": "ICreateErrorInfo",
+    "original_method_records": 7,
+    "candidate_method_records": 7,
+    "complete_used_method_attrs_slots_types_equal": true,
+    "original": [
+      {
+        "name": "SetGUID",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1188"
+      },
+      {
+        "name": "SetSource",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x118a"
+      },
+      {
+        "name": "SetDescription",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x118a"
+      },
+      {
+        "name": "SetHelpFile",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x118a"
+      },
+      {
+        "name": "SetHelpContext",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 28,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x118c"
+      },
+      {
+        "name": "ICreateErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "ICreateErrorInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1190"
+      },
+      {
+        "name": "ICreateErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1191"
+      }
+    ],
+    "candidate": [
+      {
+        "name": "SetGUID",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x106a"
+      },
+      {
+        "name": "SetSource",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x106c"
+      },
+      {
+        "name": "SetDescription",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x106c"
+      },
+      {
+        "name": "SetHelpFile",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x21",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x106c"
+      },
+      {
+        "name": "SetHelpContext",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 28,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x106e"
+      },
+      {
+        "name": "ICreateErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "ICreateErrorInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1072"
+      },
+      {
+        "name": "ICreateErrorInfo",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "ICreateErrorInfo"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "ICreateErrorInfo"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1073"
+      }
+    ]
+  },
+  {
+    "class": "IDispatch",
+    "original_method_records": 6,
+    "candidate_method_records": 6,
+    "complete_used_method_attrs_slots_types_equal": true,
+    "original": [
+      {
+        "name": "GetTypeInfoCount",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x111c"
+      },
+      {
+        "name": "GetTypeInfo",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          3,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "pointer",
+                "0xa",
+                [
+                  "class_ref",
+                  "struct",
+                  "ITypeInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1121"
+      },
+      {
+        "name": "GetIDsOfNames",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          5,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "primitive",
+              "long32/HRESULT",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1126"
+      },
+      {
+        "name": "Invoke",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          8,
+          [
+            [
+              "primitive",
+              "long32/HRESULT",
+              0
+            ],
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x21",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagDISPPARAMS"
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagVARIANT"
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagEXCEPINFO"
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x75",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x112c"
+      },
+      {
+        "name": "IDispatch",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IDispatch"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x1130"
+      },
+      {
+        "name": "IDispatch",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x1131"
+      }
+    ],
+    "candidate": [
+      {
+        "name": "GetTypeInfoCount",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 12,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          1,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x10bb"
+      },
+      {
+        "name": "GetTypeInfo",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 16,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          3,
+          [
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "pointer",
+                "0xa",
+                [
+                  "class_ref",
+                  "struct",
+                  "ITypeInfo"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x10c0"
+      },
+      {
+        "name": "GetIDsOfNames",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 20,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          5,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "primitive",
+                "primitive:0x21",
+                4
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x75",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "primitive",
+              "long32/HRESULT",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x10c5"
+      },
+      {
+        "name": "Invoke",
+        "attr": 27,
+        "access": 3,
+        "property": 6,
+        "slot_byte_offset": 24,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          7,
+          0,
+          8,
+          [
+            [
+              "primitive",
+              "long32/HRESULT",
+              0
+            ],
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "_GUID"
+                ]
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x22",
+              0
+            ],
+            [
+              "primitive",
+              "primitive:0x21",
+              0
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagDISPPARAMS"
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagVARIANT"
+              ]
+            ],
+            [
+              "pointer",
+              "0xa",
+              [
+                "class_ref",
+                "struct",
+                "tagEXCEPINFO"
+              ]
+            ],
+            [
+              "primitive",
+              "primitive:0x75",
+              4
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x10ca"
+      },
+      {
+        "name": "IDispatch",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          11,
+          0,
+          1,
+          [
+            [
+              "pointer",
+              "0x2a",
+              [
+                "modifier",
+                "0x1",
+                [
+                  "class_ref",
+                  "struct",
+                  "IDispatch"
+                ]
+              ]
+            ]
+          ],
+          0
+        ],
+        "type_index": "0x10ce"
+      },
+      {
+        "name": "IDispatch",
+        "attr": 259,
+        "access": 3,
+        "property": 0,
+        "slot_byte_offset": null,
+        "type": [
+          "member_function",
+          [
+            "primitive",
+            "primitive:0x3",
+            0
+          ],
+          [
+            "class_ref",
+            "struct",
+            "IDispatch"
+          ],
+          [
+            "pointer",
+            "0x40a",
+            [
+              "class_ref",
+              "struct",
+              "IDispatch"
+            ]
+          ],
+          11,
+          0,
+          0,
+          [],
+          0
+        ],
+        "type_index": "0x10cf"
+      }
+    ]
+  }
+]

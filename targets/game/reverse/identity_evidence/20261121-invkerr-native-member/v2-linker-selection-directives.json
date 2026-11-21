@@ -1,0 +1,77 @@
+{
+  "original_comdat": [
+    {
+      "section": ".rdata",
+      "definitions": [
+        "__GUID_00020400_0000_0000_c000_000000000046"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".rdata",
+      "definitions": [
+        "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".text",
+      "definitions": [
+        "?WCodeToHRESULT@_com_error@@SAJG@Z"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".text",
+      "definitions": [
+        "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z"
+      ],
+      "selection": 1,
+      "associated_section": 0
+    }
+  ],
+  "candidate_comdat": [
+    {
+      "section": ".rdata",
+      "definitions": [
+        "__GUID_00020400_0000_0000_c000_000000000046"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".rdata",
+      "definitions": [
+        "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".text",
+      "definitions": [
+        "?WCodeToHRESULT@_com_error@@SAJG@Z"
+      ],
+      "selection": 2,
+      "associated_section": 0
+    },
+    {
+      "section": ".text",
+      "definitions": [
+        "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z"
+      ],
+      "selection": 1,
+      "associated_section": 0
+    }
+  ],
+  "same": true,
+  "original_directives": [
+    "/DEFAULTLIB:\"uuid.lib\" /DEFAULTLIB:\"uuid.lib\" /DEFAULTLIB:\"comsupp.lib\" /DEFAULTLIB:\"user32.lib\" /DEFAULTLIB:\"ole32.lib\" /DEFAULTLIB:\"oleaut32.lib\" "
+  ],
+  "candidate_directives": [
+    "/DEFAULTLIB:\"uuid.lib\" /DEFAULTLIB:\"uuid.lib\" /DEFAULTLIB:\"MSVCRT\" /DEFAULTLIB:\"OLDNAMES\" "
+  ]
+}

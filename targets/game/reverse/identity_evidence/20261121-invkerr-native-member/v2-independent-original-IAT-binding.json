@@ -1,0 +1,28 @@
+[
+  {
+    "source_section": 6,
+    "site_rva": "0xafe2ab",
+    "offset": 43,
+    "kind": 6,
+    "symbol": "__imp__CreateErrorInfo@4",
+    "target_va": "0x1359198",
+    "target_section": 0,
+    "original_addend": 0,
+    "iat_rva": "0xf59198",
+    "dll": "oleaut32.dll",
+    "PE_import": "CreateErrorInfo"
+  },
+  {
+    "source_section": 6,
+    "site_rva": "0xafe330",
+    "offset": 176,
+    "kind": 6,
+    "symbol": "__imp__SysFreeString@4",
+    "target_va": "0x13591a8",
+    "target_section": 0,
+    "original_addend": 0,
+    "iat_rva": "0xf591a8",
+    "dll": "oleaut32.dll",
+    "PE_import": "SysFreeString"
+  }
+]
