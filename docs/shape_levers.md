@@ -4456,3 +4456,10 @@ objects. Eighteen emitted small helper definitions were independently compared
 under their own emitted names against the current evidenced native providers.
 No new pins, aliases, compiler flags, imported helper names or gate changes.
 Evidence: targets/game/reverse/identity_evidence/20261120-0017cae0-native-attack-update.md.
+
+
+## Inline provenance includes COMDAT selection (2026-11-21)
+
+With VS2003, matching body bytes alone can miss original inline provenance. The Invkerr26-byte mapper first matched raw bytes out of line but emitted NODUPLICATES1 instead of native ANY2; ordinary inline preserved the complete body and restored ANY2. ComRaise uses ordinary inline under its evidenced /O2 /G6 /Ob2 /EHsc /GR context: real calls, throw metadata and the virtual table naturally emit constructor54, copy50, destructor38 and scalar58 with the original ANY2 selections. No forced-inline or address emitter is needed. Its whole251-byte code and150-byte metadata graph also retain the native weak E-to-strong-G record and prefixed LARGEST6 vtable.
+
+Verified sources: game/Libraries/Source/COM/ComInvokeError.cpp (7f066038212c) and ComRaise.cpp. Full identity and native selection evidence: targets/game/reverse/identity_evidence/20261121-comraise-native-member.md and the corresponding Invkerr evidence. This is measured for these members and profiles, not a general substitute for comparing every COMDAT.
