@@ -1,0 +1,32 @@
+[
+  {
+    "original_row": {
+      "name": "?Rva00C6E380Register@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00C6E380",
+      "target_size": "12",
+      "source": "game/GameEngine/Source/Common/StaticInit/Rva00C6GapCallbacks.cpp",
+      "status": "matched",
+      "notes": "CRT initializer slot 00EA5E28; int3 before and after; registers matched callback 00C71600 through atexit 009F6E26; owning TU identity unknown;model=gpt-6-astra"
+    },
+    "candidate_notes": "object-symbol=_$E1",
+    "candidate_source": "build/agent-melee-20261120/comutil-whole-member-20261121/source/ComUtil.cpp",
+    "strict_native_compile_function_unmasked_equal": true,
+    "no_new_body_credit": true
+  },
+  {
+    "original_row": {
+      "name": "?bfmeGoDXE@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00C71600",
+      "target_size": "22",
+      "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+      "status": "matched",
+      "notes": ""
+    },
+    "candidate_notes": "object-symbol=_$E2",
+    "candidate_source": "build/agent-melee-20261120/comutil-whole-member-20261121/source/ComUtil.cpp",
+    "strict_native_compile_function_unmasked_equal": true,
+    "no_new_body_credit": true
+  }
+]

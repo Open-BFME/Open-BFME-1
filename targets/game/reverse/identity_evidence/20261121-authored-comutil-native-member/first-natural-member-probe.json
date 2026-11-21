@@ -1,0 +1,28 @@
+{
+  "claim_sha256": "d50f6e1de4235b4c33dd556bc4f1e9df340b5156bdf3197bb33ac8a97464f6d3",
+  "lease": "479767436f1f4a68927b7919d4a0fd1a",
+  "source_sha256": "af7e5ebb2b54e063e9897ebe6385938f340d786deb4b8e44a0839f20352b8381",
+  "canonical_header_sha256": "1c717d4963dd5f0aeb5d7dcb5379ac97f4434d907cca2c3b8076a1550daee860",
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "donor_source_sha256": "6569f089db61e7e7e95e62d3c2381499787ba66ce5526b143b736f01915bfa15",
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-O2",
+    "-G6",
+    "-Ob2",
+    "-EHsc",
+    "-DNDEBUG",
+    "-MD",
+    "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+    "-Fobuild/agent-melee-20261120/comutil-whole-member-20261121/objects/ComUtil.obj",
+    "build/agent-melee-20261120/comutil-whole-member-20261121/source/ComUtil.cpp"
+  ],
+  "compile_ok": true,
+  "exit": 0,
+  "no_source_sweep": true
+}

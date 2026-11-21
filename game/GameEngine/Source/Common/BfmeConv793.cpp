@@ -58,21 +58,6 @@ bool BfmeThingDXD::bfmeGoDXD()
 	return AIL_3D_sample_status(h) != 4;
 }
 
-extern "C" __declspec(dllimport) HRESULT __stdcall VariantClear(VARIANT *what);
-// ?g_bfmeArgDXE@@3UtagVARIANT@@A: reference recorded ?g_bfmeArgDXE@@3PAEA
-extern unsigned char *g_bfmeArgDXE;
-// comutil.h declares `void __stdcall _com_issue_error(HRESULT)`; the sweep
-// comutil.h shim does not, so the declaration is repeated here under its exact
-// defining spelling (?_com_issue_error@@YGXJ@Z).
-extern void __stdcall _com_issue_error(long);
-
-void bfmeGoDXE()
-{
-	int r = VariantClear((VARIANT *)&g_bfmeArgDXE);
-	if (r < 0)
-		_com_issue_error((long)r);
-}
-
 extern "C" __declspec(dllimport) DWORD WINAPI GetFileType(HANDLE a);
 
 bool bfmeGoDXF(void *a)

@@ -1,0 +1,54 @@
+{
+  "native_public_wcslen_route_verdict": null,
+  "exact_native_route_note": "route=MSVCR71.dll!wcslen",
+  "owner_EH_cases": [
+    {
+      "label": "new-first",
+      "owner_handler_name_and_selected_object_exact": true,
+      "native_eh_verdict": null,
+      "actual_verified_references": [
+        {
+          "linked_RVA": "0x1eba",
+          "retail_RVA": "0x9f6dd6",
+          "proof": "genuine6B CODE import, same actual PE DLL/export",
+          "import_key": "('msvcr71.dll', '__CxxFrameHandler')",
+          "retained_native_provider_not_new_CPP_closure": true
+        },
+        {
+          "linked_RVA": "0x10cc",
+          "retail_RVA": "0xafd96c",
+          "proof": "actual selected ComUtil section, full previously proven placed bytes/relocations",
+          "candidate_section": 5,
+          "data": false
+        }
+      ],
+      "negative_unverified_frame_provider_control": "handler target unverified"
+    },
+    {
+      "label": "providers-first",
+      "owner_handler_name_and_selected_object_exact": true,
+      "native_eh_verdict": null,
+      "actual_verified_references": [
+        {
+          "linked_RVA": "0x1fec",
+          "retail_RVA": "0x9f6dd6",
+          "proof": "genuine6B CODE import, same actual PE DLL/export",
+          "import_key": "('msvcr71.dll', '__CxxFrameHandler')",
+          "retained_native_provider_not_new_CPP_closure": true
+        },
+        {
+          "linked_RVA": "0x1a9c",
+          "retail_RVA": "0xafd96c",
+          "proof": "actual selected ComUtil section, full previously proven placed bytes/relocations",
+          "candidate_section": 5,
+          "data": false
+        }
+      ],
+      "negative_unverified_frame_provider_control": "handler target unverified"
+    }
+  ],
+  "native_functions_only_no_link_cycle_CLI_or_shared_measurement": true,
+  "no_tool_change_or_reference_always_true_stub": true,
+  "scope_limit": "Native EH structural predicate has genuinely checked providers and catch-code references in actual private DLL images. This is not Measure source-closure/shifted whole-image proof; retained generated/import leaves remain0 recovery credit.",
+  "production_claims_ledger_pins_modified": false
+}

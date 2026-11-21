@@ -1,0 +1,32 @@
+{
+  "created_utc": "2026-11-21T07:22:14.944772+00:00",
+  "read_only": true,
+  "compiler_count": 0,
+  "task_credit": 0,
+  "files": {
+    "CONSUMER-AND-DEPENDENCY-SCOPE.json": {
+      "sha256": "82f688c73dfbd64e3ccdef048888983ab9ecbc7bf791db11299e83dc2c678ddc",
+      "bytes": 12643
+    },
+    "CURRENT-ROWS-AND-HISTORY.json": {
+      "sha256": "cc18fc3d3d437d33f1c8b3d6227bd2aca3ed34c275d4ea14d0e3651f885b07ae",
+      "bytes": 46526
+    },
+    "FRESH-ILT-IDENTITY.json": {
+      "sha256": "d6032a9011ff00ec77820947eb9caa906da9929c59581b91396b968e159a4066",
+      "bytes": 1204
+    },
+    "HANDOFF.md": {
+      "sha256": "20053b9df93561540c2b04bf023e5b00f4eefda829e6bf759ec5568f3f243d3a",
+      "bytes": 6193
+    },
+    "NATIVE-BOUNDARY-ABI.json": {
+      "sha256": "8f3517c00a778071d9aa0f9323aab58799984f9f80392bc82c832e9bccc66602",
+      "bytes": 3156
+    },
+    "PROPOSED-MINIMAL-SCOPE.json": {
+      "sha256": "5120ab1a9756aaba3cac395cb181c7c162b056776d878bba21e7445dbcf3c470",
+      "bytes": 14606
+    }
+  }
+}

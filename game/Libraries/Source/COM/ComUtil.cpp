@@ -1,0 +1,123 @@
+// cl: /O2 /G6 /Ob2 /EHsc /DNDEBUG /MD /Iinputs/toolchains/vs2003/Vc7/PlatformSDK/Include
+// [BFME 2 donor] Complete authored ComUtil algorithms from official1e864b34.
+// Original B1 comutil.obj proves the five839B bodies and real16B vtMissing
+// object/lifetime. The canonical public SDK base replaces the donor flat view.
+// Ordinary inline follows original ANY2; the actual native global below is
+// the only lifetime/emission root. Existing generated EH anchors are untouched.
+#include "VariantNative.h"
+#pragma intrinsic(_alloca)
+
+// B1 nativeAFD6C0/111B RET8. Identity and ABI come from the existing
+// compiler-mangled _variant_t(long,unsigned short) comsupp.lib row and its
+// exact Release/comutil.obj member, independently reproduced from retail.
+// No Microsoft implementation source was used. This is an authored recovery.
+// Native tag checks accept VT_I4=3,VT_ERROR=10,VT_BOOL=11; invalid input calls
+// the existing stdcall _com_issue_error(E_INVALIDARG) providerAFD540.
+// The 16B automation value has its tag at0 and value union at8. Reserved
+// words and unused union bytes are intentionally untouched, as in retail.
+void __stdcall _com_issue_error(long);
+
+// B1 AFD6B0: signed HRESULT check,15B.
+namespace _com_util {
+ inline void CheckError(long hr) {if(hr<0)_com_issue_error(hr);}
+}
+
+// B1 AFD730: VariantClear followed by the HRESULT check,18B.
+
+
+// B1 AFD8B0 includes the C++ catch funclet,343B.
+
+
+
+
+extern "C" unsigned int __cdecl wcslen(const unsigned short*);
+
+void * __cdecl operator new(unsigned int);
+
+void __cdecl operator delete(void*);
+
+namespace _com_util {
+ char *__stdcall ConvertBSTRToString(unsigned short *source) {
+  if(!source)return 0;
+  int inputLength=wcslen(source)+1;
+  int outputLength=WideCharToMultiByte(0,0,source,inputLength,0,0,0,0);
+  if(!outputLength) {
+   _com_issue_error((long)GetLastError()<=0 ? (long)GetLastError() : (long)((GetLastError()&0xffff)|0x80070000));
+   return 0;
+  }
+  char *output;
+  try {output=(char*)::operator new(outputLength);}catch(...) {output=0;}
+  if(!output) {_com_issue_error((long)0x8007000e);return 0;}
+  if(!WideCharToMultiByte(0,0,source,inputLength,output,outputLength,0,0)) {
+   ::operator delete(output);output=0;
+   _com_issue_error((long)GetLastError()<=0 ? (long)GetLastError() : (long)((GetLastError()&0xffff)|0x80070000));
+  }
+  return output;
+ }
+}
+
+// B1 AFD750:328B conversion plus24B same-section SEH scope =352B.
+
+
+
+
+
+
+extern "C" void *__cdecl malloc(unsigned int);
+
+// B1 directly calls true CRT free9F6C3A; no additional veneer or provider.
+extern "C" void __cdecl free(void *);
+
+extern "C" void *__cdecl _alloca(unsigned int);
+
+namespace _com_util {
+ unsigned short *__stdcall ConvertStringToBSTR(const char *source) {
+  if(!source)return 0;
+  int inputLength=lstrlen(source)+1;
+  int outputLength=MultiByteToWideChar(0,0,source,inputLength,0,0);
+  if(!outputLength) {
+   _com_issue_error((long)GetLastError()<=0 ? (long)GetLastError() : (long)((GetLastError()&0xffff)|0x80070000));
+   return 0;
+  }
+  unsigned short *temporary;
+  __try {
+   temporary=(unsigned short*)(outputLength<4096 ? _alloca(outputLength*2) : malloc(outputLength*2));
+  } __except(1) {temporary=0;}
+  if(!temporary) {_com_issue_error((long)0x8007000e);return 0;}
+  if(!MultiByteToWideChar(0,0,source,inputLength,temporary,outputLength)) {
+   if(outputLength>=4096)free(temporary);
+   _com_issue_error((long)GetLastError()<=0 ? (long)GetLastError() : (long)((GetLastError()&0xffff)|0x80070000));
+   return 0;
+  }
+  unsigned short *result=SysAllocString(temporary);
+  if(outputLength>=4096)free(temporary);
+  if(!result)_com_issue_error((long)0x8007000e);
+  return result;
+ }
+
+}
+
+// ---- from Code/Libraries/Source/COM/ComUtil.cpp
+
+inline _variant_t::_variant_t(long value,unsigned short tag)
+{
+ if(tag!=3 && tag!=10 && tag!=11) {
+  _com_issue_error((long)0x80070057);
+ } else if(tag==10) {
+  scode=value;
+  vt=10;
+ } else if(tag==11) {
+  vt=11;
+  boolVal=value ? (short)-1 : (short)0;
+ } else {
+  vt=3;
+  lVal=value;
+ }
+}
+
+inline _variant_t::~_variant_t() {_com_util::CheckError(VariantClear(this));}
+
+// Original external symbol ?vtMissing@@3V_variant_t@@A, RVA00EE6010/16.
+// Its native VT_ERROR/SCODE value and E1/E2/CRT chain independently identify
+// this real object; this is not an artificial emitter or second storage alias.
+_variant_t vtMissing((long)0x80020004,(unsigned short)10);

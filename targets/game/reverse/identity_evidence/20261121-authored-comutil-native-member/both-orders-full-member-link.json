@@ -1,0 +1,2280 @@
+{
+  "cases": [
+    {
+      "label": "new-first",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "-nologo",
+        "-dll",
+        "-noentry",
+        "-machine:x86",
+        "-opt:noref",
+        "-opt:noicf",
+        "-incremental:no",
+        "-verbose:lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+        "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\link\\new-first.dll",
+        "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\link\\new-first.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\objects\\ComUtil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+        "msvcrt.lib",
+        "kernel32.lib",
+        "ole32.lib",
+        "oleaut32.lib",
+        "user32.lib",
+        "uuid.lib"
+      ],
+      "exit": 0,
+      "DLL_executed": false,
+      "no_recipe_library_expansion": true,
+      "selected_new_main_and_global": {
+        "?CheckError@_com_util@@YAXJ@Z": {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "va": 268439552,
+          "owner": "ComUtil.obj"
+        },
+        "??0_variant_t@@QAE@JG@Z": {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "va": 268440272,
+          "owner": "ComUtil.obj"
+        },
+        "??1_variant_t@@QAE@XZ": {
+          "name": "??1_variant_t@@QAE@XZ",
+          "va": 268440384,
+          "owner": "ComUtil.obj"
+        },
+        "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z": {
+          "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "va": 268439920,
+          "owner": "ComUtil.obj"
+        },
+        "?ConvertBSTRToString@_com_util@@YGPADPAG@Z": {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268439568,
+          "owner": "ComUtil.obj"
+        },
+        "?vtMissing@@3V_variant_t@@A": {
+          "name": "?vtMissing@@3V_variant_t@@A",
+          "va": 268451840,
+          "owner": "ComUtil.obj"
+        }
+      },
+      "selected_lifetime": {
+        "_$E1": {
+          "name": "_$E1",
+          "va": 268443888,
+          "owner": "ComUtil.obj"
+        },
+        "_$E2": {
+          "name": "_$E2",
+          "va": 268443904,
+          "owner": "ComUtil.obj"
+        }
+      },
+      "selected_local_handler": {
+        "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+        "va": 268443872,
+        "owner": "ComUtil.obj"
+      },
+      "all12_placed_sections": [
+        {
+          "candidate_section": 3,
+          "original_section": 3,
+          "retail_rva": "0xafd6b0",
+          "actual_link_va": "0x10001000",
+          "name": ".text",
+          "size": 15,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 11,
+          "original_section": 6,
+          "retail_rva": "0xafd6c0",
+          "actual_link_va": "0x100012d0",
+          "name": ".text",
+          "size": 111,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 13,
+          "original_section": 9,
+          "retail_rva": "0xafd730",
+          "actual_link_va": "0x10001340",
+          "name": ".text",
+          "size": 18,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 9,
+          "original_section": 12,
+          "retail_rva": "0xafd750",
+          "actual_link_va": "0x10001170",
+          "name": ".text",
+          "size": 352,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 5,
+          "original_section": 17,
+          "retail_rva": "0xafd8b0",
+          "actual_link_va": "0x10001010",
+          "name": ".text",
+          "size": 343,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 17,
+          "original_section": 24,
+          "retail_rva": "0xee6010",
+          "actual_link_va": "0x10004000",
+          "name": ".data",
+          "size": 16,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 15,
+          "original_section": 21,
+          "retail_rva": "0xc6e380",
+          "actual_link_va": "0x100020f0",
+          "name": ".text$yc",
+          "size": 12,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 19,
+          "original_section": 26,
+          "retail_rva": "0xc71600",
+          "actual_link_va": "0x10002100",
+          "name": ".text$yd",
+          "size": 22,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 6,
+          "original_section": 19,
+          "retail_rva": "0xc61f80",
+          "actual_link_va": "0x100020e0",
+          "name": ".text$x",
+          "size": 10,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 16,
+          "original_section": 23,
+          "retail_rva": "0xea5e28",
+          "actual_link_va": "0x10005000",
+          "name": ".CRT$XCU",
+          "size": 4,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 10,
+          "original_section": 14,
+          "retail_rva": "0xdbc348",
+          "actual_link_va": "0x10003078",
+          "name": ".rdata",
+          "size": 12,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 7,
+          "original_section": 20,
+          "retail_rva": "0xe51808",
+          "actual_link_va": "0x100031e8",
+          "name": ".xdata$x",
+          "size": 80,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        }
+      ],
+      "actual_external_providers": [
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "actual_va": "0x10003054",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_handler3",
+          "actual_va": "0x10001ecc",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__imp__lstrlenA@4",
+          "actual_va": "0x1000300c",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "actual_va": "0x10003010",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__alloca_probe",
+          "actual_va": "0x10001ee0",
+          "provider": "msvcrt:chkstk.obj",
+          "kind": 20
+        },
+        {
+          "name": "_malloc",
+          "actual_va": "0x10001ec6",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "actual_va": "0x10003010",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "_free",
+          "actual_va": "0x10001ec0",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__SysAllocString@4",
+          "actual_va": "0x10003050",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "_free",
+          "actual_va": "0x10001ec0",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "_wcslen",
+          "actual_va": "0x10001eb4",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "actual_va": "0x10003000",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "??2@YAPAXI@Z",
+          "actual_va": "0x10001eae",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "actual_va": "0x10003000",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "??3@YAXPAX@Z",
+          "actual_va": "0x10001ea8",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "_atexit",
+          "actual_va": "0x10001f43",
+          "provider": "msvcrt:atonexit.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "actual_va": "0x10003054",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "___CxxFrameHandler",
+          "actual_va": "0x10001eba",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        }
+      ],
+      "all_original_comutil_member_absent": true,
+      "all_old_vtMissing_or_lifetime_providers_absent": true,
+      "typed_vtMissing16_and_CRT_E1_pointer_exact": true,
+      "actual_type_info_provider": {
+        "name": "??_7type_info@@6B@",
+        "va": 268447952,
+        "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+      },
+      "retained_issue_error_provider": {
+        "name": "?_com_issue_error@@YGXJ@Z",
+        "va": 268442944,
+        "owner": "comsupp:comsupp.obj"
+      },
+      "retained_original_comsupp_scope": true,
+      "game_mem_ops_new_delete_not_claimed_selected": {
+        "new": {
+          "name": "??2@YAPAXI@Z",
+          "va": 268443310,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        "delete": {
+          "name": "??3@YAXPAX@Z",
+          "va": 268443304,
+          "owner": "msvcrt:MSVCR71.dll"
+        }
+      },
+      "DLL_sha256": "ed21d9b38ad64c0c98d26cb84df8fe496956a4976ae06f33646e7678cdb50279",
+      "map_sha256": "e97bfa609ff22199f5f8315e352a339936d5874678f88581f1b648563531883b",
+      "_all_map_symbols": [
+        {
+          "name": "__except_list",
+          "va": 0,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "___safe_se_handler_count",
+          "va": 2,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__ldused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__fltused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "va": 268439552,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268439568,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "va": 268439920,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "va": 268440272,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "??1_variant_t@@QAE@XZ",
+          "va": 268440384,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z",
+          "va": 268440416,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268442000,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268442080,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268442128,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?WCodeToHRESULT@_com_error@@SAJG@Z",
+          "va": 268442240,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z",
+          "va": 268442272,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          "va": 268442528,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          "va": 268442592,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@ABV0@@Z",
+          "va": 268442656,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??1_com_error@@UAE@XZ",
+          "va": 268442720,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_G_com_error@@UAEPAXI@Z",
+          "va": 268442768,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_E_com_error@@UAEPAXI@Z",
+          "va": 268442768,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0type_info@@AAE@ABV0@@Z",
+          "va": 268442826,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Etype_info@@UAEPAXI@Z",
+          "va": 268442837,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Ftype_info@@QAEXXZ",
+          "va": 268442912,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+          "va": 268442923,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?_set_com_error_handler@@YGXP6GXJPAUIErrorInfo@@@Z@Z",
+          "va": 268442928,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "va": 268442944,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_errorex@@YGXJPAUIUnknown@@ABU_GUID@@@Z",
+          "va": 268442960,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268443072,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268443152,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268443200,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "??3@YAXPAX@Z",
+          "va": 268443304,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "??2@YAPAXI@Z",
+          "va": 268443310,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_wcslen",
+          "va": 268443316,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "___CxxFrameHandler",
+          "va": 268443322,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_free",
+          "va": 268443328,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_malloc",
+          "va": 268443334,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__except_handler3",
+          "va": 268443340,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__alloca_probe",
+          "va": 268443360,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "__chkstk",
+          "va": 268443360,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "__onexit",
+          "va": 268443421,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "_atexit",
+          "va": 268443459,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "__CxxThrowException@8",
+          "va": 268443478,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443502,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??_M@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443596,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??1type_info@@UAE@XZ",
+          "va": 268443692,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "___dllonexit",
+          "va": 268443698,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?terminate@@YAXXZ",
+          "va": 268443704,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__SEH_prolog",
+          "va": 268443712,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "__SEH_epilog",
+          "va": 268443771,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "_GetLastError@0",
+          "va": 268443788,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_WideCharToMultiByte@32",
+          "va": 268443794,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_MultiByteToWideChar@24",
+          "va": 268443800,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenA@4",
+          "va": 268443806,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenW@4",
+          "va": 268443812,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_LocalFree@4",
+          "va": 268443818,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_SysAllocString@4",
+          "va": 268443824,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantClear@4",
+          "va": 268443830,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantChangeType@16",
+          "va": 268443836,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantInit@4",
+          "va": 268443842,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SetErrorInfo@8",
+          "va": 268443848,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SysFreeString@4",
+          "va": 268443854,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_CreateErrorInfo@4",
+          "va": 268443860,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_GetErrorInfo@8",
+          "va": 268443866,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "va": 268447744,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__LocalFree@4",
+          "va": 268447748,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__lstrlenW@4",
+          "va": 268447752,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__lstrlenA@4",
+          "va": 268447756,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "va": 268447760,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "va": 268447764,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "\\177KERNEL32_NULL_THUNK_DATA",
+          "va": 268447768,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp___CxxThrowException@8",
+          "va": 268447772,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??1type_info@@UAE@XZ",
+          "va": 268447776,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____dllonexit",
+          "va": 268447780,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___except_handler3",
+          "va": 268447784,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_?terminate@@YAXXZ",
+          "va": 268447788,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__malloc",
+          "va": 268447792,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??3@YAXPAX@Z",
+          "va": 268447796,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__free",
+          "va": 268447800,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____CxxFrameHandler",
+          "va": 268447804,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__wcslen",
+          "va": 268447808,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??2@YAPAXI@Z",
+          "va": 268447812,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___onexit",
+          "va": 268447816,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "\\177MSVCR71_NULL_THUNK_DATA",
+          "va": 268447820,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__SysAllocString@4",
+          "va": 268447824,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "va": 268447828,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantChangeType@16",
+          "va": 268447832,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantInit@4",
+          "va": 268447836,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SetErrorInfo@8",
+          "va": 268447840,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SysFreeString@4",
+          "va": 268447844,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__CreateErrorInfo@4",
+          "va": 268447848,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__GetErrorInfo@8",
+          "va": 268447852,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "\\177OLEAUT32_NULL_THUNK_DATA",
+          "va": 268447856,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__GUID_00000000_0000_0000_0000_000000000000",
+          "va": 268447876,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+          "va": 268447908,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "__GUID_00020400_0000_0000_c000_000000000046",
+          "va": 268447924,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "??_7_com_error@@6B@",
+          "va": 268447944,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_7type_info@@6B@",
+          "va": 268447952,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "__GUID_df0b3d60_548f_101b_8e65_08002b2bd119",
+          "va": 268447956,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "__load_config_used",
+          "va": 268448008,
+          "owner": "msvcrt:loadcfg.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@_com_error@@8",
+          "va": 268448080,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R2_com_error@@8",
+          "va": 268448104,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R3_com_error@@8",
+          "va": 268448112,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R4_com_error@@6B@",
+          "va": 268448128,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@type_info@@8",
+          "va": 268448148,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R2type_info@@8",
+          "va": 268448172,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R3type_info@@8",
+          "va": 268448180,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R4type_info@@6B@",
+          "va": 268448196,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "___safe_se_handler_table",
+          "va": 268448224,
+          "owner": "<linker-defined>"
+        },
+        {
+          "name": "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+          "va": 268448312,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__CTA1?AV_com_error@@",
+          "va": 268448340,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__TI1?AV_com_error@@",
+          "va": 268448348,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_MSVCR71",
+          "va": 268448364,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_KERNEL32",
+          "va": 268448384,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_OLEAUT32",
+          "va": 268448404,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__NULL_IMPORT_DESCRIPTOR",
+          "va": 268448424,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?vtMissing@@3V_variant_t@@A",
+          "va": 268451840,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "??_R0?AV_com_error@@@8",
+          "va": 268451856,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R0?AVtype_info@@@8",
+          "va": 268451884,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R0H@8",
+          "va": 268451908,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA",
+          "va": 268451920,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "___security_cookie",
+          "va": 268451936,
+          "owner": "msvcrt:seccook.obj"
+        },
+        {
+          "name": "___onexitend",
+          "va": 268451940,
+          "owner": "<common>"
+        },
+        {
+          "name": "___onexitbegin",
+          "va": 268451944,
+          "owner": "<common>"
+        },
+        {
+          "name": "$L54956",
+          "va": 268439756,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z",
+          "va": 268443484,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268443872,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "_$E1",
+          "va": 268443888,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "_$E2",
+          "va": 268443904,
+          "owner": "ComUtil.obj"
+        }
+      ],
+      "_candidate_section_bases": {
+        "3": 268439552,
+        "11": 268440272,
+        "13": 268440384,
+        "9": 268439920,
+        "5": 268439568,
+        "17": 268451840,
+        "15": 268443888,
+        "19": 268443904,
+        "6": 268443872,
+        "16": 268455936,
+        "10": 268447864,
+        "7": 268448232
+      }
+    },
+    {
+      "label": "providers-first",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "-nologo",
+        "-dll",
+        "-noentry",
+        "-machine:x86",
+        "-opt:noref",
+        "-opt:noicf",
+        "-incremental:no",
+        "-verbose:lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+        "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\link\\providers-first.dll",
+        "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\link\\providers-first.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\objects\\ComUtil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+        "msvcrt.lib",
+        "kernel32.lib",
+        "ole32.lib",
+        "oleaut32.lib",
+        "user32.lib",
+        "uuid.lib"
+      ],
+      "exit": 0,
+      "DLL_executed": false,
+      "no_recipe_library_expansion": true,
+      "selected_new_main_and_global": {
+        "?CheckError@_com_util@@YAXJ@Z": {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "va": 268442064,
+          "owner": "ComUtil.obj"
+        },
+        "??0_variant_t@@QAE@JG@Z": {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "va": 268442784,
+          "owner": "ComUtil.obj"
+        },
+        "??1_variant_t@@QAE@XZ": {
+          "name": "??1_variant_t@@QAE@XZ",
+          "va": 268442896,
+          "owner": "ComUtil.obj"
+        },
+        "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z": {
+          "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "va": 268442432,
+          "owner": "ComUtil.obj"
+        },
+        "?ConvertBSTRToString@_com_util@@YGPADPAG@Z": {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268442080,
+          "owner": "ComUtil.obj"
+        },
+        "?vtMissing@@3V_variant_t@@A": {
+          "name": "?vtMissing@@3V_variant_t@@A",
+          "va": 268451904,
+          "owner": "ComUtil.obj"
+        }
+      },
+      "selected_lifetime": {
+        "_$E1": {
+          "name": "_$E1",
+          "va": 268443904,
+          "owner": "ComUtil.obj"
+        },
+        "_$E2": {
+          "name": "_$E2",
+          "va": 268443920,
+          "owner": "ComUtil.obj"
+        }
+      },
+      "selected_local_handler": {
+        "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+        "va": 268443888,
+        "owner": "ComUtil.obj"
+      },
+      "all12_placed_sections": [
+        {
+          "candidate_section": 3,
+          "original_section": 3,
+          "retail_rva": "0xafd6b0",
+          "actual_link_va": "0x100019d0",
+          "name": ".text",
+          "size": 15,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 11,
+          "original_section": 6,
+          "retail_rva": "0xafd6c0",
+          "actual_link_va": "0x10001ca0",
+          "name": ".text",
+          "size": 111,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 13,
+          "original_section": 9,
+          "retail_rva": "0xafd730",
+          "actual_link_va": "0x10001d10",
+          "name": ".text",
+          "size": 18,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 9,
+          "original_section": 12,
+          "retail_rva": "0xafd750",
+          "actual_link_va": "0x10001b40",
+          "name": ".text",
+          "size": 352,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 5,
+          "original_section": 17,
+          "retail_rva": "0xafd8b0",
+          "actual_link_va": "0x100019e0",
+          "name": ".text",
+          "size": 343,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 17,
+          "original_section": 24,
+          "retail_rva": "0xee6010",
+          "actual_link_va": "0x10004040",
+          "name": ".data",
+          "size": 16,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 15,
+          "original_section": 21,
+          "retail_rva": "0xc6e380",
+          "actual_link_va": "0x10002100",
+          "name": ".text$yc",
+          "size": 12,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 19,
+          "original_section": 26,
+          "retail_rva": "0xc71600",
+          "actual_link_va": "0x10002110",
+          "name": ".text$yd",
+          "size": 22,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 6,
+          "original_section": 19,
+          "retail_rva": "0xc61f80",
+          "actual_link_va": "0x100020f0",
+          "name": ".text$x",
+          "size": 10,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 16,
+          "original_section": 23,
+          "retail_rva": "0xea5e28",
+          "actual_link_va": "0x10005000",
+          "name": ".CRT$XCU",
+          "size": 4,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 10,
+          "original_section": 14,
+          "retail_rva": "0xdbc348",
+          "actual_link_va": "0x100030c8",
+          "name": ".rdata",
+          "size": 12,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        },
+        {
+          "candidate_section": 7,
+          "original_section": 20,
+          "retail_rva": "0xe51808",
+          "actual_link_va": "0x1000321c",
+          "name": ".xdata$x",
+          "size": 80,
+          "all_nonrelocation_bytes_and_actual_symbol_bindings_exact": true
+        }
+      ],
+      "actual_external_providers": [
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "actual_va": "0x10003054",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_handler3",
+          "actual_va": "0x10001eb0",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__imp__lstrlenA@4",
+          "actual_va": "0x10003004",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "actual_va": "0x10003008",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__alloca_probe",
+          "actual_va": "0x10001ec0",
+          "provider": "msvcrt:chkstk.obj",
+          "kind": 20
+        },
+        {
+          "name": "_malloc",
+          "actual_va": "0x10001ff8",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "actual_va": "0x10003008",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "_free",
+          "actual_va": "0x10001ff2",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__SysAllocString@4",
+          "actual_va": "0x10003068",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "_free",
+          "actual_va": "0x10001ff2",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "_wcslen",
+          "actual_va": "0x10001fe6",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "actual_va": "0x1000300c",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "??2@YAPAXI@Z",
+          "actual_va": "0x10001fe0",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "actual_va": "0x1000300c",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "??3@YAXPAX@Z",
+          "actual_va": "0x10001f04",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "actual_va": "0x10003014",
+          "provider": "kernel32:KERNEL32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "__except_list",
+          "actual_va": "0x0",
+          "provider": "<absolute>",
+          "kind": 6
+        },
+        {
+          "name": "_atexit",
+          "actual_va": "0x10002024",
+          "provider": "msvcrt:atonexit.obj",
+          "kind": 20
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "actual_va": "0x10003054",
+          "provider": "oleaut32:OLEAUT32.dll",
+          "kind": 6
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "actual_va": "0x10001d40",
+          "provider": "comsupp:comsupp.obj",
+          "kind": 20
+        },
+        {
+          "name": "___CxxFrameHandler",
+          "actual_va": "0x10001fec",
+          "provider": "msvcrt:MSVCR71.dll",
+          "kind": 20
+        }
+      ],
+      "all_original_comutil_member_absent": true,
+      "all_old_vtMissing_or_lifetime_providers_absent": true,
+      "typed_vtMissing16_and_CRT_E1_pointer_exact": true,
+      "actual_type_info_provider": {
+        "name": "??_7type_info@@6B@",
+        "va": 268447936,
+        "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+      },
+      "retained_issue_error_provider": {
+        "name": "?_com_issue_error@@YGXJ@Z",
+        "va": 268442944,
+        "owner": "comsupp:comsupp.obj"
+      },
+      "retained_original_comsupp_scope": true,
+      "game_mem_ops_new_delete_not_claimed_selected": {
+        "new": {
+          "name": "??2@YAPAXI@Z",
+          "va": 268443616,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        "delete": {
+          "name": "??3@YAXPAX@Z",
+          "va": 268443396,
+          "owner": "msvcrt:MSVCR71.dll"
+        }
+      },
+      "DLL_sha256": "9ed2e241394e89cb8c0ef660a052553ab30c1ad7699b1ad26fe5adb11a21ced8",
+      "map_sha256": "605f60a76be4b3910fe4317873318f89f6010fb27ea56de7d5c8687cd40a35d3",
+      "_all_map_symbols": [
+        {
+          "name": "__except_list",
+          "va": 0,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "___safe_se_handler_count",
+          "va": 2,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__ldused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__fltused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z",
+          "va": 268439552,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268441136,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268441216,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268441264,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "?WCodeToHRESULT@_com_error@@SAJG@Z",
+          "va": 268441376,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z",
+          "va": 268441408,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          "va": 268441664,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          "va": 268441728,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@ABV0@@Z",
+          "va": 268441792,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??1_com_error@@UAE@XZ",
+          "va": 268441856,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_G_com_error@@UAEPAXI@Z",
+          "va": 268441904,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_E_com_error@@UAEPAXI@Z",
+          "va": 268441904,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0type_info@@AAE@ABV0@@Z",
+          "va": 268441962,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Etype_info@@UAEPAXI@Z",
+          "va": 268441973,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Ftype_info@@QAEXXZ",
+          "va": 268442048,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+          "va": 268442059,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "va": 268442064,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268442080,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "va": 268442432,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "va": 268442784,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "??1_variant_t@@QAE@XZ",
+          "va": 268442896,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?_set_com_error_handler@@YGXP6GXJPAUIErrorInfo@@@Z@Z",
+          "va": 268442928,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "va": 268442944,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_errorex@@YGXJPAUIUnknown@@ABU_GUID@@@Z",
+          "va": 268442960,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268443072,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268443152,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268443200,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "__except_handler3",
+          "va": 268443312,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__chkstk",
+          "va": 268443328,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "__alloca_probe",
+          "va": 268443328,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "__CxxThrowException@8",
+          "va": 268443390,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "??3@YAXPAX@Z",
+          "va": 268443396,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443420,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??_M@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443514,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??1type_info@@UAE@XZ",
+          "va": 268443610,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "??2@YAPAXI@Z",
+          "va": 268443616,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_wcslen",
+          "va": 268443622,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "___CxxFrameHandler",
+          "va": 268443628,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_free",
+          "va": 268443634,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_malloc",
+          "va": 268443640,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__onexit",
+          "va": 268443646,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "_atexit",
+          "va": 268443684,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "?terminate@@YAXXZ",
+          "va": 268443702,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__SEH_prolog",
+          "va": 268443708,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "__SEH_epilog",
+          "va": 268443767,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "___dllonexit",
+          "va": 268443784,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_GetLastError@0",
+          "va": 268443790,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenW@4",
+          "va": 268443796,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_LocalFree@4",
+          "va": 268443802,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_WideCharToMultiByte@32",
+          "va": 268443808,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_MultiByteToWideChar@24",
+          "va": 268443814,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenA@4",
+          "va": 268443820,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_VariantChangeType@16",
+          "va": 268443826,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantClear@4",
+          "va": 268443832,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantInit@4",
+          "va": 268443838,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SetErrorInfo@8",
+          "va": 268443844,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SysFreeString@4",
+          "va": 268443850,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_CreateErrorInfo@4",
+          "va": 268443856,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SysAllocString@4",
+          "va": 268443862,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_GetErrorInfo@8",
+          "va": 268443868,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__lstrlenW@4",
+          "va": 268447744,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__lstrlenA@4",
+          "va": 268447748,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "va": 268447752,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "va": 268447756,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__LocalFree@4",
+          "va": 268447760,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "va": 268447764,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "\\177KERNEL32_NULL_THUNK_DATA",
+          "va": 268447768,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__free",
+          "va": 268447772,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__malloc",
+          "va": 268447776,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_?terminate@@YAXXZ",
+          "va": 268447780,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____CxxFrameHandler",
+          "va": 268447784,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___onexit",
+          "va": 268447788,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__wcslen",
+          "va": 268447792,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___except_handler3",
+          "va": 268447796,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??2@YAPAXI@Z",
+          "va": 268447800,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??1type_info@@UAE@XZ",
+          "va": 268447804,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??3@YAXPAX@Z",
+          "va": 268447808,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___CxxThrowException@8",
+          "va": 268447812,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____dllonexit",
+          "va": 268447816,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "\\177MSVCR71_NULL_THUNK_DATA",
+          "va": 268447820,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__VariantChangeType@16",
+          "va": 268447824,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "va": 268447828,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantInit@4",
+          "va": 268447832,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SetErrorInfo@8",
+          "va": 268447836,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SysFreeString@4",
+          "va": 268447840,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__CreateErrorInfo@4",
+          "va": 268447844,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SysAllocString@4",
+          "va": 268447848,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__GetErrorInfo@8",
+          "va": 268447852,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "\\177OLEAUT32_NULL_THUNK_DATA",
+          "va": 268447856,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__GUID_00000000_0000_0000_0000_000000000000",
+          "va": 268447864,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke.obj"
+        },
+        {
+          "name": "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+          "va": 268447892,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "__GUID_00020400_0000_0000_c000_000000000046",
+          "va": 268447908,
+          "owner": "game_^libraries_^source_^c^o^m_^com^invoke^error.obj"
+        },
+        {
+          "name": "??_7_com_error@@6B@",
+          "va": 268447928,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_7type_info@@6B@",
+          "va": 268447936,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "__GUID_df0b3d60_548f_101b_8e65_08002b2bd119",
+          "va": 268447956,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "__load_config_used",
+          "va": 268448008,
+          "owner": "msvcrt:loadcfg.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@_com_error@@8",
+          "va": 268448080,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R2_com_error@@8",
+          "va": 268448104,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R3_com_error@@8",
+          "va": 268448112,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R4_com_error@@6B@",
+          "va": 268448128,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@type_info@@8",
+          "va": 268448148,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R2type_info@@8",
+          "va": 268448172,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R3type_info@@8",
+          "va": 268448180,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R4type_info@@6B@",
+          "va": 268448196,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "___safe_se_handler_table",
+          "va": 268448224,
+          "owner": "<linker-defined>"
+        },
+        {
+          "name": "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+          "va": 268448232,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__CTA1?AV_com_error@@",
+          "va": 268448260,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__TI1?AV_com_error@@",
+          "va": 268448268,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_MSVCR71",
+          "va": 268448364,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_KERNEL32",
+          "va": 268448384,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_OLEAUT32",
+          "va": 268448404,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__NULL_IMPORT_DESCRIPTOR",
+          "va": 268448424,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "??_R0?AV_com_error@@@8",
+          "va": 268451840,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R0?AVtype_info@@@8",
+          "va": 268451868,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R0H@8",
+          "va": 268451892,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?vtMissing@@3V_variant_t@@A",
+          "va": 268451904,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA",
+          "va": 268451920,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "___security_cookie",
+          "va": 268451936,
+          "owner": "msvcrt:seccook.obj"
+        },
+        {
+          "name": "___onexitend",
+          "va": 268451940,
+          "owner": "<common>"
+        },
+        {
+          "name": "___onexitbegin",
+          "va": 268451944,
+          "owner": "<common>"
+        },
+        {
+          "name": "$L54956",
+          "va": 268442268,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z",
+          "va": 268443402,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268443888,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "_$E1",
+          "va": 268443904,
+          "owner": "ComUtil.obj"
+        },
+        {
+          "name": "_$E2",
+          "va": 268443920,
+          "owner": "ComUtil.obj"
+        }
+      ],
+      "_candidate_section_bases": {
+        "3": 268442064,
+        "11": 268442784,
+        "13": 268442896,
+        "9": 268442432,
+        "5": 268442080,
+        "17": 268451904,
+        "15": 268443904,
+        "19": 268443920,
+        "6": 268443888,
+        "16": 268455936,
+        "10": 268447944,
+        "7": 268448284
+      }
+    }
+  ],
+  "all_frozen_normal_controls_still_current_and_unchanged": true,
+  "actual_generated_issue_error_and_EH_anchor_not_modified_or_rehomed": true,
+  "no_full_game_census_runtime_or_source_closed_claim": true,
+  "scope_limit": "Current C++ ComInvoke/Invkerr/ComRaise/ti_inst are actual inputs. Original comsupp.obj supplies issue-error16 and its native siblings; current ComSupp5 are separately frozen/byte-verified controls. Bounded CRT new/delete selection differs from game mem_ops; no passing-fixture provider expansion or aliases were added."
+}
