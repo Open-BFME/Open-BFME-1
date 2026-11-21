@@ -25,4 +25,7 @@ private:
 type_info::type_info(const type_info&) {
     if (0) new type_info[2];
 }
+type_info& type_info::operator=(const type_info&) {
+    return *this;
+}
 typedef char TypeInfoSizeCheck[sizeof(type_info)==12?1:-1];
