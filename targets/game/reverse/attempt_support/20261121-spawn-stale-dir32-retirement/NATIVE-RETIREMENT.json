@@ -1,0 +1,16 @@
+{
+  "base": "3e96d9b81949a4091fee8aaec36dbd0b04ff8e37",
+  "function": "??_7SpawnUnitBehaviorModuleData@@6B@",
+  "original_va": "0x0108E890",
+  "original_rva": "0x00C8E890",
+  "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataConstructor.cpp",
+  "source_sha256": "ca7999e2f9ffd593c516d5e2f1df62ab6664c9b91d1e36bcf034f44ddb3b47cf",
+  "native_pass_test": true,
+  "baseline_lines_removed": 1,
+  "other_baseline_bytes_preserved": true,
+  "source_changed": false,
+  "data_rows_admitted": 0,
+  "vtable_extent_or_ABI_fixed": false,
+  "completed_body_credit": 0,
+  "published": false
+}

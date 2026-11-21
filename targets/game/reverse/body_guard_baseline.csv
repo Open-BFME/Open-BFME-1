@@ -61,7 +61,6 @@ dir32,0x010860B0,??_7Rva000FBDC0Filter@@6B@,"retail 0x010860B0 is already record
 dir32,0x010860C4,??_7Rva000FC2E0Filter@@6B@,"retail 0x010860C4 is already recorded as ??_7DecalMeshClass@@6B@; reference that name, not a new one"
 dir32,0x01089644,??_7Rva001129B0@@6BSubsystemInterface@@@,"retail 0x01089644 is already recorded as ??_7BfmeOwnCE@@6BSubsystemInterface@@@ (+1 more); reference that name, not a new one"
 dir32,0x01089774,??_7ObjectModule@@6B@,"nothing in the ledger owns 0x01089774. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
-dir32,0x0108E890,??_7SpawnUnitBehaviorModuleData@@6B@,"nothing in the ledger owns 0x0108E890. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0108E9F0,??_7RunOffMapBehaviorModuleData@@6B@,"nothing in the ledger owns 0x0108E9F0. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x0108EAF8,??_7RubbleRiseUpdateModuleData@@6B@,"nothing in the ledger owns 0x0108EAF8. Give the datum a data row first (tools/add_data_match.py), or use an address name (g_Va<VA>)"
 dir32,0x010956C4,??_7PartitionFilter010956C4@@6B@,"retail 0x010956C4 is already recorded as ?g_010956C4@@3PAPBXA; reference that name, not a new one"
