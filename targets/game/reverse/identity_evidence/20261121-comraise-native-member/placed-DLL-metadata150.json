@@ -1,0 +1,56 @@
+[
+  {
+    "name": "??_R1A@?0A@A@_com_error@@8",
+    "size": 24,
+    "DLL_base_va": "0x10002110",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "??_R2_com_error@@8",
+    "size": 5,
+    "DLL_base_va": "0x10002128",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "??_R3_com_error@@8",
+    "size": 16,
+    "DLL_base_va": "0x10002130",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "??_R0?AV_com_error@@@8",
+    "size": 25,
+    "DLL_base_va": "0x10003000",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "??_R4_com_error@@6B@",
+    "size": 20,
+    "DLL_base_va": "0x10002140",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "??_7_com_error@@6B@",
+    "size": 8,
+    "DLL_base_va": "0x10002048",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+    "size": 28,
+    "DLL_base_va": "0x100021a4",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "__CTA1?AV_com_error@@",
+    "size": 8,
+    "DLL_base_va": "0x100021c0",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  },
+  {
+    "name": "__TI1?AV_com_error@@",
+    "size": 16,
+    "DLL_base_va": "0x100021c8",
+    "placed_bytes_and_all_selected_relocations_exact": true
+  }
+]

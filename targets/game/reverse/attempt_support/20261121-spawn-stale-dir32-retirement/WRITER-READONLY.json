@@ -1,0 +1,146 @@
+{
+  "read_only": true,
+  "compiler_calls": 0,
+  "live_unrecorded_dir32_problem": null,
+  "function_owner_problem": null,
+  "cpp_name": null,
+  "compiled_size_early_reject": [
+    null,
+    "??_7SpawnUnitBehaviorModuleData@@6B@ cannot be named from its TU"
+  ],
+  "locate_source": null,
+  "native_code_referenced_boundaries": [
+    {
+      "va": "0x0108E88C",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E890",
+      "referenced_in_code": true
+    },
+    {
+      "va": "0x0108E894",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E898",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E89C",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8A0",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8A4",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8A8",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8AC",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8B0",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8B4",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8B8",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8BC",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8C0",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8C4",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8C8",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8CC",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8D0",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8D4",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8D8",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8DC",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8E0",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8E4",
+      "referenced_in_code": false
+    },
+    {
+      "va": "0x0108E8E8",
+      "referenced_in_code": true
+    }
+  ],
+  "native_slot_target_set": [
+    "0x0000558D",
+    "0x0000ADF8",
+    "0x0000B9F6",
+    "0x00013624",
+    "0x000148DF",
+    "0x00015B77",
+    "0x0001794A",
+    "0x00020BEE",
+    "0x000273B8",
+    "0x00027F5C",
+    "0x000294A6",
+    "0x0002A03B",
+    "0x0002A78E",
+    "0x0002E5D7",
+    "0x0003099F",
+    "0x0003308C",
+    "0x0004B547",
+    "0x001139F0",
+    "0x00113A00",
+    "0x00113A10",
+    "0x00113A20",
+    "0x00113A30",
+    "0x00113A40",
+    "0x00113A50",
+    "0x00113A60",
+    "0x00113A70",
+    "0x00113A80",
+    "0x00113A90",
+    "0x00113AA0",
+    "0x00113AB0",
+    "0x00113AC0",
+    "0x00113AD0",
+    "0x00113EC0",
+    "0x00126ED0"
+  ]
+}

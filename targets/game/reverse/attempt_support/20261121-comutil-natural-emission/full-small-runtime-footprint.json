@@ -1,0 +1,272 @@
+{
+  "original_selected_sections": [
+    {
+      "section_name": ".text",
+      "size": 111,
+      "flags": "0x60501020",
+      "raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+      "definitions": [
+        [
+          "??0_variant_t@@QAE@JG@Z",
+          0,
+          32,
+          2
+        ]
+      ],
+      "relocations": [
+        [
+          32,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    },
+    {
+      "section_name": ".text",
+      "size": 18,
+      "flags": "0x60501020",
+      "raw": "51ff150000000085c07d0650e800000000c3",
+      "definitions": [
+        [
+          "??1_variant_t@@QAE@XZ",
+          0,
+          32,
+          2
+        ]
+      ],
+      "relocations": [
+        [
+          3,
+          6,
+          "__imp__VariantClear@4"
+        ],
+        [
+          13,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    },
+    {
+      "section_name": ".text",
+      "size": 15,
+      "flags": "0x60501020",
+      "raw": "8b44240485c07d0650e800000000c3",
+      "definitions": [
+        [
+          "?CheckError@_com_util@@YAXJ@Z",
+          0,
+          32,
+          2
+        ]
+      ],
+      "relocations": [
+        [
+          10,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    }
+  ],
+  "candidate": {
+    "runtime_sections": [
+      {
+        "section_name": ".text",
+        "size": 111,
+        "flags": "0x60501020",
+        "raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+        "definitions": [
+          [
+            "??0_variant_t@@QAE@JG@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            32,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 18,
+        "flags": "0x60501020",
+        "raw": "51ff150000000085c07d0650e800000000c3",
+        "definitions": [
+          [
+            "??1_variant_t@@QAE@XZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            3,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            13,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 15,
+        "flags": "0x60501020",
+        "raw": "8b44240485c07d0650e800000000c3",
+        "definitions": [
+          [
+            "?CheckError@_com_util@@YAXJ@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      }
+    ],
+    "undefined": [
+      [
+        "?_com_issue_error@@YGXJ@Z",
+        32,
+        2
+      ],
+      [
+        "__imp__VariantClear@4",
+        0,
+        2
+      ]
+    ]
+  },
+  "debug": {
+    "runtime_sections": [
+      {
+        "section_name": ".text",
+        "size": 111,
+        "flags": "0x60501020",
+        "raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+        "definitions": [
+          [
+            "??0_variant_t@@QAE@JG@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            32,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 18,
+        "flags": "0x60501020",
+        "raw": "51ff150000000085c07d0650e800000000c3",
+        "definitions": [
+          [
+            "??1_variant_t@@QAE@XZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            3,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            13,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 15,
+        "flags": "0x60501020",
+        "raw": "8b44240485c07d0650e800000000c3",
+        "definitions": [
+          [
+            "?CheckError@_com_util@@YAXJ@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      }
+    ],
+    "undefined": [
+      [
+        "?_com_issue_error@@YGXJ@Z",
+        32,
+        2
+      ],
+      [
+        "__imp__VariantClear@4",
+        0,
+        2
+      ]
+    ]
+  },
+  "all_runtime_subset_bytes_flags_definitions_relocations_equal": true,
+  "COMDAT_selections_original": {
+    "?CheckError@_com_util@@YAXJ@Z": {
+      "selection": 2,
+      "association": 0
+    },
+    "??0_variant_t@@QAE@JG@Z": {
+      "selection": 2,
+      "association": 0
+    },
+    "??1_variant_t@@QAE@XZ": {
+      "selection": 2,
+      "association": 0
+    }
+  },
+  "COMDAT_selections_candidate": {
+    "?CheckError@_com_util@@YAXJ@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??0_variant_t@@QAE@JG@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??1_variant_t@@QAE@XZ": {
+      "selection": 1,
+      "association": 0
+    }
+  },
+  "COMDAT_selection_equal": false,
+  "complete_footprint_including_selection_equal": false,
+  "no_other_runtime_code_data_EH_or_static_initialization": true
+}

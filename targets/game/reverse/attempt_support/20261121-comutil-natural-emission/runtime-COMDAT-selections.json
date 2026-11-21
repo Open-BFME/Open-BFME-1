@@ -1,0 +1,45 @@
+{
+  "original": {
+    "?CheckError@_com_util@@YAXJ@Z": {
+      "selection": 2,
+      "association": 0
+    },
+    "??0_variant_t@@QAE@JG@Z": {
+      "selection": 2,
+      "association": 0
+    },
+    "??1_variant_t@@QAE@XZ": {
+      "selection": 2,
+      "association": 0
+    }
+  },
+  "candidate": {
+    "?CheckError@_com_util@@YAXJ@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??0_variant_t@@QAE@JG@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??1_variant_t@@QAE@XZ": {
+      "selection": 1,
+      "association": 0
+    }
+  },
+  "debug": {
+    "?CheckError@_com_util@@YAXJ@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??0_variant_t@@QAE@JG@Z": {
+      "selection": 1,
+      "association": 0
+    },
+    "??1_variant_t@@QAE@XZ": {
+      "selection": 1,
+      "association": 0
+    }
+  },
+  "selection_equal": false
+}

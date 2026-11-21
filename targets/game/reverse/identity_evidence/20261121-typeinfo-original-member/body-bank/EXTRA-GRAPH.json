@@ -1,0 +1,81 @@
+{
+  "extra_codegen_graph": [
+    {
+      "name": "??_Ftype_info@@QAEXXZ",
+      "size": 11,
+      "section_flags": "0x60101020",
+      "COMDAT_selection": 2,
+      "raw": "6800000000e800000000c3",
+      "relocations": [
+        {
+          "offset": 1,
+          "kind": 6,
+          "target": "??_R0H@8"
+        },
+        {
+          "offset": 6,
+          "kind": 20,
+          "target": "??0type_info@@AAE@ABV0@@Z"
+        }
+      ],
+      "inbound_relocations_in_this_object": [
+        {
+          "section": 15,
+          "section_name": ".debug$F",
+          "offset": 0,
+          "kind": 7,
+          "owners": []
+        }
+      ],
+      "new_body_credit": 0,
+      "new_data_coverage_credit": 0
+    },
+    {
+      "name": "??_R0H@8",
+      "size": 11,
+      "section_flags": "0xc0301040",
+      "COMDAT_selection": 2,
+      "raw": "00000000000000002e4800",
+      "relocations": [
+        {
+          "offset": 0,
+          "kind": 6,
+          "target": "??_7type_info@@6B@"
+        }
+      ],
+      "inbound_relocations_in_this_object": [
+        {
+          "section": 13,
+          "section_name": ".text",
+          "offset": 1,
+          "kind": 6,
+          "owners": [
+            "??_Ftype_info@@QAEXXZ"
+          ]
+        }
+      ],
+      "new_body_credit": 0,
+      "new_data_coverage_credit": 0
+    }
+  ],
+  "compiler_adapter_graph": "Default-argument closure -> existing global int RTTI, and -> real original copy constructor. The closure also has its compiler FPO .debug$F DIR32NB inbound metadata reference. No native address is assigned to the closure. The int descriptor IS globally referenced native data, not an independent harmless unused datum.",
+  "boundary_neighbors": {
+    "preceding_existing_wcscpy_thunk_rva": "0x009F6C9E",
+    "preceding_thunk_raw": "ff2520953501",
+    "copy_start": "0x009F6CA4",
+    "copy11_then_vector75_then_assignment5_contiguous": true,
+    "assignment_then_INT3_then_next_import_raw": "8bc1c20400ccff2554923501",
+    "following_import_rva": "0x009F6D00",
+    "following_import_entry": [
+      "MSVCR71.dll",
+      "_CxxThrowException"
+    ],
+    "next_ehvec_filter_rva": "0x009F6D06"
+  },
+  "limits": [
+    "Local absence of ordinary code/data inbound closure references does not prove no global source references; its actual FPO metadata edge is disclosed.",
+    "New closure has no retail identity/address/row and no recovery credit.",
+    "Existing int RTTI is a same-name exact SELECT_ANY provider addition; actual current global selected ownership remains unknown until normal native provider/link evidence.",
+    "The unrowed 11B/5B function admissions remain Root decisions; this is no interior-placement or new-task claim."
+  ]
+}

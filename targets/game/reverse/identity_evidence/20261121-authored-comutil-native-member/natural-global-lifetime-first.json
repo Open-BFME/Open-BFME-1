@@ -1,0 +1,162 @@
+{
+  "global_symbol": {
+    "index": 77,
+    "name": "?vtMissing@@3V_variant_t@@A",
+    "value": 0,
+    "section": 17,
+    "type": 0,
+    "storage": 2
+  },
+  "global_section": ".data",
+  "global_section_size": 16,
+  "global16_raw": "0a000000000000000400028000000000",
+  "global16_initial_bytes_exact": true,
+  "global_section_relocations": [],
+  "CRT_section_count": 1,
+  "runtime_sections": [
+    {
+      "number": 3,
+      "name": ".text",
+      "size": 15,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 5,
+      "name": ".text",
+      "size": 343,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 6,
+      "name": ".text$x",
+      "size": 10,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 7,
+      "name": ".xdata$x",
+      "size": 80,
+      "flags": "0x40301040"
+    },
+    {
+      "number": 8,
+      "name": ".sxdata",
+      "size": 8,
+      "flags": "0x300200"
+    },
+    {
+      "number": 9,
+      "name": ".text",
+      "size": 352,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 10,
+      "name": ".rdata",
+      "size": 12,
+      "flags": "0x40401040"
+    },
+    {
+      "number": 11,
+      "name": ".text",
+      "size": 111,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 13,
+      "name": ".text",
+      "size": 18,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 15,
+      "name": ".text$yc",
+      "size": 12,
+      "flags": "0x60501020"
+    },
+    {
+      "number": 16,
+      "name": ".CRT$XCU",
+      "size": 4,
+      "flags": "0xc0300040"
+    },
+    {
+      "number": 17,
+      "name": ".data",
+      "size": 16,
+      "flags": "0xc0400040"
+    },
+    {
+      "number": 19,
+      "name": ".text$yd",
+      "size": 22,
+      "flags": "0x60501020"
+    }
+  ],
+  "CRT_size": 4,
+  "CRT_raw": "00000000",
+  "CRT_relocations": [
+    [
+      0,
+      6,
+      "_$E1"
+    ]
+  ],
+  "natural_initializer": {
+    "name": "_$E1",
+    "symbol": {
+      "index": 70,
+      "name": "_$E1",
+      "value": 0,
+      "section": 15,
+      "type": 32,
+      "storage": 3
+    },
+    "section": ".text$yc",
+    "section_size": 12,
+    "raw": "6800000000e80000000059c3",
+    "relocations": [
+      [
+        1,
+        6,
+        "_$E2"
+      ],
+      [
+        6,
+        20,
+        "_atexit"
+      ]
+    ]
+  },
+  "natural_cleanup": {
+    "name": "_$E2",
+    "symbol": {
+      "index": 82,
+      "name": "_$E2",
+      "value": 0,
+      "section": 19,
+      "type": 32,
+      "storage": 3
+    },
+    "section": ".text$yd",
+    "section_size": 22,
+    "raw": "6800000000ff150000000085c07d0650e800000000c3",
+    "relocations": [
+      [
+        1,
+        6,
+        "?vtMissing@@3V_variant_t@@A"
+      ],
+      [
+        7,
+        6,
+        "__imp__VariantClear@4"
+      ],
+      [
+        17,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ]
+  }
+}

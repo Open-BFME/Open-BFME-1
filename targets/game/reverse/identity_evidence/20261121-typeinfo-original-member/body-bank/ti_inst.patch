@@ -1,0 +1,36 @@
+diff --git a/game/Libraries/Source/CRT/VS2003/ti_inst.cpp b/game/Libraries/Source/CRT/VS2003/ti_inst.cpp
+new file mode 100644
+--- /dev/null
++++ b/game/Libraries/Source/CRT/VS2003/ti_inst.cpp
+@@ -0,0 +1,31 @@
++// cl: /O1 /G7 /MD /EHsc /GR
++// Original MSVC7.1 ti_inst.obj whole member. Authored from original COFF,
++// CodeView and public typeinfo.h; no Microsoft implementation source read.
++// Native B1 producer has full RTTI including COL/vtable-prefix, hence /GR.
++// Destructor references are native CODE thunk addresses, not dllimport IAT.
++// The source-only default argument and unreachable array-new request compiler
++// vector-deletion emission, following the authored pinned B2 donor. They are
++// disclosed emitter adapters, not original API or executed allocation claims.
++// Original member identities: copy009F6CA4/11, vector-delete009F6CAF/75,
++// assignment009F6CFA/5. The two unrowed bodies remain admission-conditional.
++class type_info {
++public:
++    virtual ~type_info();
++    int operator==(const type_info& rhs) const;
++    int operator!=(const type_info& rhs) const;
++    int before(const type_info& rhs) const;
++    const char* name() const;
++    const char* raw_name() const;
++private:
++    void *_m_data;
++    char _m_d_name[1];
++    type_info(const type_info& rhs = typeid(int));
++    type_info& operator=(const type_info& rhs);
++};
++type_info::type_info(const type_info&) {
++    if (0) new type_info[2];
++}
++type_info& type_info::operator=(const type_info&) {
++    return *this;
++}
++typedef char TypeInfoSizeCheck[sizeof(type_info)==12?1:-1];

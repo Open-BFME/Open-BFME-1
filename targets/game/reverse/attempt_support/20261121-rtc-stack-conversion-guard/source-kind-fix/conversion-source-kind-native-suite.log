@@ -1,0 +1,117 @@
+.EEE.................................................................... [ 26%]
+........FF.............................................................. [ 52%]
+........................................................................ [ 78%]
+..........................................................               [100%]
+=================================== ERRORS ====================================
+________ ERROR at setup of test_tool_reproduced_conversion_is_accepted ________
+
+context = <dump_apply.Context object at 0x0000027ED5F60AD0>
+original = b'.386\n.model flat\n_TEXT SEGMENT\n\n; ghidra: bounds-high  retail @ 0x00138250 size 50\npublic ?d_00138250@@YAXXZ\n?... 00h, 00h, 57h, 8Bh, 0CEh, 0FFh, 52h, 6Ch, 5Fh, 5Eh, 0C2h\n    db 04h, 00h\n?d_00168910@@YAXXZ ENDP\n_TEXT ENDS\nEND\n'
+
+    @pytest.fixture(scope="module")
+    def converted(context, original):
+        text, bodies = dump_apply.reproduce(SOURCE, original.decode("utf-8"), context)
+>       assert text is not None and bodies
+E       assert (None is not None)
+
+tools\tests\test_conversion_gate_dump_apply.py:44: AssertionError
+_____ ERROR at setup of test_tool_output_with_one_byte_changed_is_refused _____
+
+context = <dump_apply.Context object at 0x0000027ED5F60AD0>
+original = b'.386\n.model flat\n_TEXT SEGMENT\n\n; ghidra: bounds-high  retail @ 0x00138250 size 50\npublic ?d_00138250@@YAXXZ\n?... 00h, 00h, 57h, 8Bh, 0CEh, 0FFh, 52h, 6Ch, 5Fh, 5Eh, 0C2h\n    db 04h, 00h\n?d_00168910@@YAXXZ ENDP\n_TEXT ENDS\nEND\n'
+
+    @pytest.fixture(scope="module")
+    def converted(context, original):
+        text, bodies = dump_apply.reproduce(SOURCE, original.decode("utf-8"), context)
+>       assert text is not None and bodies
+E       assert (None is not None)
+
+tools\tests\test_conversion_gate_dump_apply.py:44: AssertionError
+_____ ERROR at setup of test_tool_output_from_a_different_base_is_refused _____
+
+context = <dump_apply.Context object at 0x0000027ED5F60AD0>
+original = b'.386\n.model flat\n_TEXT SEGMENT\n\n; ghidra: bounds-high  retail @ 0x00138250 size 50\npublic ?d_00138250@@YAXXZ\n?... 00h, 00h, 57h, 8Bh, 0CEh, 0FFh, 52h, 6Ch, 5Fh, 5Eh, 0C2h\n    db 04h, 00h\n?d_00168910@@YAXXZ ENDP\n_TEXT ENDS\nEND\n'
+
+    @pytest.fixture(scope="module")
+    def converted(context, original):
+        text, bodies = dump_apply.reproduce(SOURCE, original.decode("utf-8"), context)
+>       assert text is not None and bodies
+E       assert (None is not None)
+
+tools\tests\test_conversion_gate_dump_apply.py:44: AssertionError
+================================== FAILURES ===================================
+_________________ test_symlink_to_vendor_emit_header_refused __________________
+
+    def test_symlink_to_vendor_emit_header_refused():
+        b = dict(VE, **{P: F("")})
+        a = dict(VE, **{P: '#include "e.h"\n' + F(""), "game/G/e.h": ("link", "../../inputs/vendor/v/e.h")})
+>       assert includes(b, a, gate.added_symlinks) == ["game/G/e.h"]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools\tests\test_conversion_gate_outside.py:565: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+before = {'inputs/vendor/v/e.h': '#define OP(x) __asm _emit x\n', 'game/G/a.cpp': 'void f()\n{\n}\n'}
+after = {'inputs/vendor/v/e.h': '#define OP(x) __asm _emit x\n', 'game/G/a.cpp': '#include "e.h"\nvoid f()\n{\n}\n', 'game/G/e.h': ('link', '../../inputs/vendor/v/e.h')}
+fn = <function added_symlinks at 0x0000027ED6043E20>
+
+    def includes(before, after, fn=None):
+        """Rule A3 (or fn(old, new)) on a staged change (before/after: path -> text)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            git = lambda *a: subprocess.run(["git", "-C", tmp, *a], check=True,
+                                            capture_output=True, text=True)
+            git("init", "-q")
+            for files in (before, after):
+                for path, text in files.items():
+                    full = Path(tmp) / path
+                    if text is None:
+                        full.unlink(missing_ok=True)
+                        continue
+                    if isinstance(text, tuple):  # ("link", target): a symlink
+                        full.parent.mkdir(parents=True, exist_ok=True)
+                        full.unlink(missing_ok=True)
+>                       os.symlink(text[1], full)
+E                       OSError: [WinError 1314] Dem Client fehlt ein erforderliches Recht: '../../inputs/vendor/v/e.h' -> 'W:\\OpenBFME\\diagnostics\\continue-20261105-1800\\shell-temp\\tmpe01kv6te\\game\\G\\e.h'
+
+tools\tests\test_conversion_gate_outside.py:38: OSError
+______________________ test_symlink_to_anything_refused _______________________
+
+    def test_symlink_to_anything_refused():
+        b = {P: F("")}
+        a = {P: F(""), "game/G/l.h": ("link", "a.cpp"), SHIMS_L: ("link", "x")}
+>       assert includes(b, a, gate.added_symlinks) == sorted(["game/G/l.h", SHIMS_L])
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools\tests\test_conversion_gate_outside.py:571: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+before = {'game/G/a.cpp': 'void f()\n{\n}\n'}
+after = {'game/G/a.cpp': 'void f()\n{\n}\n', 'game/G/l.h': ('link', 'a.cpp'), 'inputs/reference/shims/x/l.h': ('link', 'x')}
+fn = <function added_symlinks at 0x0000027ED6043E20>
+
+    def includes(before, after, fn=None):
+        """Rule A3 (or fn(old, new)) on a staged change (before/after: path -> text)."""
+        with tempfile.TemporaryDirectory() as tmp:
+            git = lambda *a: subprocess.run(["git", "-C", tmp, *a], check=True,
+                                            capture_output=True, text=True)
+            git("init", "-q")
+            for files in (before, after):
+                for path, text in files.items():
+                    full = Path(tmp) / path
+                    if text is None:
+                        full.unlink(missing_ok=True)
+                        continue
+                    if isinstance(text, tuple):  # ("link", target): a symlink
+                        full.parent.mkdir(parents=True, exist_ok=True)
+                        full.unlink(missing_ok=True)
+>                       os.symlink(text[1], full)
+E                       OSError: [WinError 1314] Dem Client fehlt ein erforderliches Recht: 'a.cpp' -> 'W:\\OpenBFME\\diagnostics\\continue-20261105-1800\\shell-temp\\tmpabpex0qn\\game\\G\\l.h'
+
+tools\tests\test_conversion_gate_outside.py:38: OSError
+=========================== short test summary info ===========================
+FAILED tools/tests/test_conversion_gate_outside.py::test_symlink_to_vendor_emit_header_refused
+FAILED tools/tests/test_conversion_gate_outside.py::test_symlink_to_anything_refused
+ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_reproduced_conversion_is_accepted
+ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_with_one_byte_changed_is_refused
+ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_from_a_different_base_is_refused
+2 failed, 269 passed, 3 errors in 137.23s (0:02:17)

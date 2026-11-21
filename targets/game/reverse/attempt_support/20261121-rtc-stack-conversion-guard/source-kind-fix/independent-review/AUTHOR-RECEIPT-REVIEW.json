@@ -1,0 +1,30 @@
+{
+  "scope": "Author test receipts read independently; reviewer did not execute Git fixtures",
+  "patch_sha256": "7108f89436aaa40388152ab8994618603ee64d7e546a3217589cfcc7cf88a7e2",
+  "candidate_sha256": "1b6407653866f504c67ec6d69087312a4fb5a4474a5915132752904aaecdf794",
+  "new_tests_sha256": "470a34cd9a640ab2cd0c2ce87cac47f6899350d2f084ca07b8320b100866e850",
+  "author_candidate_suite": {
+    "passed": 241,
+    "failed": 2,
+    "errors": 3,
+    "new26_passed": true
+  },
+  "same_five_failure_error_ids_under_frozen_baseline": [
+    "ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_from_a_different_base_is_refused",
+    "ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_with_one_byte_changed_is_refused",
+    "ERROR tools/tests/test_conversion_gate_dump_apply.py::test_tool_reproduced_conversion_is_accepted",
+    "FAILED tools/tests/test_conversion_gate_outside.py::test_symlink_to_anything_refused",
+    "FAILED tools/tests/test_conversion_gate_outside.py::test_symlink_to_vendor_emit_header_refused"
+  ],
+  "hashes": {
+    "suite.log": "3acb37b496db78179360507f2bb8e6805bd557849b50bb18457f50ac4ca41fcc",
+    "suite-result.json": "5c2e3535078ba1ac50cec624cd05c8d77a2d403b5b674d4a1855a82a63920187",
+    "baseline-five.log": "04bfbdb06d9e3df3c3b493b34b282cce00bf96e32f88196f980655c31a91a051",
+    "baseline-five-result.json": "52132811149353698b3c3b36cfe06afafbf4a88f12a6e2199dbbda7561f1450f",
+    "red.log": "25c8d2059ea550e80a72e1253b4dc06df60143e186ba4ead715d9842732c6883",
+    "red-result.json": "87f7f36c0f8bc849d6c3cd72018beff4493eb8070bee016b70aaa910b4994e30"
+  },
+  "encoding_helper_binding_limit": "Four original tests dynamically load production tool; identical RuleA source but no claimed private-candidate execution for those helpers",
+  "no_full_green_claim": true,
+  "no_production_red_claim": true
+}

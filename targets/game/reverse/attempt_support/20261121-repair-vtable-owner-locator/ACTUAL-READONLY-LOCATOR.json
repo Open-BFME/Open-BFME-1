@@ -1,0 +1,7 @@
+{
+  "private_candidate_sha256": "299f17749eb412ef0d010fe648cb811c66d4aad90a7db7a2d4e7a97e67ebbc63",
+  "name": "??_7SpawnUnitBehaviorModuleData@@6B@",
+  "owner": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataConstructor.cpp",
+  "compiler_calls": 0,
+  "baseline_pass_executed": false
+}

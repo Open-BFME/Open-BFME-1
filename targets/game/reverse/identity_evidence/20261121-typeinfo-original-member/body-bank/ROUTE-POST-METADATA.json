@@ -1,0 +1,20 @@
+{
+  "scope": "Read-only current native route_verdict after Root normal same-source metadata repair; no callable pin written by child",
+  "actual_row": {
+    "name": "?ji_009f7ed4@@YAXXZ",
+    "export_rva": "",
+    "target_rva": "0x009F7ED4",
+    "target_size": "6",
+    "source": "game/gen_small/imports_000.cpp",
+    "status": "matched",
+    "notes": "gen-import;slot=0x0135921C;target=??1type_info@@UAE@XZ;native FF25 PE CODE import metadata reconciled;identity and source unchanged;evidence=targets/game/reverse/identity_evidence/20261121-typeinfo-original-member/IMPORT-METADATA.md;model=codex;launched=gpt-6;host=Michael-PC"
+  },
+  "thunk_raw": "ff251c923501",
+  "slot_va": "0x135921c",
+  "actual_import": [
+    "MSVCR71.dll",
+    "??1type_info@@UAE@XZ"
+  ],
+  "route_verdict": null,
+  "actual_generated_source_sha256": "7d29244132fb12d2fd813501423fc3b6e23f0ee52af1d31ead1d29a4fa519068"
+}

@@ -1,0 +1,155 @@
+{
+  "target_rva": "0x269c50",
+  "native_dump_open": true,
+  "retired": false,
+  "native_boundary": {
+    "rva": 2530384,
+    "size": 1073,
+    "extent": 1073,
+    "names": [
+      "?d_00269c50@@YAXXZ"
+    ],
+    "refuted": {},
+    "reject": null,
+    "warnings": []
+  },
+  "full_target_sha256": "b4520c397a04eee7fc619d25a2e4c1f5a6102375c651ec87fb0093f30e08afc4",
+  "leading": [
+    {
+      "rva": "0x269c50",
+      "mnemonic": "push",
+      "ops": "-1"
+    },
+    {
+      "rva": "0x269c52",
+      "mnemonic": "mov",
+      "ops": "eax, dword ptr fs:[0]"
+    },
+    {
+      "rva": "0x269c58",
+      "mnemonic": "push",
+      "ops": "0x100ff20"
+    },
+    {
+      "rva": "0x269c5d",
+      "mnemonic": "push",
+      "ops": "eax"
+    }
+  ],
+  "terminal": [
+    {
+      "rva": "0x26a073",
+      "mnemonic": "pop",
+      "ops": "ebx"
+    },
+    {
+      "rva": "0x26a074",
+      "mnemonic": "mov",
+      "ops": "dword ptr fs:[0], ecx"
+    },
+    {
+      "rva": "0x26a07b",
+      "mnemonic": "add",
+      "ops": "esp, 0x58"
+    },
+    {
+      "rva": "0x26a07e",
+      "mnemonic": "ret",
+      "ops": "4"
+    }
+  ],
+  "after_padding": "cccccccccccccccccccccccc",
+  "configure_native105_sha256": "5318950560675a49debe14a7a047c48f0d0914e613c0425ac950b738e55ed4d0",
+  "configure_first18": [
+    {
+      "offset": "0x0",
+      "mnemonic": "push",
+      "ops": "esi"
+    },
+    {
+      "offset": "0x1",
+      "mnemonic": "push",
+      "ops": "edi"
+    },
+    {
+      "offset": "0x2",
+      "mnemonic": "mov",
+      "ops": "edi, ecx"
+    },
+    {
+      "offset": "0x4",
+      "mnemonic": "call",
+      "ops": "0x3682c"
+    },
+    {
+      "offset": "0x9",
+      "mnemonic": "mov",
+      "ops": "eax, dword ptr [esp + 0xc]"
+    },
+    {
+      "offset": "0xd",
+      "mnemonic": "mov",
+      "ops": "ecx, dword ptr [esp + 0x10]"
+    },
+    {
+      "offset": "0x11",
+      "mnemonic": "mov",
+      "ops": "dword ptr [edi + 0x14], eax"
+    },
+    {
+      "offset": "0x14",
+      "mnemonic": "mov",
+      "ops": "edx, dword ptr [ecx]"
+    },
+    {
+      "offset": "0x16",
+      "mnemonic": "mov",
+      "ops": "eax, dword ptr [esp + 0x18]"
+    },
+    {
+      "offset": "0x1a",
+      "mnemonic": "push",
+      "ops": "eax"
+    },
+    {
+      "offset": "0x1b",
+      "mnemonic": "lea",
+      "ops": "ecx, [edi + 0x1c]"
+    },
+    {
+      "offset": "0x1e",
+      "mnemonic": "mov",
+      "ops": "dword ptr [edi + 0x18], edx"
+    },
+    {
+      "offset": "0x21",
+      "mnemonic": "call",
+      "ops": "0x887c90"
+    },
+    {
+      "offset": "0x26",
+      "mnemonic": "mov",
+      "ops": "ecx, dword ptr [esp + 0x1c]"
+    },
+    {
+      "offset": "0x2a",
+      "mnemonic": "mov",
+      "ops": "eax, dword ptr [esp + 0x14]"
+    },
+    {
+      "offset": "0x2e",
+      "mnemonic": "mov",
+      "ops": "dword ptr [edi + 0x20], ecx"
+    },
+    {
+      "offset": "0x31",
+      "mnemonic": "mov",
+      "ops": "ecx, dword ptr [eax + 0x24]"
+    },
+    {
+      "offset": "0x34",
+      "mnemonic": "mov",
+      "ops": "edx, 1"
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "scope": "Independent read-only code/AST and native source-kind review; no Git command, fixture mutation, source compiler or production change by reviewer",
+  "inputs": {
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\conversion_gate.baseline.py": "b419163a2e274013bc061e1ad8303800a3227026c03b5b1d7bba7b214b983120",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\tools\\conversion_gate.py": "1b6407653866f504c67ec6d69087312a4fb5a4474a5915132752904aaecdf794",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\tools\\tests\\test_conversion_gate_source_kind.py": "470a34cd9a640ab2cd0c2ce87cac47f6899350d2f084ca07b8320b100866e850",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\progress.py": "7fc0b40ce40f3fb0d6a2fc18e8a91770170169dc65685b7c82cceb6882e0ef1f",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\conversion_gate.py": "b419163a2e274013bc061e1ad8303800a3227026c03b5b1d7bba7b214b983120"
+  },
+  "production_gate_equals_reviewed_baseline": true,
+  "only_top_level_function_changed": [
+    "clean_coverage_lost"
+  ],
+  "whole_AST_identical_after_reverting_exact_two_intended_expressions": true,
+  "unchanged_protections": [
+    "Rule A all lift/emit/asm-only/include guards",
+    "Rule C generated-dump grammar/identity/mixed-change guards",
+    "Whole-file naked_cpp_rows and missing-source exclusions",
+    "OLD/NEW ledger object-ID authority and staged-index reading",
+    "Retraction is legal; a surviving clean C++ owner is required for a live repointed claim"
+  ],
+  "native_source_kind_cases": [
+    {
+      "path": "game/F.cpp",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.CPP",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.c",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.C",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.cc",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.CC",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.cxx",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/F.CXX",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/Libraries/Source/CRT/Runtime.cpp",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "inputs/reference/runtime/Runtime.CXX",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "inputs/vendor/library/Runtime.Cc",
+      "native_kind": "cpp",
+      "expected_clean_suffix_class": true
+    },
+    {
+      "path": "game/masm_dumps/F.asm",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "game/masm_dumps/F.ASM",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "game/masm_dumps/F.s",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "game/masm_dumps/F.S",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "inputs/vendor/runtime.lib",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "inputs/vendor/runtime.LIB",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "inputs/vendor/runtime.LiB",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    },
+    {
+      "path": "inputs/toolchains/vs2003/Vc7/lib/libc.lib",
+      "native_kind": "asm",
+      "expected_clean_suffix_class": false
+    }
+  ],
+  "unsupported_suffixes_fail_closed": [
+    {
+      "path": "game/F.txt",
+      "native_failure": "matched source has unsupported suffix .txt: game/F.txt"
+    },
+    {
+      "path": "game/F.hpp",
+      "native_failure": "matched source has unsupported suffix .hpp: game/F.hpp"
+    },
+    {
+      "path": "game/F",
+      "native_failure": "matched source has unsupported suffix <none>: game/F"
+    },
+    {
+      "path": "game/F.cpp.tmp",
+      "native_failure": "matched source has unsupported suffix .tmp: game/F.cpp.tmp"
+    },
+    {
+      "path": "game/F.cpp ",
+      "native_failure": "matched source has unsupported suffix .cpp : game/F.cpp "
+    }
+  ],
+  "end_to_end_tests_reviewed_not_run_by_reviewer": {
+    "count": 26,
+    "modes": [
+      "real historical Git commits",
+      "real staged Git index"
+    ],
+    "positive_controls": [
+      "binary non-UTF8 .lib/.LIB to legitimate MASM",
+      "archive to readable C++",
+      "retracted C++ row"
+    ],
+    "negative_controls": [
+      "live ordinary/real library/reference C/C++ to MASM",
+      "CPP to binary .lib/.LIB or .s/.S/.ASM",
+      "CPP to naked C++ (both A and B reject)"
+    ]
+  },
+  "logic_result": "No concrete P1/P2 regression found. Classification change aligns both sides of Rule B with existing native progress and preserves old genuine C++ ownership. Real archive bytes cannot retain C++ coverage.",
+  "limits": [
+    "This independent review does not execute Git fixtures or rerun the author tests. Author receipts are separate evidence.",
+    "The RTC125B/90B-C++ plus35B assembly implementation and normal admission are outside this classification review.",
+    "No new allowlist, baseline, B2 import exception, assembly allowance or progress credit is added.",
+    "Known pre-existing checks outside Rule B are preserved; this is not a claim to close unrelated historical gate gaps."
+  ]
+}

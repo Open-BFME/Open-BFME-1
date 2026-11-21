@@ -1,0 +1,3 @@
+cl : Command line warning D4025 : overriding '/O2' with '/O1'
+cl : Command line warning D4025 : overriding '/EHc-' with '/EHc'
+ehvecdtr.cpp

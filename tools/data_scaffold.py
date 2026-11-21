@@ -471,13 +471,16 @@ def census_lock_path():
     return main / "build" / "wt_link.census-lock"
 
 
-def retail_libraries(out):
+def retail_libraries(out, *, objects=None):
     """The libraries retail's imports come from: msvcrt.lib (MSVCR71 and the CRT's
     static members, crtexew.obj's _WinMainCRTStartup among them), the toolchain's
     import library for every other DLL in retail's import table, and for a DLL
     the toolchain lacks one generated from retail's own import names and hints
     (tools/loader_lanes.py). Plus retail's resources as a .res. Returns
-    (paths, report)."""
+    (paths, report). Only actual current authored C++ objects may request
+    disposable IAT-only providers for their independently proved native
+    callable imports; the original library catalog is otherwise unchanged.
+    """
     import loader_lanes
     root = build.vc71_root() / "Vc7"
     folders = [root / "lib", root / "PlatformSDK" / "Lib"]
@@ -506,6 +509,11 @@ def retail_libraries(out):
     res.write_bytes(loader_lanes.res_bytes(loader_lanes.resource_leaves(loader_lanes.load(build.EXE))))
     paths.append(res)
     report["resources"] = "retail .rsrc as retail.res"
+    if objects is not None:
+        import import_binding
+        paths, context = import_binding.scoped_import_libraries(paths, objects, out / "source_owned_imports")
+        if context["owners"]:
+            report["source_owned_callable_imports"] = context
     return paths, report
 
 
@@ -637,7 +645,7 @@ def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
     link, env = linker()
     extra = []
     if libraries:
-        libs, lib_report = retail_libraries(out)
+        libs, lib_report = retail_libraries(out, objects=linked)
         extra = [str(p) for p in libs] + ["/SAFESEH:NO"]
         counts["libraries"] = lib_report
         log(json.dumps(lib_report))
@@ -655,6 +663,9 @@ def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
                 raise SystemExit(f"data_scaffold: {lock} held for {LOCK_WAIT // 60} min; not linking")
             time.sleep(30)
     try:
+        if counts.get("libraries", {}).get("source_owned_callable_imports"):
+            (work / "trial.exe").unlink(missing_ok=True)
+            (work / "trial.map").unlink(missing_ok=True)
         started = time.time()
         proc = subprocess.run(cmd, capture_output=True, text=True, errors="replace", env=env)
         seconds = time.time() - started
@@ -662,9 +673,21 @@ def trial_link(img, objects, rsp, out, log=print, code=True, libraries=True):
         lock.rmdir()
     text = proc.stdout + proc.stderr
     (work / "trial.log").write_text(text, encoding="utf-8")
+    import_failures = []
+    owned_context = counts.get("libraries", {}).get("source_owned_callable_imports")
+    if owned_context:
+        import import_binding
+        try:
+            if proc.returncode:
+                raise import_binding.Refused("native trial link failed before selected import proof")
+            counts["source_owned_import_proof"] = import_binding.source_owned_selected_proof(
+                owned_context, work / "trial.map", work / "trial.exe")
+        except (OSError, ValueError, KeyError, IndexError, struct.error, import_binding.Refused) as why:
+            import_failures.append(str(why))
     meta = {"when": time.strftime("%Y-%m-%d %H:%M"), "objects": len(linked), "dump_objects_swapped": swapped,
             "original_dump_objects_kept": kept, "original_dump_objects_rejected": rejected,
-            "complete": not rejected, "seconds": round(seconds), "exit": proc.returncode, **counts}
+            "source_owned_import_failures": import_failures,
+            "complete": not rejected and not import_failures, "seconds": round(seconds), "exit": proc.returncode, **counts}
     (work / "trial_meta.json").write_text(json.dumps(meta), encoding="utf-8")
     return classify_trial(img, objects, text, meta, work, log)
 
@@ -884,7 +907,7 @@ def main(argv=None):
                                          json.loads((work / "trial_meta.json").read_text(encoding="utf-8")), work)
     (args.out / "verify.json").write_text(json.dumps(report, indent=1), encoding="utf-8")
     if report.get("trial") and not report["trial"].get("complete", True):
-        print("data_scaffold: trial INCOMPLETE -- a dump source's object was rejected (not relocatable)")
+        print("data_scaffold: trial INCOMPLETE -- dump relocation or source-owned import proof failed")
         return 1
     print(json.dumps({k: v for k, v in report.items() if k != "failures"}, indent=1))
     bad = checks.get("retail_differs", 0) or checks.get("field_not_moved", 0) or checks.get("byte_changed", 0) \

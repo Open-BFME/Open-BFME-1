@@ -1,0 +1,245 @@
+{
+  "all_commands_conditional_not_executed_by_child": true,
+  "lease": "479767436f1f4a68927b7919d4a0fd1a",
+  "step_order": [
+    {
+      "step": 1,
+      "action": "Review both unapplied patches and frozen hashes; apply ONLY the new-source/header patch now. Keep the two old lifetime definitions intact until their rows are repointed, so no row ever names a removed body during admission. Preserve all three own EH-correction documents. Stage new source/header for data admission.",
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "game/Libraries/Source/COM/ComUtil.cpp",
+        "game/Libraries/Source/COM/VariantNative.h"
+      ]
+    },
+    {
+      "step": 2,
+      "action": "Ordinary genuine data admission. Source and header staged first; compiler measured16 in private native runner, regular tool must independently reprove it. No commit yet.",
+      "argv": [
+        "python3",
+        "tools/add_data_match.py",
+        "?vtMissing@@3V_variant_t@@A",
+        "0x00EE6010",
+        "--rva",
+        "game/Libraries/Source/COM/ComUtil.cpp",
+        "--size",
+        "16",
+        "--model",
+        "<actual root model>",
+        "--evidence",
+        "Original comutil.obj public16B _variant_t; native VT_ERROR10 SCODE80020004 and exact E1/E2/CRT; targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+      ]
+    },
+    {
+      "step": 3,
+      "action": "Central ordinary symbols.csv actual-callee addition only: add verified genuine public CODE-route pin. Keep the old pointer candidate until its old consumer is removed in step5. No alias or replacement datum. Existing __imp pins untouched. Stage symbols and the newly admitted DATA ROW.",
+      "symbol_edits": {
+        "add_exact_fields": [
+          "_wcslen",
+          "0x009F6F7C",
+          "route=MSVCR71.dll!wcslen;original comutil public CODE call and actual FF25/IAT export proof;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ]
+      },
+      "argv_after_edit": [
+        "git",
+        "add",
+        "--",
+        "targets/game/reverse/symbols.csv",
+        "targets/game/reverse/data_rows.csv"
+      ]
+    },
+    {
+      "step": 4,
+      "action": "Ordinary same-name/same-extent retained lifetime owner moves,0 new body credit. Actual compiler labels already proven by real global/CRT graph. Tools must pass; no direct ledger or register edit.",
+      "commands": [
+        [
+          "python3",
+          "tools/add_match.py",
+          "?Rva00C6E380Register@@YAXXZ",
+          "0x00C6E380",
+          "12",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "object-symbol=_$E1;original comutil.obj natural vtMissing lifetime;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ],
+        [
+          "python3",
+          "tools/add_match.py",
+          "?bfmeGoDXE@@YAXXZ",
+          "0x00C71600",
+          "22",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "object-symbol=_$E2;original comutil.obj natural vtMissing lifetime;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ]
+      ]
+    },
+    {
+      "step": 5,
+      "action": "Only after BOTH successful lifetime repoints apply old-source-lifetime-removals.patch. Remove only the now-unused NONIMPORT pointer candidate, then refresh the INDEX explicitly. New typed data owner must be indexed; both old pointer declaration/comment/body blocks must be absent from indexed game/shims. Never commit the temporary duplicate old definitions.",
+      "symbol_edits": {
+        "delete_exact_fields": [
+          "?g_bfmeArgDXE@@3PAEA",
+          "0x00EE6010",
+          "pin"
+        ]
+      },
+      "argv": [
+        "git",
+        "add",
+        "--",
+        "game/Libraries/Source/COM/ComUtil.cpp",
+        "game/Libraries/Source/COM/VariantNative.h",
+        "game/GameEngine/Source/Common/BfmeConv793.cpp",
+        "game/GameEngine/Source/Common/StaticInit/Rva00C6GapCallbacks.cpp",
+        "targets/game/reverse/functions.csv",
+        "targets/game/reverse/data_rows.csv",
+        "targets/game/reverse/symbols.csv"
+      ]
+    },
+    {
+      "step": 6,
+      "action": "Only now run indexed-owner DIR32 retirement against the real first-body message file; it appends the mandatory trailer. Do not delete/rewrite the CSV by hand. Stage its exact output.",
+      "argv": [
+        "python3",
+        "tools/dir32_record.py",
+        "retire",
+        "?g_bfmeArgDXE@@3PAEA",
+        "--for",
+        "?vtMissing@@3V_variant_t@@A",
+        "--msg",
+        "<actual first-body commit-message file>"
+      ],
+      "argv_after_success": [
+        "git",
+        "add",
+        "--",
+        "targets/game/reverse/dir32_addresses.csv"
+      ]
+    },
+    {
+      "step": 7,
+      "action": "Bank first main body with coupled genuine source/header/data/lifetime prerequisite and exact retirement trailer; existing five LIB names already globally rowed. Keep all5 complete source definitions in every snapshot. Ordinary source/hook checks decide; if a real intermediate dependency refusal occurs, preserve it rather than weakening/splitting emitters.",
+      "argv": [
+        "python3",
+        "tools/add_match.py",
+        "?CheckError@_com_util@@YAXJ@Z",
+        "0x00AFD6B0",
+        "15",
+        "game/Libraries/Source/COM/ComUtil.cpp",
+        "--replace-existing",
+        "--model",
+        "<actual root model>",
+        "--notes",
+        "BFME2 authored donor1e864b34;original whole comutil.obj;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+      ]
+    },
+    {
+      "step": 8,
+      "action": "Normal scoped checks for final new source and both edited whole sources; normal header/full hook required. Use normal pin checks on the real symbol table. Stage only exact native writer outputs, including compiler-label register admissions from add_match, re_attempts.log and evidence. Any new DIR32 proposal is adopted only by dir32_record.py record after its actual full-gate preconditions, with --msg to keep audit trailers. Never hand-add/remove records or modify baseline limits.",
+      "commands": [
+        [
+          "build.cmd",
+          "game/Libraries/Source/COM/ComUtil.cpp"
+        ],
+        [
+          "build.cmd",
+          "game/GameEngine/Source/Common/BfmeConv793.cpp"
+        ],
+        [
+          "build.cmd",
+          "game/GameEngine/Source/Common/StaticInit/Rva00C6GapCallbacks.cpp"
+        ],
+        [
+          "python3",
+          "tools/pin_consistency.py",
+          "--symbol",
+          "_wcslen"
+        ],
+        [
+          "python3",
+          "tools/pin_consistency.py",
+          "--check"
+        ]
+      ]
+    },
+    {
+      "step": 9,
+      "action": "Commit normally using the real message file containing Dir32-Retire; native hooks run. First commit credits exactly CheckError15 plus coupled0-credit prerequisites. No --no-verify. Do not claim/publish intermediate source inventories as linked while original comutil still serves any NODUP parent.",
+      "argv": [
+        "git",
+        "commit",
+        "--file",
+        "<actual first-body commit-message file>"
+      ]
+    },
+    {
+      "step": 10,
+      "action": "Admit and normally commit each remaining verified main body separately on the identical full-source snapshot. Final whole-member cohort must have no LIB comutil ownership, no duplicate old E1/E2 definitions or second global. Current real full links are final-cohort scope.",
+      "per_body_admission_commands": [
+        [
+          "python3",
+          "tools/add_match.py",
+          "??0_variant_t@@QAE@JG@Z",
+          "0x00AFD6C0",
+          "111",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "BFME2 authored donor1e864b34;original whole comutil.obj;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ],
+        [
+          "python3",
+          "tools/add_match.py",
+          "??1_variant_t@@QAE@XZ",
+          "0x00AFD730",
+          "18",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "BFME2 authored donor1e864b34;original whole comutil.obj;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ],
+        [
+          "python3",
+          "tools/add_match.py",
+          "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "0x00AFD750",
+          "352",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "BFME2 authored donor1e864b34;original whole comutil.obj;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ],
+        [
+          "python3",
+          "tools/add_match.py",
+          "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "0x00AFD8B0",
+          "343",
+          "game/Libraries/Source/COM/ComUtil.cpp",
+          "--replace-existing",
+          "--model",
+          "<actual root model>",
+          "--notes",
+          "BFME2 authored donor1e864b34;original whole comutil.obj;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md"
+        ]
+      ]
+    }
+  ],
+  "stop_on_any_actual_native_refusal": true,
+  "generated_EH_row_source_import_rows_unchanged": true,
+  "model_note": "Root supplies actual runtime model, not a fabricated reviewer/worker."
+}

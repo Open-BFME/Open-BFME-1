@@ -1,0 +1,172 @@
+{
+  "normal_sources_before": [
+    {
+      "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+      "source_sha256": "8a233c5158ff64abb95c031b0f5f1e21d0437fff26163f2bae88dd599a150b25",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^game^engine_^source_^common_^bfme^conv793.obj",
+      "normal_object_sha256": "23143a8ab673a006f4d74a95855264994e0d08a7d5a1cbdee1aaedbbb3e0e714",
+      "normal_current": true,
+      "private_source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\old-source-controls\\BfmeConv793.cpp",
+      "private_source_sha256": "72de985d6b079d9a2c062e528d2526f419cdc51ccaed36da8318e94de80d28d2",
+      "removed_body_RVA": "0x00C71600",
+      "remaining_row_count": 4
+    },
+    {
+      "source": "game/GameEngine/Source/Common/StaticInit/Rva00C6GapCallbacks.cpp",
+      "source_sha256": "ea997d368423caba3de90b7964a2048252c2c5e642a8326a9a6808b6129968ab",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^game^engine_^source_^common_^static^init_^rva00^c6^gap^callbacks.obj",
+      "normal_object_sha256": "2f11b74cb94758742858faa1c9e173edf6774292c6fc73eb92dfa4f580f386b0",
+      "normal_current": true,
+      "private_source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\old-source-controls\\Rva00C6GapCallbacks.cpp",
+      "private_source_sha256": "f682b0b67d490b74028e27750fa9fbf730acc03897643d02e613be651292b9c6",
+      "removed_body_RVA": "0x00C6E380",
+      "remaining_row_count": 7
+    }
+  ],
+  "compiles": [
+    {
+      "label": "final-main",
+      "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\source\\ComUtil.cpp",
+      "source_sha256": "6e0f7b042bebba6586fb9e59e35ead68270a3aac614c1ee61faeacd5e4d6504d",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\objects\\ComUtil.obj",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+        "-nologo",
+        "-c",
+        "-O2",
+        "-GR-",
+        "-EHsc-",
+        "-O2",
+        "-G6",
+        "-Ob2",
+        "-EHsc",
+        "-DNDEBUG",
+        "-MD",
+        "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+        "-Fobuild/agent-melee-20261120/comutil-whole-member-20261121/objects/ComUtil.obj",
+        "build/agent-melee-20261120/comutil-whole-member-20261121/source/ComUtil.cpp"
+      ],
+      "compile_ok": true,
+      "exit": 0,
+      "rows": [],
+      "object_sha256": "22d0957a25e3594fe4d658766c1e5ac812ededb359b69ae41aa1b5541a56e9aa"
+    },
+    {
+      "label": "BfmeConv793",
+      "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\old-source-controls\\BfmeConv793.cpp",
+      "source_sha256": "72de985d6b079d9a2c062e528d2526f419cdc51ccaed36da8318e94de80d28d2",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\objects\\BfmeConv793-without-lifetime.obj",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+        "-nologo",
+        "-c",
+        "-O2",
+        "-GR-",
+        "-EHsc-",
+        "-DNDEBUG",
+        "-DWIN32",
+        "-D_WINDOWS",
+        "-MD",
+        "-EHsc",
+        "-Iinputs/reference/shims/sweep",
+        "-Fobuild/agent-melee-20261120/comutil-whole-member-20261121/objects/BfmeConv793-without-lifetime.obj",
+        "build/agent-melee-20261120/comutil-whole-member-20261121/old-source-controls/BfmeConv793.cpp"
+      ],
+      "compile_ok": true,
+      "exit": 0,
+      "rows": [
+        {
+          "name": "?bfmeGoDXB@BfmeThingDXB@@QAEXXZ",
+          "rva": "0x009F69D3",
+          "size": 22,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?bfmeGoDXC@BfmeThingDXC@@QAEXXZ",
+          "rva": "0x0013ADE0",
+          "size": 24,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?bfmeGoDXD@BfmeThingDXD@@QAE_NXZ",
+          "rva": "0x00694D40",
+          "size": 28,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?bfmeGoDXF@@YA_NPAX@Z",
+          "rva": "0x00849E60",
+          "size": 23,
+          "strict_unmasked_exact": true
+        }
+      ],
+      "object_sha256": "37c8fe59d672aadc38acc7c42ca3a93f95e4edd1a9b42a0fdb09d4fc8203e74c"
+    },
+    {
+      "label": "Rva00C6GapCallbacks",
+      "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\old-source-controls\\Rva00C6GapCallbacks.cpp",
+      "source_sha256": "f682b0b67d490b74028e27750fa9fbf730acc03897643d02e613be651292b9c6",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-whole-member-20261121\\objects\\Rva00C6GapCallbacks-without-lifetime.obj",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+        "-nologo",
+        "-c",
+        "-O2",
+        "-GR-",
+        "-EHsc-",
+        "-O2",
+        "-MD",
+        "-Igame/Libraries/Source/WWVegas/WWLib",
+        "-Fobuild/agent-melee-20261120/comutil-whole-member-20261121/objects/Rva00C6GapCallbacks-without-lifetime.obj",
+        "build/agent-melee-20261120/comutil-whole-member-20261121/old-source-controls/Rva00C6GapCallbacks.cpp"
+      ],
+      "compile_ok": true,
+      "exit": 0,
+      "rows": [
+        {
+          "name": "?Rva00C6FC60Release@@YAXXZ",
+          "rva": "0x00C6FC60",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C6FC70Release@@YAXXZ",
+          "rva": "0x00C6FC70",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C70040Release@@YAXXZ",
+          "rva": "0x00C70040",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C700F0Release@@YAXXZ",
+          "rva": "0x00C700F0",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C714F0Release@@YAXXZ",
+          "rva": "0x00C714F0",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C708F0Release@@YAXXZ",
+          "rva": "0x00C708F0",
+          "size": 10,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "?Rva00C70910Release@@YAXXZ",
+          "rva": "0x00C70910",
+          "size": 10,
+          "strict_unmasked_exact": true
+        }
+      ],
+      "object_sha256": "49e61b7ffa065acdfef089f9e033d49dd37e5a366daecd028866a90549bcea7c"
+    }
+  ]
+}

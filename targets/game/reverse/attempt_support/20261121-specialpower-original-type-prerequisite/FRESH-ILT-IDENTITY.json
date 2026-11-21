@@ -1,0 +1,37 @@
+[
+  {
+    "name": "?triggerSpecialPower@SpecialPowerModule@@IAEXPBVCoord3D@@@Z",
+    "rva": "0x00269C50",
+    "exit_code": 0,
+    "stdout": "CONFIRMED  p_false=3.91e-04  (exact)\n",
+    "stderr": ""
+  },
+  {
+    "name": "?triggerSpecialPower@SpecialPowerModule@@IAEXPBUCoord3D@@@Z",
+    "rva": "0x00269C50",
+    "exit_code": 1,
+    "stdout": "CONTRADICTED  p_false=3.91e-04  (outside every window of the target's slots 29576:18634-18639)\n",
+    "stderr": ""
+  },
+  {
+    "name": "?finishSpecialPower@SpecialPowerModule@@QAEXI@Z",
+    "rva": "0x00269C50",
+    "exit_code": 1,
+    "stdout": "CONTRADICTED  p_false=3.91e-04  (outside every window of the target's slots 29576:18634-18639)\n",
+    "stderr": ""
+  },
+  {
+    "name": "?createViewObject@SpecialPowerModule@@IAEXPBVCoord3D@@@Z",
+    "rva": "0x00269130",
+    "exit_code": 0,
+    "stdout": "CONFIRMED  p_false=3.26e-04  (exact)\n",
+    "stderr": ""
+  },
+  {
+    "name": "?createViewObject@SpecialPowerModule@@IAEXPBUCoord3D@@@Z",
+    "rva": "0x00269130",
+    "exit_code": 1,
+    "stdout": "CONTRADICTED  p_false=3.26e-04  (outside every window of the target's slots 31314:19580-19584)\n",
+    "stderr": ""
+  }
+]

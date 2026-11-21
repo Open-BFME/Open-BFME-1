@@ -1,0 +1,114 @@
+{
+  "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\source\\ComUtil.cpp",
+  "source_sha256": "e1a6b26372ca363073ea59e5d8c29c41a2fdfa81722f429382d4c81fcf269e2c",
+  "header_sha256": "1c717d4963dd5f0aeb5d7dcb5379ac97f4434d907cca2c3b8076a1550daee860",
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "donor_source_sha256": "6569f089db61e7e7e95e62d3c2381499787ba66ce5526b143b736f01915bfa15",
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-O2",
+    "-G6",
+    "-Ob2",
+    "-EHsc",
+    "-DNDEBUG",
+    "-MD",
+    "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+    "-Fobuild/agent-melee-20261120/comutil-small-20261121/objects/ComUtil.obj",
+    "build/agent-melee-20261120/comutil-small-20261121/source/ComUtil.cpp"
+  ],
+  "compile_ok": true,
+  "exit": 0,
+  "rows": [
+    {
+      "name": "??0_variant_t@@QAE@JG@Z",
+      "rva": "0x00AFD6C0",
+      "size": 111,
+      "unmasked_exact": true,
+      "unresolved": [],
+      "native_raw_equal": true,
+      "native_relocations_equal": true,
+      "raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+      "relocations": [
+        [
+          32,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    },
+    {
+      "name": "??1_variant_t@@QAE@XZ",
+      "rva": "0x00AFD730",
+      "size": 18,
+      "unmasked_exact": true,
+      "unresolved": [],
+      "native_raw_equal": true,
+      "native_relocations_equal": true,
+      "raw": "51ff150000000085c07d0650e800000000c3",
+      "relocations": [
+        [
+          3,
+          6,
+          "__imp__VariantClear@4"
+        ],
+        [
+          13,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    },
+    {
+      "name": "?CheckError@_com_util@@YAXJ@Z",
+      "rva": "0x00AFD6B0",
+      "size": 15,
+      "unmasked_exact": true,
+      "unresolved": [],
+      "native_raw_equal": true,
+      "native_relocations_equal": true,
+      "raw": "8b44240485c07d0650e800000000c3",
+      "relocations": [
+        [
+          10,
+          20,
+          "?_com_issue_error@@YGXJ@Z"
+        ]
+      ]
+    }
+  ],
+  "all_runtime_sections": [
+    [
+      3,
+      ".text",
+      15
+    ],
+    [
+      5,
+      ".text",
+      111
+    ],
+    [
+      7,
+      ".text",
+      18
+    ]
+  ],
+  "undefined": [
+    [
+      "?_com_issue_error@@YGXJ@Z",
+      32,
+      2
+    ],
+    [
+      "__imp__VariantClear@4",
+      0,
+      2
+    ]
+  ],
+  "object_sha256": "31b13365e75f4b194a425e4c51a52202a06155eb406d08455ce26b48c65e5250"
+}

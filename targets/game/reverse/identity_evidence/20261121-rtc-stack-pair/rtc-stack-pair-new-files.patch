@@ -1,0 +1,70 @@
+diff --git a/game/Libraries/Source/CRT/VS2003/RtcStack.cpp b/game/Libraries/Source/CRT/VS2003/RtcStack.cpp
+new file mode 100644
+--- /dev/null
++++ b/game/Libraries/Source/CRT/VS2003/RtcStack.cpp
+@@ -0,0 +1,20 @@
++// cl: /O1 /G6 /Oi /Ob1 /MD /GX-
++// Independent reconstruction of native stack.obj's ordinary fastcall guard
++// checker, from retail, COFF identity/relocations and CodeView types. The
++// descriptor layouts are the public rtcapi.h definitions (8 and 12 bytes).
++// Its flag-dependent sibling remains assembly in RTC_CheckEsp.asm; no naked
++// C++ or compiler-generated import aliases are used here.
++#include <rtcapi.h>
++#pragma intrinsic(_ReturnAddress)
++void _RTC_StackFailure(void *,const char *);
++
++extern "C" void __fastcall _RTC_CheckStackVars(void *frame,_RTC_framedesc *v) {
++ unsigned int byteOffset=0;
++ for(int i=0;i<v->varCount;++i,byteOffset+=sizeof(_RTC_vardesc)) {
++  int pos=(*(_RTC_vardesc *)((char *)v->variables+byteOffset)).addr;
++  int size=(*(_RTC_vardesc *)((char *)v->variables+byteOffset)).size;
++  if(*(int *)((unsigned long)frame+pos-4)!=0xCCCCCCCC ||
++     *(int *)((unsigned long)frame+pos+size)!=0xCCCCCCCC)
++   _RTC_StackFailure(_ReturnAddress(),(*(_RTC_vardesc *)((char *)v->variables+byteOffset)).name);
++ }
++}
+diff --git a/game/masm_dumps/RTC_CheckEsp.asm b/game/masm_dumps/RTC_CheckEsp.asm
+new file mode 100644
+--- /dev/null
++++ b/game/masm_dumps/RTC_CheckEsp.asm
+@@ -0,0 +1,40 @@
++.386
++.model flat
++
++; Native stack.obj compiler machinery, BFME1 retail 0x009F7502..0x009F7525.
++; The caller's ZF is the input: an ordinary C++ prologue cannot implement
++; this entry contract. The failure path also preserves live EAX and EDX.
++; It remains assembly and receives zero C++ credit. The ordinary fastcall
++; guard-checking sibling is recovered in CRT/RtcStack.cpp.
++EXTERN ?_RTC_Failure@@YAXPAXH@Z:PROC
++
++_TEXT SEGMENT
++public __RTC_CheckEsp
++__RTC_CheckEsp PROC
++    jne bad_stack
++    ret
++bad_stack:
++    push ebp
++    mov ebp,esp
++    sub esp,0
++    push eax
++    push edx
++    push ebx
++    push esi
++    push edi
++    push 0
++    push DWORD PTR [ebp+4]
++    call ?_RTC_Failure@@YAXPAXH@Z
++    pop ecx
++    pop ecx
++    pop edi
++    pop esi
++    pop ebx
++    pop edx
++    pop eax
++    mov esp,ebp
++    pop ebp
++    ret
++__RTC_CheckEsp ENDP
++_TEXT ENDS
++END

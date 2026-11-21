@@ -1,0 +1,19 @@
+[
+  {
+    "name": "??_E_com_error@@UAEPAXI@Z",
+    "type": 32,
+    "aux": 1,
+    "section": 0,
+    "tag": 15,
+    "search": 2,
+    "default": {
+      "index": 15,
+      "name": "??_G_com_error@@UAEPAXI@Z",
+      "section": 0,
+      "storage": 2,
+      "value": 0,
+      "type": 32,
+      "aux": 0
+    }
+  }
+]

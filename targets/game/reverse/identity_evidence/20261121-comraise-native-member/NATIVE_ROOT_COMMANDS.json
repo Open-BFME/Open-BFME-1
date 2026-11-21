@@ -1,0 +1,42 @@
+[
+  {
+    "snapshot": "01-raise",
+    "body": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+    "rva": "0xafda50",
+    "size": 51,
+    "command": "python3 tools/add_match.py '?_com_raise_error@@YGXJPAUIErrorInfo@@@Z' 0x00AFDA50 51 game/Libraries/Source/COM/ComRaise.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored complete ComRaise;original COFF CV and251B+150B graph exact;native inline ANY2 weakE/G andLARGEST6 preserved;evidence=targets/game/reverse/identity_evidence/20261121-comraise-native-member.md'",
+    "normal_check": ".\\build.cmd game/Libraries/Source/COM/ComRaise.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp game/Libraries/Source/COM/ComInvokeError.cpp"
+  },
+  {
+    "snapshot": "02-constructor",
+    "body": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+    "rva": "0xafda10",
+    "size": 54,
+    "command": "python3 tools/add_match.py '??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z' 0x00AFDA10 54 game/Libraries/Source/COM/ComRaise.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored complete ComRaise;original COFF CV and251B+150B graph exact;native inline ANY2 weakE/G andLARGEST6 preserved;evidence=targets/game/reverse/identity_evidence/20261121-comraise-native-member.md'",
+    "normal_check": ".\\build.cmd game/Libraries/Source/COM/ComRaise.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp game/Libraries/Source/COM/ComInvokeError.cpp"
+  },
+  {
+    "snapshot": "03-copy",
+    "body": "??0_com_error@@QAE@ABV0@@Z",
+    "rva": "0xafda90",
+    "size": 50,
+    "command": "python3 tools/add_match.py '??0_com_error@@QAE@ABV0@@Z' 0x00AFDA90 50 game/Libraries/Source/COM/ComRaise.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored complete ComRaise;original COFF CV and251B+150B graph exact;native inline ANY2 weakE/G andLARGEST6 preserved;evidence=targets/game/reverse/identity_evidence/20261121-comraise-native-member.md'",
+    "normal_check": ".\\build.cmd game/Libraries/Source/COM/ComRaise.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp game/Libraries/Source/COM/ComInvokeError.cpp"
+  },
+  {
+    "snapshot": "04-destructor",
+    "body": "??1_com_error@@UAE@XZ",
+    "rva": "0xafdad0",
+    "size": 38,
+    "command": "python3 tools/add_match.py '??1_com_error@@UAE@XZ' 0x00AFDAD0 38 game/Libraries/Source/COM/ComRaise.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored complete ComRaise;original COFF CV and251B+150B graph exact;native inline ANY2 weakE/G andLARGEST6 preserved;evidence=targets/game/reverse/identity_evidence/20261121-comraise-native-member.md'",
+    "normal_check": ".\\build.cmd game/Libraries/Source/COM/ComRaise.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp game/Libraries/Source/COM/ComInvokeError.cpp"
+  },
+  {
+    "snapshot": "05-scalar-delete",
+    "body": "??_G_com_error@@UAEPAXI@Z",
+    "rva": "0xafdb00",
+    "size": 58,
+    "command": "python3 tools/add_match.py '??_G_com_error@@UAEPAXI@Z' 0x00AFDB00 58 game/Libraries/Source/COM/ComRaise.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored complete ComRaise;original COFF CV and251B+150B graph exact;native inline ANY2 weakE/G andLARGEST6 preserved;evidence=targets/game/reverse/identity_evidence/20261121-comraise-native-member.md'",
+    "normal_check": ".\\build.cmd game/Libraries/Source/COM/ComRaise.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp game/Libraries/Source/COM/ComInvokeError.cpp"
+  }
+]

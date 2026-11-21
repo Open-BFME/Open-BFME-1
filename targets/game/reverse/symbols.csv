@@ -82725,7 +82725,6 @@ name,address,notes
 ?g_bfmeArg1051@@3PADA,0x00D090E8,pin
 ?g_bfmeArg1057@@3PADA,0x00D07374,pin
 ?g_bfmeArgAAV@@3HA,0x012B6BB4,Open-BFME5 value the 0x004D1B00 shutdown forwards
-?g_bfmeArgDXE@@3PAEA,0x00EE6010,pin
 ?g_bfmeArgDZE@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgDZF@@3PAXA,0x00EB7D80,pin
 ?g_bfmeArgEAA@@3PAXA,0x00EB7D80,pin
@@ -91347,3 +91346,8 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_C@_0N@GKGGOADM@ArmorSetFlag?$AA@,0x00C8D6A0,g_bfmeTableABF field-parse table VA 0x012AC188 entry 2 token; compiler string literal ArmorSetFlag equals retail at VA 0x0108D6A0
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x0002CA61,pin
 ?bfmeAskBIC@BfmeSubBIC@@QAEHXZ,0x001CABE0,pin
+__controlfp,0x009F7DF2,route=MSVCR71.dll!_controlfp;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-fp8-atonexit-members.md
+___dllonexit,0x009F7EE0,route=MSVCR71.dll!__dllonexit;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-fp8-atonexit-members.md
+__CRT_RTC_INIT,0x009F8088,route=MSVCR71.dll!_CRT_RTC_INIT;native original CODE import and independently decoded named caller; evidence=targets/game/reverse/identity_evidence/20261120-rtc-init-member.md
+??1type_info@@UAE@XZ,0x009F7ED4,route=MSVCR71.dll!??1type_info@@UAE@XZ;native FF25 VA0135921C original x86 CODE import and PE exact identity;small original destructor dependency for ti_inst vector body;evidence=targets/game/reverse/identity_evidence/20261121-ti-inst-member.md
+_wcslen,0x009F6F7C,route=MSVCR71.dll!wcslen;original public CODE call and independent FF25/IAT export proof;targets/game/reverse/identity_evidence/20261121-authored-comutil-native-member.md

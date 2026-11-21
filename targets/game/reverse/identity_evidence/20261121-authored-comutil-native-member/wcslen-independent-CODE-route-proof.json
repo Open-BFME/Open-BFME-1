@@ -1,0 +1,36 @@
+{
+  "original_COFF": {
+    "index": 101,
+    "name": "_wcslen",
+    "value": 0,
+    "section": 0,
+    "type": 32,
+    "storage": 2
+  },
+  "original_call_site": "0x00AFD8DE",
+  "target_rva": "0x009F6F7C",
+  "thunk6_raw": "ff2524953501",
+  "IAT_VA": "0x1359524",
+  "IAT_RVA": "0x00F59524",
+  "PE_import": [
+    "msvcr71.dll",
+    "wcslen"
+  ],
+  "original_CRT_library": "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+  "original_CRT_library_sha256": "e888617fbd2e153645b92122deab1c6ec437905431243c43aa7310164c0e7779",
+  "native_CODE_import_member": [
+    {
+      "member": "MSVCR71.dll",
+      "member_sha256": "24f9864e973d28980083a0c1c30b621c4b17319aca94c9d7d474a6633e1fb9ae",
+      "machine": 332,
+      "import_type": 0,
+      "name_type": 2,
+      "strings": [
+        "_wcslen",
+        "MSVCR71.dll"
+      ]
+    }
+  ],
+  "private_symbolmap_route_only": true,
+  "no_pin_or_generated_provider_write": true
+}

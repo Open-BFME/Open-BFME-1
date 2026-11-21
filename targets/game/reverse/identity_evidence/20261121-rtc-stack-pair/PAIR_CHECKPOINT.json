@@ -1,0 +1,283 @@
+{
+  "claim_snapshot": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\bfme1\\rtc-stack-claim-scope.json",
+  "claim_sha256": "c65d1965956b8d304c8a43113d17c6699132758e21768fc8f4ed488e9c1324a7",
+  "lease": "9e948b64fe864d95968ef217f983a0e2",
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "native_member": "..\\build\\intel\\st_obj\\stack.obj",
+  "native_member_sha256": "27d50f13be24c322ef991eb457a85acea2f37e708159d62697e94459638cadd4",
+  "normal": [
+    {
+      "name": "@_RTC_CheckStackVars@8",
+      "rva": 10450213,
+      "size": 90,
+      "donor": "inputs/reference/open-bfme-2/Code/Libraries/Source/CRT/RtcStack.cpp",
+      "destination": "game/Libraries/Source/CRT/VS2003/RtcStack.cpp",
+      "file": "RtcStack.cpp",
+      "credit": 90,
+      "donor_sha256": "402169d42f9b48c0e12357f42c9dbf33310a57f38209d374a6158314d6d3f484",
+      "candidate_sha256": "402169d42f9b48c0e12357f42c9dbf33310a57f38209d374a6158314d6d3f484",
+      "compile_ok": true,
+      "exit": 0,
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\objects\\RtcStack.obj",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+        "-nologo",
+        "-c",
+        "-O2",
+        "-GR-",
+        "-EHsc-",
+        "-O1",
+        "-G6",
+        "-Oi",
+        "-Ob1",
+        "-MD",
+        "-GX-",
+        "-Fobuild/agent-melee-20261120/rtc-stack-pair-20261121/objects/RtcStack.obj",
+        "build/agent-melee-20261120/rtc-stack-pair-20261121/source/RtcStack.cpp"
+      ],
+      "object_sha256": "04f948312d9098b790c1714da025f707738c87f0e1a903ef58a1a6be01e01f2f",
+      "raw": "558bec515153568bf233db391e8bd18955f8895dfc7e3f57bfcccccccc8b460403c38b08397c11fc750a8b400403c1393c1074148b4604ff741808ff7504e8000000008b55f85959ff45fc8b45fc83c30c3b067cc85f5e5bc9c3",
+      "relocations": [
+        [
+          63,
+          20,
+          "?_RTC_StackFailure@@YAXPAXPBD@Z"
+        ]
+      ],
+      "native_raw_equal": true,
+      "native_relocations_equal": true,
+      "strict_retail_equal": true,
+      "unresolved": [],
+      "masked": false,
+      "symbol": {
+        "index": 13,
+        "name": "@_RTC_CheckStackVars@8",
+        "value": 0,
+        "section": 3,
+        "type": 32,
+        "storage": 2
+      },
+      "code_section_flags": "0x60101020",
+      "extra_runtime_sections": [],
+      "undefined": [
+        {
+          "name": "?_RTC_StackFailure@@YAXPAXPBD@Z",
+          "value": 0,
+          "section": 0,
+          "type": 32,
+          "storage": 2
+        }
+      ],
+      "normal_dependency_receipt_current": false,
+      "directives": [
+        "/DEFAULTLIB:\"MSVCRT\" /DEFAULTLIB:\"OLDNAMES\" "
+      ]
+    },
+    {
+      "name": "__RTC_CheckEsp",
+      "rva": 10450178,
+      "size": 35,
+      "donor": "inputs/reference/open-bfme-2/Code/masm_dumps/RTC_CheckEsp.asm",
+      "destination": "game/masm_dumps/RTC_CheckEsp.asm",
+      "file": "RTC_CheckEsp.asm",
+      "credit": 0,
+      "donor_sha256": "9752f37382698cebaa341c2478f340a3e9fac1f7fbd72646af2dce397c1ea641",
+      "candidate_sha256": "015d92d07b6c55aa8298474c4a6cab46e0d6e7998685f9a5cfef8439f5468a6b",
+      "compile_ok": true,
+      "exit": 0,
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\objects\\RTC_CheckEsp.obj",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\ml.exe",
+        "-nologo",
+        "-c",
+        "-Cx",
+        "-Fobuild/agent-melee-20261120/rtc-stack-pair-20261121/objects/RTC_CheckEsp.obj",
+        "build/agent-melee-20261120/rtc-stack-pair-20261121/source/RTC_CheckEsp.asm"
+      ],
+      "object_sha256": "59dfd8c05381f26d26e13be45f05d8a0142104d6ca3ab8f0076516360be91e19",
+      "raw": "7501c3558bec83ec0050525356576a00ff7504e80000000059595f5e5b5a588be55dc3",
+      "relocations": [
+        [
+          20,
+          20,
+          "?_RTC_Failure@@YAXPAXH@Z"
+        ]
+      ],
+      "native_raw_equal": true,
+      "native_relocations_equal": true,
+      "strict_retail_equal": true,
+      "unresolved": [],
+      "masked": false,
+      "symbol": {
+        "index": 15,
+        "name": "__RTC_CheckEsp",
+        "value": 0,
+        "section": 1,
+        "type": 32,
+        "storage": 2
+      },
+      "code_section_flags": "0x60300020",
+      "extra_runtime_sections": [],
+      "undefined": [
+        {
+          "name": "?_RTC_Failure@@YAXPAXH@Z",
+          "value": 0,
+          "section": 0,
+          "type": 0,
+          "storage": 2
+        }
+      ],
+      "normal_dependency_receipt_current": true,
+      "directives": []
+    }
+  ],
+  "layout": {
+    "exit": 0,
+    "command": [
+      "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+      "-nologo",
+      "-c",
+      "-O2",
+      "-GR-",
+      "-EHsc-",
+      "-O1",
+      "-G6",
+      "-Oi",
+      "-Ob1",
+      "-MD",
+      "-GX-",
+      "-Fobuild/agent-melee-20261120/rtc-stack-pair-20261121/objects/RtcStack-layout.obj",
+      "build/agent-melee-20261120/rtc-stack-pair-20261121/source/RtcStack.cpp",
+      "-Z7",
+      "-showIncludes"
+    ],
+    "types": {
+      "_RTC_framedesc": {
+        "fwd": false,
+        "key": "struct",
+        "size": 8,
+        "bases": [],
+        "fields": [
+          [
+            0,
+            "varCount",
+            "int",
+            4
+          ],
+          [
+            4,
+            "variables",
+            "_RTC_vardesc*",
+            4
+          ]
+        ],
+        "statics": [],
+        "methods": [],
+        "virtual": [],
+        "vslots": {},
+        "vfptr": false
+      },
+      "_RTC_vardesc": {
+        "fwd": false,
+        "key": "struct",
+        "size": 12,
+        "bases": [],
+        "fields": [
+          [
+            0,
+            "addr",
+            "int",
+            4
+          ],
+          [
+            4,
+            "size",
+            "int",
+            4
+          ],
+          [
+            8,
+            "name",
+            "char*",
+            4
+          ]
+        ],
+        "statics": [],
+        "methods": [],
+        "virtual": [],
+        "vslots": {},
+        "vfptr": false
+      }
+    },
+    "native_types": {
+      "_RTC_framedesc": {
+        "fwd": false,
+        "key": "struct",
+        "size": 8,
+        "bases": [],
+        "fields": [
+          [
+            0,
+            "varCount",
+            "int",
+            4
+          ],
+          [
+            4,
+            "variables",
+            "_RTC_vardesc*",
+            4
+          ]
+        ],
+        "statics": [],
+        "methods": [],
+        "virtual": [],
+        "vslots": {},
+        "vfptr": false
+      },
+      "_RTC_vardesc": {
+        "fwd": false,
+        "key": "struct",
+        "size": 12,
+        "bases": [],
+        "fields": [
+          [
+            0,
+            "addr",
+            "int",
+            4
+          ],
+          [
+            4,
+            "size",
+            "int",
+            4
+          ],
+          [
+            8,
+            "name",
+            "char*",
+            4
+          ]
+        ],
+        "statics": [],
+        "methods": [],
+        "virtual": [],
+        "vslots": {},
+        "vfptr": false
+      }
+    },
+    "descriptors_equal": true,
+    "debug_code_relocs_equal_plain": true
+  },
+  "total_code": 125,
+  "new_cpp_max": 90,
+  "new_cpp_bodies_max": 1,
+  "assembly_cpp_credit": 0,
+  "new_data": 0,
+  "productive_changes": false,
+  "claims_changed": false,
+  "full_game_link_or_runtime_proven": false,
+  "remaining": "Root normal source admission and combined build/link/pin/import/source gates; private focused link completed, see RTC_STACK_FINAL_PROOF.json.",
+  "focused_link_complete": true
+}

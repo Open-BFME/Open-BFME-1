@@ -1,0 +1,83 @@
+{
+  "b1_head": "befaad49ddfda6cabe0ed00f5ecdf48eb1a6a8b4",
+  "donor_root": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2",
+  "donor_head": "1e864b34e05f68568db539537b6959d94d104f57",
+  "source_and_input_checks": [
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\game\\GameEngine\\Source\\GameLogic\\Object\\Behavior\\SpawnUnitBehaviorModuleDataConstructor.cpp",
+      "initial_sha256": "ca7999e2f9ffd593c516d5e2f1df62ab6664c9b91d1e36bcf034f44ddb3b47cf",
+      "final_sha256": "ca7999e2f9ffd593c516d5e2f1df62ab6664c9b91d1e36bcf034f44ddb3b47cf",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\game\\GameEngine\\Source\\GameLogic\\Object\\Behavior\\SpawnUnitBehaviorModuleDataDestructor.cpp",
+      "initial_sha256": "5b514f234646e6c85e120af16e5e3146e1b770e7011f01464e94fe9571f903d9",
+      "final_sha256": "5b514f234646e6c85e120af16e5e3146e1b770e7011f01464e94fe9571f903d9",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\game\\GameEngine\\Source\\GameLogic\\Object\\Behavior\\SpawnUnitBehaviorFactories.cpp",
+      "initial_sha256": "10e645ea5aec25c72c13c86e4c89d969807413eb0a7612ebecbe2e9b7b2e940f",
+      "final_sha256": "10e645ea5aec25c72c13c86e4c89d969807413eb0a7612ebecbe2e9b7b2e940f",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\game\\GameEngine\\Source\\GameLogic\\Object\\Behavior\\SpawnUnitBehaviorUpdate.cpp",
+      "initial_sha256": "35c1e5932adfa45e6e7c0e141b156c5cdf217cfac2e1f6567230b4fdcf615052",
+      "final_sha256": "35c1e5932adfa45e6e7c0e141b156c5cdf217cfac2e1f6567230b4fdcf615052",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\baselines\\bfme1\\retail-1.03-unpacked\\files\\lotrbfme.exe",
+      "initial_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+      "final_sha256": "1fbdc0ced8f283732c094c4f0804ce8dc1e3e3675b720bcab066c94fed964e75",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\targets\\game\\reverse\\functions.csv",
+      "initial_sha256": "5f8e83f0f300c3c19d8697975baa5e14a7ac274e7874680a249a28790cd3b473",
+      "final_sha256": "5f8e83f0f300c3c19d8697975baa5e14a7ac274e7874680a249a28790cd3b473",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\targets\\game\\reverse\\symbols.csv",
+      "initial_sha256": "6d72782f448e99dbb5ca56ce7b9579d9f6580c9db3cf57c6b73e86f9973e9d61",
+      "final_sha256": "6d72782f448e99dbb5ca56ce7b9579d9f6580c9db3cf57c6b73e86f9973e9d61",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\tools\\add_data_match.py",
+      "initial_sha256": "015431e2eb5ac63284999103714b8fdd16f3ccb65468c020c43d5b6c05c4735c",
+      "final_sha256": "015431e2eb5ac63284999103714b8fdd16f3ccb65468c020c43d5b6c05c4735c",
+      "equal": true
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\tools\\repair_queue.py",
+      "initial_sha256": "44e7b3196d7681eb108beca4b5157c43518c3af82560ba8a8b69d8811120a92a",
+      "final_sha256": "44e7b3196d7681eb108beca4b5157c43518c3af82560ba8a8b69d8811120a92a",
+      "equal": true
+    }
+  ],
+  "donor_inputs": [
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2\\Code\\GameEngine\\Include\\Common\\ModuleData.h",
+      "sha256": "d5eabd25d232e22a79d93dd8267a23c31343657b3d929c24b86eed31105f9b31"
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2\\Code\\GameEngine\\Include\\Common\\BfmeModuleData.h",
+      "sha256": "e8b20e5faf397ee74d50305ca3c0757ab6afe4db60783d96434d10c4bd7a586f"
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2\\Code\\GameEngine\\Source\\GameLogic\\Object\\Behavior\\SpawnUnitBehaviorModuleDataCtor.cpp",
+      "sha256": "661b9cf6c874741671e54c976e16ec4decfebb4fd6ab5ed7f963d46ac3ca8f3f"
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2\\Code\\GameEngine\\Source\\GameLogic\\Object\\Upgrade\\FamilyUpgradeModuleDataDtors.cpp",
+      "sha256": "d604a5e8dd580a46ac50e7819c27879c28c899701d9995cfaff9dd4de2c42361"
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\inputs\\reference\\open-bfme-2\\reverse\\attempt_support\\vtable-bridge-uncovered-survey-20261115.md",
+      "sha256": "8b30849d20fa3ebd11da2bfce6948f3b8edb50532474395406b6b6d8723018db"
+    }
+  ]
+}

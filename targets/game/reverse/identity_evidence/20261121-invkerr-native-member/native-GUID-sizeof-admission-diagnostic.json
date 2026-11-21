@@ -1,0 +1,24 @@
+{
+  "results": [
+    {
+      "name": "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+      "native_expression": "_GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+      "compiled_sizeof": 16,
+      "fresh_probe_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\native-sizeof-4fdf657270ce.obj",
+      "probe_sha256": "70b010130e15196690de6bd886d8961cd55a1d82634f3656300ab9ea61539dd0",
+      "no_custom_declaration_alias_or_macro": true
+    },
+    {
+      "name": "__GUID_00020400_0000_0000_c000_000000000046",
+      "native_expression": "_GUID_00020400_0000_0000_c000_000000000046",
+      "compiled_sizeof": 16,
+      "fresh_probe_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\native-sizeof-880e09dd1edd.obj",
+      "probe_sha256": "8949f7be1fb6f65813da0355e685bcf895225bdd5d05b8ad0d5e63186b0bef05",
+      "no_custom_declaration_alias_or_macro": true
+    }
+  ],
+  "proof": "Actual native _cpp_data_access/_run_probe and same native source/compiler-command/guarded probe text, only explicit private output location instead of shared build/data_rows/probe. Both existing fresh probes succeed and emit16. Native symbol_size/admission unmodified, not invoked with a substituted sizer. Root may use regular add_data_match; other normal gates remain authoritative.",
+  "formal_data_rows_admitted": 0,
+  "native_sizeof_admission_prerequisite_passes": true,
+  "initial_diagnostic_assumption_corrected": "Expected C2065 was wrong; the real VC7.1 compiler resolves its own _GUID_* identifiers after the source uuid expressions and emits sizeof16."
+}

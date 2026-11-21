@@ -1,0 +1,28 @@
+{
+  "head": "243464a71e9f4c6e64c111cf147bb39b76407e19",
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "claim_snapshot": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\bfme1\\invkerr-claim-scope.json",
+  "claim_sha256": "f35329bf78b22d502a7ab60a9503d4a5ad5d787f30403c4289b0d3d2cb185a02",
+  "lease": "4e9ab26bbcff41b89b5823059fb95d81",
+  "native_member_sha256": "6463ac6bee2bd7a88738d2fdcf268f9869806d43e7f572b7bfba8495d1eb161b",
+  "donor_source_sha256": "f21dc67bff226a6ac4a9d5e62af6155c2bc12a44f391b31e8dba6c1712e27205",
+  "donor_header_sha256": "8fb47b86ca49121bff6637c5642b74a4263d4a4cbc79bf42f4ff62534dce03b0",
+  "candidate_source_sha256": "daa8f699ed3b257ef19b1b4b73dcd92d28599db607b2305c673feca05779fa16",
+  "candidate_header_sha256": "b6e0642daf08032cf9288089f4b49ec1f1125f6313126a5b29e48957522b53b9",
+  "readonly_controls_before": [
+    {
+      "source": "game/Libraries/Source/COM/ComInvoke.cpp",
+      "source_sha256": "ada720da0bd600aa91b78a4d719b404cb040b8746a4b33e76e9f39d6fb432499",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+      "normal_object_sha256": "9d5b9d75081ed10a792f517864a2e07a296df2a93e1e3f23d3739937a554b05b",
+      "normal_current": true
+    },
+    {
+      "source": "game/Libraries/Source/COM/ComSupp.cpp",
+      "source_sha256": "3a39fb2c76b1c79588aa48f64f7cffda803a444bb7af3b236fb01377d42673f8",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+      "normal_object_sha256": "bc90609448e63e717cfd6099d32b44ce511ce8baf696de91ae2bd146ba80f690",
+      "normal_current": true
+    }
+  ]
+}

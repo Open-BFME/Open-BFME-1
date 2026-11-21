@@ -1,0 +1,683 @@
+[
+  {
+    "label": "candidate",
+    "source": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\source\\ComInvokeError.cpp",
+    "command": [
+      "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+      "-nologo",
+      "-c",
+      "-O2",
+      "-GR-",
+      "-EHsc-",
+      "-Ob2",
+      "-EHsc",
+      "-DNDEBUG",
+      "-MD",
+      "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+      "-Fobuild/agent-melee-20261120/invkerr-whole-member-20261121/objects/ComInvokeError.obj",
+      "build/agent-melee-20261120/invkerr-whole-member-20261121/source/ComInvokeError.cpp"
+    ],
+    "compile_ok": true,
+    "exit": 0,
+    "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComInvokeError.obj",
+    "object_sha256": "11ddb2271d864cef5f06b34ba1b59cd5c98497f020a14666f8fd512380b1003a",
+    "rows": [
+      {
+        "name": "?WCodeToHRESULT@_com_error@@SAJG@Z",
+        "rva": "0x00AFE260",
+        "size": 26,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "668b442404663d00fe7206b8ffff0480c30fb7c02d00fefb7fc3",
+        "relocations": [],
+        "native_raw_equal": true,
+        "native_relocations_equal": true
+      },
+      {
+        "name": "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z",
+        "rva": "0x00AFE280",
+        "size": 248,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "568b7424088b461885c0740356ffd0578b7c241085ffc744240c000000000f84850000008d44240c50ff150000000085c07c768b44240c8b08680000000050ff510c8b460485c0740b8b4c240c8b115051ff52108b460885c0740b8b4c240c8b115051ff52148b460c85c0740b8b4c240c8b115051ff52188b56108b44240c8b085250ff511c8b44240c8b0857680000000050ff1185c07d06c707000000008b44240c8b1050ff52088b460485c08b3d00000000740350ffd78b460885c0740350ffd78b460c85c0740350ffd7668b066685c05f741b663d00fe7209b8ffff04805ec208000fb7c02d00fefb7f5ec208008b461c5ec20800",
+        "relocations": [
+          [
+            43,
+            6,
+            "__imp__CreateErrorInfo@4"
+          ],
+          [
+            58,
+            6,
+            "__GUID_00020400_0000_0000_c000_000000000046"
+          ],
+          [
+            142,
+            6,
+            "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119"
+          ],
+          [
+            176,
+            6,
+            "__imp__SysFreeString@4"
+          ]
+        ],
+        "native_raw_equal": true,
+        "native_relocations_equal": true
+      }
+    ]
+  },
+  {
+    "label": "ComInvoke",
+    "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\COM\\ComInvoke.cpp",
+    "command": [
+      "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+      "-nologo",
+      "-c",
+      "-O2",
+      "-GR-",
+      "-EHsc-",
+      "-O2",
+      "-G6",
+      "-Ob2",
+      "-EHsc",
+      "-GR",
+      "-DNDEBUG",
+      "-MD",
+      "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+      "-Fobuild/agent-melee-20261120/invkerr-whole-member-20261121/objects/ComInvoke-control.obj",
+      "game/Libraries/Source/COM/ComInvoke.cpp"
+    ],
+    "compile_ok": true,
+    "exit": 0,
+    "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComInvoke-control.obj",
+    "object_sha256": "8c030729f0d68125b606163e91c3785d12c78954fbf3158ce529d24beff99226",
+    "rows": [
+      {
+        "name": "?_com_dispatch_raw_propget@@YGJPAUIDispatch@@JGPAX@Z",
+        "rva": "0x00AFE1C0",
+        "size": 35,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "8b4424108b4c240c8b5424086a00508b44240c516a025250e80000000083c418c21000",
+        "relocations": [
+          [
+            25,
+            20,
+            "?_com_dispatch_raw_method@@YAJPAUIDispatch@@JGGPAXPBGZZ"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z",
+        "rva": "0x00AFDB40",
+        "size": 1571,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "558bec6aff6800000000680000000064a100000000506489250000000083ec545356578965e88b450885c07519b8034000808d65908b4df064890d000000005f5e5b8be55dc38b452485c07406c7000000000033c9894dbc894dc08bc18945c4894dc88b4d1c85c9740a51ff15000000008945c4c745e0fdfffffff645100c741585c00f8462040000c745c8010000008d55e08955c085c00f86160200009bc745fc00000000c1e0048bf083c00383e0fce8000000008965e88bc48bd8895de49bc745fcffffffff8bce33c08bfb8bd1c1e902f3ab8bca83e103f3aa895dbc8b551c8bfa8b45c4c1e0048d4c18f066833a000f84230100008b4520eb038d4900668b376681e6fff76689310fb7d683fa240f8fc30000000f84e200000083ea0283fa170f87ca000000ff24950000000083c004668b50fc66895108e9c800000066c701050083c0088b50f88951088b50fc89510ce9af00000083c0048b50fc8b328971088b520489510ce99900000083c004668b50fc66f7da1bd266895108e98400000083c0048b50fc8bf18b1a891e8b5a04895e048b5a08895e088b520c89560c8b5de4eb6183c0048b50fc8bf18b1a891e8b5a04895e048b5a08895e088b520c89560c66c7010e008b5de4eb3983c0048a50fc885108eb2e81ea0240000083fa22770e0fb69200000000ff249500000000f7c6002000000f84ec02000083c0048b50fc89510883e91083c70266833f000f85e8feffff8b551c8b7dc88bc7c1e00403c38b4dc42bcf8d4c4afe33f63bca723e668b110fb7da81e3ffbfffff81fb0c0800007527f6c64074058b5008eb028bd066833a0a7515817a0804000280750c4683c01083e9023b4d1c73c58b5de485f6763e33c085ff762f8d6424008bd0c1e20403d38d0c30c1e10403cb8b3a89398b7a048979048b7a088979088b520c89510c403b45c872d52975c4c1e6040175bc8d45cc50ff150000000033c9894d9c894da0894da4894da8894dac894db0894db4894db8c745dcffffffff8b45088b108d4ddc518d4d9c518b7d14668bcf66f7d91bc98d75cc23ce518d4dbc518b4d10516a0068000000008b4d0c5150ff52188bd885db0f8d910000008bd652ff150000000081fb090002800f85b60000008b4524508d4d9c51e8000000008d65908b4df064890d000000005f5e5b8be55dc3b801000000c38b65e88b3500000000ffd685c07f1effd69bc745fcffffffff8d65908b4df064890d000000005f5e5b8be55dc3ffd625ffff00000d000007809bc745fcffffffff8d65908b4df064890d000000005f5e5b8be55dc36685ff74358b751885f6742e6683ff0c743e8b4dcc663bf97439576a008d55cc528bc250ff15000000008bd885db7d208d4dcc51ff15000000008bc38d65908b4df064890d000000005f5e5b8be55dc38b4dcc0fb7c783f8240f8f950000000f84a700000083e80283f8170f87af000000ff248500000000668b55d4668916ebb9dd45d4dd1eebb2668b4dd466890eeba9890e8b55d08956048b45d48946088b4dd8894e0ceb93890e8b45d08946048b4dd4894e088b55d889560ce97affffff8a45d48806e970ffffff8a4dd4880ee966ffffff8b45d489068b4dd8894e04e956ffffff8b55d489168b45d8894604e946ffffff2d0240000083f82277220fb68800000000ff248d000000008b55d48916e924ffffff8b4dd4890ee91afffffff7c700200000740a8b45d48906e908ffffff8d4dcc51ff1500000000b8570007808d65908b4df064890d000000005f5e5b8be55dc30000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000100010101010101010101010090000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001020002010001020001020003010200010102020003020303030303030303030302",
+        "relocations": [
+          [
+            6,
+            6,
+            "$T55320"
+          ],
+          [
+            11,
+            6,
+            "__except_handler3"
+          ],
+          [
+            17,
+            6,
+            "__except_list"
+          ],
+          [
+            25,
+            6,
+            "__except_list"
+          ],
+          [
+            59,
+            6,
+            "__except_list"
+          ],
+          [
+            109,
+            6,
+            "__imp__lstrlenW@4"
+          ],
+          [
+            178,
+            20,
+            "__alloca_probe"
+          ],
+          [
+            300,
+            6,
+            "$L55335"
+          ],
+          [
+            488,
+            6,
+            "$L55323"
+          ],
+          [
+            495,
+            6,
+            "$L55336"
+          ],
+          [
+            698,
+            6,
+            "__imp__VariantInit@4"
+          ],
+          [
+            776,
+            6,
+            "__GUID_00000000_0000_0000_0000_000000000000"
+          ],
+          [
+            803,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            828,
+            20,
+            "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z"
+          ],
+          [
+            841,
+            6,
+            "__except_list"
+          ],
+          [
+            863,
+            6,
+            "__imp__GetLastError@0"
+          ],
+          [
+            892,
+            6,
+            "__except_list"
+          ],
+          [
+            932,
+            6,
+            "__except_list"
+          ],
+          [
+            981,
+            6,
+            "__imp__VariantChangeType@16"
+          ],
+          [
+            997,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            1012,
+            6,
+            "__except_list"
+          ],
+          [
+            1059,
+            6,
+            "$L55337"
+          ],
+          [
+            1200,
+            6,
+            "$L55324"
+          ],
+          [
+            1207,
+            6,
+            "$L55338"
+          ],
+          [
+            1255,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            1273,
+            6,
+            "__except_list"
+          ],
+          [
+            1284,
+            6,
+            "$L54926"
+          ],
+          [
+            1288,
+            6,
+            "$L54934"
+          ],
+          [
+            1292,
+            6,
+            "$L54990"
+          ],
+          [
+            1296,
+            6,
+            "$L54991"
+          ],
+          [
+            1300,
+            6,
+            "$L55016"
+          ],
+          [
+            1304,
+            6,
+            "$L54991"
+          ],
+          [
+            1308,
+            6,
+            "$L54934"
+          ],
+          [
+            1312,
+            6,
+            "$L54934"
+          ],
+          [
+            1316,
+            6,
+            "$L54934"
+          ],
+          [
+            1320,
+            6,
+            "$L55024"
+          ],
+          [
+            1324,
+            6,
+            "$L55034"
+          ],
+          [
+            1328,
+            6,
+            "$L54934"
+          ],
+          [
+            1332,
+            6,
+            "$L55042"
+          ],
+          [
+            1336,
+            6,
+            "$L55066"
+          ],
+          [
+            1340,
+            6,
+            "$L55050"
+          ],
+          [
+            1344,
+            6,
+            "$L55050"
+          ],
+          [
+            1348,
+            6,
+            "$L54926"
+          ],
+          [
+            1352,
+            6,
+            "$L54934"
+          ],
+          [
+            1356,
+            6,
+            "$L54991"
+          ],
+          [
+            1360,
+            6,
+            "$L54991"
+          ],
+          [
+            1364,
+            6,
+            "$L54934"
+          ],
+          [
+            1368,
+            6,
+            "$L54934"
+          ],
+          [
+            1372,
+            6,
+            "$L55066"
+          ],
+          [
+            1376,
+            6,
+            "$L54934"
+          ],
+          [
+            1380,
+            6,
+            "$L54934"
+          ],
+          [
+            1384,
+            6,
+            "$L55066"
+          ],
+          [
+            1424,
+            6,
+            "$L55107"
+          ],
+          [
+            1428,
+            6,
+            "$L55228"
+          ],
+          [
+            1432,
+            6,
+            "$L55231"
+          ],
+          [
+            1436,
+            6,
+            "$L55120"
+          ],
+          [
+            1440,
+            6,
+            "$L55168"
+          ],
+          [
+            1444,
+            6,
+            "$L55120"
+          ],
+          [
+            1448,
+            6,
+            "$L55231"
+          ],
+          [
+            1452,
+            6,
+            "$L55171"
+          ],
+          [
+            1456,
+            6,
+            "$L55228"
+          ],
+          [
+            1460,
+            6,
+            "$L55135"
+          ],
+          [
+            1464,
+            6,
+            "$L55138"
+          ],
+          [
+            1468,
+            6,
+            "$L55171"
+          ],
+          [
+            1472,
+            6,
+            "$L55144"
+          ],
+          [
+            1476,
+            6,
+            "$L55237"
+          ],
+          [
+            1480,
+            6,
+            "$L55147"
+          ],
+          [
+            1484,
+            6,
+            "$L55150"
+          ],
+          [
+            1488,
+            6,
+            "$L55107"
+          ],
+          [
+            1492,
+            6,
+            "$L55228"
+          ],
+          [
+            1496,
+            6,
+            "$L55165"
+          ],
+          [
+            1500,
+            6,
+            "$L55168"
+          ],
+          [
+            1504,
+            6,
+            "$L55231"
+          ],
+          [
+            1508,
+            6,
+            "$L55171"
+          ],
+          [
+            1512,
+            6,
+            "$L55237"
+          ],
+          [
+            1516,
+            6,
+            "$L55228"
+          ],
+          [
+            1520,
+            6,
+            "$L55228"
+          ],
+          [
+            1524,
+            6,
+            "$L55231"
+          ],
+          [
+            1528,
+            6,
+            "$L55171"
+          ],
+          [
+            1532,
+            6,
+            "$L55237"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_dispatch_raw_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+        "rva": "0x00AFE170",
+        "size": 74,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "518b54241c568d442404508b4424208d4c2428518b4c2420528b542420508b442420518b4c2420525051e8000000008bf083c42085f67d0d8b542404526a00ff15000000008bc65e59c3",
+        "relocations": [
+          [
+            43,
+            20,
+            "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z"
+          ],
+          [
+            65,
+            6,
+            "__imp__SetErrorInfo@8"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_dispatch_raw_propput@@YAJPAUIDispatch@@JGZZ",
+        "rva": "0x00AFE1F0",
+        "size": 105,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "83ec088b442414663d09006689042466c74424020000740b663d0d00b8040000007505b808000000568d4c2408518d542420528b54241c8d4c240c516a006a00508b4424285250e8000000008bf083c42085f67d0d8b4c2408516a00ff15000000008bc65e83c408c3",
+        "relocations": [
+          [
+            72,
+            20,
+            "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z"
+          ],
+          [
+            94,
+            6,
+            "__imp__SetErrorInfo@8"
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "label": "ComSupp",
+    "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\COM\\ComSupp.cpp",
+    "command": [
+      "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+      "-nologo",
+      "-c",
+      "-O2",
+      "-GR-",
+      "-EHsc-",
+      "-Ob2",
+      "-EHsc",
+      "-DNDEBUG",
+      "-MD",
+      "-IW:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Include",
+      "-Fobuild/agent-melee-20261120/invkerr-whole-member-20261121/objects/ComSupp-control.obj",
+      "game/Libraries/Source/COM/ComSupp.cpp"
+    ],
+    "compile_ok": true,
+    "exit": 0,
+    "object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComSupp-control.obj",
+    "object_sha256": "2425f8777b62dd4b096ef278fd2a8188f529e0a299b7e34744d1c160e8289fa6",
+    "rows": [
+      {
+        "name": "?_com_dispatch_propget@@YGJPAUIDispatch@@JGPAX@Z",
+        "rva": "0x00AFD610",
+        "size": 35,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "8b4424108b4c240c8b5424086a00508b44240c516a025250e80000000083c418c21000",
+        "relocations": [
+          [
+            25,
+            20,
+            "?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ"
+          ]
+        ]
+      },
+      {
+        "name": "?_set_com_error_handler@@YGXP6GXJPAUIErrorInfo@@@Z@Z",
+        "rva": "0x00AFD530",
+        "size": 12,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "8b442404a300000000c20400",
+        "relocations": [
+          [
+            5,
+            6,
+            "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_issue_errorex@@YGXJPAUIUnknown@@ABU_GUID@@@Z",
+        "rva": "0x00AFD550",
+        "size": 110,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "518b44240c85c0c7042400000000744b8b088d54240c52680000000050ff1185c07c388b5424108b44240c8b08565250ff510c8bf08b4424108b0850ff510885f65e75178d1424526a00ff150000000085c07407c70424000000008b04248b4c24085051ff150000000059c20c00",
+        "relocations": [
+          [
+            24,
+            6,
+            "__GUID_df0b3d60_548f_101b_8e65_08002b2bd119"
+          ],
+          [
+            76,
+            6,
+            "__imp__GetErrorInfo@8"
+          ],
+          [
+            102,
+            6,
+            "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+        "rva": "0x00AFD5C0",
+        "size": 73,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "518b54241c568d442404508b4424208d4c2428518b4c2420528b542420508b442420518b4c2420525051e8000000008bf083c42085f67d0c8b5424045256ff15000000008bc65e59c3",
+        "relocations": [
+          [
+            43,
+            20,
+            "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z"
+          ],
+          [
+            64,
+            6,
+            "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA"
+          ]
+        ]
+      },
+      {
+        "name": "?_com_dispatch_propput@@YAJPAUIDispatch@@JGZZ",
+        "rva": "0x00AFD640",
+        "size": 104,
+        "strict_unmasked_equal": true,
+        "unresolved": [],
+        "raw": "83ec088b442414663d09006689042466c74424020000740b663d0d00b8040000007505b808000000568d4c2408518d542420528b54241c8d4c240c516a006a00508b4424285250e8000000008bf083c42085f67d0c8b4c24085156ff15000000008bc65e83c408c3",
+        "relocations": [
+          [
+            72,
+            20,
+            "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z"
+          ],
+          [
+            93,
+            6,
+            "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA"
+          ]
+        ]
+      }
+    ]
+  }
+]

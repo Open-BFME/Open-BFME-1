@@ -1,0 +1,176 @@
+{
+  "sections": [
+    {
+      "index": 1,
+      "name": ".debug$S",
+      "size": 374,
+      "flags": "0x42100040",
+      "relocations": 0
+    },
+    {
+      "index": 2,
+      "name": ".text",
+      "size": 11,
+      "flags": "0x60101020",
+      "relocations": 1
+    },
+    {
+      "index": 3,
+      "name": ".debug$S",
+      "size": 151,
+      "flags": "0x42101040",
+      "relocations": 3
+    },
+    {
+      "index": 4,
+      "name": ".rdata$r",
+      "size": 24,
+      "flags": "0x40301040",
+      "relocations": 1
+    },
+    {
+      "index": 5,
+      "name": ".rdata$r",
+      "size": 5,
+      "flags": "0x40301040",
+      "relocations": 1
+    },
+    {
+      "index": 6,
+      "name": ".rdata$r",
+      "size": 16,
+      "flags": "0x40301040",
+      "relocations": 1
+    },
+    {
+      "index": 7,
+      "name": ".data",
+      "size": 24,
+      "flags": "0xc0301040",
+      "relocations": 1
+    },
+    {
+      "index": 8,
+      "name": ".rdata$r",
+      "size": 20,
+      "flags": "0x40301040",
+      "relocations": 2
+    },
+    {
+      "index": 9,
+      "name": ".rdata",
+      "size": 8,
+      "flags": "0x40301040",
+      "relocations": 2
+    },
+    {
+      "index": 10,
+      "name": ".debug$F",
+      "size": 16,
+      "flags": "0x42101040",
+      "relocations": 1
+    },
+    {
+      "index": 11,
+      "name": ".text",
+      "size": 75,
+      "flags": "0x60101020",
+      "relocations": 5
+    },
+    {
+      "index": 12,
+      "name": ".debug$S",
+      "size": 250,
+      "flags": "0x42101040",
+      "relocations": 3
+    },
+    {
+      "index": 13,
+      "name": ".debug$F",
+      "size": 16,
+      "flags": "0x42101040",
+      "relocations": 1
+    },
+    {
+      "index": 14,
+      "name": ".text",
+      "size": 5,
+      "flags": "0x60101020",
+      "relocations": 0
+    },
+    {
+      "index": 15,
+      "name": ".debug$S",
+      "size": 151,
+      "flags": "0x42101040",
+      "relocations": 3
+    },
+    {
+      "index": 16,
+      "name": ".debug$F",
+      "size": 16,
+      "flags": "0x42101040",
+      "relocations": 1
+    },
+    {
+      "index": 17,
+      "name": ".debug$T",
+      "size": 572,
+      "flags": "0x42100040",
+      "relocations": 0
+    }
+  ],
+  "file_symbols": [
+    {
+      "index": 0,
+      "name": ".file",
+      "value": 10,
+      "section": -2,
+      "type": 0,
+      "storage": 103
+    },
+    {
+      "index": 10,
+      "name": ".file",
+      "value": 0,
+      "section": -2,
+      "type": 0,
+      "storage": 103
+    }
+  ],
+  "producer_strings": {
+    "1": [
+      "F:\\VS70Builds\\3077\\vc\\crtbld\\crt\\src\\build\\intel\\dll_obj\\ti_inst.obj",
+      "Microsoft (R) Optimizing Compiler",
+      "$T2 $esp .cbLocals + .cbSavedRegs + = $T0 .raSearchStart = $eip $T0 ^ = $esp $T0 4 + =",
+      "$T2 $esp .cbLocals + .cbSavedRegs + = $T0 .raSearchStart = $eip $T0 ^ = $esp $T0 4 + = $ebx $T0 4 - ^ =",
+      "type_info"
+    ],
+    "3": [
+      "type_info::type_info",
+      "this"
+    ],
+    "12": [
+      "type_info::`vector deleting destructor'",
+      "this"
+    ],
+    "15": [
+      "type_info::operator=",
+      "this"
+    ],
+    "17": [
+      "type_info",
+      "~type_info",
+      "operator==",
+      "operator!=",
+      "before",
+      "name",
+      "raw_name",
+      "_m_data",
+      "_m_d_name",
+      "type_info",
+      "__vecDelDtor",
+      "type_info"
+    ]
+  }
+}

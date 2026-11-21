@@ -1,0 +1,1129 @@
+{
+  "original": {
+    "runtime_sections": [
+      {
+        "section_name": ".text",
+        "size": 50,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf1c706000000008b4804894e048b50088bc285c0895608c7460c0000000074068b0850ff51048bc65ec20400",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@ABV0@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            9,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 54,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf18946048b44240c85c0c70600000000894608c7460c00000000740e8a4c241084c974068b0850ff51048bc65ec20c00",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            18,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 38,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b760c85f6740756ff15000000005ec3",
+        "definitions": [
+          [
+            "??1_com_error@@UAE@XZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0000000000000000",
+        "definitions": [
+          [
+            "??_7_com_error@@6B@",
+            4,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R4_com_error@@6B@"
+          ],
+          [
+            4,
+            6,
+            "??_E_com_error@@UAEPAXI@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 58,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b460c85c0740750ff1500000000f644240801740956e80000000083c4048bc65ec20400",
+        "definitions": [
+          [
+            "??_G_com_error@@UAEPAXI@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ],
+          [
+            45,
+            20,
+            "??3@YAXPAX@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".data",
+        "size": 25,
+        "flags": "0xc0301040",
+        "raw": "00000000000000002e3f41565f636f6d5f6572726f72404000",
+        "definitions": [
+          [
+            "??_R0?AV_com_error@@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_7type_info@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 24,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff0000000000000000",
+        "definitions": [
+          [
+            "??_R1A@?0A@A@_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 5,
+        "flags": "0x40301040",
+        "raw": "0000000000",
+        "definitions": [
+          [
+            "??_R2_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R1A@?0A@A@_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000100000000000000",
+        "definitions": [
+          [
+            "??_R3_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R2_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 20,
+        "flags": "0x40301040",
+        "raw": "0000000000000000000000000000000000000000",
+        "definitions": [
+          [
+            "??_R4_com_error@@6B@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            16,
+            6,
+            "??_R3_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 51,
+        "flags": "0x60501020",
+        "raw": "83ec108b4424148b4c241868000000008d54240452c7442408000000008944240c894c2410c744241400000000e800000000cc",
+        "definitions": [
+          [
+            "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "__TI1?AV_com_error@@"
+          ],
+          [
+            25,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            46,
+            20,
+            "__CxxThrowException@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 28,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff000000001000000000000000",
+        "definitions": [
+          [
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            24,
+            6,
+            "??0_com_error@@QAE@ABV0@@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0100000000000000",
+        "definitions": [
+          [
+            "__CTA1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000000000000000000",
+        "definitions": [
+          [
+            "__TI1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??1_com_error@@UAE@XZ"
+          ],
+          [
+            12,
+            6,
+            "__CTA1?AV_com_error@@"
+          ]
+        ]
+      }
+    ],
+    "undefined": [
+      [
+        "??3@YAXPAX@Z",
+        32,
+        2
+      ],
+      [
+        "??_7type_info@@6B@",
+        0,
+        2
+      ],
+      [
+        "??_E_com_error@@UAEPAXI@Z",
+        32,
+        105
+      ],
+      [
+        "??_G_com_error@@UAEPAXI@Z",
+        32,
+        2
+      ],
+      [
+        "__CxxThrowException@8",
+        32,
+        2
+      ],
+      [
+        "__imp__LocalFree@4",
+        0,
+        2
+      ]
+    ]
+  },
+  "candidate": {
+    "runtime_sections": [
+      {
+        "section_name": ".text",
+        "size": 50,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf1c706000000008b4804894e048b50088bc285c0895608c7460c0000000074068b0850ff51048bc65ec20400",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@ABV0@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            9,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 54,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf18946048b44240c85c0c70600000000894608c7460c00000000740e8a4c241084c974068b0850ff51048bc65ec20c00",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            18,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 38,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b760c85f6740756ff15000000005ec3",
+        "definitions": [
+          [
+            "??1_com_error@@UAE@XZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0000000000000000",
+        "definitions": [
+          [
+            "??_7_com_error@@6B@",
+            4,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R4_com_error@@6B@"
+          ],
+          [
+            4,
+            6,
+            "??_E_com_error@@UAEPAXI@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 58,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b460c85c0740750ff1500000000f644240801740956e80000000083c4048bc65ec20400",
+        "definitions": [
+          [
+            "??_G_com_error@@UAEPAXI@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ],
+          [
+            45,
+            20,
+            "??3@YAXPAX@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".data",
+        "size": 25,
+        "flags": "0xc0301040",
+        "raw": "00000000000000002e3f41565f636f6d5f6572726f72404000",
+        "definitions": [
+          [
+            "??_R0?AV_com_error@@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_7type_info@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 24,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff0000000000000000",
+        "definitions": [
+          [
+            "??_R1A@?0A@A@_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 5,
+        "flags": "0x40301040",
+        "raw": "0000000000",
+        "definitions": [
+          [
+            "??_R2_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R1A@?0A@A@_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000100000000000000",
+        "definitions": [
+          [
+            "??_R3_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R2_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 20,
+        "flags": "0x40301040",
+        "raw": "0000000000000000000000000000000000000000",
+        "definitions": [
+          [
+            "??_R4_com_error@@6B@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            16,
+            6,
+            "??_R3_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 51,
+        "flags": "0x60501020",
+        "raw": "83ec108b4424148b4c241868000000008d54240452c7442408000000008944240c894c2410c744241400000000e800000000cc",
+        "definitions": [
+          [
+            "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "__TI1?AV_com_error@@"
+          ],
+          [
+            25,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            46,
+            20,
+            "__CxxThrowException@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 28,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff000000001000000000000000",
+        "definitions": [
+          [
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            24,
+            6,
+            "??0_com_error@@QAE@ABV0@@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0100000000000000",
+        "definitions": [
+          [
+            "__CTA1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000000000000000000",
+        "definitions": [
+          [
+            "__TI1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??1_com_error@@UAE@XZ"
+          ],
+          [
+            12,
+            6,
+            "__CTA1?AV_com_error@@"
+          ]
+        ]
+      }
+    ],
+    "undefined": [
+      [
+        "??3@YAXPAX@Z",
+        32,
+        2
+      ],
+      [
+        "??_7type_info@@6B@",
+        0,
+        2
+      ],
+      [
+        "??_E_com_error@@UAEPAXI@Z",
+        32,
+        105
+      ],
+      [
+        "??_G_com_error@@UAEPAXI@Z",
+        32,
+        2
+      ],
+      [
+        "__CxxThrowException@8",
+        32,
+        2
+      ],
+      [
+        "__imp__LocalFree@4",
+        0,
+        2
+      ]
+    ]
+  },
+  "debug": {
+    "runtime_sections": [
+      {
+        "section_name": ".text",
+        "size": 50,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf1c706000000008b4804894e048b50088bc285c0895608c7460c0000000074068b0850ff51048bc65ec20400",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@ABV0@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            9,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 54,
+        "flags": "0x60501020",
+        "raw": "8b442404568bf18946048b44240c85c0c70600000000894608c7460c00000000740e8a4c241084c974068b0850ff51048bc65ec20c00",
+        "definitions": [
+          [
+            "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            18,
+            6,
+            "??_7_com_error@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 38,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b760c85f6740756ff15000000005ec3",
+        "definitions": [
+          [
+            "??1_com_error@@UAE@XZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0000000000000000",
+        "definitions": [
+          [
+            "??_7_com_error@@6B@",
+            4,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R4_com_error@@6B@"
+          ],
+          [
+            4,
+            6,
+            "??_E_com_error@@UAEPAXI@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 58,
+        "flags": "0x60501020",
+        "raw": "568bf18b460885c0c7060000000074068b0850ff51088b460c85c0740750ff1500000000f644240801740956e80000000083c4048bc65ec20400",
+        "definitions": [
+          [
+            "??_G_com_error@@UAEPAXI@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            10,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            32,
+            6,
+            "__imp__LocalFree@4"
+          ],
+          [
+            45,
+            20,
+            "??3@YAXPAX@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".data",
+        "size": 25,
+        "flags": "0xc0301040",
+        "raw": "00000000000000002e3f41565f636f6d5f6572726f72404000",
+        "definitions": [
+          [
+            "??_R0?AV_com_error@@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_7type_info@@6B@"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 24,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff0000000000000000",
+        "definitions": [
+          [
+            "??_R1A@?0A@A@_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 5,
+        "flags": "0x40301040",
+        "raw": "0000000000",
+        "definitions": [
+          [
+            "??_R2_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            0,
+            6,
+            "??_R1A@?0A@A@_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000100000000000000",
+        "definitions": [
+          [
+            "??_R3_com_error@@8",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R2_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".rdata$r",
+        "size": 20,
+        "flags": "0x40301040",
+        "raw": "0000000000000000000000000000000000000000",
+        "definitions": [
+          [
+            "??_R4_com_error@@6B@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            16,
+            6,
+            "??_R3_com_error@@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".text",
+        "size": 51,
+        "flags": "0x60501020",
+        "raw": "83ec108b4424148b4c241868000000008d54240452c7442408000000008944240c894c2410c744241400000000e800000000cc",
+        "definitions": [
+          [
+            "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            12,
+            6,
+            "__TI1?AV_com_error@@"
+          ],
+          [
+            25,
+            6,
+            "??_7_com_error@@6B@"
+          ],
+          [
+            46,
+            20,
+            "__CxxThrowException@8"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 28,
+        "flags": "0x40301040",
+        "raw": "000000000000000000000000ffffffff000000001000000000000000",
+        "definitions": [
+          [
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??_R0?AV_com_error@@@8"
+          ],
+          [
+            24,
+            6,
+            "??0_com_error@@QAE@ABV0@@Z"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 8,
+        "flags": "0x40301040",
+        "raw": "0100000000000000",
+        "definitions": [
+          [
+            "__CTA1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16"
+          ]
+        ]
+      },
+      {
+        "section_name": ".xdata$x",
+        "size": 16,
+        "flags": "0x40301040",
+        "raw": "00000000000000000000000000000000",
+        "definitions": [
+          [
+            "__TI1?AV_com_error@@",
+            0,
+            0,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            4,
+            6,
+            "??1_com_error@@UAE@XZ"
+          ],
+          [
+            12,
+            6,
+            "__CTA1?AV_com_error@@"
+          ]
+        ]
+      }
+    ],
+    "undefined": [
+      [
+        "??3@YAXPAX@Z",
+        32,
+        2
+      ],
+      [
+        "??_7type_info@@6B@",
+        0,
+        2
+      ],
+      [
+        "??_E_com_error@@UAEPAXI@Z",
+        32,
+        105
+      ],
+      [
+        "??_G_com_error@@UAEPAXI@Z",
+        32,
+        2
+      ],
+      [
+        "__CxxThrowException@8",
+        32,
+        2
+      ],
+      [
+        "__imp__LocalFree@4",
+        0,
+        2
+      ]
+    ]
+  },
+  "candidate_original_runtime_exact": true,
+  "debug_normal_runtime_exact": true
+}

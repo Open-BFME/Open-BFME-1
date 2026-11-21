@@ -1,0 +1,27 @@
+typedefs:
+  Bool               0 private views  -
+  Real               0 private views  -
+  Int                0 private views  -
+  UnsignedInt        0 private views  -
+value types:
+  Coord2D           29 private views  game/Libraries/Include/Lib/Coord2D.h
+  Coord3D          213 private views  game/Libraries/Include/Lib/Coord3D.h
+  ICoord2D          24 private views  game/Libraries/Include/Lib/ICoord2D.h
+  ICoord3D          13 private views  -
+  Region2D          19 private views  -
+  Region3D          29 private views  -
+  IRegion2D         58 private views  -
+  RGBColor          19 private views  -
+string base:
+  StringBase         0 private views  -
+strings:
+  AsciiString      596 private views  game/Libraries/Source/WWVegas/WWLib/ascii_string.h
+  UnicodeString    278 private views  -
+snapshot:
+  Snapshot         204 private views  -
+xfer:
+  Xfer             125 private views  -
+thing:
+  Thing            234 private views  -
+object:
+  Object          1389 private views  -

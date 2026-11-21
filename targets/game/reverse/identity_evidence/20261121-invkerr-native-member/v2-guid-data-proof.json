@@ -1,0 +1,18 @@
+[
+  {
+    "symbol": "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+    "rva": "0xdbc37c",
+    "size": 16,
+    "raw": "20b1f21c7d541b108e6508002b2bd119",
+    "exact_candidate_native_retail": true,
+    "relocations": []
+  },
+  {
+    "symbol": "__GUID_00020400_0000_0000_c000_000000000046",
+    "rva": "0xdbc38c",
+    "size": 16,
+    "raw": "0004020000000000c000000000000046",
+    "exact_candidate_native_retail": true,
+    "relocations": []
+  }
+]

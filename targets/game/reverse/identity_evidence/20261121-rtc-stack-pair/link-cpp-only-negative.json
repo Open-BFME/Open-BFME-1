@@ -1,0 +1,26 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+    "/NOLOGO",
+    "/DLL",
+    "/NOENTRY",
+    "/NODEFAULTLIB",
+    "/MACHINE:X86",
+    "/INCREMENTAL:NO",
+    "/OPT:REF",
+    "/OUT:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\link\\cpp-only-negative.dll",
+    "/MAP:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\link\\cpp-only-negative.map",
+    "/VERBOSE:LIB",
+    "/EXPORT:_RTC_CheckEsp",
+    "/EXPORT:@_RTC_CheckStackVars@8",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\rtc-stack-pair-20261121\\objects\\RtcStack.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\libc.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\msvcrt.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\kernel32.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\user32.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\version.lib",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\lib\\psapi.lib"
+  ],
+  "exit": 1169,
+  "expected_duplicate90": true
+}

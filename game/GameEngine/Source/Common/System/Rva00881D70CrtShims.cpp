@@ -11,7 +11,8 @@
 
 extern "C" void *( *__cdecl __gameMemAllocPtr )( unsigned int size, int flags );
 extern "C" void ( *__cdecl __gameMemFreePtr )( void *ptr, int flags );
-extern "C" void *__onexitbegin;
+typedef void (__cdecl *CrtExitCallback)();
+extern "C" CrtExitCallback *__onexitbegin;
 extern "C" unsigned int (__cdecl *g_rva0130E9B0)(void *);
 extern "C" void *( *__cdecl g_rva0130E9A0 )( void *ptr, unsigned int size, int flags );
 extern "C" void *( __stdcall *g_rva0130E988LoadLibraryA )( const char *name );

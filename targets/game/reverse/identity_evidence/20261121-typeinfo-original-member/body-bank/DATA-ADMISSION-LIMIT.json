@@ -1,0 +1,49 @@
+{
+  "scope": "Unchanged native symbol_size/compiled_size only; every unsupported name returns before starting a sizeof probe",
+  "results": [
+    {
+      "name": "??_7type_info@@6B@",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_7type_info@@6B@ cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R4type_info@@6B@",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R4type_info@@6B@ cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R0?AVtype_info@@@8",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R0?AVtype_info@@@8 cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R3type_info@@8",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R3type_info@@8 cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R2type_info@@8",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R2type_info@@8 cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R1A@?0A@A@type_info@@8",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R1A@?0A@A@type_info@@8 cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    },
+    {
+      "name": "??_R0H@8",
+      "normal_native_symbol_size_values": [],
+      "normal_native_refusal": "??_R0H@8 cannot be named from its TU",
+      "compiler_invoked_by_this_size_check": false
+    }
+  ],
+  "data_rows_admitted_by_this_agent": 0,
+  "no_ledger_pin_header_or_gate_change": true
+}
