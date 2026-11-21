@@ -1,0 +1,634 @@
+{
+  "read_only": true,
+  "compiler_invoked": false,
+  "productive_changes": false,
+  "new_bodies": 0,
+  "target_rva": "0x002BB170",
+  "target_size": 1261,
+  "incumbent_rva": "0x002BAC00",
+  "incumbent_size": 657,
+  "root_reported_head": "c57153e7286d97cfb7006da9b433e44731a28ed0",
+  "donor": "1e864b34e05f68568db539537b6959d94d104f57",
+  "source_hashes": {
+    "game/GameEngine/Source/Common/System/snapshot.h": "37b054017a8321b5151f8a332fd6faa12be7e28de832bddf93e883b1b4bbdd1e",
+    "game/GameEngine/Include/Common/Module.h": "11a4427991a341557fd66c5c55b43a78f07be25fad3314b60c350b1f81c27c07",
+    "game/GameEngine/Include/Common/Snapshot.h": "4240c6c4bc63a6dafa4c3efca3dc5f6c3446e38d9a097a2bba64938e3160c137",
+    "game/GameEngine/Include/GameLogic/Module/UpdateModule.h": "d406047ca3a33fbd6ef359982fa4ee27c2b26b81145664d4d7090b5a52da1a0a",
+    "game/GameEngine/Source/Common/Thing/ModuleFactory.cpp": "15e786e9778bc0b07080f394a7ed35f8e4a9da40f194114a05b5d6f4bc6876e8",
+    "inputs/reference/open-bfme-2/Code/GameEngine/Include/Common/Module.h": "55326bed1265f4a3913d82f24018aff0d7e96d206a45848b0b6e11120088d47e",
+    "inputs/reference/open-bfme-2/Code/GameEngine/Include/Common/ObjectModule.h": "9051a3edc0ef911680a779f048bdaedb1b17e61d9bbf63ed15e222226f5308a6",
+    "inputs/reference/open-bfme-2/Code/GameEngine/Include/Common/ModuleData.h": "d5eabd25d232e22a79d93dd8267a23c31343657b3d929c24b86eed31105f9b31"
+  },
+  "tables": {
+    "ModuleData": {
+      "va": "0x10896b8",
+      "slots": [
+        "0x113ae0",
+        "0x113ab0",
+        "0x113ac0",
+        "0x113ad0",
+        "0x1139f0",
+        "0x113a00",
+        "0x113a10",
+        "0x113a20",
+        "0x113ec0",
+        "0x113a30",
+        "0x113a40",
+        "0x113a50",
+        "0x113a60",
+        "0x113a70",
+        "0x113a80",
+        "0x113a90",
+        "0x113aa0"
+      ],
+      "name_literal": "ModuleData"
+    },
+    "DelayedLuaData": {
+      "va": "0x10bd278",
+      "slots": [
+        "0x28bc70",
+        "0x113ab0",
+        "0x113ac0",
+        "0x113ad0",
+        "0x1139f0",
+        "0x113a00",
+        "0x113a10",
+        "0x113a20",
+        "0x113ec0",
+        "0x113a30",
+        "0x113a40",
+        "0x113a50",
+        "0x113a60",
+        "0x113a70",
+        "0x113a80",
+        "0x113a90",
+        "0x113aa0"
+      ],
+      "name_literal": "ModuleData"
+    },
+    "AimWeaponData": {
+      "va": "0x10a1848",
+      "slots": [
+        "0x1ed120",
+        "0x113ab0",
+        "0x113ac0",
+        "0x113ad0",
+        "0x1139f0",
+        "0x113a00",
+        "0x113a10",
+        "0x113a20",
+        "0x113ec0",
+        "0x113a30",
+        "0x113a40",
+        "0x113a50",
+        "0x113a60",
+        "0x113a70",
+        "0x113a80",
+        "0x113a90",
+        "0x113aa0"
+      ]
+    },
+    "Module": {
+      "va": "0x108971c",
+      "slots": [
+        "0x113ef0",
+        "0x113b80",
+        "0x113b90",
+        "0x113c30",
+        "0x88c500",
+        "0x113b40",
+        "0x113b50",
+        "0x113b60",
+        "0x113b70"
+      ],
+      "name_literal": "Module"
+    },
+    "ObjectModule": {
+      "va": "0x1089774",
+      "slots": [
+        "0x113f20",
+        "0x113d20",
+        "0x113d30",
+        "0x113d50",
+        "0x88c500",
+        "0x113b40",
+        "0x113b50",
+        "0x113b60",
+        "0x113b70",
+        "0x113d10"
+      ]
+    },
+    "SubsystemInterface": {
+      "va": "0x1141640",
+      "slots": [
+        "0x9a1d00",
+        "0x88c500",
+        "0x9a1a50",
+        "0x67930",
+        "0x88c500",
+        "0x88c500",
+        "0x67940",
+        "0x9a16c0",
+        "0x9a16d0"
+      ]
+    }
+  },
+  "original_bodies": {
+    "0x28bbf0": "8bc1c70078d20b01c3",
+    "0x28bca0": "c70144370701c3",
+    "0x1ecef0": "8bc1c70048180a01c74008cdcc4cbdc7400ccdcc4c3dc7401000000000c74014ffff7f7fc3",
+    "0x9a1a30": "8bc1c70040161401c7400400000000c3",
+    "0x1bee60": "53568bb1f00100008b0e33db85c97428578b7c24108b01ff50103bc774128b4e0483c60485c975ed5f5e8bc35bc204008b065f5e5bc204005e8bc35bc20400",
+    "0x2b9f80": "64a1000000008a0da0022f016aff687e35010150b80100000084c86489250000000075310905a0022f018b0d00d62e0168bc000901c744240c00000000e8150ed8ffa39c022f018b0c2464890d0000000083c40cc38b0c24a19c022f0164890d0000000083c40cc3",
+    "0x113c60": "6aff6848e0ff0064a100000000506489250000000083ec0c8b442420568bf18974240489460485c0c744241800000000c70674970801752368509708018d44240c6a0350e857c9730083c40c6830fc1d018d4c240c51e845308e008b4c242085c974078b11ff5208eb0233c08b4c24108946088bc65e64890d0000000083c418c20800",
+    "0x113b90": "b848970801c3",
+    "0x113ac0": "b80c970801c3"
+  },
+  "selected_current_rows": [
+    {
+      "name": "??0AimWeaponBehaviorModuleData@@QAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x001ECEF0",
+      "target_size": "37",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/AimWeaponBehaviorModuleDataConstructorThunk.cpp",
+      "status": "matched",
+      "notes": "Open-BFME5 exact C++ raw constructor thunk; retail default weapon behavior fields preserved"
+    },
+    {
+      "name": "??0DelayedLuaEventUpdateModuleData@@QAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x0028BBF0",
+      "target_size": "9",
+      "source": "game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateModuleDataCtorThunk.cpp",
+      "status": "matched",
+      "notes": "Open-BFME5 DelayedLuaEventUpdate module-data constructor C++ recovery"
+    },
+    {
+      "name": "??0ObjectModule@@QAE@PAVThing@@PBVModuleData@@@Z",
+      "export_rva": "",
+      "target_rva": "0x00113C60",
+      "target_size": "131",
+      "source": "game/GameEngine/Source/Common/Thing/ObjectModuleConstructor.cpp",
+      "status": "matched",
+      "notes": "clean C++ conversion of the naked SlavedUpdateDestructorThunk.cpp lift; vtable 0x01089774 installed; ILT 0x000170E4 base-ctor callers and slot-zero ILT 0x00002C9D corroborate identity;model=opencode/space-bunny-free"
+    },
+    {
+      "name": "??0SubsystemInterface@@QAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x009A1A30",
+      "target_size": "16",
+      "source": "game/GameEngine/Source/Common/System/SubsystemInterface.cpp",
+      "status": "matched",
+      "notes": "MASM converted to clean C++"
+    },
+    {
+      "name": "??_GAimWeaponBehaviorModuleData@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x001ED120",
+      "target_size": "30",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/AimWeaponBehaviorModuleDataDeletingDestructor.cpp",
+      "status": "matched",
+      "notes": "authentic protected scalar-deleting destructor; exact constructor 0x001ECEF0 installs vtable 0x00CA1848 whose slot zero routes through ILT 0x00037F0B; complete destructor ILT 0x00039397 reaches tail body 0x001ED150;ilt-verified=T1-access(efp=2.28e-03)"
+    },
+    {
+      "name": "??_GDelayedLuaEventUpdateModuleData@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x0028BC70",
+      "target_size": "30",
+      "source": "game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateModuleDataDeletingDestructor.cpp",
+      "status": "matched",
+      "notes": "authentic protected scalar-deleting destructor; exact constructor 0x0028BBF0 installs vtable 0x00CBD278 whose slot zero routes through ILT 0x0000DECC; complete destructor ILT 0x00049B4D reaches tail body 0x0028BCA0;ilt-verified=T1-access(efp=6.52e-03)"
+    },
+    {
+      "name": "??_GGen_dtor_00113ae0@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x00113AE0",
+      "target_size": "30",
+      "source": "game/gen_small/dtors_000.cpp",
+      "status": "matched",
+      "notes": "gen-dtor;ghidra=FUN_00513ae0"
+    },
+    {
+      "name": "??_GGen_dtor_00113ef0@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x00113EF0",
+      "target_size": "30",
+      "source": "game/gen_small/dtors_000.cpp",
+      "status": "matched",
+      "notes": "gen-dtor;ghidra=FUN_00513ef0"
+    },
+    {
+      "name": "??_GObjectModule@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x00113F20",
+      "target_size": "30",
+      "source": "game/GameEngine/Source/Common/Thing/ObjectModuleDeletingDestructor.cpp",
+      "status": "matched",
+      "notes": "authentic scalar-deleting destructor; exact constructor 0x00113C60 installs vtable 0x01089774 whose slot-zero ILT 0x00002C9D routes here; named derived module constructors corroborate the exact type; complete destructor through ILT 0x00047C53"
+    },
+    {
+      "name": "??_GSubsystemInterface@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x009A1D00",
+      "target_size": "30",
+      "source": "game/GameEngine/Source/Common/System/SubsystemInterface.cpp",
+      "status": "matched",
+      "notes": ""
+    },
+    {
+      "name": "?Rva001139F0@@YA_NXZ",
+      "export_rva": "",
+      "target_rva": "0x001139F0",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived bool-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A00@@YA_NXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A00",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived bool-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A10@@YA_NXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A10",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived bool-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A50@@YAHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A50",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived int-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A60@@YAHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A60",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived int-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A70@@YAHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A70",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived int-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A80@@YAHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A80",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived int-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113A90@@YAHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A90",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived int-zero body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113AA0@@YA_NXZ",
+      "export_rva": "",
+      "target_rva": "0x00113AA0",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived bool-one body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113AB0Noop@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113AB0",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "address-derived one-byte no-op; carved boundary has one generated thunk caller and no semantic identity evidence"
+    },
+    {
+      "name": "?Rva00113AD0@@YGXH@Z",
+      "export_rva": "",
+      "target_rva": "0x00113AD0",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived stdcall one-dword cleanup body with one thunk xref"
+    },
+    {
+      "name": "?Rva00113B50Noop@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B50",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/Rva00113B50Noop.cpp",
+      "status": "matched",
+      "notes": "address-derived one-byte return from carved boundary with anonymous caller"
+    },
+    {
+      "name": "?Rva00113B80Noop@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B80",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/RvaShard1TinyNoops.cpp",
+      "status": "matched",
+      "notes": "carved one-byte ret boundary; anonymous ILT caller; address-qualified identity"
+    },
+    {
+      "name": "?Rva00113D10@@YGXHH@Z",
+      "export_rva": "",
+      "target_rva": "0x00113D10",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/Rva00113TinyBodies.cpp",
+      "status": "matched",
+      "notes": "opaque address-derived stdcall two-dword cleanup body with one thunk xref"
+    },
+    {
+      "name": "?b_00113b70@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B70",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/Rva00113B70Noop.cpp",
+      "status": "matched",
+      "notes": "carved ret boundary at 0x00113B70; address-derived identity"
+    },
+    {
+      "name": "?bfmeGoDNC@BfmeThingDNC@@QAEPAVBfmeOtherDNC@@PAV2@PAX@Z",
+      "export_rva": "",
+      "target_rva": "0x00113EC0",
+      "target_size": "33",
+      "source": "game/GameEngine/Source/Common/BfmeConv735.cpp",
+      "status": "matched",
+      "notes": ""
+    },
+    {
+      "name": "?d_00067940@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00067940",
+      "target_size": "5",
+      "source": "game/GameEngine/Source/Common/StdcallFalseThunk.cpp",
+      "status": "matched",
+      "notes": "object-symbol=?stdcall_false@@YG_NH@Z;Open-BFME5 clean C++ stdcall false result"
+    },
+    {
+      "name": "?dup_00113c30@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113C30",
+      "target_size": "27",
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "status": "matched",
+      "notes": "gen-alias;object-symbol=?DoXfer@ButterflyDrawModuleInfo@FXParticleSystem@@UAEXAAVXfer@@@Z;C++ alias"
+    },
+    {
+      "name": "?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z",
+      "export_rva": "",
+      "target_rva": "0x001BEE60",
+      "target_size": "63",
+      "source": "game/GameEngine/Source/GameLogic/Object/Object.cpp",
+      "status": "matched",
+      "notes": "body of retail ICF thunk 0x2AE23"
+    },
+    {
+      "name": "?getModuleNameKey@FoundationAIUpdate@@UBE?AW4NameKeyType@@XZ",
+      "export_rva": "",
+      "target_rva": "0x002B9F80",
+      "target_size": "104",
+      "source": "game/GameEngine/Source/Common/Thing/ModuleNameKeys_06.cpp",
+      "status": "matched",
+      "notes": "name proven by the literal verify_string_refs checks"
+    },
+    {
+      "name": "?invoke@Rva00113D50Caller@@QAEXPAVRva00113D50Target@@@Z",
+      "export_rva": "",
+      "target_rva": "0x00113D50",
+      "target_size": "55",
+      "source": "game/GameEngine/Source/Common/PairedFlagVirtualCallers.cpp",
+      "status": "matched",
+      "notes": "passes two all-true two-bool flag pairs by reference through vftable slot 0x28 twice"
+    },
+    {
+      "name": "?loadIniFilesFromLegend@SubsystemInterface@@UAE_NXZ",
+      "export_rva": "",
+      "target_rva": "0x009A1A50",
+      "target_size": "286",
+      "source": "game/Libraries/Source/subsystem/SubsystemInterface.cpp",
+      "status": "matched",
+      "notes": "vtable slot 2 - the legend lookup every subsystem inherits"
+    },
+    {
+      "name": "?loadPostProcess@ObjectModule@@MAEXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113D20",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/Thing/Module.cpp",
+      "status": "matched",
+      "notes": "identity-correction=reverse/identity_evidence/00113d20.md;vftable 0x01089774 slot 1 (BFME Snapshot loadPostProcess slot); lone ret"
+    },
+    {
+      "name": "?m@Gen_00113a20@@QAE_NXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A20",
+      "target_size": "3",
+      "source": "game/gen_small/fun_000.cpp",
+      "status": "matched",
+      "notes": "gen-shim;skeleton=ret-false;ghidra=FUN_00513a20"
+    },
+    {
+      "name": "?m@Gen_00113a30@@QAEHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A30",
+      "target_size": "3",
+      "source": "game/gen_small/fun_000.cpp",
+      "status": "matched",
+      "notes": "gen-shim;skeleton=ret-zero;ghidra=FUN_00513a30"
+    },
+    {
+      "name": "?m@Gen_00113a40@@QAEHXZ",
+      "export_rva": "",
+      "target_rva": "0x00113A40",
+      "target_size": "3",
+      "source": "game/gen_small/fun_000.cpp",
+      "status": "matched",
+      "notes": "gen-shim;skeleton=ret-zero;ghidra=FUN_00513a40"
+    },
+    {
+      "name": "?m@Gen_00113b40@@QAEXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B40",
+      "target_size": "1",
+      "source": "game/gen_small/fun_000.cpp",
+      "status": "matched",
+      "notes": "gen-shim;skeleton=ret-void;ghidra=FUN_00513b40"
+    },
+    {
+      "name": "?m@Gen_00113b90@@QAEIXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B90",
+      "target_size": "6",
+      "source": "game/gen_small/fun_000.cpp",
+      "status": "matched",
+      "notes": "gen-shim;skeleton=ret-imm;ghidra=FUN_00513b90"
+    },
+    {
+      "name": "?method@Rva009A16C0@@UAEXXZ",
+      "export_rva": "",
+      "target_rva": "0x009A16C0",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/System/Rva009A16C0.cpp",
+      "status": "matched",
+      "notes": "opaque empty slot7 in independently installed base table1141640; RET then15 INT3; no header layout/name additions; identity_evidence/009a16c0-009a16d0-empty-slots.md;model=gpt-6-astra;host=steamdeck"
+    },
+    {
+      "name": "?method@Rva009A16D0@@UAEXI@Z",
+      "export_rva": "",
+      "target_rva": "0x009A16D0",
+      "target_size": "3",
+      "source": "game/GameEngine/Source/Common/System/Rva009A16C0.cpp",
+      "status": "matched",
+      "notes": "opaque empty slot8 in independently installed base table1141640; RET4 then13 INT3; ignored argument only ABI word; identity_evidence/009a16c0-009a16d0-empty-slots.md;model=gpt-6-astra;host=steamdeck"
+    },
+    {
+      "name": "?name@Rva00113AC0Named@@QBEPBDXZ",
+      "export_rva": "",
+      "target_rva": "0x00113AC0",
+      "target_size": "6",
+      "source": "game/GameEngine/Source/Common/LiteralNameGetters_01.cpp",
+      "status": "matched",
+      "notes": "literal name getter returning ModuleData; address-derived placeholder name"
+    },
+    {
+      "name": "?name@Rva00113D30Named@@QBEPBDXZ",
+      "export_rva": "",
+      "target_rva": "0x00113D30",
+      "target_size": "6",
+      "source": "game/GameEngine/Source/Common/LiteralNameGetters_01.cpp",
+      "status": "matched",
+      "notes": "literal name getter returning ObjectModule; address-derived placeholder name"
+    },
+    {
+      "name": "?postProcessLoad@SubsystemInterface@@UAEXXZ",
+      "export_rva": "",
+      "target_rva": "0x00067930",
+      "target_size": "1",
+      "source": "game/GameEngine/Source/Common/System/SubsystemInterfacePostProcessLoad.cpp",
+      "status": "matched",
+      "notes": "authentic inherited BFME subsystem hook; ParticleSystemManager vtable 0x0110FDCC and W3DParticleSystemManager vtable 0x0112039C both slot 3 route via ILT 0x004436B2; upstream SubsystemInterface declares postProcessLoad between init and reset with BFME loadIniFilesFromLegend inserted before it"
+    },
+    {
+      "name": "?rva00113B60@W3DLightDraw@@UAEXXZ",
+      "export_rva": "",
+      "target_rva": "0x00113B60",
+      "target_size": "1",
+      "source": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLightDrawDestructor.cpp",
+      "status": "matched",
+      "notes": "W3DLightDraw primary vtable 0x01122B20 slot 7 points through ILT 0x00041821 to this empty virtual override."
+    },
+    {
+      "name": "__purecall",
+      "export_rva": "",
+      "target_rva": "0x0088C500",
+      "target_size": "60",
+      "source": "game/Libraries/Source/debug/debug_purecall.cpp",
+      "status": "matched",
+      "notes": "identity-correction=targets/game/reverse/identity_evidence/20261003-purecall-binding-audit.md;compiler CRT purecall hook; destructor-anchored GameSpyInfoInterface table and EA debug_purecall source agree; complete cdecl reporter with RET followed by INT3; freshly revalidated on upstream after second environment recovery;model=gpt-6-astra;host=ccf2ec58c344"
+    },
+    {
+      "name": "??1DelayedLuaEventUpdateModuleData@@UAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x0028BCA0",
+      "target_size": "7",
+      "source": "game/GameEngine/Source/GameLogic/ScriptEngine/DelayedLuaEventUpdateModuleDataDestructor.cpp",
+      "status": "matched",
+      "notes": "empty complete destructor keeps only the Snapshot vtable store 0x01073744; matched scalar deleting destructor calls it through the pinned ILT; ilt_oracle confirms the UAE decoration; replaces gen-shim placeholder;model=claude-opus-5-5;host=vm"
+    }
+  ],
+  "legacy_moduledata_header_codeview": {
+    "fwd": false,
+    "key": "class",
+    "size": 8,
+    "bases": [
+      [
+        "Snapshot",
+        0
+      ]
+    ],
+    "fields": [
+      [
+        4,
+        "m_moduleTagNameKey",
+        "enum",
+        4
+      ]
+    ],
+    "statics": [],
+    "methods": [
+      "ModuleData",
+      "__local_vftable_ctor_closure",
+      "__vecDelDtor",
+      "buildFieldParse",
+      "crc",
+      "getAsW3DModelDrawModuleData",
+      "getAsW3DTreeDrawModuleData",
+      "getMinimumRequiredGameLOD",
+      "getModuleTagNameKey",
+      "isAiModuleData",
+      "loadPostProcess",
+      "setModuleTagNameKey",
+      "xfer",
+      "~ModuleData"
+    ],
+    "virtual": [
+      "__vecDelDtor",
+      "crc",
+      "getAsW3DModelDrawModuleData",
+      "getAsW3DTreeDrawModuleData",
+      "getMinimumRequiredGameLOD",
+      "isAiModuleData",
+      "loadPostProcess",
+      "xfer",
+      "~ModuleData"
+    ],
+    "vslots": {
+      "3": "__vecDelDtor(uint)",
+      "4": "isAiModuleData()",
+      "5": "getAsW3DModelDrawModuleData()",
+      "6": "getAsW3DTreeDrawModuleData()",
+      "7": "getMinimumRequiredGameLOD()"
+    },
+    "vfptr": false
+  },
+  "legacy_probe_object_sha256": "d9a861ae4e6185aa8b94ec434752efcca993dcb3ef7b628d578828827c037484",
+  "donor_ModuleData_slots": 31,
+  "source_macro_not_snapshot": "ModuleFactory.cpp #define Snapshot BfmeModuleFactoryBase binds original SubsystemInterface constructor009A1A30,not Snapshot",
+  "limits": [
+    "No new41-slot scan or new compiler source was run.",
+    "17slotModuleData is corroborated by its live parent table and identical inherited slots in delayed-lua data.",
+    "The existing strictFoundation657 result is retained evidence,not a new task.",
+    "A direct Shared-Module inheritance swap would also change ModuleData and legacy module macros through Common/Module.h; no stand-in was proposed."
+  ],
+  "legacy_moduledata_primary_slot_span": 8,
+  "factory_tag_offset4_stores": [
+    {
+      "rva": "0x129672",
+      "instruction": "mov dword ptr [esi + 4], eax"
+    }
+  ]
+}
