@@ -26,7 +26,7 @@
     <text x="852" y="212" class="strong" font-size="20" font-weight="700" text-anchor="end">35.57%</text>
     <rect class="track" x="28" y="222" width="824" height="14" rx="7"/>
     <rect x="28" y="222" width="293.11" height="14" rx="7" fill="#d29922"/>
-    <text x="28" y="256" class="muted" font-size="12.5">3,022,503 / 8,496,907 bytes of the game's own code linked (measured 2026-11-22)</text>
+    <text x="28" y="256" class="muted" font-size="12.5">3,022,503 / 8,496,907 bytes of the game's own code linked (measured 2026-11-23)</text>
     <text x="28" y="286" class="strong" font-size="15" font-weight="600">Readable names</text>
     <text x="852" y="286" class="strong" font-size="20" font-weight="700" text-anchor="end">70.53%</text>
     <rect class="track" x="28" y="296" width="824" height="14" rx="7"/>
