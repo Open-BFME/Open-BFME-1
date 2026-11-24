@@ -1,0 +1,56 @@
+{
+  "candidate_sha256": "8678c7f69536ad7aedbd328c4c1f6cbb5826378d7b9991cae9f064dfdaeb976f",
+  "checked_worktree_source": "game\\GameEngine\\Source\\Common\\BfmeConv793.cpp",
+  "finished_utc": "2026-11-24T19:36:51.461063+00:00",
+  "global_census_or_image_link_or_runtime_claim": false,
+  "head": "ec28b9ebb62f6d6384794768c5ff142f1e579e27",
+  "helper": "??_GOpen2Dtor13A8E0@@QAEPAXI@Z",
+  "helper_code_bytes": 30,
+  "helper_comdat_copies": [
+    [
+      "game_^game^engine_^source_^common_^bfme^conv793.obj",
+      "9f3b58662255",
+      30,
+      null
+    ]
+  ],
+  "helper_globally_referenced": false,
+  "helper_has_separate_FPO": true,
+  "helper_ledger_owners": [],
+  "index_or_unreferenced_set_modified": false,
+  "missing_after": 0,
+  "missing_before": 0,
+  "native_copy_loses": {
+    "game_^game^engine_^source_^common_^bfme^conv793.obj": false
+  },
+  "native_fact_snapshots_validated_before_after_references_and_final": true,
+  "native_keep_rule": "unreferenced",
+  "native_methods": [
+    "ledger",
+    "objects",
+    "_object_sources",
+    "stale_objects",
+    "verify_data_objects",
+    "read_facts",
+    "ledger_owners",
+    "link_references",
+    "validate_fact_snapshots",
+    "keep_rule",
+    "census_receipts.Receipts.current/check"
+  ],
+  "native_receipt_input_extraction_count": 7,
+  "native_receipt_input_extraction_sha256": "f65fd02bf8e9c0aefc2de00030822bd32b085d4b61315d7c75b27ef934f5950d",
+  "new_body_credit": 0,
+  "objects": 22997,
+  "policy_sha256": "b535ddb0b0936dcd8155779828255e92b406beb4aa5e4aae652eaa9ff42853bc",
+  "referenced_names_count": 335493,
+  "referenced_names_sha256": "54bf40f4b7228591bc58f65599c1735ab590dd26cff00988c9792ffeff1cea5d",
+  "runtime_graph_unchanged": false,
+  "source_tool_input_and_object_snapshots_stable": true,
+  "stale_after": 0,
+  "stale_before": 0,
+  "started_utc": "2026-11-24T19:26:04.186906+00:00",
+  "truth_inputs_sha256": "3c8a3aac918167f4ecb22c1294af3446b10b131d61e82e17cef1d7f66d5026f6",
+  "unchanged_index_sha256": "35b1b72b3d5aedd561c700132b6086cea4a72ad1ef6cd6e483fdb5b23d3b6437",
+  "weak_and_alternatename_edges": "included by unchanged native link_references"
+}
