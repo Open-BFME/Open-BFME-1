@@ -1,0 +1,179 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv1993.cpp",
+  "whole_source_rows": 2,
+  "strict_current_native_rows": [
+    {
+      "row": {
+        "name": "?dup_00C56D28@@YAXXZ",
+        "export_rva": "",
+        "target_rva": "0x00C56D28",
+        "target_size": "25",
+        "source": "game/GameEngine/Source/Common/BfmeConv1993.cpp",
+        "status": "matched",
+        "notes": "authored C++ cleanup;gen-funclet;parent=?bfmeMakeEVB@@YA?AVRefHandle008958D0@@PBD@Z;object-symbol=$L368;retail parent 0x008931A0 pushes handler stub 0x00C56D41 (mov eax FuncInfo) whose unwind map names this action;label mapped by state index;model=claude-opus-5-5;host=GreatFaram"
+      },
+      "strict": true,
+      "raw_unchanged": true,
+      "raw": "8b45f083e0010f840c0000008365f0fe8b4d04e900000000c3b800000000e900000000",
+      "relocations": [
+        [
+          20,
+          20,
+          "??1RefHandle008958D0@@QAE@XZ"
+        ],
+        [
+          26,
+          6,
+          "$T387"
+        ],
+        [
+          31,
+          20,
+          "___CxxFrameHandler"
+        ]
+      ],
+      "note": null
+    },
+    {
+      "row": {
+        "name": "?bfmeMakeEVB@@YA?AVRefHandle008958D0@@PBD@Z",
+        "export_rva": "",
+        "target_rva": "0x008931A0",
+        "target_size": "133",
+        "source": "game/GameEngine/Source/Common/BfmeConv1993.cpp",
+        "status": "matched",
+        "notes": "identity-correction=targets/game/reverse/identity_evidence/008931a0-owning-handle-forwarder-20261124.md;existing133B owning-handle forwarder;exact4B return and existing builder/dtor identities;source-provider reconciliation;zero new body coverage;model=codex;launched=gpt-6;host=Michael-PC"
+      },
+      "strict": true,
+      "raw_unchanged": true,
+      "raw": "6aff680000000064a100000000506489250000000083ec088b44241c56508d4c2408c744240c00000000e8000000008b74241c8d4c2404518b0d0000000056c744241c01000000e8000000008b44240466ff0866833800c744240801000000c644241400750d8b150000000050ff520483c4048b4c240c8bc65e64890d0000000083c414c3",
+      "relocations": [
+        [
+          3,
+          6,
+          "__ehhandler$?bfmeMakeEVB@@YA?AVRefHandle008958D0@@PBD@Z"
+        ],
+        [
+          9,
+          6,
+          "__except_list"
+        ],
+        [
+          17,
+          6,
+          "__except_list"
+        ],
+        [
+          43,
+          20,
+          "?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z"
+        ],
+        [
+          58,
+          6,
+          "?g_rva00893030Manager@@3PAVRva00893030Manager@@A"
+        ],
+        [
+          72,
+          20,
+          "?rva00895A00@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z"
+        ],
+        [
+          104,
+          6,
+          "?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A"
+        ],
+        [
+          125,
+          6,
+          "__except_list"
+        ]
+      ],
+      "note": null
+    }
+  ],
+  "retained_existing_bytes": 158,
+  "new_exact_body_bytes": 0,
+  "normal_object_sha256": {
+    "before": "eb100f75fe94a3e31b9428b7d0c786c26b1a431c1c89818a2224146bec6a6728",
+    "after": "d110538705c2e128b02ddd43b180e0e7730e37b886fb9e14dacda0edc0339ce2"
+  },
+  "comparison_only_independently_proven_name_mapping": {
+    "?bfmeMakeEVB@@YA?AUBfmeResultEVB@@PBD@Z": "?bfmeMakeEVB@@YA?AVRefHandle008958D0@@PBD@Z",
+    "??1BfmeResultEVB@@QAE@XZ": "??1RefHandle008958D0@@QAE@XZ",
+    "?bfmeBuildEVB@Rva00893030Manager@@QAE?AUBfmeResultEVB@@PAVBfmeStrVKI@@@Z": "?rva00895A00@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z"
+  },
+  "physical_same_location_local_label_changes": {},
+  "runtime_and_FPO_section_bytes_flags_extents_unchanged": true,
+  "relocation_offsets_kinds_and_physical_graph_unchanged_except_proven_names": true,
+  "definitions_Weak_COMDAT_DefaultLib_CRT_SafeSEH_data_unchanged_except_parent_name": true,
+  "undefined": {
+    "before": [
+      "??1BfmeResultEVB@@QAE@XZ",
+      "?bfmeBuildEVB@Rva00893030Manager@@QAE?AUBfmeResultEVB@@PAVBfmeStrVKI@@@Z",
+      "?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z",
+      "?g_rva00893030Manager@@3PAVRva00893030Manager@@A",
+      "?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A",
+      "___CxxFrameHandler",
+      "__except_list"
+    ],
+    "after": [
+      "??1RefHandle008958D0@@QAE@XZ",
+      "?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z",
+      "?g_rva00893030Manager@@3PAVRva00893030Manager@@A",
+      "?g_rva01337A30AllocPair@@3PAUBfmeStringPool3AF0@@A",
+      "?rva00895A00@Rva00893030Manager@@QAE?AVRefHandle008958D0@@PAVBfmeStrVKI@@@Z",
+      "___CxxFrameHandler",
+      "__except_list"
+    ]
+  },
+  "compiler_command_and_include_dependencies_unchanged": true,
+  "no_resolver_pin_row_or_gate_override": true,
+  "full_census_or_runtime_proof": false,
+  "donor": {
+    "checked_at_utc": "2026-11-24T15:31:34.914401+00:00",
+    "old_donor": "1e864b34e05f68568db539537b6959d94d104f57",
+    "verified_official_master": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+    "clean_detached_checkout": true,
+    "reference_only": true,
+    "BFME2_archived_and_active_successor_is_not_a_build_dependency": true,
+    "native_scan_command": "python3 tools/bfme2_sweep.py scan",
+    "native_cache": "W:\\OpenBFME\\Open-BFME-1\\build\\bfme2_sweep\\binary.json",
+    "cache_sha256": "29ac6c75a0861c3eb652128377a81943c4fbd51bc5fceb21c7bf07552f36d833",
+    "native_current_receipt_validation": true,
+    "input_fingerprints": 16424,
+    "bodies_scanned": 53315,
+    "placements": 790847,
+    "buckets": {
+      "exact-unique": 4820,
+      "near": 25778,
+      "exact-multi": 759646,
+      "truncated": 450,
+      "string-conflict": 153
+    },
+    "selected_donor_paths_unchanged_since_previous_check": {
+      "Code/GameEngine/Source/Common/Bfme5ThirtyFour.cpp": "0b1d48999204c696610e44d6d8abbcf98db3736dd71c860e063bee9b98b14b7b",
+      "docs/recipes.md": "4fe72336704e7014ad6a5e47f92b4b430d2bd9751cd7888f0821a5445e99fabe"
+    },
+    "all_native_scan_input_fingerprints_sha256": "43ad1ed1f0217df78a2764c7699e22a13c0a963e9b23063d55dbddad4f06a433",
+    "new_cache_not_identity_or_byte_admission": true,
+    "scope": "Validated before the later intentional same-range function identity correction; do not reuse that cache after its target-ledger hash changes."
+  },
+  "tool_prerequisite_commit": "5ffd60c384449236b56a334bfe0f7e7b22fc18e3",
+  "direct_tool_regressions_passed": 74,
+  "source_tasks": 1,
+  "source_session_baseline": "83661bbe3aedea497f83968cbb6ba7de1329401f",
+  "actual_link_before": "UNLINKED0 ->0",
+  "actual_link_after": "LINKS0 ->133",
+  "source_sha256": "3f0bfffa4cb75883013e982165e8483dc0d66898669902474df01229b75b7d47",
+  "identity_evidence_sha256": "06fcee2a8a8f1834950ebc620822e7dcb9b148a1a4c9d49c2aeaba3aeecfba73",
+  "captured_logs": {
+    "conv1993-normal-admission.log": "799826c32033302b69971a49932381ef93ba3aef06d0881b9ab7f37647bcad0c",
+    "conv1993-link-before.log": "2cc97a604ed2d407dba3c2f32068a7b33f7d2cd2e8dc23bae97320584af9f69d",
+    "conv1993-link-after.log": "e884a940422d55ccedade1c2aadecac4bd2d46f4ba06df1b574b483e6fd16722",
+    "conv1993-eh-check.log": "99c2ed27af3472742c58246e4eec72ec2fafafeab791746d28c708e083b91216",
+    "tool-prerequisite-tests.log": "259c37b7413771889b0102a9b71c2b86e293ea64cb28463a6ce045e5cc09aefa",
+    "PROFILE-AND-EXISTING-PROVIDERS.json": "b7f4aec944f5b0e67f886d1e74125f36f2c8674a4979271cd15a545bc5ed61f4",
+    "CONTROL-AND-ORIGINAL.json": "f30832f1fdb9c635f52db0afefbbd9cc61c072a079f7453d04839903134b8e47"
+  }
+}
