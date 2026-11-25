@@ -15475,7 +15475,6 @@ _piChannelMessageA,0x00C6B430
 _piChannelModeChangedA,0x00C6B9D0
 _piChannelNewUserListA,0x00C6B8D0
 _piChannelTopicChangedA,0x00C6B860
-_piChannelUserChangedNickA,0x00C6B810
 _piChannelUserJoinedA,0x00C6B5E0
 _piChannelUserPartedA,0x00C6B710
 _piChatDisconnectedA,0x00C6B2D0
