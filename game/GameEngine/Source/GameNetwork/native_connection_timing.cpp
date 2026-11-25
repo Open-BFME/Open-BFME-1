@@ -439,7 +439,7 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 extern unsigned int g_dword010EAD50;
-extern unsigned int g_lastPacketRouterStallFrame;
+unsigned int g_lastPacketRouterStallFrame = 0;
 extern int FRAMES_TO_KEEP;
 
 template <class T> const T &frameMaximum(const T &a, const T &b)
