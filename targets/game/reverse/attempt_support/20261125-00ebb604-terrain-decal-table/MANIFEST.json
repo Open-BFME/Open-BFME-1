@@ -1,0 +1,122 @@
+{
+  "source": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp",
+  "source_sha256": "fd0e3d9b4ef4ea31d0831932bddbe144c72b2d1cd99b4b49b83b012836319a1b",
+  "source_tasks_completed": 1,
+  "new_code_union_bytes": 0,
+  "new_data_bytes": 115,
+  "physical_function_extent": 294,
+  "native_scoped_linked_preview": "0->293",
+  "tracked_artifacts": {
+    "HANDOFF.md": {
+      "sha256": "a6a6634a24d610bf88a83bcdcc4d0016c8caaa9b886e8985f41bed32abadb91e",
+      "bytes": 5917
+    },
+    "LINK-AFTER.txt": {
+      "sha256": "f5011320e17495902c3d0c867e47a49639cfa154b63d0bc0d2e3749c933a13f3",
+      "bytes": 343
+    },
+    "LINK-BEFORE.txt": {
+      "sha256": "fb50aa7cb2c1f4700fce332149bf7d96104b4e273ff5b7c99fa459391f2bb2d7",
+      "bytes": 382
+    },
+    "NATIVE-DATA-ADMISSIONS.json": {
+      "sha256": "17e71a5eab580cc7ca0465920a04cc94e2a5c395b788bd23fe1012928664ac1b",
+      "bytes": 2793
+    },
+    "NORMAL-BUILD.txt": {
+      "sha256": "43c1738d2f7205ebc5678b9afd12109057ce7a08fe7e8cd77ea75b283fbb9614",
+      "bytes": 805
+    },
+    "NORMAL-OBJECT.json": {
+      "sha256": "00837ed2fa5c94864b9efe318c202ed05662371f5f51e658a3d9e6d2bebdb984",
+      "bytes": 9726
+    },
+    "ORIGINAL-LEAF-SCOPE.json": {
+      "sha256": "18eaf53104ec9e491e1666e2956225158f2166eb2ea01e6d3a4e0dc892d1f9dc",
+      "bytes": 1546
+    },
+    "REFERENCE.json": {
+      "sha256": "d94def8d8ea5b523bf55ba6c624938cb7d4a049f2ef30ba73f3383d8a13ee431",
+      "bytes": 886
+    },
+    "REFUSAL-ANONYMOUS-LITERALS.txt": {
+      "sha256": "a6e6c0b923e1af82eed01e8d45b6d96a41b2588f69fb3eb08969dd332fa4385e",
+      "bytes": 150
+    },
+    "REVIEW.md": {
+      "sha256": "748ecd4ee07bd08bfebb2676f701ae7225092cd57aac810568be1a60f4192c3a",
+      "bytes": 4561
+    }
+  },
+  "private_diagnostics": "W:\\OpenBFME\\diagnostics\\one-per-project-20261125-190319\\bfme1",
+  "private_artifacts": {
+    "terrain-control-0.obj": {
+      "sha256": "0a584fbd78e44028509606bd49b55aaab2939619f073686a9e572aa7a06e392a",
+      "bytes": 2927
+    },
+    "terrain-control-1.obj": {
+      "sha256": "9eabbec5d56ff257348506a9e38333ca94462c8a478f60716dd262fce8caf6f3",
+      "bytes": 318657
+    },
+    "terrain-control-2.obj": {
+      "sha256": "20c56178f9368114d020eaa9e78e0a4ff1be7615dcb622b8231dab35371ee4d1",
+      "bytes": 75008
+    },
+    "terrain-normal-after.obj": {
+      "sha256": "3180d53ce02126451962778a0eb0275498802e52559a872b554d3b5a45186424",
+      "bytes": 3415
+    },
+    "terrain-anonymous-normal.obj": {
+      "sha256": "a4847d6a2a56f1015b30d1159aa9a3f79299cbdb1d99d4fb05e367b3ccf733a0",
+      "bytes": 3969
+    },
+    "TERRAIN-CONTROL-INPUTS.json": {
+      "sha256": "59957f72629721c90ac9eee8d000a95c326a329c7ef63a34c20adf3e6bff1198",
+      "bytes": 6136
+    },
+    "TERRAIN-ONE-CANDIDATE.json": {
+      "sha256": "b58e123410dd70e53bb32ea1a592abce897ec3aeadcccfdd83e9cdc432158d73",
+      "bytes": 733
+    },
+    "TERRAIN-OWNED-LEAVES-CANDIDATE.json": {
+      "sha256": "27bb2d48ebce13f13c308f3a10cda45c9e699a4b0af36e85ba01e51b6eb91c9d",
+      "bytes": 2743
+    },
+    "TERRAIN-ANONYMOUS-WHOLE-OBJECT-PROOF.json": {
+      "sha256": "8edc53d4c4d4fc854b12ccc9c095f8066fa3c42835925a2356e5369f39e63427",
+      "bytes": 10664
+    },
+    "terrain-whole-object-proof-pre-admission.log": {
+      "sha256": "257fc1d1bab53c1546517fa57d80d1e7893cf76d964d94390b429ec39a6c7f91",
+      "bytes": 452
+    },
+    "terrain-whole-object-proof.py": {
+      "sha256": "899fa63f7c48bfc97515e8caf8525737d168bfbc10b28d52acc3c23ca196ff28",
+      "bytes": 10374
+    },
+    "terrain-adapt-owned-leaves.py": {
+      "sha256": "fc5d6ebeb36b1be35b2a87bf5f36fe0d3a129bc90ee2dbdad1c13229292d479d",
+      "bytes": 3548
+    },
+    "terrain-admit-owned-data.py": {
+      "sha256": "7cee8fe9b69188aba607bb5b9b3760722cd0932eb6450bc716910dd8de636305",
+      "bytes": 4826
+    },
+    "selection/DECAL-SELECTED-PROVIDERS.json": {
+      "sha256": "73376cc730c0ca69939dca4ca5736102bd112b73382c1cb47c222a4badf81c88",
+      "bytes": 369254
+    },
+    "selection/DECAL-KEPT-PROVIDERS-COMPACT.json": {
+      "sha256": "5b5b0ded8bc8b10231a4e028897cca73a11c6bafaa8d4f5f250b57511f831deb",
+      "bytes": 1824
+    },
+    "selection/DECAL-FULL294-CORRECTION.json": {
+      "sha256": "818a5f226639f6ac778f7a2a699a70d1637cba6d6a17bddc29ae15b6bc25cb55",
+      "bytes": 14086
+    },
+    "selection/TERRAIN-DATUM-HANDOFF.md": {
+      "sha256": "962c33c2441635f849bcbb23b87fa316e9646486979cd9305bf6e3e69d506334",
+      "bytes": 8279
+    }
+  }
+}

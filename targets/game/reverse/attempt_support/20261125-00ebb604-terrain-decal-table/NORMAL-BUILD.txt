@@ -1,0 +1,10 @@
+Source claims: OK (3 sources, scoped byte-verified)
+Data rows: OK (15 row(s) byte-verified)
+Compile: 0 of 3 TU(s) (deps-cache: 3 current)
+Funclet pins: 1 row(s) verified past a renumbered $L label
+    uw_00c527c0 (game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp): $L80121 was renumbered by an edit to this TU; the body is $L80175 in the object built now (stale ledger pin, not a byte mismatch)
+Functions: OK 220/220 matched across 3 source file(s)
+String-ref verify: OK (7 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (43 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (116 reference(s) checked against 17231 recorded symbols)
+Body guard: OK (220 row(s); 0 baselined finding(s); {'static_skip': 8})

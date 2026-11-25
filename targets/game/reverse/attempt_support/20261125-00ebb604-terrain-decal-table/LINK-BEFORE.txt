@@ -1,0 +1,5 @@
+Compile: 0 of 1 TU(s) (deps-cache: 1 current)
+Lib members: 159 extracted from 3 archive(s)
+game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: does not link  LINKED 0 -> 0 bytes (census 2026-11-21 10:53 at 42237e2367; file's own bytes 293)
+  unresolved  ?g_012BB604@@3QBQBDB
+link_check: 0 of 1 link cleanly; LINKED 0 -> 0 bytes (385.2s)

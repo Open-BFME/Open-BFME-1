@@ -1,0 +1,51 @@
+[
+  {
+    "name": "?g_011236E8@@3QBDB",
+    "va": "0x011236E8",
+    "size": 35,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236E8@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 35 B at 0x011236E8 equal to retail, 0 relocation(s) on target (sizeof(::g_011236E8) under the build's flags = 35 (allocation extent 36))"
+  },
+  {
+    "name": "?g_011236DC@@3QBDB",
+    "va": "0x011236DC",
+    "size": 8,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236DC@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 8 B at 0x011236DC equal to retail, 0 relocation(s) on target (sizeof(::g_011236DC) under the build's flags = 8 (allocation extent 8))"
+  },
+  {
+    "name": "?g_011236CC@@3QBDB",
+    "va": "0x011236CC",
+    "size": 11,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236CC@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 11 B at 0x011236CC equal to retail, 0 relocation(s) on target (sizeof(::g_011236CC) under the build's flags = 11 (allocation extent 12))"
+  },
+  {
+    "name": "?g_011236C0@@3QBDB",
+    "va": "0x011236C0",
+    "size": 9,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236C0@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 9 B at 0x011236C0 equal to retail, 0 relocation(s) on target (sizeof(::g_011236C0) under the build's flags = 9 (allocation extent 12))"
+  },
+  {
+    "name": "?g_011236B0@@3QBDB",
+    "va": "0x011236B0",
+    "size": 12,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236B0@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 12 B at 0x011236B0 equal to retail, 0 relocation(s) on target (sizeof(::g_011236B0) under the build's flags = 12 (allocation extent 12))"
+  },
+  {
+    "name": "?g_011236A0@@3QBDB",
+    "va": "0x011236A0",
+    "size": 12,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_011236A0@@3QBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 12 B at 0x011236A0 equal to retail, 0 relocation(s) on target (sizeof(::g_011236A0) under the build's flags = 12 (allocation extent 12))"
+  },
+  {
+    "name": "?g_012BB604@@3QBQBDB",
+    "va": "0x012BB604",
+    "size": 28,
+    "returncode": 0,
+    "native_output": "add_data_match: ?g_012BB604@@3QBQBDB -> game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp: 28 B at 0x012BB604 equal to retail, 7 relocation(s) on target (sizeof(::g_012BB604) under the build's flags = 28 (allocation extent 28))"
+  }
+]
