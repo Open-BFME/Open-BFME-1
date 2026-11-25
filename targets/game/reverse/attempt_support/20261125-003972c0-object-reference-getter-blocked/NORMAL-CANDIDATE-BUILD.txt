@@ -1,0 +1,7 @@
+Source claims: OK (3 sources, scoped byte-verified)
+Compile: 1 of 3 TU(s) (deps-cache: 2 current)
+Functions: OK 4/4 matched across 3 source file(s)
+String-ref verify: OK (0 literals + 0 empty-string refs verified, 0 unverified/skipped)
+Constant-ref verify: OK (0 float constants verified; 0 local readonly loads verified)
+DIR32 addresses: OK (7 reference(s) checked against 17231 recorded symbols)
+Body guard: OK (4 row(s); 0 baselined finding(s); {})

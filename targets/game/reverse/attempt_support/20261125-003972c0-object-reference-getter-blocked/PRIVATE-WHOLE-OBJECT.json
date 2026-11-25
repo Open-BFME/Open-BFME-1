@@ -1,0 +1,113 @@
+{
+  "source": "game/GameEngine/Source/GameLogic/Object/BfmeObjectReferenceResolve.cpp",
+  "candidate_sha256": "6582cd85937c6b747a2e18079fff307952c3555ec0a4a87cb4d60a22bcf11322",
+  "candidate_strict": true,
+  "only_runtime_change": [
+    {
+      "section": 3,
+      "offset": 5,
+      "kind": 20
+    }
+  ],
+  "old_callee": "?getObjectIdSlot@BfmeObjectReference@@QAEPAUBfmeObjectIdSlot@@XZ",
+  "new_callee": "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+  "full_runtime_FPO_sections_preserved": true,
+  "no_extra_code_data_EH_FPO_COMDAT_weak_CRT_DefaultLib_vtable_emission": true,
+  "original_full_profile_and_environment_preserved": true,
+  "old_prefix_structs_preserved": true,
+  "canonical_ObjectID_header_used": true,
+  "canonical_STL_types_only_forward_declared": true,
+  "no_AIGroup_layout_size_base_or_vtable_assumed": true,
+  "vector_prefix_evidence": [
+    "original3972C0 load vector start then first4B ID",
+    "original154AD0 returns own vector atthis+34",
+    "canonicalSTLport _Vector_base first field _M_start",
+    "BFME2 PlayerSetCurrentlySelectedAIGroup.cpp71 uses existing vector-return prefix access"
+  ],
+  "provider_inputs": {
+    "game/GameEngine/Source/GameLogic/Object/BfmeObjectReferenceResolve.cpp": {
+      "source_sha256": "437052efd0e7d6947bcd388ec91208a52227afe257a703860b2c3d82a0f8bbf6",
+      "object_sha256": "8eb2da44c0794ad01169dce2e24642fe832e685b8f0209e886b188af52dc6b24"
+    },
+    "game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp": {
+      "source_sha256": "0c036b1443ecec3aacdb4e9e993c7a5f4d4d78da9f78e4ff74fc31eb30c5a20c",
+      "object_sha256": "66f3076e3641d2aa04ce2b454ab57bbe56b9eaf1f5b31bedbebcd9bbdbbb3b6d"
+    },
+    "game/GameEngine/Source/GameClient/GUI/Palantir/SelectionAll00595230.cpp": {
+      "source_sha256": "016260a293d56e41a10eb5c0a880e7bcde48b11f6038349d0c560f103d8def33",
+      "object_sha256": "f733ca6754582d8505bfbe3a563e4c634859b9b190a49c436b22593448d31534"
+    }
+  },
+  "whole_source_provider_rows": [
+    {
+      "name": "?findObjectByID@GameLogic@@QAEPAVObject@@H@Z",
+      "rva": "0x0009A510",
+      "extent": "82",
+      "strict": true
+    },
+    {
+      "name": "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+      "rva": "0x00154AD0",
+      "extent": "136",
+      "strict": true
+    },
+    {
+      "name": "?invoke@SelectionTable00595230@@QAEXXZ",
+      "rva": "0x00595230",
+      "extent": "527",
+      "strict": true
+    },
+    {
+      "name": "?resolve@BfmeObjectReference@@QAEPAVObject@@XZ",
+      "rva": "0x003972C0",
+      "extent": "29",
+      "strict": true
+    }
+  ],
+  "before_externals": {
+    "defined": [
+      [
+        "?resolve@BfmeObjectReference@@QAEPAVObject@@XZ",
+        0,
+        32,
+        2
+      ]
+    ],
+    "undefined": [
+      "?TheGameLogic@@3PAVGameLogic@@A",
+      "?findObjectByID@GameLogic@@QAEPAVObject@@H@Z",
+      "?getObjectIdSlot@BfmeObjectReference@@QAEPAUBfmeObjectIdSlot@@XZ"
+    ],
+    "weak": [],
+    "comdat": {
+      "1": 0,
+      "2": 0,
+      "3": 1,
+      "4": 5
+    }
+  },
+  "candidate_externals": {
+    "defined": [
+      [
+        "?resolve@BfmeObjectReference@@QAEPAVObject@@XZ",
+        0,
+        32,
+        2
+      ]
+    ],
+    "undefined": [
+      "?TheGameLogic@@3PAVGameLogic@@A",
+      "?findObjectByID@GameLogic@@QAEPAVObject@@H@Z",
+      "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ"
+    ],
+    "weak": [],
+    "comdat": {
+      "1": 0,
+      "2": 0,
+      "3": 1,
+      "4": 5
+    }
+  },
+  "new_exact_body_or_union_bytes": 0,
+  "global_census_image_link_or_runtime_claim": false
+}

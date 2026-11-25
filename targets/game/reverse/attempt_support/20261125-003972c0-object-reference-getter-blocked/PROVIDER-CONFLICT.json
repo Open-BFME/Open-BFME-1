@@ -1,0 +1,97 @@
+{
+  "read_only_no_compiler_or_refresh": true,
+  "name": "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+  "owner_rows": [
+    {
+      "name": "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+      "export_rva": "",
+      "target_rva": "0x00154AD0",
+      "target_size": "136",
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp",
+      "status": "matched",
+      "notes": ""
+    }
+  ],
+  "owner_source_sha256": "0c036b1443ecec3aacdb4e9e993c7a5f4d4d78da9f78e4ff74fc31eb30c5a20c",
+  "owner_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^game^engine_^source_^game^logic_^a^i_^a^i^group_get^all^i^ds.obj",
+  "owner_object_sha256": "66f3076e3641d2aa04ce2b454ab57bbe56b9eaf1f5b31bedbebcd9bbdbbb3b6d",
+  "owner_native_cache_current": true,
+  "COMDAT_size": 136,
+  "owner_native_verdict": "wrong",
+  "owner_exact_named_copy": [
+    [
+      "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+      "054f9cd871d2",
+      136,
+      "wrong"
+    ]
+  ],
+  "owner_exclusive": true,
+  "body_non_relocation_differences": [],
+  "relocations": [
+    {
+      "offset": 116,
+      "kind": 20,
+      "referent": {
+        "index": 143,
+        "name": "?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z",
+        "section": 53,
+        "storage": 2,
+        "value": 0,
+        "type": 32,
+        "aux": 0
+      },
+      "original_target_rva": "0x10b8b",
+      "original_ILT_body": "0x1523d0",
+      "native_identity_addresses": [
+        "0x33dac"
+      ],
+      "native_lands": false,
+      "expected_all_shared": false
+    }
+  ],
+  "old_census_definers": [
+    [
+      "game_^game^engine_^source_^game^logic_^a^i_^a^i^group_get^all^i^ds.obj",
+      "comdat",
+      "054f9cd871d2"
+    ],
+    [
+      "game_^game^engine_^source_^game^logic_^a^i_^a^i^group_get^all^i^ds.obj",
+      "strong"
+    ]
+  ],
+  "old_census_kept": [
+    "game_^game^engine_^source_^game^logic_^a^i_^a^i^group_get^all^i^ds.obj",
+    "strong"
+  ],
+  "old_census_kept_verdict": "strong",
+  "all_current_literal_sources": [
+    "game/GameEngine/Source\\GameLogic\\System\\GameLogicDispatch.cpp",
+    "game/GameEngine/Source\\GameLogic\\AI\\AIGroup_getAllIDs.cpp",
+    "game/GameEngine/Source\\GameLogic\\AI\\Squad.cpp",
+    "game/GameEngine/Source\\GameLogic\\Object\\BfmeObjectReferenceResolve.cpp",
+    "game/GameEngine/Source\\GameLogic\\Object\\Update\\FlammableUpdateEffects.cpp",
+    "game/GameEngine/Source\\Common\\RTS\\Player.cpp",
+    "game/GameEngine/Source\\Common\\RTS\\PlayerSetCurrentlySelectedAIGroup.cpp"
+  ],
+  "definitions_in_current_literal_sources": [
+    {
+      "source": "game/GameEngine/Source/GameLogic/AI/AIGroup_getAllIDs.cpp",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^game^engine_^source_^game^logic_^a^i_^a^i^group_get^all^i^ds.obj",
+      "sha256": "66f3076e3641d2aa04ce2b454ab57bbe56b9eaf1f5b31bedbebcd9bbdbbb3b6d",
+      "symbols": [
+        {
+          "index": 166,
+          "name": "?getAllIDs@AIGroup@@QBEABV?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@XZ",
+          "section": 59,
+          "storage": 2,
+          "value": 0,
+          "type": 32,
+          "aux": 0
+        }
+      ]
+    }
+  ],
+  "definition_inventory_limit": "Native old index plus exact name in current source literals, not a new whole-object census; current whole-refresh remains authoritative"
+}

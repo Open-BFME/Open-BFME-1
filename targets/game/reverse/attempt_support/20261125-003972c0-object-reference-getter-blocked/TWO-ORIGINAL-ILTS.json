@@ -1,0 +1,12 @@
+[
+  {
+    "rva": "0x33dac",
+    "raw": "e9df763300",
+    "jmp_target": "0x36b490"
+  },
+  {
+    "rva": "0x10b8b",
+    "raw": "e940181400",
+    "jmp_target": "0x1523d0"
+  }
+]

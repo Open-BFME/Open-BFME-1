@@ -1,0 +1,55 @@
+// cl: /DNDEBUG /MD /EHsc
+
+#include "../../../Include/Common/ObjectID.h"
+
+// The canonical STLport types are forward declared only; no container storage
+// is defined here. This is the existing getAllIDs return contract.
+namespace _STL
+{
+template <class T> class allocator;
+template <class T, class A> class vector;
+}
+
+class AIGroup
+{
+public:
+	const _STL::vector<ObjectID, _STL::allocator<ObjectID> > &getAllIDs() const;
+};
+
+class Object;
+
+struct BfmeObjectIdValue
+{
+	int m_id;
+};
+
+struct BfmeObjectIdSlot
+{
+	BfmeObjectIdValue *m_value;
+};
+
+class BfmeObjectReference
+{
+public:
+	Object *resolve();
+};
+
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+extern GameLogic *TheGameLogic;
+
+Object *BfmeObjectReference::resolve()
+{
+	if (this != 0) {
+		// Original3972C0 reads the returned vector start pointer, then its first4B ID.
+		const BfmeObjectIdSlot *slot = reinterpret_cast<const BfmeObjectIdSlot *>(
+			&reinterpret_cast<const AIGroup *>(this)->getAllIDs());
+		return TheGameLogic->findObjectByID(slot->m_value->m_id);
+	}
+	return 0;
+}
