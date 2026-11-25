@@ -1,0 +1,37 @@
+--- a/game/GameEngine/Source/GameNetwork/GameSpy/peer/peerOperationsListGroupRooms.cpp
++++ b/game/GameEngine/Source/GameNetwork/GameSpy/peer/peerOperationsListGroupRooms.cpp
+@@ -94,4 +94,3 @@
+-/* peerOperations.c defines the no-A providers (0085FCD0 and 00860020), but
+-   retail's operation constructors hand Chat the A-variants: 0x00C5FCD0 here
+-   (dir32-recorded _piChangeNickCallbackA) and 0x00C60020 below. */
+-void piChangeNickCallbackA(void *chat, int success, const char *oldNick,
++/* Retail hands Chat the existing completion bodies at VA 0x00C5FCD0
++   and 0x00C60020. Use their owned C provider names directly. */
++void piChangeNickCallback(void *chat, int success, const char *oldNick,
+@@ -101 +100 @@
+-void piAuthenticateCDKeyCallbackA(void *chat, int result, const char *message,
++void piAuthenticateCDKeyCallback(void *chat, int result, const char *message,
+@@ -179,4 +178,2 @@
+-/* Chat disconnected/private-message callbacks: piNewConnectOperation's DIR32
+-   references are the retail piChat slots 0x00C6B2D0 and 0x00C6B360
+-   (dir32-recorded _piChatDisconnectedA/_piChatPrivateMessageA), not the
+-   matched C providers at 0086B2D0/0086B360 which stay owned by their TUs. */
++/* Retail's global callback slots reference VA 0x00C6B2D0 and 0x00C6B360.
++   Keep the existing opaque provider APIs and callback argument contracts. */
+@@ -184 +181 @@
+-void piChatDisconnectedA(void *chat, const char *reason,
++void Rva0086B2D0Disconnected(void *chat, const char *reason,
+@@ -186 +183 @@
+-void piChatPrivateMessageA(void *chat, const char *nick, const char *message,
++void Rva0086B360Dispatch(void *chat, const char *nick, const char *message,
+@@ -259,2 +256,2 @@
+-	globalCallbacks.disconnected = piChatDisconnectedA;
+-	globalCallbacks.privateMessage = piChatPrivateMessageA;
++	globalCallbacks.disconnected = Rva0086B2D0Disconnected;
++	globalCallbacks.privateMessage = Rva0086B360Dispatch;
+@@ -598 +595 @@
+-		piChangeNickCallbackA, operation, 0);
++		piChangeNickCallback, operation, 0);
+@@ -612 +609 @@
+-		piAuthenticateCDKeyCallbackA, operation, 0);
++		piAuthenticateCDKeyCallback, operation, 0);
