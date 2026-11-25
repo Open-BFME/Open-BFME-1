@@ -1,0 +1,11 @@
+{
+  "validated_utc": "2026-11-25T16:12:17.199415+00:00",
+  "native_load_binary_pass": true,
+  "cache_sha256": "7a88cb6f288fe8f3407161488c317b2a58727c087c5478aa853f901ec350f27c",
+  "reference_head": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+  "record_count": 790847,
+  "input_entry_count": 16424,
+  "input_receipt_sha256": "f39d44aafa88b239c48135703f9d2626773ec1d0a3519dc3ad62ad9da535ee0e",
+  "functions_sha256": "8e45e73667418202bf966c1fce23104f8e4e6e7d3a1f2194103df41e3a55abac",
+  "freshness_marker": "checked_at_utc=2026-11-24T15:31:34.914401+00:00\ndonor_revision=e2e99959950e6eebfe1ced5663aa05de320afc52\nverification=Official clean historical donor checkout; regular native scan and all native input fingerprints validated; selected source/recipes unchanged; no BFME1 build inputs redirected. See diagnostics/one-per-project-20261124/bfme1/REFERENCE-REFRESH.json.\n"
+}
