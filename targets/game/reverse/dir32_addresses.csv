@@ -6006,7 +6006,6 @@ name,va
 ?DualIndexedDispatchSixSecond@@3HA,0x012B9690
 ?DuplicateLocationHash@@3V?$HashTemplateClass@VVector3@@I@@A,0x012D71D8
 ?DynamicDecalFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2798
-?Effects0040A260@@3PAUEffectFactory0040A260@@A,0x012EF4F0
 ?EmptyScript@ScriptList@@0PAVScript@@A,0x012F078C
 ?EngineGlobal007629F0@@3PAUEngine007629F0@@A,0x012ED524
 ?EnumThreadWndProc@@YGHPAXJ@Z,0x00C89700

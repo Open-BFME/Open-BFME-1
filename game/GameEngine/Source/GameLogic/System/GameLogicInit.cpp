@@ -226,7 +226,7 @@ extern GlobalData *TheWritableGlobalData;                                 // 0x0
 class SidesList;
 extern SidesList *TheSidesList;                                      // 0x012EF428
 extern TerrainLogic *TheTerrainLogic;                                     // 0x012EF4CC
-extern Manager012EF4F0 *g_012EF4F0;                                       // 0x012EF4F0 TheBuffLogic
+Manager012EF4F0 *g_012EF4F0 = 0;                                       // 0x012EF4F0 TheBuffLogic
 extern GhostObjectManager *TheGhostObjectManager;                         // 0x012EF4FC
 extern GameLogic *TheGameLogic;                                           // 0x012F0898
 LargeGroupAudio *TheLargeGroupAudio = 0;                               // 0x012F1044
