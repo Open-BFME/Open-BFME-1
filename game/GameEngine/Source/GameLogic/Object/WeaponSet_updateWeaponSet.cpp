@@ -117,19 +117,22 @@ public:
 	Bool m_pitchLimited;
 };
 
-class BfmeWeaponStore
+// Call-only API of the existing singleton; no Store storage or vtable
+// layout is asserted here. Keep the original public const facade from
+// Zero Hour Weapon.h and the local weapon shim; its lookup stays protected.
+// Allocation calls the existing out-of-line BFME1 factory.
+class WeaponStore
 {
 public:
-	WeaponTemplate *findWeaponTemplatePrivate(NameKeyType key) const;
+	const WeaponTemplate *findWeaponTemplateByNameKey(NameKeyType key) const
+	{
+		return findWeaponTemplatePrivate(key);
+	}
 	Weapon *allocateNewWeapon(const WeaponTemplate *tmpl, WeaponSlotType slot) const;
-};
 
-// Retail global 0x012EF738 is EA's WeaponStore singleton, defined once in
-// game/GameEngine/Source/GameLogic/Object/Weapon.cpp; this TU keeps its own
-// BfmeWeaponStore view of it. Only ever used as a pointee, so a forward
-// declaration is enough (the definition lives in
-// Common/System/game_engine_subsystems.h).
-class WeaponStore;
+protected:
+	WeaponTemplate *findWeaponTemplatePrivate(NameKeyType key) const;
+};
 
 extern WeaponStore *TheWeaponStore;
 
@@ -208,10 +211,10 @@ void WeaponSet::updateWeaponSet(const Object *obj)
 
 			if (set->m_template[i])
 			{
-				WeaponTemplate *found = ((BfmeWeaponStore *)TheWeaponStore)->findWeaponTemplatePrivate(set->m_template[i]->getNameKey());
+				const WeaponTemplate *found = TheWeaponStore->findWeaponTemplateByNameKey(set->m_template[i]->getNameKey());
 				if (found)
 				{
-					m_weapons[i] = ((BfmeWeaponStore *)TheWeaponStore)->allocateNewWeapon(found, (WeaponSlotType)i);
+					m_weapons[i] = TheWeaponStore->allocateNewWeapon(found, (WeaponSlotType)i);
 					m_weapons[i]->m_ownerId = obj->m_id;
 					m_weapons[i]->loadAmmoNow(obj);
 					m_filledWeaponSlotMask |= (1 << i);

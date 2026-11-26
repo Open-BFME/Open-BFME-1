@@ -154510,7 +154510,7 @@ uw_00c08c38,,0x00C08C38,8,game/gen_small/uw_gen_008.cpp,matched,gen-funclet;obje
 uw_00c08c50,,0x00C08C50,8,game/gen_small/uw_gen_002.cpp,matched,gen-funclet;object-symbol=$L394
 uw_00c08c70,,0x00C08C70,8,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;object-symbol=$L7696
 uw_00c08c90,,0x00C08C90,8,game/gen_small/uw_gen_005.cpp,matched,gen-funclet;object-symbol=$L9375
-uw_00c08cb0,,0x00C08CB0,11,game/GameEngine/Source/GameLogic/Object/WeaponStore_allocateNewWeapon_Thunk.cpp,matched,gen-funclet;parent=?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z;object-symbol=$L315
+uw_00c08cb0,,0x00C08CB0,11,game/GameEngine/Source/GameLogic/Object/WeaponStore_allocateNewWeapon_Thunk.cpp,matched,gen-funclet;parent=?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z;object-symbol=$L319;eh-state-pin $L315->$L319: retail unwind map (?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z states [0]) binds this address to $L319;repin-model=codex
 uw_00c08d10,,0x00C08D10,8,game/gen_small/uw_gen_016.cpp,matched,gen-funclet;object-symbol=$L7733
 uw_00c08d50,,0x00C08D50,8,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L13466
 uw_00c08db0,,0x00C08DB0,8,game/gen_small/uw_gen_014.cpp,matched,gen-funclet;object-symbol=$L13466
