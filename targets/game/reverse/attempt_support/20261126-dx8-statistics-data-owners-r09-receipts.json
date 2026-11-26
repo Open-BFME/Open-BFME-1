@@ -1,0 +1,372 @@
+{
+  "round": 9,
+  "baseline": "480dc037ea50d210848d94b4d7a68a62f041517d",
+  "source": "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+  "source_sha256": "7e9dfbdacefa4bf70d68f77b2bf9c14012aa0f6b37e223e0ea9aa24115136120",
+  "header": "game/Libraries/Source/WWVegas/WW3D2/dx8wrapper.h",
+  "header_sha256": "c01ae1e72de5a846af989c924f7e616ab8c5e6b5f013dd252545a65b7578f1a4",
+  "control_object_sha256": "cc2b02733ab51d46e2b70ca7fb9dc376dcda76d47e9d4496352fd71e7f0527d7",
+  "current_object_sha256": "2eac1cec563d3ad2591fbf92886850b8c3eb20deb1de0aa598ca21f454b11682",
+  "source_tasks_completed": 0,
+  "data_owner_tasks_completed": 1,
+  "source_code_modified": false,
+  "normal_data_admission_pass": true,
+  "new_static_data_bytes": 32,
+  "new_data_rows": 8,
+  "new_emitted_storage_bytes": 0,
+  "new_CPP_or_body_credit": 0,
+  "actual_COFF_header_metadata": {
+    "field": "IMAGE_FILE_HEADER.TimeDateStamp",
+    "offset": 4,
+    "size": 4,
+    "control_value": 1795655476,
+    "current_value": 1795660696,
+    "control_hex": "3487076b",
+    "current_hex": "989b076b",
+    "total_raw_object_bytes": 198931,
+    "strictly_identical_other_raw_bytes": 198927,
+    "actual_comdat_selection_counts": {
+      "0": 6,
+      "2": 477,
+      "5": 330,
+      "1": 108
+    },
+    "NEWEST7_absent": true,
+    "per_native_frontdoor_recompile_metadata": [
+      {
+        "name": "?matrix_changes@DX8Wrapper@@1IA",
+        "VA": "0x134054c",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?matrix_changes@DX8Wrapper@@1IA",
+          "0x134054c",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "b287be5737d7f07db54c5138a3434c4b79e5bd06363726eb6a423c6440a4c2a7",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660682,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "cd83263d8b7d8b9e8ddf567413b5e614bb8fbbb5611c1f149b959e9236a2a8d3"
+      },
+      {
+        "name": "?material_changes@DX8Wrapper@@1IA",
+        "VA": "0x1340550",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?material_changes@DX8Wrapper@@1IA",
+          "0x1340550",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "da0474efcf4839f8963a223e346de61f241d9533e6da99e70627ba355ddd8869",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660684,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "b1e8f8b0159e89db014137c8a9a7215e798119da8291baae6d5d6f5026487e4a"
+      },
+      {
+        "name": "?vertex_buffer_changes@DX8Wrapper@@1IA",
+        "VA": "0x1340554",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?vertex_buffer_changes@DX8Wrapper@@1IA",
+          "0x1340554",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "38bc7900d96f0705fa9853555195c19316f41ecedfe847c8e61c1129a09ec074",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660686,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "18c382a1fa02a5a1802e6bc6cdb17cc5395a1648e0a812563c5faee7f67823bd"
+      },
+      {
+        "name": "?index_buffer_changes@DX8Wrapper@@1IA",
+        "VA": "0x1340558",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?index_buffer_changes@DX8Wrapper@@1IA",
+          "0x1340558",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "e8e97adba6b37bdedd47a5dabbd5778671b9699033f2d97dc7acd4ba8027467f",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660688,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "9227cede14b8f5a6e9200483da814a0a216a9949e3be5bd44ced183e8d194fb6"
+      },
+      {
+        "name": "?light_changes@DX8Wrapper@@1IA",
+        "VA": "0x134055c",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?light_changes@DX8Wrapper@@1IA",
+          "0x134055c",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "5bace3f662627bafd55e553ac7e065373e0c5b6a271218fe2077a406271c8b62",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660690,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "5226742db3a574413120072af843d31e50d9216860cf9acdbaf9dd241afbd4de"
+      },
+      {
+        "name": "?texture_changes@DX8Wrapper@@1IA",
+        "VA": "0x1340560",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?texture_changes@DX8Wrapper@@1IA",
+          "0x1340560",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "1c2a4f9fa923a85b47b75aef054d85d7cf2140de3d560d1088b4a7e82b3e0cce",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660692,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "3b7b58e96418bec94eb0547be8482bccf6359067370f93001491f9152ebed7f2"
+      },
+      {
+        "name": "?render_state_changes@DX8Wrapper@@1IA",
+        "VA": "0x1340564",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?render_state_changes@DX8Wrapper@@1IA",
+          "0x1340564",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "847235bc550e661e4c10ef9f497407b37215706d5c4c20bfd3bc8239a19dff92",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660694,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "3783172ea3e7262e0b2cf2a13998c3441e8093d41bb2e62c6e45581c07d9cc08"
+      },
+      {
+        "name": "?draw_calls@DX8Wrapper@@1IA",
+        "VA": "0x134056c",
+        "size": 4,
+        "normal_frontdoor_pass": true,
+        "normal_command": [
+          "W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe",
+          "-B",
+          "tools/add_data_match.py",
+          "?draw_calls@DX8Wrapper@@1IA",
+          "0x134056c",
+          "--va",
+          "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+          "--size",
+          "4",
+          "--model",
+          "codex",
+          "--evidence",
+          "targets/game/reverse/attempt_support/20261126-dx8-statistics-data-owners-r09.md"
+        ],
+        "source_unchanged": true,
+        "normal_object_sha256": "2eac1cec563d3ad2591fbf92886850b8c3eb20deb1de0aa598ca21f454b11682",
+        "control_TimeDateStamp": 1795655476,
+        "actual_TimeDateStamp": 1795660696,
+        "all_actual_COFF_bytes_outside_header_time_identical": true,
+        "native_log_sha256": "ace32707c119c995075e683f0da62e32e2962b335905f53aa690828246c45ab2"
+      }
+    ]
+  },
+  "all_other_raw_COFF_bytes_identical": true,
+  "runtime_nodes": 920,
+  "SafeSEH": 26,
+  "FPO_bytes": 4448,
+  "numeric_locals": 395,
+  "old_data_rows": 18,
+  "actual_data_rows": 26,
+  "normal_functions": "123/123",
+  "normal_DIR32": 446,
+  "other_gate_ledgers_unchanged": true,
+  "private_lastframe_TSS_DXcalls_FrameCount_newrows_excluded": true,
+  "native_link_previews": {
+    "before": {
+      "clean": 0,
+      "LINKED_before": 0,
+      "LINKED_after": 0,
+      "seconds": 349.3
+    },
+    "after": {
+      "clean": 0,
+      "LINKED_before": 0,
+      "LINKED_after": 0,
+      "seconds": 349.2
+    }
+  },
+  "current_selection_UNKNOWN_and_old_provider_debt_retained": true,
+  "full_current_census_image_or_runtime_claimed": false,
+  "private_root": "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r09",
+  "private_artifacts": {
+    "STATISTICS-OWNER-AND-SCOPE.json": {
+      "sha256": "d3fd92e6959721c388132a0a393436e7e073bc6031d769c2030b5aa136dcd638",
+      "bytes": 86926
+    },
+    "STATISTICS-EIGHT-NATIVE-ADMISSIONS.json": {
+      "sha256": "64ed32ea2a3421c66ac7fe94b24611bf1d5127fe3248dc698ec467eec53ea330",
+      "bytes": 8389
+    },
+    "admit-statistics.py": {
+      "sha256": "137b883aa01e5ba98813eff2d9173aa4d2cfc826035479b184e57cd6fbe4cdc6",
+      "bytes": 3532
+    },
+    "STATISTICS-WHOLE-OBJECT-PROOF.json": {
+      "sha256": "d259f91aecef5cb27c2a403021814710d02916fe4aa2f44784dcfb35e1351c2f",
+      "bytes": 33950
+    },
+    "statistics-whole-object-proof.py": {
+      "sha256": "3661005b451854e6dcc7147efec7f339503f0ac88c255e6351397b78db087805",
+      "bytes": 5929
+    },
+    "control-build.log": {
+      "sha256": "8c7f77a7ca5b6a2c674e37c4bd08081217ac28847a7fa26a1512d0613f25df03",
+      "bytes": 584
+    },
+    "after-build.log": {
+      "sha256": "464d5a2124fddedbec45b2cbc8c3452f26d365eb60bad3e3f332a6adb52d8265",
+      "bytes": 584
+    },
+    "fdu-staged.log": {
+      "sha256": "688254e992720bbea595c75088bab721c85f815a6bfc61efa29dac5e378dfcf4",
+      "bytes": 149
+    },
+    "link-before.log": {
+      "sha256": "2945966386299569bbafd4db1f74536543b24bc26f00b45e2a7f2b0a53ba46f4",
+      "bytes": 6891
+    },
+    "link-after.log": {
+      "sha256": "7dcf3b344121d4774213f7b99961fcee797baeb7201b3a4a6f64489ec50d7e56",
+      "bytes": 6891
+    },
+    "STATISTICS-LINK-COMPARISON.json": {
+      "sha256": "86a797afd7b3313ed3ffb400aac80ae53ec38bfbc3f2e4f94ad1f34473fd0ac3",
+      "bytes": 222
+    },
+    "independent-review/HANDOFF.md": {
+      "sha256": "3de6a9590b86a9a2b6d3bd4a950e9870df45d9736f9ee46384ca38a23e7c13a5",
+      "bytes": 5734
+    },
+    "independent-review/MANIFEST.json": {
+      "sha256": "04655901799a797c82ace86fea163b9392b3f41471af4a6a69d1c4ad830f884e",
+      "bytes": 8556
+    },
+    "independent-review/RESULT.json": {
+      "sha256": "23739c2060d33228c4490e0db3b35e77e6235856b831a81505457db8a3e67452",
+      "bytes": 158783
+    },
+    "data-admission-01.log": {
+      "sha256": "cd83263d8b7d8b9e8ddf567413b5e614bb8fbbb5611c1f149b959e9236a2a8d3",
+      "bytes": 282
+    },
+    "data-admission-02.log": {
+      "sha256": "b1e8f8b0159e89db014137c8a9a7215e798119da8291baae6d5d6f5026487e4a",
+      "bytes": 286
+    },
+    "data-admission-03.log": {
+      "sha256": "18c382a1fa02a5a1802e6bc6cdb17cc5395a1648e0a812563c5faee7f67823bd",
+      "bytes": 296
+    },
+    "data-admission-04.log": {
+      "sha256": "9227cede14b8f5a6e9200483da814a0a216a9949e3be5bd44ced183e8d194fb6",
+      "bytes": 294
+    },
+    "data-admission-05.log": {
+      "sha256": "5226742db3a574413120072af843d31e50d9216860cf9acdbaf9dd241afbd4de",
+      "bytes": 280
+    },
+    "data-admission-06.log": {
+      "sha256": "3b7b58e96418bec94eb0547be8482bccf6359067370f93001491f9152ebed7f2",
+      "bytes": 284
+    },
+    "data-admission-07.log": {
+      "sha256": "3783172ea3e7262e0b2cf2a13998c3441e8093d41bb2e62c6e45581c07d9cc08",
+      "bytes": 294
+    },
+    "data-admission-08.log": {
+      "sha256": "ace32707c119c995075e683f0da62e32e2962b335905f53aa690828246c45ab2",
+      "bytes": 274
+    }
+  }
+}
