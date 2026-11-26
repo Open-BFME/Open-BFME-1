@@ -1,6 +1,7 @@
 """Callable-loss selection without a retail image, object cache, or git history."""
 import json
 import os
+import struct
 from pathlib import Path
 import subprocess
 import sys
@@ -157,17 +158,20 @@ def test_actual_object_freshness_check(tmp_path, monkeypatch, state):
     monkeypatch.setattr(delta.build, "ROOT", tmp_path)
     monkeypatch.setattr(delta.build, "_deps_sidecar", lambda path: sidecar)
     if state != "missing":
-        obj.touch()
+        obj.write_bytes(struct.pack("<HHIIIHH", 0x14c, 0, 0, 0, 0, 0, 0))
+        assert delta.build.object_is_valid(obj)
     if state not in {"missing", "missing-sidecar"}:
         meta = {"version": 2, "source": delta.build._hash_file(str(source)),
                 "deps": {str(header): delta.build._hash_file(str(header))},
                 "inventory": delta.build.search_inventory(source, ["cl"], {}),
                 "search_roots": ["game"], "retry_dirs": []}
-        if state == "legacy":
-            del meta["version"]
         sidecar.write_text(json.dumps(meta))
+        assert delta.object_is_current(source, obj)
     if state == "malformed":
         sidecar.write_text("{")
+    elif state == "legacy":
+        del meta["version"]
+        sidecar.write_text(json.dumps(meta))
     elif state == "changed-source":
         source.write_text("changed source")
     elif state == "changed-header":
@@ -186,7 +190,8 @@ def test_delta_rejects_object_shadowed_by_new_earlier_header(tmp_path, monkeypat
     old = late / "Thing.h"
     old.write_text("old")
     obj = tmp_path / "a.obj"
-    obj.touch()
+    obj.write_bytes(struct.pack("<HHIIIHH", 0x14c, 0, 0, 0, 0, 0, 0))
+    assert delta.build.object_is_valid(obj)
     monkeypatch.setattr(delta.build, "ROOT", tmp_path)
     sidecar = delta.build._deps_sidecar(obj)
     sidecar.write_text(json.dumps({
