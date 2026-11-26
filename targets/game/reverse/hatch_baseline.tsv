@@ -879,6 +879,7 @@ address_global	game/GameEngine/Source/GameLogic/Pathfinder/PathfinderFindSafePat
 address_global	game/GameEngine/Source/GameLogic/Pathfinder/PathfinderFindSafePathBfme.cpp	g_Rva010977E0	2
 address_global	game/GameEngine/Source/GameLogic/Pathfinder/PathfinderValidMovementTerrain.cpp	g_Va012B49FC	2
 address_global	game/GameEngine/Source/GameLogic/ScriptEngine/Parameter_WriteParameter_Thunk.cpp	g_bfmeRva012AA068	4
+address_global	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp	g_bfmeVftRva0033C070TailDtor	2
 address_global	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineAttackInfo.cpp	g_Rva00F36E5C	3
 address_global	game/GameEngine/Source/GameLogic/System/BfmeCellGrid.cpp	g_Rva00F36E5C	2
 address_global	game/GameEngine/Source/GameLogic/System/WeatherData.cpp	g_Va010EBC6C	2	allow=15e3d0ed5efddb254b66b73f63be59976a847f22
@@ -132329,4 +132330,3 @@ present_unmatched	game/gen_small/U3_deleting_dtors.cpp	1Rva0006B450Node@@UAE@XZ	
 present_unmatched	game/gen_small/U3_deleting_dtors.cpp	_GRva0007B850Exception@@UAEPAXI@Z	1
 present_unmatched	game/stlport/X4Iostream.cpp	0Init@ios_base@_STL@@QAE@XZ	1
 present_unmatched	game/stlport/X4Iostream.cpp	1Init@ios_base@_STL@@QAE@XZ	1
-address_global	game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp	g_bfmeVftRva0033C070TailDtor	2

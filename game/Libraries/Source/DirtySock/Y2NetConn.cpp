@@ -7,9 +7,9 @@
 //
 // The three module words it reports are address-derived; nothing names them but
 // the selectors they answer.
-extern int g_Rva0130A590State;   // 'open'
-extern int g_Rva0130A594Conn;    // 'conn'
-extern int g_Rva0130A598Online;  // 'onln'
+int g_Rva0130A590State = 0;   // 'open'
+int g_Rva0130A594Conn = 0;    // 'conn'
+int g_Rva0130A598Online = 0;  // 'onln'
 
 int  Rva007FE780Printf( const char *format, ... );    // 0x007FE780
 int  Rva007FDEE0( void );                             // 0x007FDEE0
@@ -34,7 +34,7 @@ struct IdleHandlerSlot
 extern IdleHandlerSlot g_Rva0130A7B0Idle[ 16 ];
 
 // The tick the pump at 0x007F8C90 will next run at.
-extern unsigned int g_Rva0130A850Next;
+unsigned int g_Rva0130A850Next = 0;
 
 unsigned int Rva007FEA00Tick( void );                 // 0x007FEA00
 
