@@ -22,29 +22,13 @@
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 
-// 0x0134050C and 0x012D6DB4/0x012D6DB8 still have no free spelling anything
-// defines, and all three ARE DX8Wrapper statics:
-//
-//   0x01340500 ZFar           0x012D6DB0 CurRenderDevice
-//   0x0134050C <bool>        0x012D6DB4 ResolutionWidth  (640 in retail .data)
-//   0x0134050D IsWindowed    0x012D6DB8 ResolutionHeight (480 in retail .data)
-//   0x01340510 DisplayFormat 0x012D6DBC BitDepth
-//   0x0134051C Light_Environment
-//   0x01340524 Vertex_Processing_Behavior
-//   0x01340528 FogEnable     0x0134052C FogColor
-//   0x01340530 D3DInterface
-//
-// dxwrapper.obj lays the same run of statics out with the same offsets relative
-// to ZFar (IsInitted +0x88 / IsWindowed +0x89 / DisplayFormat +0x8C / ... /
-// D3DInterface +0xAC against retail's +0xD/+0xD/+0x10/.../+0x30, a constant
-// +0x7C shift), which fixes the unnamed bool at 0x0134050C as
-// DX8Wrapper::IsInitted.  All four are PROTECTED static members, though, and
-// MSVC encodes access in the mangling: the defining spellings are
-// ?ResolutionWidth@DX8Wrapper@@1HA and friends, and no spelling a free
-// function may write produces them.  Referencing them here is impossible, not
-// merely unproven -- a `friend` or a derived view would be invented, and
-// `#define protected public` would renumber the access digit in the symbol.
-extern bool g_0134050C;
+// The original byte at VA 0x0134050C is DX8Wrapper::IsInitted, already
+// defined in dxwrapper.cpp. Its Init/Shutdown stores and Reset_Device read
+// bind the same cell. Use its exact protected COFF data name, as the
+// existing IsWindowed references below do; no duplicate global or view.
+extern "C" bool __identifier("?IsInitted@DX8Wrapper@@1_NA");
+
+// The width and height references retain their existing address spellings.
 extern int g_Va012D6DB4;
 extern int g_Va012D6DB8;
 
@@ -61,7 +45,7 @@ int Rva008FD600Global() { return g_Va012D6DB8; }
 void *Rva008A4B00Global() { return g_bfmeFallbackDB; }
 void *Rva008A4B10Global() { return g_bfmeFallbackDB; }
 void *Rva00850720Global() { return theBlockParseList; }
-bool Rva0090C7F0Global() { return g_0134050C; }
+bool Rva0090C7F0Global() { return __identifier("?IsInitted@DX8Wrapper@@1_NA"); }
 
 // 0x0134050D is DX8Wrapper::IsWindowed, a protected static (data_rows.csv
 // ?IsWindowed@DX8Wrapper@@1_NA, defined in dxwrapper.cpp).  The free functions

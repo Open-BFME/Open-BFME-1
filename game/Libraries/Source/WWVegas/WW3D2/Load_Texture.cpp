@@ -61,7 +61,8 @@ public:
     bool supportTextureFormat(WW3DFormat);
 };
 extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
-extern bool g_0134050C;
+// Actual protected data owner; same header-free reference route as IsWindowed.
+extern "C" bool __identifier("?IsInitted@DX8Wrapper@@1_NA");
 
 BFMEWaterTrackTextureHandle Load_Texture(ChunkLoadClass &cload)
 {
@@ -104,7 +105,7 @@ BFMEWaterTrackTextureHandle Load_Texture(ChunkLoadClass &cload)
             }
             int format=0;
             if ((texinfo.Attributes&W3DTEXTURE_TYPE_MASK)==W3DTEXTURE_TYPE_BUMPMAP) {
-                if (g_0134050C && TheW3DRadarFormatCaps->field13C) {
+                if (__identifier("?IsInitted@DX8Wrapper@@1_NA") && TheW3DRadarFormatCaps->field13C) {
                     mipcount=1;
                     if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)60)) format=60;
                     else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)62)) format=62;

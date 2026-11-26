@@ -884,12 +884,11 @@ void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,boo
 	}
 }
 
-extern bool g_0134050C;
 extern unsigned int NPatchesLevel;
 
 bool MeshMatDescClass::Do_Mappers_Need_Normals(void)
 {
-	if (g_0134050C
+	if (DX8Wrapper::Is_Initted()
 		&& *reinterpret_cast<const bool *>(reinterpret_cast<const unsigned char *>(DX8Wrapper::Get_Current_Caps()) + 0x13b)
 		&& NPatchesLevel > 1) {
 		return true;
