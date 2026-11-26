@@ -2260,7 +2260,7 @@ class BfmeAptScreenSpellStore;
 extern BfmeAptScreenSpellStore *g_purchaseScienceWindow;
 
 // Retail keyboard-scroll speed, 250.0f in .data at 0x012B54B8.
-extern Real g_bfmeKeyboardScrollSpeed012B54B8;
+Real g_bfmeKeyboardScrollSpeed012B54B8 = 250.0f;
 // The 0x30-byte subsystem InGameUI::init creates at 0x012F4B78.
 class Gen00587600;
 extern Gen00587600 *g_bfmeSubsystem012F4B78;

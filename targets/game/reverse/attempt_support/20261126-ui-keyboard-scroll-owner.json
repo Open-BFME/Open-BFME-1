@@ -1,0 +1,142 @@
+{
+  "round": 6,
+  "round_baseline": "fb80b36c113f7f3cf1924e6e028dcb914c4f39c9",
+  "logical_tasks": 1,
+  "source_tasks_completed": 1,
+  "source": "game/GameEngine/Source/GameClient/InGameUI.cpp",
+  "source_sha256_before": "484aec0e104de0d7df2481319eb817d013751fb8c2f867fd345212d4136331cf",
+  "source_sha256_after": "b2f4b1cffdb0eb556325fb3e583efd15db78481fafcb9b37243830d66494ce45",
+  "change": "one existing nonconst Real extern becomes Real=250.0f; every other source byte preserved",
+  "new_function_rows": 0,
+  "new_cpp_exact_bytes": 0,
+  "new_unique_text_union_bytes": 0,
+  "new_data_rows": 1,
+  "new_static_data_bytes": 4,
+  "retained_rows": 76,
+  "unique_code_RVAs": 71,
+  "retained_row_extent_sum": 10858,
+  "normal_link_own_filtered_bytes": 7421,
+  "normal_source_gate": "76/76+3data+109DIR32/16floats/6literals+1empty/body0baselined",
+  "native_FDU_staged_pass": "Existing unmarked disregardDrawable is identical atHEAD; native main297-315 filtersit. Native parsed105definition set unchanged; no new marker/helper/allowance.",
+  "original_cell": {
+    "name": "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA",
+    "va": "0x012B54B8",
+    "rva": "0x00EB54B8",
+    "bytes": "00007a43",
+    "float_value": 250.0,
+    "size": 4,
+    "existing_type": "Real (float), nonconst external"
+  },
+  "original_four_operands": [
+    [
+      985,
+      6,
+      "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA"
+    ],
+    [
+      1015,
+      6,
+      "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA"
+    ],
+    [
+      1057,
+      6,
+      "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA"
+    ],
+    [
+      1087,
+      6,
+      "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA"
+    ]
+  ],
+  "normal_data_admission": "sizeof4/allocation4/nativebytes00007a43/0relocs; soleadd_data_match",
+  "actual_control_obj_sha256": "df8d7dac1bfb6ee4e876d8e20eb59a6aa54094de7726fb70267e5481d45dbedb",
+  "actual_current_obj_sha256": "0eea46abc9fa489742a76d714715d6861d77a903752ffa854222186aef011746",
+  "runtime_nodes": [
+    2305,
+    2305
+  ],
+  "data_insertion": {
+    "old_section": 82,
+    "new_section": 3,
+    "old_size": 68,
+    "new_size": 72,
+    "offset": 64,
+    "bytes": "00007a43",
+    "value_float": 250.0,
+    "new_external_symbol": {
+      "index": 12,
+      "name": "?g_bfmeKeyboardScrollSpeed012B54B8@@3MA",
+      "value": 64,
+      "section": 3,
+      "type": 0,
+      "storage": 2
+    }
+  },
+  "old_static_scalar_shift": "_SECONDS_PER_LOGICFRAME_REAL64->68 withsame4Bpayload; other.data arrays unchanged",
+  "all_other_runtime_graph_exact": true,
+  "exact_numeric_locals": 176,
+  "SafeSEH_handlers_unchanged": 37,
+  "FPO_bytes_unchanged": 12192,
+  "EH_CRT_weak_COMDAT_directives_unchanged": true,
+  "no_extra_helper_initializer_vtable_or_function": true,
+  "actual_313_header_dependencies_and_compiler_argv_unchanged": true,
+  "full_inherited_host_environment_equality_claimed": false,
+  "preexisting_mixed_source_lifts_and_views": "Unchanged inherited source, not newly recovered C++",
+  "native_scoped_legacy_before": {
+    "before_bytes": 0,
+    "after_bytes": 0,
+    "seconds": 480.2
+  },
+  "native_scoped_legacy_after": {
+    "before_bytes": 0,
+    "after_bytes": 0,
+    "seconds": 470.4
+  },
+  "legacy_census": "2026-11-21 10:53 at42237e2367",
+  "other_unresolved_count": 11,
+  "other_COMDAT_count": 49,
+  "other_selected_count": 48,
+  "other_duplicate_count": 11,
+  "other_diagnostics_preserved": true,
+  "current_selection_UNKNOWN_reported": true,
+  "UNKNOWN_log_lines_private_hash": "666d925f7f1225b028bf62e0ea8ed06f4c2ec733359d7eb8bfb570e4ac029d26",
+  "LINKED_gain": 0,
+  "full_current_census_or_image_link_or_runtime_proved": false,
+  "historical_BFME2_donor": {
+    "revision": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+    "source": "Code/GameEngine/Source/GameClient/InGameUIUpdate.cpp",
+    "lines": [
+      221,
+      398,
+      404
+    ],
+    "fact": "Existing nonconstfloat250 scale andfourmatchingdirection factors corroborate source role; B1address/type/value/refs independent",
+    "not_copied": "donorheaders,addresses,offsets,sourcebodies orflags"
+  },
+  "artifacts": {
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-OWNER-AND-SCOPE.json": "7c21bf209b595b85559d5e7b1cfd94f54a000fb429a9edd66f3766297b95af3f",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-CLAIM-SCOPE.json": "880d3ed8e88b04d3ea01f314a103da02dc77c0cdc8218aa5461487b51eafe0fc",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-CONTROL-INPUTS.json": "ea9e8dd546c76746a18e2c52865cf339756c834cd638fe000f115fb413d0561d",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-ACTUAL-REAL-TYPE.json": "21187267720f85412407b60faac9d71a05d81f65dd7eca4498c2b7173afe2fdc",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-APPLY-FENCE.json": "f6d4d3b5455846acd2c1281ef241dcdf46dd399dbf57659062adeadf961ae11f",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-UNCHANGED-FUNCTION-DEFINITION-SET.json": "4294d638acb3816525b58eee402245b91f48c203dfd029bc9806d8f511d3def8",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\ui-control.obj": "df8d7dac1bfb6ee4e876d8e20eb59a6aa54094de7726fb70267e5481d45dbedb",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\ui-control.deps.json": "062075de977c27bfc6d5e161fa62c215e47a929d9fc41ee73ec01d867dd4512f",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\ui-current.obj": "0eea46abc9fa489742a76d714715d6861d77a903752ffa854222186aef011746",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\ui-current.deps.json": "b97679983d3602778c566ffb0bd18e49e2cc889160fc4ef381cf8f5faa7f5568",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\UI-WHOLE-OBJECT-PROOF.json": "f158c514427bbcd7d54e206d56062800da36cc30a25b93be9feb8c99fce217ce",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\ui-whole-object-proof.py": "08a9fd31f2c0d2f12dd9e0f03592a37d75010079d15cf0e8b47395c1c1faad72",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\control-build.log": "c06c571bf94427cb696e511bd9b8f1e02ffe75bb0bca2435b21859de3cc4bd33",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\native-add-data.log": "3f7d10714201606e2203a1ee533e079151106c957793cbb31b3992a6add5f951",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\candidate-build.log": "4ac317e81f7faf470345a4f310d521c6dbcffae513cbfa8c52a837930b4cdc13",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\FDU.log": "00d3d612a5a1c7a046fa3a2a39c1007eb61f6af71310aa4e930c2b48e86458b3",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\FDU-native-staged.log": "313d3f5a259cedfa4a299a8284cd212b7af6a2aaa15466cb33549b180365807e",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\link-before.log": "33e059666f0ec0db9071821624d8f8f5aa1709a680ad0231a84573ee6ac5d431",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\link-after.log": "d6ba26bd48a948767c129b80f2444f65d33a0cf6da33ec108919ae31a3801fee",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\ui-scroll-data\\HANDOFF.md": "1eabf8a7f57b61725ceb2553d99d621b48364aa7bdb662f8130c80e548c1529e",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\ui-scroll-data\\ORIGINAL-AND-CONSUMER.json": "128943f047de5fb268d84130eeaff350bd9bc8e72c54260860655895fe8c4eb8",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\independent-review\\HANDOFF.md": "fcab7da8ee7e35a7ed28119c8231c1cbd694f2f8e0b6595bef6e977c5ab2cb26",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r06\\independent-review\\MANIFEST.json": "84540c4a60fb79bcf151dee6567428a8171de3ec5d90b38e029b6b23525cb757"
+  }
+}
