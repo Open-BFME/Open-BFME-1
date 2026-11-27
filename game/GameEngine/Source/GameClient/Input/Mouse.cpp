@@ -187,7 +187,7 @@ struct BfmeMouseEventLayout
 	Int eventsThisFrame;								///< retail this+0x4E00
 };
 
-extern bool Glo012F4C62;								///< retail [0x012F4C62]
+bool Glo012F4C62 = false;								///< retail [0x012F4C62]
 
 void Mouse::updateMouseData( )
 {
