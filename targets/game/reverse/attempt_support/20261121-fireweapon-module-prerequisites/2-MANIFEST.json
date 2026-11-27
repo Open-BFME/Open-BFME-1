@@ -1,0 +1,46 @@
+{
+  "read_only": true,
+  "compiler_actions": 0,
+  "production_mutations": 0,
+  "native_index": {
+    "path": "W:/OpenBFME/Open-BFME-1/build/link_census/link_index.pkl",
+    "sha256": "35b1b72b3d5aedd561c700132b6086cea4a72ad1ef6cd6e483fdb5b23d3b6437"
+  },
+  "files": [
+    {
+      "file": "augment_owner_rows_readonly.py",
+      "bytes": 3462,
+      "sha256": "20c95a5a13a4d060b5f3c089ce6096669b37827b71d4669051d50d0cbcdc2f87"
+    },
+    {
+      "file": "EXACT-NATIVE-REFERENCES.json",
+      "bytes": 80373,
+      "sha256": "f6eef91b21c3ac40bb60ab28b6b2b5c6ede59bddba783a55f6354606ad16ca0f"
+    },
+    {
+      "file": "HANDOFF.md",
+      "bytes": 5940,
+      "sha256": "2b28d2b0675d59b2eee9368b53136dabf599acb7ca4fa57691a12c191e8e8594"
+    },
+    {
+      "file": "INVENTORY-HASH-AUDIT.json",
+      "bytes": 11708806,
+      "sha256": "5ddc69f5028a8591f573fb5c3d3dc4406d7fba1a13fd9d66c237687f726b292c"
+    },
+    {
+      "file": "query_exact_reference_readonly.py",
+      "bytes": 7907,
+      "sha256": "ce842c8a6cf3029c251b3efea7ea156c8f2af40a853ca752260992d8bab4cd07"
+    },
+    {
+      "file": "REFERENCE-OWNER-ADDENDUM.json",
+      "bytes": 33806,
+      "sha256": "6498ca0a57a1cbab16db39406f2dbe808cf5f35cf80f1c7cbc4efd956ade32eb"
+    },
+    {
+      "file": "SUMMARY.json",
+      "bytes": 11497,
+      "sha256": "598aeeb64a632aaa6aee916d86a3c83303d9fef92bd0ee55fd0eb25da00572b8"
+    }
+  ]
+}

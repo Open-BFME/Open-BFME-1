@@ -1,0 +1,343 @@
+{
+  "original": [
+    {
+      "section": ".data",
+      "size": 25,
+      "definitions": [
+        [
+          "??_R0?AV_com_error@@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 16,
+      "definitions": [
+        [
+          "??_R3_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 20,
+      "definitions": [
+        [
+          "??_R4_com_error@@6B@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 24,
+      "definitions": [
+        [
+          "??_R1A@?0A@A@_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 5,
+      "definitions": [
+        [
+          "??_R2_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata",
+      "size": 8,
+      "definitions": [
+        [
+          "??_7_com_error@@6B@",
+          4
+        ]
+      ],
+      "selection": 6,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 38,
+      "definitions": [
+        [
+          "??1_com_error@@UAE@XZ",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 50,
+      "definitions": [
+        [
+          "??0_com_error@@QAE@ABV0@@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 51,
+      "definitions": [
+        [
+          "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          0
+        ]
+      ],
+      "selection": 1,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 54,
+      "definitions": [
+        [
+          "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 58,
+      "definitions": [
+        [
+          "??_G_com_error@@UAEPAXI@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 16,
+      "definitions": [
+        [
+          "__TI1?AV_com_error@@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 28,
+      "definitions": [
+        [
+          "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 8,
+      "definitions": [
+        [
+          "__CTA1?AV_com_error@@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    }
+  ],
+  "candidate": [
+    {
+      "section": ".data",
+      "size": 25,
+      "definitions": [
+        [
+          "??_R0?AV_com_error@@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 16,
+      "definitions": [
+        [
+          "??_R3_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 20,
+      "definitions": [
+        [
+          "??_R4_com_error@@6B@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 24,
+      "definitions": [
+        [
+          "??_R1A@?0A@A@_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata$r",
+      "size": 5,
+      "definitions": [
+        [
+          "??_R2_com_error@@8",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".rdata",
+      "size": 8,
+      "definitions": [
+        [
+          "??_7_com_error@@6B@",
+          4
+        ]
+      ],
+      "selection": 6,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 38,
+      "definitions": [
+        [
+          "??1_com_error@@UAE@XZ",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 50,
+      "definitions": [
+        [
+          "??0_com_error@@QAE@ABV0@@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 51,
+      "definitions": [
+        [
+          "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          0
+        ]
+      ],
+      "selection": 1,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 54,
+      "definitions": [
+        [
+          "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".text",
+      "size": 58,
+      "definitions": [
+        [
+          "??_G_com_error@@UAEPAXI@Z",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 16,
+      "definitions": [
+        [
+          "__TI1?AV_com_error@@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 28,
+      "definitions": [
+        [
+          "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    },
+    {
+      "section": ".xdata$x",
+      "size": 8,
+      "definitions": [
+        [
+          "__CTA1?AV_com_error@@",
+          0
+        ]
+      ],
+      "selection": 2,
+      "assoc": 0
+    }
+  ],
+  "equal": true
+}

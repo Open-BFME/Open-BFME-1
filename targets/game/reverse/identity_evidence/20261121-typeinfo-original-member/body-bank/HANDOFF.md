@@ -1,0 +1,15 @@
+# Original ti_inst.obj: reservation plan
+
+Historical pre-claim plan. FINAL-HANDOFF.md supersedes it: Root assigned VS2003/ti_inst.cpp; the compiler-emitted int descriptor already has native pinEC83B0 and global consumers; no global/local descriptor unreferenced claim survives the actual relocation inventory. Compiler data cannot be normally admitted by the current sizeof grammar. See FINAL-SCOPE.json, EXTRA-GRAPH.json and INT-RTTI-PROVIDERS.json.
+
+Sicher: the native original member has three complete named bodies (11/75/5B), and the retail 11B constructor installs the exact type_info vtable whose sole method is the existing75B vector deleting destructor. Following the original COFF relocation names and addends from that operand reconstructs all97B of original RTTI/vtable physical data. All non-relocation data bytes agree. SCOPE.json retains the full original/member/retail evidence.
+
+RESERVATION.json gives exactly11 coordination RVAs:3 code,1 unchanged generated import dependency,7 data scopes. The seven data scopes are six actual native named definitions plus the anonymous4B COL prefix belonging to the original8B vtable section. The prefix must not become an invented global identity. Existing type_info vtable/TypeDescriptor symbols remain their true owners.
+
+Proposed authored whole-member path: game/Libraries/Source/CRT/VS2003/TypeInfoCopyConstructor.cpp. This needs Root explicit path/lane assignment: tu_map currently only records the displaced native library/type_info.cpp origin. This is not a named EA lift whose path can be relocated arbitrarily.
+
+The75B existing-library-to-C++ conversion is the primary task. The11B and5B unrowed placements are conditional; neither overlaps a matched current row, but ordinary identity/boundary/admission still decides whether either is a new recoverable body. No new total coverage, linked-byte gain or runtime benefit is claimed by this planning package.
+
+ROUTE-NATIVE.json reproduces current normal route_verdict without overriding any input: FF25 at009F7ED4 reads VA0135921C; actual PE and original x86 CODE import both name ??1type_info@@UAE@XZ. The old gen-import metadata target=~type_info causes refusal. The controlfp native control passes. The generated import identity/source/6B code remain unchanged. The file names its generator as tools/gen_small.py gen-imports, but that generator is absent from the current checkout. Current add_match.py --replace-existing allows a same-name/same-source verified metadata replacement; Root can assess that existing writer without weakening route_verdict or swapping the gen-import to C++.
+
+The pinned B2 source provides an authored emission lead, not blanket ABI or flag authority. Public VS2003 typeinfo.h and the original member must remain the authority for B1 declarations/data. B2's default-argument closure and primitive-int RTTI have no assigned native addresses. The original5B assignment is absent from the B2 donor body source and must be independently accounted for. No compiler was invoked and no production source, pin, ledger, claim or Git state was changed.

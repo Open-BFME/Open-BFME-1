@@ -1,0 +1,5 @@
+{
+  "original_sha256": "1619988ff52636e489b72ab07b9cf188ad8f6d35b5cdd70ef34f1b0cb0941f99",
+  "applied_sha256": "cbdedbf187f3102327cf12075185d6907ce7064065d843cdd8c52e8eb64b0610",
+  "change": "Patch text CRLF to LF only, matching untouched LF source files; all patch hunks unchanged"
+}

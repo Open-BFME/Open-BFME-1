@@ -1,0 +1,889 @@
+{
+  "controls_frozen_and_current_before_after": [
+    {
+      "source": "game/Libraries/Source/COM/ComRaise.cpp",
+      "source_sha256": "9deca5e328dd135301c058e4bcabb071cc16739ad130e4f5fc7dd93d6679e982",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+      "object_sha256": "d1b3f647c0fc89a30228a307ea932f13f50d9e35224e5c39c222c9858f92a8ca",
+      "normal_current": true,
+      "rows": [
+        {
+          "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          "rva": "0x00AFDA50",
+          "size": 51,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          "rva": "0x00AFDA10",
+          "size": 54,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??0_com_error@@QAE@ABV0@@Z",
+          "rva": "0x00AFDA90",
+          "size": 50,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??1_com_error@@UAE@XZ",
+          "rva": "0x00AFDAD0",
+          "size": 38,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??_G_com_error@@UAEPAXI@Z",
+          "rva": "0x00AFDB00",
+          "size": 58,
+          "strict_unmasked_exact": true
+        }
+      ]
+    },
+    {
+      "source": "game/Libraries/Source/CRT/VS2003/ti_inst.cpp",
+      "source_sha256": "2b11ade4bb77c0e1b4d7d1f655a53e80df86d4b62c57f41b1f4fa24d0084547c",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+      "object_sha256": "7b5a272e5420b348f0ba04babe8c456957d6334f4065ee5b90986748b7e1eaed",
+      "normal_current": true,
+      "rows": [
+        {
+          "name": "??0type_info@@AAE@ABV0@@Z",
+          "rva": "0x009F6CA4",
+          "size": 11,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??_Etype_info@@UAEPAXI@Z",
+          "rva": "0x009F6CAF",
+          "size": 75,
+          "strict_unmasked_exact": true
+        },
+        {
+          "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+          "rva": "0x009F6CFA",
+          "size": 5,
+          "strict_unmasked_exact": true
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "label": "baseline-original",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "-nologo",
+        "-dll",
+        "-noentry",
+        "-machine:x86",
+        "-opt:noref",
+        "-opt:noicf",
+        "-incremental:no",
+        "-verbose:lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+        "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\baseline-original.dll",
+        "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\baseline-original.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+        "msvcrt.lib",
+        "kernel32.lib",
+        "ole32.lib",
+        "oleaut32.lib",
+        "user32.lib",
+        "uuid.lib"
+      ],
+      "exit": 0,
+      "input_objects": [
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj"
+      ],
+      "no_recipe_flags_or_library_changes": true,
+      "DLL_executed": false,
+      "selected_three_bodies": [
+        {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "size": 111,
+          "provider": "native-comutil.obj",
+          "va": "0x10001010",
+          "all_placed_code_bytes_and_bindings_equal": true
+        },
+        {
+          "name": "??1_variant_t@@QAE@XZ",
+          "size": 18,
+          "provider": "native-comutil.obj",
+          "va": "0x10001080",
+          "all_placed_code_bytes_and_bindings_equal": true
+        },
+        {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "size": 15,
+          "provider": "native-comutil.obj",
+          "va": "0x10001000",
+          "all_placed_code_bytes_and_bindings_equal": true
+        }
+      ],
+      "retained_vtMissing": {
+        "provider": "native-comutil.obj",
+        "va": "0x10004000",
+        "size": 16,
+        "all_initial_bytes_exact": true
+      },
+      "original_member_static_map_symbols": [
+        {
+          "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268443888,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "_$E1",
+          "va": 268443904,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "_$E2",
+          "va": 268443920,
+          "owner": "native-comutil.obj"
+        }
+      ],
+      "retained_issue_error_provider": {
+        "name": "?_com_issue_error@@YGXJ@Z",
+        "va": 268440832,
+        "owner": "comsupp:comsupp.obj"
+      },
+      "retained_type_info_provider": {
+        "name": "??_7type_info@@6B@",
+        "va": 268447888,
+        "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+      },
+      "DLL_sha256": "4743d2743278a87b13cb236dc3c183cc2014a713bc11aa0467f740a0ce2f5613",
+      "map_sha256": "c24350d3341b2a4e49e729e580f38c3536ebd15c043b8b66fd12814b3213a842",
+      "_all_map_symbols": [
+        {
+          "name": "__except_list",
+          "va": 0,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "___safe_se_handler_count",
+          "va": 2,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__fltused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "__ldused",
+          "va": 39030,
+          "owner": "<absolute>"
+        },
+        {
+          "name": "?CheckError@_com_util@@YAXJ@Z",
+          "va": 268439552,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "??0_variant_t@@QAE@JG@Z",
+          "va": 268439568,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "??1_variant_t@@QAE@XZ",
+          "va": 268439680,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+          "va": 268439712,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268440064,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+          "va": 268440416,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+          "va": 268440480,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0_com_error@@QAE@ABV0@@Z",
+          "va": 268440544,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??1_com_error@@UAE@XZ",
+          "va": 268440608,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_G_com_error@@UAEPAXI@Z",
+          "va": 268440656,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_E_com_error@@UAEPAXI@Z",
+          "va": 268440656,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??0type_info@@AAE@ABV0@@Z",
+          "va": 268440714,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Etype_info@@UAEPAXI@Z",
+          "va": 268440725,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_Ftype_info@@QAEXXZ",
+          "va": 268440800,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+          "va": 268440811,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?_set_com_error_handler@@YGXP6GXJPAUIErrorInfo@@@Z@Z",
+          "va": 268440816,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_error@@YGXJ@Z",
+          "va": 268440832,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_issue_errorex@@YGXJPAUIUnknown@@ABU_GUID@@@Z",
+          "va": 268440848,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268440960,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268441040,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_dispatch_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268441088,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "?_com_invoke_helper@@YAJPAUIDispatch@@JGGPAXPBGPADPAPAUIErrorInfo@@@Z",
+          "va": 268441200,
+          "owner": "comsupp:invkprxy.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_method@@YAJPAUIDispatch@@JGGPAXPBGZZ",
+          "va": 268442784,
+          "owner": "comsupp:invkprxy.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propget@@YGJPAUIDispatch@@JGPAX@Z",
+          "va": 268442864,
+          "owner": "comsupp:invkprxy.obj"
+        },
+        {
+          "name": "?_com_dispatch_raw_propput@@YAJPAUIDispatch@@JGZZ",
+          "va": 268442912,
+          "owner": "comsupp:invkprxy.obj"
+        },
+        {
+          "name": "?WCodeToHRESULT@_com_error@@SAJG@Z",
+          "va": 268443024,
+          "owner": "comsupp:invkerr.obj"
+        },
+        {
+          "name": "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z",
+          "va": 268443056,
+          "owner": "comsupp:invkerr.obj"
+        },
+        {
+          "name": "_free",
+          "va": 268443304,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_malloc",
+          "va": 268443310,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__except_handler3",
+          "va": 268443328,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__chkstk",
+          "va": 268443344,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "__alloca_probe",
+          "va": 268443344,
+          "owner": "msvcrt:chkstk.obj"
+        },
+        {
+          "name": "??3@YAXPAX@Z",
+          "va": 268443406,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "??2@YAPAXI@Z",
+          "va": 268443412,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "_wcslen",
+          "va": 268443418,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "___CxxFrameHandler",
+          "va": 268443424,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__onexit",
+          "va": 268443430,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "_atexit",
+          "va": 268443468,
+          "owner": "msvcrt:atonexit.obj"
+        },
+        {
+          "name": "__CxxThrowException@8",
+          "va": 268443486,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?__ArrayUnwind@@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443510,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??_M@YGXPAXIHP6EX0@Z@Z",
+          "va": 268443604,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "??1type_info@@UAE@XZ",
+          "va": 268443700,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "___dllonexit",
+          "va": 268443706,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?terminate@@YAXXZ",
+          "va": 268443712,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__SEH_prolog",
+          "va": 268443720,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "__SEH_epilog",
+          "va": 268443779,
+          "owner": "msvcrt:sehprolg.obj"
+        },
+        {
+          "name": "_GetLastError@0",
+          "va": 268443796,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_MultiByteToWideChar@24",
+          "va": 268443802,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenA@4",
+          "va": 268443808,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_WideCharToMultiByte@32",
+          "va": 268443814,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_LocalFree@4",
+          "va": 268443820,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_lstrlenW@4",
+          "va": 268443826,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "_VariantClear@4",
+          "va": 268443832,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SysAllocString@4",
+          "va": 268443838,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_GetErrorInfo@8",
+          "va": 268443844,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantChangeType@16",
+          "va": 268443850,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_VariantInit@4",
+          "va": 268443856,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SetErrorInfo@8",
+          "va": 268443862,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_SysFreeString@4",
+          "va": 268443868,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "_CreateErrorInfo@4",
+          "va": 268443874,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__MultiByteToWideChar@24",
+          "va": 268447744,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__lstrlenW@4",
+          "va": 268447748,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__LocalFree@4",
+          "va": 268447752,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__WideCharToMultiByte@32",
+          "va": 268447756,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__lstrlenA@4",
+          "va": 268447760,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp__GetLastError@0",
+          "va": 268447764,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "\\177KERNEL32_NULL_THUNK_DATA",
+          "va": 268447768,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__imp___CxxThrowException@8",
+          "va": 268447772,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??1type_info@@UAE@XZ",
+          "va": 268447776,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____dllonexit",
+          "va": 268447780,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp____CxxFrameHandler",
+          "va": 268447784,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_?terminate@@YAXXZ",
+          "va": 268447788,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__wcslen",
+          "va": 268447792,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__free",
+          "va": 268447796,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??2@YAPAXI@Z",
+          "va": 268447800,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp_??3@YAXPAX@Z",
+          "va": 268447804,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___except_handler3",
+          "va": 268447808,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__malloc",
+          "va": 268447812,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp___onexit",
+          "va": 268447816,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "\\177MSVCR71_NULL_THUNK_DATA",
+          "va": 268447820,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__imp__VariantClear@4",
+          "va": 268447824,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SysAllocString@4",
+          "va": 268447828,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__GetErrorInfo@8",
+          "va": 268447832,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantChangeType@16",
+          "va": 268447836,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__VariantInit@4",
+          "va": 268447840,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SetErrorInfo@8",
+          "va": 268447844,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__SysFreeString@4",
+          "va": 268447848,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__imp__CreateErrorInfo@4",
+          "va": 268447852,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "\\177OLEAUT32_NULL_THUNK_DATA",
+          "va": 268447856,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "??_7_com_error@@6B@",
+          "va": 268447880,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_7type_info@@6B@",
+          "va": 268447888,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "__GUID_df0b3d60_548f_101b_8e65_08002b2bd119",
+          "va": 268447892,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "__GUID_00000000_0000_0000_0000_000000000000",
+          "va": 268447908,
+          "owner": "comsupp:invkprxy.obj"
+        },
+        {
+          "name": "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119",
+          "va": 268447940,
+          "owner": "comsupp:invkerr.obj"
+        },
+        {
+          "name": "__GUID_00020400_0000_0000_c000_000000000046",
+          "va": 268447956,
+          "owner": "comsupp:invkerr.obj"
+        },
+        {
+          "name": "__load_config_used",
+          "va": 268448008,
+          "owner": "msvcrt:loadcfg.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@_com_error@@8",
+          "va": 268448080,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R2_com_error@@8",
+          "va": 268448104,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R3_com_error@@8",
+          "va": 268448112,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R4_com_error@@6B@",
+          "va": 268448128,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R1A@?0A@A@type_info@@8",
+          "va": 268448148,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R2type_info@@8",
+          "va": 268448172,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R3type_info@@8",
+          "va": 268448180,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R4type_info@@6B@",
+          "va": 268448196,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "___safe_se_handler_table",
+          "va": 268448224,
+          "owner": "<linker-defined>"
+        },
+        {
+          "name": "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+          "va": 268448312,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__CTA1?AV_com_error@@",
+          "va": 268448340,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__TI1?AV_com_error@@",
+          "va": 268448348,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_MSVCR71",
+          "va": 268448364,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_KERNEL32",
+          "va": 268448384,
+          "owner": "kernel32:KERNEL32.dll"
+        },
+        {
+          "name": "__IMPORT_DESCRIPTOR_OLEAUT32",
+          "va": 268448404,
+          "owner": "oleaut32:OLEAUT32.dll"
+        },
+        {
+          "name": "__NULL_IMPORT_DESCRIPTOR",
+          "va": 268448424,
+          "owner": "msvcrt:MSVCR71.dll"
+        },
+        {
+          "name": "?vtMissing@@3V_variant_t@@A",
+          "va": 268451840,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "??_R0?AV_com_error@@@8",
+          "va": 268451856,
+          "owner": "game_^libraries_^source_^c^o^m_^com^raise.obj"
+        },
+        {
+          "name": "??_R0?AVtype_info@@@8",
+          "va": 268451884,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "??_R0H@8",
+          "va": 268451908,
+          "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+        },
+        {
+          "name": "?__errorPfn@@3P6GXJPAUIErrorInfo@@@ZA",
+          "va": 268451920,
+          "owner": "comsupp:comsupp.obj"
+        },
+        {
+          "name": "___security_cookie",
+          "va": 268451936,
+          "owner": "msvcrt:seccook.obj"
+        },
+        {
+          "name": "___onexitend",
+          "va": 268451940,
+          "owner": "<common>"
+        },
+        {
+          "name": "___onexitbegin",
+          "va": 268451944,
+          "owner": "<common>"
+        },
+        {
+          "name": "$L60941",
+          "va": 268440252,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "?ArrayUnwindFilter@@YAHPAU_EXCEPTION_POINTERS@@@Z",
+          "va": 268443492,
+          "owner": "msvcrt:ehvecdtr.obj"
+        },
+        {
+          "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "va": 268443888,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "_$E1",
+          "va": 268443904,
+          "owner": "native-comutil.obj"
+        },
+        {
+          "name": "_$E2",
+          "va": 268443920,
+          "owner": "native-comutil.obj"
+        }
+      ],
+      "scope_limit": "Actual generated issue-error game TU remains unchanged. Bounded link selects original comsupp.obj for that dependency; current authored ComRaise and ti_inst providers are inputs. This is not game/census linking, and CRT operator delete differs from game mem_ops selection."
+    },
+    {
+      "label": "cpp-before-original",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "-nologo",
+        "-dll",
+        "-noentry",
+        "-machine:x86",
+        "-opt:noref",
+        "-opt:noicf",
+        "-incremental:no",
+        "-verbose:lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+        "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\cpp-before-original.dll",
+        "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\cpp-before-original.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\ComUtil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+        "msvcrt.lib",
+        "kernel32.lib",
+        "ole32.lib",
+        "oleaut32.lib",
+        "user32.lib",
+        "uuid.lib"
+      ],
+      "exit": 1169,
+      "input_objects": [
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\ComUtil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj"
+      ],
+      "no_recipe_flags_or_library_changes": true,
+      "DLL_executed": false
+    },
+    {
+      "label": "original-before-cpp",
+      "command": [
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+        "-nologo",
+        "-dll",
+        "-noentry",
+        "-machine:x86",
+        "-opt:noref",
+        "-opt:noicf",
+        "-incremental:no",
+        "-verbose:lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+        "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+        "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\original-before-cpp.dll",
+        "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\link\\original-before-cpp.map",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\ComUtil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^raise.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+        "msvcrt.lib",
+        "kernel32.lib",
+        "ole32.lib",
+        "oleaut32.lib",
+        "user32.lib",
+        "uuid.lib"
+      ],
+      "exit": 1169,
+      "input_objects": [
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj",
+        "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\ComUtil.obj"
+      ],
+      "no_recipe_flags_or_library_changes": true,
+      "DLL_executed": false
+    }
+  ],
+  "two_source_hypotheses_only": true,
+  "full_game_runtime_or_LINKED_coverage_claim": false
+}

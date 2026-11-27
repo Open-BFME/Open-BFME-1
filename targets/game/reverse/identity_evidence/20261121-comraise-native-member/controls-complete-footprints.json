@@ -1,0 +1,38 @@
+[
+  {
+    "source": "game/Libraries/Source/COM/ComInvoke.cpp",
+    "normal_current_before": true,
+    "normal_current_now": true,
+    "source_hash_unchanged": true,
+    "normal_object_hash_unchanged": true,
+    "entire_runtime_footprint_equal": true,
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+    "normal_object_sha256": "38025dd818c763d398bf84f914bc5cb38ef2e7cf7eb58f0f22240ccc0f690e10",
+    "private_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\objects\\ComInvoke-control.obj",
+    "private_object_sha256": "dc3b1ebd0a32775209cc7b401422b041acfb0aed44c6cfc57463494e61fb8036"
+  },
+  {
+    "source": "game/Libraries/Source/COM/ComSupp.cpp",
+    "normal_current_before": true,
+    "normal_current_now": true,
+    "source_hash_unchanged": true,
+    "normal_object_hash_unchanged": true,
+    "entire_runtime_footprint_equal": true,
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+    "normal_object_sha256": "7dee24ea03af25a590a5b8f588ad4d1dc032760824ef68edbad1655813c8f0f8",
+    "private_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\objects\\ComSupp-control.obj",
+    "private_object_sha256": "5af86f4bdd25543a208b80ab3d5017b9467af307acca1f510a6978994d0140b4"
+  },
+  {
+    "source": "game/Libraries/Source/COM/ComInvokeError.cpp",
+    "normal_current_before": true,
+    "normal_current_now": true,
+    "source_hash_unchanged": true,
+    "normal_object_hash_unchanged": true,
+    "entire_runtime_footprint_equal": true,
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+    "normal_object_sha256": "9c6046540060bb11f76d22d644574ce7c537d11016ed67b9337e93a1bc24b658",
+    "private_object": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\objects\\ComInvokeError-control.obj",
+    "private_object_sha256": "a4022485fbeba057a301af6d6f33297b1a610f9a089927a47151e0a51ec753d5"
+  }
+]

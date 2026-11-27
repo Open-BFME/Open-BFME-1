@@ -1,0 +1,265 @@
+{
+  "task": "R10 one WeaponSet store-callee linking repair",
+  "source": "game/GameEngine/Source/GameLogic/Object/WeaponSet_updateWeaponSet.cpp",
+  "source_sha256": "116036556844377df8740d0327b0aeebf7ec8f0380de4c5639780b58b0d0c533",
+  "SourceTask": 1,
+  "DataOwnerTask": 0,
+  "new_CPP_exact_or_union_bytes": 0,
+  "new_static_data_bytes": 0,
+  "normal_function_rows": 60,
+  "normal_sources": 5,
+  "normal_data_rows": 1,
+  "normal_DIR32": 51,
+  "native_before_after_scoped_legacy_LINKED": [
+    0,
+    379
+  ],
+  "before_seconds": 226.1,
+  "after_seconds": 227.9,
+  "legacy_census": "2026-11-21 10:53 at42237e2367; not new Nov25 MAP/current full census",
+  "global": {
+    "objects": 22997,
+    "fresh_verified_data_rows": 1913,
+    "referenced_names_count": 335488,
+    "missing_before": 0,
+    "missing_after": 0,
+    "stale_before": 0,
+    "stale_after": 0,
+    "helper": "?findWeaponTemplateByNameKey@WeaponStore@@QBEPBVWeaponTemplate@@W4NameKeyType@@@Z",
+    "helper_comdat_copies": [
+      [
+        "game_^game^engine_^source_^game^logic_^object_^weapon^set_update^weapon^set.obj",
+        "bfe761d24112",
+        5,
+        null
+      ]
+    ],
+    "helper_ledger_owners": [],
+    "helper_globally_referenced": false,
+    "native_keep_rule": "unreferenced",
+    "native_copy_loses": {
+      "game_^game^engine_^source_^game^logic_^object_^weapon^set_update^weapon^set.obj": false
+    },
+    "native_receipt_input_extraction_count": 7,
+    "source_tool_input_and_object_snapshots_stable": true,
+    "unchanged_index_sha256": "35b1b72b3d5aedd561c700132b6086cea4a72ad1ef6cd6e483fdb5b23d3b6437"
+  },
+  "extra_compiler_emission": {
+    "code_bytes": 5,
+    "FPO_bytes": 16,
+    "kind": "ANY2/ASSOCIATIVE5",
+    "FPO_relocation_kind": "DIR32NB7",
+    "new_original_body_identity": false
+  },
+  "new_actual_main_callee_bindings": [
+    {
+      "old": [
+        222,
+        20,
+        "?findWeaponTemplatePrivate@BfmeWeaponStore@@QBEPAVWeaponTemplate@@W4NameKeyType@@@Z"
+      ],
+      "new": [
+        222,
+        20,
+        "?findWeaponTemplatePrivate@WeaponStore@@IBEPAVWeaponTemplate@@W4NameKeyType@@@Z"
+      ]
+    },
+    {
+      "old": [
+        239,
+        20,
+        "?allocateNewWeapon@BfmeWeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z"
+      ],
+      "new": [
+        239,
+        20,
+        "?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z"
+      ]
+    }
+  ],
+  "normal_factory_state_writer_only": [
+    {
+      "name": "uw_00c08cb0",
+      "rva": "0x00C08CB0",
+      "source": "game/GameEngine/Source/GameLogic/Object/WeaponStore_allocateNewWeapon_Thunk.cpp",
+      "old_notes": "gen-funclet;parent=?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z;object-symbol=$L315",
+      "new_notes": "gen-funclet;parent=?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z;object-symbol=$L319;eh-state-pin $L315->$L319: retail unwind map (?allocateNewWeapon@WeaponStore@@QBEPAVWeapon@@PBVWeaponTemplate@@W4WeaponSlotType@@@Z states [0]) binds this address to $L319;repin-model=codex"
+    }
+  ],
+  "current_Source_objects": {
+    "game/GameEngine/Source/GameLogic/Object/WeaponSet_updateWeaponSet.cpp": {
+      "source_sha256": "116036556844377df8740d0327b0aeebf7ec8f0380de4c5639780b58b0d0c533",
+      "object_sha256": "09a98029fecd285e2e7bdef97b0e47edbda3151090009683deb7eaa81736bf5a",
+      "control_object_sha256": "2ae519c771683cdd9eb4e5d1fe6efa26cb251883f675b4a450c774ad8a8996af",
+      "runtime_nodes_before": 5,
+      "runtime_nodes_after": 7,
+      "all_old_nodes_and_Aux_identical_under_exact_two_groundtruth_bindings": true,
+      "normal_profile_and_dependencies_unchanged": true,
+      "generated_semantic_environment_hashes_identical": true,
+      "full_host_environment_equality_claimed": false,
+      "extra_runtime_nodes": 2,
+      "extra_aux_entries": 2,
+      "provider_actual_header_timestamp_before": 1795544341,
+      "provider_actual_header_timestamp_after": 1795662690
+    },
+    "game/GameEngine/Source/GameLogic/Object/Weapon.cpp": {
+      "source_sha256": "31208e98c1800ebcceba43f74cf3cb21641935ba787b904f913f159f15c08b11",
+      "object_sha256": "695e6462e690a2232eed42362c7e0a5d657cc1ca5d9af63f93322597ffc25a19",
+      "control_object_sha256": "16cc0088fc7db680ecb99a18fe3b07a76f90c8a923ba9babe0e19a6dc2763ce9",
+      "runtime_nodes_before": 1566,
+      "runtime_nodes_after": 1566,
+      "all_old_nodes_and_Aux_identical_under_exact_two_groundtruth_bindings": true,
+      "normal_profile_and_dependencies_unchanged": true,
+      "generated_semantic_environment_hashes_identical": true,
+      "full_host_environment_equality_claimed": false,
+      "extra_runtime_nodes": 0,
+      "extra_aux_entries": 0,
+      "provider_actual_header_timestamp_before": 1795662557,
+      "provider_actual_header_timestamp_after": 1795663165
+    },
+    "game/GameEngine/Source/GameLogic/Object/WeaponStore_allocateNewWeapon_Thunk.cpp": {
+      "source_sha256": "267489d9316fa0ec50ddcfe97bc1242f84c381ef820198b6c82708c2d4e99c86",
+      "object_sha256": "7fbd46dd1bd82bcfc6d4552e03c878efa72b7d8127fd2172808be55947e71572",
+      "control_object_sha256": "7fbd46dd1bd82bcfc6d4552e03c878efa72b7d8127fd2172808be55947e71572",
+      "runtime_nodes_before": 6,
+      "runtime_nodes_after": 6,
+      "all_old_nodes_and_Aux_identical_under_exact_two_groundtruth_bindings": true,
+      "normal_profile_and_dependencies_unchanged": true,
+      "generated_semantic_environment_hashes_identical": true,
+      "full_host_environment_equality_claimed": false,
+      "extra_runtime_nodes": 0,
+      "extra_aux_entries": 0,
+      "provider_actual_header_timestamp_before": 1795180225,
+      "provider_actual_header_timestamp_after": 1795180225
+    },
+    "game/GameEngine/Source/GameLogic/Object/WeaponConstructor.cpp": {
+      "source_sha256": "907e57086f6d2ad2c4dfa594bf7395934595922787dd940a6082e56a044e61cc",
+      "object_sha256": "bbcb088ef2f718936d3ffec983b45f3e3ce7189a070eafc79d37963c88d990eb",
+      "control_object_sha256": "bbcb088ef2f718936d3ffec983b45f3e3ce7189a070eafc79d37963c88d990eb",
+      "runtime_nodes_before": 12,
+      "runtime_nodes_after": 12,
+      "all_old_nodes_and_Aux_identical_under_exact_two_groundtruth_bindings": true,
+      "normal_profile_and_dependencies_unchanged": true,
+      "generated_semantic_environment_hashes_identical": true,
+      "full_host_environment_equality_claimed": false,
+      "extra_runtime_nodes": 0,
+      "extra_aux_entries": 0,
+      "provider_actual_header_timestamp_before": 1794997196,
+      "provider_actual_header_timestamp_after": 1794997196
+    },
+    "game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp": {
+      "source_sha256": "09ff0ab24c70dd6520a8990f2feb8e721d90c20bbc5e4201acc1c47a7d9b9c69",
+      "object_sha256": "77d22d2e90e9cc7de1857677454f413b18fe2fcc4150ec0896f794ca1d024428",
+      "control_object_sha256": "77d22d2e90e9cc7de1857677454f413b18fe2fcc4150ec0896f794ca1d024428",
+      "runtime_nodes_before": 9,
+      "runtime_nodes_after": 9,
+      "all_old_nodes_and_Aux_identical_under_exact_two_groundtruth_bindings": true,
+      "normal_profile_and_dependencies_unchanged": true,
+      "generated_semantic_environment_hashes_identical": true,
+      "full_host_environment_equality_claimed": false,
+      "extra_runtime_nodes": 0,
+      "extra_aux_entries": 0,
+      "provider_actual_header_timestamp_before": 1794831659,
+      "provider_actual_header_timestamp_after": 1794831659
+    }
+  },
+  "global_current_factory_unknown_not_upgraded": true,
+  "ctor_current_native_retail_rule": true,
+  "new_alias_pin_Header_profile_baseline_or_RepositoryVerifier_changes": false,
+  "CodeView_main_diagnostics_not_claimed_unchanged": true,
+  "runtime_graph_unchanged": false,
+  "full_census_image_or_runtime_proven": false,
+  "private_artifact_root": "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r10",
+  "artifacts": {
+    "WEAPON-WHOLE-OBJECT-PROOF-initial.json": {
+      "sha256": "2ca4f9d0ecc939c49f260d5826d85d3839f7a9765a11a42071b90a43f26c35af",
+      "bytes": 27676
+    },
+    "WEAPON-WHOLE-OBJECT-PROOF-post-global.json": {
+      "sha256": "8673e05536ac7a888865bc26b7621e78d7b75b14efc1969ee9b77cdb642ee0f9",
+      "bytes": 27708
+    },
+    "WEAPON-CURRENT-PROVIDER-PROOFS.json": {
+      "sha256": "236ca5e6d3e720ad3e9dcc9842f0f64bcbc1383f78b8f9fac734181d18f9e1ba",
+      "bytes": 22693
+    },
+    "WEAPON-OBJECT-GENERATION-RECONCILIATION.json": {
+      "sha256": "f67ffda6ef47a0f64a44f76d78b2eaa2ec9acd80dfb72f80a926c310c78fc23a",
+      "bytes": 137271
+    },
+    "WEAPON-GLOBAL-NATIVE-REFERENCES.json": {
+      "sha256": "833088dfa379a67aa55e71a072dcfbb0da162dd0d5fe7ad135d211dd2c49e10f",
+      "bytes": 4228
+    },
+    "WEAPON-GLOBAL-INPUTS-BEFORE.json": {
+      "sha256": "c6c016c297130e48561e19729fec4a4bbe4792cd3fe2511ee02329babb8a00c2",
+      "bytes": 5603916
+    },
+    "WEAPON-GLOBAL-OBJECTS.json": {
+      "sha256": "e2b004310eb625330b92de8d411c4c56c0707b075ee8a85695b0d3a0e290ca9a",
+      "bytes": 4361019
+    },
+    "WEAPON-GLOBAL-REFERENCED-NAMES.json": {
+      "sha256": "0d25baa7ad80b0a2967478ae2ff1f8c6f73ca05c445d5dbc27e7c3e66112c882",
+      "bytes": 14160686
+    },
+    "WEAPON-GLOBAL-CURRENT-PROVIDER-BINDING.json": {
+      "sha256": "3a396047d4c248bc0d29d69a646ebb351977c8b8c21ab7468089ee5338894e1d",
+      "bytes": 2812
+    },
+    "WEAPON-GLOBAL-DATASET-FENCE-after-global.json": {
+      "sha256": "b6074c32d0df7f7fd8c31dcd83a32f8e28b5d46c4c9f3efc00b8ab9584e82b5a",
+      "bytes": 700
+    },
+    "WEAPON-NATIVE-RECEIPT-PROVENANCE-EXTRACTION.json": {
+      "sha256": "f65fd02bf8e9c0aefc2de00030822bd32b085d4b61315d7c75b27ef934f5950d",
+      "bytes": 70445
+    },
+    "normal-control.log": {
+      "sha256": "6b9c76264b5c47e9e039182c8e79f1377bb3646fd2cb6155cdb218e46e97aaa3",
+      "bytes": 1208
+    },
+    "normal-candidate.log": {
+      "sha256": "6ac728ca45c9fb549b053d105fbe59c33a04c1e464a2c22fe13e5f7c5cc402e6",
+      "bytes": 922
+    },
+    "weapon-link-before.log": {
+      "sha256": "3f1fe52af158999c97437efc40fa41844231c1319595b06029ed5d53144c8b2a",
+      "bytes": 784
+    },
+    "weapon-link-after.log": {
+      "sha256": "645cbf06a489b5a475da76b33a07ca6321df6fd31a10219d8b36557bd60e790a",
+      "bytes": 576
+    },
+    "factory-eh-native-fix.log": {
+      "sha256": "a4879998392c5321ab9992509249c02b5eeef2e6bab1ed08696275e7a5f93d64",
+      "bytes": 104
+    },
+    "factory-eh-postcheck/report.json": {
+      "sha256": "9425fbba8192d2ac967259eb5ea821d66e24a155a336615356e2c49b2b710186",
+      "bytes": 516
+    },
+    "normal-FDU.log": {
+      "sha256": "1acbe863198593932808b39bef4a8fa157fd549415074975abe62b15992c5dae",
+      "bytes": 44
+    },
+    "weapon-whole-object-proof-v1-refusal.log": {
+      "sha256": "d14d77cc3e95a8d9881fdd2e04c0a65f4e1d19ddba357cb52a94ea4ac091c17b",
+      "bytes": 300
+    },
+    "weapon-whole-object-proof-v2-refusal.log": {
+      "sha256": "4188b7cad3efd8c87281a2b4811bdb56404487f2fef7ddec4031382a3ef7d485",
+      "bytes": 434
+    },
+    "weapon-whole-object-proof-environment-refusal.log": {
+      "sha256": "073d6c2e191b8f3983b136cfd35edc3720895f19841537fbb13a36aad92c3fe5",
+      "bytes": 456
+    },
+    "fence-global-after-v1-refusal.log": {
+      "sha256": "cb87aae53dc4a4719abed2914df864547efe4a5d42202b86997607519fa17e59",
+      "bytes": 431
+    }
+  },
+  "BFME2_donor_revision": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+  "parked_Node13_ref_preserved": "0485927757533b40c3ce34412ae871bcb70f85c9"
+}

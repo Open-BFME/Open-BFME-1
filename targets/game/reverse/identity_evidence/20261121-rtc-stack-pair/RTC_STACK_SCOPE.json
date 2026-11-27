@@ -1,0 +1,243 @@
+{
+  "read_only": true,
+  "compiled": false,
+  "root_reservation_required_before_private_compile": true,
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "library": "inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib\\libc.lib",
+  "member": "..\\build\\intel\\st_obj\\stack.obj",
+  "member_sha256": "27d50f13be24c322ef991eb457a85acea2f37e708159d62697e94459638cadd4",
+  "full_code_bytes": 125,
+  "data_bytes": 0,
+  "data_or_EH_scopes": [],
+  "scopes": [
+    {
+      "rva": "0x009F7525",
+      "size": 90,
+      "symbol": "@_RTC_CheckStackVars@8",
+      "source": "game/Libraries/Source/CRT/VS2003/RtcStack.cpp",
+      "cpp_body_credit_max": 1,
+      "cpp_bytes_max": 90
+    },
+    {
+      "rva": "0x009F7502",
+      "size": 35,
+      "symbol": "__RTC_CheckEsp",
+      "source": "game/masm_dumps/RTC_CheckEsp.asm",
+      "cpp_body_credit_max": 0,
+      "cpp_bytes_max": 0,
+      "reason": "proven compiler entry consumes caller ZF and preserves EAX/EDX on failure"
+    }
+  ],
+  "readonly_callee_rvas": [
+    "0x009F7889/62",
+    "0x009F7A5B/140"
+  ],
+  "selected_current_rows": [
+    {
+      "name": "@_RTC_CheckStackVars@8",
+      "export_rva": "",
+      "target_rva": "0x009F7525",
+      "target_size": "90",
+      "source": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/libc.lib",
+      "status": "matched",
+      "notes": "vendored=msvc71-crt;member=..\\build\\intel\\st_obj\\stack.obj"
+    },
+    {
+      "name": "__RTC_CheckEsp",
+      "export_rva": "",
+      "target_rva": "0x009F7502",
+      "target_size": "35",
+      "source": "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/lib/libc.lib",
+      "status": "matched",
+      "notes": "vendored=msvc71-crt;member=..\\build\\intel\\st_obj\\stack.obj"
+    },
+    {
+      "name": "?_RTC_Failure@@YAXPAXH@Z",
+      "export_rva": "",
+      "target_rva": "0x009F7889",
+      "target_size": "62",
+      "source": "game/Libraries/Source/CRT/VS2003/RtcError.cpp",
+      "status": "matched",
+      "notes": "BFME2 donor147fd3 whole original RTC userapi/error member;complete native COFF CV code relocations private states SEH and imports;evidence=targets/game/reverse/identity_evidence/20261121-rtc-userapi-error-native-members.md;model=codex;launched=gpt-6;host=Michael-PC"
+    },
+    {
+      "name": "?_RTC_StackFailure@@YAXPAXPBD@Z",
+      "export_rva": "",
+      "target_rva": "0x009F7A5B",
+      "target_size": "140",
+      "source": "game/Libraries/Source/CRT/VS2003/RtcError.cpp",
+      "status": "matched",
+      "notes": "BFME2 donor147fd3 whole original RTC userapi/error member;complete native COFF CV code relocations private states SEH and imports;evidence=targets/game/reverse/identity_evidence/20261121-rtc-userapi-error-native-members.md;model=codex;launched=gpt-6;host=Michael-PC"
+    }
+  ],
+  "code": [
+    {
+      "section": 2,
+      "rva": "0x9f7502",
+      "size": 35,
+      "raw_native": "7501c3558bec83ec0050525356576a00ff7504e80000000059595f5e5b5a588be55dc3",
+      "raw_retail": "7501c3558bec83ec0050525356576a00ff7504e86f03000059595f5e5b5a588be55dc3",
+      "nonreloc_identical": true,
+      "relocs": [
+        {
+          "offset": 20,
+          "kind": 20,
+          "symbol": {
+            "index": 17,
+            "name": "?_RTC_Failure@@YAXPAXH@Z",
+            "value": 0,
+            "section": 0,
+            "type": 32,
+            "storage": 2
+          },
+          "target_rva": "0x9f7889"
+        }
+      ],
+      "COMDAT_selection": 1,
+      "flags": "0x60101020"
+    },
+    {
+      "section": 4,
+      "rva": "0x9f7525",
+      "size": 90,
+      "raw_native": "558bec515153568bf233db391e8bd18955f8895dfc7e3f57bfcccccccc8b460403c38b08397c11fc750a8b400403c1393c1074148b4604ff741808ff7504e8000000008b55f85959ff45fc8b45fc83c30c3b067cc85f5e5bc9c3",
+      "raw_retail": "558bec515153568bf233db391e8bd18955f8895dfc7e3f57bfcccccccc8b460403c38b08397c11fc750a8b400403c1393c1074148b4604ff741808ff7504e8f30400008b55f85959ff45fc8b45fc83c30c3b067cc85f5e5bc9c3",
+      "nonreloc_identical": true,
+      "relocs": [
+        {
+          "offset": 63,
+          "kind": 20,
+          "symbol": {
+            "index": 30,
+            "name": "?_RTC_StackFailure@@YAXPAXPBD@Z",
+            "value": 0,
+            "section": 0,
+            "type": 32,
+            "storage": 2
+          },
+          "target_rva": "0x9f7a5b"
+        }
+      ],
+      "COMDAT_selection": 1,
+      "flags": "0x60101020"
+    }
+  ],
+  "codeview_structs": {
+    "_RTC_framedesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 8,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "varCount",
+          "int",
+          4
+        ],
+        [
+          4,
+          "variables",
+          "_RTC_vardesc*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    },
+    "_RTC_vardesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 12,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "addr",
+          "int",
+          4
+        ],
+        [
+          4,
+          "size",
+          "int",
+          4
+        ],
+        [
+          8,
+          "name",
+          "char*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    }
+  },
+  "codeview_procedures": [
+    {
+      "name": "_RTC_CheckEsp",
+      "debug_section": 3,
+      "type_index": "0x1015",
+      "type_kind": "0x1008",
+      "procedure_raw": "030000000000000014100000",
+      "return": "void",
+      "callconv": 0,
+      "parameter_count": 0,
+      "args": [],
+      "code_size": 35
+    },
+    {
+      "name": "_RTC_CheckStackVars",
+      "debug_section": 5,
+      "type_index": "0x1017",
+      "type_kind": "0x1008",
+      "procedure_raw": "030000000400020016100000",
+      "return": "void",
+      "callconv": 4,
+      "parameter_count": 2,
+      "args": [
+        "void*",
+        "_RTC_framedesc*"
+      ],
+      "code_size": 90
+    }
+  ],
+  "source_hashes": {
+    "inputs/reference/open-bfme-2/Code/Libraries/Source/CRT/RtcStack.cpp": "402169d42f9b48c0e12357f42c9dbf33310a57f38209d374a6158314d6d3f484",
+    "inputs/reference/open-bfme-2/Code/masm_dumps/RTC_CheckEsp.asm": "9752f37382698cebaa341c2478f340a3e9fac1f7fbd72646af2dce397c1ea641",
+    "inputs/reference/open-bfme-2/reverse/attempt_support/0x0075a5c5-crt-stack/readme.md": "5231f034ee15fe9612646f0a742a0a7c351afa1cf7cd28e2982742153d8c5e53",
+    "inputs/reference/open-bfme-2/reverse/attempt_support/real-link-codex-efb5fcbb60-20261104/README.md": "8f1537e067ae5ba48844f4721d5561ad7ff68f51238203ec46c571277cff809b",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/rtcapi.h": "cacac011758ed21df2312ab6191bc48a6e326f7866287ec100b32697d2c9817f"
+  },
+  "native_admission": "Existing same-named35/90B library rows; normal add_match --replace-existing for each within one unpublised whole-member change, then regular combined build/link guards. No generated owner move or prototype rename.",
+  "native_MASM_path": "build.compiler_command .asm branch -> VC7/bin/ml.exe -nologo -c -Cx -FoPRIVATE SOURCE",
+  "duplicate_avoidance": "Both functions are NODUPLICATES COMDATs in one native member. New CPP90 alone would pull native stack.obj for35 and duplicate90. Both source owners are required; do not alter/reindex archive or use FORCE/alias/inline emission hacks.",
+  "donor_link_evidence": "Current donor rows own both sources; focused non-executed DLL map selected both new objects with no duplicate/unresolved. The Nov4 earlier handoff explicitly refused a unilateral move until owner placement approval; current35B row records owner approval2026-11-04. No donor evidence is a B1 full-image/runtime proof.",
+  "eligibility": {
+    "0x9f7502": {
+      "retired": false,
+      "last_verdict": "blocked",
+      "attempts": 3,
+      "native_source_lane": "library"
+    },
+    "0x9f7525": {
+      "retired": false,
+      "last_verdict": null,
+      "attempts": 0,
+      "native_source_lane": "library"
+    }
+  },
+  "limits": [
+    "No compile/claims/production/Git changes here.",
+    "Historical CheckEsp attempts concern the3B flag-consuming prefix; current complete member extent is35B. No C++ retry proposed for it.",
+    "Scope stays below009F9B82 and does not touch D3DX.",
+    "Original MS object metadata/binary and public SDK declarations only; no Microsoft implementation source read."
+  ]
+}

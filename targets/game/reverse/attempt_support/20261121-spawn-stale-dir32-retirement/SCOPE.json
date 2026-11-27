@@ -1,0 +1,106 @@
+{
+  "read_only": true,
+  "claims_made": 0,
+  "compiler_calls": 0,
+  "body_credit": 0,
+  "data_va": "0x0108E890",
+  "data_rva": "0x00C8E890",
+  "original_extent": 68,
+  "current_compiler_allocation_extent": 4,
+  "initial_claim_recommendation": [],
+  "reason": "native ownership finding already gone; normal pass-test owner locator cannot find compiler-generated symbol",
+  "conditional_whole_class_sources": [
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataConstructor.cpp",
+      "sha256": "ca7999e2f9ffd593c516d5e2f1df62ab6664c9b91d1e36bcf034f44ddb3b47cf"
+    },
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataDestructor.cpp",
+      "sha256": "5b514f234646e6c85e120af16e5e3146e1b770e7011f01464e94fe9571f903d9"
+    },
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorFactories.cpp",
+      "sha256": "10e645ea5aec25c72c13c86e4c89d969807413eb0a7612ebecbe2e9b7b2e940f"
+    },
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorUpdate.cpp",
+      "sha256": "35c1e5932adfa45e6e7c0e141b156c5cdf217cfac2e1f6567230b4fdcf615052"
+    }
+  ],
+  "conditional_existing_rows": [
+    {
+      "name": "??0SpawnUnitBehaviorModuleData@@QAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x00125CE0",
+      "target_size": "114",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataConstructor.cpp",
+      "status": "matched",
+      "notes": "model=space-bunny-free"
+    },
+    {
+      "name": "??1SpawnUnitBehaviorModuleData@@UAE@XZ",
+      "export_rva": "",
+      "target_rva": "0x00126F00",
+      "target_size": "80",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataDestructor.cpp",
+      "status": "matched",
+      "notes": "Open-BFME5 clean C++ AsciiString-then-base SEH ModuleData dtor"
+    },
+    {
+      "name": "??_GSpawnUnitBehaviorModuleData@@UAEPAXI@Z",
+      "export_rva": "",
+      "target_rva": "0x00126ED0",
+      "target_size": "30",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorModuleDataConstructor.cpp",
+      "status": "matched",
+      "notes": "model=claude-opus-5-5;host=GreatFaram"
+    },
+    {
+      "name": "?friend_newModuleData@SpawnUnitBehavior@@SAPAVModuleData@@PAVINI@@@Z",
+      "export_rva": "",
+      "target_rva": "0x00125D70",
+      "target_size": "107",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorFactories.cpp",
+      "status": "matched",
+      "notes": "Open-BFME5 clean C++ friend_newModuleData factory"
+    },
+    {
+      "name": "?friend_newModuleInstance@SpawnUnitBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z",
+      "export_rva": "",
+      "target_rva": "0x0011E1D0",
+      "target_size": "96",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorFactories.cpp",
+      "status": "matched",
+      "notes": "Open-BFME5 clean C++ friend_newModuleInstance factory"
+    },
+    {
+      "name": "?update@SpawnUnitBehavior@@UAE?AW4UpdateSleepTime@@XZ",
+      "export_rva": "",
+      "target_rva": "0x0020D310",
+      "target_size": "361",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorUpdate.cpp",
+      "status": "matched",
+      "notes": "clean C++ SpawnUnitBehavior update; ctor 0x0020D0F0 vtable 0x010A6EC4 slot 0 via ILT 0x00043798; conditional AsciiString temporary with nothrow StringBase equality under EHsc;model=claude-opus-5-5"
+    },
+    {
+      "name": "uw_00c00420",
+      "export_rva": "",
+      "target_rva": "0x00C00420",
+      "target_size": "11",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorFactories.cpp",
+      "status": "matched",
+      "notes": "gen-funclet;parent=?friend_newModuleInstance@SpawnUnitBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z;object-symbol=$L371"
+    },
+    {
+      "name": "uw_00c01810",
+      "export_rva": "",
+      "target_rva": "0x00C01810",
+      "target_size": "11",
+      "source": "game/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorFactories.cpp",
+      "status": "matched",
+      "notes": "gen-funclet;parent=?friend_newModuleData@SpawnUnitBehavior@@SAPAVModuleData@@PAVINI@@@Z;object-symbol=$L351"
+    }
+  ],
+  "retained_existing_rows": 8,
+  "retained_existing_bytes": 810
+}

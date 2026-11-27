@@ -1,0 +1,117 @@
+{
+  "round": 8,
+  "baseline": "283d0922b3a28474d38b5a02d8bf97ecde2384ff",
+  "source": "game/Libraries/Source/WWVegas/WW3D2/shader.cpp",
+  "source_sha256": "8275c93662afbc200aee33f46dd4102ea6cc9233a93b72bcd02d2de917981e5d",
+  "header": "game/Libraries/Source/WWVegas/WW3D2/shader.h",
+  "header_sha256": "eafff4b6ad849afbac4c4c2385d32b45546f59925bd04f4f2ee1853401ff6ac5",
+  "control_object_sha256": "a350f42034f476c79e0e9e4ffa1bdeb1e97337af34e0775dccecb7b4b18b8d26",
+  "current_object_sha256": "8291f1db076181417d0a53d4acf702359a37f7273efc0456b472fb607a03b98c",
+  "source_tasks_completed": 0,
+  "data_owner_tasks_completed": 1,
+  "source_code_modified": false,
+  "normal_data_admission_pass": true,
+  "new_static_data_bytes": 1,
+  "new_data_rows": 1,
+  "new_emitted_storage_bytes": 0,
+  "new_CPP_or_body_credit": 0,
+  "actual_COFF_metadata_delta": {
+    "offset": 4,
+    "bytes": 4,
+    "old_value": 1794832159,
+    "current_value": 1795659181,
+    "old_hex": "1ff7fa6a",
+    "current_hex": "ad95076b",
+    "cause": "ordinary add_data_match provider recompile, Source and compiler profile unchanged",
+    "all_other_actual_COFF_bytes_identical": 37226
+  },
+  "all_other_actual_raw_COFF_bytes_identical": true,
+  "runtime_nodes": 170,
+  "SafeSEH": 2,
+  "FPO_bytes": 832,
+  "numeric_locals": 89,
+  "normal_functions": "22/22",
+  "normal_data_rows": 6,
+  "normal_DIR32": 68,
+  "all_other_function_symbol_DIR32_hatch_ledgers_identical": true,
+  "no_old_alias_retirement_or_convergence": true,
+  "normal_link_previews": {
+    "before": {
+      "clean": 0,
+      "LINKED_before": 0,
+      "LINKED_after": 0,
+      "seconds": 345.5
+    },
+    "after": {
+      "clean": 0,
+      "LINKED_before": 0,
+      "LINKED_after": 0,
+      "seconds": 343.0
+    }
+  },
+  "current_selection_UNKNOWN_and_old_provider_debt_retained": true,
+  "full_current_census_image_link_or_runtime_claimed": false,
+  "private_root": "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r08",
+  "private_artifacts": {
+    "SHADERDIRTY-OWNER-AND-SCOPE.json": {
+      "sha256": "ee824f89525cf6ed40269c0c2ea68a9b5181c9bcb14cbad100d6715e2d639dd8",
+      "bytes": 17902
+    },
+    "SHADERDIRTY-WHOLE-OBJECT-PROOF.json": {
+      "sha256": "f3c66532d70c4d79083d258624d44bc7a2fd62be8736b7545d857687f11a48ea",
+      "bytes": 6268
+    },
+    "shaderdirty-whole-object-proof.py": {
+      "sha256": "3d2b16ed72d156b47d1938c30be4f4a01093ffa7eacf4fd81a64f0933c6c5afe",
+      "bytes": 6030
+    },
+    "SHADERDIRTY-ACTUAL-RAW-COFF-DELTA.json": {
+      "sha256": "b7bb98adc54001037c53d5ad6379c85e51372d917463bc7fa990df2439d4b1c9",
+      "bytes": 416
+    },
+    "shader-initial-raw-equality-refusal.log": {
+      "sha256": "cb14faa261514a87662fff5b8d9f069477c67569e3aaf62d07f52a77cca995ff",
+      "bytes": 387
+    },
+    "control-build.log": {
+      "sha256": "faae2e61239e63b35f81a82c5390841c19fb3f887346d1f07412932f3e7d8ad1",
+      "bytes": 540
+    },
+    "after-build.log": {
+      "sha256": "b1ee06f3615c1785e58c2f2ff4ddc890f1ac0ab4f47c3c2dad0d221807a848fc",
+      "bytes": 540
+    },
+    "data-admission-native.log": {
+      "sha256": "6571ebad26f42385fc381125b408be1667928bcd3301a96b8746f3587cab5c72",
+      "bytes": 307
+    },
+    "fdu-staged.log": {
+      "sha256": "3dfb8380630545c603e361f6daec49c6a3747916dce3193a7639edaacf554beb",
+      "bytes": 144
+    },
+    "link-before.log": {
+      "sha256": "493a19b673c0b6c0884e6b80f518b07e4171d51f22776c5cd0d630563c50ad30",
+      "bytes": 826
+    },
+    "link-after.log": {
+      "sha256": "3c7f67d62a9dc958eabcd66969cdbb23ecc19fbac73111cbd4d25d60b629feb7",
+      "bytes": 826
+    },
+    "SHADERDIRTY-LINK-COMPARISON.json": {
+      "sha256": "f0e11ba0a0aa9b4ef78b7e98f3e74cafbfb83e737a7abd2f22841b1a3db1e1c4",
+      "bytes": 222
+    },
+    "independent-review/HANDOFF.md": {
+      "sha256": "c51976261584ed12159736453c57643b76991db0d3f61b7b264c18bcbd84ca16",
+      "bytes": 5078
+    },
+    "independent-review/MANIFEST.json": {
+      "sha256": "e4d461787f7b61f74bf391806ab38739287298f19094f08daa8e9aba7ba54bec",
+      "bytes": 6340
+    },
+    "independent-review/RESULT.json": {
+      "sha256": "7352b845385ff3ea9c154a2f7e2c4962194496bb1ad73bee406d952e4c906544",
+      "bytes": 31930
+    }
+  }
+}

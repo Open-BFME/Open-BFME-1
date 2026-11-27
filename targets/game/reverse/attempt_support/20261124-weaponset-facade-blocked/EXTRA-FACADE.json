@@ -1,0 +1,54 @@
+{
+  "symbol": "?findWeaponTemplateByNameKey@WeaponStore@@QBEPBVWeaponTemplate@@W4NameKeyType@@@Z",
+  "physical_object_sha256": "2e2719695e722048e83f65ad297ea0f58ef1a2d9cd7bbbfb0bfecae6ca9ed70d",
+  "physical_definition": {
+    "section": 5,
+    "size": 5,
+    "flags": 1615859744,
+    "storage": 2,
+    "body": "e900000000",
+    "relocations": [
+      [
+        1,
+        20,
+        "?findWeaponTemplatePrivate@WeaponStore@@IBEPAVWeaponTemplate@@W4NameKeyType@@@Z"
+      ]
+    ],
+    "comdat_selections": {
+      "1": 0,
+      "2": 0,
+      "3": 2,
+      "4": 5,
+      "5": 2,
+      "6": 5,
+      "7": 1,
+      "8": 5
+    }
+  },
+  "native_current_TU_runtime_incoming_roots": false,
+  "native_current_TU_runtime_incoming_edges": [],
+  "all_incoming_relocations": [
+    {
+      "section": ".debug$F",
+      "offset": 0,
+      "kind": 7,
+      "debug_only": true
+    }
+  ],
+  "source_facade_semantics_from_real_header": true,
+  "existing_native_retail_address_candidates": null,
+  "existing_native_census_definition": null,
+  "existing_native_census_definitions": {
+    "strong": [],
+    "comdat": []
+  },
+  "existing_native_census_unreferenced_receipt": false,
+  "index_meta": {
+    "date": "2026-11-21 10:53",
+    "commit": "42237e2367"
+  },
+  "FDU_result": "0/all matched; qualified-definition parser does not establish inline-member ownership",
+  "unreferenced_policy": "link_census.keep_rule962ff permits no-address unreferenced copies only with link_references global roots/edges closure. Current TU has no runtime incoming edge, but that alone is not a global receipt.",
+  "scope_decision": "No independently owned retail body or explicit current global unreferenced ownership receipt; do not land or pin an ILT. Preserve then restore the only candidate. No new compiler/source variant.",
+  "task_credit": 0
+}

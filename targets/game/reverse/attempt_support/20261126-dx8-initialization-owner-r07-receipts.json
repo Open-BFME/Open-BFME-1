@@ -1,0 +1,182 @@
+{
+  "round": 7,
+  "baseline": "8f06fd4114796d2175b8d741984687f805391597",
+  "diagnostic_root": "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r07",
+  "source": "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+  "source_sha256": {
+    "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp": "7e9dfbdacefa4bf70d68f77b2bf9c14012aa0f6b37e223e0ea9aa24115136120",
+    "game/Libraries/Source/WWVegas/WW3D2/Load_Texture.cpp": "0d45d3a02860e38f075238ec660e0b5c4d35c7cff73b9b0de0d2441d1374cdae",
+    "game/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp": "31fca3ce291ac570c36ba2fceaa39eb16d093a4fb35bb17be673f4ab36643ec9",
+    "game/GameEngine/Source/Common/UnclaimedGlobalGetters.cpp": "bf9291448617d81765c2e3b60a6131aa59063cf0086559de8ccb42be2eb084c6"
+  },
+  "control_and_current_object_sha256": {
+    "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp": {
+      "control": "4e0af42f8301792379193d89434eb8a8ed9174b7344d2970b293189ef9f9063b",
+      "current": "cc2b02733ab51d46e2b70ca7fb9dc376dcda76d47e9d4496352fd71e7f0527d7"
+    },
+    "game/Libraries/Source/WWVegas/WW3D2/Load_Texture.cpp": {
+      "control": "701fdd047dbf4384ecf0cb16e5687de0ecc1969e3c199b7142fcac84e1f34da5",
+      "current": "3e4688fb0dc1e2dcc4263abc8fa97abda053a7b7ddecda9e2633dbbb067f5c2f"
+    },
+    "game/Libraries/Source/WWVegas/WW3D2/meshmatdesc.cpp": {
+      "control": "30b612785f9112047cbd7d8289a73deacd2466799e3e42321be72e0fa2938848",
+      "current": "f990a4a1d829df4f84f47c38eafede2185d5c9ae662f8cc586f123679d5e7aa6"
+    },
+    "game/GameEngine/Source/Common/UnclaimedGlobalGetters.cpp": {
+      "control": "f8f6f43cfca10490cb2ce939838397f87fee11a5efb853bd5f3f43d9fdf952d2",
+      "current": "f0529d4524fff032a029134046a05e0138026095a1b3034233c0a03c05f4f329"
+    }
+  },
+  "normal_rows": 177,
+  "normal_data_rows": 18,
+  "normal_DIR32_references": 556,
+  "new_data_owner_bytes": 5,
+  "new_emitted_storage_bytes": 0,
+  "new_CPP_or_body_credit": 0,
+  "LINKED_gain": 0,
+  "physical_runtime_nodes": "1244+6B API COMDAT+16B associated FPO=1246",
+  "retained_runtime_changes": "Five actual data bindings;454 exact owner/offset/type/storage local-name correspondences;three explicitly bound runtime __LINE__ log arguments. Every other retained payload/edge stays exact.",
+  "native_global_objects": 22997,
+  "native_global_referenced_names": 335489,
+  "native_global_missing_stale_before_after": 0,
+  "native_keep_rule": "unreferenced",
+  "helper_globally_referenced": false,
+  "global_current_data_rows_verified": 1904,
+  "actual_fresh_retry_receipts": 7,
+  "index_unchanged_sha256": "35b1b72b3d5aedd561c700132b6086cea4a72ad1ef6cd6e483fdb5b23d3b6437",
+  "legacy_previews": "42237 at2026-11-21,0/4clean,0->0; newly UNKNOWN selection currency for9+10 siblings. Not current /MAP census/full-image link/runtime.",
+  "private_artifacts": {
+    "DXINIT-OWNER-AND-SCOPE.json": {
+      "sha256": "6f945f7e96cfae471e1f7d98c62b42de2d7a2bed894de6ca4a7c5c564b2d669b",
+      "bytes": 87139
+    },
+    "DXINIT-CONTROLS-AND-CANDIDATE.json": {
+      "sha256": "472fc09436327f7d85203c9e3787ef38703f0e19659e6530e8348290aea99b78",
+      "bytes": 83460
+    },
+    "DXINIT-WHOLE-OBJECT-PROOF.json": {
+      "sha256": "a92fb2b4537856de08959d11f551f8217516baa1d78cc7e2df8451de041d728c",
+      "bytes": 235986
+    },
+    "dxinit-whole-object-proof.py": {
+      "sha256": "e7510305ade326a6b2e6d991a1ca2647eb489df862cb663edadacb02252ad56a",
+      "bytes": 12649
+    },
+    "DXINIT-LINE-LITERAL-DELTA.json": {
+      "sha256": "20ea1424d448b91c22ce2135ea226b0e04c1409958307f5aba1ebd69a94680ba",
+      "bytes": 1277
+    },
+    "DXINIT-PHYSICAL-GRAPH-REFUSAL.json": {
+      "sha256": "97c26388fddff9c88af87ac4c14a72373a3c7c377ff2011f9b5bd04b99ae666a",
+      "bytes": 41982
+    },
+    "DXINIT-GLOBAL-NATIVE-REFERENCES.json": {
+      "sha256": "f67d9f0c13c3e3e86d3f5e538f9591afcc71ec08510fb47fa84b902d4289e355",
+      "bytes": 3360
+    },
+    "dxinit-global-native-references.py": {
+      "sha256": "931268e9952c996aa1eacb7671ca1ffe4281fd8f29fb23a4a79ec4f4550ee5ee",
+      "bytes": 10979
+    },
+    "DXINIT-GLOBAL-DRIVER-PROVENANCE.json": {
+      "sha256": "6c961c961aee06d37051b062b3dc8ec3d39e94f5954163a80008a349bc2ed964",
+      "bytes": 1048
+    },
+    "DXINIT-GLOBAL-INPUTS-BEFORE.json": {
+      "sha256": "dcef1cf192518ee710a560517e5ed9788fc8087364e7643ee4f0a5e881fdcb6d",
+      "bytes": 5603916
+    },
+    "DXINIT-GLOBAL-OBJECTS.json": {
+      "sha256": "3e425f88d0880442d0dcab3271ff0bdd3d0ac79821af9f5e37fc5becf71a81d8",
+      "bytes": 4361019
+    },
+    "DXINIT-GLOBAL-REFERENCED-NAMES.json": {
+      "sha256": "c65f4d98684277237269f4877e9320ae29ed1ef8110c1b17f77ad024139ef13e",
+      "bytes": 14160776
+    },
+    "DXINIT-GLOBAL-CURRENCY-BEFORE.json": {
+      "sha256": "41888f175541203017a0082b0739694c1f370c9cb26266637bfdc1f75afccc78",
+      "bytes": 3011804
+    },
+    "DXINIT-GLOBAL-CURRENCY-AFTER.json": {
+      "sha256": "41888f175541203017a0082b0739694c1f370c9cb26266637bfdc1f75afccc78",
+      "bytes": 3011804
+    },
+    "DXINIT-ALL-UNKNOWN-INPUT-PROVENANCE.json": {
+      "sha256": "ef39e66ed45f12e4cf930a55c973ae314c7e31f74841a304077919f3d877afab",
+      "bytes": 2056
+    },
+    "DXINIT-NATIVE-RECEIPT-PROVENANCE-EXTRACTION.json": {
+      "sha256": "f65fd02bf8e9c0aefc2de00030822bd32b085d4b61315d7c75b27ef934f5950d",
+      "bytes": 70445
+    },
+    "control-build.log": {
+      "sha256": "03cfa502cc186d0582959b4a4e825904f355cd478224f0a4c151d235912646f8",
+      "bytes": 1700
+    },
+    "candidate-build.log": {
+      "sha256": "b6bde10f0e02f2bfd95f6646ca45e87315ac3f6c0eec15174fe6714b315e2a5e",
+      "bytes": 2181
+    },
+    "candidate-post-eh-build.log": {
+      "sha256": "72e5920a1e18ccf53281ade48dd09e6b025cc893697fc82bfa6ee42fcdabaefa",
+      "bytes": 585
+    },
+    "eh-first-candidate/report.json": {
+      "sha256": "383b386f31aece989b0b4300048fa18a5eb7535e9855c2ebadc9598f80c9a0d4",
+      "bytes": 5420
+    },
+    "eh-native-fix.log": {
+      "sha256": "c32c8573d03b6e0de4a5012ee7f1e69d686989e398516042254f43cf5ad24aa3",
+      "bytes": 1404
+    },
+    "eh-postfix/report.json": {
+      "sha256": "195a7e2fa2f4c306f2f3d5f0a11d39344b7014a0de321425c72f3963d5be4d7f",
+      "bytes": 5198
+    },
+    "data-bool-native.log": {
+      "sha256": "1c7a8e0529cd736e763b4ddbf08d71e4dddcd29d74119fab93cbdc695ba9bddb",
+      "bytes": 273
+    },
+    "data-thread-native.log": {
+      "sha256": "70ffdc6248b1b4ac84abd9ac8c43be47c4ca81762fa97c5d1d93545d09963398",
+      "bytes": 280
+    },
+    "retire-bool-native.log": {
+      "sha256": "0d02fcbf17c915bdb15aaac6713bff960d6628c3850f8e9af11e5d3728ff170d",
+      "bytes": 76
+    },
+    "retire-thread-native.log": {
+      "sha256": "51d47e507b3e29fc116644a756c461524d67d0945ee34f398e237f39d27e6b5e",
+      "bytes": 78
+    },
+    "fdu-staged.log": {
+      "sha256": "7b688da48c87672fb96ddcc8f9c6599d7217fe8f52278c0e7789fd8ddecd56c2",
+      "bytes": 255
+    },
+    "link-before.log": {
+      "sha256": "a91645b92f5da2544396e5f52f548ddd5176ce18f0226db252aef3cb0c5e360d",
+      "bytes": 10812
+    },
+    "link-after.log": {
+      "sha256": "254ceb8cf3463f30f25232e3a5d413b508c08e8334f90534d839acbe4ac93d51",
+      "bytes": 11587
+    },
+    "DXINIT-NATIVE-LINK-COMPARISON.json": {
+      "sha256": "f3a5b6e4990fa26b6f0290b656c43b010fc6bdb08a2f39134cc15a722c244ec3",
+      "bytes": 25066
+    },
+    "independent-review/HANDOFF.md": {
+      "sha256": "da680a701b56b36adecd01affe8947dadb4b0bcd77f6715596077977439db0ed",
+      "bytes": 9392
+    },
+    "independent-review/MANIFEST.json": {
+      "sha256": "7478bfcf16130deb2d71427c898ba0eece46949b2c53e9a5e1c4c9df295f81e8",
+      "bytes": 11167
+    },
+    "independent-review/RESULT.json": {
+      "sha256": "fd7caaba937af175f5968265d71a1c112be894ad9f79520719df4df697f5ea69",
+      "bytes": 505782
+    }
+  }
+}

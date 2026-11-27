@@ -1,0 +1,394 @@
+{
+  "source": "game/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp",
+  "source_sha256": "fd0e3d9b4ef4ea31d0831932bddbe144c72b2d1cd99b4b49b83b012836319a1b",
+  "normal_object_sha256": "3180d53ce02126451962778a0eb0275498802e52559a872b554d3b5a45186424",
+  "original_actual_native_compiler_argv_and_source_flags_preserved": true,
+  "native_current_source_dependency_receipts_pass": true,
+  "no_header_or_include_edit": true,
+  "historical_host_environment_limit": {
+    "control_entire_host_environment_sha256": "506da66b910d4339b26b8ec393f77eefe1fcd9954ddf4a9c7cc4fb28e52ef18f",
+    "now_entire_host_environment_sha256": "3a7b5c03a834c598c0ecec724cba7a4e0085534dbb51af72ae64981b3ee7417a",
+    "full_historical_host_environment_equal_proved": false,
+    "limitation": "Original full ENV values were not captured; original hash-refusal preserved. Actual native argv is identical, native dependency/currentness passes. BUILD_POOL is scheduling by tools/build.py2941/3060, not a compiler flag. No arbitrary ENV filtering was used.",
+    "actual_current_compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515",
+    "actual_current_generated_toolchain_environment_hashes": {
+      "INCLUDE": "58c7b67b3bf0310432e42f12c51251f4d4c17c4a3d871bab05e9217eb9faf4bd",
+      "LIB": "01e982c6847e4bdf815a725fddf2ffd7ef197aa07f2dcde51dd952e19a3ca845",
+      "PATH": "363c5f1854bfb09f41d26fc6d602e3c11768f350c2941759e0b8b5750331d117"
+    }
+  },
+  "preexisting_runtime_FPO_COMDAT_directive_sections_exact": [
+    {
+      "before_section": 1,
+      "after_section": 1,
+      "name": ".drectve",
+      "bytes": 44,
+      "externs": []
+    },
+    {
+      "before_section": 3,
+      "after_section": 4,
+      "name": ".text",
+      "bytes": 3,
+      "externs": [
+        "?getNonOverloadedPointer@BfmeOverrideView@@QBEPAVOverridable@@XZ"
+      ]
+    },
+    {
+      "before_section": 4,
+      "after_section": 5,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 5,
+      "after_section": 6,
+      "name": ".text",
+      "bytes": 4,
+      "externs": [
+        "?getTemplate@BfmeDrawableView@@QBEPAVOverridable@@XZ"
+      ]
+    },
+    {
+      "before_section": 6,
+      "after_section": 7,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 7,
+      "after_section": 8,
+      "name": ".text",
+      "bytes": 20,
+      "externs": [
+        "??0BfmeDecalInfo@@QAE@XZ"
+      ]
+    },
+    {
+      "before_section": 8,
+      "after_section": 9,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 9,
+      "after_section": 10,
+      "name": ".text",
+      "bytes": 10,
+      "externs": [
+        "?enableShadowRender@Shadow@@QAEX_N@Z"
+      ]
+    },
+    {
+      "before_section": 10,
+      "after_section": 11,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 11,
+      "after_section": 12,
+      "name": ".text",
+      "bytes": 6,
+      "externs": []
+    },
+    {
+      "before_section": 12,
+      "after_section": 13,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 13,
+      "after_section": 14,
+      "name": ".text",
+      "bytes": 6,
+      "externs": []
+    },
+    {
+      "before_section": 14,
+      "after_section": 15,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    },
+    {
+      "before_section": 15,
+      "after_section": 16,
+      "name": ".text",
+      "bytes": 294,
+      "externs": [
+        "?setTerrainDecal@W3DModelDraw@@UAEXW4TerrainDecalType@@@Z"
+      ]
+    },
+    {
+      "before_section": 16,
+      "after_section": 17,
+      "name": ".debug$F",
+      "bytes": 16,
+      "externs": []
+    }
+  ],
+  "section_ordinal_mapping_only": true,
+  "new_functions": 0,
+  "new_weak": 0,
+  "new_CRT_initializers": 0,
+  "new_runtime_data_sections": [
+    {
+      "number": 3,
+      "name": ".rdata",
+      "size": 120,
+      "flags": 1076887616,
+      "body": "5445525241494e5f444543414c5f44454d4f52414c495a45445f4f42534f4c45544500004558486f726465004558486f7264655f555000004558486f72646542000000004558486f726465425f55500045584a756e6b43726174650000000000000000000000000000000000000000000000000000000000",
+      "definitions": [
+        [
+          ".rdata",
+          0,
+          0,
+          3
+        ],
+        [
+          "?g_011236A0@@3QBDB",
+          80,
+          0,
+          2
+        ],
+        [
+          "?g_011236B0@@3QBDB",
+          68,
+          0,
+          2
+        ],
+        [
+          "?g_011236C0@@3QBDB",
+          56,
+          0,
+          2
+        ],
+        [
+          "?g_011236CC@@3QBDB",
+          44,
+          0,
+          2
+        ],
+        [
+          "?g_011236DC@@3QBDB",
+          36,
+          0,
+          2
+        ],
+        [
+          "?g_011236E8@@3QBDB",
+          0,
+          0,
+          2
+        ],
+        [
+          "?g_012BB604@@3QBQBDB",
+          92,
+          0,
+          2
+        ]
+      ],
+      "relocations": [
+        [
+          92,
+          6,
+          "?g_011236E8@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          96,
+          6,
+          "?g_011236DC@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          100,
+          6,
+          "?g_011236CC@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          104,
+          6,
+          "?g_011236C0@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          108,
+          6,
+          "?g_011236B0@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          112,
+          6,
+          "?g_011236A0@@3QBDB",
+          2,
+          0,
+          null
+        ],
+        [
+          116,
+          6,
+          "?g_011236B0@@3QBDB",
+          2,
+          0,
+          null
+        ]
+      ],
+      "COMDAT_selection": 0,
+      "associative_parent": null
+    }
+  ],
+  "new_datum_name": "?g_012BB604@@3QBQBDB",
+  "new_datum_storage": 2,
+  "new_datum_size": 28,
+  "elements": [
+    {
+      "index": 0,
+      "name": "?g_011236E8@@3QBDB",
+      "section": 3,
+      "value": 0,
+      "text": "TERRAIN_DECAL_DEMORALIZED_OBSOLETE",
+      "OriginalVA": "0x11236e8"
+    },
+    {
+      "index": 1,
+      "name": "?g_011236DC@@3QBDB",
+      "section": 3,
+      "value": 36,
+      "text": "EXHorde",
+      "OriginalVA": "0x11236dc"
+    },
+    {
+      "index": 2,
+      "name": "?g_011236CC@@3QBDB",
+      "section": 3,
+      "value": 44,
+      "text": "EXHorde_UP",
+      "OriginalVA": "0x11236cc"
+    },
+    {
+      "index": 3,
+      "name": "?g_011236C0@@3QBDB",
+      "section": 3,
+      "value": 56,
+      "text": "EXHordeB",
+      "OriginalVA": "0x11236c0"
+    },
+    {
+      "index": 4,
+      "name": "?g_011236B0@@3QBDB",
+      "section": 3,
+      "value": 68,
+      "text": "EXHordeB_UP",
+      "OriginalVA": "0x11236b0"
+    },
+    {
+      "index": 5,
+      "name": "?g_011236A0@@3QBDB",
+      "section": 3,
+      "value": 80,
+      "text": "EXJunkCrate",
+      "OriginalVA": "0x11236a0"
+    },
+    {
+      "index": 6,
+      "name": "?g_011236B0@@3QBDB",
+      "section": 3,
+      "value": 68,
+      "text": "EXHordeB_UP",
+      "OriginalVA": "0x11236b0"
+    }
+  ],
+  "literal_alias_4_and_6_identical": true,
+  "typed_leaf_data": [
+    {
+      "va": "0x011236E8",
+      "rva": "0x00D236E8",
+      "size": 35,
+      "source_name": "g_011236E8",
+      "text": "TERRAIN_DECAL_DEMORALIZED_OBSOLETE",
+      "original_sha256": "48a55688d1380b96fdd6d382922bfcc47ea0c03b29a8e3bdfd24f649574d75fc",
+      "data_row_overlap": false
+    },
+    {
+      "va": "0x011236DC",
+      "rva": "0x00D236DC",
+      "size": 8,
+      "source_name": "g_011236DC",
+      "text": "EXHorde",
+      "original_sha256": "bd14089099ceb9e27bc4dbbf638cfbace6b91eb2e9575ffc39b1f23e718f36fe",
+      "data_row_overlap": false
+    },
+    {
+      "va": "0x011236CC",
+      "rva": "0x00D236CC",
+      "size": 11,
+      "source_name": "g_011236CC",
+      "text": "EXHorde_UP",
+      "original_sha256": "7bcc1ee62e0713209842625afb204f8091795a1fdc60ba5246ddd804fc15ce6d",
+      "data_row_overlap": false
+    },
+    {
+      "va": "0x011236C0",
+      "rva": "0x00D236C0",
+      "size": 9,
+      "source_name": "g_011236C0",
+      "text": "EXHordeB",
+      "original_sha256": "be16ee937118a7f7587d6d0a7a4b37833ba76d6ba980e5c45d7ea6355b45dc84",
+      "data_row_overlap": false
+    },
+    {
+      "va": "0x011236B0",
+      "rva": "0x00D236B0",
+      "size": 12,
+      "source_name": "g_011236B0",
+      "text": "EXHordeB_UP",
+      "original_sha256": "7fc059699f33407e17fbbf20f937b65f1f6cc9a8c4ec5e26d1a0afddd3ff9b04",
+      "data_row_overlap": false
+    },
+    {
+      "va": "0x011236A0",
+      "rva": "0x00D236A0",
+      "size": 12,
+      "source_name": "g_011236A0",
+      "text": "EXJunkCrate",
+      "original_sha256": "8a64a93ae899bb4321387c14512dec637b1636aa472bb2024772207d2b899ffa",
+      "data_row_overlap": false
+    }
+  ],
+  "new_total_data_payload_bytes": 115,
+  "undefined_delta": {
+    "removed": [
+      "?g_012BB604@@3QBQBDB"
+    ],
+    "added": []
+  },
+  "existing_providers_unchanged": {
+    "game/GameEngine/Source/GameLogic/Object/Object.cpp": "9eabbec5d56ff257348506a9e38333ca94462c8a478f60716dd262fce8caf6f3",
+    "game/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadow.cpp": "20c56178f9368114d020eaa9e78e0a4ff1be7615dcb622b8231dab35371ee4d1"
+  },
+  "code_extent": 294,
+  "native_LINKED_counter": 293,
+  "new_exact_code_union_bytes": 0,
+  "normal_family_control": "220/220 functions,8 old data,116DIR32",
+  "runtime_or_full_image_link_proved": false
+}

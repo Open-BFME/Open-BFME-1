@@ -1,0 +1,111 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv1803.cpp",
+  "candidate_source_sha256": "902190eede09d1c4f60b1fee0f8a4a361962e302ac454d0460e87655d9d3acc0",
+  "private_compiler_trials": 1,
+  "source_variant_count": 1,
+  "production_source_still_original": true,
+  "source_46_raw_bytes_preserved": true,
+  "only_runtime_relocation_delta": [
+    {
+      "section": 3,
+      "offset": 30,
+      "kind": 20
+    }
+  ],
+  "old_callee": "?bfmeBaseInitZQ@BfmeOwnerZQ@@QAEXPAX000HH@Z",
+  "new_callee": "??0Rva006D51B0TextureBase@@QAE@IIIIII@Z",
+  "full_runtime_FPO_sections_identical_except_bound_name": true,
+  "no_extra_code_data_vtable_ctor_dtor_CRT_SafeSEH_or_weak_emission": true,
+  "section_order_flags_bodies_relocations_COMDAT_FPO_DefaultLib_preserved": true,
+  "before_externals": {
+    "definitions": [
+      [
+        "?bfmeInitZQ@BfmeOwnerZQ@@QAEPAV1@PAX000@Z",
+        0,
+        32,
+        2
+      ]
+    ],
+    "undefined": [
+      "?bfmeBaseInitZQ@BfmeOwnerZQ@@QAEXPAX000HH@Z",
+      "?g_BfmeVftZQ@@3PAPAXA"
+    ],
+    "weak": [],
+    "comdat": {
+      "1": 0,
+      "2": 0,
+      "3": 1,
+      "4": 5
+    }
+  },
+  "candidate_externals": {
+    "definitions": [
+      [
+        "?bfmeInitZQ@BfmeOwnerZQ@@QAEPAV1@PAX000@Z",
+        0,
+        32,
+        2
+      ]
+    ],
+    "undefined": [
+      "??0Rva006D51B0TextureBase@@QAE@IIIIII@Z",
+      "?g_BfmeVftZQ@@3PAPAXA"
+    ],
+    "weak": [],
+    "comdat": {
+      "1": 0,
+      "2": 0,
+      "3": 1,
+      "4": 5
+    }
+  },
+  "whole_three_source_control_rows": [
+    {
+      "name": "??0Rva006D51B0@@QAE@II@Z",
+      "rva": "0x006D51B0",
+      "extent": "163",
+      "strict": true
+    },
+    {
+      "name": "??0Rva006D51B0TextureBase@@QAE@IIIIII@Z",
+      "rva": "0x0090CF90",
+      "extent": "250",
+      "strict": true
+    },
+    {
+      "name": "??0Rva006D5280@@QAE@III@Z",
+      "rva": "0x006D5280",
+      "extent": "163",
+      "strict": true
+    },
+    {
+      "name": "?bfmeInitZQ@BfmeOwnerZQ@@QAEPAV1@PAX000@Z",
+      "rva": "0x006D4620",
+      "extent": "46",
+      "strict": true
+    }
+  ],
+  "provider_inputs": {
+    "game/GameEngine/Source/Common/BfmeConv1803.cpp": {
+      "source_sha256": "95b1a5fc746ddc23c9729bc6113d09fefc3625a20ff7eec24091263b7d841aa6",
+      "object_sha256": "8fa0c2a59c02b4c1ea91f559935c1c9aa64022735526c6de5844e340337b2e4f"
+    },
+    "game/GameEngine/Source/Common/Bfme/Rva006D51B0Ctor.cpp": {
+      "source_sha256": "0a9ef661723c3d73c84aa0cd5883fc5532f74a9960e48beb35a972a8fbea2051",
+      "object_sha256": "1fcaf92c0ac9bae44ce376e2367ec520f34fa5ee80f894430749eb2fe34c6691"
+    },
+    "game/GameEngine/Source/Common/Bfme/Rva006D5280Ctor.cpp": {
+      "source_sha256": "b0e63078e4790acf189ca6b06319bbd2a35dd8e11f65452c658e667cd224b54f",
+      "object_sha256": "cc94b054b39d0c00f8ccbedb02b45da2f93e53a7b816e208ba2b0f4ffc731c95"
+    }
+  },
+  "data_owner_source": "game/GameEngine/Source/Common/Bfme/Rva006D5280Ctor.cpp",
+  "data_name": "?g_BfmeVftZQ@@3PAPAXA",
+  "data_original_va": "0x0111DFB0",
+  "data_extent": 68,
+  "original_pointer_slots": 17,
+  "data_native_gate": "texture-whole-scope-control-build.log:1/1 data and7DIR32 PASS",
+  "canonical_header_review": "texture.h has a different unreconciled class/layout; no Rva006D51B0TextureBase header exists",
+  "new_exact_coverage_or_body_bytes": 0,
+  "global_census_link_or_runtime_claim": false
+}

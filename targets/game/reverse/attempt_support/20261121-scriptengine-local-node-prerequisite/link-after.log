@@ -1,0 +1,7 @@
+Compile: 0 of 1 TU(s) (deps-cache: 1 current)
+Compile: 0 of 1 TU(s) (deps-cache: 1 current)
+Lib members: 159 extracted from 3 archive(s)
+game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp: LINKED PREVIEW UNKNOWN  LINKED 942 -> 942 bytes (census 2026-11-21 10:53 at 42237e2367; file's own bytes 1,049)
+  LINKED PREVIEW UNKNOWN — selection census stale for: ??0?$StringBase@D@@AAE@ABV0@@Z
+game/GameEngine/Source/Common/Rva00339A80ParticleSystemSinkStart.cpp: LINKS  LINKED 107 -> 0 bytes (census 2026-11-21 10:53 at 42237e2367; file's own bytes 0)
+link_check: 1 of 2 link cleanly; LINKED 1,049 -> 942 bytes (946.1s)

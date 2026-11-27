@@ -1,0 +1,13 @@
+{
+  "checked_utc": "2026-11-24T18:49:44.741047+00:00",
+  "native_load_binary_pass": true,
+  "cache_sha256": "7a88cb6f288fe8f3407161488c317b2a58727c087c5478aa853f901ec350f27c",
+  "reference_head": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+  "records": 790847,
+  "source_input_receipt_entry_count": 16424,
+  "source_input_receipt_canonical_sha256": "f39d44aafa88b239c48135703f9d2626773ec1d0a3519dc3ad62ad9da535ee0e",
+  "full_private_receipt": "W:\\OpenBFME\\diagnostics\\one-per-project-20261124-185505\\bfme1\\REFERENCE-REFRESH-FINAL.json",
+  "full_private_receipt_sha256": "4cfe1e7aac26c1dc29997e87882ec26a42b9a7dd4392332cbc2656ec8ba8edba",
+  "full_private_receipt_bytes": 3351649,
+  "summary_is_not_a_substitute_for_native_load_binary_validation": true
+}

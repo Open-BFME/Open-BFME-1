@@ -20,7 +20,12 @@ extern "C" __declspec(dllimport) int __cdecl _control87(void);
 extern "C" __declspec(dllimport) int __cdecl _copysign(void);
 extern "C" __declspec(dllimport) int __cdecl _ecvt(void);
 extern "C" __declspec(dllimport) int __cdecl _errno(void);
-extern "C" __declspec(dllimport) int __cdecl _except_handler3(void);
+// _except_handler3 is the four-argument x86 SEH dispatcher registered by
+// the original __SEH_prolog; excpt.h supplies its public disposition and
+// exception/context types. The strong IAT cell is owned by msvcrt.lib.
+#include <excpt.h>
+extern "C" EXCEPTION_DISPOSITION (__cdecl *_imp___except_handler3)(
+    _EXCEPTION_RECORD *, void *, _CONTEXT *, void *);
 extern "C" __declspec(dllimport) int __cdecl _exit(void);
 extern "C" __declspec(dllimport) int __cdecl _fcvt(void);
 extern "C" __declspec(dllimport) int __cdecl _fpreset(void);
@@ -107,7 +112,11 @@ extern "C" __declspec(dllimport) int __cdecl wcsstr(void);
 extern "C" __declspec(dllimport) int __cdecl wcstok(void);
 
 int Rva009F6C40_resetstkoflw(void) { return _resetstkoflw(); }
-int Rva009F6C50_except_handler3(void) { return _except_handler3(); }
+extern "C" EXCEPTION_DISPOSITION __cdecl _except_handler3(
+    _EXCEPTION_RECORD *record, void *frame, _CONTEXT *context, void *dispatcher)
+{
+    return _imp___except_handler3(record, frame, context, dispatcher);
+}
 int Rva009F6C9Ewcscpy(void) { return wcscpy(); }
 int Rva009F6DDCstrpbrk(void) { return strpbrk(); }
 int Rva009F6DF4_stat(void) { return _stat(); }

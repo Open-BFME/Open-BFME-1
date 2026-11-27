@@ -26,7 +26,9 @@ Verification (build.py, per source and in the full gate), per row:
             in the build), agreeing with the mangled scalar type when there is
             one, and no larger than the symbol's allocation extent (to the next
             symbol or the section end, padding included), which alone proves
-            nothing; a COMMON symbol's own size; otherwise refused.
+            nothing; a compiler vftable's complete dedicated read-only COMDAT
+            with one DIR32 word per slot; a COMMON symbol's own size; otherwise
+            refused.
   bytes     initialised: equal to retail over the extent outside relocation
             fields, and every relocation's target (symbol + in-place addend)
             equal to retail's pointer there, the target's address coming from
@@ -440,6 +442,38 @@ def compiled_arithmetic(source, symbol):
                         f" {shape}")
 
 
+def _vftable_size(sec, symbols, sym):
+    """A compiler vftable owns its read-only COMDAT: one DIR32 word per slot.
+
+    Unlike an ordinary datum, this symbol cannot be named in a sizeof probe.
+    Accept only a complete, dedicated section starting at the vftable itself;
+    an RTTI prefix, another named definition, padding or missing raw data does
+    not prove its extent. Pointer addends need not be zero: verify_row still
+    checks every initializer byte and relocation target against retail.
+    """
+    flags, size, body = sec["flags"], sec["size"], sec["body"]
+    required = 0x40000000 | 0x1000 | 0x40  # READ | COMDAT | INITIALIZED_DATA
+    forbidden = 0x80000000 | 0x20000000 | 0x20 | UNINIT  # WRITE | EXECUTE | CODE | BSS
+    if (not re.fullmatch(r"\?\?_7.+@6B.*@", sym["name"])
+            or sym["storage"] != EXTERNAL or sym["type"] != 0 or sym["value"] != 0
+            or flags & required != required or flags & forbidden
+            or body is None or size <= 0 or size % 4 or len(body) != size):
+        return None
+    for other in symbols.values():
+        if other is sym or other["section"] != sym["section"]:
+            continue
+        # The actual COFF section symbol is metadata, not a second datum.
+        if (other["name"] == sec["name"] and other["storage"] == STATIC
+                and other["type"] == 0 and other["value"] == 0):
+            continue
+        return None
+    relocs = sec["relocs"]
+    if (sorted(where for where, _, _ in relocs) != list(range(0, size, 4))
+            or any(kind != DIR32 or index not in symbols for _, index, kind in relocs)):
+        return None
+    return size, "the vftable's complete dedicated COFF COMDAT section size"
+
+
 def symbol_size(sections, symbols, sym, source=None, sizer=compiled_size):
     """(proven sizes, what proves them) for a defined or COMMON data symbol.
 
@@ -448,8 +482,9 @@ def symbol_size(sections, symbols, sym, source=None, sizer=compiled_size):
     itself says: sizeof(symbol) in a probe TU compiled with the source's own
     command (`sizer`), which resolves namespaces, typedefs, packing and array
     bounds as the real build does; it must fit the extent and agree with the
-    mangled scalar type when there is one. A COMMON symbol carries its own size.
-    Anything else is refused."""
+    mangled scalar type when there is one. A compiler vftable instead needs a
+    complete, dedicated read-only COMDAT with one relocated word per slot; a
+    COMMON symbol carries its own size. Anything else is refused."""
     _, rl = _tools()
     if sym["section"] == 0:  # COMMON: the value is the size
         return {sym["value"]}, "COMMON symbol size"
@@ -460,7 +495,8 @@ def symbol_size(sections, symbols, sym, source=None, sizer=compiled_size):
     extent = (later[0] if later else sec["size"]) - sym["value"]
     if source is None:
         return set(), f"no source to evaluate sizeof in (allocation extent {extent} is not a size)"
-    size, how = sizer(source, sym["name"])
+    table = _vftable_size(sec, symbols, sym)
+    size, how = table if table is not None else sizer(source, sym["name"])
     if size is None:
         return set(), how
     scalar = rl.mangled_scalar_size(sym["name"])

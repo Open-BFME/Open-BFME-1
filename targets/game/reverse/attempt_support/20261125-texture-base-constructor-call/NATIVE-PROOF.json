@@ -1,0 +1,17 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv1803.cpp",
+  "source_sha256": "902190eede09d1c4f60b1fee0f8a4a361962e302ac454d0460e87655d9d3acc0",
+  "normal_object_sha256": "5194d3676d27ce72c049bdb814087636b249bbea16eed69f4a3d72ecdf753187",
+  "private_trial_object_sha256": "c3bcbe488cbd0e4164a9a364495595b935125981f74c873da39d8776e61514b1",
+  "normal_profile_and_actual_dependencies_unchanged": true,
+  "normal_runtime_FPO_graph_identical_to_the_one_verified_private_candidate": true,
+  "only_runtime_change_from_original": "REL32 offset30 old synthetic initializer -> already owned90CF90 constructor",
+  "source_identity_extent_and_46_raw_bytes_preserved": true,
+  "extra_function_data_table_EH_weak_COMDAT_CRT_FPO_emissions": 0,
+  "existing_providers_source_and_objects_unchanged": true,
+  "native_whole_family_build": "4/4 normal function rows +1/1 data +7DIR32, BodyGuard0",
+  "full_global_unreferenced_sweep_required": false,
+  "reason_no_global_copy_sweep": "no new definition, emission or duplicate; only an existing owned callee changes",
+  "global_census_image_link_or_runtime_claim": false,
+  "new_exact_body_bytes": 0
+}

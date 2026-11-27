@@ -1,0 +1,13 @@
+# NetConn state and idle-deadline scalar owners
+
+Sicher im geprüften Umfang: four existing scalar declarations in `game/Libraries/Source/DirtySock/Y2NetConn.cpp` become ordinary zero definitions. Original Startup/Status/Shutdown accesses bind the three state words at VA0130A590/594/598; the pump's DWORD comparison, unsigned `jae` and second-tick+5 store bind deadline VA0130A850. All four original writable cells initially contain four zero bytes. Three adjacent state words and a later deadline do not establish a historical aggregate or EA variable names; the existing separate scalar types/names are preserved.
+
+Normal add_data_match admits four rows through actual sizeof4/allocation4/loaderzero checks. All13 existing function rows (1,613 summed extent bytes),71DIR32,FDU/CSV and body gates pass. The complete physical runtime graph grows5→6 through one16B writable BSS with four real EXTERNAL2 definitions at offsets0/4/8/12. All old code/data/RTC/EH/CRT/FPO/COMDAT/weak/directive payloads and six compiler-local names are exact. Eleven witnessed scalar references change their COFF binding from undefined to these actual definitions; their independent original VAs are bound by native byte/data gates. The owning source has no header includes; actual profile/dependencies are unchanged. Complete inherited host-environment equality is unproven.
+
+The native data writer also reserializes an existing hatch-register row from EOF into sorted order. An exact132,332-row multiset comparison preserves every rule, counter and allowance; zero grants/growth/removals and no manual baseline edit. The separate Node source/parked branch are unchanged.
+
+Normal scoped legacy42237 before0→0/215.0s and after0→0/220.1s, ownfiltered1,589B. The four repaired missing names disappear; ten preexisting callee/buffer/table names remain. No new LINKED bytes, current whole-program census, startup or runtime improvement is claimed.
+
+BFME2 e2e99959950e6eebfe1ced5663aa05de320afc52 `Code/Libraries/Source/DirtySock/Y2NetConn.cpp` corroborates the plain scalar definitions, at different addresses. Its matching data rows were absent; source precedent is not a verified donor data-owner result. Donor addresses/directives/interfaces/layouts are excluded. Old re_attempts:52424 was a patch-nonapplication setup failure; the current actual replacements and emitted definitions are asserted, so it is not repeated unchanged.
+
+One logical source/data task:4new matched data rows/16static bytes;0new C++/function/unique-text bytes. The [compact receipt](20261126-y2-netconn-scalar-owners.json) binds normal logs, actual original access proofs, source/object/graph/compiler context, all17claim fences and the independent review to immutable private artifact hashes.

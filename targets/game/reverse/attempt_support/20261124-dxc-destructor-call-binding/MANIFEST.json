@@ -1,0 +1,160 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+  "source_sha256": "8678c7f69536ad7aedbd328c4c1f6cbb5826378d7b9991cae9f064dfdaeb976f",
+  "functions_csv_sha256": "8e45e73667418202bf966c1fce23104f8e4e6e7d3a1f2194103df41e3a55abac",
+  "native_global_proof_sha256": "7e75ab3bac3b9d8f0dd9ed1427e600ddbf8205ef0f69632d48386e6d6732806d",
+  "private_root": "W:/OpenBFME/diagnostics/one-per-project-20261124-185505/bfme1",
+  "private_artifacts": {
+    "DXC.before.cpp.txt": {
+      "sha256": "59bf34f290deb06aaf0c81c8f6ce20553f51566e76f5c52f2bb5106fd64bf0b6",
+      "bytes": 1268
+    },
+    "DXC.after.cpp.txt": {
+      "sha256": "8678c7f69536ad7aedbd328c4c1f6cbb5826378d7b9991cae9f064dfdaeb976f",
+      "bytes": 1569
+    },
+    "dxc-before.obj": {
+      "sha256": "d5e71eb99203ba5a407c7fd4ea64da7a04fb5a47a2b7f19d7718074d811b3a20",
+      "bytes": 1827
+    },
+    "dxc-after.obj": {
+      "sha256": "5303e5a30567b0107b3fb9842577f988534fd2c6b980275164c4f9f9bc5ddfec",
+      "bytes": 2128
+    },
+    "dxc-before.deps.json": {
+      "sha256": "8acc10b9d6f7994617ea39601aaa071dc980ff830d8f8ef7f3b7a2bbb1535511",
+      "bytes": 1627
+    },
+    "dxc-after.deps.json": {
+      "sha256": "9e6855ffe4a3b61a477dd99aac6f97377885dfa98fa4ce42156a99426965b387",
+      "bytes": 1627
+    },
+    "DXC-GRAPH-CONTROL.json": {
+      "sha256": "a714244f7f9ea123422a3f44ed177c32265d3bbf2a7c477cab57e99033e5cc60",
+      "bytes": 17112
+    },
+    "DXC-DELETING-COPY-POLICY.json": {
+      "sha256": "fd5d5d3e4b430df4074a720bdc1d884876c68651d5efb2376fb32397ee02a2c6",
+      "bytes": 1587
+    },
+    "DXC-GLOBAL-CURRENCY-BEFORE.json": {
+      "sha256": "41888f175541203017a0082b0739694c1f370c9cb26266637bfdc1f75afccc78",
+      "bytes": 3011804
+    },
+    "DXC-GLOBAL-CURRENCY-AFTER.json": {
+      "sha256": "41888f175541203017a0082b0739694c1f370c9cb26266637bfdc1f75afccc78",
+      "bytes": 3011804
+    },
+    "DXC-GLOBAL-INPUTS-BEFORE.json": {
+      "sha256": "d56e8498c4c4fbcb6fc5f36ed903678196757727c1db941911bc03bb6deaf374",
+      "bytes": 5603916
+    },
+    "DXC-GLOBAL-OBJECTS.json": {
+      "sha256": "e96ed47ec207cfc4985e5ecc219bc2ed509a6b351152c7d82acba8c95bbbbd05",
+      "bytes": 4361019
+    },
+    "DXC-GLOBAL-REFERENCED-NAMES.json": {
+      "sha256": "54bf40f4b7228591bc58f65599c1735ab590dd26cff00988c9792ffeff1cea5d",
+      "bytes": 14160836
+    },
+    "dxc-global-native-references.py": {
+      "sha256": "6a06b845ba81c6a387227b9448c9f1e4f71be4b22c8601b54e37cf3a02479eef",
+      "bytes": 7953
+    },
+    "dxc-global-native-references.log": {
+      "sha256": "788a7a081331b73b1e7779ceeac8b3670c33275195dbd0382aa31684900c39e1",
+      "bytes": 1292
+    },
+    "dxc-global-native-references-v2.py": {
+      "sha256": "9f2644bc6ee14628b94b356c9d2cad4d0147b02e7dba4cb6cfc8d61269c1358e",
+      "bytes": 10207
+    },
+    "dxc-global-native-references-v2.log": {
+      "sha256": "ef686aa45010b017838948941c8a7ab562b527fd71a9a09ce8e6f97398b2cc5a",
+      "bytes": 442
+    },
+    "DXC-NATIVE-RECEIPT-PROVENANCE-EXTRACTION.json": {
+      "sha256": "f65fd02bf8e9c0aefc2de00030822bd32b085d4b61315d7c75b27ef934f5950d",
+      "bytes": 70445
+    },
+    "DXC-ALL-UNKNOWN-INPUT-PROVENANCE.json": {
+      "sha256": "74012cd7f52690895965559fe1b0e7774d0d9f12f2be39fe81853a28baba1efb",
+      "bytes": 5409
+    },
+    "DXC-PROVENANCE-REFUSAL-DIAGNOSIS.json": {
+      "sha256": "250769a8a97e171406826add5d2ebbc6176178d9bd90bc7e4b316b39cb495ecc",
+      "bytes": 21961
+    },
+    "global-first-refusal/driver.py.txt": {
+      "sha256": "6a06b845ba81c6a387227b9448c9f1e4f71be4b22c8601b54e37cf3a02479eef",
+      "bytes": 7953
+    },
+    "global-first-refusal/refusal.log": {
+      "sha256": "788a7a081331b73b1e7779ceeac8b3670c33275195dbd0382aa31684900c39e1",
+      "bytes": 1292
+    },
+    "global-first-refusal/CURRENCY-BEFORE.json": {
+      "sha256": "41888f175541203017a0082b0739694c1f370c9cb26266637bfdc1f75afccc78",
+      "bytes": 3011804
+    },
+    "account-dxc-whole-objects.py": {
+      "sha256": "c84cf8774638353e068d7e79f797ada2f05e77fc124fb76aa3a3b6fcfc639d91",
+      "bytes": 6929
+    },
+    "dxc-whole-object-accounting.log": {
+      "sha256": "1b7517110c775fb5de40ddc437e2e7d945a497d4b44438d9abfa8a7d25718869",
+      "bytes": 113
+    },
+    "dxc-link-before.log": {
+      "sha256": "39b0d0b89c0cf6c36a94745f9b150f5fecdc98e410ae706883dffce3b9f64ef0",
+      "bytes": 349
+    },
+    "dxc-link-after-refresh.log": {
+      "sha256": "f916a14955b047c8dd31becd767da68ae0bc85687ad962e7f1bf7c5e1693b32f",
+      "bytes": 683
+    },
+    "dxc-original-caller-dtor.log": {
+      "sha256": "477d2052135d6ff2e155837c5cf7ed66cdb884cea0457895f09453e0afafa079",
+      "bytes": 1555
+    },
+    "dxc-base-dtor-eh.log": {
+      "sha256": "d40b92e494003c2041bb3761cfa32377d75dcef5b9fab691d19c92f10f4fc0b8",
+      "bytes": 1810
+    },
+    "dxc-eni-parent-eh.log": {
+      "sha256": "517769aa6d49c7673a6b3f0a4be57ba1d68cad52bbb0d076fc603753da6c069a",
+      "bytes": 887
+    },
+    "dxc-normal-candidate-build.log": {
+      "sha256": "4e9c21d2cfc09163dffc6dcfc57602aa26f05069dad0c2be2cafd69cb476a289",
+      "bytes": 412
+    },
+    "dxc-real-provider-build.log": {
+      "sha256": "95cd63b774c775b07269724ffe2247134509945e090327e98fbf46718f4f5ef6",
+      "bytes": 459
+    },
+    "dxc-fdu.log": {
+      "sha256": "1acbe863198593932808b39bef4a8fa157fd549415074975abe62b15992c5dae",
+      "bytes": 44
+    },
+    "REFERENCE-REFRESH-FINAL.json": {
+      "sha256": "4cfe1e7aac26c1dc29997e87882ec26a42b9a7dd4392332cbc2656ec8ba8edba",
+      "bytes": 3351649
+    }
+  },
+  "tracked_artifacts": {
+    "HANDOFF.md": "2075a384ca3063100faf9f422836cbd1f58d889e420bd1c523873baaa42a8b14",
+    "NATIVE-REFERENCES.json": "7e75ab3bac3b9d8f0dd9ed1427e600ddbf8205ef0f69632d48386e6d6732806d",
+    "OBJECT-ACCOUNTING.json": "6cbaba5b8c29d47bdc848e7696f835083d6d4b78b0d7b24715dc9be876cd8c97",
+    "REFERENCE-REFRESH.json": "0c8422bf03237ee02a8b0f1b67a885bc830921497c6a88f2945c05bf3157f096",
+    "SOURCE-PREFLIGHT.json": "fbce0d332428a9f2c5c8bb3af81b2072ef1b55e1dc5eabe64ca07dfb5a42ad08"
+  },
+  "scope": {
+    "one_source_task": true,
+    "new_body_bytes": 0,
+    "retained_extent_sum": 97,
+    "per_file_link_preview_before": 0,
+    "per_file_link_preview_after": 97,
+    "new_global_census_or_runtime_claim": false
+  }
+}

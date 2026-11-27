@@ -1,0 +1,37 @@
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <vector>
+#include "../../../Include/Common/ObjectID.h"
+
+class Object;
+
+// Declaration-only API view of the existing getAllIDs provider. No AIGroup
+// storage or BFME2 layout is assumed by this caller.
+class AIGroup
+{
+public:
+	const _STL::vector<ObjectID> &getAllIDs() const;
+};
+
+class BfmeObjectReference
+{
+public:
+	Object *resolve();
+};
+
+class GameLogic
+{
+public:
+	Object *findObjectByID(int id);
+};
+
+extern GameLogic *TheGameLogic;
+
+Object *BfmeObjectReference::resolve()
+{
+	if (this != 0) {
+		const _STL::vector<ObjectID> &ids = reinterpret_cast<const AIGroup *>(this)->getAllIDs();
+		return TheGameLogic->findObjectByID(static_cast<int>(ids.front()));
+	}
+	return 0;
+}

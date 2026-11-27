@@ -1,0 +1,104 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+    "-nologo",
+    "-dll",
+    "-noentry",
+    "-machine:x86",
+    "-opt:noref",
+    "-opt:noicf",
+    "-incremental:no",
+    "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\link\\comraise-current-cpp.dll",
+    "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\link\\comraise-current-cpp.map",
+    "-verbose:lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\objects\\ComRaise.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+    "msvcrt.lib",
+    "kernel32.lib",
+    "ole32.lib",
+    "oleaut32.lib",
+    "user32.lib",
+    "uuid.lib"
+  ],
+  "exit": 0,
+  "no_new_libraries_or_provider_sources": true,
+  "DLL_executed": false,
+  "not_game_runtime_or_full_image": true,
+  "selected_new_bodies": {
+    "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z": {
+      "va": 268439552,
+      "owner": "ComRaise.obj"
+    },
+    "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z": {
+      "va": 268439616,
+      "owner": "ComRaise.obj"
+    },
+    "??0_com_error@@QAE@ABV0@@Z": {
+      "va": 268439680,
+      "owner": "ComRaise.obj"
+    },
+    "??1_com_error@@UAE@XZ": {
+      "va": 268439744,
+      "owner": "ComRaise.obj"
+    },
+    "??_G_com_error@@UAEPAXI@Z": {
+      "va": 268439792,
+      "owner": "ComRaise.obj"
+    }
+  },
+  "placed_bodies": [
+    {
+      "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+      "size": 54,
+      "va": "0x10001000",
+      "all_placed_bytes_and_reloc_bindings_exact": true,
+      "sha256": "fc268f29e49255bca779025e1bb083dec27afd9f0a720e1fd8d96fbfcb639d1f"
+    },
+    {
+      "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+      "size": 51,
+      "va": "0x10001040",
+      "all_placed_bytes_and_reloc_bindings_exact": true,
+      "sha256": "9f28006b570bd60374e3d4b4220d94d4685727de57c1079a18b5a017ea640676"
+    },
+    {
+      "name": "??0_com_error@@QAE@ABV0@@Z",
+      "size": 50,
+      "va": "0x10001080",
+      "all_placed_bytes_and_reloc_bindings_exact": true,
+      "sha256": "6ab921ae1d11ca0e463d456f80849f6b2debcc879c9d75403add6708faaabd84"
+    },
+    {
+      "name": "??1_com_error@@UAE@XZ",
+      "size": 38,
+      "va": "0x100010c0",
+      "all_placed_bytes_and_reloc_bindings_exact": true,
+      "sha256": "89957a27d97d231d8c8a06bb5479ea0b77f2a4eaf3ba7f4b1c64b4f7ef724791"
+    },
+    {
+      "name": "??_G_com_error@@UAEPAXI@Z",
+      "size": 58,
+      "va": "0x100010f0",
+      "all_placed_bytes_and_reloc_bindings_exact": true,
+      "sha256": "b538c3ead367270aff04b9a75d2420916bb99ae64c51fd71a63f0eab3137e33f"
+    }
+  ],
+  "original_comraise_invkerr_invkprxy_comsupp_selected": false,
+  "vft_selected_same_candidate": {
+    "va": 268443724,
+    "owner": "ComRaise.obj"
+  },
+  "vft_prefix_COL_va": "0x10002140",
+  "vft_slot_G_va": "0x100010f0",
+  "vft_one_slot_same_object_G": true,
+  "DLL_sha256": "4a4360b67b59cb910d18314c07c2c47128c0545dcbc7ef2227fa607fe2172b0c",
+  "map_sha256": "93eeff3f6ff9c5de07c31d03a08a7a014b7f929d6a96eca096185f3dffbe143a",
+  "bounded_allocator_note": "This bounded recipe resolves operator delete via unchanged CRT libraries, while original game RVA881EB0 is its existing mem_ops.cpp provider. No full-game selected allocator claim; normal game/link guard remains authoritative.",
+  "all_three_normal_controls_still_current_and_unchanged": true
+}

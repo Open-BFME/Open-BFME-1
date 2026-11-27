@@ -1,0 +1,614 @@
+{
+  "fpo_before": [
+    {
+      "raw": "00000000040000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?rva00336B20Int@@YAHPBVParameter@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000050000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "??1?$StringBase@D@@AAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000050000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "??1AsciiString@@QAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000070100000000000003000d02",
+      "refs": [
+        [
+          0,
+          7,
+          "?setTimer@ScriptEngine@@IAEXPAVScriptAction@@_N1@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000000d0000000100000001000100",
+      "refs": [
+        [
+          0,
+          7,
+          "?bfmeSetTimerFloatToLong@@YAJM@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000000d0000000100000001000100",
+      "refs": [
+        [
+          0,
+          7,
+          "?bfmeTimerFloatToLong@@YAJM@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000110000000000000000000200",
+      "refs": [
+        [
+          0,
+          7,
+          "??0Rva00339A80ParticleNode@@QAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000130000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "??0AsciiString@@QAE@ABV0@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000130000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "??0AsciiString@@QAE@PBD@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000190000000000000001000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getParameter@Condition@@QAEPAVParameter@@H@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000190000000000000001000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getParameter@ScriptAction@@QAEPAVParameter@@H@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000340000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?pauseTimer@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000390000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?restartTimer@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000490000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?evaluateTimer@ScriptEngine@@QAE_NPAVCondition@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000006b0000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?Rva00339A80ParticleSystemSinkStart@@YAXXZ"
+        ]
+      ]
+    },
+    {
+      "raw": "000000008c0000000400000004003000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getStats@ScriptEngine@@QAE?AVAsciiString@@PAM00@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000a00000000000000003000c02",
+      "refs": [
+        [
+          0,
+          7,
+          "?adjustTimer@ScriptEngine@@IAEXPAVScriptAction@@_N1@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000cb0000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "?setSway@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    }
+  ],
+  "fpo_after": [
+    {
+      "raw": "00000000040000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?rva00336B20Int@@YAHPBVParameter@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000050000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "??1?$StringBase@D@@AAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000050000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "??1AsciiString@@QAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000070100000000000003000d02",
+      "refs": [
+        [
+          0,
+          7,
+          "?setTimer@ScriptEngine@@IAEXPAVScriptAction@@_N1@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000000d0000000100000001000100",
+      "refs": [
+        [
+          0,
+          7,
+          "?bfmeSetTimerFloatToLong@@YAJM@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000000d0000000100000001000100",
+      "refs": [
+        [
+          0,
+          7,
+          "?bfmeTimerFloatToLong@@YAJM@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000110000000000000000000200",
+      "refs": [
+        [
+          0,
+          7,
+          "??0Rva00339A80ParticleNode@@QAE@XZ"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000130000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "??0AsciiString@@QAE@ABV0@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000130000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "??0AsciiString@@QAE@PBD@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000190000000000000001000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getParameter@Condition@@QAEPAVParameter@@H@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000190000000000000001000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getParameter@ScriptAction@@QAEPAVParameter@@H@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000340000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?pauseTimer@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000390000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?restartTimer@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000490000000000000001000701",
+      "refs": [
+        [
+          0,
+          7,
+          "?evaluateTimer@ScriptEngine@@QAE_NPAVCondition@@@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "000000006b0000000000000000000000",
+      "refs": [
+        [
+          0,
+          7,
+          "?Rva00339A80ParticleSystemSinkStart@@YAXXZ"
+        ]
+      ]
+    },
+    {
+      "raw": "000000008c0000000400000004003000",
+      "refs": [
+        [
+          0,
+          7,
+          "?getStats@ScriptEngine@@QAE?AVAsciiString@@PAM00@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000a00000000000000003000c02",
+      "refs": [
+        [
+          0,
+          7,
+          "?adjustTimer@ScriptEngine@@IAEXPAVScriptAction@@_N1@Z"
+        ]
+      ]
+    },
+    {
+      "raw": "00000000cb0000000000000001000800",
+      "refs": [
+        [
+          0,
+          7,
+          "?setSway@ScriptEngine@@IAEXPAVScriptAction@@@Z"
+        ]
+      ]
+    }
+  ],
+  "whole_package_fpo_equal_with_native_state_bound_local_label_roles": true,
+  "only_fpo_label_correspondence_is_native_EH_state_binding": true,
+  "helper_and_ctor_transfer": [
+    {
+      "symbol": "?Rva00339A80ParticleSystemSinkStart@@YAXXZ",
+      "size_control": 107,
+      "size_candidate": 107,
+      "raw_bytes_equal": true,
+      "relocation_referents_equal_except_actual_node_linkage": true,
+      "control_relocations": [
+        [
+          2,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          11,
+          6,
+          "?g_rva00339a80Node@@3PAVRva00339A80ParticleNode@@A"
+        ],
+        [
+          22,
+          20,
+          "??2@YAPAXI@Z"
+        ],
+        [
+          35,
+          6,
+          "??_7Rva0033C070TailDtor@@6B@"
+        ],
+        [
+          56,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          64,
+          6,
+          "?g_rva00339a80Node@@3PAVRva00339A80ParticleNode@@A"
+        ],
+        [
+          73,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          79,
+          6,
+          "?TheParticleSystemManager@@3PAVParticleSystemManager@@A"
+        ],
+        [
+          97,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ]
+      ],
+      "candidate_relocations": [
+        [
+          2,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          11,
+          6,
+          "_g_rva00339a80Node"
+        ],
+        [
+          22,
+          20,
+          "??2@YAPAXI@Z"
+        ],
+        [
+          35,
+          6,
+          "??_7Rva0033C070TailDtor@@6B@"
+        ],
+        [
+          56,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          64,
+          6,
+          "_g_rva00339a80Node"
+        ],
+        [
+          73,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ],
+        [
+          79,
+          6,
+          "?TheParticleSystemManager@@3PAVParticleSystemManager@@A"
+        ],
+        [
+          97,
+          6,
+          "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A"
+        ]
+      ],
+      "correspondence_limit": "only the independently evidenced external-to-local node transition, not a data alias/pin"
+    },
+    {
+      "symbol": "??0Rva00339A80ParticleNode@@QAE@XZ",
+      "size_control": 17,
+      "size_candidate": 17,
+      "raw_bytes_equal": true,
+      "relocation_referents_equal_except_actual_node_linkage": true,
+      "control_relocations": [
+        [
+          6,
+          6,
+          "??_7Rva0033C070TailDtor@@6B@"
+        ]
+      ],
+      "candidate_relocations": [
+        [
+          6,
+          6,
+          "??_7Rva0033C070TailDtor@@6B@"
+        ]
+      ],
+      "correspondence_limit": "only the independently evidenced external-to-local node transition, not a data alias/pin"
+    }
+  ],
+  "data_symbols": [
+    {
+      "role": "proper-control",
+      "name": "?TheScriptDebugWindowDLL@@3PAXA",
+      "storage": 2,
+      "section": ".bss",
+      "value": 4,
+      "next_symbol_or_section_end": 8,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "proper-control",
+      "name": "?TheScriptEngine@@3PAVScriptEngine@@A",
+      "storage": 2,
+      "section": ".bss",
+      "value": 0,
+      "next_symbol_or_section_end": 4,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "proper-candidate",
+      "name": "?TheScriptDebugWindowDLL@@3PAXA",
+      "storage": 2,
+      "section": ".bss",
+      "value": 8,
+      "next_symbol_or_section_end": 12,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "proper-candidate",
+      "name": "?TheScriptEngine@@3PAVScriptEngine@@A",
+      "storage": 2,
+      "section": ".bss",
+      "value": 4,
+      "next_symbol_or_section_end": 8,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "proper-candidate",
+      "name": "_g_rva00339a80Node",
+      "storage": 3,
+      "section": ".bss",
+      "value": 0,
+      "next_symbol_or_section_end": 4,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "helper-control",
+      "name": "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A",
+      "storage": 2,
+      "section": ".bss",
+      "value": 4,
+      "next_symbol_or_section_end": 8,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "helper-control",
+      "name": "?g_rva00339a80Node@@3PAVRva00339A80ParticleNode@@A",
+      "storage": 2,
+      "section": ".bss",
+      "value": 0,
+      "next_symbol_or_section_end": 4,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    },
+    {
+      "role": "helper-candidate",
+      "name": "?g_rva00339a80Sink@@3PAVRva00339A80ParticleSink@@A",
+      "storage": 2,
+      "section": ".bss",
+      "value": 0,
+      "next_symbol_or_section_end": 4,
+      "coff_extent_to_next_boundary": 4,
+      "section_raw_is_zero_fill": true
+    }
+  ],
+  "unresolved_external_closure_before": [
+    "??0?$StringBase@D@@AAE@ABV0@@Z",
+    "??0?$StringBase@D@@AAE@PBD@Z",
+    "??2@YAPAXI@Z",
+    "??_7Rva0033C070TailDtor@@6B@",
+    "?GetGameLogicRandomValue@@YAHHHPADH@Z",
+    "?TheParticleSystemManager@@3PAVParticleSystemManager@@A",
+    "?bfmeCounter@ScriptEngine@@IAEPAUScriptCounter@@VAsciiString@@@Z",
+    "?releaseBuffer@?$StringBase@D@@AAEXXZ",
+    "___CxxFrameHandler",
+    "__except_list",
+    "__fltused",
+    "__ftol2",
+    "__imp__ceil",
+    "_cosf",
+    "_sinf"
+  ],
+  "unresolved_external_closure_after": [
+    "??0?$StringBase@D@@AAE@ABV0@@Z",
+    "??0?$StringBase@D@@AAE@PBD@Z",
+    "??2@YAPAXI@Z",
+    "??_7Rva0033C070TailDtor@@6B@",
+    "?GetGameLogicRandomValue@@YAHHHPADH@Z",
+    "?TheParticleSystemManager@@3PAVParticleSystemManager@@A",
+    "?bfmeCounter@ScriptEngine@@IAEPAUScriptCounter@@VAsciiString@@@Z",
+    "?releaseBuffer@?$StringBase@D@@AAEXXZ",
+    "___CxxFrameHandler",
+    "__except_list",
+    "__fltused",
+    "__ftol2",
+    "__imp__ceil",
+    "_cosf",
+    "_sinf"
+  ],
+  "unresolved_external_closure_equal": true,
+  "added_sink_undefined_is_satisfied_by_existing_source_owned_candidate_helper_definition": true,
+  "normal_data_admission_claimed": false,
+  "compiler_calls": 0
+}

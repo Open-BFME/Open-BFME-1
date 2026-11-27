@@ -1,0 +1,57 @@
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/find_declared_unmatched.py game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp game/GameEngine/Source/Common/Rva00339A80ParticleSystemSinkStart.cpp
+All defined functions are already matched.
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/data_rows.py --check
+data_rows: 1888 row(s), integrity OK
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/check_csv.py
+check_csv: OK (functions.csv 173478 rows, symbols.csv 91352 rows, data_rows.csv 1888 rows)
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/hatch_counters.py --update
+  address_global +2 in game/GameEngine/Source/Common/Bfme/Rva00889340.cpp: g_Rva00F36E5C
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01081720
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va0108634C
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01086370
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01086390
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va010863B0
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va010863C8
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va010863E4
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va010863FC
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01086414
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01086424
+  address_global +2 in game/GameEngine/Source/Common/Bfme5FortyOne.cpp: g_Va01086434
+  address_global +1 in game/GameEngine/Source/Common/BfmeConv1182.cpp: g_Va0134CC58
+  address_global +2 in game/GameEngine/Source/Common/BfmeConv1362.cpp: g_Rva00F36E5C
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Rva01337A20
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va013379AC
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va013379B4
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va013379F0
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va013379FC
+  address_global +2 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va01337A00
+  address_global +4 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va01338760
+  address_global +4 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va01338778
+  address_global +3 in game/GameEngine/Source/Common/BfmeSlotTaggedReplace.cpp: g_Va013387D8
+  address_global +2 in game/GameEngine/Source/Common/BfmeStateAY.cpp: g_Va0109B558
+  address_global +2 in game/GameEngine/Source/Common/BfmeStateAZ.cpp: g_Va0109B558
+  address_global +2 in game/GameEngine/Source/Common/BfmeWideResultForward.cpp: g_Va012DBD60
+  address_global +2 in game/GameEngine/Source/Common/DataReferencedTinyCallbacks.cpp: g_Va012A7A4C
+  address_global +2 in game/GameEngine/Source/Common/DataReferencedTinyCallbacks.cpp: g_Va012E6040
+  address_global +2 in game/GameEngine/Source/Common/DataReferencedTinyCallbacks.cpp: g_Va0130A44C
+  address_global +2 in game/GameEngine/Source/Common/DataReferencedTinyCallbacks.cpp: g_Va0130A454
+  address_global +2 in game/GameEngine/Source/Common/DataReferencedTinyCallbacks.cpp: g_Va01336CE4
+  address_global +2 in game/GameEngine/Source/Common/Debug_recordCallsite.cpp: g_Rva00F36E5C
+  address_global +3 in game/GameEngine/Source/Common/GameCommonConvertThunk.cpp: g_Va012A86A8
+  address_global +2 in game/GameEngine/Source/Common/GameEngineFramePacing.cpp: g_Va012A7244
+  address_global +2 in game/GameEngine/Source/Common/GameEngineUpdate.cpp: g_Rva00F36E5C
+  address_global +2 in game/GameEngine/Source/Common/GameEngine_execute.cpp: g_Va012A7244
+  address_global +2 in game/GameEngine/Source/Common/GameLODManagerInit.cpp: g_Va012A7418
+  address_global +2 in game/GameEngine/Source/Common/GlobalDwordGetters.cpp: g_Va012C8394
+  address_global +2 in game/GameEngine/Source/Common/INI/AudioEventInfoParseVolumeSliderMultiplier.cpp: g_Va012A8280
+  address_global +2 in game/GameEngine/Source/Common/INI/INIAudioDefinitionParsers.cpp: g_Rva00F36E5C
+hatch_counters: 2565 occurrence key(s) grew; remove them, or admit them with --allow PATH --reason TEXT
+Traceback (most recent call last):
+  File "W:\OpenBFME\diagnostics\continue-20261120-body-recovery-1656\bank-bfme1-scriptengine-sourcea.py", line 20, in <module>
+    run([sys.executable,'tools/hatch_counters.py','--update'])
+  File "W:\OpenBFME\diagnostics\continue-20261120-body-recovery-1656\bank-bfme1-scriptengine-sourcea.py", line 8, in run
+    def run(a):print('RUN',*a,flush=True);subprocess.run(a,check=True)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\micha\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['W:\\OpenBFME\\.tools\\python\\Scripts\\python3.exe', 'tools/hatch_counters.py', '--update']' returned non-zero exit status 1.

@@ -6006,7 +6006,6 @@ name,va
 ?DualIndexedDispatchSixSecond@@3HA,0x012B9690
 ?DuplicateLocationHash@@3V?$HashTemplateClass@VVector3@@I@@A,0x012D71D8
 ?DynamicDecalFXNuggetFieldParse@@3QBUFieldParse@@B,0x010F2798
-?Effects0040A260@@3PAUEffectFactory0040A260@@A,0x012EF4F0
 ?EmptyScript@ScriptList@@0PAVScript@@A,0x012F078C
 ?EngineGlobal007629F0@@3PAUEngine007629F0@@A,0x012ED524
 ?EnumThreadWndProc@@YGHPAXJ@Z,0x00C89700
@@ -9679,7 +9678,6 @@ name,va
 ?g_bfmeArgAAV@@3HA,0x012B6BB4
 ?g_bfmeArgBase@@3PAPAVAptValue@@A,0x01338750
 ?g_bfmeArgCount@@3HA,0x01338748
-?g_bfmeArgDXE@@3PAEA,0x012E6010
 ?g_bfmeArgDZE@@3PAXA,0x012B7D80
 ?g_bfmeArgDZF@@3PAXA,0x012B7D80
 ?g_bfmeArgEAA@@3PAXA,0x012B7D80
@@ -15476,7 +15474,6 @@ _piChannelMessageA,0x00C6B430
 _piChannelModeChangedA,0x00C6B9D0
 _piChannelNewUserListA,0x00C6B8D0
 _piChannelTopicChangedA,0x00C6B860
-_piChannelUserChangedNickA,0x00C6B810
 _piChannelUserJoinedA,0x00C6B5E0
 _piChannelUserPartedA,0x00C6B710
 _piChatDisconnectedA,0x00C6B2D0
@@ -15778,8 +15775,6 @@ _bfmeVftGenericNode,0x01145484
 ?g_01338358@@3PAVRva008ACAC0Releaseable@@A,0x01338358
 ?g_0133835C@@3PAVRva008ACAC0Releaseable@@A,0x0133835C
 ?g_0133F500@@3PAEA,0x0133F500
-?g_0134050C@@3_NA,0x0134050C
-?g_01340570@@3IA,0x01340570
 ?g_01340598@@3IA,0x01340598
 ?g_0134059C@@3IA,0x0134059C
 ?g_013405A0@@3IA,0x013405A0

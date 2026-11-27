@@ -1,0 +1,47 @@
+{
+  "actual_root_assigned_source": "game/Libraries/Source/CRT/VS2003/ti_inst.cpp",
+  "supersedes_planning_source_proposal_in_RESERVATION_json": true,
+  "original_member": "build\\intel\\dll_obj\\ti_inst.obj",
+  "lease": "ccc4090995a04c67a761d596d0bc530c",
+  "primary": {
+    "rva": "0x009F6CAF",
+    "size": 75,
+    "code_source_gain_only_if_native_admitted": 75,
+    "new_total_exact_bytes": 0
+  },
+  "conditional_unrowed": [
+    {
+      "rva": "0x009F6CA4",
+      "size": 11
+    },
+    {
+      "rva": "0x009F6CFA",
+      "size": 5
+    }
+  ],
+  "original_physical_data_private_proven": 97,
+  "original_compiler_data_native_admitted_by_child": 0,
+  "extra_existing_global_descriptor": {
+    "name": "??_R0H@8",
+    "rva": "0x00EC83B0",
+    "size": 11,
+    "new_coverage": 0
+  },
+  "extra_compiler_closure": {
+    "name": "??_Ftype_info@@QAEXXZ",
+    "code_size": 11,
+    "assigned_native_address": null,
+    "new_body_credit": 0
+  },
+  "new_source_cpp_sha256": "2b11ade4bb77c0e1b4d7d1f655a53e80df86d4b62c57f41b1f4fa24d0084547c",
+  "copy_first_cpp_sha256": "45604a510fc0acb0a839ac5e260db302110ac19b279ab012351f5880757e1900",
+  "checks": {
+    "code91_original_and_native_strict": true,
+    "all97_original_data_graph_bytes_referents_strict": true,
+    "retained_progressive_and_Z7_footprints_equal": true,
+    "native_data_size_admission": false,
+    "native_int_descriptor_and_two_object_selection_model_both_orders": true,
+    "actual_NOENTRY_closure": false,
+    "full_program_link_or_runtime": false
+  }
+}

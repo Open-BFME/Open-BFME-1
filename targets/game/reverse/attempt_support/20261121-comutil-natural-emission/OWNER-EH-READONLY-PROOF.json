@@ -1,0 +1,373 @@
+{
+  "scope": "READ-ONLY original/current-object parse; no compiler, test execution, source, tool, ledger, claims or Git changes. Only private diagnostic files written.",
+  "time_utc": "2026-11-21T06:30:27.132198+00:00",
+  "snapshots": [
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comutil-small-20261121\\objects\\native-comutil.obj",
+      "sha256": "a4e82e871bdfdd14760c6eb72ed544a38eaa9e13083ea342c57d75c0325270f6",
+      "selected_symbols": [
+        {
+          "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "storage": 2,
+          "type": 32,
+          "value": 0,
+          "section": 17,
+          "section_name": ".text",
+          "section_size": 343,
+          "handler_10b": null,
+          "relocations": [
+            {
+              "offset": 6,
+              "kind": 6,
+              "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+              "storage": 3,
+              "target_section": 19
+            },
+            {
+              "offset": 12,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 20,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 46,
+              "kind": 20,
+              "name": "_wcslen",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 75,
+              "kind": 6,
+              "name": "__imp__WideCharToMultiByte@32",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 90,
+              "kind": 6,
+              "name": "__imp__GetLastError@0",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 104,
+              "kind": 20,
+              "name": "?_com_issue_error@@YGXJ@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 116,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 143,
+              "kind": 20,
+              "name": "?_com_issue_error@@YGXJ@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 155,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 177,
+              "kind": 20,
+              "name": "??2@YAPAXI@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 196,
+              "kind": 6,
+              "name": "$L60946",
+              "storage": 3,
+              "target_section": 17
+            },
+            {
+              "offset": 227,
+              "kind": 20,
+              "name": "?_com_issue_error@@YGXJ@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 239,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 269,
+              "kind": 6,
+              "name": "__imp__WideCharToMultiByte@32",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 279,
+              "kind": 20,
+              "name": "??3@YAXPAX@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 285,
+              "kind": 6,
+              "name": "__imp__GetLastError@0",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 318,
+              "kind": 20,
+              "name": "?_com_issue_error@@YGXJ@Z",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 332,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            }
+          ]
+        },
+        {
+          "name": "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+          "storage": 3,
+          "type": 32,
+          "value": 0,
+          "section": 19,
+          "section_name": ".text$x",
+          "section_size": 10,
+          "handler_10b": "b800000000e900000000",
+          "relocations": [
+            {
+              "offset": 1,
+              "kind": 6,
+              "name": "$T60945",
+              "storage": 3,
+              "target_section": 20
+            },
+            {
+              "offset": 6,
+              "kind": 20,
+              "name": "___CxxFrameHandler",
+              "storage": 2,
+              "target_section": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_gen_small_eh_anchor.obj",
+      "sha256": "a9179bb5f0a8c995948ff4715aa7c881c183a2ebf8d74b63afe79e2dc1be02ca",
+      "selected_symbols": [
+        {
+          "name": "?eh_anchor@@YAXXZ",
+          "storage": 2,
+          "type": 32,
+          "value": 0,
+          "section": 3,
+          "section_name": ".text",
+          "section_size": 66,
+          "handler_10b": null,
+          "relocations": [
+            {
+              "offset": 3,
+              "kind": 6,
+              "name": "__ehhandler$?eh_anchor@@YAXXZ",
+              "storage": 3,
+              "target_section": 4
+            },
+            {
+              "offset": 9,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 17,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 31,
+              "kind": 20,
+              "name": "?eh_anchor_callee@@YAXXZ",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 47,
+              "kind": 20,
+              "name": "??1EhAnchorGuard@@QAE@XZ",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 58,
+              "kind": 6,
+              "name": "__except_list",
+              "storage": 2,
+              "target_section": 0
+            }
+          ]
+        },
+        {
+          "name": "__ehhandler$?eh_anchor@@YAXXZ",
+          "storage": 3,
+          "type": 32,
+          "value": 8,
+          "section": 4,
+          "section_name": ".text$x",
+          "section_size": 18,
+          "handler_10b": "b800000000e900000000",
+          "relocations": [
+            {
+              "offset": 4,
+              "kind": 20,
+              "name": "??1EhAnchorGuard@@QAE@XZ",
+              "storage": 2,
+              "target_section": 0
+            },
+            {
+              "offset": 9,
+              "kind": 6,
+              "name": "$T294",
+              "storage": 3,
+              "target_section": 5
+            },
+            {
+              "offset": 14,
+              "kind": 20,
+              "name": "___CxxFrameHandler",
+              "storage": 2,
+              "target_section": 0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "original_binding": {
+    "parent": {
+      "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+      "rva": "0x00AFD8B0",
+      "size": 343,
+      "handler_DIR32_site": 6
+    },
+    "handler": {
+      "rva": "0x00C61F80",
+      "size": 10,
+      "retail_bytes": "b83c182501e94c4ed9ff",
+      "FuncInfo_rva": "0x00E5183C",
+      "CRT_target_rva": "0x009F6DD6"
+    },
+    "xdata": {
+      "rva": "0x00E51808",
+      "size": 80,
+      "raw": "ffffffff00000000ffffffff0000000000000000000000000000000000000000000000000000000001000000010000000000000020059319020000000000000001000000000000000000000000000000",
+      "retail": "ffffffff00000000ffffffff000000000000000000000000000000006cd9ef00000000000000000001000000010000001818250120059319020000000818250101000000281825010000000000000000",
+      "concrete_bytes": 64,
+      "nonreloc_equal": true,
+      "relocations": [
+        {
+          "offset": 28,
+          "kind": 6,
+          "symbol": "$L60941",
+          "storage": 3,
+          "section": 17,
+          "value": 188,
+          "native_rva": "0x00AFD96C"
+        },
+        {
+          "offset": 48,
+          "kind": 6,
+          "symbol": "$T60951",
+          "storage": 3,
+          "section": 20,
+          "value": 16,
+          "native_rva": "0x00E51818"
+        },
+        {
+          "offset": 60,
+          "kind": 6,
+          "symbol": "$T60949",
+          "storage": 3,
+          "section": 20,
+          "value": 0,
+          "native_rva": "0x00E51808"
+        },
+        {
+          "offset": 68,
+          "kind": 6,
+          "symbol": "$T60950",
+          "storage": 3,
+          "section": 20,
+          "value": 32,
+          "native_rva": "0x00E51828"
+        }
+      ]
+    },
+    "original_COMDAT_relationships": {
+      "17": {
+        "selection": 1,
+        "association": 0
+      },
+      "19": {
+        "selection": 5,
+        "association": 17
+      },
+      "20": {
+        "selection": 5,
+        "association": 17
+      }
+    }
+  },
+  "input_hashes": {
+    "AGENTS.md": "954ad011a38db1e355798dd24eb75acdc9d2321af46cadcbe0805fe68ab476ba",
+    "tools/add_match.py": "e9770d713c31809919dd6d5b632ddfff44cbb232665f3a13cb2272e2dd667b24",
+    "tools/build.py": "ebb58c14c1dbda17bd7b399d5cf6ab9c0cd0a5c92183f911b40c7311788eba8a",
+    "tools/body_guard.py": "63a7aceb4aa84840c3e139b1686bc0af05bf0e476cf7ab16cc0da8228e491d5e",
+    "tools/eh_state_pins.py": "9407fd55525ede1572dc29d5bd48f45a88ed7155fb6e196a0b800dfb7bda82c8",
+    "tools/link_cycle.py": "654ff09bb793d6d36d012f2f010ddad48dbfe10e40dffc18327f650a3cd173ee",
+    "tools/link_census.py": "d12a4078bf7ebfd1906484cf05e422cb9f49990b5535cc4c770bc0ad08a83c8e",
+    "tools/progress.py": "7fc0b40ce40f3fb0d6a2fc18e8a91770170169dc65685b7c82cceb6882e0ef1f",
+    "tools/code_scaffold.py": "9888457bef6d935532408f8a6d9fb31136933d1e7b70e6516c98b8604fa185da",
+    "tools/tests/test_add_match_gen_small.py": "63652ef1961f3cdff132e2bb4d3f7c532dde76c549a932ba1918dc6ac31e9c6d",
+    "tools/tests/test_link_cycle.py": "9b3dac495acf78617523f7a7be79c83b2eeb5ace6994076bd64069f5994b1e3a",
+    "game/gen_small/eh_anchor.cpp": "355369abc98abc0f86a4623fdc0d477dc04cd0628a542ba46a03f2d842938361"
+  },
+  "conclusions": {
+    "handler_rehome_required_for_parent_emission": false,
+    "separate_10B_authored_admission_currently_supported": false,
+    "existing_owner_aware_link_verifier": "tools/link_cycle.py:Measure.code_ref -> eh_verdict + Shifted.eh + greatest_closure",
+    "candidate_source_or_actual_full_link_tested": false,
+    "new_body_or_byte_credit": 0,
+    "no_tool_repair_requested": true
+  }
+}

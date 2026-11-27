@@ -1,0 +1,487 @@
+[
+  {
+    "name": "??0_variant_t@@QAE@JG@Z",
+    "rva": "0x00AFD6C0",
+    "size": 111,
+    "unmasked_exact": true,
+    "unresolved": [],
+    "native_raw_equal": true,
+    "native_relocations_equal": true,
+    "candidate_raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+    "candidate_relocations": [
+      [
+        32,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ],
+    "native_raw": "668b442408663d0300568bf1741c663d0a00741c663d0b0074106857000780e8000000008bc65ec20800663d0a0075128b44240889460866c7060a008bc65ec20800663d0b0075158b4c2408f7d96689061bc966894e088bc65ec208008b54240866c70603008956088bc65ec20800",
+    "native_relocations": [
+      [
+        32,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ]
+  },
+  {
+    "name": "??1_variant_t@@QAE@XZ",
+    "rva": "0x00AFD730",
+    "size": 18,
+    "unmasked_exact": true,
+    "unresolved": [],
+    "native_raw_equal": true,
+    "native_relocations_equal": true,
+    "candidate_raw": "51ff150000000085c07d0650e800000000c3",
+    "candidate_relocations": [
+      [
+        3,
+        6,
+        "__imp__VariantClear@4"
+      ],
+      [
+        13,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ],
+    "native_raw": "51ff150000000085c07d0650e800000000c3",
+    "native_relocations": [
+      [
+        3,
+        6,
+        "__imp__VariantClear@4"
+      ],
+      [
+        13,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ]
+  },
+  {
+    "name": "?ConvertBSTRToString@_com_util@@YGPADPAG@Z",
+    "rva": "0x00AFD8B0",
+    "size": 343,
+    "unmasked_exact": true,
+    "unresolved": [],
+    "native_raw_equal": true,
+    "native_relocations_equal": false,
+    "candidate_raw": "558bec6aff680000000064a100000000506489250000000083ec105356578b7d0885ff8965f00f84bb00000057e80000000083c4046a006a006a006a008bf04656576a006a008975ecff15000000008bf885ff897de875508b3500000000ffd685c07f1dffd650e80000000033c08b4df464890d000000005f5e5b8be55dc20400ffd625ffff00000d0000078050e80000000033c08b4df464890d000000005f5e5b8be55dc2040057c745fc00000000e80000000083c4048bd8eb16c745e400000000b800000000c38b75ec8b7de88b5de485dbc745fcffffffff751f680e000780e80000000033c08b4df464890d000000005f5e5b8be55dc204008b45086a006a00575356506a006a00ff150000000085c0752d53e8000000008b350000000083c40433dbffd685c07f04ffd6eb0cffd625ffff00000d0000078050e8000000008b4df45f5e8bc364890d000000005b8be55dc20400",
+    "candidate_relocations": [
+      [
+        6,
+        6,
+        "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z"
+      ],
+      [
+        12,
+        6,
+        "__except_list"
+      ],
+      [
+        20,
+        6,
+        "__except_list"
+      ],
+      [
+        46,
+        20,
+        "_wcslen"
+      ],
+      [
+        75,
+        6,
+        "__imp__WideCharToMultiByte@32"
+      ],
+      [
+        90,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        104,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        116,
+        6,
+        "__except_list"
+      ],
+      [
+        143,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        155,
+        6,
+        "__except_list"
+      ],
+      [
+        177,
+        20,
+        "??2@YAPAXI@Z"
+      ],
+      [
+        196,
+        6,
+        "$L54961"
+      ],
+      [
+        227,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        239,
+        6,
+        "__except_list"
+      ],
+      [
+        269,
+        6,
+        "__imp__WideCharToMultiByte@32"
+      ],
+      [
+        279,
+        20,
+        "??3@YAXPAX@Z"
+      ],
+      [
+        285,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        318,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        332,
+        6,
+        "__except_list"
+      ]
+    ],
+    "native_raw": "558bec6aff680000000064a100000000506489250000000083ec105356578b7d0885ff8965f00f84bb00000057e80000000083c4046a006a006a006a008bf04656576a006a008975ecff15000000008bf885ff897de875508b3500000000ffd685c07f1dffd650e80000000033c08b4df464890d000000005f5e5b8be55dc20400ffd625ffff00000d0000078050e80000000033c08b4df464890d000000005f5e5b8be55dc2040057c745fc00000000e80000000083c4048bd8eb16c745e400000000b800000000c38b75ec8b7de88b5de485dbc745fcffffffff751f680e000780e80000000033c08b4df464890d000000005f5e5b8be55dc204008b45086a006a00575356506a006a00ff150000000085c0752d53e8000000008b350000000083c40433dbffd685c07f04ffd6eb0cffd625ffff00000d0000078050e8000000008b4df45f5e8bc364890d000000005b8be55dc20400",
+    "native_relocations": [
+      [
+        6,
+        6,
+        "__ehhandler$?ConvertBSTRToString@_com_util@@YGPADPAG@Z"
+      ],
+      [
+        12,
+        6,
+        "__except_list"
+      ],
+      [
+        20,
+        6,
+        "__except_list"
+      ],
+      [
+        46,
+        20,
+        "_wcslen"
+      ],
+      [
+        75,
+        6,
+        "__imp__WideCharToMultiByte@32"
+      ],
+      [
+        90,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        104,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        116,
+        6,
+        "__except_list"
+      ],
+      [
+        143,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        155,
+        6,
+        "__except_list"
+      ],
+      [
+        177,
+        20,
+        "??2@YAPAXI@Z"
+      ],
+      [
+        196,
+        6,
+        "$L60946"
+      ],
+      [
+        227,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        239,
+        6,
+        "__except_list"
+      ],
+      [
+        269,
+        6,
+        "__imp__WideCharToMultiByte@32"
+      ],
+      [
+        279,
+        20,
+        "??3@YAXPAX@Z"
+      ],
+      [
+        285,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        318,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        332,
+        6,
+        "__except_list"
+      ]
+    ]
+  },
+  {
+    "name": "?ConvertStringToBSTR@_com_util@@YGPAGPBD@Z",
+    "rva": "0x00AFD750",
+    "size": 352,
+    "unmasked_exact": true,
+    "unresolved": [],
+    "native_raw_equal": true,
+    "native_relocations_equal": false,
+    "candidate_raw": "558bec6aff6800000000680000000064a100000000506489250000000083ec145356578965e88b750885f60f84eb00000056ff15000000008bd843895de46a006a0053566a006a00ff15000000008bf08975e085f60f8497000000c745fc000000008d043681fe001000007d1e83c00383e0fce8000000008965e88bc48bf8897ddcc745fcffffffffeb2f50e80000000083c4048bf8897ddcc745fcffffffffeb18b801000000c38b65e833ffc745fcffffffff8b5de48b75e085ff750e680e000780e80000000033c0eb7e5657538b4d08516a006a00ff150000000085c0753f81fe001000007c0957e80000000083c4048b3500000000ffd685c07f0cffd650e80000000033c0eb40ffd625ffff00000d0000078050e80000000033c0eb2a57ff15000000008bd881fe001000007c0957e80000000083c40485db750a680e000780e8000000008bc38d65d08b4df064890d000000005f5e5b8be55dc20400",
+    "candidate_relocations": [
+      [
+        6,
+        6,
+        "$T54983"
+      ],
+      [
+        11,
+        6,
+        "__except_handler3"
+      ],
+      [
+        17,
+        6,
+        "__except_list"
+      ],
+      [
+        25,
+        6,
+        "__except_list"
+      ],
+      [
+        52,
+        6,
+        "__imp__lstrlenA@4"
+      ],
+      [
+        74,
+        6,
+        "__imp__MultiByteToWideChar@24"
+      ],
+      [
+        116,
+        20,
+        "__alloca_probe"
+      ],
+      [
+        141,
+        20,
+        "_malloc"
+      ],
+      [
+        196,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        217,
+        6,
+        "__imp__MultiByteToWideChar@24"
+      ],
+      [
+        235,
+        20,
+        "_free"
+      ],
+      [
+        244,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        258,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        280,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        291,
+        6,
+        "__imp__SysAllocString@4"
+      ],
+      [
+        307,
+        20,
+        "_free"
+      ],
+      [
+        324,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        339,
+        6,
+        "__except_list"
+      ]
+    ],
+    "native_raw": "558bec6aff6800000000680000000064a100000000506489250000000083ec145356578965e88b750885f60f84eb00000056ff15000000008bd843895de46a006a0053566a006a00ff15000000008bf08975e085f60f8497000000c745fc000000008d043681fe001000007d1e83c00383e0fce8000000008965e88bc48bf8897ddcc745fcffffffffeb2f50e80000000083c4048bf8897ddcc745fcffffffffeb18b801000000c38b65e833ffc745fcffffffff8b5de48b75e085ff750e680e000780e80000000033c0eb7e5657538b4d08516a006a00ff150000000085c0753f81fe001000007c0957e80000000083c4048b3500000000ffd685c07f0cffd650e80000000033c0eb40ffd625ffff00000d0000078050e80000000033c0eb2a57ff15000000008bd881fe001000007c0957e80000000083c40485db750a680e000780e8000000008bc38d65d08b4df064890d000000005f5e5b8be55dc20400",
+    "native_relocations": [
+      [
+        6,
+        6,
+        "$T60922"
+      ],
+      [
+        11,
+        6,
+        "__except_handler3"
+      ],
+      [
+        17,
+        6,
+        "__except_list"
+      ],
+      [
+        25,
+        6,
+        "__except_list"
+      ],
+      [
+        52,
+        6,
+        "__imp__lstrlenA@4"
+      ],
+      [
+        74,
+        6,
+        "__imp__MultiByteToWideChar@24"
+      ],
+      [
+        116,
+        20,
+        "__alloca_probe"
+      ],
+      [
+        141,
+        20,
+        "_malloc"
+      ],
+      [
+        196,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        217,
+        6,
+        "__imp__MultiByteToWideChar@24"
+      ],
+      [
+        235,
+        20,
+        "_free"
+      ],
+      [
+        244,
+        6,
+        "__imp__GetLastError@0"
+      ],
+      [
+        258,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        280,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        291,
+        6,
+        "__imp__SysAllocString@4"
+      ],
+      [
+        307,
+        20,
+        "_free"
+      ],
+      [
+        324,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ],
+      [
+        339,
+        6,
+        "__except_list"
+      ]
+    ]
+  },
+  {
+    "name": "?CheckError@_com_util@@YAXJ@Z",
+    "rva": "0x00AFD6B0",
+    "size": 15,
+    "unmasked_exact": true,
+    "unresolved": [],
+    "native_raw_equal": true,
+    "native_relocations_equal": true,
+    "candidate_raw": "8b44240485c07d0650e800000000c3",
+    "candidate_relocations": [
+      [
+        10,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ],
+    "native_raw": "8b44240485c07d0650e800000000c3",
+    "native_relocations": [
+      [
+        10,
+        20,
+        "?_com_issue_error@@YGXJ@Z"
+      ]
+    ]
+  }
+]

@@ -1,0 +1,6 @@
+Snapshot: class (bytes), sizeof 4 (zh), bases [] (zh); 97 views, 3 uncompiled, zh CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+  +0x000 4 void*        __vfptr          zh/zh  views=97 retail={} witness=None
+  QUEUE slot0: {'bfmeS0XB()': 1, 'crc()': 5, '__vecDelDtor(uint)': 84, 'xfer(Xfer*)': 1, 'slot00()': 2, 'crc(Xfer*)': 2, 'anchor()': 1} beyond the retail vftable's 0 slots
+  QUEUE slot1: {'bfmeS1XB()': 1, 'xfer()': 5, 'crc(Xfer*)': 32, 'crc()': 3, 'loadPostProcess()': 7, 'LoadPostProcess()': 6, 'crc(void*)': 8, 'rva005BC4C0()': 1, 'slot04()': 3, 'rva001CEE10()': 1, 'unknown()': 2, 'xfer(Xfer*)': 2} beyond the retail vftable's 0 slots
+  QUEUE slot2: {'bfmeS2XB()': 1, 'loadPostProcess()': 7, 'xfer(Xfer*)': 32, 'xfer()': 3, 'getSnapshotName()': 6, 'GetSnapshotName()': 6, 'xfer(void*)': 8, 'name()': 1, 'rva005BC4D0()': 1, 'slot08()': 3} beyond the retail vftable's 0 slots
+  QUEUE slot3: {'bfmeTakeXB(BfmeItemXB*)': 1, 'loadPostProcess()': 42, 'xfer(Xfer*)': 7, 'DoXfer(Xfer*)': 6, 'DoXfer(void*)': 1, 'slot0c()': 1} beyond the retail vftable's 0 slots

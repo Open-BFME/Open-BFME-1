@@ -1,0 +1,72 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+    "-nologo",
+    "-dll",
+    "-noentry",
+    "-machine:x86",
+    "-opt:noref",
+    "-opt:noicf",
+    "-incremental:no",
+    "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\link\\invkerr-current-cpp.dll",
+    "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\link\\invkerr-current-cpp.map",
+    "-verbose:lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\invkerr-whole-member-20261121\\objects\\ComInvokeError-inline.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+    "msvcrt.lib",
+    "kernel32.lib",
+    "ole32.lib",
+    "oleaut32.lib",
+    "user32.lib",
+    "uuid.lib"
+  ],
+  "exit": 0,
+  "reused_original_bounded_COM_library_recipe": true,
+  "DLL_executed": false,
+  "source_code_test_doubles": false,
+  "full_game_link_or_runtime": false,
+  "selected_new_providers": {
+    "?WCodeToHRESULT@_com_error@@SAJG@Z": {
+      "va": 268439552,
+      "owner": "ComInvokeError-inline.obj"
+    },
+    "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z": {
+      "va": 268439584,
+      "owner": "ComInvokeError-inline.obj"
+    },
+    "__GUID_1cf2b120_547d_101b_8e65_08002b2bd119": {
+      "va": 268443720,
+      "owner": "ComInvokeError-inline.obj"
+    },
+    "__GUID_00020400_0000_0000_c000_000000000046": {
+      "va": 268443736,
+      "owner": "ComInvokeError-inline.obj"
+    }
+  },
+  "original_invkerr_invkprxy_comsupp_selected": false,
+  "retained_native_comraise": true,
+  "placed_new_bodies": [
+    {
+      "name": "?WCodeToHRESULT@_com_error@@SAJG@Z",
+      "size": 26,
+      "va": "0x10001000",
+      "actual_bytes_and_selected_relocations_equal": true,
+      "sha256": "a86ef87506ecd35076724b5921c16be02634465ada2f59c2b276c8e42656b6f9"
+    },
+    {
+      "name": "?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z",
+      "size": 248,
+      "va": "0x10001020",
+      "actual_bytes_and_selected_relocations_equal": true,
+      "sha256": "3b9def44929d8710a9b3199de24a8b3d1498af6d8ad0d50e39461288d161eed3"
+    }
+  ],
+  "image_sha256": "18d6312ab37e01587222e18e66deb1de998996d320729c570afaaf51716f375e",
+  "map_sha256": "30449342334da6aa04abcef4d17e1b05daf5fdd1ddb2613b033e00e33ba640f2",
+  "readonly_current_cpp_consumers_unchanged_after_link": true
+}

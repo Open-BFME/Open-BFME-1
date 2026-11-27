@@ -1,0 +1,163 @@
+{
+  "round": 5,
+  "round_baseline": "8db25416688b1df34cc765152fc1c927d896fdff",
+  "logical_tasks": 1,
+  "source_tasks_completed": 1,
+  "source": "game/Libraries/Source/DirtySock/Y2NetConn.cpp",
+  "source_sha256_before": "8df6bfe9eedb4d66d7c9a0145e69631b163719d13798bd7a5b792eb1c7e40b2f",
+  "source_sha256_after": "cee32d20cacd8b6946107e5ffb6cd299e27319835b9829e24e0fe5aa3a835f19",
+  "change": "exactlyfour existing same-type extern declarations become zero definitions",
+  "normal_rows": "13/13 +4data +71DIR32, FDU/CSV, body0baselined/static_ok8/ltable6",
+  "retained_row_extent_sum": 1613,
+  "normal_link_own_filtered_bytes": 1589,
+  "new_function_rows": 0,
+  "new_cpp_exact_bytes": 0,
+  "new_unique_text_union_bytes": 0,
+  "new_data_rows": 4,
+  "new_static_data_bytes": 16,
+  "actual_control_object_sha256": "235ab53f5a7f313bf44ed58f380da7937957678fa6ec329eff514ddf591a3a42",
+  "actual_candidate_object_sha256": "1a49ccfca351d184db8f8a01cf45a74c9aac255c443f78e8695726d1c16a35aa",
+  "original_cells": [
+    {
+      "name": "?g_Rva0130A590State@@3HA",
+      "va": "0x0130A590",
+      "rva": "0x00F0A590",
+      "width": 4,
+      "loader_initial": "00000000",
+      "existing_type": "int"
+    },
+    {
+      "name": "?g_Rva0130A594Conn@@3HA",
+      "va": "0x0130A594",
+      "rva": "0x00F0A594",
+      "width": 4,
+      "loader_initial": "00000000",
+      "existing_type": "int"
+    },
+    {
+      "name": "?g_Rva0130A598Online@@3HA",
+      "va": "0x0130A598",
+      "rva": "0x00F0A598",
+      "width": 4,
+      "loader_initial": "00000000",
+      "existing_type": "int"
+    },
+    {
+      "name": "?g_Rva0130A850Next@@3IA",
+      "va": "0x0130A850",
+      "rva": "0x00F0A850",
+      "width": 4,
+      "loader_initial": "00000000",
+      "existing_type": "unsigned int"
+    }
+  ],
+  "original_actual_DWORD_accesses": 11,
+  "original_cell_noncontiguity": "Three adjacent state words and a separate later tick cell; no claim of one original16B aggregate",
+  "data_type_contract": "Retain3signedint state/conn/online and1unsignedint deadline. Originaljae/tick+5 supports unsignedtimer; no new name/layout/class claim.",
+  "normal_native_size_proofs": "4cells eachsizeof4/allocation4/loaderzero, sole add_data_match",
+  "runtime_nodes": [
+    5,
+    6
+  ],
+  "physical_source_data_addition": "one16B writable BSS with realEXTERNAL2definitions at0/4/8/12",
+  "old_runtime_graph": "All old rawcode/data/RTC/EH/CRT/FPO/COMDAT/weak/directive nodes retained,6exact compilerlocals. Eleven witnessed scalar-symbol referents now resolve to their real own BSS definitions; all other bindings preserved.",
+  "actual_header_dependencies": 0,
+  "source_profile_unchanged": "original /Od /GZ /GS /DNDEBUG /MD /GX",
+  "full_inherited_host_environment_equality_claimed": false,
+  "native_baseline_serialization": {
+    "cause": "sole native add_data_match -> hatch_counters.admit canonical serialization",
+    "old_sha256": "38a495cd52c26ea6cc56dc55780a05b679777eac5c4bfd1bffce1f02ab267e9e",
+    "new_sha256": "136f159021aa57286a56f79639e09778bc7af087be4418553e4c64cfc4eb7574",
+    "all_baseline_rows_and_counters_and_allowances_multiset_identical": true,
+    "old_row_count": 132332,
+    "new_row_count": 132332,
+    "change": "existing ScriptEngine g_bfmeVftRva0033C070TailDtor count2 row moved from EOF into sortedposition; zero new/grown/removed baseline rules",
+    "manual_baseline_change": false
+  },
+  "native_scoped_legacy_before": {
+    "before_bytes": 0,
+    "after_bytes": 0,
+    "seconds": 215.0
+  },
+  "native_scoped_legacy_after": {
+    "before_bytes": 0,
+    "after_bytes": 0,
+    "seconds": 220.1
+  },
+  "legacy_census": "2026-11-21 10:53 at42237e2367",
+  "LINKED_gain": 0,
+  "all_four_repaired_names_removed": true,
+  "other_missing_names": [
+    "  unresolved  ?Rva007FD080@@YAXH@Z",
+    "  unresolved  ?Rva007FD270@@YAXXZ",
+    "  unresolved  ?Rva007FDEE0@@YAHXZ",
+    "  unresolved  ?Rva007FE780Printf@@YAHPBDZZ",
+    "  unresolved  ?Rva007FEA00Tick@@YAIXZ",
+    "  unresolved  ?g_Rva0112B918HexDigits@@3QBDB",
+    "  unresolved  ?g_Rva0130A59CDefault@@3PADA",
+    "  unresolved  ?g_Rva0130A7B0Idle@@3PAUIdleHandlerSlot@@A",
+    "  unresolved  ?g_Rva0130A830Mac@@3PAEA",
+    "  unresolved  ?g_Rva0130A840Text@@3PADA"
+  ],
+  "additional_UNKNOWN": [],
+  "full_current_census_or_full_image_link_or_runtime_proved": false,
+  "historical_donor": {
+    "revision": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+    "source": "Code/Libraries/Source/DirtySock/Y2NetConn.cpp",
+    "source_sha256": "d87f7bf8e2573444b87f33b6f9a7490167e89d39886f581bd3798b249de921e9",
+    "data_rows": [
+      {
+        "name": "?g_Rva0130A590State@@3HA",
+        "matched_row": "",
+        "returncode": 1
+      },
+      {
+        "name": "?g_Rva0130A594Conn@@3HA",
+        "matched_row": "",
+        "returncode": 1
+      },
+      {
+        "name": "?g_Rva0130A598Online@@3HA",
+        "matched_row": "",
+        "returncode": 1
+      },
+      {
+        "name": "?g_Rva0130A850Next@@3IA",
+        "matched_row": "",
+        "returncode": 1
+      }
+    ],
+    "ownership": "Donor defines same four scalar identifiers at its OWN different native addresses. These are supported repair precedents; never substitute donor addresses."
+  },
+  "old_52424": "Actual source patch did not apply then; no real candidate type/byte failure. Currentactual4replacements and emitteddata verified before each nativeadmission.",
+  "artifacts": {
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\Y2-CLAIM-SCOPE.json": "26d5f245701477d176214b6261f00744762240e2538f679be9602bd79f470c4f",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\Y2-CONTROL-INPUTS.json": "d95a038eac0f92f8263de0ee2a82da88d02292b7d957f2d2bb4d8c6659e82985",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\Y2-APPLY-FENCE.json": "69b6f0a372c5892397c4e2f120d770a0e26cf44c0b9a17926a72727201738647",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-control.obj": "235ab53f5a7f313bf44ed58f380da7937957678fa6ec329eff514ddf591a3a42",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-control.deps.json": "04ba3b67a23d8d30005a27917a635d8412e38610f50e214d7dcf2a9ef2721758",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-current.obj": "1a49ccfca351d184db8f8a01cf45a74c9aac255c443f78e8695726d1c16a35aa",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-current.deps.json": "9ede236a912772623dbf19d7ce18af9b49e1dbc664b760324151c6719fede6d0",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\Y2-WHOLE-OBJECT-PROOF.json": "6c6896adf74e6775d9b5489a1048c20fa38c48e96910b380ac2ec1894118f638",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-whole-object-proof.py": "171a03b00dc1722bbccbb1e738ab8f660c70aa2d754aadc9935d55d4df864991",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\Y2-NATIVE-BASELINE-SERIALIZATION.json": "591e548f07106fb33c2886754e01cb7e65fd70578617e3216ca99262253a192b",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-hatch-baseline-before.tsv": "38a495cd52c26ea6cc56dc55780a05b679777eac5c4bfd1bffce1f02ab267e9e",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\y2-hatch-baseline-after.tsv": "136f159021aa57286a56f79639e09778bc7af087be4418553e4c64cfc4eb7574",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\control-build.log": "f475dd7132cf25e40207cb0f767a699ba524b5c080551562273f07a6a30d4ce4",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\candidate-build.log": "0221f03911f5f56d24a3a95caa6539431c6dabdd8e36331ea5960977c0788b66",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\FDU.log": "1acbe863198593932808b39bef4a8fa157fd549415074975abe62b15992c5dae",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\post-admission-check-csv.log": "dd920a7414b1820b0af8ce6d205fb393ad6c6bbe3892cdb90fd8600457e371e6",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\link-before.log": "0084bdb25ce1a1d82901b27c97b75ac0914e09e7838b8b79c6263bfa15142864",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\link-after.log": "34298b6964e494ec4be09e3ebfd0892043c81d06cc284e02b6efff53a84082f2",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\native-add-data-State.log": "3d874181534362ec347eb05dc2a7be5db28ce48fdbc3209a7be5bb8cf0865dd5",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\native-add-data-Conn.log": "bc22bbb2c5f8498be3c0b250bc1b02be0b42b5488ffb5a8c331494348017a5ce",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\native-add-data-Online.log": "775b97cbf13878a26c6a65963bdf3553cb605729d4c111375d213926cdaf0b3e",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\native-add-data-Next.log": "2831ba020c434d365f67de36403b8a5d4b86faba216afff8e4fe45950abb606e",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\thing-y2netconn-data-private-20261125\\HANDOFF.md": "7c7ef132b5a2fd861a37fe44d968767ae2b37a8c6eaf3505e0b3ca37c44975b6",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\thing-y2netconn-data-private-20261125\\MANIFEST.json": "deaab0776a03960a95b98e4a6247c48fc131d7fb177b5161dd232a1f4b534fe0",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\thing-y2netconn-data-readonly-20261125\\ORIGINAL-AND-DONOR-PROOF.json": "53011f692af68f374fdf94db04d1edcfde862121e0ec018c5ba52b13157b7b24",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\selection\\thing-y2netconn-data-readonly-20261125\\HANDOFF.md": "e124682e8fe76bbcf511f73e74c14cf6f9bcbacc7b6d599ffae48218a9986daa",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\independent-review\\HANDOFF.md": "a51a0c6b6b169445cb5d568a6433ba0e0db8a238ac11162cbeb7e0eda5ff2dde",
+    "W:\\OpenBFME\\diagnostics\\ten-rounds-20261125-2054\\bfme1\\r05\\independent-review\\MANIFEST.json": "a6e302c363802c15ad860adf7c8a5c3e17a6cb1e646deef72a86870dabe83dac"
+  }
+}

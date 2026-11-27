@@ -1,0 +1,170 @@
+{
+  "mode": "candidate-new",
+  "exit_code": 0,
+  "seconds": 0.375,
+  "paths": [
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_own_comdat_proves_size_without_a_sizeof_compile",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_pointer_addends_need_not_be_zero_but_each_must_match_retail",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_size_proof_does_not_relax_pointer_ownership",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\tests\\test_data_rows.py::test_vftable_existing_weak_external_policy_still_refuses_the_slot"
+  ],
+  "no_cpp_scope_excluded_explicit_node_names": [],
+  "reports": [
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_own_comdat_proves_size_without_a_sizeof_compile",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_pointer_addends_need_not_be_zero_but_each_must_match_retail",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_size_proof_does_not_relax_pointer_ownership",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change0]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change1]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change2]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change3]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change4]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change5]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change6]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change7]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change8]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change9]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change10]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change11]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change12]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change13]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change14]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change15]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change16]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change17]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change18]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change19]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_only_complete_dedicated_vftable_shape_proves_extent[change20]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[truncated]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[missing]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[unknown-relocation-target]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_incomplete_coff_payload_never_proves_size[function-type]",
+      "when": "call",
+      "outcome": "passed"
+    },
+    {
+      "nodeid": "diagnostics/continue-20261120-body-recovery-1656/agents/transport/vftable-coff-sizing-tooling-20261121/tools/tests/test_data_rows.py::test_vftable_existing_weak_external_policy_still_refuses_the_slot",
+      "when": "call",
+      "outcome": "passed"
+    }
+  ],
+  "deselected": [],
+  "counts": {
+    "passed": 29,
+    "failed": 0,
+    "skipped": 0
+  },
+  "unexpected_compiler_attempts": [],
+  "private_tool_path": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\tools\\data_rows.py",
+  "actual_repository_context_file": "W:\\OpenBFME\\Open-BFME-1\\tools\\data_rows.py"
+}

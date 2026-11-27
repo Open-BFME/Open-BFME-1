@@ -1,0 +1,121 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+  "source_sha256": "59bf34f290deb06aaf0c81c8f6ce20553f51566e76f5c52f2bb5106fd64bf0b6",
+  "candidate_sha256": "8678c7f69536ad7aedbd328c4c1f6cbb5826378d7b9991cae9f064dfdaeb976f",
+  "normal_object_sha256": "d5e71eb99203ba5a407c7fd4ea64da7a04fb5a47a2b7f19d7718074d811b3a20",
+  "control_rows": [
+    {
+      "row": {
+        "name": "?bfmeGoDXB@BfmeThingDXB@@QAEXXZ",
+        "export_rva": "",
+        "target_rva": "0x009F69D3",
+        "target_size": "22",
+        "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+        "status": "matched",
+        "notes": ""
+      },
+      "strict": true,
+      "raw": "568bf18d461850ff15000000008d4e305ee900000000",
+      "relocations": [
+        [
+          9,
+          6,
+          "__imp__DeleteCriticalSection@4"
+        ],
+        [
+          18,
+          20,
+          "?RemoveAll@Rva009F68C6PointerArray@@QAEXXZ"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "name": "?bfmeGoDXC@BfmeThingDXC@@QAEXXZ",
+        "export_rva": "",
+        "target_rva": "0x0013ADE0",
+        "target_size": "24",
+        "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+        "status": "matched",
+        "notes": ""
+      },
+      "strict": true,
+      "raw": "568bf18b464850ff150000000083c4048bce5ee900000000",
+      "relocations": [
+        [
+          9,
+          6,
+          "__imp__fclose"
+        ],
+        [
+          20,
+          20,
+          "?bfmeTailDXC@BfmeThingDXC@@QAEXXZ"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "name": "?bfmeGoDXD@BfmeThingDXD@@QAE_NXZ",
+        "export_rva": "",
+        "target_rva": "0x00694D40",
+        "target_size": "28",
+        "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+        "status": "matched",
+        "notes": ""
+      },
+      "strict": true,
+      "raw": "8b410485c07503b001c350ff150000000033c983f8040f95c18ac1c3",
+      "relocations": [
+        [
+          13,
+          6,
+          "__imp__AIL_3D_sample_status@4"
+        ]
+      ]
+    },
+    {
+      "row": {
+        "name": "?bfmeGoDXF@@YA_NPAX@Z",
+        "export_rva": "",
+        "target_rva": "0x00849E60",
+        "target_size": "23",
+        "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+        "status": "matched",
+        "notes": ""
+      },
+      "strict": true,
+      "raw": "8b44240450ff150000000025ff7fffff48f7d81bc040c3",
+      "relocations": [
+        [
+          7,
+          6,
+          "__imp__GetFileType@4"
+        ]
+      ]
+    }
+  ],
+  "source_profile": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-DNDEBUG",
+    "-DWIN32",
+    "-D_WINDOWS",
+    "-MD",
+    "-EHsc",
+    "-Iinputs/reference/shims/sweep",
+    "-Fobuild/match/game_^game^engine_^source_^common_^bfme^conv793.obj",
+    "game/GameEngine/Source/Common/BfmeConv793.cpp"
+  ],
+  "INCLUDE": "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\include",
+  "functions_csv_frozen_sha256": "8e45e73667418202bf966c1fce23104f8e4e6e7d3a1f2194103df41e3a55abac",
+  "no_row_identity_change_planned": true,
+  "original_cpp_provider": "game/GameEngine/Source/Common/Open2Destructors.cpp",
+  "provider_source_sha256": "9552a6c26b016c6dd81f1c9be4b05fac86ca63dd53190e1d82258f3af34ab960",
+  "root_GO": "Declaration-only existing dtor API, original caller/receiver/extent; all4 rows and whole object; no invented fields/virtual slots/inline helpers.",
+  "no_new_body_credit": true
+}

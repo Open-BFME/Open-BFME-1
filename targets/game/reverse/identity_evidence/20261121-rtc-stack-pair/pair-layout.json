@@ -1,0 +1,139 @@
+{
+  "exit": 0,
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\cl.exe",
+    "-nologo",
+    "-c",
+    "-O2",
+    "-GR-",
+    "-EHsc-",
+    "-O1",
+    "-G6",
+    "-Oi",
+    "-Ob1",
+    "-MD",
+    "-GX-",
+    "-Fobuild/agent-melee-20261120/rtc-stack-pair-20261121/objects/RtcStack-layout.obj",
+    "build/agent-melee-20261120/rtc-stack-pair-20261121/source/RtcStack.cpp",
+    "-Z7",
+    "-showIncludes"
+  ],
+  "types": {
+    "_RTC_framedesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 8,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "varCount",
+          "int",
+          4
+        ],
+        [
+          4,
+          "variables",
+          "_RTC_vardesc*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    },
+    "_RTC_vardesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 12,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "addr",
+          "int",
+          4
+        ],
+        [
+          4,
+          "size",
+          "int",
+          4
+        ],
+        [
+          8,
+          "name",
+          "char*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    }
+  },
+  "native_types": {
+    "_RTC_framedesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 8,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "varCount",
+          "int",
+          4
+        ],
+        [
+          4,
+          "variables",
+          "_RTC_vardesc*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    },
+    "_RTC_vardesc": {
+      "fwd": false,
+      "key": "struct",
+      "size": 12,
+      "bases": [],
+      "fields": [
+        [
+          0,
+          "addr",
+          "int",
+          4
+        ],
+        [
+          4,
+          "size",
+          "int",
+          4
+        ],
+        [
+          8,
+          "name",
+          "char*",
+          4
+        ]
+      ],
+      "statics": [],
+      "methods": [],
+      "virtual": [],
+      "vslots": {},
+      "vfptr": false
+    }
+  },
+  "descriptors_equal": true,
+  "debug_code_relocs_equal_plain": true
+}

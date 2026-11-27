@@ -1,0 +1,8 @@
+[
+  "python3 tools/add_match.py '?WCodeToHRESULT@_com_error@@SAJG@Z' 0x00AFE260 26 game/Libraries/Source/COM/ComInvokeError.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored whole invkerr;original COFF CV ABI inline SELECT_ANY2 and274B+32B exact;evidence=targets/game/reverse/identity_evidence/20261121-invkerr-native-member.md'",
+  "python3 tools/add_data_match.py '__GUID_1cf2b120_547d_101b_8e65_08002b2bd119' 0x00DBC37C --rva game/Libraries/Source/COM/ComInvokeError.cpp --size 16 --model codex --evidence 'Original invkerr GUID symbol;canonical IErrorInfo uuid;native sizeof16 and exact native retail16B;20261121-invkerr-native-member'",
+  "python3 tools/add_data_match.py '__GUID_00020400_0000_0000_c000_000000000046' 0x00DBC38C --rva game/Libraries/Source/COM/ComInvokeError.cpp --size 16 --model codex --evidence 'Original invkerr GUID symbol;canonical IDispatch uuid;native sizeof16 and exact native retail16B;20261121-invkerr-native-member'",
+  ".\\build.cmd game/Libraries/Source/COM/ComInvokeError.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp",
+  "python3 tools/add_match.py '?_com_handle_excepinfo@@YGJAAUtagEXCEPINFO@@PAPAUIErrorInfo@@@Z' 0x00AFE280 248 game/Libraries/Source/COM/ComInvokeError.cpp --replace-existing --model codex --notes 'BFME2 donor1e864 authored whole invkerr;complete248B helper plus26B mapper;original SDK ABI GUIDs and whole footprint;evidence=targets/game/reverse/identity_evidence/20261121-invkerr-native-member.md'",
+  ".\\build.cmd game/Libraries/Source/COM/ComInvokeError.cpp game/Libraries/Source/COM/ComInvoke.cpp game/Libraries/Source/COM/ComSupp.cpp"
+]

@@ -1,0 +1,56 @@
+{
+  "actual_owner_ObjectID_overflow_parts": [
+    {
+      "name": "?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z",
+      "bytes": 332,
+      "digest": "561762b27c94"
+    }
+  ],
+  "relevant_existing_rows": [
+    {
+      "name": "??4?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@QAEAAV01@ABV01@@Z",
+      "export_rva": "",
+      "target_rva": "0x0002DC9F",
+      "target_size": "5",
+      "source": "game/Libraries/Source/WWVegas/WWLib/ObjectIDPairVectorAssignmentThunk.cpp",
+      "status": "matched",
+      "notes": "5-byte incremental-link STL assignment thunk converted to focused C++ thunk TU"
+    },
+    {
+      "name": "?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z",
+      "export_rva": "",
+      "target_rva": "0x00033DAC",
+      "target_size": "5",
+      "source": "game/Libraries/Source/WWVegas/WWLib/ObjectIDPairVectorAssignmentThunk.cpp",
+      "status": "matched",
+      "notes": "5-byte incremental-link STL vector thunk converted to focused C++ thunk TU"
+    },
+    {
+      "name": "?dup_001523d0@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x001523D0",
+      "target_size": "282",
+      "source": "game/GameEngine/Source/Common/INI/ParsePrerequisiteScienceThunk.cpp",
+      "status": "matched",
+      "notes": "gen-alias;object-symbol=?_M_insert_overflow@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@IAEXPAW4ScienceType@@ABW43@ABU__false_type@2@I_N@Z;C++ alias"
+    },
+    {
+      "name": "?j_00010b8b@@YAXXZ",
+      "export_rva": "",
+      "target_rva": "0x00010B8B",
+      "target_size": "5",
+      "source": "game/gen_small/thunks_007.cpp",
+      "status": "matched",
+      "notes": "gen-thunk;target=FUN_005523d0"
+    },
+    {
+      "name": "Gen_f265_b7a8aa_0036b490",
+      "export_rva": "",
+      "target_rva": "0x0036B490",
+      "target_size": "265",
+      "source": "game/gen_small/fam_001.cpp",
+      "status": "matched",
+      "notes": "gen-shim;family=f265_b7a8aa;object-symbol=?_M_insert_overflow@?$vector@UGen_t_0036b490_m4pod@@V?$allocator@UGen_t_0036b490_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_0036b490_m4pod@@ABU3@ABU__true_type@2@I_N@Z"
+    }
+  ]
+}

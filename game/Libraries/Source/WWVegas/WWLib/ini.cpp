@@ -111,6 +111,7 @@
 #include	<stdio.h>
 #include <malloc.h>
 #include <ctype.h>
+#include <mbstring.h>
 #include "rawfile.h"
 #include "ffactory.h"
 
@@ -507,7 +508,7 @@ int INIClass::Load(Straw & ffile)
 			char * ptr = strchr(buffer, ']');
 			if (ptr != NULL) *ptr = '\0';
 			strtrim(buffer);
-			INISection * secptr = W3DNEW INISection(strdup(buffer));
+			INISection * secptr = W3DNEW INISection(reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(buffer))));
 			if (secptr == NULL) {
 				Clear();
 				return(false);
@@ -558,7 +559,7 @@ int INIClass::Load(Straw & ffile)
 				}
 
 
-				INIEntry * entryptr = W3DNEW INIEntry(strdup(buffer), strdup(divider));
+				INIEntry * entryptr = W3DNEW INIEntry(reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(buffer))), reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(divider))));
 				if (entryptr == NULL) {
 					delete secptr;
 					Clear();
@@ -1709,7 +1710,7 @@ char *INIClass::Get_Alloc_String(char const * section, char const * entry, char 
 	}
 
 	if (defvalue == NULL) return NULL;
-	return(strdup(defvalue));
+	return(reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(defvalue))));
 }
 
 int INIClass::Get_List_Index(char const * section, char const * entry, int const defvalue, char *list[])
@@ -1722,7 +1723,7 @@ int INIClass::Get_List_Index(char const * section, char const * entry, int const
 	}
 
 	for (int lp = 0; list[lp]; lp++) {
-		if (stricmp(entryptr->Value, list[lp]) == 0) {
+		if (_strcmpi(entryptr->Value, list[lp]) == 0) {
 			return lp;
 		}
 		assert(lp < 1000);
@@ -1741,14 +1742,14 @@ int INIClass::Get_Int_Bitfield(char const * section, char const * entry, int def
 	// get the bitfield value for each piece.
 	// int count	= 0; (gth) initailized but not referenced...
 	int retval	= 0;
-	char *str	= strdup(entryptr->Value);
+	char *str	= reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(entryptr->Value)));
 
    int lp;
 	for (char *token = strtok(str, "|+"); token; token = strtok(NULL, "|+")) {
 		for (lp = 0; list[lp]; lp++) {
 			// if this list entry matches our string token then we need
 			// to set this bit.
-			if (stricmp(token, list[lp]) == 0) {
+			if (_strcmpi(token, list[lp]) == 0) {
 				retval |= (1 << lp);
 				break;
 			}
@@ -1776,7 +1777,7 @@ int *	INIClass::Get_Alloc_Int_Array(char const * section, char const * entry, in
 	// count all the tokens in the string.  Each token should represent an
 	// integer number.
 	int count = 0;
-	char *str = strdup(entryptr->Value);
+	char *str = reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(entryptr->Value)));
 	char *token;
 	for (token = strtok(str, " "); token; token = strtok(NULL, " ")) {
 		count++;
@@ -1787,7 +1788,7 @@ int *	INIClass::Get_Alloc_Int_Array(char const * section, char const * entry, in
 	// array to hold the tokens and parse out the actual values.
 	retval	= W3DNEWARRAY int[count+1];
 	count		= 0;
-	str		= strdup(entryptr->Value);
+	str		= reinterpret_cast<char *>(_mbsdup(reinterpret_cast<const unsigned char *>(entryptr->Value)));
 	for (token = strtok(str, " "); token; token = strtok(NULL, " ")) {
 		retval[count] = atoi(token);
 		count++;

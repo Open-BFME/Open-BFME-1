@@ -1,0 +1,8 @@
+{
+  "source_sha256": "437052efd0e7d6947bcd388ec91208a52227afe257a703860b2c3d82a0f8bbf6",
+  "object_sha256": "8bfb82c0ccbec19f508ef1c02b23ba551b87ce364b3f387501bab47f9213d822",
+  "original_runtime_FPO_COMDAT_weak_graph_restored": true,
+  "normal_whole_family": "4/4 rows, 7DIR32, BodyGuard0",
+  "new_source_tasks": 0,
+  "new_coverage": 0
+}

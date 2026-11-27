@@ -27,10 +27,18 @@ void BfmeThingDXB::bfmeGoDXB()
 	m_bfmeSub.RemoveAll();
 }
 
+// Original13ADE0 closes FILE* at+48, then forwards unchanged ECX via
+// ILT0B488 to the existing180B ten-string prefix destructor13A8E0.
+// This is a declaration-only call view, with no asserted storage/base/vtable.
+class Open2Dtor13A8E0
+{
+public:
+	~Open2Dtor13A8E0();
+};
+
 struct BfmeThingDXC
 {
 	void bfmeGoDXC();
-	void bfmeTailDXC();
 	unsigned char m_bfmeHead[0x48];
 	FILE *m_bfmeP;
 };
@@ -38,7 +46,7 @@ struct BfmeThingDXC
 void BfmeThingDXC::bfmeGoDXC()
 {
 	fclose(m_bfmeP);
-	bfmeTailDXC();
+	reinterpret_cast<Open2Dtor13A8E0 *>(this)->~Open2Dtor13A8E0();
 }
 
 extern "C" __declspec(dllimport) S32 __stdcall AIL_3D_sample_status(H3DSAMPLE h);
@@ -56,21 +64,6 @@ bool BfmeThingDXD::bfmeGoDXD()
 	if (!h)
 		return true;
 	return AIL_3D_sample_status(h) != 4;
-}
-
-extern "C" __declspec(dllimport) HRESULT __stdcall VariantClear(VARIANT *what);
-// ?g_bfmeArgDXE@@3UtagVARIANT@@A: reference recorded ?g_bfmeArgDXE@@3PAEA
-extern unsigned char *g_bfmeArgDXE;
-// comutil.h declares `void __stdcall _com_issue_error(HRESULT)`; the sweep
-// comutil.h shim does not, so the declaration is repeated here under its exact
-// defining spelling (?_com_issue_error@@YGXJ@Z).
-extern void __stdcall _com_issue_error(long);
-
-void bfmeGoDXE()
-{
-	int r = VariantClear((VARIANT *)&g_bfmeArgDXE);
-	if (r < 0)
-		_com_issue_error((long)r);
 }
 
 extern "C" __declspec(dllimport) DWORD WINAPI GetFileType(HANDLE a);

@@ -1,0 +1,5 @@
+Compile: 0 of 1 TU(s) (deps-cache: 1 current)
+Lib members: 159 extracted from 3 archive(s)
+game/GameEngine/Source/GameLogic/Object/BfmeObjectReferenceResolve.cpp: does not link  LINKED 0 -> 0 bytes (census 2026-11-21 10:53 at 42237e2367; file's own bytes 29)
+  unresolved  ?getObjectIdSlot@BfmeObjectReference@@QAEPAUBfmeObjectIdSlot@@XZ
+link_check: 0 of 1 link cleanly; LINKED 0 -> 0 bytes (586.5s)

@@ -24,10 +24,9 @@ class ThingTemplate;
 class ThingFactory { public: const ThingTemplate *findTemplate(const AsciiString&); };
 extern ThingFactory *TheThingFactory;
 struct BuffLogic { Snapshot0040A260 *addBuff(const ThingTemplate*,void*); };
-// The datum's recorded type keeps the pre-EA spelling until it is data-matched:
-// retail 0x012EF4F0 is recorded as ?Effects0040A260@@3PAUEffectFactory0040A260@@A.
-struct EffectFactory0040A260;
-extern EffectFactory0040A260 *Effects0040A260;
+// Original pointer cell VA 0x012EF4F0; use its existing recorded owner type.
+class Manager012EF4F0;
+extern Manager012EF4F0 *g_012EF4F0;
 void *Owner0040A260 = 0;
 #include "../../../Libraries/Source/WWVegas/WWMath/color.h"
 struct BuffTransfer0040A260 {
@@ -63,7 +62,7 @@ void BuffTransfer0040A260::transfer(Xfer *xfer) {
  if(xfer->IsLoading()) {
   if(hasEffect) {
    if(field1c && Owner0040A260) {
-    field18=((BuffLogic *)Effects0040A260)->addBuff(field1c,Owner0040A260);
+    field18=((BuffLogic *)g_012EF4F0)->addBuff(field1c,Owner0040A260);
     ((BlockView0040A260*)xfer)->begin("TBUFF");
     field18->transfer(xfer);
     ((BlockView0040A260*)xfer)->end();

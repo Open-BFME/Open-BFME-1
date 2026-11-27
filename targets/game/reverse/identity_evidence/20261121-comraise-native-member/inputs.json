@@ -1,0 +1,34 @@
+{
+  "head": "7f066038212c3f1f5d12fd45589512e6b6f34656",
+  "claim_snapshot": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\bfme1\\comraise-claim-scope.json",
+  "claim_sha256": "27eccb991258bea52d0a229ab5b219a72c9a44afd0622466287496549211ab50",
+  "lease": "f2baef3eb3a14afe89b224348d36d994",
+  "donor_revision": "1e864b34e05f68568db539537b6959d94d104f57",
+  "donor_source_sha256": "6949f661f5af60082c71dd55114d10d8515e4a7c442753bc58655fa7f5486c48",
+  "native_member_sha256": "c9c0932a9b7ec8e11c5c71f1c7ce4faebf0994c63e2eb543cda144cdf6e382ec",
+  "canonical_header_sha256": "b6e0642daf08032cf9288089f4b49ec1f1125f6313126a5b29e48957522b53b9",
+  "candidate_sha256": "9deca5e328dd135301c058e4bcabb071cc16739ad130e4f5fc7dd93d6679e982",
+  "readonly_controls_before": [
+    {
+      "source": "game/Libraries/Source/COM/ComInvoke.cpp",
+      "source_sha256": "ada720da0bd600aa91b78a4d719b404cb040b8746a4b33e76e9f39d6fb432499",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+      "normal_object_sha256": "38025dd818c763d398bf84f914bc5cb38ef2e7cf7eb58f0f22240ccc0f690e10",
+      "normal_current": true
+    },
+    {
+      "source": "game/Libraries/Source/COM/ComSupp.cpp",
+      "source_sha256": "3a39fb2c76b1c79588aa48f64f7cffda803a444bb7af3b236fb01377d42673f8",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+      "normal_object_sha256": "7dee24ea03af25a590a5b8f588ad4d1dc032760824ef68edbad1655813c8f0f8",
+      "normal_current": true
+    },
+    {
+      "source": "game/Libraries/Source/COM/ComInvokeError.cpp",
+      "source_sha256": "74d6a52f8b65cc64a4fbb8ea76039d4e1d4dc01ea4339a2aaaf70ea149d06608",
+      "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+      "normal_object_sha256": "9c6046540060bb11f76d22d644574ce7c537d11016ed67b9337e93a1bc24b658",
+      "normal_current": true
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "scope": "Historical index lead only, not current provider selection",
+  "meta": {
+    "date": "2026-11-18 15:28",
+    "commit": "4da772231e"
+  },
+  "selection_keys": [
+    "exceptions",
+    "owners",
+    "weak_kept",
+    "weak_addresses",
+    "weak_locations",
+    "weak_ambiguous",
+    "weak_receipt"
+  ],
+  "strong": [],
+  "comdat": [
+    {
+      "index": 449,
+      "object": "game_^libraries_^source_string_^string^base.obj",
+      "digest": "7066978f02da",
+      "verdict": "retail",
+      "inventory": [
+        "/home/runner/work/Open-BFME-1/Open-BFME-1/build/match/game_^libraries_^source_string_^string^base.obj",
+        "645eaaf50ac093f2e06328e499bba47c57f242a125d0fdb7da2056e261c5744f"
+      ]
+    },
+    {
+      "index": 2033,
+      "object": "game_^game^engine_^source_^common_^i^n^i_ini_parsers.obj",
+      "digest": "7066978f02da",
+      "verdict": "retail",
+      "inventory": [
+        "/home/runner/work/Open-BFME-1/Open-BFME-1/build/match/game_^game^engine_^source_^common_^i^n^i_ini_parsers.obj",
+        "5d8f8821a3cafe4bd2316584242ba4f599a2250bea006d1a205628f67737383b"
+      ]
+    },
+    {
+      "index": 19871,
+      "object": "game_^game^engine_^source_^common_^i^n^i_^i^n^i_parse^bit^string32_^thunk.obj",
+      "digest": "7066978f02da",
+      "verdict": "retail",
+      "inventory": [
+        "/home/runner/work/Open-BFME-1/Open-BFME-1/build/match/game_^game^engine_^source_^common_^i^n^i_^i^n^i_parse^bit^string32_^thunk.obj",
+        "0bdb77cd66770e7598b0c890d5ec12f132f84e2232c9063fcaf1cc3f0b5aa893"
+      ]
+    },
+    {
+      "index": 20183,
+      "object": "game_^libraries_^source_string_^string^base^case^ops.obj",
+      "digest": "7066978f02da",
+      "verdict": "retail",
+      "inventory": [
+        "/home/runner/work/Open-BFME-1/Open-BFME-1/build/match/game_^libraries_^source_string_^string^base^case^ops.obj",
+        "c849cd328908bd070228ceec283a616661e2ef55face621ca6014372683b4d3a"
+      ]
+    }
+  ],
+  "unreferenced_in_historical_index": false,
+  "selected_fields": {
+    "weak_kept": "game_^libraries_^source_string_^string^base.obj",
+    "weak_addresses": 45966484,
+    "weak_locations": "game_^libraries_^source_string_^string^base.obj"
+  }
+}

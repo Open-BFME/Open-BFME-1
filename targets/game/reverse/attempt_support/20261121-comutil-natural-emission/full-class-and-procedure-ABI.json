@@ -1,0 +1,495 @@
+{
+  "original_variant": {
+    "fwd": false,
+    "key": "class",
+    "size": 16,
+    "bases": [
+      [
+        "tagVARIANT",
+        0
+      ]
+    ],
+    "fields": [],
+    "statics": [],
+    "methods": [
+      "Attach",
+      "ChangeType",
+      "Clear",
+      "Detach",
+      "GetAddress",
+      "GetVARIANT",
+      "SetString",
+      "__vecDelDtor",
+      "_variant_t",
+      "operator __int64",
+      "operator bool",
+      "operator char",
+      "operator class _bstr_t",
+      "operator double",
+      "operator float",
+      "operator int",
+      "operator long",
+      "operator short",
+      "operator struct IDispatch *",
+      "operator struct IUnknown *",
+      "operator struct tagDEC",
+      "operator struct tagVARIANT",
+      "operator union tagCY",
+      "operator unsigned __int64",
+      "operator unsigned char",
+      "operator unsigned int",
+      "operator unsigned long",
+      "operator unsigned short",
+      "operator!=",
+      "operator=",
+      "operator==",
+      "~_variant_t"
+    ],
+    "virtual": [],
+    "vslots": {},
+    "vfptr": false
+  },
+  "candidate_variant": {
+    "fwd": false,
+    "key": "class",
+    "size": 16,
+    "bases": [
+      [
+        "tagVARIANT",
+        0
+      ]
+    ],
+    "fields": [],
+    "statics": [],
+    "methods": [
+      "__vecDelDtor",
+      "_variant_t",
+      "~_variant_t"
+    ],
+    "virtual": [],
+    "vslots": {},
+    "vfptr": false
+  },
+  "public_base_records": [
+    {
+      "access_attr": 3,
+      "access": 3,
+      "base": "tagVARIANT",
+      "offset": 0
+    }
+  ],
+  "full_tagVARIANT_summary_equal": true,
+  "tagVARIANT": {
+    "fwd": false,
+    "key": "struct",
+    "size": 16,
+    "bases": [],
+    "fields": [
+      [
+        0,
+        "vt",
+        "ushort",
+        2
+      ],
+      [
+        2,
+        "wReserved1",
+        "ushort",
+        2
+      ],
+      [
+        4,
+        "wReserved2",
+        "ushort",
+        2
+      ],
+      [
+        6,
+        "wReserved3",
+        "ushort",
+        2
+      ],
+      [
+        8,
+        "llVal",
+        "int64",
+        8
+      ],
+      [
+        8,
+        "lVal",
+        "long",
+        4
+      ],
+      [
+        8,
+        "bVal",
+        "uchar",
+        1
+      ],
+      [
+        8,
+        "iVal",
+        "short",
+        2
+      ],
+      [
+        8,
+        "fltVal",
+        "float",
+        4
+      ],
+      [
+        8,
+        "dblVal",
+        "double",
+        8
+      ],
+      [
+        8,
+        "boolVal",
+        "short",
+        2
+      ],
+      [
+        8,
+        "scode",
+        "long",
+        4
+      ],
+      [
+        8,
+        "cyVal",
+        "k1506",
+        0
+      ],
+      [
+        8,
+        "date",
+        "double",
+        8
+      ],
+      [
+        8,
+        "bstrVal",
+        "ushort*",
+        4
+      ],
+      [
+        8,
+        "punkVal",
+        "IUnknown*",
+        4
+      ],
+      [
+        8,
+        "pdispVal",
+        "IDispatch*",
+        4
+      ],
+      [
+        8,
+        "parray",
+        "tagSAFEARRAY*",
+        4
+      ],
+      [
+        8,
+        "pbVal",
+        "uchar*",
+        4
+      ],
+      [
+        8,
+        "piVal",
+        "short*",
+        4
+      ],
+      [
+        8,
+        "plVal",
+        "long*",
+        4
+      ],
+      [
+        8,
+        "pllVal",
+        "int64*",
+        4
+      ],
+      [
+        8,
+        "pfltVal",
+        "float*",
+        4
+      ],
+      [
+        8,
+        "pdblVal",
+        "double*",
+        4
+      ],
+      [
+        8,
+        "pboolVal",
+        "short*",
+        4
+      ],
+      [
+        8,
+        "pscode",
+        "long*",
+        4
+      ],
+      [
+        8,
+        "pcyVal",
+        "k1506*",
+        4
+      ],
+      [
+        8,
+        "pdate",
+        "double*",
+        4
+      ],
+      [
+        8,
+        "pbstrVal",
+        "ushort**",
+        4
+      ],
+      [
+        8,
+        "ppunkVal",
+        "IUnknown**",
+        4
+      ],
+      [
+        8,
+        "ppdispVal",
+        "IDispatch**",
+        4
+      ],
+      [
+        8,
+        "pparray",
+        "tagSAFEARRAY**",
+        4
+      ],
+      [
+        8,
+        "pvarVal",
+        "tagVARIANT*",
+        4
+      ],
+      [
+        8,
+        "byref",
+        "void*",
+        4
+      ],
+      [
+        8,
+        "cVal",
+        "char",
+        1
+      ],
+      [
+        8,
+        "uiVal",
+        "ushort",
+        2
+      ],
+      [
+        8,
+        "ulVal",
+        "ulong",
+        4
+      ],
+      [
+        8,
+        "ullVal",
+        "uint64",
+        8
+      ],
+      [
+        8,
+        "intVal",
+        "int",
+        4
+      ],
+      [
+        8,
+        "uintVal",
+        "uint",
+        4
+      ],
+      [
+        8,
+        "pdecVal",
+        "tagDEC*",
+        4
+      ],
+      [
+        8,
+        "pcVal",
+        "char*",
+        4
+      ],
+      [
+        8,
+        "puiVal",
+        "ushort*",
+        4
+      ],
+      [
+        8,
+        "pulVal",
+        "ulong*",
+        4
+      ],
+      [
+        8,
+        "pullVal",
+        "uint64*",
+        4
+      ],
+      [
+        8,
+        "pintVal",
+        "int*",
+        4
+      ],
+      [
+        8,
+        "puintVal",
+        "uint*",
+        4
+      ],
+      [
+        8,
+        "pvRecord",
+        "void*",
+        4
+      ],
+      [
+        12,
+        "pRecInfo",
+        "IRecordInfo*",
+        4
+      ],
+      [
+        0,
+        "decVal",
+        "tagDEC",
+        0
+      ]
+    ],
+    "statics": [],
+    "methods": [],
+    "virtual": [],
+    "vslots": {},
+    "vfptr": false
+  },
+  "all_three_procedures": [
+    {
+      "name": "_com_util::CheckError",
+      "size": 15,
+      "type": [
+        "procedure",
+        [
+          "primitive",
+          "primitive:0x3",
+          0
+        ],
+        0,
+        0,
+        1,
+        [
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "_variant_t::_variant_t",
+      "size": 111,
+      "type": [
+        "member_function",
+        [
+          "primitive",
+          "primitive:0x3",
+          0
+        ],
+        [
+          "class_ref",
+          "class",
+          "_variant_t"
+        ],
+        [
+          "pointer",
+          "0x40a",
+          [
+            "class_ref",
+            "class",
+            "_variant_t"
+          ]
+        ],
+        11,
+        0,
+        2,
+        [
+          [
+            "primitive",
+            "long32/HRESULT",
+            0
+          ],
+          [
+            "primitive",
+            "primitive:0x21",
+            0
+          ]
+        ],
+        0
+      ]
+    },
+    {
+      "name": "_variant_t::~_variant_t",
+      "size": 18,
+      "type": [
+        "member_function",
+        [
+          "primitive",
+          "primitive:0x3",
+          0
+        ],
+        [
+          "class_ref",
+          "class",
+          "_variant_t"
+        ],
+        [
+          "pointer",
+          "0x40a",
+          [
+            "class_ref",
+            "class",
+            "_variant_t"
+          ]
+        ],
+        11,
+        0,
+        0,
+        [],
+        0
+      ]
+    }
+  ],
+  "three_procedure_full_attrs_equal": true,
+  "two_consumed_method_contracts_equal": true,
+  "not_full_32_method_API_recovery": true
+}

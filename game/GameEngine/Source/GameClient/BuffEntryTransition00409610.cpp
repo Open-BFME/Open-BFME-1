@@ -25,10 +25,9 @@ struct Snapshot0040A260 {
 struct BuffLogic {
 	Snapshot0040A260 *addBuff(const ThingTemplate *,void *);
 };
-// The datum's recorded type keeps the pre-EA spelling until it is data-matched:
-// retail 0x012EF4F0 is recorded as ?Effects0040A260@@3PAUEffectFactory0040A260@@A.
-struct EffectFactory0040A260;
-extern EffectFactory0040A260 *Effects0040A260;
+// Original pointer cell VA 0x012EF4F0; use its existing recorded owner type.
+class Manager012EF4F0;
+extern Manager012EF4F0 *g_012EF4F0;
 struct GameLogic;
 extern GameLogic *TheGameLogic;
 struct GameLogicFrame00409610 { char bytes00[0x3c]; int field3c; };
@@ -44,7 +43,7 @@ bool BuffEntry00409E20::transition00409610(int type,int mode,void *arg,void *own
 		field08 = k;
 		field0c = mode;
 		field1c = p;
-		field18 = (EffectHandle00409E20 *)((BuffLogic *)Effects0040A260)->addBuff((const ThingTemplate *)p,q);
+		field18 = (EffectHandle00409E20 *)((BuffLogic *)g_012EF4F0)->addBuff((const ThingTemplate *)p,q);
 	} else if (p != field1c) {
 		volatile int s08 = field18->field08;
 		int s0c = field18->field0c;
@@ -53,7 +52,7 @@ bool BuffEntry00409E20::transition00409610(int type,int mode,void *arg,void *own
 		field08 = k;
 		field0c = mode;
 		field1c = p;
-		field18 = (EffectHandle00409E20 *)((BuffLogic *)Effects0040A260)->addBuff((const ThingTemplate *)p,q);
+		field18 = (EffectHandle00409E20 *)((BuffLogic *)g_012EF4F0)->addBuff((const ThingTemplate *)p,q);
 		if (field18) {
 			field18->field08 = s08;
 			field18->field0c = s0c;

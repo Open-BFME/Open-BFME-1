@@ -1,0 +1,53 @@
+{
+  "read_only": true,
+  "production_writes": 0,
+  "compiler_calls": 0,
+  "body_credit": 0,
+  "artifacts": [
+    {
+      "path": "EMITTER-NAMED-SYMBOLS.json",
+      "bytes": 1407,
+      "sha256": "7ae12203930155863cac46d04f059c49330435236de11c7d6dacac01204cd94a"
+    },
+    {
+      "path": "FACTS.json",
+      "bytes": 10750,
+      "sha256": "780b6961afafd16229b5a556cf911adfbc8e88e5eaf16b977f40d78472dd7b59"
+    },
+    {
+      "path": "FINAL-CURRENCY.json",
+      "bytes": 4431,
+      "sha256": "467221608053787d4c7a47607c99554a4e5b9a2f915fdb9deee969e3176878e0"
+    },
+    {
+      "path": "HANDOFF.md",
+      "bytes": 8877,
+      "sha256": "12344f2ebbaadce193d3607a7b009840e2659660cfd56389dcb162f922acb950"
+    },
+    {
+      "path": "inspect_readonly.py",
+      "bytes": 4021,
+      "sha256": "bb6520161dd91aba084cc09c1739a9d8a3785d381a9e3b138104117200334005"
+    },
+    {
+      "path": "ORIGINAL-CONTRACT.json",
+      "bytes": 45150,
+      "sha256": "88d2fb59d208da5dfa1d6f16eacd525ecb5c8f126931a525510820722b592c27"
+    },
+    {
+      "path": "original_contract_readonly.py",
+      "bytes": 3959,
+      "sha256": "459411f2fba86c2ed9b92c4e98054559d2a6efd9b389e5a0be9dd9b01203cf30"
+    },
+    {
+      "path": "SCOPE.json",
+      "bytes": 4533,
+      "sha256": "b4a3a25bfdabcaecb2f200c5d0634d5e21db501b915ce1140f3f50d5e61b797d"
+    },
+    {
+      "path": "WRITER-READONLY.json",
+      "bytes": 2874,
+      "sha256": "f49b7ebc931f3b19759328161c7c7da6e0df64f77a52827466da136d736f8cfc"
+    }
+  ]
+}

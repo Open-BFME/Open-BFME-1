@@ -1,0 +1,30 @@
+{
+  "baseline": "c5b6f6bc563565b1d73f8a41191e87dbddd04149",
+  "candidate_source_sha256": "b5fac54a547757d461598b6d7d06d49c2ffdd9ade20ad46f57c094aa58d4c905",
+  "source_tasks_completed": 0,
+  "candidate_compiler_calls": 0,
+  "after_link_run": false,
+  "native_retirements_before_full_rollback": 2,
+  "native_refusal": "descriptive name may not be replaced by address-derived/placeholder provider",
+  "all_Source_record_graphs_restored": true,
+  "normal_original_and_restored_controls": "164/164+87DIR32",
+  "seven_unlanded_CAS_releases": true,
+  "remote_active_owner_claims": 0,
+  "new_code_data_LINKED_bytes": 0,
+  "source_patch_sha256": "455fe97c743022e0c49ec1c7d44f4b81582c87e9094591a11e98c9846d057711",
+  "private_archive": "diagnostics/ten-rounds-20261125-2054/bfme1/r02",
+  "private_receipt_sha256": {
+    "OPERATIONS-ONE-CANDIDATE.json": "91a4db5411c5d8ac5203fbc79cc117ca2e25efa4b0817af2bc9363ab6a412361",
+    "OPERATIONS-FOUR-ORIGINAL-BINDINGS.json": "3436d6f2aa7ffab7bdd7bb10cc6f48e356d967f529a24dd2d7380b37f739eb88",
+    "INDEPENDENT-ADDED-CALLBACK-REVIEW.md": "589934ce887781fea9e6425a984b45b2603715f137b26b30bfa264469a4d571f",
+    "operations-native-packet.log": "ceaceffaeb02053cd873350a9644f9952e9dcd2d96b45466e13470c0ba8cde11",
+    "operations-link-before.log": "ae4737d06982d585c8bf388f8c2bc8f53883722f4f85512371e3a36f47f873fa",
+    "native-retire-_piChangeNickCallbackA.log": "d41779d1c099099173b9681870343ff56746d28e2a859f05a37704243aa1e660",
+    "native-retire-_piAuthenticateCDKeyCallbackA.log": "a4f7a31f2ba18ff44c77ab1057451da6b0aaa7acb580d44df2bcc69bdf5e219f",
+    "native-retire-_piChatDisconnectedA.log": "33caba27ac675d0921b498fe30abc0446ac8561eda16236d918685bca9cdf38a",
+    "operations-whole-provider-control-build.log": "fb3357ce3a9a40c1aebf428cdf612a8647254a9a4d9a7263a1c241ddc4b690bb",
+    "operations-restored-control-build.log": "fb3357ce3a9a40c1aebf428cdf612a8647254a9a4d9a7263a1c241ddc4b690bb",
+    "BLOCKED-OPERATIONS-CLEANUP.json": "f9f0a95c78f60195e69d8c80c61c1c910d9139674eafbeab618afef270cbf11e"
+  },
+  "source_patch_format": "zero-context unified diff; git apply --unidiff-zero, never apply CSV from a bank"
+}

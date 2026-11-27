@@ -1,0 +1,20 @@
+[
+  {
+    "name": "??3@YAXPAX@Z",
+    "export_rva": "",
+    "target_rva": "0x00881EB0",
+    "target_size": "21",
+    "source": "game/Libraries/Source/WWVegas/WWLib/mem_ops.cpp",
+    "status": "matched",
+    "notes": "operator delete"
+  },
+  {
+    "name": "?ji_009f6d00@@YAXXZ",
+    "export_rva": "",
+    "target_rva": "0x009F6D00",
+    "target_size": "6",
+    "source": "game/gen_small/imports_000.cpp",
+    "status": "matched",
+    "notes": "gen-import;slot=0x01359254;target=_CxxThrowException"
+  }
+]

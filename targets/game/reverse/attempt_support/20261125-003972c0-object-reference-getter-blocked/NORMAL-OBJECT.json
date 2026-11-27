@@ -1,0 +1,18 @@
+{
+  "source": "game/GameEngine/Source/GameLogic/Object/BfmeObjectReferenceResolve.cpp",
+  "source_sha256": "6582cd85937c6b747a2e18079fff307952c3555ec0a4a87cb4d60a22bcf11322",
+  "normal_object_sha256": "c7465c59cf6ebd59c67b596fcc66cbd9b4d304aa0e7a44c82376710b2d348f8d",
+  "native_full_original_profile_preserved": true,
+  "production_runtime_FPO_equals_exact_private_prefix_candidate": true,
+  "original_runtime_graph_delta": "only offset5 REL32 synthetic slot getter -> real owned const vector<ObjectID>& getAllIDs",
+  "new_code_data_EH_COMDAT_CRT_FPO_weak_vtable_emissions": 0,
+  "same_source_identity_extent_and_29_raw_bytes": true,
+  "canonical_ObjectID_header_new_actual_dependency": {
+    "game\\GameEngine\\Include\\Common\\ObjectID.h": "aa216547d9c9cfe919f91339c56de24e"
+  },
+  "canonical_vector_types_forward_declared_without_layout_definition": true,
+  "actual_AIGroup_getAllIDs_and_GameLogic_lookup_source_and_object_unchanged": true,
+  "normal_whole_family_rows": "4/4 and7DIR32 BodyGuard0",
+  "new_exact_body_or_union_bytes": 0,
+  "global_census_image_link_or_runtime_claim": false
+}

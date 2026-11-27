@@ -1,0 +1,12 @@
+RUN W:\OpenBFME\.tools\python\Scripts\python3.exe tools/add_match.py ?bfmeMakeERD@Rva0033C070TailDtor@@UAEPAVBfmeSysERD@@PBD@Z 0x003391E0 158 game/GameEngine/Source/Common/BfmeConv1949.cpp --replace-rva 0x003391E0 --correct-identity ?bfmeMakeERD@@YGPAVBfmeSysERD@@PBD@Z --identity-evidence targets/game/reverse/identity_evidence/20261121-node13-operations.md --model codex
+add_match: replaced row 31632: 0x003391E0/158B game/GameEngine/Source/Common/BfmeConv1949.cpp
+add_match: with: ?bfmeMakeERD@Rva0033C070TailDtor@@UAEPAVBfmeSysERD@@PBD@Z,,0x003391E0,158,game/GameEngine/Source/Common/BfmeConv1949.cpp,matched,identity-correction=targets/game/reverse/identity_evidence/20261121-node13-operations.md;model=codex;launched=gpt-6;host=Michael-PC
+add_match: verifying: W:\OpenBFME\.tools\python\Scripts\python3.exe tools/build.py game/GameEngine/Source/Common/BfmeConv1949.cpp
+Source claims: OK (1 sources, scoped byte-verified)
+  FAIL ?dup_00C17578@@YAXXZ (game/GameEngine/Source/Common/BfmeConv1949.cpp)
+    ?dup_00C17578@@YAXXZ (game/GameEngine/Source/Common/BfmeConv1949.cpp): $L878 is not in the object, and nothing in the parent's group holds this funclet either. The pin renumbered and no body replaces it, so the row has no anchor -- check whether it deserves one before giving it a new pin.
+    no $L bodies in the parent's group at all
+Functions: FAIL 1/2
+1 function(s) failed byte comparison
+add_match: verification failed (exit 1) — append and marker strip REVERTED; nothing was changed
+{"source": "game/GameEngine/Source/Common/BfmeConv1949.cpp", "native_exit": 1, "expected_refusal": "unchanged existing child parent note still names old parent", "new_body_credit": 0, "native_metadata_rollback_verified": true, "own_source_restored": true}

@@ -1,0 +1,39 @@
+{
+  "task_category": "one Mouse physical data-owner task",
+  "source": "game/GameEngine/Source/GameClient/Input/Mouse.cpp",
+  "source_sha256": "b43385e50fa8325e5c921f8981761956a287d9b71dfe0ff077d7cc46110625fa",
+  "source_code_modified": true,
+  "source_tasks_completed": 0,
+  "data_owner_tasks_completed": 1,
+  "new_data_bytes": 1,
+  "new_data_rows": 1,
+  "new_emitted_BSS_bytes": 1,
+  "new_cpp_exact_bytes": 0,
+  "new_function_rows": 0,
+  "normal_data_admission_pass": true,
+  "native_sizeof": 1,
+  "allocation_extent": 1,
+  "normal_control_rows": 24,
+  "normal_candidate_rows": 24,
+  "retained_existing_row_bytes": 1876,
+  "old_runtime_nodes_exact": 188,
+  "runtime_nodes_before_after": [
+    189,
+    189
+  ],
+  "whole_runtime_graph_unchanged": false,
+  "precommit_scope_only": true,
+  "final_posthook_diagnostics": "W:\\OpenBFME\\diagnostics\\one-per-project-20261127-1848\\bfme1",
+  "evidence": {
+    "ORIGINAL-ACCESS-CHAIN.json": "732e1e4c6bc2445f84f2ed0985124b7eb544055fa7c65b19c25e749c4f190c09",
+    "REFERENCE-REFRESH.json": "5bb833a0ac1fb64b55f712d51b60ebf8a785c49090fc643bd1df928850bc374a",
+    "add-data.log": "484c251754d0bb980a1f6f38d58a450e3d9b3acdfd81d26b768cbc0101902f8b",
+    "normal-control.log": "c0057ef920af6f978405783bc4f8145feb8ed48390eb8d78d8664f04edf554c5",
+    "normal-candidate.log": "bfc73c72fa7a7aeb76b7c91fd544b63af22f93cdccbe442cd53bba8574561da3",
+    "NATIVE-PREVIEW-before.json": "e7422e6499ea348068237927642922623d37b00438a05828eb5221f05eded0af",
+    "WHOLE-OBJECT-PROOF-precommit.json": "0d89827de8f5732d6fade11bdad820162ffbd978e5f946e5c43e2e2ed806766f",
+    "ACTUAL-NATIVE-ROWS-precommit.json": "4da0e2bb86ce4fa896a84bb0f2a85b6e8723c806278986dd080df4041be9621c",
+    "CONTROL-RUNTIME-GRAPH-precommit.json": "6f0e06f1efde02a7707cf29f40f868d153c3bc7dfb457e8496240224f7aa9c25",
+    "CANDIDATE-RUNTIME-GRAPH-precommit.json": "9c43d8de15b91667e0cc6945be6986349d87524a0410d70360e5228771f332ab"
+  }
+}

@@ -349,10 +349,8 @@ extern volatile int g_bfmeDepthVHM;
 extern unsigned char g_Va0133F4A8[0x40];
 extern unsigned char g_Va0133F548[0x40];
 extern unsigned char g_0133F500[0x40];
-extern unsigned g_01340570;
 extern void *g_013405CC;
 extern void *g_013405D0;
-extern bool g_0134050C;
 extern unsigned g_01340598, g_0134059C, g_013405A0, g_013405A4, g_013405A8;
 extern unsigned g_013405AC, g_013405B0, g_013405B4, g_013405B8, g_013405BC;
 struct BfmeCsVHM
@@ -402,7 +400,7 @@ bool DX8Wrapper::Init(void *hwnd, bool lite)
 	memset(Pixel_Shader_Constants, 0, 0x80);
 	memset(&render_state, 0, 0x270);
 	_Hwnd = (HWND)hwnd;
-	BFME_RVA_G32(g_01340570) = GetCurrentThreadId();
+	_MainThreadID = GetCurrentThreadId();
 	InitializeCriticalSection((LPCRITICAL_SECTION)&g_bfmeCsVHM);
 	BFME_RVA_G32(g_bfmeEventVHM) = (unsigned)CreateMutexA(0, 0, 0);
 	W3DRadarResetLock();
@@ -459,7 +457,7 @@ bool DX8Wrapper::Init(void *hwnd, bool lite)
 			bfmeUnlock1179();
 			return false;
 		}
-		BFME_RVA_G8(g_0134050C) = 1;
+		IsInitted = true;
 		Enumerate_Devices();
 	}
 

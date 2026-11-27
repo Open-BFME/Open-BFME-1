@@ -1,0 +1,22 @@
+{
+  "base": "af5caf10f06c2cf77836353e6ef849c11e1862d8",
+  "source_home": "game/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngine.cpp",
+  "old_source": "game/GameEngine/Source/Common/Rva00339A80ParticleSystemSinkStart.cpp",
+  "retained_helper_rva": "0x00339A80",
+  "retained_helper_bytes": 107,
+  "normal_code_rows": 9,
+  "normal_data_rows": 3,
+  "retired_external_data_va": "0x012F0754",
+  "retired_external_data_bytes": 4,
+  "static_node": true,
+  "preserved_sink_va": "0x012F0778",
+  "normal_eh_writer": true,
+  "private_compiles": 4,
+  "new_body_credit": 0,
+  "new_cpp_exact_bytes": 0,
+  "link_after_exit": 1,
+  "link_preview_unknown": true,
+  "link_gain_claimed": false,
+  "committed": false,
+  "published": false
+}

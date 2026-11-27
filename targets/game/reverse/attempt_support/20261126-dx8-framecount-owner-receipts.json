@@ -1,0 +1,170 @@
+{
+  "task": "ONE existing FrameCount4B data-owner admission",
+  "source": "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp",
+  "source_tasks_completed": 0,
+  "data_owner_tasks_completed": 1,
+  "source_code_modified": false,
+  "new_static_data_bytes": 4,
+  "new_data_rows": 1,
+  "new_emitted_storage_bytes": 0,
+  "new_CPP_exact_or_union_bytes": 0,
+  "new_body_credit": 0,
+  "native_protected_sizeof4_allocation4": true,
+  "current_Source_data_rows": 27,
+  "old26_exactly_preserved": true,
+  "global_data_rows1914": true,
+  "native_normal_rows": "124/124",
+  "normal_DIR32": 485,
+  "sources": {
+    "game/Libraries/Source/WWVegas/WW3D2/dxwrapper.cpp": {
+      "source_sha256": "7e9dfbdacefa4bf70d68f77b2bf9c14012aa0f6b37e223e0ea9aa24115136120",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^w^w^vegas_^w^w3^d2_dxwrapper.obj",
+      "control_object_sha256": "2eac1cec563d3ad2591fbf92886850b8c3eb20deb1de0aa598ca21f454b11682",
+      "object_sha256": "8dbed2ee07fce5513821d107517edc3f6f89a4e3ed623fc87c4c877ccdc5c581",
+      "deps_sha256": "53c6c696c0e0c1342b24385901386f10a4c5e8ab61a5a5c0565172daa7483cd7",
+      "total_raw_bytes": 198931,
+      "strictly_identical_raw_bytes_outside_field": 198927,
+      "actual_COFF_TimeDateStamp": {
+        "offset": 4,
+        "size": 4,
+        "before_value": 1795660696,
+        "after_value": 1795694621,
+        "before_hex": "989b076b",
+        "after_hex": "1d20086b",
+        "actual_differing_byte_offsets": [
+          4,
+          5,
+          6
+        ]
+      },
+      "full_raw_other_bytes_and_runtime_CV_symbols_Aux_equal": true,
+      "actual_comdat_selection_counts": {
+        "0": 6,
+        "2": 477,
+        "5": 330,
+        "1": 108
+      },
+      "NEWEST7_absent": true,
+      "runtime_nodes": 920,
+      "FPO_bytes": 4448,
+      "numeric_locals": 395,
+      "SafeSEH_handlers": 26,
+      "actual_profile_compiler_and_generated_semantic_environment_equal": true,
+      "full_host_environment_equality_claimed": false
+    },
+    "game/Libraries/Source/WWVegas/WW3D2/DX8WrapperEndScene.cpp": {
+      "source_sha256": "42724d033478fe2f1be67cb59b58b5ec8c63099d53cab29ddbf434247adbe03a",
+      "object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^w^w^vegas_^w^w3^d2_^d^x8^wrapper^end^scene.obj",
+      "control_object_sha256": "3bb44cabdac1a5f79dc5ed8b8e19cb775ca0a4d8df44290f5abe9e1b214c883f",
+      "object_sha256": "3bb44cabdac1a5f79dc5ed8b8e19cb775ca0a4d8df44290f5abe9e1b214c883f",
+      "deps_sha256": "7f00cf2d74eadee432aa88735fddaf504400d3d64d01f0585785ba06a43d86eb",
+      "total_raw_bytes": 5937,
+      "strictly_identical_raw_bytes_outside_field": 5933,
+      "actual_COFF_TimeDateStamp": {
+        "offset": 4,
+        "size": 4,
+        "before_value": 1794830769,
+        "after_value": 1794830769,
+        "before_hex": "b1f1fa6a",
+        "after_hex": "b1f1fa6a",
+        "actual_differing_byte_offsets": []
+      },
+      "full_raw_other_bytes_and_runtime_CV_symbols_Aux_equal": true,
+      "actual_comdat_selection_counts": {
+        "0": 4,
+        "2": 10,
+        "5": 12,
+        "1": 1
+      },
+      "NEWEST7_absent": true,
+      "runtime_nodes": 26,
+      "FPO_bytes": 160,
+      "numeric_locals": 3,
+      "SafeSEH_handlers": 1,
+      "actual_profile_compiler_and_generated_semantic_environment_equal": true,
+      "full_host_environment_equality_claimed": false
+    }
+  },
+  "original_live_role": "getter/reset/flip/EndScene seven DWORD operands; Init no FrameCount operand",
+  "before_after_legacy_link": {
+    "before": {
+      "before_bytes": 0,
+      "after_bytes": 0,
+      "seconds": 608.9,
+      "log_sha256": "3124f72508f7eb51ef8a5968b922459ad53a861fcca76309e0299eb3b5ea78c0"
+    },
+    "after": {
+      "before_bytes": 0,
+      "after_bytes": 0,
+      "seconds": 352.9,
+      "log_sha256": "3753593ca0f80ec9b9255c339ddd0bf15580a4807a8fd7f3c4dd28fc0b933d12"
+    }
+  },
+  "new_LINKED_gain": 0,
+  "full_current_census_image_or_runtime_claimed": false,
+  "private_artifact_root": "W:\\OpenBFME\\diagnostics\\one-per-project-20261126-1243\\bfme1",
+  "artifacts": {
+    "FRAMECOUNT-OWNER-AND-SCOPE.json": {
+      "sha256": "3d419eede0ed98c7b0791be3538e5eda8ada557e04a9f3ec795d5f8acccf50fc",
+      "bytes": 77451
+    },
+    "FRAMECOUNT-ORIGINAL-DWORD-INSTRUCTION-PROOF.json": {
+      "sha256": "6e8b19059b827cc86c572c290464de9a625fd578d63bb61c5a46d594b4a6d792",
+      "bytes": 2351
+    },
+    "FRAMECOUNT-NATIVE-ADMISSION.json": {
+      "sha256": "9ff1de2d0f3d4ec3c02e2eec6a7b4418726c0d7dd1c60545d930865fb0324ce6",
+      "bytes": 1064
+    },
+    "FRAMECOUNT-WHOLE-OBJECT-PROOF.json": {
+      "sha256": "a5bf8da8bac9b3007490b201be8b519987747ff55fa757cf34123e2cc687748e",
+      "bytes": 12889
+    },
+    "FRAMECOUNT-WHOLE-OBJECT-INVENTORIES.json": {
+      "sha256": "b2b26be56c05a434162508e698f3a49ea70d84b40d3031c37b28bf66d15cf1d8",
+      "bytes": 3296592
+    },
+    "FRAMECOUNT-CONTROL-INPUTS.json": {
+      "sha256": "e27973f634b03c40d0fcf08172ce418b0d674d1156c13548c76ea4ba2096cd9b",
+      "bytes": 5964
+    },
+    "normal-control.log": {
+      "sha256": "7f702e5b5aac5bcaa31a32c3cb471fd6b48aa390a077474d9a363cab49b076f7",
+      "bytes": 584
+    },
+    "normal-after-admission.log": {
+      "sha256": "f0f9beaf6ab2aadb95bbf3d8333ed4d53cc3b69151fbaf71f0a64943212c4b6c",
+      "bytes": 584
+    },
+    "normal-data-admission.log": {
+      "sha256": "e16fbbaca05372599c6829540d06f3516f81a1eb69751faba6ed3d7b3e8af68b",
+      "bytes": 274
+    },
+    "normal-FDU.log": {
+      "sha256": "0ea1c4987ced2704c592871f25974382819f078a5d378d9aaa04af0aff68e3f4",
+      "bytes": 260
+    },
+    "framecount-link-before.log": {
+      "sha256": "3124f72508f7eb51ef8a5968b922459ad53a861fcca76309e0299eb3b5ea78c0",
+      "bytes": 7278
+    },
+    "framecount-link-after.log": {
+      "sha256": "3753593ca0f80ec9b9255c339ddd0bf15580a4807a8fd7f3c4dd28fc0b933d12",
+      "bytes": 7278
+    },
+    "independent-review/HANDOFF.md": {
+      "sha256": "e8f987d4ef9ad6212609bbd07da3716f62e58b7a3f225a8935a9ed65573910d4",
+      "bytes": 5232
+    },
+    "independent-review/MANIFEST.json": {
+      "sha256": "a68ac87ba5383d0d7b77917f94761c38c227e3879065e6a13d40b3e205a01a6f",
+      "bytes": 2111
+    },
+    "near-current.log": {
+      "sha256": "e6713261d02be170d8f067e4bfab2b8d8d25a46a64c777ece7bbe18f3a42e3c3",
+      "bytes": 842
+    }
+  },
+  "donor_revision": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+  "CI_limit": "Root/Melee independently reproduce same two positive publication-safety fixture failures on f19 master and d062; source/tool/test/workflow blobs identical; no current all-CI-green claim"
+}

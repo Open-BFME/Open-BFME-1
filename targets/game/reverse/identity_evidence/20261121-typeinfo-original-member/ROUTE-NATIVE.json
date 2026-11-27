@@ -1,0 +1,64 @@
+{
+  "scope": "read-only native route_verdict with unchanged actual PE and filtered current ledger; no compiler, pin, note, source, tool or Git changes",
+  "rva": "0x009F7ED4",
+  "thunk_raw": "ff251c923501",
+  "slot_va": "0x0135921C",
+  "actual_pe_import": [
+    "MSVCR71.dll",
+    "??1type_info@@UAE@XZ"
+  ],
+  "actual_original_code_import": [
+    {
+      "member": "MSVCR71.dll",
+      "sha256": "b6ad83a5803a541d3dc3571af881ad7ec9979c160efa08bc6a2103f424690994",
+      "symbol": "??1type_info@@UAE@XZ",
+      "dll": "MSVCR71.dll",
+      "machine": "0x14c",
+      "kind": 0,
+      "name_type": 1,
+      "hint": 16,
+      "raw": "0000ffff00004c01f0db773e21000000100004003f3f31747970655f696e666f404055414540585a004d5356435237312e646c6c00"
+    }
+  ],
+  "current_row": {
+    "name": "?ji_009f7ed4@@YAXXZ",
+    "export_rva": "",
+    "target_rva": "0x009F7ED4",
+    "target_size": "6",
+    "source": "game/gen_small/imports_000.cpp",
+    "status": "matched",
+    "notes": "gen-import;slot=0x0135921C;target=~type_info"
+  },
+  "current_native_route_verdict": "0x009F7ED4: the ledger's gen-import row targets ~type_info, not ??1type_info@@UAE@XZ",
+  "requested_route": "MSVCR71.dll!??1type_info@@UAE@XZ",
+  "native_control": {
+    "symbol": "__controlfp",
+    "rva": "0x009F7DF2",
+    "verdict": null
+  },
+  "actual_dir32_witness": [
+    {
+      "name": "??1type_info@@UAE@XZ",
+      "va": "0x00DF7ED4"
+    }
+  ],
+  "hashes": {
+    "tools/pin_consistency.py": "732f7cdb61dab22812b0dba33c2899adba35db021bb0b5eec827a3e09f7b812e",
+    "tools/add_match.py": "e9770d713c31809919dd6d5b632ddfff44cbb232665f3a13cb2272e2dd667b24",
+    "tools/import_binding.py": "8583b72a4b746c13f74bb65e9cf8c39aff1123b6372ae39b56be4313c46422c5",
+    "targets/game/reverse/functions.csv": "4a2104b1cd591402117f1dff4528040180b89a8ffb7b35b4cab514ce6850aa01",
+    "targets/game/reverse/symbols.csv": "8c1a68f4f6d2f431e02572facfcdd28efa335409864a925b1a8666c9eacb05c2",
+    "targets/game/reverse/imports.csv": "53e90333b1ced7eaf40696fed4a0454afa6213ba68e9b6199d3c041c89c6ab97",
+    "targets/game/reverse/dir32_addresses.csv": "55d3a29f36d2c62bc2805a978d11d0006cf2ed8861a4fc7e2934e8b74ad5c0f0",
+    "inputs/reference/open-bfme-2/Code/Libraries/Source/CRT/TypeInfoCopyConstructor.cpp": "6b4b7ca2440d23abfc80f3dec8faec5b01f299506d899a6ffdc854455c777471",
+    "inputs/reference/open-bfme-2/reverse/attempt_support/typeinfo-vector-delete-20261024.md": "583c760a8c8ee3c8d60608c9b93873643c41fb481dcb1586506a733410eb397f",
+    "inputs/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003/Vc7/include/typeinfo.h": "ffbdae1216f3931935db753f35c595f44a92076079756279991746c9cfa468ab"
+  },
+  "limits": [
+    "The byte/native-import facts are independent of the old gen-import display target.",
+    "This does not override route_verdict, claim a generic checker fix, or authorize any target-note rewrite.",
+    "A generic verifier change, if warranted, requires Root separate scope, true negative controls and normal verification.",
+    "B1 add_match has no --pin option; import_binding.pin only writes __imp_ pins and cannot admit this callable route.",
+    "The B2 pin_admission workflow is absent from B1; no donor writer or gen-import replacement is proposed."
+  ]
+}

@@ -1,6 +1,6 @@
-// ILT41970 -> d_002d9f90 is thiscall with no stack args and RET0.
+// ILT41970 reaches Rva002D9F90Behavior::clearConfiguredModelCondition.
 // ILT1EF9C -> BfmeOwnerXI::bfmeSendXI(BfmeMsgXI*) keeps one stack slot.
-extern "C" void __cdecl __identifier("?d_002d9f90@@YAXXZ")();
+class Rva002D9F90Behavior { public: void clearConfiguredModelCondition(); };
 class BfmeMsgXI;
 class BfmeOwnerXI { public: void bfmeSendXI(BfmeMsgXI *); };
 
@@ -43,13 +43,7 @@ void AttributeModifierUpgrade::removeUpgrade()
 	if (bfmeAsk1040() == 0)
 		return;
 
-	union
-	{
-		void (__cdecl *symbol)();
-		void (BfmeG1040::*member)();
-	} clear;
-	clear.symbol = &__identifier("?d_002d9f90@@YAXXZ");
-	(((BfmeG1040 *)((char *)this - 0x10))->*clear.member)();
+	((Rva002D9F90Behavior *)((char *)this - 0x10))->clearConfiguredModelCondition();
 	(*(BfmeOwnerXI **)((char *)this - 8))->bfmeSendXI((BfmeMsgXI *)(*(char **)((char *)this - 0xc) + 0x70));
 	bfmeFin1040(0);
 }

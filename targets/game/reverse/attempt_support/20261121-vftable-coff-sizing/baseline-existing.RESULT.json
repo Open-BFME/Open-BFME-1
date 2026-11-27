@@ -1,0 +1,39 @@
+{
+  "mode": "baseline-existing",
+  "exit_code": 1,
+  "seconds": 0.188,
+  "paths": [
+    "tools/tests/test_data_rows_probe_includes.py::test_missing_include_retries_with_the_sweep_dirs",
+    "tools/tests/test_data_rows_probe_includes.py::test_other_compile_errors_are_not_retried"
+  ],
+  "no_cpp_scope_excluded_explicit_node_names": [
+    "test_compiler_sizes_real_protected_static_member_and_private_stays_inaccessible",
+    "test_only_a_compiler_proven_arithmetic_type_is_a_number",
+    "test_prime_table_words_are_upstream_declared_unsigned_shorts",
+    "test_reference_definitions_count_only_file_scope",
+    "test_reference_lookup_refuses_a_file_it_cannot_preprocess_no_raw_fallback",
+    "test_the_compiler_sizes_what_a_textual_lookup_gets_wrong",
+    "test_the_sizeof_probe_refuses_a_macro_named_like_the_symbol"
+  ],
+  "reports": [
+    {
+      "nodeid": "tools/tests/test_data_rows_probe_includes.py::test_missing_include_retries_with_the_sweep_dirs",
+      "when": "call",
+      "outcome": "failed"
+    },
+    {
+      "nodeid": "tools/tests/test_data_rows_probe_includes.py::test_other_compile_errors_are_not_retried",
+      "when": "call",
+      "outcome": "failed"
+    }
+  ],
+  "deselected": [],
+  "counts": {
+    "passed": 0,
+    "failed": 2,
+    "skipped": 0
+  },
+  "unexpected_compiler_attempts": [],
+  "private_tool_path": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\vftable-coff-sizing-tooling-20261121\\data_rows.baseline.py",
+  "actual_repository_context_file": "W:\\OpenBFME\\Open-BFME-1\\tools\\data_rows.py"
+}

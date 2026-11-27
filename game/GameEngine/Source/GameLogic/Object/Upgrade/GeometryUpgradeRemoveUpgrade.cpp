@@ -25,7 +25,7 @@ class BfmeBaseZJ
 {
 };
 
-extern "C" void __cdecl __identifier("?d_002d9f90@@YAXXZ")();
+class Rva002D9F90Behavior { public: void clearConfiguredModelCondition(); };
 
 class BfmePathCL
 {
@@ -155,13 +155,7 @@ void GeometryUpgrade::removeUpgrade()
 	if (!canTeardown())
 		return;
 
-	union
-	{
-		void (__cdecl *symbol)();
-		void (BfmeBaseZJ::*member)();
-	} clear;
-	clear.symbol = &__identifier("?d_002d9f90@@YAXXZ");
-	(((BfmeBaseZJ *)((char *)this - 0x10))->*clear.member)();
+	((Rva002D9F90Behavior *)((char *)this - 0x10))->clearConfiguredModelCondition();
 	BfmeHostCL *host = *(BfmeHostCL **)((char *)this - 8);
 	((Pathfinder *)TheAI->m_bfmePathCL)->removeObjectFromPathfindMap((Object *)host);
 

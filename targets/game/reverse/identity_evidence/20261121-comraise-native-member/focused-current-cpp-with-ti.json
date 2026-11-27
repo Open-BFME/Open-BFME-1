@@ -1,0 +1,290 @@
+{
+  "command": [
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\bin\\link.exe",
+    "-nologo",
+    "-dll",
+    "-noentry",
+    "-machine:x86",
+    "-opt:noref",
+    "-opt:noicf",
+    "-incremental:no",
+    "-out:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\link\\comraise-current-cpp-with-ti.dll",
+    "-map:W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\link\\comraise-current-cpp-with-ti.map",
+    "-verbose:lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\lib",
+    "-libpath:W:\\OpenBFME\\Open-BFME-1\\inputs\\toolchains\\vs2003\\Program Files\\Microsoft Visual Studio .NET 2003\\Vc7\\PlatformSDK\\Lib",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\agent-melee-20261120\\comraise-whole-member-20261121\\objects\\ComRaise.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^supp.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^o^m_^com^invoke^error.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+    "W:\\OpenBFME\\Open-BFME-1\\inputs\\vendor\\comsupp\\comsupp.lib",
+    "msvcrt.lib",
+    "kernel32.lib",
+    "ole32.lib",
+    "oleaut32.lib",
+    "user32.lib",
+    "uuid.lib"
+  ],
+  "exit": 0,
+  "current_ti_inst_input": {
+    "source": "W:\\OpenBFME\\Open-BFME-1\\game\\Libraries\\Source\\CRT\\VS2003\\ti_inst.cpp",
+    "source_sha256": "2b11ade4bb77c0e1b4d7d1f655a53e80df86d4b62c57f41b1f4fa24d0084547c",
+    "normal_object": "W:\\OpenBFME\\Open-BFME-1\\build\\match\\game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj",
+    "normal_object_sha256": "7b5a272e5420b348f0ba04babe8c456957d6334f4065ee5b90986748b7e1eaed",
+    "normal_current_before": true
+  },
+  "existing_ti_inst_code_checks": [
+    {
+      "name": "??0type_info@@AAE@ABV0@@Z",
+      "rva": "0x009F6CA4",
+      "size": 11,
+      "strict_unmasked_exact": true
+    },
+    {
+      "name": "??_Etype_info@@UAEPAXI@Z",
+      "rva": "0x009F6CAF",
+      "size": 75,
+      "strict_unmasked_exact": true
+    },
+    {
+      "name": "??4type_info@@AAEAAV0@ABV0@@Z",
+      "rva": "0x009F6CFA",
+      "size": 5,
+      "strict_unmasked_exact": true
+    }
+  ],
+  "no_compilation_no_new_profile_library_or_recovery": true,
+  "DLL_executed": false,
+  "not_full_game_census_runtime": true,
+  "selected_current_cpp_ti_inst": {
+    "??_7type_info@@6B@": {
+      "va": 268443808,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_R0?AVtype_info@@@8": {
+      "va": 268447776,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_R1A@?0A@A@type_info@@8": {
+      "va": 268443988,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_R2type_info@@8": {
+      "va": 268444012,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_R3type_info@@8": {
+      "va": 268444020,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_R4type_info@@6B@": {
+      "va": 268444036,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??0type_info@@AAE@ABV0@@Z": {
+      "va": 268442328,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??_Etype_info@@UAEPAXI@Z": {
+      "va": 268442339,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    },
+    "??4type_info@@AAEAAV0@ABV0@@Z": {
+      "va": 268442425,
+      "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+    }
+  },
+  "int_type_descriptor_closure": [
+    [
+      "??_R0H@8",
+      {
+        "va": 268447800,
+        "owner": "game_^libraries_^source_^c^r^t_^v^s2003_ti_inst.obj"
+      }
+    ]
+  ],
+  "original_msvcrt_ti_inst_selected": false,
+  "normal_ti_inst_still_current": true,
+  "normal_ti_inst_source_and_object_hashes_unchanged": true,
+  "DLL_sha256": "9b7217db9a675ac9232649443fbb159b34013b47fe8df61cf6e9590e055940ac",
+  "map_sha256": "856770581fb979b33ff188283a7b1eeb916d5c1076aaf6637ca3dfbdb587df76",
+  "native_DLL_destructor_provider": {
+    "va": 268442734,
+    "owner": "msvcrt:MSVCR71.dll"
+  },
+  "all_placed_ComRaise251_and_metadata150_exact": true,
+  "placed_sections": [
+    {
+      "name": "??0_com_error@@QAE@JPAUIErrorInfo@@_N@Z",
+      "size": 54,
+      "kind": "code",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_R1A@?0A@A@_com_error@@8",
+      "size": 24,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_R2_com_error@@8",
+      "size": 5,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_R3_com_error@@8",
+      "size": 16,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_R0?AV_com_error@@@8",
+      "size": 25,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_R4_com_error@@6B@",
+      "size": 20,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_7_com_error@@6B@",
+      "size": 8,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "?_com_raise_error@@YGXJPAUIErrorInfo@@@Z",
+      "size": 51,
+      "kind": "code",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "__CT??_R0?AV_com_error@@@8??0_com_error@@QAE@ABV0@@Z16",
+      "size": 28,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "__CTA1?AV_com_error@@",
+      "size": 8,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "__TI1?AV_com_error@@",
+      "size": 16,
+      "kind": "metadata",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??0_com_error@@QAE@ABV0@@Z",
+      "size": 50,
+      "kind": "code",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??1_com_error@@UAE@XZ",
+      "size": 38,
+      "kind": "code",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    },
+    {
+      "name": "??_G_com_error@@UAEPAXI@Z",
+      "size": 58,
+      "kind": "code",
+      "selected_owner": "ComRaise.obj",
+      "placed_full_bytes_and_relocations_exact": true
+    }
+  ],
+  "observed_current_ti_inst_noncode_sections": [
+    {
+      "section": ".rdata$r",
+      "size": 24,
+      "names": [
+        "??_R1A@?0A@A@type_info@@8"
+      ]
+    },
+    {
+      "section": ".rdata$r",
+      "size": 5,
+      "names": [
+        "??_R2type_info@@8"
+      ]
+    },
+    {
+      "section": ".rdata$r",
+      "size": 16,
+      "names": [
+        "??_R3type_info@@8"
+      ]
+    },
+    {
+      "section": ".data",
+      "size": 24,
+      "names": [
+        "??_R0?AVtype_info@@@8"
+      ]
+    },
+    {
+      "section": ".rdata$r",
+      "size": 20,
+      "names": [
+        "??_R4type_info@@6B@"
+      ]
+    },
+    {
+      "section": ".rdata",
+      "size": 8,
+      "names": [
+        "??_7type_info@@6B@"
+      ]
+    },
+    {
+      "section": ".data",
+      "size": 11,
+      "names": [
+        "??_R0H@8"
+      ]
+    }
+  ],
+  "observed_current_ti_inst_noncode_bytes": 108,
+  "all11_COM_consumer_rows_current_objects_unchanged_after_primary_link": [
+    {
+      "source": "game/Libraries/Source/COM/ComInvoke.cpp",
+      "source_sha256": "ada720da0bd600aa91b78a4d719b404cb040b8746a4b33e76e9f39d6fb432499",
+      "object_sha256": "38025dd818c763d398bf84f914bc5cb38ef2e7cf7eb58f0f22240ccc0f690e10",
+      "normal_current_after_primary_link": true
+    },
+    {
+      "source": "game/Libraries/Source/COM/ComSupp.cpp",
+      "source_sha256": "3a39fb2c76b1c79588aa48f64f7cffda803a444bb7af3b236fb01377d42673f8",
+      "object_sha256": "7dee24ea03af25a590a5b8f588ad4d1dc032760824ef68edbad1655813c8f0f8",
+      "normal_current_after_primary_link": true
+    },
+    {
+      "source": "game/Libraries/Source/COM/ComInvokeError.cpp",
+      "source_sha256": "74d6a52f8b65cc64a4fbb8ea76039d4e1d4dc01ea4339a2aaaf70ea149d06608",
+      "object_sha256": "9c6046540060bb11f76d22d644574ce7c537d11016ed67b9337e93a1bc24b658",
+      "normal_current_after_primary_link": true
+    }
+  ]
+}

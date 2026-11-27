@@ -1,0 +1,163 @@
+FF.............................FFF                                       [100%]
+================================== FAILURES ===================================
+____ test_compiler_name_locates_real_current_owner_without_source_literal _____
+
+owner = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_locates_rea0\\repo\\game\\GameEngine\\Owner.cpp'])
+
+    def test_compiler_name_locates_real_current_owner_without_source_literal(owner):
+        assert VTABLE not in owner.source.read_text()
+>       assert owner.rq.locate_source(VTABLE) == owner.rel
+E       AssertionError: assert None == 'game/GameEngine/Owner.cpp'
+E        +  where None = <function locate_source at 0x000001507DE94180>('??_7FixtureOwner@@6B@')
+E        +    where <function locate_source at 0x000001507DE94180> = <module 'repair_queue' from 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py'>.locate_source
+E        +      where <module 'repair_queue' from 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py'> = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_locates_rea0\\repo\\game\\GameEngine\\Owner.cpp']).rq
+E        +  and   'game/GameEngine/Owner.cpp' = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_locates_rea0\\repo\\game\\GameEngine\\Owner.cpp']).rel
+
+tools\tests\test_repair_queue_vtable_owner.py:115: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.h', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'targets/game/reverse/functions.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/build.py', LF will be replaced by CRLF the next time Git touches it
+__ test_compiler_name_comdat_and_strong_inventory_same_definer_is_one_owner ___
+
+owner = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_comdat_and_0\\repo\\game\\GameEngine\\Owner.cpp'])
+
+    def test_compiler_name_comdat_and_strong_inventory_same_definer_is_one_owner(owner):
+        owner.index["comdat"][VTABLE] = [(0, "same-object", None)]
+        owner.save()
+>       assert owner.rq.locate_source(VTABLE) == owner.rel
+E       AssertionError: assert None == 'game/GameEngine/Owner.cpp'
+E        +  where None = <function locate_source at 0x000001507DE99760>('??_7FixtureOwner@@6B@')
+E        +    where <function locate_source at 0x000001507DE99760> = <module 'repair_queue' from 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py'>.locate_source
+E        +      where <module 'repair_queue' from 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py'> = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_comdat_and_0\\repo\\game\\GameEngine\\Owner.cpp']).rq
+E        +  and   'game/GameEngine/Owner.cpp' = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_name_comdat_and_0\\repo\\game\\GameEngine\\Owner.cpp']).rel
+
+tools\tests\test_repair_queue_vtable_owner.py:121: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.h', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'targets/game/reverse/functions.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/build.py', LF will be replaced by CRLF the next time Git touches it
+_ test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes[0] _
+
+owner = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_owner_pass_test_0\\repo\\game\\GameEngine\\Owner.cpp'])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001507DD2F680>
+exitcode = 0
+
+    @pytest.mark.parametrize("exitcode", [0, 7])
+    def test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes(owner, monkeypatch, exitcode):
+        path = owner.rev / "body_guard_baseline.csv"
+        line = f"dir32,0x00402000,{VTABLE},unowned datum"
+        untouched = b"tail,0x00003000,other,last row without newline"
+        header = b"check,target_rva,name,detail\r\n"
+        raw = header + line.encode() + b"\r\n" + untouched
+        path.write_bytes(raw)
+        monkeypatch.setenv("TEST_REPAIR_GATE_EXIT", str(exitcode))
+        ok, _ = owner.rq.pass_test(line)
+>       assert ok == (exitcode == 0)
+E       assert False == (0 == 0)
+
+tools\tests\test_repair_queue_vtable_owner.py:225: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.h', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'targets/game/reverse/functions.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/build.py', LF will be replaced by CRLF the next time Git touches it
+_ test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes[7] _
+
+owner = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_owner_pass_test_1\\repo\\game\\GameEngine\\Owner.cpp'])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001507DF12360>
+exitcode = 7
+
+    @pytest.mark.parametrize("exitcode", [0, 7])
+    def test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes(owner, monkeypatch, exitcode):
+        path = owner.rev / "body_guard_baseline.csv"
+        line = f"dir32,0x00402000,{VTABLE},unowned datum"
+        untouched = b"tail,0x00003000,other,last row without newline"
+        header = b"check,target_rva,name,detail\r\n"
+        raw = header + line.encode() + b"\r\n" + untouched
+        path.write_bytes(raw)
+        monkeypatch.setenv("TEST_REPAIR_GATE_EXIT", str(exitcode))
+        ok, _ = owner.rq.pass_test(line)
+        assert ok == (exitcode == 0)
+>       gate = json.loads((owner.root / "build/gate.json").read_text())
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools\tests\test_repair_queue_vtable_owner.py:226: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+C:\Users\micha\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py:1027: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner-locator-tooling-20261121/pytest-red/test_compiler_owner_pass_test_1/repo/build/gate.json')
+mode = 'r', buffering = -1, encoding = 'locale', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed to by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: 'W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_owner_pass_test_1\\repo\\build\\gate.json'
+
+C:\Users\micha\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\Lib\pathlib.py:1013: FileNotFoundError
+---------------------------- Captured stderr setup ----------------------------
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.h', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'targets/game/reverse/functions.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/build.py', LF will be replaced by CRLF the next time Git touches it
+__________ test_compiler_branch_never_uses_grep_after_census_refusal __________
+
+owner = namespace(root=WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner...epair-owner-locator-tooling-20261121\\pytest-red\\test_compiler_branch_never_use0\\repo\\game\\GameEngine\\Owner.cpp'])
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001507DF13B00>
+
+    def test_compiler_branch_never_uses_grep_after_census_refusal(owner, monkeypatch):
+        C.INDEX.unlink()
+        native_run = owner.rq.subprocess.run
+    
+        def run(command, **kwargs):
+            assert command[:2] != ["git", "grep"]
+            return native_run(command, **kwargs)
+    
+        monkeypatch.setattr(owner.rq.subprocess, "run", run)
+>       assert owner.rq.locate_source(VTABLE) is None
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools\tests\test_repair_queue_vtable_owner.py:240: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+baseline\tools\repair_queue.py:276: in locate_source
+    got = subprocess.run(["git", "grep", "-l", "-F", "--", name, SOURCE_PREFIX], cwd=ROOT,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+command = ['git', 'grep', '-l', '-F', '--', '??_7FixtureOwner@@6B@', ...]
+kwargs = {'cwd': WindowsPath('W:/OpenBFME/diagnostics/continue-20261120-body-recovery-1656/agents/transport/repair-owner-locator-tooling-20261121/pytest-red/test_compiler_branch_never_use0/repo'), 'capture_output': True, 'text': True}
+
+    def run(command, **kwargs):
+>       assert command[:2] != ["git", "grep"]
+E       AssertionError: assert ['git', 'grep'] != ['git', 'grep']
+
+tools\tests\test_repair_queue_vtable_owner.py:236: AssertionError
+---------------------------- Captured stderr setup ----------------------------
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'game/GameEngine/Owner.h', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'targets/game/reverse/functions.csv', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'tools/build.py', LF will be replaced by CRLF the next time Git touches it
+=========================== short test summary info ===========================
+FAILED tools/tests/test_repair_queue_vtable_owner.py::test_compiler_name_locates_real_current_owner_without_source_literal
+FAILED tools/tests/test_repair_queue_vtable_owner.py::test_compiler_name_comdat_and_strong_inventory_same_definer_is_one_owner
+FAILED tools/tests/test_repair_queue_vtable_owner.py::test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes[0]
+FAILED tools/tests/test_repair_queue_vtable_owner.py::test_compiler_owner_pass_test_calls_original_gate_and_restores_all_bytes[7]
+FAILED tools/tests/test_repair_queue_vtable_owner.py::test_compiler_branch_never_uses_grep_after_census_refusal
+5 failed, 29 passed in 8.81s
+RECEIPT {"mode": "red", "pytest_exit": 1, "repair_queue": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py", "sha256": "44e7b3196d7681eb108beca4b5157c43518c3af82560ba8a8b69d8811120a92a", "final_loaded_module": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\transport\\repair-owner-locator-tooling-20261121\\baseline\\tools\\repair_queue.py", "all_reload_routing_frozen": true}

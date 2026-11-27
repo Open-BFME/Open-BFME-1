@@ -1,4 +1,4 @@
-// Walks every live object and runs the AI-side action whose readiness gate is set.
+// Walks live objects and calls the existing AI-side action when its predicate succeeds.
 
 class Object;
 
@@ -9,10 +9,11 @@ public:
 	Object *getFirstObject(void);
 };
 
-class BfmeReadyGate
+// Opaque call view of the existing59-byte provider, reached through ILT2E8ED.
+// It takes the unchanged receiver in ECX, no stack arguments, and returns AL.
+struct Rva003FD060Owner
 {
-public:
-	bool bfmeReady(void);
+	bool anyBlocked() const;
 };
 
 class BfmeObjectAI
@@ -22,7 +23,7 @@ public:
 
 private:
 	char m_bfmeHead[0x140];
-	BfmeReadyGate *m_bfmeGate;
+	Rva003FD060Owner *m_bfmeGate;
 
 	friend void __cdecl bfmeRunReadyObjectAI(void);
 };
@@ -48,7 +49,7 @@ void __cdecl bfmeRunReadyObjectAI(void)
 		object = object->m_bfmeNext)
 	{
 		BfmeObjectAI *ai = object->m_bfmeAI;
-		if (ai != 0 && ai->m_bfmeGate != 0 && ai->m_bfmeGate->bfmeReady())
+		if (ai != 0 && ai->m_bfmeGate != 0 && ai->m_bfmeGate->anyBlocked())
 			ai->bfmeRunReadyAction();
 	}
 }

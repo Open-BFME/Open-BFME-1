@@ -92,7 +92,23 @@ public:
 };
 
 // Retail directly indexes the seven-entry decal-name table at VA 0x012BB604.
-extern const char *const g_012BB604[];
+// Original NUL-terminated terrain names; address labels claim no EA C++ name.
+extern const char g_011236E8[] = "TERRAIN_DECAL_DEMORALIZED_OBSOLETE";
+extern const char g_011236DC[] = "EXHorde";
+extern const char g_011236CC[] = "EXHorde_UP";
+extern const char g_011236C0[] = "EXHordeB";
+extern const char g_011236B0[] = "EXHordeB_UP";
+extern const char g_011236A0[] = "EXJunkCrate";
+
+extern const char *const g_012BB604[] = {
+	g_011236E8,
+	g_011236DC,
+	g_011236CC,
+	g_011236C0,
+	g_011236B0,
+	g_011236A0,
+	g_011236B0,
+};
 
 static const char *const *bfmeTerrainDecalNamesAt012BB604()
 {

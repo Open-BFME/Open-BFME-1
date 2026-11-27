@@ -145,6 +145,103 @@ def test_move_between_files_via_update_passes(repo):
     assert staged(repo).returncode == 0
 
 
+def test_scoped_move_preserves_unrelated_debt_and_normal_refusal(repo):
+    unrelated = repo.lay["src"].replace("a.cpp", "unrelated.cpp")
+    repo.write(unrelated, "int clean;\n")
+    repo.commit("other clean source")
+    original = repo.read(repo.lay["base"])
+    repo.write(unrelated, "int g_Va00123456;\n")
+    repo.git("mv", repo.lay["src"], repo.lay["src2"])
+    got = repo.tool("--move", repo.lay["src"], repo.lay["src2"])
+    assert got.returncode == 0, got.stderr
+    written = repo.read(repo.lay["base"])
+    before = hc.parse(original)[0]
+    after = hc.parse(written)[0]
+    assert hc.by_token(before) == hc.by_token(after)
+    assert "allow=" not in written and "unrelated.cpp" not in written
+    unchanged = lambda text: [line for line in text.splitlines()
+                              if not (hc._key_of(line) and hc._key_of(line)[1] in
+                                      (repo.lay["src"], repo.lay["src2"]))]
+    assert unchanged(original) == unchanged(written)
+    repo.git("add", "--", repo.lay["base"])
+    assert staged(repo).returncode == 0
+    repo.git("add", "--", unrelated)
+    assert staged(repo).returncode == 1  # unrelated new debt was never admitted
+
+
+@pytest.mark.parametrize("extra", [
+    "void extra() { __asm { __emit 0x90 } }\n",
+    "int g_Va00123456;\n",
+])
+def test_scoped_move_refuses_new_token_or_occurrence_without_writing(repo, extra):
+    repo.git("mv", repo.lay["src"], repo.lay["src2"])
+    repo.write(repo.lay["src2"], SOURCE + extra)
+    repo.git("add", "--", repo.lay["src2"])
+    baseline = repo.read(repo.lay["base"])
+    got = repo.tool("--move", repo.lay["src"], repo.lay["src2"])
+    assert got.returncode != 0 and "hatch/token" in got.stderr
+    assert repo.read(repo.lay["base"]) == baseline
+
+
+def test_scoped_move_refuses_unstaged_source_or_register(repo):
+    repo.git("mv", repo.lay["src"], repo.lay["src2"])
+    repo.write(repo.lay["src2"], SOURCE + "int clean;\n")
+    baseline = repo.read(repo.lay["base"])
+    assert repo.tool("--move", repo.lay["src"], repo.lay["src2"]).returncode != 0
+    assert repo.read(repo.lay["base"]) == baseline
+    repo.git("add", "--", repo.lay["src2"])
+    repo.write(repo.lay["base"], baseline + "# pending register edit\n")
+    assert repo.tool("--move", repo.lay["src"], repo.lay["src2"]).returncode != 0
+    assert repo.read(repo.lay["base"]) == baseline + "# pending register edit\n"
+
+
+def test_scoped_move_refuses_unregistered_original_source(repo):
+    repo.write(repo.lay["src"], SOURCE + "int g_Va00123456;\n")
+    repo.commit("historical unregistered source")
+    repo.git("mv", repo.lay["src"], repo.lay["src2"])
+    baseline = repo.read(repo.lay["base"])
+    got = repo.tool("--move", repo.lay["src"], repo.lay["src2"])
+    assert got.returncode != 0 and "original source inventories" in got.stderr
+    assert repo.read(repo.lay["base"]) == baseline
+
+
+@pytest.mark.parametrize("path", ["../outside.cpp", "/game/outside.cpp", "reverse/functions.csv"])
+def test_scoped_move_refuses_non_source_path(repo, path):
+    baseline = repo.read(repo.lay["base"])
+    assert repo.tool("--move", repo.lay["src"], path).returncode != 0
+    assert repo.read(repo.lay["base"]) == baseline
+
+
+@pytest.mark.parametrize("concurrent_change", ["register", "head"])
+def test_scoped_move_fences_changes_during_final_source_probe(repo, monkeypatch, concurrent_change):
+    repo.git("mv", repo.lay["src"], repo.lay["src2"])
+    baseline = repo.read(repo.lay["base"])
+    pending = "emit\tother.cpp\t*\t1\tallow=" + "a" * 40 + "\n"
+    monkeypatch.setattr(hc, "ROOT", repo.root)
+    monkeypatch.setattr(hc, "BASELINE", repo.lay["base"])
+    monkeypatch.setattr(hc, "SOURCE_ROOTS", (repo.lay["src"].split("/", 1)[0] + "/",))
+    original_run = subprocess.run
+    probes = 0
+
+    def racing_run(args, *a, **kw):
+        nonlocal probes
+        got = original_run(args, *a, **kw)
+        if args[:4] == ["git", "diff", "--quiet", "--"]:
+            probes += 1
+            if probes == 2:
+                if concurrent_change == "register":
+                    repo.write(repo.lay["base"], baseline + pending)
+                else:
+                    repo.git("commit", "--allow-empty", "-q", "-m", "concurrent HEAD")
+        return got
+
+    monkeypatch.setattr(subprocess, "run", racing_run)
+    with pytest.raises(SystemExit, match="changed; no register write"):
+        hc.move([repo.lay["src"], repo.lay["src2"]])
+    assert probes == 2
+    assert repo.read(repo.lay["base"]) == baseline + (pending if concurrent_change == "register" else "")
+
+
 # ---- positive controls: each of these passed before this gate existed
 
 @pytest.mark.parametrize("line", [

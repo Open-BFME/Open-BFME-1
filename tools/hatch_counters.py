@@ -39,6 +39,8 @@ Usage:
   python3 tools/hatch_counters.py --report              per-hatch totals (HEAD baseline vs tree)
   python3 tools/hatch_counters.py --update              rewrite the baseline from the tree;
                                                         shrinks and moves only
+  python3 tools/hatch_counters.py --move OLD NEW        transfer a staged source pair only;
+                                                        exact token totals, no allowances
   python3 tools/hatch_counters.py --allow PATH... --reason TEXT
                                                         also admit growth in PATHs (tool allowance)
   python3 tools/hatch_counters.py --admit PATH --reason TEXT [--tokens T...]
@@ -468,6 +470,67 @@ def update(allow_paths=(), reason=None):
             print("%-18s %7d -> %7d" % (hatch, t0[hatch], t1[hatch]))
 
 
+def move(paths):
+    """Write an exact source-pair transfer without scanning/admitting unrelated debt.
+
+    Both original source inventories must equal their existing register grants.
+    The staged pair must conserve every hatch/token count, not just hatch totals.
+    No allow blob is minted and the normal staged gate is unchanged.
+    """
+    if len(set(paths)) != 2 or any(
+            p != p.replace("\\", "/") or Path(p).is_absolute() or
+            any(part in ("", ".", "..") for part in p.split("/")) or
+            not p.startswith(SOURCE_ROOTS) or not p.lower().endswith(CODE_EXT + (".asm",))
+            for p in paths):
+        sys.exit("hatch_counters: --move needs two distinct repository-relative source paths")
+    changed = set(git("diff", "--cached", "--name-only", "--no-renames", "-z").split("\0"))
+    if not set(paths) <= changed:
+        sys.exit("hatch_counters: --move requires both source paths staged")
+    unstaged = subprocess.run(["git", "diff", "--quiet", "--", *paths], cwd=ROOT)
+    if unstaged.returncode:
+        sys.exit("hatch_counters: --move refuses unstaged source edits")
+    baseline = ROOT / BASELINE
+    original = baseline.read_bytes()
+    if original and not original.endswith(b"\n"):
+        sys.exit("hatch_counters: --move requires a newline-terminated register")
+    if original != git("show", ":" + BASELINE, binary=True, check=True):
+        sys.exit("hatch_counters: --move refuses an unstaged register")
+    ids = index_blob_ids([*paths, BASELINE])
+    head = git("rev-parse", "HEAD", check=True).strip()
+    prefixes = (head + ":", ":")
+    texts = read_blobs([prefix + p for p in paths for prefix in prefixes])
+    old, after = collections.Counter(), collections.Counter()
+    for path in paths:
+        for prefix, dest in zip(prefixes, (old, after)):
+            text = texts[prefix + path]
+            if text is not None:
+                dest.update(scan(path, text))
+    grants = {k: n for k, n in parse(original.decode("utf-8"))[0].items() if k[1] in paths}
+    if dict(old) != grants:
+        sys.exit("hatch_counters: --move original source inventories differ from their register")
+    if by_token(old) != by_token(after):
+        sys.exit("hatch_counters: --move must preserve every hatch/token total")
+    # Keep all other lines byte-for-byte, including pending allowances and comments.
+    kept = []
+    for line in original.splitlines(keepends=True):
+        key = _key_of(line.decode("utf-8").rstrip("\r\n"))
+        if key is None or key[1] not in paths:
+            kept.append(line)
+    additions = "".join("%s\t%s\t%s\t%d\n" % (key + (after[key],))
+                        for key in sorted(after) if after[key] > 0).encode("utf-8")
+    if subprocess.run(["git", "diff", "--quiet", "--", *paths], cwd=ROOT).returncode:
+        sys.exit("hatch_counters: --move sources changed; no register write")
+    if (index_blob_ids([*paths, BASELINE]) != ids or
+            git("rev-parse", "HEAD", check=True).strip() != head):
+        sys.exit("hatch_counters: --move index or HEAD changed; no register write")
+    # Do this last, after every subprocess: another regular writer may have
+    # installed a pending allowance while the final source/HEAD probes ran.
+    if baseline.read_bytes() != original:
+        sys.exit("hatch_counters: --move register changed; no register write")
+    baseline.write_bytes(b"".join(kept) + additions)
+    print("hatch_counters: exact staged source transfer (%d occurrence(s)); no allowances" % sum(after.values()))
+
+
 def blob_id(path, data):
     """The blob id DATA (bytes) would be staged as at PATH: git applies the path's
     eol/autocrlf filters, so the id agrees with `git add` on any checkout."""
@@ -578,6 +641,7 @@ def main(argv=None):
     g.add_argument("--staged", action="store_true")
     g.add_argument("--report", action="store_true")
     g.add_argument("--update", action="store_true")
+    g.add_argument("--move", nargs=2, metavar=("OLD", "NEW"))
     g.add_argument("--allow", nargs="+", metavar="PATH")
     g.add_argument("--write-baseline", action="store_true")
     g.add_argument("--admit", metavar="PATH")
@@ -618,6 +682,9 @@ def main(argv=None):
         for key in got["refused"]:
             print("hatch_counters: NOT admitted (token not in --tokens): %s in %s: %s" % key, file=sys.stderr)
         return 1 if got["refused"] else 0
+    if args.move:
+        move(args.move)
+        return 0
     update(args.allow or (), args.reason)
     return 0
 

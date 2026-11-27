@@ -1,0 +1,40 @@
+{
+  "root_normal_baseline_verified": true,
+  "root_normal_batches": 9,
+  "root_normal_all99_sources_match": true,
+  "root_normal_no_errors": true,
+  "root_normal_result_sha256": "46eeceb5a037ae1d2b17f0e0238b8914f487db1c3dfe790b963b389acdeae447",
+  "root_normal_result": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\bfme1\\snapshot-native-baseline-result.json",
+  "dir32_incomplete_context_was_not_a_production_failure": true,
+  "private_guard_context_receipt": "snapshot-core-complete-guard-context.json",
+  "code": {
+    "sources_each_phase": 99,
+    "strict_rows_each_phase": 1126,
+    "unmasked_all": true,
+    "all_equal": true
+  },
+  "runtime": {
+    "unchanged_code_all99": true,
+    "unchanged_definitions_undefined_aux_all99": true,
+    "identical_whole_graphs": 84,
+    "data_delta_sources": 15,
+    "data_delta_tables": 41,
+    "delta_is_only_load_name_slot_swap": true
+  },
+  "fully_name_bound_native_data_tables": 31,
+  "not_all41_vtables_fully_provider_bound": true,
+  "source_identity_limits": [
+    "T1Base_005FDE80 native DefaultModule<CAT_PHYSICS> table vs source DefaultPhysicsModuleInfo methods remains preexisting mismatch.",
+    "LightningDraw source symbol also references abstract Snapshot table; retained existing multiple-base artifact.",
+    "Bulk LightningEmissionModuleTemplate table has no direct matched-code data-address anchor in99-source cohort.",
+    "Other missing GetSnapshotName/LoadPostProcess typed map names have native role/literal evidence only; no new pins or renames."
+  ],
+  "production_source_inputs_unchanged": true,
+  "external_inputs_unchanged": true,
+  "ledger_map_unchanged": true,
+  "private_header_candidate_count": 1,
+  "no_full_gate_run": true,
+  "zero_body_credit": true,
+  "Foundation1261_recovered": false,
+  "Behavior41_closed": false
+}

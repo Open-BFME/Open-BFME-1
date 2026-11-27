@@ -1,0 +1,105 @@
+{
+  "baseline_head": "a8daabf04b082e690e376d748964ce8ddb219a43",
+  "baseline_sha256": "b419163a2e274013bc061e1ad8303800a3227026c03b5b1d7bba7b214b983120",
+  "candidate_sha256": "1b6407653866f504c67ec6d69087312a4fb5a4474a5915132752904aaecdf794",
+  "production_tool_unchanged": true,
+  "progress_source_sha256": "7fc0b40ce40f3fb0d6a2fc18e8a91770170169dc65685b7c82cceb6882e0ef1f",
+  "donor": "1e864b34e05f68568db539537b6959d94d104f57",
+  "changed_functions": [
+    "clean_coverage_lost"
+  ],
+  "other_top_level_functions_and_classes_identical": 61,
+  "new_regression_count": 26,
+  "unchanged_baseline_expected_red": {
+    "failed": 14,
+    "passed": 12,
+    "seconds": 16.3
+  },
+  "production_files_proposed": [
+    "tools/conversion_gate.py",
+    "tools/tests/test_conversion_gate_source_kind.py"
+  ],
+  "compiler_processes": 0,
+  "root_validation": "Apply generic tooling fix alone and run normal matching tests/hooks; recover the parked RTC pair only after tooling admission. No gate or byte waiver is part of this patch.",
+  "hashes": {
+    "conversion_gate.baseline.py": "b419163a2e274013bc061e1ad8303800a3227026c03b5b1d7bba7b214b983120",
+    "tools/conversion_gate.py": "1b6407653866f504c67ec6d69087312a4fb5a4474a5915132752904aaecdf794",
+    "tools/tests/test_conversion_gate_source_kind.py": "470a34cd9a640ab2cd0c2ce87cac47f6899350d2f084ca07b8320b100866e850",
+    "conversion-gate-source-kind.patch": "7108f89436aaa40388152ab8994618603ee64d7e546a3217589cfcc7cf88a7e2",
+    "red.log": "25c8d2059ea550e80a72e1253b4dc06df60143e186ba4ead715d9842732c6883",
+    "red-result.json": "87f7f36c0f8bc849d6c3cd72018beff4493eb8070bee016b70aaa910b4994e30",
+    "suite.log": "3acb37b496db78179360507f2bb8e6805bd557849b50bb18457f50ac4ca41fcc",
+    "suite-result.json": "5c2e3535078ba1ac50cec624cd05c8d77a2d403b5b674d4a1855a82a63920187",
+    "baseline-five.log": "04bfbdb06d9e3df3c3b493b34b282cce00bf96e32f88196f980655c31a91a051",
+    "baseline-five-result.json": "52132811149353698b3c3b36cfe06afafbf4a88f12a6e2199dbbda7561f1450f",
+    "run_private_tests.py": "c57f25764e8f51b9ba13cc0b379a21ea8f427b46958b0de505e107a08136a012",
+    "run_baseline_five.py": "fd9f05ba37f2f6c7b2bfe795a8c6da8758f80e9a6972674053ab39b4aa01896b",
+    "HANDOFF.md": "90be15f287c60c74a91a8527bb8247f044c33981cac2080f943ffcf9dfcbd53b"
+  },
+  "target_repo_source_git_or_claim_mutations": false,
+  "private_git_fixtures_created": true,
+  "current_head_readonly": "a8daabf04b082e690e376d748964ce8ddb219a43",
+  "production_tool_still_baseline": true,
+  "candidate_suite": {
+    "passed": 241,
+    "failed": 2,
+    "errors": 3,
+    "seconds": 175.19,
+    "new_tests_passed": 26,
+    "existing_tests_passed": 215,
+    "process_exit": 1
+  },
+  "unchanged_baseline_comparison": {
+    "exact_same_five_failure_nodes": true,
+    "failed": 2,
+    "errors": 3,
+    "seconds": 2.36,
+    "process_exit": 1,
+    "nodes": [
+      [
+        "ERROR",
+        "tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_from_a_different_base_is_refused"
+      ],
+      [
+        "ERROR",
+        "tools/tests/test_conversion_gate_dump_apply.py::test_tool_output_with_one_byte_changed_is_refused"
+      ],
+      [
+        "ERROR",
+        "tools/tests/test_conversion_gate_dump_apply.py::test_tool_reproduced_conversion_is_accepted"
+      ],
+      [
+        "FAILED",
+        "tools/tests/test_conversion_gate_outside.py::test_symlink_to_anything_refused"
+      ],
+      [
+        "FAILED",
+        "tools/tests/test_conversion_gate_outside.py::test_symlink_to_vendor_emit_header_refused"
+      ]
+    ]
+  },
+  "scope_limits": [
+    "Not a fully green suite: five original fixtures fail identically with untouched baseline.",
+    "Two symlink fixtures fail before the gate due Windows error1314.",
+    "Three dump_apply fixtures fail before judgement because converted fixture is None with either version.",
+    "Four existing encoding tests dynamically reload the original production tool path; their RuleA functions are source-identical, and normal Root replay after integration remains required.",
+    "No tests/guards skipped or changed to hide existing fixture failures.",
+    "No compiler or shared object/cache mutation; fixture-local Git/index operations only."
+  ],
+  "root_test_argv": [
+    "python3",
+    "-m",
+    "pytest",
+    "-q",
+    "tools/tests/test_conversion_gate_source_kind.py",
+    "tools/tests/test_conversion_gate_dump_apply.py",
+    "tools/tests/test_conversion_gate_encoding.py",
+    "tools/tests/test_conversion_gate_outside.py",
+    "tools/tests/test_conversion_gate_pragma.py",
+    "tools/tests/test_conversion_gate_reshown_emit.py",
+    "tools/tests/test_conversion_gate_reuse.py",
+    "tools/tests/test_conversion_gate_rule_a_r2.py",
+    "tools/tests/test_conversion_gate_shims.py",
+    "tools/tests/test_progress.py"
+  ]
+}

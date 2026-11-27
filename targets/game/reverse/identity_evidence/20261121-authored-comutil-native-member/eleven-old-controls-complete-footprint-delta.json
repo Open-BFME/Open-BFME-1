@@ -1,0 +1,110 @@
+[
+  {
+    "source": "game/GameEngine/Source/Common/BfmeConv793.cpp",
+    "exactly_removed_function": "?bfmeGoDXE@@YAXXZ",
+    "removed_runtime_section": [
+      {
+        "section_name": ".text",
+        "size": 22,
+        "flags": "0x60501020",
+        "raw": "6800000000ff150000000085c07d0650e800000000c3",
+        "definitions": [
+          [
+            "?bfmeGoDXE@@YAXXZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            1,
+            6,
+            "?g_bfmeArgDXE@@3PAEA"
+          ],
+          [
+            7,
+            6,
+            "__imp__VariantClear@4"
+          ],
+          [
+            17,
+            20,
+            "?_com_issue_error@@YGXJ@Z"
+          ]
+        ]
+      }
+    ],
+    "all_remaining_code_data_flags_definitions_relocations_graph_equal": true,
+    "literal_label_and_index_bytes_equal": true,
+    "compiler_local_labels_and_SafeSEH_indexes_compared_as_actual_target_sections_values_types_storage": true,
+    "removed_undefined": [
+      [
+        "?_com_issue_error@@YGXJ@Z",
+        32,
+        2
+      ],
+      [
+        "?g_bfmeArgDXE@@3PAEA",
+        0,
+        2
+      ],
+      [
+        "__imp__VariantClear@4",
+        0,
+        2
+      ]
+    ],
+    "new_undefined_added": [],
+    "production_source_and_object_unchanged": true
+  },
+  {
+    "source": "game/GameEngine/Source/Common/StaticInit/Rva00C6GapCallbacks.cpp",
+    "exactly_removed_function": "?Rva00C6E380Register@@YAXXZ",
+    "removed_runtime_section": [
+      {
+        "section_name": ".text",
+        "size": 12,
+        "flags": "0x60501020",
+        "raw": "6800000000e80000000059c3",
+        "definitions": [
+          [
+            "?Rva00C6E380Register@@YAXXZ",
+            0,
+            32,
+            2
+          ]
+        ],
+        "relocations": [
+          [
+            1,
+            6,
+            "?bfmeGoDXE@@YAXXZ"
+          ],
+          [
+            6,
+            20,
+            "_atexit"
+          ]
+        ]
+      }
+    ],
+    "all_remaining_code_data_flags_definitions_relocations_graph_equal": true,
+    "literal_label_and_index_bytes_equal": false,
+    "compiler_local_labels_and_SafeSEH_indexes_compared_as_actual_target_sections_values_types_storage": true,
+    "removed_undefined": [
+      [
+        "?bfmeGoDXE@@YAXXZ",
+        32,
+        2
+      ],
+      [
+        "_atexit",
+        32,
+        2
+      ]
+    ],
+    "new_undefined_added": [],
+    "production_source_and_object_unchanged": true
+  }
+]

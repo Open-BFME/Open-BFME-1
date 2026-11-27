@@ -380,3 +380,143 @@ def test_data_next_uses_the_input_it_is_given(tmp_path, monkeypatch):
     provider_repair.main(["data-next", "--no-claim", "--worklist", str(tmp_path / "w.csv")])
     provider_repair.main(["data-next", "--no-claim"])
     assert seen == [str(tmp_path / "q.csv"), str(tmp_path / "w.csv"), str(provider_repair.WORKLIST)]
+
+# A vftable has no C++ expression for sizeof. Use complete COFF objects, not
+# a compiler stub that asserts a requested byte count; verify_row still checks
+# the actual stored bytes and all relocation targets against a fixture image.
+VFTABLE = "??_7ProbeTable@@6B@"
+VFT_F, VFT_G = "?f@ProbeTable@@UAEXXZ", "?g@ProbeTable@@UAEXXZ"
+VFT_FLAGS = 0x40301040
+VFT_HOMES = {VFT_F: {BASE + 0x1004}, VFT_G: {BASE + 0x1008}}
+
+
+def vftable_object(tmp_path, monkeypatch, *, body=bytes(8), flags=VFT_FLAGS,
+                   relocs=None, table=VFTABLE, value=0, storage=2, extra=()):
+    from test_link_cycle_identity import emit
+    import reloc_ledger
+    relocs = [(0, VFT_F, 6), (4, VFT_G, 6)] if relocs is None else relocs
+    raw = bytearray(emit([
+        {"name": ".rdata", "flags": flags, "body": body, "sel": 2, "relocs": relocs},
+        {"name": ".text", "flags": 0x60500020, "body": b"\xc3" * 9},
+    ], [{"name": table, "sec": 0, "value": value, "cls": storage},
+        {"name": VFT_F, "sec": 1, "value": 4},
+        {"name": VFT_G, "sec": 1, "value": 8}] + list(extra)))
+    # The shared code-oriented COFF fixture labels defined symbols as functions;
+    # give actual section/data records their proper COFF data type instead.
+    table_at = struct.unpack_from("<I", raw, 8)[0]
+    _, symbols = reloc_ledger.parse_coff(raw)
+    for index, symbol in symbols.items():
+        if symbol["name"] == table or symbol["storage"] == 3:
+            struct.pack_into("<H", raw, table_at + 18 * index + 14, 0)
+    obj = tmp_path / "G.obj"
+    obj.write_bytes(raw)
+    (tmp_path / "game").mkdir(exist_ok=True)
+    (tmp_path / "game/G.cpp").write_text("// private COFF verification fixture\n")
+    monkeypatch.setattr(data_rows, "ROOT", tmp_path)
+    monkeypatch.setattr(data_rows._tools()[0], "obj_path", lambda source: obj)
+    return obj
+
+
+def vftable_row(size="8", table=VFTABLE):
+    return row(table, "0x00402000", size=size, section=".rdata")
+
+
+def test_vftable_own_comdat_proves_size_without_a_sizeof_compile(tmp_path, monkeypatch):
+    import reloc_ledger
+    obj = vftable_object(tmp_path, monkeypatch)
+    sections, symbols = reloc_ledger.parse_coff(obj.read_bytes())
+    sym = next(s for s in symbols.values() if s["name"] == VFTABLE)
+
+    def no_probe(*args):
+        raise AssertionError("a compiler vftable cannot be named in a sizeof probe")
+
+    sizes, why = data_rows.symbol_size(sections, symbols, sym, tmp_path / "game/G.cpp", no_probe)
+    assert sizes == {8} and "COMDAT" in why
+    img = image_with(rdata=struct.pack("<2I", BASE + 0x1004, BASE + 0x1008))
+    assert verify(img, vftable_row(), VFT_HOMES)[0]
+    for wrong in ("4", "12"):
+        ok, message = verify(img, vftable_row(wrong), VFT_HOMES)
+        assert not ok and "unproven" in message
+
+
+def test_vftable_pointer_addends_need_not_be_zero_but_each_must_match_retail(tmp_path, monkeypatch):
+    vftable_object(tmp_path, monkeypatch, body=struct.pack("<2i", 4, -4))
+    img = image_with(rdata=struct.pack("<2I", BASE + 0x1008, BASE + 0x1004))
+    assert verify(img, vftable_row(), VFT_HOMES)[0]
+    wrong = image_with(rdata=struct.pack("<2I", BASE + 0x1008, BASE + 0x1008))
+    ok, message = verify(wrong, vftable_row(), VFT_HOMES)
+    assert not ok and "retail points" in message
+
+
+def test_vftable_size_proof_does_not_relax_pointer_ownership(tmp_path, monkeypatch):
+    vftable_object(tmp_path, monkeypatch)
+    img = image_with(rdata=struct.pack("<2I", BASE + 0x1004, BASE + 0x1008))
+    assert "no retail address" in verify(img, vftable_row(), {VFT_F: VFT_HOMES[VFT_F]})[1]
+    ok, message = verify(img, vftable_row(), {**VFT_HOMES, VFT_G: {BASE + 0x1010}})
+    assert not ok and "retail points" in message
+
+
+import pytest
+
+
+@pytest.mark.parametrize("change", [
+    {"flags": VFT_FLAGS & ~0x1000},                     # ordinary allocation/padding
+    {"flags": VFT_FLAGS | 0x80000000},                  # writable
+    {"flags": VFT_FLAGS | 0x20000000},                  # executable
+    {"flags": VFT_FLAGS | 0x20},                        # code contents
+    {"flags": VFT_FLAGS | 0x80},                        # uninitialised
+    {"flags": VFT_FLAGS & ~0x40},                       # not initialized data
+    {"flags": VFT_FLAGS & ~0x40000000},                 # not readable
+    {"body": b"", "relocs": []},                     # no slots
+    {"body": bytes(10)},                               # fractional last word
+    {"relocs": [(0, VFT_F, 6)]},                       # unrelocated/null/padding word
+    {"relocs": [(0, VFT_F, 6), (0, VFT_G, 6)]},        # duplicate field
+    {"relocs": [(0, VFT_F, 6), (2, VFT_G, 6)]},        # overlapping field
+    {"relocs": [(0, VFT_F, 6), (8, VFT_G, 6)]},        # field past section end
+    {"relocs": [(0, VFT_F, 7), (4, VFT_G, 6)]},        # not a 32-bit VA pointer
+    {"value": 4},                                     # COL/prefix before vftable
+    {"extra": [{"name": "?other@@3HA", "sec": 0, "value": 4}]},
+    {"extra": [{"name": "alias", "sec": 0}]},       # alias at same start
+    {"extra": [{"name": ".hidden", "sec": 0, "cls": 3}]},
+    {"extra": [{"name": "??_R4ProbeTable@@6B@", "sec": 0}]},
+    {"storage": 3},                                   # not an external compiler table
+    {"table": "?ordinary@@3PAHA"},                    # arbitrary pointer array
+])
+def test_only_complete_dedicated_vftable_shape_proves_extent(tmp_path, monkeypatch, change):
+    vftable_object(tmp_path, monkeypatch, **change)
+    table = change.get("table", VFTABLE)
+    ok, message = verify(image_with(rdata=bytes(24)), vftable_row(table=table), VFT_HOMES)
+    assert not ok and ("unproven" in message or "not defined once" in message), message
+
+
+@pytest.mark.parametrize("mutation", ["truncated", "missing", "unknown-relocation-target", "function-type"])
+def test_vftable_incomplete_coff_payload_never_proves_size(tmp_path, monkeypatch, mutation):
+    import reloc_ledger
+    obj = vftable_object(tmp_path, monkeypatch)
+    sections, symbols = reloc_ledger.parse_coff(obj.read_bytes())
+    sym = next(s for s in symbols.values() if s["name"] == VFTABLE)
+    section = sections[sym["section"] - 1]
+    if mutation == "truncated":
+        section["body"] = section["body"][:-1]
+    elif mutation == "missing":
+        section["body"] = None
+    elif mutation == "unknown-relocation-target":
+        section["relocs"][0] = (0, max(symbols) + 1, 6)
+    else:
+        sym["type"] = 0x20
+    sizes, _ = data_rows.symbol_size(sections, symbols, sym, tmp_path / "game/G.cpp", fixture_sizer)
+    assert sizes == set()
+
+
+def test_vftable_existing_weak_external_policy_still_refuses_the_slot(tmp_path, monkeypatch):
+    import reloc_ledger
+    obj = vftable_object(tmp_path, monkeypatch)
+    raw = bytearray(obj.read_bytes())
+    _, symbols = reloc_ledger.parse_coff(raw)
+    index = next(i for i, s in symbols.items() if s["name"] == VFT_G)
+    table_at = struct.unpack_from("<I", raw, 8)[0]
+    raw[table_at + 18 * index + 16] = 105
+    obj.write_bytes(raw)
+    img = image_with(rdata=struct.pack("<2I", BASE + 0x1004, BASE + 0x1008))
+    ok, message = verify(img, vftable_row(), VFT_HOMES)
+    assert not ok and "cannot be placed" in message

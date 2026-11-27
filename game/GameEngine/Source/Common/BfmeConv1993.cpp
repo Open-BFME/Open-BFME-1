@@ -42,27 +42,32 @@ public:
 	BfmeHdrVKI *m_data;
 };
 
-struct BfmeResultEVB
+// The existing builder and its returned-object unwind action establish one
+// counted pointer, not the old sixteen-byte return stand-in. Reuse the
+// existing address-qualified owning-handle identity and declared API.
+class BfmeDropObjectA;
+class RefHandle008958D0
 {
-	~BfmeResultEVB();
+public:
+	RefHandle008958D0();
+	RefHandle008958D0(BfmeDropObjectA *p);
+	RefHandle008958D0(const RefHandle008958D0 &other);
+	~RefHandle008958D0();
 
-	void *m_bfmeAEVB;
-	void *m_bfmeBEVB;
-	void *m_bfmeCEVB;
-	void *m_bfmeDEVB;
+	BfmeDropObjectA *m_bfmeAEVB;
 };
 
 class Rva00893030Manager
 {
 public:
-	BfmeResultEVB bfmeBuildEVB(BfmeStrVKI *name);
+	RefHandle008958D0 rva00895A00(BfmeStrVKI *name);
 };
 
 extern Rva00893030Manager *g_rva00893030Manager;
 
-BfmeResultEVB bfmeMakeEVB(const char *name)
+RefHandle008958D0 bfmeMakeEVB(const char *name)
 {
 	BfmeStrVKI value(name);
 
-	return g_rva00893030Manager->bfmeBuildEVB(&value);
+	return g_rva00893030Manager->rva00895A00(&value);
 }

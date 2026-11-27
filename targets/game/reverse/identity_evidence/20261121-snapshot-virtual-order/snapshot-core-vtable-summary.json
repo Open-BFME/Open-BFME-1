@@ -1,0 +1,788 @@
+{
+  "counts": {
+    "native_role_witness": 8,
+    "full_current_name_address_anchor": 31,
+    "preexisting_provider_mismatch": 1,
+    "no_direct_table_anchor": 1
+  },
+  "tables": [
+    {
+      "source": "game/GameEngine/Source/GameClient/DrawableConstructor.cpp",
+      "symbol": "??_7Drawable@@6BSnapshot@@@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x10f154c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x419a00",
+            "0x4120a0",
+            "0x4199d0",
+            "0x41d290"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/DrawableDestructor.cpp",
+      "symbol": "??_7Drawable@@6BSnapshot@@@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x10f154c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x419a00",
+            "0x4120a0",
+            "0x4199d0",
+            "0x41d290"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/InGameUIConstructor.cpp",
+      "symbol": "??_7InGameUI@@6BSnapshot@@@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x10f5b24",
+          "slot_count": 4,
+          "original_slots": [
+            "0x44b3e0",
+            "0x44b3c0",
+            "0x44b3d0",
+            "0x44c250"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/InGameUIDestructorThunk.cpp",
+      "symbol": "??_7InGameUI@@6BSnapshot@@@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x10f5b24",
+          "slot_count": 4,
+          "original_slots": [
+            "0x44b3e0",
+            "0x44b3c0",
+            "0x44b3d0",
+            "0x44c250"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/DefaultPhysicsModuleInfoCtorThunk.cpp",
+      "symbol": "??_7DefaultPhysicsModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110bf8",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d7f70",
+            "0x5d4610",
+            "0x5d4620",
+            "0x5fda60"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LifeEventModuleInfoCtorThunk.cpp",
+      "symbol": "??_7LifeEventModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1111278",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5ddee0",
+            "0x5d4650",
+            "0x5d4660",
+            "0x5fc3f0"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningDrawModuleInfoCtorThunk.cpp",
+      "symbol": "??_7LightningDrawModuleInfo@FXParticleSystem@@6B@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x1073744",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5c550",
+            "0x88c500",
+            "0x88c500",
+            "0x88c500"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        },
+        {
+          "va": "0x1110d38",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d9030",
+            "0x5d4730",
+            "0x5d4740",
+            "0x5f4260"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionInfoCtor.cpp",
+      "symbol": "??_7EmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x110f980",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5bd730",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/LightningEmissionInfoCtor.cpp",
+      "symbol": "??_7LightningEmissionInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a8c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d6a60",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/T1Base005FDE80Ctor.cpp",
+      "symbol": "??_7T1Base_005FDE80@@6B@",
+      "classification": "preexisting_provider_mismatch",
+      "original_bindings": [
+        {
+          "va": "0x11130e0",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5ec6f0",
+            "0x5e3020",
+            "0x5e3030",
+            "0x5e3040"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/TerrainCollisionModuleInfoCtorThunk.cpp",
+      "symbol": "??_7TerrainCollisionModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11112f8",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5de770",
+            "0x5d4780",
+            "0x5d4790",
+            "0x5fcf10"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7ButterflyDrawModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110cf8",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d8bb0",
+            "0x5d46d0",
+            "0x5d46e0",
+            "0x5f0c70"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7QuadDrawModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110cb8",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d8900",
+            "0x5d46a0",
+            "0x5d46b0",
+            "0x5f5460"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7EmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x110f980",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5bd730",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7LightningEmissionInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a8c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d6a60",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7BoxEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109cc",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d5ed0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7CylinderEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a4c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d64f0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7LineEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x111098c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d5b60",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7SphereEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a0c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d61d0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7BoxEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109e0",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd220",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a60",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd060",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system.cpp",
+      "symbol": "??_7LineEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109a0",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd280",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7EmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x110f980",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5bd730",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7BoxEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109cc",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d5ed0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7SphereEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a0c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d61d0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7CylinderEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a4c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d64f0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7LineEmissionVolumeInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x111098c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d5b60",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7ButterflyDrawModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110d24",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd270",
+            "0x5d46d0",
+            "0x5d46e0",
+            "0x5f0c70"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7DefaultPhysicsModuleInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110bf8",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d7f70",
+            "0x5d4610",
+            "0x5d4620",
+            "0x5fda60"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7LightningEmissionInfo@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a8c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5d6a60",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7PointEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110960",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd040",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7QuadDrawModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110ce4",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd0e0",
+            "0x5d46a0",
+            "0x5d46b0",
+            "0x5f5460"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7SphereEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a20",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dcfe0",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7BoxEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109e0",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd220",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7CylinderEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1110a60",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd060",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7LightningEmissionModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "no_direct_table_anchor",
+      "original_bindings": []
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7LineEmissionVolumeModuleTemplate@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x11109a0",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd280",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/FXParticleSystem/fx_particle_system_bulk.cpp",
+      "symbol": "??_7?$DefaultParticleModuleTemplate@$04@FXParticleSystem@@6B@",
+      "classification": "full_current_name_address_anchor",
+      "original_bindings": [
+        {
+          "va": "0x1111240",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5dd240",
+            "0x5bd650",
+            "0x5bd660",
+            "0x5bd670"
+          ],
+          "slot1_bound": true,
+          "slot2_bound": true
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameClient/System/ParticleConstructor.cpp",
+      "symbol": "??_7Particle@@6B@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x110fe8c",
+          "slot_count": 4,
+          "original_slots": [
+            "0x5cf050",
+            "0x5c5030",
+            "0x5ceaa0",
+            "0x5cc860"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngine/Source/GameLogic/Object/ObjectDestructor.cpp",
+      "symbol": "??_7Object@@6BSnapshot@@@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x109ee44",
+          "slot_count": 4,
+          "original_slots": [
+            "0x1d3f40",
+            "0x1cee10",
+            "0x1d3e60",
+            "0x1d48a0"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    },
+    {
+      "source": "game/GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObjectDoXfer.cpp",
+      "symbol": "??_7W3DRenderObjectSnapshot@@6B@",
+      "classification": "native_role_witness",
+      "original_bindings": [
+        {
+          "va": "0x111d024",
+          "slot_count": 4,
+          "original_slots": [
+            "0x6bce10",
+            "0x6bcdf0",
+            "0x6bce00",
+            "0x6bd380"
+          ],
+          "slot1_bound": false,
+          "slot2_bound": false
+        }
+      ]
+    }
+  ]
+}

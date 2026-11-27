@@ -1,0 +1,22 @@
+{
+  "mode": "suite",
+  "exit": 1,
+  "module_path": "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\tools\\conversion_gate.py",
+  "pytest_args": [
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "--basetemp",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\pytest-suite",
+    "W:\\OpenBFME\\diagnostics\\continue-20261120-body-recovery-1656\\agents\\melee\\conversion-gate-source-kind-20261121\\tools\\tests\\test_conversion_gate_source_kind.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_dump_apply.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_encoding.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_outside.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_pragma.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_reshown_emit.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_reuse.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_rule_a_r2.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_conversion_gate_shims.py",
+    "W:\\OpenBFME\\Open-BFME-1\\tools\\tests\\test_progress.py"
+  ]
+}

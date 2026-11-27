@@ -1,0 +1,135 @@
+{
+  "round": 1,
+  "baseline": "90a9e571a9d3a9ad7e478bcb00089d8023bb0677",
+  "source": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerGlobalCallbacksSetChannel.c",
+  "source_sha256_before": "a572c7c4b07133bb82f9cdf2d0afb3af9d4daf208d118f7d330b06c9b7f79bd9",
+  "source_sha256_after": "776fd144f3739721438e8c7b30142c829e704af915a09660955ad3e99dbc7bf0",
+  "native_existing_verifier_fix": "8337c57e34b8f7be226a42017bb89af2bf8cfebb",
+  "original_witness": {
+    "caller_rva": "0x0086BA10",
+    "offset": "0x35",
+    "originalVA": "0x00C6B810",
+    "slot_offset": "0x10"
+  },
+  "existing_callback": {
+    "name": "_piUserChangedNickCallback",
+    "rva": "0x0086B810",
+    "extent": 68,
+    "ABI": "void cdecl(void*,const char*,const char*,const char*,void*)",
+    "unique_authored_strong_owner": true
+  },
+  "sole_object_delta": {
+    "kind": "DIR32",
+    "caller_offset": "0x35",
+    "old": "_piChannelUserChangedNickA",
+    "new": "_piUserChangedNickCallback"
+  },
+  "whole_object_controls": {
+    "TUs": 5,
+    "runtime_FPO_EH_COMDAT_CRT_SafeSEH_directive_sections": 366,
+    "new_definitions": 0,
+    "new_data": 0,
+    "new_weak": 0,
+    "all_other_graph_facts_equal": true
+  },
+  "normal_family_gate": {
+    "functions": "158/158",
+    "DIR32": 66,
+    "static_ok": 3,
+    "string_literals": 5,
+    "empty_string_refs": 2,
+    "baseline_findings": 0
+  },
+  "normal_FDU": "all defined functions already matched",
+  "native_retirement": "Dir32-Retire: _piChannelUserChangedNickA 0x00C6B810 for _piUserChangedNickCallback",
+  "native_scoped_link_preview": {
+    "before": "0->0",
+    "after": "0->94",
+    "caller_physical_extent": 94,
+    "before_exit": 1,
+    "after_exit": 0,
+    "before_seconds": 585.2,
+    "after_seconds": 1022.5,
+    "legacy_census": "2026-11-21 10:53 at 42237e2367"
+  },
+  "new_CPP_exact_bytes": 0,
+  "new_unique_text_union_bytes": 0,
+  "new_static_data_bytes": 0,
+  "limits": {
+    "transitive_native_RetailTruth_unknowns": [
+      "120B _piPlayerChangedNick -> own STATIC3 _piAddPlayer225",
+      "79B _piAddPlayerChangedNickCallback -> own STATIC3 _piAddCallback197"
+    ],
+    "ordinary_current_false_source": "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerCallbacks.c",
+    "fresh_normal_whole_source_byte_gate_proof_not_cached_current_claim": true,
+    "full_inherited_host_ENV_equality_claimed": false,
+    "full_image_link_or_runtime_claimed": false
+  },
+  "donor": {
+    "revision": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+    "checked_utc": "2026-11-24T15:31:34.914401+00:00",
+    "native_sweep_current": true,
+    "reviewed_sources": [
+      "Code/GameEngine/Source/GameNetwork/GameSpy/peer/peerGlobalCallbacksSetChannel.c",
+      "Code/GameEngine/Source/GameNetwork/GameSpy/peer/peerUserChangedNickCallback.c"
+    ],
+    "result": "No source port: donor retains old reference and forbidden alternatename; independently proven B1 owned callback used."
+  },
+  "header_adoption": "Exact game/shim header search finds no chatChannelCallbacks/CHAT/callback declaration. sweep Peer.h is different PEERCallbacks API; existing table view unchanged.",
+  "objects": {
+    "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerGlobalCallbacksSetChannel.c": {
+      "source_sha256": "776fd144f3739721438e8c7b30142c829e704af915a09660955ad3e99dbc7bf0",
+      "before_object_sha256": "424b05ec008beb958d3df20b09e209c25d6200db73cb068cb001a73109c7dcad",
+      "after_object_sha256": "eb8702ae30a39b734a1067acf2a981436fd09207012169404719738544785e45",
+      "ordinary_current": true,
+      "compiler_argv_identical": true,
+      "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+    },
+    "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerUserChangedNickCallback.c": {
+      "source_sha256": "3e10d6ba4449c004d3714048ed727e0764b1949ba4e31e774695550f5a283be3",
+      "before_object_sha256": "2fb061ee7000b03bed3bd26481f3404efd3302beb29050c0fd60a7b6faaa5c1c",
+      "after_object_sha256": "2fb061ee7000b03bed3bd26481f3404efd3302beb29050c0fd60a7b6faaa5c1c",
+      "ordinary_current": true,
+      "compiler_argv_identical": true,
+      "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+    },
+    "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerPlayersRoomFlags.c": {
+      "source_sha256": "7c14895e61058f8321c331458a288adf089f080b36ac5f40c598ab78d4677e47",
+      "before_object_sha256": "7e7e0519b3149a67724eedfebe30293655bf841f362b179ba2fd903e70a9e9cd",
+      "after_object_sha256": "7e7e0519b3149a67724eedfebe30293655bf841f362b179ba2fd903e70a9e9cd",
+      "ordinary_current": true,
+      "compiler_argv_identical": true,
+      "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+    },
+    "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerCallbacks.c": {
+      "source_sha256": "5135c4f8f0970db1e136817a7f2869bd5cc941b5f695d13b7ca748e3095ba9de",
+      "before_object_sha256": "7936bdc75bc13654f0a1813345a967a99501e65f603bfcde647697a822c66e11",
+      "after_object_sha256": "684eea0bff3d8629a4081babb315d7909589727a7ee2a3409d8be73e87b78c5a",
+      "ordinary_current": false,
+      "compiler_argv_identical": true,
+      "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+    },
+    "game/GameEngine/Source/GameNetwork/GameSpy/peer/peerRoomsInit.c": {
+      "source_sha256": "dd2fe06137b4d0d393ec0d046e77747565d849d289bb7c8b105e775e8c73c42b",
+      "before_object_sha256": "8167a00136708327bbb099bd7191b8bcfa62b98b9d63f4ebb0ee88cedf09e214",
+      "after_object_sha256": "8167a00136708327bbb099bd7191b8bcfa62b98b9d63f4ebb0ee88cedf09e214",
+      "ordinary_current": true,
+      "compiler_argv_identical": true,
+      "compiler_sha256": "2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515"
+    }
+  },
+  "private_archive": "diagnostics/ten-rounds-20261125-2054/bfme1/r01",
+  "private_receipt_sha256": {
+    "PEER-WHOLE-OBJECT-PROOF.json": "82a67d6a949bc163e3fea1bb6799a69adca79f216444ad611093aa27d75f1375",
+    "PEER-CONTROL-INPUTS.json": "40a63937299145d101bec7c0a0797bf8884443944e7cd72061de2685a36d2676",
+    "PEER-ORIGINAL-COMPLETE-DECODE.json": "bd0bbd2277ac52dfd45ab5c2115d5298bb3f9e2b14301cd675a8b1e68c3872d6",
+    "INDEPENDENT-REVIEW.md": "7001ee2c76b9e7d6b32ad3b768e7faf55a4bb9f9ef9c8c540b3df8185c107f08",
+    "peer-whole-object-proof.py": "fb0ef2d0b67d47c99793a0ca219a596bcc59a54261b1e17c23705e444832f07e",
+    "callback-whole-provider-control-build.log": "9f76a4b13efbafb21f259d4b7a74abc89cf50676d8f886dd38ce0322c47f67a9",
+    "callback-whole-provider-after-build.log": "06d644d1ec15cc1fb10dedf6beaf14f5b4c26c8bacf81f8506e3c6828bcf407f",
+    "peer-link-before.log": "a94b66709ab04e29ca4ce30f2c117c8224b64bc9912db3062c16ce378c5c89b3",
+    "peer-link-after.log": "5b9065b980e171d39b0d75ee14a90554308a988446e595ff9977a7de45ab7af8",
+    "peer-native-retire.log": "cc51bd1219ab1ee71e04fe673a6a4f99d9f10fad3e70cc57e9841e6bd3308f12",
+    "peer-fdu.log": "1acbe863198593932808b39bef4a8fa157fd549415074975abe62b15992c5dae"
+  }
+}

@@ -1,0 +1,238 @@
+{
+  "scope": "original CodeView only, no compiler and no CRT implementation source",
+  "member_sha256": "a03833b45869b6b2396e8e44c3ebccc59af1c18d1bae29cb42cd24da8768c0ba",
+  "classes": [
+    {
+      "type_index": "0x1014",
+      "kind": "0x1504",
+      "name": "type_info",
+      "size": 12,
+      "layout": {
+        "bases": [],
+        "fields": [
+          [
+            4,
+            "_m_data",
+            "void*",
+            4
+          ],
+          [
+            8,
+            "_m_d_name",
+            "char[1]",
+            1
+          ]
+        ],
+        "statics": [],
+        "methods": [
+          "__vecDelDtor",
+          "before",
+          "name",
+          "operator!=",
+          "operator==",
+          "raw_name",
+          "type_info",
+          "~type_info"
+        ],
+        "virtual": [
+          "__vecDelDtor",
+          "~type_info"
+        ],
+        "vslots": {
+          "0": "__vecDelDtor(uint)"
+        },
+        "vfptr": true
+      }
+    }
+  ],
+  "member_function_type_records": [
+    {
+      "type_index": "0x1005",
+      "return_type": "void",
+      "return_type_index": "0x3",
+      "class_type": "type_info",
+      "this_type": "type_info*",
+      "this_type_index": "0x1001",
+      "calling_convention": 11,
+      "flags": 0,
+      "parameter_count": 0,
+      "parameters": [],
+      "parameter_type_indices": [],
+      "this_adjust": 0
+    },
+    {
+      "type_index": "0x100a",
+      "return_type": "int",
+      "return_type_index": "0x74",
+      "class_type": "type_info",
+      "this_type": "type_info*",
+      "this_type_index": "0x1009",
+      "calling_convention": 11,
+      "flags": 0,
+      "parameter_count": 1,
+      "parameters": [
+        "type_info*"
+      ],
+      "parameter_type_indices": [
+        "0x1007"
+      ],
+      "this_adjust": 0
+    },
+    {
+      "type_index": "0x100d",
+      "return_type": "char*",
+      "return_type_index": "0x100c",
+      "class_type": "type_info",
+      "this_type": "type_info*",
+      "this_type_index": "0x1009",
+      "calling_convention": 11,
+      "flags": 0,
+      "parameter_count": 0,
+      "parameters": [],
+      "parameter_type_indices": [],
+      "this_adjust": 0
+    },
+    {
+      "type_index": "0x100f",
+      "return_type": "void",
+      "return_type_index": "0x3",
+      "class_type": "type_info",
+      "this_type": "type_info*",
+      "this_type_index": "0x1001",
+      "calling_convention": 11,
+      "flags": 0,
+      "parameter_count": 1,
+      "parameters": [
+        "type_info*"
+      ],
+      "parameter_type_indices": [
+        "0x1007"
+      ],
+      "this_adjust": 0
+    },
+    {
+      "type_index": "0x1011",
+      "return_type": "void*",
+      "return_type_index": "0x403",
+      "class_type": "type_info",
+      "this_type": "type_info*",
+      "this_type_index": "0x1001",
+      "calling_convention": 11,
+      "flags": 0,
+      "parameter_count": 1,
+      "parameters": [
+        "uint"
+      ],
+      "parameter_type_indices": [
+        "0x75"
+      ],
+      "this_adjust": 0
+    }
+  ],
+  "original_procedure_records": [
+    {
+      "name": "type_info::type_info",
+      "length": 11,
+      "type_index": "0x100f",
+      "record_kind": "0x1110"
+    },
+    {
+      "name": "type_info::`vector deleting destructor'",
+      "length": 75,
+      "type_index": "0x1011",
+      "record_kind": "0x1110"
+    },
+    {
+      "name": "type_info::operator=",
+      "length": 5,
+      "type_index": "0x0",
+      "record_kind": "0x1110"
+    }
+  ],
+  "native_type_records": {
+    "0x1000": {
+      "kind": "0x1504",
+      "raw": "000080000000000000000000000000000000747970655f696e666f00"
+    },
+    "0x1001": {
+      "kind": "0x1002",
+      "raw": "001000000a040000"
+    },
+    "0x1002": {
+      "kind": "0xa",
+      "raw": "010050f1"
+    },
+    "0x1003": {
+      "kind": "0x1002",
+      "raw": "021000000a000000"
+    },
+    "0x1004": {
+      "kind": "0x1201",
+      "raw": "00000000"
+    },
+    "0x1005": {
+      "kind": "0x1009",
+      "raw": "0300000000100000011000000b0000000410000000000000"
+    },
+    "0x1006": {
+      "kind": "0x1001",
+      "raw": "001000000100f2f1"
+    },
+    "0x1007": {
+      "kind": "0x1002",
+      "raw": "061000002a000000"
+    },
+    "0x1008": {
+      "kind": "0x1201",
+      "raw": "0100000007100000"
+    },
+    "0x1009": {
+      "kind": "0x1002",
+      "raw": "061000000a040000"
+    },
+    "0x100a": {
+      "kind": "0x1009",
+      "raw": "7400000000100000091000000b0001000810000000000000"
+    },
+    "0x100b": {
+      "kind": "0x1001",
+      "raw": "700000000100f2f1"
+    },
+    "0x100c": {
+      "kind": "0x1002",
+      "raw": "0b1000000a000000"
+    },
+    "0x100d": {
+      "kind": "0x1009",
+      "raw": "0c10000000100000091000000b0000000410000000000000"
+    },
+    "0x100e": {
+      "kind": "0x1503",
+      "raw": "7000000011000000010000f1"
+    },
+    "0x100f": {
+      "kind": "0x1009",
+      "raw": "0300000000100000011000000b0001000810000000000000"
+    },
+    "0x1010": {
+      "kind": "0x1201",
+      "raw": "0100000075000000"
+    },
+    "0x1011": {
+      "kind": "0x1009",
+      "raw": "0304000000100000011000000b0001001010000000000000"
+    },
+    "0x1012": {
+      "kind": "0x1203",
+      "raw": "09140000031000001115130005100000000000007e747970655f696e666f00f1111503000a1000006f70657261746f723d3d00f1111503000a1000006f70657261746f72213d00f1111503000a1000006265666f726500f1111503000d1000006e616d6500f3f2f1111503000d1000007261775f6e616d6500f3f2f10d1501000304000004005f6d5f6461746100f2f10d1501000e10000008005f6d5f645f6e616d6500111501000f100000747970655f696e666f00f2f11115130111100000000000005f5f76656344656c44746f7200f3f2f1"
+    },
+    "0x1013": {
+      "kind": "0xa",
+      "raw": "010050f1"
+    },
+    "0x1014": {
+      "kind": "0x1504",
+      "raw": "0b0006001210000000000000131000000c00747970655f696e666f00"
+    }
+  }
+}

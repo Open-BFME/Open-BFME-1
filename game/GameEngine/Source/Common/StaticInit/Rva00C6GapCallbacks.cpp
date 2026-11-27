@@ -19,16 +19,6 @@ void Rva00C6FC70Release()
     g_bfmeHostVSF.~AsciiString();
 }
 
-// CRT initializer table slot RVA 00EA5E28 points to 00C6E380.
-// The registered callback is independently matched at 00C71600.
-extern "C" int __cdecl atexit(void (__cdecl *callback)());
-void bfmeGoDXE();
-
-void Rva00C6E380Register()
-{
-    atexit(bfmeGoDXE);
-}
-
 // Registered by the push at RVA 0x004555F3 before atexit at 0x004555FB.
 // The complete 10-byte callback loads VA 0x012F15CC into ECX and jumps
 // through ILT 0x0001F951 to the existing Rva000782A0::invoke body.

@@ -1,0 +1,56 @@
+[
+  {
+    "va": "0x011236E8",
+    "rva": "0x00D236E8",
+    "size": 35,
+    "source_name": "g_011236E8",
+    "text": "TERRAIN_DECAL_DEMORALIZED_OBSOLETE",
+    "original_sha256": "48a55688d1380b96fdd6d382922bfcc47ea0c03b29a8e3bdfd24f649574d75fc",
+    "data_row_overlap": false
+  },
+  {
+    "va": "0x011236DC",
+    "rva": "0x00D236DC",
+    "size": 8,
+    "source_name": "g_011236DC",
+    "text": "EXHorde",
+    "original_sha256": "bd14089099ceb9e27bc4dbbf638cfbace6b91eb2e9575ffc39b1f23e718f36fe",
+    "data_row_overlap": false
+  },
+  {
+    "va": "0x011236CC",
+    "rva": "0x00D236CC",
+    "size": 11,
+    "source_name": "g_011236CC",
+    "text": "EXHorde_UP",
+    "original_sha256": "7bcc1ee62e0713209842625afb204f8091795a1fdc60ba5246ddd804fc15ce6d",
+    "data_row_overlap": false
+  },
+  {
+    "va": "0x011236C0",
+    "rva": "0x00D236C0",
+    "size": 9,
+    "source_name": "g_011236C0",
+    "text": "EXHordeB",
+    "original_sha256": "be16ee937118a7f7587d6d0a7a4b37833ba76d6ba980e5c45d7ea6355b45dc84",
+    "data_row_overlap": false
+  },
+  {
+    "va": "0x011236B0",
+    "rva": "0x00D236B0",
+    "size": 12,
+    "source_name": "g_011236B0",
+    "text": "EXHordeB_UP",
+    "original_sha256": "7fc059699f33407e17fbbf20f937b65f1f6cc9a8c4ec5e26d1a0afddd3ff9b04",
+    "data_row_overlap": false
+  },
+  {
+    "va": "0x011236A0",
+    "rva": "0x00D236A0",
+    "size": 12,
+    "source_name": "g_011236A0",
+    "text": "EXJunkCrate",
+    "original_sha256": "8a64a93ae899bb4321387c14512dec637b1636aa472bb2024772207d2b899ffa",
+    "data_row_overlap": false
+  }
+]

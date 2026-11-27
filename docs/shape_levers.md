@@ -4365,3 +4365,106 @@ general position-based rename. Evidence: targets/game/reverse/identity_evidence/
 ### VC7.1: store an owned vptr before activating a local destructor guard
 
 A manual store in a novtable EH destructor body moved after the EH-state write. A local guard constructor that first saves this and then stores the existing owned vptr retains the73-byte primary sequence. Preserve the real guard destructor body for unwind; importing it leaves an invalid helper import. Only its always-inlined constructor uses dllimport plus forceinline suppression. Review the changed LEA-to-local-cleanup unwind path and all other retained sections, SafeSEH and COMDAT mappings, emitted helpers and provider/consumer gates. This is specific to MSVC13.10 EHsc/O2 and the observed opaque prefix, not a recovered full-class ABI. See targets/game/reverse/attempt_support/20261119-next500-1927-particle-vtable-binding.md.
+
+### VC7.1: a proved one-bit invariant selects the retail TEST encoding
+
+The 67-byte RVA 0x002D9F90 bank differed only by `test eax,edx` instead of
+`test edx,eax`. Immediately after `const unsigned int mask = 1u <<
+(condition & 31)`, `__assume((mask & (mask - 1u)) == 0)` produces the retail
+operand order without changing the remaining instructions. On the pinned
+32-bit VC7.1 compiler the count is 0..31 and mask has exactly one set bit,
+so this assumption is true for every input; it imposes no extra precondition.
+The ordinary build retains the original default optimization settings and
+existing notifier ILT binding. Nonzero, range and extraction-domain hints,
+and adding nonzero to the one-bit hint, did not close the mismatch. This is
+a measured effect in this TU, not a general optimizer rule or proof of the
+original source. See `game/GameEngine/Source/GameLogic/Object/Upgrade/
+Rva002D9F90ClearCondition.cpp` and
+`targets/game/reverse/attempt_support/20261120-002d9f90-one-bit-invariant.md`.
+
+### STLport vector copy: reconcile both linkage and exception context
+
+The native STLport 4.6 vector<ICoord2D>::_M_allocate_and_copy implementation
+reproduces RVA 0x009F5370's complete 94-byte loop only when both TU-local
+`_STLP_USE_STATIC_LIB` and `_STLP_NO_EXCEPTIONS` are defined. Original VC7.1
+`/DNDEBUG /MD /EHsc` and base options remain unchanged. Controls emit 143
+bytes with neither macro, 161 with static linkage alone, and 78 with only
+STL exceptions disabled. Both macros select retail's node allocator and
+non-unwinding loop; they are not substitutes for proving its element layout
+and allocation targets. Canonical ICoord2D is eight bytes, and both retail
+call relocations verify. The six extra template helpers match existing
+same-name providers. Other TUs still emit an EH variant of the primary
+symbol, so this finding does not establish full-image COMDAT selection.
+See `game/Libraries/Source/WWVegas/WWLib/VectorICoord2DAllocateAndCopy.cpp`
+and `targets/game/reverse/identity_evidence/20261120-009f5370-vector-allocate-copy.md`.
+
+
+## Preserve OVERRIDE's member object and the inline recursive walker (2026-11-20)
+
+AIMoveToState::onEnter,0x00173470 (322B,MSVC7.1 13.10.3077,/O2 /MD /EHsc)
+was banked at331B with an early-EDI-push mismatch. Normal member declarations
+alone were byte-neutral. After correcting an extra null guard and retaining
+the witnessed machine local for the first geometry lookup,the remaining
+wrapper load folded to `[ecx+4]` instead of retail's `add eax,4;mov eax,[eax]`.
+The actual GeneralsMD Thing member is OVERRIDE<ThingTemplate>. Keeping that
+member object and the visible inline recursive getFinalOverride gives the
+complete322B exactly; declaring the walker only gives317B. This also fixes the
+fallback copy's register context. It is an observed result for this TU,not a
+general claim about wrapper classes or a semantic layout proof from bytes alone.
+
+The complete AIStates.cpp integration uses existing shared types plus scoped
+BFME field views. A static __forceinline accessor returning the geometry member
+by const reference gives retail's LEA and emits no helper body; direct pointer
+arithmetic or direct member access gave MOV+ADD and324B. All103 existing rows
+remain strict-exact in the private whole-TU control. See
+identity_evidence/20261120-00173470-native-override-and-tu.md and the landed
+AIStates.cpp body; ordinary gates still establish production acceptance.
+
+
+
+## A true override wrapper and nonthrowing comparison restore conditional-string temporary scheduling (2026-11-20)
+
+AIAttackState::update, 0x0017CAE0, 1108 B, native MSVC 7.1
+13.10.3077 /O2 /DNDEBUG /MD /EHsc in AIStates.cpp. The old private
+/EHs-c- bank was 1100 B with 433 positional differences. Replacing its
+manual template/nextOverride unwrapping with the actual OVERRIDE<ThingTemplate>
+member and visible recursive Overridable walker gives 1108 B/15 differences
+under that old profile; reference-receiver aliases alone are neutral.
+
+The proper TU uses /EHsc. With StringBase<char>::compare(const char*) declared
+potentially throwing it emits a 1230-B body/EH frame. The entire native 90-B
+comparison at 0x000A2BB0 contains only pointer/length reads, a byte length loop,
+inline repe cmpsb and return arithmetic: no calls, allocation, callback or
+C++ throw. A TU-local explicit specialization declaration `template<> int
+StringBase<char>::compare(const char*) const throw();` before the new native
+view's uses preserves the real provider/mangling and /EHsc and gives 1108 B
+without an EH frame. It also moves the conditional temporary cleanup-bit store
+from before getName to after the successful call/load/test, matching retail.
+This contract is supported by that complete native provider; do not apply it
+to allocating comparisons or unrelated getters by analogy.
+
+The last four EAX/EDX differences in virtual setState disappear when the
+proven native default-state ID at machine+0x18 is materialized in an unsigned
+value local before the call. A const-reference-returning accessor is neutral;
+the value accessor is exact. Preserving the native getMachine accessor at the
+earlier shouldExit call also preserves its reload and instruction size in the
+proper TU. These are measured effects, not general register-allocation laws.
+
+Whole-TU proof: main 1108 B, 37 relocations, strict/unmasked and no unresolved
+symbols; 104 existing rows remain strict/exact in fresh control/candidate
+objects. Eighteen emitted small helper definitions were independently compared
+under their own emitted names against the current evidenced native providers.
+No new pins, aliases, compiler flags, imported helper names or gate changes.
+Evidence: targets/game/reverse/identity_evidence/20261120-0017cae0-native-attack-update.md.
+
+
+## Inline provenance includes COMDAT selection (2026-11-21)
+
+With VS2003, matching body bytes alone can miss original inline provenance. The Invkerr26-byte mapper first matched raw bytes out of line but emitted NODUPLICATES1 instead of native ANY2; ordinary inline preserved the complete body and restored ANY2. ComRaise uses ordinary inline under its evidenced /O2 /G6 /Ob2 /EHsc /GR context: real calls, throw metadata and the virtual table naturally emit constructor54, copy50, destructor38 and scalar58 with the original ANY2 selections. No forced-inline or address emitter is needed. Its whole251-byte code and150-byte metadata graph also retain the native weak E-to-strong-G record and prefixed LARGEST6 vtable.
+
+Verified sources: game/Libraries/Source/COM/ComInvokeError.cpp (7f066038212c) and ComRaise.cpp. Full identity and native selection evidence: targets/game/reverse/identity_evidence/20261121-comraise-native-member.md and the corresponding Invkerr evidence. This is measured for these members and profiles, not a general substitute for comparing every COMDAT.
+
+
+### Inline without a real emission root can emit nothing (2026-11-21)
+
+The three small ComUtil functions demonstrate the limit of the preceding inline technique. Under VS2003 /O2 /G6 /Ob2 /EHsc /DNDEBUG /MD, normal out-of-line definitions reproduce all144 bytes and the used original VARIANT API but change original ANY2 to NODUPLICATES. With the original whole member still needed, both object orders failLNK2005/LNK1169. Adding ordinary inline produces no runtime sections or function symbols. A real source emission context is required; neither a raw byte match nor a forced emitter fixes this. No candidate source/header is installed. Evidence: targets/game/reverse/attempt_support/20261121-comutil-natural-emission/BLOCKER_HANDOFF.md.

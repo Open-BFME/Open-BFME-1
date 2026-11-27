@@ -1,0 +1,44 @@
+{
+  "source": "game/GameEngine/Source/Common/BfmeConv1803.cpp",
+  "source_sha256": "902190eede09d1c4f60b1fee0f8a4a361962e302ac454d0460e87655d9d3acc0",
+  "normal_object_proof_sha256": "e67b8562962f0dd402170601a58f463d74bd0e9d5d575f358dfc92bfa2d8b960",
+  "donor_source_sha256": "2c0941e4e052fd1567c7284492b62043f5057e5a492f564cf20c2f477236b6b8",
+  "donor_head": "e2e99959950e6eebfe1ced5663aa05de320afc52",
+  "private_root": "W:\\OpenBFME\\diagnostics\\one-per-project-20261125-170839\\bfme1",
+  "private_artifacts": {
+    "TEXTURE.before.cpp.txt": "95b1a5fc746ddc23c9729bc6113d09fefc3625a20ff7eec24091263b7d841aa6",
+    "TEXTURE.candidate.cpp.txt": "902190eede09d1c4f60b1fee0f8a4a361962e302ac454d0460e87655d9d3acc0",
+    "texture-before.obj": "8fa0c2a59c02b4c1ea91f559935c1c9aa64022735526c6de5844e340337b2e4f",
+    "texture-before.deps.json": "1c4ebdb9535afb31cafa468d38ebbee217da7365f4fe94c8c97d1afaf45db80c",
+    "texture-normal-after.obj": "5194d3676d27ce72c049bdb814087636b249bbea16eed69f4a3d72ecdf753187",
+    "texture-normal-after.deps.json": "d768dc925ca54427e5e17e151f98a7c4479210df4806bac304bd0c5018882f9c",
+    "TEXTURE-PRIVATE-TRIAL.json": "24ad68130bcfb85acb77aa32809106e35e89a9d198d39152480b2bc39e55ff6f",
+    "texture-private-compiler.log": "b6152dd98389674a214e34060daf919cb545d1f335fe42486832604c6371ac13",
+    "texture-private-constructor-trial.first-serialization-error.log": "b9e7aabb5c9a9b9da399ef954cf896c47475901ff384f158e5a5d935786d0f55",
+    "texture-private-existing-object-analysis.log": "465c914af66d1c0461e413b7cbe1bd938590503f21042e417f083b44120f41c8",
+    "texture-private-constructor-trial.py": "d0bf024a04bd18335dca2a5b19645b82dffb3fef9e0cf77400945e1cf207bd67",
+    "prove-texture-whole-objects-readonly.py": "c3199784eed94ac74c00bffae28a618f0f7abc5f57b7237333e6e82654262a6f",
+    "texture-normal-object-proof.py": "0a7ae048a2f90f4421c525246f4bc7f3b609cdcd5176d5d0e61c8f4e36cb6dca",
+    "texture-whole-scope-control-build.log": "93afedeee8a37b73511635b56f65d27c8d3b5d6b6998324a1bbac72bb5548bf4",
+    "texture-normal-candidate-build.log": "a2ce83d2bd99bfe5966921973868cd3d06e53b72148d279b785fe030c9e0da0d",
+    "texture-link-before.log": "d84581d9161a081c557779d3454b02a21feaad91626c0b483f4745a0c31db335",
+    "texture-link-after.log": "ed70e1f22a4c7f557a92609093f2e7d2117b055c4c69c8470a5edd27f577ef91",
+    "texture-fdu.log": "1acbe863198593932808b39bef4a8fa157fd549415074975abe62b15992c5dae",
+    "texture-caller-callees.log": "098108814e7955dacae4f25554f4359e7436cee691c2e7b91b3c264fab2de7fe",
+    "texture-original-caller-base-ctor.log": "ca8acd27035e57ceb14ecc44f84d7fd8526afe54bf636029a73c670f69a3093d",
+    "TEXTURE-PRIVATE-SOURCE-CLEANUP.json": "84136a64c7acbeada79b0c65b758f60017039ff8e2197abc8d472e5e84885e7d",
+    "provider-Rva006D51B0Ctor.obj": "1fcaf92c0ac9bae44ce376e2367ec520f34fa5ee80f894430749eb2fe34c6691",
+    "provider-Rva006D5280Ctor.obj": "cc94b054b39d0c00f8ccbedb02b45da2f93e53a7b816e208ba2b0f4ffc731c95"
+  },
+  "private_candidate_object": {
+    "path": "W:\\OpenBFME\\Open-BFME-1\\build\\agent-transport-one-20261125-1708\\texture-qualified-ctor\\candidate.obj",
+    "sha256": "c3bcbe488cbd0e4164a9a364495595b935125981f74c873da39d8776e61514b1"
+  },
+  "tracked_artifacts": {
+    "HANDOFF.md": "b25e33b71c22b67784b1d45003a2b117b0a2856cef43441f90a73c192ddb6369",
+    "NATIVE-PROOF.json": "e67b8562962f0dd402170601a58f463d74bd0e9d5d575f358dfc92bfa2d8b960",
+    "OBJECT-PROOF.json": "92aa7c42a7c74a745869daee4e19d7851aea776a7479a9e79de9d3bafcdfb04c",
+    "REFERENCE.json": "2ab2ddad9544c7d6fc58ea6463e55dba442b2094b912379f09e1127177aa6b89"
+  },
+  "new_exact_body_or_union_bytes": 0
+}

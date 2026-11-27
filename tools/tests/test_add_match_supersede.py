@@ -8,6 +8,7 @@ else it touched.
 """
 import csv
 import io
+import subprocess
 import sys
 from pathlib import Path
 from types import SimpleNamespace
@@ -450,3 +451,194 @@ def test_vendored_row_in_paused_d3dx_region_refused(tmp_path, monkeypatch, rva):
     proof.parent.mkdir(parents=True)
     proof.write_text(f"{rva} is {REAL}, not {VENDORED_OLD}.\n")
     assert_refused(*files)
+
+
+# A renamed real parent and its existing compiler-label cleanup must be one
+# verified ledger state. The fake byte gate tests the transaction only; the
+# original/native proof remains an independent admission requirement.
+PARENT_OLD = "?oldParent@@YAXXZ"
+CHILD = "?existingCleanup@@YAXXZ"
+CHILD_RVA = "0x00ABCE00"
+
+
+def arrange_parent_correction(tmp_path, monkeypatch, *, notes=None, status="matched",
+                              child_source=SOURCE_REL, parent_source=SOURCE_REL,
+                              size="158", rva="0x00ABCD00", extra_args=()):
+    proof_rel = "targets/game/reverse/identity_evidence/parent.md"
+    parent = (f"{PARENT_OLD},,0x00ABCD00,158,{parent_source},matched,authored")
+    files = arrange(tmp_path, monkeypatch, gate=0, scaffold=parent, size=size,
+                    target_rva=rva, extra_args=("--correct-identity", PARENT_OLD,
+                                              "--identity-evidence", proof_rel, *extra_args))
+    proof = tmp_path / proof_rel
+    proof.parent.mkdir(parents=True)
+    proof.write_text(f"The original same body proves {PARENT_OLD} -> {REAL}.\n")
+    if notes is None:
+        notes = f"authored cleanup;gen-funclet;parent={PARENT_OLD};object-symbol=$L878;keep this prose"
+    functions, _deleted, _source = files
+    functions.write_bytes(functions.read_bytes() +
+        f"{CHILD},,{CHILD_RVA},11,{child_source},{status},{notes}\r\n".encode())
+    monkeypatch.delenv("BFME_RUN_DIR", raising=False)
+    monkeypatch.setenv("BFME_CLAIMS", "off")
+    return files
+
+
+def ledger_rows(functions):
+    return list(csv.DictReader(io.StringIO(functions.read_text(encoding="utf-8"))))
+
+
+@pytest.mark.parametrize("gate", [0, 1])
+def test_same_source_parent_and_158b_11b_child_are_verified_atomically(
+        tmp_path, monkeypatch, gate):
+    real_run = subprocess.run
+    functions, deleted, source = arrange_parent_correction(tmp_path, monkeypatch)
+    # Git is real, isolated and local. Only the C++ byte verifier is doubled.
+    real_run(["git", "init", "-q", str(tmp_path)], check=True)
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    seen = []
+
+    def verify(command, **kwargs):
+        if command[0] == "git":
+            return real_run(command, **kwargs)
+        assert kwargs["cwd"] == tmp_path
+        assert command[-1] == SOURCE_REL  # whole-source verification, not one row
+        assert kwargs["env"]["ADDMATCH_BOUNDARY_NAME"] == REAL
+        rows = ledger_rows(functions)
+        parent = next(r for r in rows if r["name"] == REAL)
+        child = next(r for r in rows if r["name"] == CHILD)
+        assert parent["target_size"] == "158"
+        assert child["target_size"] == "11" and child["target_rva"] == CHILD_RVA
+        assert f"parent={REAL}" in child["notes"].split(";")
+        assert "object-symbol=$L878" in child["notes"].split(";")
+        assert PARENT_OLD not in [r["name"] for r in rows]
+        assert "keep this prose" in child["notes"]
+        seen.append(True)
+        return SimpleNamespace(returncode=gate)
+
+    monkeypatch.setattr(add_match.subprocess, "run", verify)
+    if gate:
+        with pytest.raises(SystemExit):
+            add_match.main()
+        assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+    else:
+        add_match.main()
+        assert f"parent={REAL}" in next(r for r in ledger_rows(functions) if r["name"] == CHILD)["notes"]
+    assert seen == [True]
+
+
+def test_parent_retarget_preserves_all_other_bytes_and_mixed_terminators(tmp_path, monkeypatch):
+    functions, _deleted, _source = arrange_parent_correction(tmp_path, monkeypatch)
+    raw = functions.read_bytes()
+    records = add_match.ledger_io.split_records(raw)
+    # Exact marker with no object-symbol is also a native $L-named funclet.
+    extra = (f"$L901,,0x00ABCF00,8,{SOURCE_REL},matched,gen-funclet;parent={PARENT_OLD};Begründung\n"
+             f"?other@@YAXXZ,,0x00ABD000,4,game/Other.cpp,matched,foreign;parent={PARENT_OLD}\r\n").encode()
+    functions.write_bytes(records[0][0] + b"\r\n" + records[1][0] + b"\r\r\n" +
+                          records[2][0] + b"\n" + extra)
+    before = functions.read_bytes()
+    add_match.main()
+    expected_kept = b"".join(payload.replace(f"parent={PARENT_OLD}".encode(), f"parent={REAL}".encode()) + term
+        if add_match.ledger_key(add_match.ledger_io.fields(payload)) in {(CHILD, 0x00ABCE00), ("$L901", 0x00ABCF00)}
+        else payload + term
+        for payload, term in add_match.ledger_io.split_records(before)
+        if add_match.ledger_key(add_match.ledger_io.fields(payload)) != (PARENT_OLD, 0x00ABCD00))
+    assert functions.read_bytes().startswith(expected_kept)
+    assert len(ledger_rows(functions)) == 4
+
+
+@pytest.mark.parametrize("notes,status,child_source", [
+    (f"gen-funclet;parent={PARENT_OLD}suffix;object-symbol=$L878", "matched", SOURCE_REL),
+    (f"gen-funclet;prose parent={PARENT_OLD};object-symbol=$L878", "matched", SOURCE_REL),
+    (f"gen-funclet;parent={PARENT_OLD.lower()};object-symbol=$L878", "matched", SOURCE_REL),
+    (f"gen-funclet; parent={PARENT_OLD};object-symbol=$L878", "matched", SOURCE_REL),
+    (f"gen-funclet;parent={PARENT_OLD} ;object-symbol=$L878", "matched", SOURCE_REL),
+    (f"not-gen-funclet;parent={PARENT_OLD};object-symbol=$L878", "matched", SOURCE_REL),
+    (f"gen-funclet;parent={PARENT_OLD};object-symbol=?realFunction@@YAXXZ", "matched", SOURCE_REL),
+    (f"gen-funclet;parent={PARENT_OLD};object-symbol=$L878", "dump", SOURCE_REL),
+    (f"gen-funclet;parent={PARENT_OLD};object-symbol=$L878", "matched", "game/Foreign.cpp"),
+])
+def test_parent_retarget_never_rewrites_unrelated_or_nonfunclet_metadata(
+        tmp_path, monkeypatch, notes, status, child_source):
+    functions, _deleted, _source = arrange_parent_correction(
+        tmp_path, monkeypatch, notes=notes, status=status, child_source=child_source)
+    child_before = next(payload + term for payload, term in add_match.ledger_io.split_records(functions.read_bytes())
+                        if add_match.ledger_key(add_match.ledger_io.fields(payload)) == (CHILD, 0x00ABCE00))
+    add_match.main()
+    assert child_before in functions.read_bytes()
+
+
+@pytest.mark.parametrize("notes", [
+    f"gen-funclet;parent={PARENT_OLD};parent=?another@@YAXXZ;object-symbol=$L878",
+    f"gen-funclet;parent={PARENT_OLD};parent={PARENT_OLD};object-symbol=$L878",
+    f"gen-funclet;parent={PARENT_OLD};object-symbol=$L878;object-symbol=$L879",
+])
+def test_ambiguous_funclet_tokens_refuse_before_any_write(tmp_path, monkeypatch, capsys, notes):
+    files = arrange_parent_correction(tmp_path, monkeypatch, notes=notes)
+    before = tuple(p.read_bytes() for p in files)
+    with pytest.raises(SystemExit) as error:
+        add_match.main()
+    assert error.value.code == 1
+    assert "ambiguous funclet" in capsys.readouterr().err
+    assert tuple(p.read_bytes() for p in files) == before
+    assert not stamp_reached()
+
+
+@pytest.mark.parametrize("kind", ["parent", "child", "quoted"])
+def test_ambiguous_or_nonlossless_parent_rows_cannot_be_selected(tmp_path, monkeypatch, kind):
+    files = arrange_parent_correction(tmp_path, monkeypatch)
+    functions = files[0]
+    if kind == "parent":
+        functions.write_bytes(functions.read_bytes() +
+            f"{PARENT_OLD},,0x00ABD100,4,{SOURCE_REL},matched,second old owner\r\n".encode())
+    elif kind == "child":
+        child = next(payload + term for payload, term in add_match.ledger_io.split_records(functions.read_bytes())
+                     if add_match.ledger_key(add_match.ledger_io.fields(payload)) == (CHILD, 0x00ABCE00))
+        functions.write_bytes(functions.read_bytes() + child)
+    else:
+        functions.write_bytes(functions.read_bytes().replace(
+            b"matched,authored cleanup;", b'matched,"authored cleanup;').replace(
+            b"keep this prose\r\n", b'keep this prose"\r\n'))
+    before = tuple(p.read_bytes() for p in files)
+    with pytest.raises(SystemExit):
+        add_match.main()
+    assert tuple(p.read_bytes() for p in files) == before
+
+
+@pytest.mark.parametrize("size,rva,parent_source,extra", [
+    ("159", "0x00ABCD00", SOURCE_REL, ("--boundary-evidence", "larger proven body")),
+    ("174", "0x00ABCCF0", SOURCE_REL, ("--boundary-evidence", "contained old row")),
+    ("158", "0x00ABCD00", "game/Old.cpp", ()),
+])
+def test_parent_retarget_does_not_expand_to_changed_range_or_source(
+        tmp_path, monkeypatch, size, rva, parent_source, extra):
+    functions, _deleted, _source = arrange_parent_correction(
+        tmp_path, monkeypatch, size=size, rva=rva, parent_source=parent_source, extra_args=extra)
+    child_before = next(r for r in ledger_rows(functions) if r["name"] == CHILD)
+    add_match.main()  # Existing ordinary route; fake gate makes no C++ claim.
+    assert next(r for r in ledger_rows(functions) if r["name"] == CHILD) == child_before
+
+
+def test_parent_retarget_refuses_no_verify_without_mutation(tmp_path, monkeypatch, capsys):
+    files = arrange_parent_correction(tmp_path, monkeypatch, extra_args=("--no-verify",))
+    before = tuple(p.read_bytes() for p in files)
+    with pytest.raises(SystemExit) as error:
+        add_match.main()
+    assert error.value.code == 1
+    assert "--no-verify" in capsys.readouterr().err
+    assert tuple(p.read_bytes() for p in files) == before
+
+
+@pytest.mark.parametrize("error", [KeyboardInterrupt, OSError])
+def test_parent_retarget_interrupted_verifier_restores_complete_snapshots(tmp_path, monkeypatch, error):
+    files = arrange_parent_correction(tmp_path, monkeypatch)
+    before = tuple(p.read_bytes() for p in files)
+
+    def interrupted(command, **kwargs):
+        if command[0] == "git":
+            return SimpleNamespace(returncode=1, stdout=b"", stderr=b"")
+        assert f"parent={REAL}" in next(r for r in ledger_rows(files[0]) if r["name"] == CHILD)["notes"]
+        raise error()
+
+    monkeypatch.setattr(add_match.subprocess, "run", interrupted)
+    with pytest.raises(error):
+        add_match.main()
+    assert tuple(p.read_bytes() for p in files) == before
